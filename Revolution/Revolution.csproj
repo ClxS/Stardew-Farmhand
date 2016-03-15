@@ -53,7 +53,28 @@
     <Compile Include="Mod.cs" />
     <Compile Include="ModLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Command.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Entities\SPlayer.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Events\Controls.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Events\EventArgs.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Events\Game.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Events\Graphics.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Events\Location.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Events\Menu.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Events\Mine.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Events\Player.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Events\Time.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Inheritance\ItemStackChange.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Inheritance\Menus\SBobberBar.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Inheritance\Menus\SGameMenu.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Inheritance\Menus\SInventoryPage.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Inheritance\Minigames\SMinigameBase.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Inheritance\SGame.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Inheritance\SGameLocation.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Inheritance\SObject.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Log.cs" />
     <Compile Include="SMAPI Compatibility Layer\Mod.cs" />
+    <Compile Include="SMAPI Compatibility Layer\ModItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />
