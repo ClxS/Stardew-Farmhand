@@ -35,6 +35,8 @@ namespace Revolution
         static void HookAnimalEvents(CecilContext cecilContext)
         {
             CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.FarmAnimal", "eatGrass", "Revolution.Events.FarmAnimalEvents", "InvokeOnEatGrass");
+            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.FarmAnimal", "makeSound", "Revolution.Events.FarmAnimalEvents", "InvokeOnMakeSound");
+            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.FarmAnimal", "farmerPushing", "Revolution.Events.FarmAnimalEvents", "InvokeOnFarmerPushing");
         }
 
         static void HookPlayerEvents(CecilContext cecilContext)

@@ -9,10 +9,22 @@ namespace Revolution.Events
     public static class FarmAnimalEvents
     {
         public static EventHandler<EventArgsOnAnimalEatGrass> OnEatGrass = delegate { };
+        public static EventHandler OnMakeSound = delegate { };
+        public static EventHandler OnFarmerPushing = delegate { };
 
         public static void InvokeOnEatGrass()
         {
             OnEatGrass.Invoke(null, new EventArgsOnAnimalEatGrass());
+        }
+
+        public static void InvokeOnMakeSound()
+        {
+            OnMakeSound.Invoke(null, new EventArgs());
+        }
+
+        public static void InvokeOnFarmerPushing()
+        {
+            OnFarmerPushing.Invoke(null, new EventArgs());
         }
     }
 }
