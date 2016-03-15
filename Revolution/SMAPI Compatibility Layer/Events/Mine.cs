@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StardewModdingAPI.Events
 {
-    class Mine
+    public static class MineEvents
     {
     }
 }

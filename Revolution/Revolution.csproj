@@ -32,6 +32,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Graphics\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="Stardew Valley">
+      <HintPath>..\RevolutionPatcher\bin\Debug\Stardew Valley.exe</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,6 +52,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="xTile">
+      <HintPath>..\RevolutionPatcher\bin\Debug\xTile.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\Arguments\EventArgsOnAnimalEatGrass.cs" />
@@ -64,6 +79,7 @@
     <Compile Include="SMAPI Compatibility Layer\Events\Mine.cs" />
     <Compile Include="SMAPI Compatibility Layer\Events\Player.cs" />
     <Compile Include="SMAPI Compatibility Layer\Events\Time.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Extensions.cs" />
     <Compile Include="SMAPI Compatibility Layer\Inheritance\ItemStackChange.cs" />
     <Compile Include="SMAPI Compatibility Layer\Inheritance\Menus\SBobberBar.cs" />
     <Compile Include="SMAPI Compatibility Layer\Inheritance\Menus\SGameMenu.cs" />
