@@ -19,6 +19,8 @@ namespace Revolution
 
             CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "Initialize", "Revolution.Events.GameEvents", "InvokeBeforeGameInitialise");
             CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "Initialize", "Revolution.Events.GameEvents", "InvokeAfterGameInitialise");
+            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "farmerTakeDamage", "Revolution.Events.PlayerEvents", "InvokeOnPlayerTakesDamage");
+            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "doneEating", "Revolution.Events.PlayerEvents", "InvokeOnPlayerDoneEating");
             CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", ".ctor", "Revolution.ModLoader", "LoadMods");
 
             cecilContext.WriteAssembly(Constants.RevolutionExe);          
