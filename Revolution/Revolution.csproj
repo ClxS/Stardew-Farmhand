@@ -53,6 +53,7 @@
     <Compile Include="Mod.cs" />
     <Compile Include="ModLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SMAPI Compatibility Layer\Mod.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />
