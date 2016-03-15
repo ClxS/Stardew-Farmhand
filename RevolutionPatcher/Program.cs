@@ -17,13 +17,29 @@ namespace Revolution
             InjectRevolutionCoreClasses();
             CecilContext cecilContext = new CecilContext(Constants.IntermediateRevolutionExe);
 
+            HookGameEvents(cecilContext);
+            HookPlayerEvents(cecilContext);
+
+            HookAPIEvents(cecilContext);
+            
+            cecilContext.WriteAssembly(Constants.RevolutionExe);          
+        }
+
+        static void HookGameEvents(CecilContext cecilContext)
+        {
             CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "Initialize", "Revolution.Events.GameEvents", "InvokeBeforeGameInitialise");
             CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "Initialize", "Revolution.Events.GameEvents", "InvokeAfterGameInitialise");
+        }
+
+        static void HookPlayerEvents(CecilContext cecilContext)
+        {
             CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "farmerTakeDamage", "Revolution.Events.PlayerEvents", "InvokeOnPlayerTakesDamage");
             CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "doneEating", "Revolution.Events.PlayerEvents", "InvokeOnPlayerDoneEating");
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", ".ctor", "Revolution.ModLoader", "LoadMods");
+        }
 
-            cecilContext.WriteAssembly(Constants.RevolutionExe);          
+        static void HookAPIEvents(CecilContext cecilContext)
+        {
+            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", ".ctor", "Revolution.ModLoader", "LoadMods");
         }
 
         static void InjectRevolutionCoreClasses()
