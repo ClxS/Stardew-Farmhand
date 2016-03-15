@@ -19,6 +19,7 @@ namespace Revolution
 
             HookGameEvents(cecilContext);
             HookPlayerEvents(cecilContext);
+            HookAnimalEvents(cecilContext);
 
             HookAPIEvents(cecilContext);
             
@@ -29,6 +30,11 @@ namespace Revolution
         {
             CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "Initialize", "Revolution.Events.GameEvents", "InvokeBeforeGameInitialise");
             CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "Initialize", "Revolution.Events.GameEvents", "InvokeAfterGameInitialise");
+        }
+
+        static void HookAnimalEvents(CecilContext cecilContext)
+        {
+            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.FarmAnimal", "eatGrass", "Revolution.Events.FarmAnimalEvents", "InvokeOnEatGrass");
         }
 
         static void HookPlayerEvents(CecilContext cecilContext)
