@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Revolution.Events
 {
-    class PlayerEvents
+    public class PlayerEvents
     {
         public static EventHandler<EventArgsOnPlayerTakesDamage> OnPlayerTakesDamage = delegate { };
         public static EventHandler<EventArgsOnPlayerDoneEating> OnPlayerDoneEating = delegate { };

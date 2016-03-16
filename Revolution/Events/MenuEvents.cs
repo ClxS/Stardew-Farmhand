@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Revolution.Events
 {
-    class MenuEvents
+    public class MenuEvents
     {
-        public static event EventHandler MenuChanged = delegate { };
+        public static event EventHandler OnMenuChanged = delegate { };
 
         public static void InvokeMenuChanged(IClickableMenu priorMenu, IClickableMenu newMenu)
         {
-            MenuChanged.Invoke(null, EventArgs.Empty);
+            OnMenuChanged.Invoke(null, EventArgs.Empty);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Revolution.Events
 {
-    class GraphicsEvents
+    public class GraphicsEvents
     {
         public static event EventHandler OnResize = delegate { };
         public static event EventHandler OnBeforeDraw = delegate { };

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Revolution.Events
 {
-    class TimeEvents
+    public class TimeEvents
     {
         public static event EventHandler OnTimeOfDayChanged = delegate { };
         public static event EventHandler OnDayOfMonthChanged = delegate { };

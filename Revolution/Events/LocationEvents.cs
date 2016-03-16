@@ -7,25 +7,25 @@ using System.Text;
 
 namespace Revolution.Events
 {
-    class LocationEvents
+    public class LocationEvents
     {
-        public static event EventHandler LocationsChanged = delegate { };
-        public static event EventHandler LocationObjectsChanged = delegate { };
-        public static event EventHandler CurrentLocationChanged = delegate { };
+        public static event EventHandler OnLocationsChanged = delegate { };
+        public static event EventHandler OnLocationObjectsChanged = delegate { };
+        public static event EventHandler OnCurrentLocationChanged = delegate { };
 
         public static void InvokeLocationsChanged(List<GameLocation> newLocations)
         {
-            LocationsChanged.Invoke(null, EventArgs.Empty);
+            OnLocationsChanged.Invoke(null, EventArgs.Empty);
         }
 
         public static void InvokeCurrentLocationChanged(GameLocation priorLocation, GameLocation newLocation)
         {
-            CurrentLocationChanged.Invoke(null, EventArgs.Empty);
+            OnCurrentLocationChanged.Invoke(null, EventArgs.Empty);
         }
 
-        internal static void InvokeOnNewLocationObject(SerializableDictionary<Vector2, StardewValley.Object> newObjects)
+        public static void InvokeOnNewLocationObject(SerializableDictionary<Vector2, StardewValley.Object> newObjects)
         {
-            LocationObjectsChanged.Invoke(null, EventArgs.Empty);
+            OnLocationObjectsChanged.Invoke(null, EventArgs.Empty);
         }
     }
 }

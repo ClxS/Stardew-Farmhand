@@ -9,6 +9,8 @@ namespace Revolution.Events
         public static EventHandler<EventArgsOnGameInitialised> OnAfterGameInitialised = delegate { };
         public static event EventHandler OnBeforeLoadContent = delegate { };
         public static event EventHandler OnAfterLoadedContent = delegate { };
+        public static event EventHandler OnBeforeUnoadContent = delegate { };
+        public static event EventHandler OnAfterUnloadedContent = delegate { };
         public static event EventHandler OnBeforeUpdateTick = delegate { };
         public static event EventHandler OnAfterUpdateTick = delegate { };
 
@@ -27,6 +29,14 @@ namespace Revolution.Events
         public static void InvokeAfterLoadedContent()
         {
             OnAfterLoadedContent.Invoke(null, EventArgs.Empty);
+        }
+        public static void InvokeBeforeUnloadContent()
+        {
+            OnBeforeUnoadContent.Invoke(null, EventArgs.Empty);
+        }
+        public static void InvokeAfterUnloadedContent()
+        {
+            OnAfterUnloadedContent.Invoke(null, EventArgs.Empty);
         }
         public static void InvokeBeforeUpdate()
         {

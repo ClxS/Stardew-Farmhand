@@ -7,55 +7,55 @@ using System.Text;
 
 namespace Revolution.Events
 {
-    class ControlEvents
+    public class ControlEvents
     {
-        public static event EventHandler KeyboardChanged = delegate { };
-        public static event EventHandler KeyPressed = delegate { };
-        public static event EventHandler KeyReleased = delegate { };
-        public static event EventHandler MouseChanged = delegate { };
-        public static event EventHandler ControllerButtonPressed = delegate { };
-        public static event EventHandler ControllerButtonReleased = delegate { };
-        public static event EventHandler ControllerTriggerPressed = delegate { };
-        public static event EventHandler ControllerTriggerReleased = delegate { };
+        public static event EventHandler OnKeyboardChanged = delegate { };
+        public static event EventHandler OnKeyPressed = delegate { };
+        public static event EventHandler OnKeyReleased = delegate { };
+        public static event EventHandler OnMouseChanged = delegate { };
+        public static event EventHandler OnControllerButtonPressed = delegate { };
+        public static event EventHandler OnControllerButtonReleased = delegate { };
+        public static event EventHandler OnControllerTriggerPressed = delegate { };
+        public static event EventHandler OnControllerTriggerReleased = delegate { };
 
         public static void InvokeKeyboardChanged(KeyboardState priorState, KeyboardState newState)
         {
-            KeyboardChanged.Invoke(null, EventArgs.Empty);
+            OnKeyboardChanged.Invoke(null, EventArgs.Empty);
         }
 
         public static void InvokeMouseChanged(MouseState priorState, MouseState newState)
         {
-            MouseChanged.Invoke(null, EventArgs.Empty);
+            OnMouseChanged.Invoke(null, EventArgs.Empty);
         }
 
         public static void InvokeKeyPressed(Keys key)
         {
-            KeyPressed.Invoke(null, EventArgs.Empty);
+            OnKeyPressed.Invoke(null, EventArgs.Empty);
         }
 
         public static void InvokeKeyReleased(Keys key)
         {
-            KeyReleased.Invoke(null, EventArgs.Empty);
+            OnKeyReleased.Invoke(null, EventArgs.Empty);
         }
 
         public static void InvokeButtonPressed(PlayerIndex playerIndex, Buttons buttons)
         {
-            ControllerButtonPressed.Invoke(null, EventArgs.Empty);
+            OnControllerButtonPressed.Invoke(null, EventArgs.Empty);
         }
 
         public static void InvokeButtonReleased(PlayerIndex playerIndex, Buttons buttons)
         {
-            ControllerButtonReleased.Invoke(null, EventArgs.Empty);
+            OnControllerButtonReleased.Invoke(null, EventArgs.Empty);
         }
 
         public static void InvokeTriggerPressed(PlayerIndex playerIndex, Buttons buttons, float value)
         {
-            ControllerTriggerPressed.Invoke(null, EventArgs.Empty);
+            OnControllerTriggerPressed.Invoke(null, EventArgs.Empty);
         }
 
         public static void InvokeTriggerReleased(PlayerIndex playerIndex, Buttons buttons, float value)
         {
-            ControllerTriggerReleased.Invoke(null, EventArgs.Empty);
+            OnControllerTriggerReleased.Invoke(null, EventArgs.Empty);
         }
     }
 }

@@ -30,6 +30,13 @@ namespace Revolution
         {
             CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "Initialize", "Revolution.Events.GameEvents", "InvokeBeforeGameInitialise");
             CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "Initialize", "Revolution.Events.GameEvents", "InvokeAfterGameInitialise");
+            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "LoadContent", "Revolution.Events.GameEvents", "InvokeBeforeLoadContent");
+            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "LoadContent", "Revolution.Events.GameEvents", "InvokeAfterLoadedContent");
+            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "UnloadContent", "Revolution.Events.GameEvents", "InvokeBeforeUnloadContent");
+            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "UnloadContent", "Revolution.Events.GameEvents", "InvokeAfterUnloadedContent");
+            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "Update", "Revolution.Events.GameEvents", "InvokeBeforeUpdate");
+            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "Update", "Revolution.Events.GameEvents", "InvokeAfterUpdate");
+            
         }
 
         static void HookAnimalEvents(CecilContext cecilContext)
