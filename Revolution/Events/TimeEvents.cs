@@ -7,35 +7,53 @@ namespace Revolution.Events
 {
     public class TimeEvents
     {
-        public static event EventHandler OnBeforeTimeOfDayChanged = delegate { };
-        public static event EventHandler OnAfterTimeOfDayChanged = delegate { };
-        public static event EventHandler OnDayOfMonthChanged = delegate { };
-        public static event EventHandler OnYearOfGameChanged = delegate { };
-        public static event EventHandler OnSeasonOfYearChanged = delegate { };
+        public static event EventHandler OnBeforeTimeChanged = delegate { };
+        public static event EventHandler OnAfterTimeChanged = delegate { };
+        public static event EventHandler OnBeforeDayChanged = delegate { };
+        public static event EventHandler OnAfterDayChanged = delegate { };
+        public static event EventHandler OnBeforeSeasonChanged = delegate { };
+        public static event EventHandler OnAfterSeasonChanged = delegate { };
+
+        public static event EventHandler OnBeforeYearChanged = delegate { };
+        public static event EventHandler OnAfterYearChanged = delegate { };
 
         public static void InvokeBeforeTimeOfDayChanged(Int32 priorInt, Int32 newInt)
         {
-            OnBeforeTimeOfDayChanged.Invoke(null, EventArgs.Empty);
+            OnBeforeTimeChanged.Invoke(null, EventArgs.Empty);
         }
 
         public static void InvokeAfterTimeOfDayChanged(Int32 priorInt, Int32 newInt)
         {
-            OnAfterTimeOfDayChanged.Invoke(null, EventArgs.Empty);
+            OnAfterTimeChanged.Invoke(null, EventArgs.Empty);
         }
 
-        public static void InvokeDayOfMonthChanged(Int32 priorInt, Int32 newInt)
+        public static void InvokeBeforeDayOfMonthChanged(Int32 priorInt, Int32 newInt)
         {
-            OnDayOfMonthChanged.Invoke(null, EventArgs.Empty);
+            OnBeforeDayChanged.Invoke(null, EventArgs.Empty);
+        }
+        public static void InvokeAfterDayOfMonthChanged(Int32 priorInt, Int32 newInt)
+        {
+            OnAfterDayChanged.Invoke(null, EventArgs.Empty);
+        }
+        
+        public static void InvokeBeforeSeasonChanged(String priorString, String newString)
+        {
+            OnBeforeSeasonChanged.Invoke(null, EventArgs.Empty);
+        }
+        public static void InvokeAfterSeasonChanged(String priorString, String newString)
+        {
+            OnAfterSeasonChanged.Invoke(null, EventArgs.Empty);
         }
 
-        public static void InvokeYearOfGameChanged(Int32 priorInt, Int32 newInt)
+
+        public static void InvokeBeforeYearChanged(Int32 priorInt, Int32 newInt)
         {
-            OnYearOfGameChanged.Invoke(null, EventArgs.Empty);
+            throw new NotImplementedException();
         }
 
-        public static void InvokeSeasonOfYearChanged(String priorString, String newString)
+        public static void InvokeAfterYearChanged(Int32 priorInt, Int32 newInt)
         {
-            OnSeasonOfYearChanged.Invoke(null, EventArgs.Empty);
+            throw new NotImplementedException();
         }
     }
 }

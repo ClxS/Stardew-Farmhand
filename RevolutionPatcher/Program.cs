@@ -50,10 +50,15 @@ namespace Revolution
         {
             CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "farmerTakeDamage", "Revolution.Events.PlayerEvents", "InvokeOnPlayerTakesDamage");
             CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "farmerTakeDamage", "Revolution.Events.PlayerEvents", "InvokeOnPlayerTakesDamage");
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "performTenMinuteClockUpdate", "Revolution.Events.TimeEvents", "InvokeBeforeTimeOfDayChanged");
-            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "performTenMinuteClockUpdate", "Revolution.Events.TimeEvents", "InvokeAfterTimeOfDayChanged");
+            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "performTenMinuteClockUpdate", "Revolution.Events.TimeEvents", "InvokeBeforeTimeChanged");
+            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "performTenMinuteClockUpdate", "Revolution.Events.TimeEvents", "InvokeAfterTimeChanged");
+            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "newDayAfterFade", "Revolution.Events.TimeEvents", "InvokeBeforeDayChanged");
+            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "newDayAfterFade", "Revolution.Events.TimeEvents", "InvokeAfterDayChanged");
+            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "newSeason", "Revolution.Events.TimeEvents", "InvokeBeforeSeasonChanged");
+            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "newSeason", "Revolution.Events.TimeEvents", "InvokeAfterSeasonChanged");
         }
         
+
         static void HookAPIEvents(CecilContext cecilContext)
         {
             CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", ".ctor", "Revolution.ModLoader", "LoadMods");
