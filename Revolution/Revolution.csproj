@@ -62,9 +62,14 @@
     <Compile Include="Events\Arguments\EventArgsOnGameInitialised.cs" />
     <Compile Include="Events\Arguments\EventArgsOnPlayerDoneEating.cs" />
     <Compile Include="Events\Arguments\EventArgsOnPlayerTakesDamage.cs" />
+    <Compile Include="Events\ControlEvents.cs" />
     <Compile Include="Events\FarmAnimalEvents.cs" />
     <Compile Include="Events\GameEvents.cs" />
+    <Compile Include="Events\GraphicsEvents.cs" />
+    <Compile Include="Events\LocationEvents.cs" />
+    <Compile Include="Events\MenuEvents.cs" />
     <Compile Include="Events\PlayerEvents.cs" />
+    <Compile Include="Events\TimeEvents.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="ModLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

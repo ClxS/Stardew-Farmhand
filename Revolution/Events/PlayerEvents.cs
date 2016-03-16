@@ -10,6 +10,9 @@ namespace Revolution.Events
     {
         public static EventHandler<EventArgsOnPlayerTakesDamage> OnPlayerTakesDamage = delegate { };
         public static EventHandler<EventArgsOnPlayerDoneEating> OnPlayerDoneEating = delegate { };
+        public static event EventHandler OnFarmerChanged = delegate { };
+        public static event EventHandler OnInventoryChanged = delegate { };
+        public static event EventHandler OnLeveledUp = delegate { };
 
         public static void InvokeOnPlayerTakesDamage()
         {
@@ -19,6 +22,21 @@ namespace Revolution.Events
         public static void InvokeOnPlayerDoneEating()
         {
             OnPlayerDoneEating.Invoke(null, new EventArgsOnPlayerDoneEating());
+        }
+
+        public static void InvokeFarmerChanged()
+        {
+            OnFarmerChanged.Invoke(null, EventArgs.Empty);
+        }
+
+        public static void InvokeInventoryChanged()
+        {
+            OnInventoryChanged.Invoke(null, EventArgs.Empty);
+        }
+
+        public static void InvokeLeveledUp()
+        {
+            OnLeveledUp.Invoke(null, EventArgs.Empty);
         }
     }
 }

@@ -19,12 +19,12 @@ namespace Revolution.Events
 
         public static void InvokeOnMakeSound()
         {
-            OnMakeSound.Invoke(null, new EventArgs());
+            OnMakeSound.Invoke(null, EventArgs.Empty);
         }
 
         public static void InvokeOnFarmerPushing()
         {
-            OnFarmerPushing.Invoke(null, new EventArgs());
+            OnFarmerPushing.Invoke(null, EventArgs.Empty);
         }
     }
 }
