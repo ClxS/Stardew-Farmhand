@@ -49,9 +49,11 @@ namespace Revolution
         static void HookPlayerEvents(CecilContext cecilContext)
         {
             CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "farmerTakeDamage", "Revolution.Events.PlayerEvents", "InvokeOnPlayerTakesDamage");
-            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "doneEating", "Revolution.Events.PlayerEvents", "InvokeOnPlayerDoneEating");
+            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "farmerTakeDamage", "Revolution.Events.PlayerEvents", "InvokeOnPlayerTakesDamage");
+            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "performTenMinuteClockUpdate", "Revolution.Events.TimeEvents", "InvokeBeforeTimeOfDayChanged");
+            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "performTenMinuteClockUpdate", "Revolution.Events.TimeEvents", "InvokeAfterTimeOfDayChanged");
         }
-
+        
         static void HookAPIEvents(CecilContext cecilContext)
         {
             CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", ".ctor", "Revolution.ModLoader", "LoadMods");
