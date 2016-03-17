@@ -17,21 +17,21 @@ namespace Revolution.Events
         public static event EventHandler OnBeforeYearChanged = delegate { };
         public static event EventHandler OnAfterYearChanged = delegate { };
 
-        public static void InvokeBeforeTimeOfDayChanged(Int32 priorInt, Int32 newInt)
+        public static void InvokeBeforeTimeChanged(Int32 priorInt, Int32 newInt)
         {
             OnBeforeTimeChanged.Invoke(null, EventArgs.Empty);
         }
 
-        public static void InvokeAfterTimeOfDayChanged(Int32 priorInt, Int32 newInt)
+        public static void InvokeAfterTimeChanged(Int32 priorInt, Int32 newInt)
         {
             OnAfterTimeChanged.Invoke(null, EventArgs.Empty);
         }
 
-        public static void InvokeBeforeDayOfMonthChanged(Int32 priorInt, Int32 newInt)
+        public static void InvokeBeforeDayChanged(Int32 priorInt, Int32 newInt)
         {
             OnBeforeDayChanged.Invoke(null, EventArgs.Empty);
         }
-        public static void InvokeAfterDayOfMonthChanged(Int32 priorInt, Int32 newInt)
+        public static void InvokeAfterDayChanged(Int32 priorInt, Int32 newInt)
         {
             OnAfterDayChanged.Invoke(null, EventArgs.Empty);
         }
