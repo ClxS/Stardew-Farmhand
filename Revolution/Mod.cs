@@ -15,7 +15,7 @@ namespace Revolution
         /// <summary>
         /// The name of the mod's authour.
         /// </summary>
-        public virtual string Authour { get; protected set; }
+        public virtual string Author { get; protected set; }
 
         /// <summary>
         /// The version of the mod.

@@ -13,7 +13,7 @@ namespace LoggingMod
             get { return "Logging Mod"; }
         }
 
-        public override string Authour
+        public override string Author
         {
             get { return "ClxS"; }
         }
