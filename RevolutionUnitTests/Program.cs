@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StardewValley;
 
-namespace Revolution
+namespace RevolutionDebugger
 {
     class Program
     {
@@ -14,10 +14,6 @@ namespace Revolution
             StardewRevolutionLauncher launcher = new StardewRevolutionLauncher();
             try
             {
-                TestMod testMod = new TestMod();
-                testMod.Entry();  
-
-
                 if (!launcher.Launch())
                 {
                     throw new Exception("Could not launch Stardew Revolution");

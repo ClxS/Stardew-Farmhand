@@ -1,4 +1,5 @@
 ﻿using ILRepacking;
+using Revolution.Attributes;
 using Revolution.Cecil;
 using Revolution.Helpers;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,52 +19,55 @@ namespace Revolution
         {
             InjectRevolutionCoreClasses();
             CecilContext cecilContext = new CecilContext(Constants.IntermediateRevolutionExe);
-
-            HookGameEvents(cecilContext);
-            HookPlayerEvents(cecilContext);
-            HookAnimalEvents(cecilContext);
-
-            HookAPIEvents(cecilContext);
+            HookApiEvents(cecilContext);
             
             cecilContext.WriteAssembly(Constants.RevolutionExe);          
         }
-
-        static void HookGameEvents(CecilContext cecilContext)
-        {
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "Initialize", "Revolution.Events.GameEvents", "InvokeBeforeGameInitialise");
-            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "Initialize", "Revolution.Events.GameEvents", "InvokeAfterGameInitialise");
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "LoadContent", "Revolution.Events.GameEvents", "InvokeBeforeLoadContent");
-            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "LoadContent", "Revolution.Events.GameEvents", "InvokeAfterLoadedContent");
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "UnloadContent", "Revolution.Events.GameEvents", "InvokeBeforeUnloadContent");
-            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "UnloadContent", "Revolution.Events.GameEvents", "InvokeAfterUnloadedContent");
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "Update", "Revolution.Events.GameEvents", "InvokeBeforeUpdate");
-            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "Update", "Revolution.Events.GameEvents", "InvokeAfterUpdate");
-            
-        }
-
-        static void HookAnimalEvents(CecilContext cecilContext)
-        {
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.FarmAnimal", "eatGrass", "Revolution.Events.FarmAnimalEvents", "InvokeOnEatGrass");
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.FarmAnimal", "makeSound", "Revolution.Events.FarmAnimalEvents", "InvokeOnMakeSound");
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.FarmAnimal", "farmerPushing", "Revolution.Events.FarmAnimalEvents", "InvokeOnFarmerPushing");
-        }
-
-        static void HookPlayerEvents(CecilContext cecilContext)
-        {
-            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "farmerTakeDamage", "Revolution.Events.PlayerEvents", "InvokeOnPlayerTakesDamage");
-            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "farmerTakeDamage", "Revolution.Events.PlayerEvents", "InvokeOnPlayerTakesDamage");
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "performTenMinuteClockUpdate", "Revolution.Events.TimeEvents", "InvokeBeforeTimeChanged");
-            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "performTenMinuteClockUpdate", "Revolution.Events.TimeEvents", "InvokeAfterTimeChanged");
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "newDayAfterFade", "Revolution.Events.TimeEvents", "InvokeBeforeDayChanged");
-            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "newDayAfterFade", "Revolution.Events.TimeEvents", "InvokeAfterDayChanged");
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", "newSeason", "Revolution.Events.TimeEvents", "InvokeBeforeSeasonChanged");
-            CecilHelper.InjectExitMethod(cecilContext, "StardewValley.Game1", "newSeason", "Revolution.Events.TimeEvents", "InvokeAfterSeasonChanged");
-        }
         
-
-        static void HookAPIEvents(CecilContext cecilContext)
+        static void HookApiEvents(CecilContext cecilContext)
         {
-            CecilHelper.InjectEntryMethod(cecilContext, "StardewValley.Game1", ".ctor", "Revolution.ModLoader", "LoadMods");
+            try
+            {
+                var revolutionAssembly = typeof(HookAttribute).Assembly;
+
+                var attribute = revolutionAssembly.GetModules()[0].GetType("Revolution.Attributes.HookAttribute");
+                var methods = revolutionAssembly.GetTypes()
+                            .SelectMany(t => t.GetMethods())
+                            .Where(m => m.GetCustomAttributes(typeof(HookAttribute), false).Length > 0)
+                            .ToArray();
+
+                foreach (var method in methods)
+                {
+                    string typeName = method.DeclaringType.FullName;
+                    string methodName = method.Name;
+                    var hookAttributes = method.GetCustomAttributes(typeof(HookAttribute), false).Cast<HookAttribute>();
+
+                    foreach (var hook in hookAttributes)
+                    {
+                        string hookTypeName = method.DeclaringType?.FullName;
+                        string hookMethodName = method.Name;
+
+                        try
+                        {
+                            switch (hook.HookType)
+                            {
+                                case HookType.Entry: CecilHelper.InjectEntryMethod(cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
+                                case HookType.Exit: CecilHelper.InjectExitMethod(cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
+                            }
+                        }
+                        catch (System.Exception ex)
+                        {
+                            Console.WriteLine("Failed to Inject {0}.{1} into {2}.{3}\n\t{4}", typeName, methodName, hookTypeName, hookMethodName, ex.Message);
+                        }    
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+           
+                
         }
 
         static void InjectRevolutionCoreClasses()

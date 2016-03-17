@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Revolution
+namespace RevolutionDebugger
 {
     public class StardewRevolutionLauncher
     {

@@ -7,8 +7,8 @@
     <ProjectGuid>{4EF4F830-92A1-46D1-8E70-38C5BF52165B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Revolution</RootNamespace>
-    <AssemblyName>Revolution</AssemblyName>
+    <RootNamespace>RevolutionDebugger</RootNamespace>
+    <AssemblyName>RevolutionDebugger</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -67,7 +67,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StardewRevolutionLauncher.cs" />
-    <Compile Include="TestMod.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

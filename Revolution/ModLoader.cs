@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Revolution.Attributes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Revolution
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
         };
         
+        [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         public static void LoadMods()
         {            
             foreach (string ModPath in ModPaths)

@@ -1,4 +1,5 @@
-﻿using StardewValley.Menus;
+﻿using Revolution.Attributes;
+using StardewValley.Menus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace Revolution.Events
     public class MenuEvents
     {
         public static event EventHandler OnMenuChanged = delegate { };
-
+        
+        [PendingHook]
         public static void InvokeMenuChanged(IClickableMenu priorMenu, IClickableMenu newMenu)
         {
             OnMenuChanged.Invoke(null, EventArgs.Empty);

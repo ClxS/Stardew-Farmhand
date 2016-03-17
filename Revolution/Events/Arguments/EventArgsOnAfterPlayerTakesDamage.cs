@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Revolution.Events.Arguments
 {
-    public class EventArgsOnPlayerTakesDamage : EventArgs
+    public class EventArgsOnAfterPlayerTakesDamage : EventArgs
     {
-        public EventArgsOnPlayerTakesDamage()
+        public EventArgsOnAfterPlayerTakesDamage()
         {
         }
     }

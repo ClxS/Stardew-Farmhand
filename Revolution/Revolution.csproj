@@ -42,7 +42,7 @@
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Graphics\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Graphics.dll</HintPath>
     </Reference>
     <Reference Include="Stardew Valley">
-      <HintPath>..\RevolutionPatcher\bin\Debug\Stardew Valley.exe</HintPath>
+      <HintPath>..\..\..\..\Games\SteamLibrary\steamapps\common\Stardew Valley\Stardew Valley.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,15 +53,18 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="xTile">
-      <HintPath>..\RevolutionPatcher\bin\Debug\xTile.dll</HintPath>
+      <HintPath>..\..\..\..\Games\SteamLibrary\steamapps\common\Stardew Valley\xTile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\HookAttribute.cs" />
+    <Compile Include="Attributes\PendingHookAttribute.cs" />
+    <Compile Include="Events\Arguments\EventArgsOnAfterPlayerTakesDamage.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAnimalEatGrass.cs" />
     <Compile Include="Events\Arguments\EventArgsOnGameInitialise.cs" />
     <Compile Include="Events\Arguments\EventArgsOnGameInitialised.cs" />
     <Compile Include="Events\Arguments\EventArgsOnPlayerDoneEating.cs" />
-    <Compile Include="Events\Arguments\EventArgsOnPlayerTakesDamage.cs" />
+    <Compile Include="Events\Arguments\EventArgsOnBeforePlayerTakesDamage.cs" />
     <Compile Include="Events\ControlEvents.cs" />
     <Compile Include="Events\FarmAnimalEvents.cs" />
     <Compile Include="Events\GameEvents.cs" />
@@ -97,9 +100,7 @@
     <Compile Include="SMAPI Compatibility Layer\Mod.cs" />
     <Compile Include="SMAPI Compatibility Layer\ModItem.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

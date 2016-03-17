@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Revolution.Attributes;
 using StardewValley;
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,20 @@ namespace Revolution.Events
         public static event EventHandler OnLocationsChanged = delegate { };
         public static event EventHandler OnLocationObjectsChanged = delegate { };
         public static event EventHandler OnCurrentLocationChanged = delegate { };
-
+        
+        [PendingHook]
         public static void InvokeLocationsChanged(List<GameLocation> newLocations)
         {
             OnLocationsChanged.Invoke(null, EventArgs.Empty);
         }
-
+        
+        [PendingHook]
         public static void InvokeCurrentLocationChanged(GameLocation priorLocation, GameLocation newLocation)
         {
             OnCurrentLocationChanged.Invoke(null, EventArgs.Empty);
         }
-
+        
+        [PendingHook]
         public static void InvokeOnNewLocationObject(SerializableDictionary<Vector2, StardewValley.Object> newObjects)
         {
             OnLocationObjectsChanged.Invoke(null, EventArgs.Empty);
