@@ -20,49 +20,49 @@ namespace Revolution.Events
         public static event EventHandler OnControllerTriggerReleased = delegate { };
 
         [PendingHook]
-        public static void InvokeKeyboardChanged(KeyboardState priorState, KeyboardState newState)
+        internal static void InvokeKeyboardChanged(KeyboardState priorState, KeyboardState newState)
         {
             OnKeyboardChanged.Invoke(null, EventArgs.Empty);
         }
 
         [PendingHook]
-        public static void InvokeMouseChanged(MouseState priorState, MouseState newState)
+        internal static void InvokeMouseChanged(MouseState priorState, MouseState newState)
         {
             OnMouseChanged.Invoke(null, EventArgs.Empty);
         }
 
         [PendingHook]
-        public static void InvokeKeyPressed(Keys key)
+        internal static void InvokeKeyPressed(Keys key)
         {
             OnKeyPressed.Invoke(null, EventArgs.Empty);
         }
 
         [PendingHook]
-        public static void InvokeKeyReleased(Keys key)
+        internal static void InvokeKeyReleased(Keys key)
         {
             OnKeyReleased.Invoke(null, EventArgs.Empty);
         }
 
         [PendingHook]
-        public static void InvokeButtonPressed(PlayerIndex playerIndex, Buttons buttons)
+        internal static void InvokeButtonPressed(PlayerIndex playerIndex, Buttons buttons)
         {
             OnControllerButtonPressed.Invoke(null, EventArgs.Empty);
         }
 
         [PendingHook]
-        public static void InvokeButtonReleased(PlayerIndex playerIndex, Buttons buttons)
+        internal static void InvokeButtonReleased(PlayerIndex playerIndex, Buttons buttons)
         {
             OnControllerButtonReleased.Invoke(null, EventArgs.Empty);
         }
 
         [PendingHook]
-        public static void InvokeTriggerPressed(PlayerIndex playerIndex, Buttons buttons, float value)
+        internal static void InvokeTriggerPressed(PlayerIndex playerIndex, Buttons buttons, float value)
         {
             OnControllerTriggerPressed.Invoke(null, EventArgs.Empty);
         }
 
         [PendingHook]
-        public static void InvokeTriggerReleased(PlayerIndex playerIndex, Buttons buttons, float value)
+        internal static void InvokeTriggerReleased(PlayerIndex playerIndex, Buttons buttons, float value)
         {
             OnControllerTriggerReleased.Invoke(null, EventArgs.Empty);
         }

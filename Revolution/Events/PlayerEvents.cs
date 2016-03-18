@@ -17,37 +17,37 @@ namespace Revolution.Events
         public static event EventHandler OnLevelUp = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.Game1", "farmerTakeDamage")]
-        public static void InvokeBeforePlayerTakesDamage()
+        internal static void InvokeBeforePlayerTakesDamage()
         {
             OnBeforePlayerTakesDamage.Invoke(null, new EventArgsOnBeforePlayerTakesDamage());            
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "farmerTakeDamage")]
-        public static void InvokeAfterPlayerTakesDamage()
+        internal static void InvokeAfterPlayerTakesDamage()
         {
             OnAfterPlayerTakesDamage.Invoke(null, new EventArgsOnAfterPlayerTakesDamage());
         }
 
         [PendingHook]
-        public static void InvokeOnPlayerDoneEating()
+        internal static void InvokeOnPlayerDoneEating()
         {
             OnPlayerDoneEating.Invoke(null, new EventArgsOnPlayerDoneEating());
         }
 
         [PendingHook]
-        public static void InvokeFarmerChanged()
+        internal static void InvokeFarmerChanged()
         {
             OnFarmerChanged.Invoke(null, EventArgs.Empty);
         }
 
         [PendingHook]
-        public static void InvokeInventoryChanged()
+        internal static void InvokeInventoryChanged()
         {
             OnInventoryChanged.Invoke(null, EventArgs.Empty);
         }
         
         [PendingHook]
-        public static void InvokeLevelUp()
+        internal static void InvokeLevelUp()
         {
             OnLevelUp.Invoke(null, EventArgs.Empty);
         }  

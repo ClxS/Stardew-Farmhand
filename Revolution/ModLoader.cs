@@ -15,7 +15,7 @@ namespace Revolution
         };
         
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
-        public static void LoadMods()
+        internal static void LoadMods()
         {            
             foreach (string ModPath in ModPaths)
             {

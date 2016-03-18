@@ -15,19 +15,19 @@ namespace Revolution.Events
         public static event EventHandler OnCurrentLocationChanged = delegate { };
         
         [PendingHook]
-        public static void InvokeLocationsChanged(List<GameLocation> newLocations)
+        internal static void InvokeLocationsChanged(List<GameLocation> newLocations)
         {
             OnLocationsChanged.Invoke(null, EventArgs.Empty);
         }
         
         [PendingHook]
-        public static void InvokeCurrentLocationChanged(GameLocation priorLocation, GameLocation newLocation)
+        internal static void InvokeCurrentLocationChanged(GameLocation priorLocation, GameLocation newLocation)
         {
             OnCurrentLocationChanged.Invoke(null, EventArgs.Empty);
         }
         
         [PendingHook]
-        public static void InvokeOnNewLocationObject(SerializableDictionary<Vector2, StardewValley.Object> newObjects)
+        internal static void InvokeOnNewLocationObject(SerializableDictionary<Vector2, StardewValley.Object> newObjects)
         {
             OnLocationObjectsChanged.Invoke(null, EventArgs.Empty);
         }

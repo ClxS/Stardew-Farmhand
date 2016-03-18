@@ -13,19 +13,19 @@ namespace Revolution.Events
         public static event EventHandler OnAfterDraw = delegate { };
         
         [PendingHook]
-        public static void InvokeResize()
+        internal static void InvokeResize()
         {
             OnResize.Invoke(null, EventArgs.Empty);
         }
         
         [PendingHook]
-        public static void InvokeBeforeDraw(object sender, EventArgs e)
+        internal static void InvokeBeforeDraw(object sender, EventArgs e)
         {
             OnBeforeDraw.Invoke(sender, EventArgs.Empty);
         }
         
         [PendingHook]
-        public static void InvokeAfterDraw(object sender, EventArgs e)
+        internal static void InvokeAfterDraw(object sender, EventArgs e)
         {
             OnAfterDraw.Invoke(sender, EventArgs.Empty);
         }
