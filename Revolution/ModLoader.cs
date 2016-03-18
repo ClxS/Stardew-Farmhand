@@ -10,7 +10,7 @@ namespace Revolution
 {
     public static class ModLoader
     {
-        public static List<Mod> InstalledMods = new List<Mod>();;
+        public static List<Mod> InstalledMods = new List<Mod>();
 
         internal static List<string> ModPaths = new List<string>() {
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
@@ -54,6 +54,12 @@ namespace Revolution
                 }
             }
 
+        }
+
+        public static void DeactivateMod(Mod mod)
+        {
+            //TODO Deactivate all events associated with mod
+            //TODO Unload mod's domain
         }
     }
 }

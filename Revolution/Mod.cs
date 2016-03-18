@@ -7,6 +7,8 @@ namespace Revolution
 {
     public abstract class Mod
     {
+        public virtual string UniqueModId { get; protected set; }
+
         /// <summary>
         /// The name of your mod.
         /// </summary>

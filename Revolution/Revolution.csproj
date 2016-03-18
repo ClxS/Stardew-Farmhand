@@ -75,6 +75,11 @@
     <Compile Include="Mod.cs" />
     <Compile Include="ModLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registries\Containers\ModDependency.cs" />
+    <Compile Include="Registries\Containers\ModInfo.cs" />
+    <Compile Include="Registries\ModRegistry.cs" />
+    <Compile Include="Registries\Registry.cs" />
+    <Compile Include="Registries\RegistryItem.cs" />
     <Compile Include="SMAPI Compatibility Layer\Command.cs" />
     <Compile Include="SMAPI Compatibility Layer\Entities\SPlayer.cs" />
     <Compile Include="SMAPI Compatibility Layer\Events\Controls.cs" />
@@ -99,7 +104,9 @@
     <Compile Include="SMAPI Compatibility Layer\Mod.cs" />
     <Compile Include="SMAPI Compatibility Layer\ModItem.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="API\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
