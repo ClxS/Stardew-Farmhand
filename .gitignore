@@ -1,5 +1,5 @@
 packages/
-
+WorkingDirectory/
 *.symlink
 *.lnk
 !*.exe
@@ -252,3 +252,4 @@ _Pvt_Extensions
 # JetBrains Rider
 .idea/
 *.sln.iml
+/WorkingDirectory

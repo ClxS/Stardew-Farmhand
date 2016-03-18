@@ -2,36 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Revolution.Registries.Containers;
 
 namespace Revolution.Registries
 {
-    public class Registry<T, TKey> where T : class
+    public class Registry<TKey, T> where T : class
     {        
         public Registry() 
         {
-            RegisteredItems = new List<RegistryItem<T, TKey>>();
+            RegisteredItems = new Dictionary<TKey, T>();
         }
-        protected List<RegistryItem<T, TKey>> RegisteredItems { get; set; }
+        protected Dictionary<TKey, T> RegisteredItems { get; set; }
 
         public virtual T GetItem(TKey key)
         {
-            var registryItem = RegisteredItems.FirstOrDefault(n => EqualityComparer<TKey>.Default.Equals(n.UniqueId, key));
-            return registryItem != null ? registryItem.Item : null;
+            var registryItem = RegisteredItems.ContainsKey(key) ? RegisteredItems[key] : null;
+            return registryItem;
         }
 
-        public virtual void RegisterItem(TKey itemId, T item)
+        public virtual void RegisterItem(TKey key, T item)
         {
-            if (GetItem(itemId) != null)
+            if (GetItem(key) == null)
             {
-                RegisteredItems.Add(new RegistryItem<T, TKey>(itemId, item));
+                RegisteredItems[key] = item;
             }
         }
 
-        public virtual void UnregisterItem(TKey itemId)
+        public virtual IEnumerable<T> GetRegisteredItems()
         {
-            if (GetItem(itemId) != null)
+            return RegisteredItems.Select(n => n.Value);
+        }
+
+        public virtual void UnregisterItem(TKey key)
+        {
+            if (GetItem(key) != null)
             {
-                RegisteredItems.Remove(RegisteredItems.FirstOrDefault(n => EqualityComparer<TKey>.Default.Equals(n.UniqueId, itemId)));
+                RegisteredItems.Remove(key);
             }
         }
     }

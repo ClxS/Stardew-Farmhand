@@ -8,14 +8,14 @@ namespace Revolution.Registries
 {
     public class ModRegistry
     {
-        private static Registry<ModInfo, string> _modRegistryInstance;
-        private static Registry<ModInfo, string> RegistryInstance
+        private static Registry<string, ModInfo> _modRegistryInstance;
+        private static Registry<string, ModInfo> RegistryInstance
         {
             get
             {
                 if(_modRegistryInstance == null)
                 {
-                    _modRegistryInstance = new Registry<ModInfo, string>();
+                    _modRegistryInstance = new Registry<string, ModInfo>();
                 }
                 return _modRegistryInstance;
             }
@@ -24,6 +24,11 @@ namespace Revolution.Registries
         public static ModInfo GetItem(string key)
         {
             return RegistryInstance.GetItem(key);
+        }
+
+        public static IEnumerable<ModInfo> GetRegisteredItems()
+        {
+            return RegistryInstance.GetRegisteredItems();
         }
 
         public static void RegisterItem(string itemId, ModInfo item)

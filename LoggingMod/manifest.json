@@ -1,0 +1,8 @@
+﻿{
+	"UniqueId" : "Clxs'sLoggingMod",
+	"Name" : "Logging Mod",
+	"ModDLL": "LoggingMod",
+	"Author": "Clxs",
+	"Version" : "0.1",
+	"Description" : "Logs various events."
+}

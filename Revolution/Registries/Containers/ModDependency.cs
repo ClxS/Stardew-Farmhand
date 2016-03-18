@@ -8,6 +8,7 @@ namespace Revolution.Registries.Containers
     public class ModDependency
     {
         public string UniqueModId { get; set; }
-        public string MinimumVersion { get; set; }
+        public Version MinimumVersion { get; set; }
+        public Version MaximumVersion { get; set; }
     }
 }

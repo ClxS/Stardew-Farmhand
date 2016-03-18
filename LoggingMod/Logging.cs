@@ -8,26 +8,6 @@ namespace LoggingMod
 {
     class Logging : Revolution.Mod
     {
-        public override string Name
-        {
-            get { return "Logging Mod"; }
-        }
-
-        public override string Author
-        {
-            get { return "ClxS"; }
-        }
-
-        public override string Version
-        {
-            get { return "0.1"; }
-        }
-
-        public override string Description
-        {
-            get { return "Logs various events."; }
-        }
-
         public override void Entry()
         {
             Revolution.Events.GameEvents.OnBeforeGameInitialised += OnGameInitialising;

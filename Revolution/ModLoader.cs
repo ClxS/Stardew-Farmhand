@@ -1,4 +1,5 @@
-﻿using Revolution.Attributes;
+﻿using Newtonsoft.Json;
+using Revolution.Attributes;
 using Revolution.Registries;
 using Revolution.Registries.Containers;
 using System;
@@ -18,51 +19,130 @@ namespace Revolution
         
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void LoadMods()
-        {            
-            foreach (string ModPath in ModPaths)
+        {
+           // try
             {
+                Console.WriteLine("Loading Mod Manifests");
+                LoadModManifests();
+                Console.WriteLine("Resolving Mod Dependencies");
+                ResolveDependencies();
+                Console.WriteLine("Importing Mod DLLs, Settings, and Content");
+                LoadFinalMods();
+            }
+            //catch (System.Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //    Console.WriteLine(ex.StackTrace);
+            //}
+            
+        }
+
+        private static void LoadFinalMods()
+        {
+            var registeredMods = ModRegistry.GetRegisteredItems();
+            Console.WriteLine("Mod Count: " + registeredMods.Count());
+            foreach(var mod in registeredMods.Where(n => n.ModState == ModState.Unloaded))
+            {
+                Console.WriteLine("Loading mod {0} by {1}", mod.Name, mod.Author);      
                 try
-                {                
-                    foreach (String s in Directory.GetFiles(ModPath, "*.dll"))
+                {
+                    if (mod.HasContent)
                     {
-                        try
-                        {
-                            Assembly mod = Assembly.LoadFrom(s); 
-                            if (mod.GetTypes().Count(x => x.BaseType == typeof(Mod)) > 0)
-                            {                           
-                                Type tar = mod.GetTypes().First(x => x.BaseType == typeof(Mod));
-                                Mod m = (Mod)mod.CreateInstance(tar.ToString());                            
-                                m.Entry();
-
-                                ModRegistry.RegisterItem(m.UniqueModId, new ModInfo()
-                                {
-                                    UniqueModId = m.UniqueModId,
-                                    Author = m.Author,
-                                    Name = m.Name,
-                                    Description = m.Description,
-                                    Version = m.Version,
-                                    Instance = m,
-                                    Dependencies = new List<ModDependency>()
-                                });
-                                Console.WriteLine("Loaded mod: {0}", m.Name);
-                            }
-                            else
-                            {
-
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("Error loading mod: {0}", ex.Message);
-                        }
+                        //TODO
                     }
+                    if (mod.HasConfig)
+                    {
+                        //TODO
+                    }
+                    if (mod.HasDLL)
+                    {
+                        mod.LoadModDLL();                        
+                    }
+                    mod.ModState = ModState.Loaded;                 
                 }
                 catch (System.Exception ex)
                 {
-                    Console.WriteLine("Error reading path: {0}", ex.Message);
+                    Console.WriteLine("Error loading mod {0} by {1}", mod.Name, mod.Author);
+                    mod.ModState = ModState.Errored;
+                    //TODO, well something broke. Do summut' 'bout it!
+                }
+                
+            }
+        }
+
+
+        private static void ResolveDependencies()
+        {
+            var registeredMods = ModRegistry.GetRegisteredItems();
+
+            //Loop to verify every dependent mod is available. 
+            bool stateChange = false;
+            do 
+            {
+                foreach (var mod in registeredMods)
+                {
+                    if (mod.ModState != ModState.MissingDependency && mod.Dependencies != null)
+                    {
+                        foreach (var dependency in mod.Dependencies)
+                        {
+                            var dependencyMatch = registeredMods.FirstOrDefault(n => n.UniqueModId == dependency.UniqueModId);
+                            if (dependencyMatch == null)
+                            {
+                                mod.ModState = ModState.MissingDependency;
+                                stateChange = true;
+                                Console.WriteLine("Failed to load {0} due to missing dependency: {1}}", mod.Name, dependency.UniqueModId);
+                            }
+                            else if (dependencyMatch.ModState == ModState.MissingDependency)
+                            {
+                                mod.ModState = ModState.MissingDependency;
+                                stateChange = true;
+                                Console.WriteLine("Failed to load {0} due to missing dependency missing dependency: {1}", mod.Name, dependency.UniqueModId);
+                            }
+                            else
+                            {
+                                Version dependencyVersion = dependencyMatch.Version;
+                                if (dependencyVersion != null)
+                                {
+                                    if (dependency.MinimumVersion != null && dependency.MinimumVersion > dependencyVersion)
+                                    {
+                                        stateChange = true;
+                                        Console.WriteLine("Failed to load {0} due to minimum version incompatibility with {1}: v.{2} < v.{3}",
+                                            mod.Name, dependency.UniqueModId, dependencyMatch.Version.ToString(), dependency.MinimumVersion.ToString());
+                                    }
+                                    else if (dependency.MaximumVersion != null && dependency.MaximumVersion < dependencyVersion)
+                                    {
+                                        stateChange = true;
+                                        Console.WriteLine("Failed to load {0} due to maximum version incompatibility with {1}: v.{2} > v.{3}",
+                                            mod.Name, dependency.UniqueModId, dependencyMatch.Version.ToString(), dependency.MinimumVersion.ToString());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            } while (stateChange);
+        }
+
+        private static void LoadModManifests()
+        {
+            foreach (string ModPath in ModPaths)
+            {
+                foreach (String modPath in Directory.GetDirectories(ModPath))
+                {
+                    var modJsonFiles = Directory.GetFiles(modPath, "manifest.json");
+                    foreach (var file in modJsonFiles)
+                    {
+                        using (StreamReader r = new StreamReader(file))
+                        {
+                            string json = r.ReadToEnd();
+                            ModInfo modInfo = JsonConvert.DeserializeObject<ModInfo>(json);
+
+                            modInfo.ModRoot = modPath;
+                            ModRegistry.RegisterItem(modInfo.UniqueModId ?? Guid.NewGuid().ToString(), modInfo);
+                        }
+                    }
                 }
             }
-
         }
 
         public static void DeactivateMod(Mod mod)

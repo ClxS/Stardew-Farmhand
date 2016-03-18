@@ -77,7 +77,8 @@ namespace Revolution
                 options.InputAssemblies = new string[] 
                 {
                     stardewExe,
-                    revolutionDll
+                    revolutionDll,
+                    Constants.JsonLibrary
                 };
                 options.OutputFile = Constants.IntermediateRevolutionExe;
                 options.SearchDirectories = new string[] { System.IO.Path.GetDirectoryName(Constants.CurrentAssemblyPath) };
