@@ -27,20 +27,20 @@ namespace Revolution.Events
         {
             OnAfterPlayerTakesDamage.Invoke(null, new EventArgsOnAfterPlayerTakesDamage());
         }
-
-        [PendingHook]
+        
+        [Hook(HookType.Exit, "StardewValley.Game1", "doneEating")]
         internal static void InvokeOnPlayerDoneEating()
         {
             OnPlayerDoneEating.Invoke(null, new EventArgsOnPlayerDoneEating());
         }
-
+        
         [PendingHook]
         internal static void InvokeFarmerChanged()
         {
             OnFarmerChanged.Invoke(null, EventArgs.Empty);
         }
-
-        [PendingHook]
+        
+        [Hook(HookType.Exit, "StardewValley.Game1", "addItemToInventory")]
         internal static void InvokeInventoryChanged()
         {
             OnInventoryChanged.Invoke(null, EventArgs.Empty);
