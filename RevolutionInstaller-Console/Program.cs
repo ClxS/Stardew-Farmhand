@@ -10,7 +10,7 @@ namespace RevolutionInstaller_Console
     {
         static void Main(string[] args)
         {
-            Revolution.Patcher.PatchStardew(Constants.StardewExe, Constants.RevolutionDll)
+            Revolution.Patcher.PatchStardew(Constants.StardewExe, Constants.RevolutionDll);
         }
     }
 }
