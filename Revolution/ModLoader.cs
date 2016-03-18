@@ -10,7 +10,9 @@ namespace Revolution
 {
     public static class ModLoader
     {
-        public static List<string> ModPaths = new List<string>() {
+        public static List<Mod> InstalledMods = new List<Mod>();;
+
+        internal static List<string> ModPaths = new List<string>() {
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
         };
         
@@ -32,6 +34,7 @@ namespace Revolution
                                 Type tar = mod.GetTypes().First(x => x.BaseType == typeof(Mod));
                                 Mod m = (Mod)mod.CreateInstance(tar.ToString());                            
                                 m.Entry();
+                                InstalledMods.Add(m);
                                 Console.WriteLine("Loaded mod: {0}", m.Name);
                             }
                             else
