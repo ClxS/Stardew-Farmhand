@@ -50,8 +50,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Stardew Revolution">
-      <HintPath>..\RevolutionPatcher\bin\Debug\Stardew Revolution.exe</HintPath>
+    <Reference Include="Stardew Revolution, Version=1.0.5919.38064, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RevolutionInstaller-Console\bin\Debug\Stardew Revolution.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -29,11 +29,10 @@ namespace Revolution
             try
             {
                 var revolutionAssembly = typeof(HookAttribute).Assembly;
-
                 var attribute = revolutionAssembly.GetModules()[0].GetType("Revolution.Attributes.HookAttribute");
                 var methods = revolutionAssembly.GetTypes()
-                            .SelectMany(t => t.GetMethods())
-                            .Where(m => m.GetCustomAttributes(typeof(HookAttribute), false).Length > 0)
+                            .SelectMany(t => t.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
+                            .Where(m => m.GetCustomAttributes(attribute, false).Any() )
                             .ToArray();
 
                 foreach (var method in methods)
@@ -44,9 +43,8 @@ namespace Revolution
 
                     foreach (var hook in hookAttributes)
                     {
-                        string hookTypeName = method.DeclaringType?.FullName;
-                        string hookMethodName = method.Name;
-
+                        string hookTypeName = hook.Type;
+                        string hookMethodName = hook.Method;
                         try
                         {
                             switch (hook.HookType)

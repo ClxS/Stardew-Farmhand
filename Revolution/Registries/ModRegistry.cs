@@ -6,28 +6,34 @@ using System.Text;
 
 namespace Revolution.Registries
 {
-    public class ModRegistry : Registry<ModInfo, string>
+    public class ModRegistry
     {
-        public override ModInfo GetItem(string key)
+        private static Registry<ModInfo, string> _modRegistryInstance;
+        private static Registry<ModInfo, string> RegistryInstance
         {
-            var registryItem = RegisteredItems.FirstOrDefault(n => n.UniqueId == key);
-            return registryItem != null ? registryItem.Item : null;
-        }
-
-        public override void RegisterItem(string itemId, ModInfo item)
-        {
-            if (GetItem(itemId) != null)
+            get
             {
-                RegisteredItems.Add(new RegistryItem<ModInfo, string>(itemId, item));
+                if(_modRegistryInstance == null)
+                {
+                    _modRegistryInstance = new Registry<ModInfo, string>();
+                }
+                return _modRegistryInstance;
             }
         }
 
-        public override void UnregisterItem(string itemId)
+        public static ModInfo GetItem(string key)
         {
-            if (GetItem(itemId) != null)
-            {
-                RegisteredItems.Remove(RegisteredItems.FirstOrDefault(n => n.UniqueId == itemId));
-            }
+            return RegistryInstance.GetItem(key);
+        }
+
+        public static void RegisterItem(string itemId, ModInfo item)
+        {
+            RegistryInstance.RegisterItem(itemId, item);
+        }
+
+        public static void UnregisterItem(string itemId)
+        {
+            RegistryInstance.UnregisterItem(itemId);
         }
     }
 }

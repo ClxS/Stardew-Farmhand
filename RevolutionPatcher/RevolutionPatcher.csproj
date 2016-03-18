@@ -59,7 +59,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Stardew Valley">
-      <HintPath>D:\Games\steamapps\common\Stardew Valley\Stardew Valley.exe</HintPath>
+      <HintPath>..\..\..\..\Games\SteamLibrary\steamapps\common\Stardew Valley\Stardew Valley.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -1,4 +1,6 @@
 ﻿using Revolution.Attributes;
+using Revolution.Registries;
+using Revolution.Registries.Containers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,8 +12,6 @@ namespace Revolution
 {
     public static class ModLoader
     {
-        public static List<Mod> InstalledMods = new List<Mod>();
-
         internal static List<string> ModPaths = new List<string>() {
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
         };
@@ -27,14 +27,23 @@ namespace Revolution
                     {
                         try
                         {
-                            Assembly mod = Assembly.LoadFrom(s); //to combat internet-downloaded DLLs
-
+                            Assembly mod = Assembly.LoadFrom(s); 
                             if (mod.GetTypes().Count(x => x.BaseType == typeof(Mod)) > 0)
                             {                           
                                 Type tar = mod.GetTypes().First(x => x.BaseType == typeof(Mod));
                                 Mod m = (Mod)mod.CreateInstance(tar.ToString());                            
                                 m.Entry();
-                                InstalledMods.Add(m);
+
+                                ModRegistry.RegisterItem(m.UniqueModId, new ModInfo()
+                                {
+                                    UniqueModId = m.UniqueModId,
+                                    Author = m.Author,
+                                    Name = m.Name,
+                                    Description = m.Description,
+                                    Version = m.Version,
+                                    Instance = m,
+                                    Dependencies = new List<ModDependency>()
+                                });
                                 Console.WriteLine("Loaded mod: {0}", m.Name);
                             }
                             else

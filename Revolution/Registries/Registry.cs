@@ -5,16 +5,19 @@ using System.Text;
 
 namespace Revolution.Registries
 {
-    public abstract class Registry<T, TKey>
-    {
+    public class Registry<T, TKey> where T : class
+    {        
         public Registry() 
         {
             RegisteredItems = new List<RegistryItem<T, TKey>>();
         }
         protected List<RegistryItem<T, TKey>> RegisteredItems { get; set; }
 
-        public abstract T GetItem(TKey key);
-        public abstract void UnregisterItem(TKey key);
+        public virtual T GetItem(TKey key)
+        {
+            var registryItem = RegisteredItems.FirstOrDefault(n => EqualityComparer<TKey>.Default.Equals(n.UniqueId, key));
+            return registryItem != null ? registryItem.Item : null;
+        }
 
         public virtual void RegisterItem(TKey itemId, T item)
         {
@@ -22,6 +25,14 @@ namespace Revolution.Registries
             {
                 RegisteredItems.Add(new RegistryItem<T, TKey>(itemId, item));
             }
-        }        
+        }
+
+        public virtual void UnregisterItem(TKey itemId)
+        {
+            if (GetItem(itemId) != null)
+            {
+                RegisteredItems.Remove(RegisteredItems.FirstOrDefault(n => EqualityComparer<TKey>.Default.Equals(n.UniqueId, itemId)));
+            }
+        }
     }
 }
