@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace Revolution
 {
-    class Program
+    public class Patcher
     {
-        static void Main(string[] args)
+        public static void PatchStardew(string stardewExe, string revolutionDll)
         {
-            InjectRevolutionCoreClasses();
+            InjectRevolutionCoreClasses(stardewExe, revolutionDll);
             CecilContext cecilContext = new CecilContext(Constants.IntermediateRevolutionExe);
             HookApiEvents(cecilContext);
             
@@ -70,7 +70,7 @@ namespace Revolution
                 
         }
 
-        static void InjectRevolutionCoreClasses()
+        static void InjectRevolutionCoreClasses(string stardewExe, string revolutionDll)
         {
             RepackOptions options = new RepackOptions();
             ILogger logger = new RepackLogger();
@@ -78,8 +78,8 @@ namespace Revolution
             {
                 options.InputAssemblies = new string[] 
                 {
-                    Constants.StardewExe,
-                    Constants.RevolutionDll
+                    stardewExe,
+                    revolutionDll
                 };
                 options.OutputFile = Constants.IntermediateRevolutionExe;
                 options.SearchDirectories = new string[] { System.IO.Path.GetDirectoryName(Constants.CurrentAssemblyPath) };

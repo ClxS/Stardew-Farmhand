@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingMod", "LoggingMod\Lo
 		{7F304954-A190-4003-B11E-A9043113396D} = {7F304954-A190-4003-B11E-A9043113396D}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevolutionInstaller-Console", "RevolutionInstaller-Console\RevolutionInstaller-Console.csproj", "{23EF7A22-E67F-4CB5-A83E-EC108BBA3201}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevolutionInstaller-UI", "RevolutionInstaller-UI\RevolutionInstaller-UI.csproj", "{6A6C072D-F3FE-4DE5-B6E5-944E16B910D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{C20C27F0-30EC-4CEC-A6C1-D134B001FE68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C20C27F0-30EC-4CEC-A6C1-D134B001FE68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C20C27F0-30EC-4CEC-A6C1-D134B001FE68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23EF7A22-E67F-4CB5-A83E-EC108BBA3201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23EF7A22-E67F-4CB5-A83E-EC108BBA3201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23EF7A22-E67F-4CB5-A83E-EC108BBA3201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23EF7A22-E67F-4CB5-A83E-EC108BBA3201}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A6C072D-F3FE-4DE5-B6E5-944E16B910D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6C072D-F3FE-4DE5-B6E5-944E16B910D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6C072D-F3FE-4DE5-B6E5-944E16B910D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6C072D-F3FE-4DE5-B6E5-944E16B910D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
