@@ -11,5 +11,6 @@ namespace Revolution
         public ModInfo ModSettings { get; set; }
 
         public abstract void Entry();
+        public virtual void LoadConfigurationSettings(string configPath) { }
     }
 }

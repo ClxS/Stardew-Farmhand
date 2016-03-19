@@ -49,14 +49,14 @@ namespace Revolution
                     if (mod.HasContent)
                     {
                         //TODO
-                    }
-                    if (mod.HasConfig)
-                    {
-                        //TODO
-                    }
+                    }                    
                     if (mod.HasDLL)
                     {
                         mod.LoadModDLL();                        
+                    }
+                    if (mod.HasDLL && mod.HasConfig)
+                    {
+                        mod.LoadConfig();
                     }
                     mod.ModState = ModState.Loaded;                 
                 }

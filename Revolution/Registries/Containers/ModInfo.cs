@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -88,6 +89,20 @@ namespace Revolution.Registries.Containers
             }
 
             return Instance != null;
+        }
+
+        internal void LoadConfig()
+        {
+            if (Instance == null)
+            {
+                throw new Exception("Error! Configurations can only be loaded into an already loaded mod!");
+            }
+
+            var configPath = ModRoot + "\\" + ConfigurationFile;
+            if(File.Exists(configPath))
+            {
+                Instance.LoadConfigurationSettings(configPath);
+            }
         }
     }
 }
