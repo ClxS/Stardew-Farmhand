@@ -1,4 +1,5 @@
 ﻿using ILRepacking;
+using Mono.Cecil;
 using Revolution.Attributes;
 using Revolution.Cecil;
 using Revolution.Helpers;
@@ -20,10 +21,41 @@ namespace Revolution
             InjectRevolutionCoreClasses(stardewExe, revolutionDll);
             CecilContext cecilContext = new CecilContext(Constants.IntermediateRevolutionExe);
             HookApiEvents(cecilContext);
+            HookApiProtectionAlterations(cecilContext);
+            Console.WriteLine("Methods injected");
             
             cecilContext.WriteAssembly(Constants.RevolutionExe);          
         }
-        
+
+        private static void HookApiProtectionAlterations(CecilContext cecilContext)
+        {
+            var typeets = cecilContext.GetTypeDefinition("Revolution.CustomMenu.TitleMenu");
+
+            try
+            {
+                var revolutionAssembly = typeof(HookAlterBaseProtection).Assembly;
+                var attribute = revolutionAssembly.GetModules()[0].GetType("Revolution.Attributes.HookAlterBaseProtection");
+                var types = revolutionAssembly.GetTypes().Where(m => m.GetCustomAttributes(attribute, false).Any()).ToArray();
+
+                foreach (var asmType in types)
+                {
+                    try
+                    {
+                        var attributeValue = asmType.GetCustomAttributes(attribute, false).First() as HookAlterBaseProtection;
+                        CecilHelper.AlterProtectionOnTypeMembers(cecilContext, attributeValue.Protection, asmType.FullName);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Console.WriteLine("Error setting protections for {0}: \n\t{1}", asmType.FullName, ex.Message);
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine("Error setting method/field protections: \n\t{0}", ex.Message);
+            }
+        }
+
         static void HookApiEvents(CecilContext cecilContext)
         {
             try

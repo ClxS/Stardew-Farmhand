@@ -2,7 +2,7 @@
 	"UniqueId" : "Clxs'sLoggingMod",
 	"Name" : "Logging Mod",
 	"ModDLL": "LoggingMod",
-	"Author": "Clxs",
+	"Author": "Carl",
 	"Version" : "0.1",
 	"Description" : "Logs various events."
 }

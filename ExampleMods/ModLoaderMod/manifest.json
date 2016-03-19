@@ -1,0 +1,8 @@
+﻿{
+	"UniqueId" : "Clxs'sModLoadingMod",
+	"Name" : "Mod Manager Mod",
+	"ModDLL": "ModLoaderMod",
+	"Author": "Carl",
+	"Version" : "0.1",
+	"Description" : "Logs various events."
+}

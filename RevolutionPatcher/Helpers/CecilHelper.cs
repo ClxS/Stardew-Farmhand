@@ -1,5 +1,6 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Revolution.Attributes;
 using Revolution.Cecil;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -81,6 +82,57 @@ namespace Revolution.Helpers
             MethodDefinition methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
             ILProcessor ilProcessor = stardewContext.GetMethodILProcessor(injecteeType, injecteeMethod);
             InjectMethod(ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition);
+        }
+
+        public static void AlterProtectionOnTypeMembers(CecilContext stardewContext, LowestProtection proection, string typeName)
+        {
+            var type = stardewContext.GetTypeDefinition(typeName);
+
+            if (type.HasMethods)
+            {
+                foreach (MethodDefinition method in type.Methods)
+                {
+                    if (proection == LowestProtection.Protected)
+                    {
+                        if (method.IsPrivate)
+                        {
+                            method.IsPrivate = false;
+                            method.IsFamily = true;
+                        }
+                    }
+                    else if (proection == LowestProtection.Public)
+                    {
+                        if (method.IsPrivate || method.IsFamily)
+                        {
+                            method.IsPrivate = false;
+                            method.IsPublic = false;
+                        }
+                    }
+                }
+            }
+
+            if (type.HasFields)
+            {
+                foreach (FieldDefinition field in type.Fields)
+                {
+                    if (proection == LowestProtection.Protected)
+                    {
+                        if (field.IsPrivate)
+                        {
+                            field.IsPrivate = false;
+                            field.IsFamily = true;
+                        }
+                    }
+                    else if (proection == LowestProtection.Public)
+                    {
+                        if (field.IsPrivate || field.IsFamily)
+                        {
+                            field.IsPrivate = false;
+                            field.IsPublic = false;
+                        }
+                    }
+                }
+            }
         }
     }
 }

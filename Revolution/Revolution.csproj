@@ -61,7 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\HookAttribute.cs" />
+    <Compile Include="Attributes\HookAlterBaseProtection.cs" />
+    <Compile Include="Attributes\HookForceVirtual.cs" />
+    <Compile Include="Attributes\HookRedirectAttribute.cs" />
     <Compile Include="Attributes\PendingHookAttribute.cs" />
+    <Compile Include="CustomMenu\TitleMenu.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAfterPlayerTakesDamage.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAnimalEatGrass.cs" />
     <Compile Include="Events\Arguments\EventArgsOnGameInitialise.cs" />
@@ -83,7 +87,6 @@
     <Compile Include="Registries\Containers\ModInfo.cs" />
     <Compile Include="Registries\ModRegistry.cs" />
     <Compile Include="Registries\Registry.cs" />
-    <Compile Include="Registries\RegistryItem.cs" />
     <Compile Include="SMAPI Compatibility Layer\Command.cs" />
     <Compile Include="SMAPI Compatibility Layer\Entities\SPlayer.cs" />
     <Compile Include="SMAPI Compatibility Layer\Events\Controls.cs" />

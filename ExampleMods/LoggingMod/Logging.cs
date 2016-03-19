@@ -27,62 +27,62 @@ namespace LoggingMod
 
         private void LocationEvents_OnLocationObjectsChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("LocationEvents_OnLocationObjectsChanged");
+            //Console.WriteLine("LocationEvents_OnLocationObjectsChanged");
         }
 
         private void LocationEvents_OnCurrentLocationChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("LocationEvents_OnCurrentLocationChanged");
+            //Console.WriteLine("LocationEvents_OnCurrentLocationChanged");
         }
 
         private void LocationEvents_OnLocationsChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("LocationEvents_OnLocationsChanged");
+            //Console.WriteLine("LocationEvents_OnLocationsChanged");
         }
 
         private void GraphicsEvents_OnAfterDraw(object sender, EventArgs e)
         {
-            Console.WriteLine("GraphicsEvents_OnAfterDraw");
+            //Console.WriteLine("GraphicsEvents_OnAfterDraw");
         }
 
         private void GraphicsEvents_OnBeforeDraw(object sender, EventArgs e)
         {
-            Console.WriteLine("GraphicsEvents_OnBeforeDraw");
+            //Console.WriteLine("GraphicsEvents_OnBeforeDraw");
         }
 
         private void GraphicsEvents_OnResize(object sender, EventArgs e)
         {
-            Console.WriteLine("GraphicsEvents_OnResize");
+           // Console.WriteLine("GraphicsEvents_OnResize");
         }
 
         private void GameEvents_OnAfterUpdateTick(object sender, EventArgs e)
         {
-            Console.WriteLine("GameEvents_OnAfterUpdateTick");
+            //Console.WriteLine("GameEvents_OnAfterUpdateTick");
         }
 
         private void GameEvents_OnBeforeUpdateTick(object sender, EventArgs e)
         {
-            Console.WriteLine("GameEvents_OnBeforeUpdateTick");
+            //Console.WriteLine("GameEvents_OnBeforeUpdateTick");
         }
 
         private void GameEvents_OnAfterLoadedContent(object sender, EventArgs e)
         {
-            Console.WriteLine("GameEvents_OnAfterLoadedContent");
+            //Console.WriteLine("GameEvents_OnAfterLoadedContent");
         }
 
         private void GameEvents_OnBeforeLoadContent(object sender, EventArgs e)
         {
-            Console.WriteLine("GameEvents_OnBeforeLoadContent");
+            //Console.WriteLine("GameEvents_OnBeforeLoadContent");
         }
 
         private void OnGameInitialising(object sender, EventArgs e)
         {
-            Console.WriteLine("OnGameInitialising");
+            //Console.WriteLine("OnGameInitialising");
         }
 
         private void OnGameInitialised(object sender, EventArgs e)
         {
-            Console.WriteLine("OnGameInitialised");
+            //Console.WriteLine("OnGameInitialised");
         }
     }
 }
