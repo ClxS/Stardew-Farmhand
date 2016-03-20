@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ModLoaderMod
 {
-    public class Class1
+    class ModLoader : Revolution.Mod
     {
+        public override void Entry()
+        {
+        }
     }
 }

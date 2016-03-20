@@ -22,15 +22,40 @@ namespace Revolution
             CecilContext cecilContext = new CecilContext(Constants.IntermediateRevolutionExe);
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations(cecilContext);
+            HookApiVirtualAlterations(cecilContext);
             Console.WriteLine("Methods injected");
             
             cecilContext.WriteAssembly(Constants.RevolutionExe);          
         }
 
+        private static void HookApiVirtualAlterations(CecilContext cecilContext)
+        {
+            try
+            {
+                var revolutionAssembly = typeof(HookForceVirtualBase).Assembly;
+                var attribute = revolutionAssembly.GetModules()[0].GetType("Revolution.Attributes.HookForceVirtualBase");
+                var types = revolutionAssembly.GetTypes().Where(m => m.GetCustomAttributes(attribute, false).Any()).ToArray();
+
+                foreach (var asmType in types)
+                {
+                    try
+                    {
+                        CecilHelper.SetVirtualOnBaseMethods(cecilContext, asmType.FullName);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Console.WriteLine("Error setting protections for {0}: \n\t{1}", asmType.FullName, ex.Message);
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine("Error setting method/field protections: \n\t{0}", ex.Message);
+            }
+        }
+
         private static void HookApiProtectionAlterations(CecilContext cecilContext)
         {
-            var typeets = cecilContext.GetTypeDefinition("Revolution.CustomMenu.TitleMenu");
-
             try
             {
                 var revolutionAssembly = typeof(HookAlterBaseProtection).Assembly;
@@ -42,7 +67,7 @@ namespace Revolution
                     try
                     {
                         var attributeValue = asmType.GetCustomAttributes(attribute, false).First() as HookAlterBaseProtection;
-                        CecilHelper.AlterProtectionOnTypeMembers(cecilContext, attributeValue.Protection, asmType.FullName);
+                        CecilHelper.AlterProtectionOnTypeMembers(cecilContext, attributeValue.Protection, asmType.BaseType.FullName);
                     }
                     catch (System.Exception ex)
                     {

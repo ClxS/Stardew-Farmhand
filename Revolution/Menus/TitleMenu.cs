@@ -7,14 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Revolution.CustomMenu
+namespace Revolution.Menus
 {
+    [HookForceVirtualBase]
     [HookAlterBaseProtection(LowestProtection.Protected)]
-    class TitleMenu : StardewValley.Menus.TitleMenu
+    internal class TitleMenu : StardewValley.Menus.TitleMenu
     {
-        protected int test;
-        public override void draw(SpriteBatch b)
-        {
-        }
+
     }
 }

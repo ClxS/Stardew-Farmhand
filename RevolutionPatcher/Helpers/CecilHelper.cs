@@ -5,6 +5,7 @@ using Revolution.Cecil;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System;
 
 namespace Revolution.Helpers
 {
@@ -48,6 +49,7 @@ namespace Revolution.Helpers
             return instructions.Where(n => n.OpCode == opcode && n.Operand == @object).ToList();
         }
 
+
         /*public static void RedirectConstructor(CecilContext stardewContext, CecilContext smapiContext,
             string typeToAlter, string methodToAlter,
             string injecteeType, string injecteeMethod,
@@ -84,7 +86,8 @@ namespace Revolution.Helpers
             InjectMethod(ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition);
         }
 
-        public static void AlterProtectionOnTypeMembers(CecilContext stardewContext, LowestProtection proection, string typeName)
+
+        public static void SetVirtualOnBaseMethods(CecilContext stardewContext, string typeName)
         {
             var type = stardewContext.GetTypeDefinition(typeName);
 
@@ -92,7 +95,23 @@ namespace Revolution.Helpers
             {
                 foreach (MethodDefinition method in type.Methods)
                 {
-                    if (proection == LowestProtection.Protected)
+                    if (!method.IsVirtual)
+                    {
+                        method.IsVirtual = true;
+                    }
+                }
+            }
+        }
+
+        public static void AlterProtectionOnTypeMembers(CecilContext stardewContext, LowestProtection protection, string typeName)
+        {
+            var type = stardewContext.GetTypeDefinition(typeName);
+
+            if (type.HasMethods)
+            {
+                foreach (MethodDefinition method in type.Methods)
+                {
+                    if (protection == LowestProtection.Protected)
                     {
                         if (method.IsPrivate)
                         {
@@ -100,7 +119,7 @@ namespace Revolution.Helpers
                             method.IsFamily = true;
                         }
                     }
-                    else if (proection == LowestProtection.Public)
+                    else if (protection == LowestProtection.Public)
                     {
                         if (method.IsPrivate || method.IsFamily)
                         {
@@ -115,7 +134,7 @@ namespace Revolution.Helpers
             {
                 foreach (FieldDefinition field in type.Fields)
                 {
-                    if (proection == LowestProtection.Protected)
+                    if (protection == LowestProtection.Protected)
                     {
                         if (field.IsPrivate)
                         {
@@ -123,7 +142,7 @@ namespace Revolution.Helpers
                             field.IsFamily = true;
                         }
                     }
-                    else if (proection == LowestProtection.Public)
+                    else if (protection == LowestProtection.Public)
                     {
                         if (field.IsPrivate || field.IsFamily)
                         {
