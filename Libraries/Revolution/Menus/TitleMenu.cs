@@ -9,8 +9,8 @@ using System.Text;
 
 namespace Revolution.Menus
 {
-    [HookForceVirtualBase]
-    [HookAlterBaseProtection(LowestProtection.Protected)]
+    [HookForceVirtualBaseAttribute]
+    [HookAlterBaseProtectionAttribute(LowestProtection.Protected)]
     internal class TitleMenu : StardewValley.Menus.TitleMenu
     {
 

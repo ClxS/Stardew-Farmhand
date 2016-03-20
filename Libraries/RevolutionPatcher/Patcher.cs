@@ -20,9 +20,11 @@ namespace Revolution
         {
             InjectRevolutionCoreClasses(stardewExe, revolutionDll);
             CecilContext cecilContext = new CecilContext(Constants.IntermediateRevolutionExe);
+
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations(cecilContext);
             HookApiVirtualAlterations(cecilContext);
+
             Console.WriteLine("Methods injected");
             
             cecilContext.WriteAssembly(Constants.RevolutionExe);          
@@ -32,7 +34,7 @@ namespace Revolution
         {
             try
             {
-                var revolutionAssembly = typeof(HookForceVirtualBase).Assembly;
+                var revolutionAssembly = typeof(HookForceVirtualBaseAttribute).Assembly;
                 var attribute = revolutionAssembly.GetModules()[0].GetType("Revolution.Attributes.HookForceVirtualBase");
                 var types = revolutionAssembly.GetTypes().Where(m => m.GetCustomAttributes(attribute, false).Any()).ToArray();
 
@@ -58,7 +60,7 @@ namespace Revolution
         {
             try
             {
-                var revolutionAssembly = typeof(HookAlterBaseProtection).Assembly;
+                var revolutionAssembly = typeof(HookAlterBaseProtectionAttribute).Assembly;
                 var attribute = revolutionAssembly.GetModules()[0].GetType("Revolution.Attributes.HookAlterBaseProtection");
                 var types = revolutionAssembly.GetTypes().Where(m => m.GetCustomAttributes(attribute, false).Any()).ToArray();
 
@@ -66,7 +68,7 @@ namespace Revolution
                 {
                     try
                     {
-                        var attributeValue = asmType.GetCustomAttributes(attribute, false).First() as HookAlterBaseProtection;
+                        var attributeValue = asmType.GetCustomAttributes(attribute, false).First() as HookAlterBaseProtectionAttribute;
                         CecilHelper.AlterProtectionOnTypeMembers(cecilContext, attributeValue.Protection, asmType.BaseType.FullName);
                     }
                     catch (System.Exception ex)

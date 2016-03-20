@@ -62,9 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\HookAttribute.cs" />
-    <Compile Include="Attributes\HookAlterBaseProtection.cs" />
-    <Compile Include="Attributes\HookForceVirtualBase.cs" />
+    <Compile Include="Attributes\HookAlterBaseProtectionAttribute.cs" />
+    <Compile Include="Attributes\HookForceVirtualBaseAttribute.cs" />
     <Compile Include="Attributes\HookRedirectAttribute.cs" />
+    <Compile Include="Attributes\HookRedirectConstructorFromBaseAttribute.cs" />
     <Compile Include="Attributes\PendingHookAttribute.cs" />
     <Compile Include="Menus\TitleMenu.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAfterPlayerTakesDamage.cs" />

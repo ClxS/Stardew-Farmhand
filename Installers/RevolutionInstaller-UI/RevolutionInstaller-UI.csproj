@@ -43,7 +43,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -97,9 +96,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RevolutionPatcher\RevolutionPatcher.csproj">
+    <ProjectReference Include="..\..\Libraries\RevolutionPatcher\RevolutionPatcher.csproj">
       <Project>{7f304954-a190-4003-b11e-a9043113396d}</Project>
       <Name>RevolutionPatcher</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Revolution\Revolution.csproj">
+      <Project>{a857e9eb-3c51-4d9d-92b3-acc90175eb7e}</Project>
+      <Name>Revolution</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

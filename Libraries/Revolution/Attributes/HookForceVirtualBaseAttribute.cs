@@ -6,9 +6,9 @@ using System.Text;
 namespace Revolution.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class HookForceVirtualBase : Attribute
+    public sealed class HookForceVirtualBaseAttribute : Attribute
     {
-        public HookForceVirtualBase()
+        public HookForceVirtualBaseAttribute()
         {
         }    
     }

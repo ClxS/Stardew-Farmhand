@@ -13,9 +13,9 @@ namespace Revolution.Attributes
     }
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class HookAlterBaseProtection : Attribute
+    public sealed class HookAlterBaseProtectionAttribute : Attribute
     {
-        public HookAlterBaseProtection(LowestProtection protection)
+        public HookAlterBaseProtectionAttribute(LowestProtection protection)
         {
             Protection = protection;
         }

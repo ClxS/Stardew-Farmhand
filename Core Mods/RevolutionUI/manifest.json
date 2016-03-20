@@ -1,9 +1,0 @@
-﻿{
-	"UniqueId" : "RevolutionCore UI",
-	"Name" : "RevolutionCore UI",
-	"ModDLL": "RevolutionUI",
-	"Author": "Carl",
-	"Version" : "0.1",
-	"Description" : "Acts as a utility mod, providing overrides for various UI components. This is done as a separate mod as revolution core is just an injected assembly, 
-					and will not have access to altered members at compile time."
-}
