@@ -23,7 +23,7 @@ namespace Revolution
         {
             try
             {
-                var types = RevolutionDllAssembly.GetTypes().Where(m => m.GetCustomAttributes(typeof(T), false).Any()).ToArray();
+                var types = RevolutionDllAssembly.GetTypesWithCustomAttribute(typeof(T).FullName).ToArray();
 
                 foreach (var asmType in types)
                 {
@@ -47,8 +47,7 @@ namespace Revolution
         {
             try
             {
-                var types = RevolutionDllAssembly.GetTypes().Where(m => m.GetCustomAttributes(typeof(T), false).Any()).ToArray();
-
+                var types = RevolutionDllAssembly.GetTypesWithCustomAttribute(typeof(T).FullName).ToArray();
                 foreach (var asmType in types)
                 {
                     try
