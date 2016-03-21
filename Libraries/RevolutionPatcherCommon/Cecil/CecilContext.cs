@@ -79,7 +79,7 @@ namespace Revolution.Cecil
             return reference;
         }
 
-        internal void WriteAssembly(string file)
+        public void WriteAssembly(string file)
         {
             _assemblyDefinition.Write(file);
         }

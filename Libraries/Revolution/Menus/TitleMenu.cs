@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Revolution.Attributes;
-using StardewValley;
+﻿using Revolution.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +6,10 @@ using System.Text;
 
 namespace Revolution.Menus
 {
-    [HookForceVirtualBaseAttribute]
-    [HookAlterBaseProtectionAttribute(LowestProtection.Protected)]
-    internal class TitleMenu : StardewValley.Menus.TitleMenu
-    {
+    //[HookForceVirtualBase]
+    //[HookAlterBaseProtection(LowestProtection.Protected)]
+    //internal class TitleMenu : StardewValley.Menus.TitleMenu
+    //{
 
-    }
+    //}
 }

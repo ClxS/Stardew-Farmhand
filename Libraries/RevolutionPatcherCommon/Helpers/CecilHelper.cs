@@ -1,6 +1,5 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
-using Revolution.Attributes;
 using Revolution.Cecil;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -103,7 +102,7 @@ namespace Revolution.Helpers
             }
         }
 
-        public static void AlterProtectionOnTypeMembers(CecilContext stardewContext, LowestProtection protection, string typeName)
+        public static void AlterProtectionOnTypeMembers(CecilContext stardewContext, bool @public, string typeName)
         {
             var type = stardewContext.GetTypeDefinition(typeName);
 
@@ -111,7 +110,7 @@ namespace Revolution.Helpers
             {
                 foreach (MethodDefinition method in type.Methods)
                 {
-                    if (protection == LowestProtection.Protected)
+                    if (!@public)
                     {
                         if (method.IsPrivate)
                         {
@@ -119,7 +118,7 @@ namespace Revolution.Helpers
                             method.IsFamily = true;
                         }
                     }
-                    else if (protection == LowestProtection.Public)
+                    else
                     {
                         if (method.IsPrivate || method.IsFamily)
                         {
@@ -134,7 +133,7 @@ namespace Revolution.Helpers
             {
                 foreach (FieldDefinition field in type.Fields)
                 {
-                    if (protection == LowestProtection.Protected)
+                    if (!@public)
                     {
                         if (field.IsPrivate)
                         {
@@ -142,7 +141,7 @@ namespace Revolution.Helpers
                             field.IsFamily = true;
                         }
                     }
-                    else if (protection == LowestProtection.Public)
+                    else
                     {
                         if (field.IsPrivate || field.IsFamily)
                         {
