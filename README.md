@@ -6,7 +6,7 @@
 
 - Revolution (DLL). The core code which is injected into Stardew
 
-- Revolution Patcher (DLL). Is responsible for injecting the core code, and connecting events.
+- Revolution Patcher (DLL). Is responsible for injecting the core code, and connecting events. This also packages Newtonsoft's JSON utilities with it as we rely on it to load mod configuration manifests.
 
 ##Executables
 
