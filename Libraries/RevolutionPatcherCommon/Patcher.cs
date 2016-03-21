@@ -29,7 +29,7 @@ namespace Revolution
                 {
                     try
                     {
-                        CecilHelper.SetVirtualOnBaseMethods(cecilContext, asmType.FullName);
+                        CecilHelper.SetVirtualOnBaseMethods(cecilContext, asmType.BaseType.FullName);
                     }
                     catch (System.Exception ex)
                     {

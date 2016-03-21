@@ -24,7 +24,8 @@ namespace Revolution
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations<HookAlterBaseProtectionAttribute>(cecilContext);
             HookApiVirtualAlterations<HookForceVirtualBaseAttribute>(cecilContext);
-            Console.WriteLine("Methods injected");
+
+            Console.WriteLine("First Pass Installation Completed");
 
             cecilContext.WriteAssembly(Constants.PassOneRevolutionExe);
         }

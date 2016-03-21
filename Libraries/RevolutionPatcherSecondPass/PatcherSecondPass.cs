@@ -13,14 +13,15 @@ namespace Revolution
         {
             CecilContext cecilContext;
 
-            InjectRevolutionCoreClasses(stardewExe, revolutionDll, Constants.JsonLibrary);
+            InjectRevolutionCoreClasses(stardewExe, revolutionDll);
             cecilContext = new CecilContext(Constants.IntermediateRevolutionExe);
             RevolutionDllAssembly = Assembly.LoadFrom(revolutionDll);
 
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations<HookAlterBaseProtectionAttribute>(cecilContext);
             HookApiVirtualAlterations<HookForceVirtualBaseAttribute>(cecilContext);
-            Console.WriteLine("Methods injected");
+
+            Console.WriteLine("Second Pass Installation Completed");
 
             cecilContext.WriteAssembly(Constants.RevolutionExe);
         }
