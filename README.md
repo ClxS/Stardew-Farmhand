@@ -26,9 +26,9 @@
 
 - RevolutionUI (DLL). This is an extension of Revolution which provides easy to use overrides for the inbuild UI classes.
 
-##Executables
+##Tools
 
-- Revolution UnitTests/Debugger (EXE). Just serves as an entry point for me to step through and debug StardewR code in the event I inject something incorrectly
+- Revolution Debugger (EXE). Just serves as an entry point for me to step through and debug StardewR code in the event I inject something incorrectly. This should be set as your startup project when not debugging the build process.
 
 
 
