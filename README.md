@@ -2,13 +2,15 @@
 
 ##Build Tasks
 
-- These projects are responsible for handling build flow. BuildRevolutionIntermediate packages Revolution Core into Stardew and applies the appropriate hooks.
+These projects are responsible for handling build flow. 
+
+- BuildRevolutionIntermediate packages Revolution Core into Stardew and applies the appropriate hooks. This is the project you should click "Rebuild" on when altering the engine, as it will force all builds to trigger in the correct order.
 
 - BuildRevolutionFinal packages the projects dependent on the results of BuildRevolutionIntermediate into Stardew and produces the final Stardew Revolution.exe
 
 ##Installers
 
-- Revolution Installer - Console (EXE). This runs RevolutionPatcher, expecting the Stardew Valley and Stardew Revolution files to be adjacent to it. This project has a post-build task setup to automatically repackage the Stardew Revolution.exe binary on successful build.
+- Revolution Installer - Console (EXE). This runs RevolutionPatcher, expecting the Stardew Valley and Stardew Revolution files to be adjacent to it. 
 
 - Revolution Installer - UI (EXE). This runs RevolutionPatcher too. Though it's not complete, the completed version is the file we should distribute to users. Using ILRepacker, it's dependency DLLs (RevolutionPacker, Revolution) can be self contained. This one will also support downloading of the most recent Revolution DLL from the internet. 
 
