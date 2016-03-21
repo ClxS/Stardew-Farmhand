@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Revolution.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class HookRedirectConstructorFromBaseAttribute : Attribute
     {
         public HookRedirectConstructorFromBaseAttribute(string type, string method)

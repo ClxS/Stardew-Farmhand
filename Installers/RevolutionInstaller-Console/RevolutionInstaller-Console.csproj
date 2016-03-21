@@ -58,10 +58,6 @@
       <Project>{5694f858-4837-4354-a808-0c7941d45b58}</Project>
       <Name>RevolutionPatcherFirstPass</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\RevolutionPatcherSecondPass\RevolutionPatcherSecondPass.csproj">
-      <Project>{54e08588-2a70-4545-9fce-0e3b6b04158a}</Project>
-      <Name>RevolutionPatcherSecondPass</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

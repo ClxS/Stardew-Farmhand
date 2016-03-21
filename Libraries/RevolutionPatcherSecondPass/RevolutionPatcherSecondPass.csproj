@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Revolution</RootNamespace>
-    <AssemblyName>RevolutionSecondPassPatcher</AssemblyName>
+    <AssemblyName>RevolutionPatcherSecondPass</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -32,8 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Stardew Revolution">
-      <HintPath>..\..\WorkingDirectory\Stardew Revolution.exe</HintPath>
+    <Reference Include="Stardew Revolution.int2, Version=1.0.5924.126, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Bin\Stardew Revolution.int2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
