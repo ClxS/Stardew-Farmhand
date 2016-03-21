@@ -1,5 +1,10 @@
+/WorkingDirectory/Mods
+/WorkingDirectory/Content
+/WorkingDirectory/*.dll
+/WorkingDirectory/*.exe
+/WorkingDirectory/*.exe.config
+
 packages/
-WorkingDirectory/
 *.symlink
 *.lnk
 !*.exe
@@ -252,4 +257,5 @@ _Pvt_Extensions
 # JetBrains Rider
 .idea/
 *.sln.iml
-/WorkingDirectory
+
+
