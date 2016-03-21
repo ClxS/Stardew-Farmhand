@@ -9,23 +9,25 @@ namespace Revolution
 {
     public class PatcherSecondPass : Patcher
     {
-        public override void PatchStardew(string stardewExe, string revolutionDll)
+        public override void PatchStardew()
         {
             CecilContext cecilContext;
 
-            InjectRevolutionCoreClasses(stardewExe, revolutionDll);
-            cecilContext = new CecilContext(Constants.IntermediateRevolutionExe);
-            RevolutionDllAssembly = Assembly.LoadFrom(revolutionDll);
-
+            InjectRevolutionCoreClasses(Constants.PassTwoPackageResult, Constants.PassOneRevolutionExe, Constants.RevolutionUIDll);
+            cecilContext = new CecilContext(Constants.PassTwoPackageResult);
+            RevolutionDllAssembly = Assembly.LoadFrom(Constants.RevolutionUIDll);
+            
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations<HookAlterBaseProtectionAttribute>(cecilContext);
             HookApiVirtualAlterations<HookForceVirtualBaseAttribute>(cecilContext);
-
+            HookMakeBaseVirtualCallAlterations<HookMakeBaseVirtualCallAttribute>(cecilContext);
+            HookConstructionRedirectors<HookRedirectConstructorFromBaseAttribute>(cecilContext);
+            
             Console.WriteLine("Second Pass Installation Completed");
-
+            
             cecilContext.WriteAssembly(Constants.RevolutionExe);
         }
-        
+
         protected override void AlterTypeBaseProtections(CecilContext context, Type type)
         {
             var attributeValue = type.GetCustomAttributes(typeof(HookAlterBaseProtectionAttribute), false).First() as HookAlterBaseProtectionAttribute;
@@ -69,6 +71,24 @@ namespace Revolution
             catch (System.Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+        }
+
+        protected override void RedirectConstructorInMethod(CecilContext cecilContext, Type asmType)
+        {
+            var attributes = asmType.GetCustomAttributes(typeof(HookRedirectConstructorFromBaseAttribute), false).ToList().Cast<HookRedirectConstructorFromBaseAttribute>();
+            foreach(var attribute in attributes)
+            {
+                CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.Type, attribute.Method);
+            }
+        }
+
+        protected override void SetVirtualCallOnMethod(CecilContext cecilContext, MethodInfo asmMethod)
+        {
+            var attributes = asmMethod.GetCustomAttributes(typeof(HookMakeBaseVirtualCallAttribute), false).ToList().Cast<HookMakeBaseVirtualCallAttribute>();
+            foreach (var attribute in attributes)
+            {
+                CecilHelper.SetVirtualCallOnMethod(cecilContext, asmMethod.DeclaringType.BaseType.FullName, asmMethod.Name, attribute.Type, attribute.Method);
             }
         }
     }

@@ -15,8 +15,13 @@ namespace Revolution
         
         public static string RevolutionDll => "Revolution.dll";
         public static string RevolutionUIDll => "RevolutionUI.dll";
-        public static string IntermediateRevolutionExe => "Stardew Revolution.int1.dll";
-        public static string PassOneRevolutionExe => "Stardew Revolution.int2.dll";
+
+        public static string PassOnePackageResult => "Stardew Revolution.int1-package.dll";
+        public static string PassTwoPackageResult => "Stardew Revolution.int2-package.dll";
+        
+        public static string PassOneRevolutionExe => "Stardew Revolution.int1.dll";
+        public static string PassTwoRevolutionExe => RevolutionExe;
+
         public static string JsonLibrary => "Newtonsoft.Json.dll";
         public static string CurrentAssemblyPath => Assembly.GetExecutingAssembly().Location;
     }

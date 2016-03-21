@@ -22,12 +22,12 @@ namespace RevolutionInstaller_Console
             if(args.Any() && args[0] == "-pass1")
             {
                 patcher = CreatePatcher(Pass.PassOne);
-                patcher.PatchStardew(Constants.StardewExe, Constants.RevolutionDll);
+                patcher.PatchStardew();
             }
             else if(args.Any() && args[0] == "-pass2")
             {
                 patcher = CreatePatcher(Pass.PassTwo);
-                patcher.PatchStardew(Constants.PassOneRevolutionExe, Constants.RevolutionUIDll);
+                patcher.PatchStardew();
             }
             else
             {

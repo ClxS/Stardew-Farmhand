@@ -5,15 +5,15 @@ using System.Text;
 
 namespace Revolution.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class HookRedirectConstructorFromBaseAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    public sealed class HookMakeBaseVirtualCallAttribute : Attribute
     {
-        public HookRedirectConstructorFromBaseAttribute(string type, string method)
+        public HookMakeBaseVirtualCallAttribute(string type, string method)
         {
             Type = type;
             Method = method;
         }
-        
+
         public string Type { get; set; }
         public string Method { get; set; }
     }

@@ -63,6 +63,7 @@
     <Compile Include="Attributes\HookAttribute.cs" />
     <Compile Include="Attributes\HookAlterBaseProtectionAttribute.cs" />
     <Compile Include="Attributes\HookForceVirtualBaseAttribute.cs" />
+    <Compile Include="Attributes\HookMakeBaseVirtualCallAttribute.cs" />
     <Compile Include="Attributes\HookRedirectAttribute.cs" />
     <Compile Include="Attributes\HookRedirectConstructorFromBaseAttribute.cs" />
     <Compile Include="Attributes\PendingHookAttribute.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="SMAPI Compatibility Layer\Log.cs" />
     <Compile Include="SMAPI Compatibility Layer\Mod.cs" />
     <Compile Include="SMAPI Compatibility Layer\ModItem.cs" />
+    <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\" />

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System;
+using System.Reflection;
 
 namespace Revolution.Helpers
 {
@@ -47,7 +48,7 @@ namespace Revolution.Helpers
         {
             return instructions.Where(n => n.OpCode == opcode && n.Operand == @object).ToList();
         }
-
+        
 
         /*public static void RedirectConstructor(CecilContext stardewContext, CecilContext smapiContext,
             string typeToAlter, string methodToAlter,
@@ -85,18 +86,47 @@ namespace Revolution.Helpers
             InjectMethod(ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition);
         }
 
+        public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, string type, string method)
+        {
+            var newConstructor = asmType.GetConstructor(new Type[] { });
+            var oldConstructor = asmType.BaseType.GetConstructor(new Type[] { });
+            var newConstructorReference = stardewContext.GetMethodDefinition(asmType.FullName, newConstructor.Name);
+            var oldConstructorReference = stardewContext.GetMethodDefinition(asmType.BaseType.FullName, oldConstructor.Name);
+
+            ILProcessor ilProcessor = stardewContext.GetMethodILProcessor(type, method);
+            var instructions = ilProcessor.Body.Instructions.Where(n => n.OpCode == OpCodes.Newobj && n.Operand == oldConstructorReference).ToList();
+            foreach(var instruction in instructions)
+            {
+                ilProcessor.Replace(instruction, ilProcessor.Create(OpCodes.Newobj, newConstructorReference));
+            }
+        }
+
+        public static void SetVirtualCallOnMethod(CecilContext cecilContext, string fullName, string name, string type, string method)
+        {
+            MethodDefinition methodDefinition = cecilContext.GetMethodDefinition(fullName, name);
+            ILProcessor ilProcessor = cecilContext.GetMethodILProcessor(type, method);
+
+            var instructions = ilProcessor.Body.Instructions.Where(n => n.OpCode == OpCodes.Call && n.Operand == methodDefinition).ToList();
+            foreach (var instruction in instructions)
+            {
+                ilProcessor.Replace(instruction, ilProcessor.Create(OpCodes.Callvirt, methodDefinition));
+            }
+        }
 
         public static void SetVirtualOnBaseMethods(CecilContext stardewContext, string typeName)
         {
             var type = stardewContext.GetTypeDefinition(typeName);
-
+            
             if (type.HasMethods)
             {
-                foreach (MethodDefinition method in type.Methods)
+                foreach (MethodDefinition method in type.Methods.Where(n => !n.IsConstructor && !n.IsStatic))
                 {
                     if (!method.IsVirtual)
                     {
                         method.IsVirtual = true;
+                        method.IsNewSlot = true;
+                        method.IsReuseSlot = false;
+                        method.IsHideBySig = true;
                     }
                 }
             }

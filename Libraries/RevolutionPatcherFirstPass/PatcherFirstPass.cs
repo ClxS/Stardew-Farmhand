@@ -13,17 +13,19 @@ namespace Revolution
 {
     public class PatcherFirstPass : Patcher
     {
-        public override void PatchStardew(string stardewExe, string revolutionDll)
+        public override void PatchStardew()
         {
             CecilContext cecilContext;
             
-            InjectRevolutionCoreClasses(stardewExe, revolutionDll, Constants.JsonLibrary);
-            cecilContext = new CecilContext(Constants.IntermediateRevolutionExe);
-            RevolutionDllAssembly = Assembly.LoadFrom(revolutionDll);
+            InjectRevolutionCoreClasses(Constants.PassOnePackageResult, Constants.StardewExe, Constants.RevolutionDll, Constants.JsonLibrary);
+            cecilContext = new CecilContext(Constants.PassOnePackageResult);
+            RevolutionDllAssembly = Assembly.LoadFrom(Constants.RevolutionDll);
                         
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations<HookAlterBaseProtectionAttribute>(cecilContext);
             HookApiVirtualAlterations<HookForceVirtualBaseAttribute>(cecilContext);
+            HookMakeBaseVirtualCallAlterations<HookMakeBaseVirtualCallAttribute>(cecilContext);
+            HookConstructionRedirectors<HookRedirectConstructorFromBaseAttribute>(cecilContext);
 
             Console.WriteLine("First Pass Installation Completed");
 
@@ -74,6 +76,20 @@ namespace Revolution
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        protected override void RedirectConstructorInMethod(CecilContext cecilContext, Type asmType)
+        {
+            var attributes = asmType.GetCustomAttributes(typeof(HookRedirectConstructorFromBaseAttribute), false).ToList().Cast<HookRedirectConstructorFromBaseAttribute>();
+            foreach (var attribute in attributes)
+            {
+                CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.Type, attribute.Method);
+            }
+        }
+
+        protected override void SetVirtualCallOnMethod(CecilContext cecilContext, MethodInfo asmMethod)
+        {
+            throw new NotImplementedException();
         }
     }
 }
