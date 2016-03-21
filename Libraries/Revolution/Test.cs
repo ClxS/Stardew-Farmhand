@@ -1,22 +1,17 @@
-﻿using System;
+﻿using Revolution.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Revolution
 {
-    public class Test
+    public static class Test
     {
-        public virtual void Test1()
+        [Hook(HookType.Entry, "StardewValley.Menus.TitleMenu", "setUpIcons")]
+        public static void Test3()
         {
-        }
-        public void Test2()
-        {
-        }
-        public void Test3()
-        {
-            Test1();
-            Test2();
+            Console.WriteLine("Using default setup");
         }
     }
 }

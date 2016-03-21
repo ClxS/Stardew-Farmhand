@@ -90,6 +90,7 @@
     <Compile Include="Registries\Containers\ModInfo.cs" />
     <Compile Include="Registries\ModRegistry.cs" />
     <Compile Include="Registries\Registry.cs" />
+    <Compile Include="Registries\TextureRegistry.cs" />
     <Compile Include="SMAPI Compatibility Layer\Command.cs" />
     <Compile Include="SMAPI Compatibility Layer\Entities\SPlayer.cs" />
     <Compile Include="SMAPI Compatibility Layer\Events\Controls.cs" />
