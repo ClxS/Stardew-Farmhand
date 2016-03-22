@@ -2,7 +2,7 @@
 	"UniqueId" : "Clxs'sModLoadingMod",
 	"Name" : "Mod Manager Mod",
 	"ModDLL": "ModLoaderMod",
-	"Author": "Carl",
+	"Author": "ClxS",
 	"Version" : "0.1",
 	"Description" : "Logs various events."
 }

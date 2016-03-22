@@ -10,6 +10,7 @@ namespace Revolution.Registries.Containers
 {
     public enum ModState
     {
+        Inactive,
         Unloaded,
         Loaded,
         MissingDependency,

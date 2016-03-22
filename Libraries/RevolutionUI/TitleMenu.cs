@@ -6,6 +6,8 @@ using Revolution.Registries;
 using StardewValley;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using Revolution.UI.ClickableMenus;
 
 namespace Revolution
 {
@@ -28,7 +30,6 @@ namespace Revolution
             [HookMakeBaseVirtualCall("StardewValley.Menus.TitleMenu", "gameWindowSizeChanged")]
             public override void setUpIcons()
             {
-                Console.WriteLine("Custom Icon Setup");
                 this.buttons.Clear();
 
                 int offset = 125;
@@ -44,11 +45,28 @@ namespace Revolution
                 this.skipButton = new ClickableComponent(new Rectangle(this.width / 2 - 261, this.height / 2 - 102, 249, 201), "Skip");
             }
 
+            [HookMakeBaseVirtualCall("StardewValley.Menus.TitleMenu", "receiveLeftClick")]
+            public override void performButtonAction(string which)
+            {
+                base.performButtonAction(which);
+
+                if (which == "Mods")
+                {
+                    this.buttonsDX = 1;
+                    this.isTransitioningButtons = true;
+                    Game1.resetPlayer();
+                    Game1.playSound("select");
+                    this.subMenu = (IClickableMenu)new ModMenu();
+                    Game1.changeMusicTrack("CloudCountry");
+                    Game1.player.favoriteThing = "";
+                }
+            }
+
             public override void update(GameTime time)
             {
                 base.update(time);
                 if (this.buttonsToShow == 3)
-                    this.buttonsToShow = 4;
+                    this.buttonsToShow = 4;                               
             }
         }
     }
