@@ -54,12 +54,46 @@ namespace ModLoaderMod.Menus
                 {
                     var checkbox = new DisableableOptionCheckbox(string.Format("{0} by {1}", mod.Name, mod.Author), 11, -1, -1);
                     checkbox.isChecked = mod.ModState == ModState.Loaded;
-                    checkbox.isDisabled = mod.ModState != ModState.Loaded && mod.ModState != ModState.Inactive;
+
+                    if(mod.ModState != ModState.Loaded && mod.ModState != ModState.Inactive)
+                    {
+                        ResolveLoadingIssue(checkbox, mod);
+                    }
                     modToggles.Add(checkbox);
                     modOptions[checkbox] = mod;
                 }
-            }
+            }            
+        }
 
+        private void ResolveLoadingIssue(DisableableOptionCheckbox checkbox, ModInfo mod)
+        {
+            checkbox.isDisabled = true;
+            if(mod.ModState == ModState.MissingDependency)
+            {
+                var missingDependencies = mod.Dependencies.Where(n => n.DependencyState == DependencyState.Missing);
+                var missingParents = mod.Dependencies.Where(n => n.DependencyState == DependencyState.ParentMissing);
+                var tooLow = mod.Dependencies.Where(n => n.DependencyState == DependencyState.TooLowVersion);
+                var tooHigh = mod.Dependencies.Where(n => n.DependencyState == DependencyState.TooHighVersion);
+
+                if(missingDependencies.Any())
+                {
+                    checkbox.disableReason = string.Format("{0}: {1}", "Missing Dependencies: ", string.Join(", ", missingDependencies.Select(n => n.UniqueId)));
+                }
+                else if (missingDependencies.Any())
+                {
+                    checkbox.disableReason = string.Format("{0}: {1}", "Dependent Mods Missing Dependencies: ", string.Join(", ", missingParents.Select(n => n.UniqueId)));
+                }
+                else if (tooLow.Any())
+                {
+                    checkbox.disableReason = string.Format("{0}: {1}", "Dependency Version Too Low: ", string.Join(", ", 
+                        tooLow.Select(n => n.UniqueId + string.Format("(Minimum: {0})", n.MinimumVersion.ToString()))));
+                }
+                else if (tooHigh.Any())
+                {
+                    checkbox.disableReason = string.Format("{0}: {1}", "Dependency Version Too High: ", string.Join(",",
+                       tooHigh.Select(n => n.UniqueId + string.Format("(Maximum: {0})", n.MaximumVersion.ToString()))));
+                }
+            }
         }
 
         private void optionButtonClick(string name)

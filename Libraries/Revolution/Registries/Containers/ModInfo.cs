@@ -53,7 +53,7 @@ namespace Revolution.Registries.Containers
 
         [JsonIgnore]
         private object ConfigurationSettings { get; set; }
-
+        
         public bool LoadModDLL()
         {
             if (Instance != null)

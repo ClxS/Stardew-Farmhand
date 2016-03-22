@@ -105,18 +105,21 @@ namespace Revolution
                     {
                         foreach (var dependency in mod.Dependencies)
                         {
-                            var dependencyMatch = registeredMods.FirstOrDefault(n => n.UniqueId == dependency.UniqueModId);
+                            var dependencyMatch = registeredMods.FirstOrDefault(n => n.UniqueId == dependency.UniqueId);
+                            dependency.DependencyState = DependencyState.OK;
                             if (dependencyMatch == null)
                             {
                                 mod.ModState = ModState.MissingDependency;
+                                dependency.DependencyState = DependencyState.Missing;
                                 stateChange = true;
-                                Console.WriteLine("Failed to load {0} due to missing dependency: {1}}", mod.Name, dependency.UniqueModId);
+                                Console.WriteLine("Failed to load {0} due to missing dependency: {1}}", mod.Name, dependency.UniqueId);
                             }
                             else if (dependencyMatch.ModState == ModState.MissingDependency)
                             {
                                 mod.ModState = ModState.MissingDependency;
+                                dependency.DependencyState = DependencyState.ParentMissing;
                                 stateChange = true;
-                                Console.WriteLine("Failed to load {0} due to missing dependency missing dependency: {1}", mod.Name, dependency.UniqueModId);
+                                Console.WriteLine("Failed to load {0} due to missing dependency missing dependency: {1}", mod.Name, dependency.UniqueId);
                             }
                             else
                             {
@@ -125,15 +128,19 @@ namespace Revolution
                                 {
                                     if (dependency.MinimumVersion != null && dependency.MinimumVersion > dependencyVersion)
                                     {
+                                        mod.ModState = ModState.MissingDependency;
+                                        dependency.DependencyState = DependencyState.TooLowVersion;
                                         stateChange = true;
                                         Console.WriteLine("Failed to load {0} due to minimum version incompatibility with {1}: v.{2} < v.{3}",
-                                            mod.Name, dependency.UniqueModId, dependencyMatch.Version.ToString(), dependency.MinimumVersion.ToString());
+                                            mod.Name, dependency.UniqueId, dependencyMatch.Version.ToString(), dependency.MinimumVersion.ToString());
                                     }
                                     else if (dependency.MaximumVersion != null && dependency.MaximumVersion < dependencyVersion)
                                     {
+                                        mod.ModState = ModState.MissingDependency;
+                                        dependency.DependencyState = DependencyState.TooHighVersion;
                                         stateChange = true;
                                         Console.WriteLine("Failed to load {0} due to maximum version incompatibility with {1}: v.{2} > v.{3}",
-                                            mod.Name, dependency.UniqueModId, dependencyMatch.Version.ToString(), dependency.MinimumVersion.ToString());
+                                            mod.Name, dependency.UniqueId, dependencyMatch.Version.ToString(), dependency.MinimumVersion.ToString());
                                     }
                                 }
                             }
