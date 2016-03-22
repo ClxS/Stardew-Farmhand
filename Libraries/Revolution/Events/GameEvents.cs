@@ -1,6 +1,7 @@
 ﻿using Revolution.Attributes;
 using Revolution.Events.Arguments;
 using System;
+using System.ComponentModel;
 
 namespace Revolution.Events
 {
@@ -12,7 +13,7 @@ namespace Revolution.Events
         public static event EventHandler OnAfterLoadedContent = delegate { };
         public static event EventHandler OnBeforeUnoadContent = delegate { };
         public static event EventHandler OnAfterUnloadedContent = delegate { };
-        public static event EventHandler OnBeforeUpdateTick = delegate { };
+        public static event EventHandler<CancelEventArgs> OnBeforeUpdateTick = delegate { };
         public static event EventHandler OnAfterUpdateTick = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
@@ -52,9 +53,11 @@ namespace Revolution.Events
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Update")]
-        internal static void InvokeBeforeUpdate()
+        internal static bool InvokeBeforeUpdate()
         {
-            OnBeforeUpdateTick.Invoke(null, EventArgs.Empty);
+            var args = new CancelEventArgs();
+            OnBeforeUpdateTick.Invoke(null, args);
+            return args.Cancel;
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "Update")]

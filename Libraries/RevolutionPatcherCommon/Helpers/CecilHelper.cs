@@ -13,7 +13,7 @@ namespace Revolution.Helpers
     {
         //System.Void StardewValley.Game1::.ctor()
 
-        private static void InjectMethod(ILProcessor ilProcessor, Instruction target, MethodReference method)
+        private static void InjectMethod(ILProcessor ilProcessor, Instruction target, MethodReference method, bool cancelable = false)
         {
             Instruction callEnterInstruction = ilProcessor.Create(OpCodes.Call, method);
 
@@ -34,6 +34,17 @@ namespace Revolution.Helpers
                 ilProcessor.InsertBefore(target, callEnterInstruction);
             }
 
+            if(cancelable)
+            {
+                var stLoc = ilProcessor.Create(OpCodes.Stloc_0);
+                var ldLoc = ilProcessor.Create(OpCodes.Ldloc_0);
+                var branch = ilProcessor.Create(OpCodes.Brfalse, target);
+                var ret = ilProcessor.Create(OpCodes.Ret);
+                
+                ilProcessor.InsertAfter(callEnterInstruction, branch);
+                ilProcessor.InsertAfter(branch, ret);
+            }
+
         }
 
         private static void InjectMethod(ILProcessor ilProcessor, IEnumerable<Instruction> targets, MethodReference method)
@@ -49,33 +60,12 @@ namespace Revolution.Helpers
             return instructions.Where(n => n.OpCode == opcode && n.Operand == @object).ToList();
         }
         
-
-        /*public static void RedirectConstructor(CecilContext stardewContext, CecilContext smapiContext,
-            string typeToAlter, string methodToAlter,
-            string injecteeType, string injecteeMethod,
-            string injectedType, string injectedMethod)
-        {
-            var ilProcessor = stardewContext.GetMethodILProcessor(typeToAlter, methodToAlter);
-            var methodDefinition = stardewContext.GetMethodDefinition(injecteeType, injecteeMethod);
-
-            var methodInfo = smapiContext.GetSMAPITypeContructor(injectedType);
-            var reference = smapiContext.ImportSMAPIMethodInStardew(stardewContext, methodInfo);
-
-            var instructionsToAlter = GetMatchingInstructions(ilProcessor.Body.Instructions, OpCodes.Newobj, methodDefinition);
-
-            var newInstruction = ilProcessor.Create(OpCodes.Newobj, reference);
-            foreach (var instruction in instructionsToAlter)
-            {
-                ilProcessor.Replace(instruction, newInstruction);
-            }
-        }*/
-
         public static void InjectEntryMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod,
             string injectedType, string injectedMethod)
         {
             MethodDefinition methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
-            ILProcessor ilProcessor = stardewContext.GetMethodILProcessor(injecteeType, injecteeMethod);
-            InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition);
+            ILProcessor ilProcessor = stardewContext.GetMethodILProcessor(injecteeType, injecteeMethod);            
+            InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
         }
 
         public static void InjectExitMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod,
@@ -88,6 +78,9 @@ namespace Revolution.Helpers
 
         public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, string type, string method)
         {
+            ILProcessor processor = stardewContext.GetMethodILProcessor("Revolution.Test", "Test3");
+            ILProcessor processor2 = stardewContext.GetMethodILProcessor("Revolution.Test", "Test4");
+
             var newConstructor = asmType.GetConstructor(new Type[] { });
             var oldConstructor = asmType.BaseType.GetConstructor(new Type[] { });
             var newConstructorReference = stardewContext.GetMethodDefinition(asmType.FullName, newConstructor.Name);
@@ -133,7 +126,7 @@ namespace Revolution.Helpers
         }
 
         public static void AlterProtectionOnTypeMembers(CecilContext stardewContext, bool @public, string typeName)
-        {
+        {            
             var type = stardewContext.GetTypeDefinition(typeName);
 
             if (type.HasMethods)

@@ -8,10 +8,23 @@ namespace Revolution
 {
     public static class Test
     {
-        [Hook(HookType.Entry, "StardewValley.Menus.TitleMenu", "setUpIcons")]
+        public static bool Test2()
+        {
+            Random rnd = new Random();
+            int month = rnd.Next(1, 13); // creates a number between 1 and 12
+            return month > 6;
+        }
+
         public static void Test3()
         {
-            Console.WriteLine("Using default setup");
+            Console.WriteLine("Test 1");
+            if (Test2())
+            {
+                Console.WriteLine("Test 2");
+                return;
+            }
+            Console.WriteLine("Test 3");            
+            return;
         }
     }
 }

@@ -4,6 +4,7 @@ using Revolution.Cecil;
 using System.Reflection;
 using Revolution.Helpers;
 using Revolution.Attributes;
+using System.ComponentModel;
 
 namespace Revolution
 {
