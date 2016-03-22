@@ -25,7 +25,7 @@ namespace Revolution.Registries.Containers
             ModState = ModState.Unloaded;
         }
 
-        public string UniqueModId { get; set; }
+        public string UniqueId { get; set; }
         public string ModDLL { get; set; }
         public string Name { get; set; }        
         public string Author { get; set; }
@@ -86,7 +86,7 @@ namespace Revolution.Registries.Containers
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("Failed to load mod '{0}'\n", modDllPath), ex);
+                throw new Exception(string.Format("Failed to load mod '{0}'\n\t-{2}\n\t\t-{3}", modDllPath, ex.Message, ex.StackTrace), ex);
             }
 
             return Instance != null;

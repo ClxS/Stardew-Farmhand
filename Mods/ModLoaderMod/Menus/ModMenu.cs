@@ -11,7 +11,7 @@ using Revolution.Registries;
 using Revolution.Registries.Containers;
 using Revolution.UI.Components;
 
-namespace Revolution.UI.ClickableMenus
+namespace ModLoaderMod.Menus
 {
     public class ModMenu : IClickableMenu
     {
@@ -23,7 +23,7 @@ namespace Revolution.UI.ClickableMenus
 
         public ModMenu()
           : base(Game1.viewport.Width / 2 - (632 + IClickableMenu.borderWidth * 2) / 2, Game1.viewport.Height / 2 - (600 + IClickableMenu.borderWidth * 2) / 2 - Game1.tileSize, 632 + IClickableMenu.borderWidth * 2, 600 + IClickableMenu.borderWidth * 2 + Game1.tileSize, false)
-        {           
+        {
             this.setUpPositions();
             Game1.player.faceDirection(2);
             Game1.player.FarmerSprite.StopAnimation();
@@ -42,7 +42,7 @@ namespace Revolution.UI.ClickableMenus
             this.labels.Clear();
             this.modToggles.Clear();
             currentItemIndex = 0;
-                        
+
             var mods = ModRegistry.GetRegisteredItems();
 
             for (int index = 0; index < 7; ++index)
@@ -50,21 +50,23 @@ namespace Revolution.UI.ClickableMenus
 
             foreach (var mod in mods)
             {
-                var checkbox = new DisableableOptionCheckbox(string.Format("{0} by {1}", mod.Name, mod.Author), 11, -1, -1);
-                checkbox.isChecked = mod.ModState == ModState.Loaded;
-                checkbox.isDisabled = mod.ModState != ModState.Loaded && mod.ModState != ModState.Inactive;                
-                modToggles.Add(checkbox);
-                modOptions[checkbox] = mod;
+                if (mod.UniqueId != ModLoader.Instance.ModSettings.UniqueId)
+                {
+                    var checkbox = new DisableableOptionCheckbox(string.Format("{0} by {1}", mod.Name, mod.Author), 11, -1, -1);
+                    checkbox.isChecked = mod.ModState == ModState.Loaded;
+                    checkbox.isDisabled = mod.ModState != ModState.Loaded && mod.ModState != ModState.Inactive;
+                    modToggles.Add(checkbox);
+                    modOptions[checkbox] = mod;
+                }
             }
-            modToggles[0].isDisabled = true;
-            modToggles[0].disableReason = "Missing Dependency: \"Test\"";
+
         }
 
         private void optionButtonClick(string name)
-        {           
+        {
             Game1.playSound("coin");
         }
-        
+
         public override void receiveLeftClick(int x, int y, bool playSound = true)
         {
             for (int index = 0; index < Enumerable.Count<ClickableComponent>((IEnumerable<ClickableComponent>)this.optionSlots); ++index)
@@ -91,30 +93,24 @@ namespace Revolution.UI.ClickableMenus
         public override void draw(SpriteBatch b)
         {
             Game1.drawDialogueBox(this.xPositionOnScreen, this.yPositionOnScreen, this.width, this.height, false, true, (string)null, false);
-
-            //foreach (ClickableTextureComponent textureComponent in this.leftSelectionButtons)
-            //    textureComponent.draw(b);
-
+            
             for (int index = 0; index < Enumerable.Count<ClickableComponent>((IEnumerable<ClickableComponent>)this.optionSlots); ++index)
             {
                 if (this.currentItemIndex >= 0 && this.currentItemIndex + index < Enumerable.Count<OptionsElement>((IEnumerable<OptionsElement>)this.modToggles))
                     this.modToggles[this.currentItemIndex + index].draw(b, this.optionSlots[index].bounds.X, this.optionSlots[index].bounds.Y);
             }
-            
+
 
             foreach (ClickableComponent clickableComponent in this.labels)
             {
                 string text = "";
                 Color color = Game1.textColor;
-                
+
                 Utility.drawTextWithShadow(b, clickableComponent.name, Game1.smallFont, new Vector2((float)clickableComponent.bounds.X, (float)clickableComponent.bounds.Y), color, 1f, -1f, -1, -1, 1f, 3);
                 if (Enumerable.Count<char>((IEnumerable<char>)text) > 0)
                     Utility.drawTextWithShadow(b, text, Game1.smallFont, new Vector2((float)(clickableComponent.bounds.X + Game1.tileSize / 3) - Game1.smallFont.MeasureString(text).X / 2f, (float)(clickableComponent.bounds.Y + Game1.tileSize / 2)), color, 1f, -1f, -1, -1, 1f, 3);
             }
 
-            //foreach (ClickableTextureComponent textureComponent in this.rightSelectionButtons)
-            //    textureComponent.draw(b);
-                       
             b.Draw(Game1.mouseCursors, new Vector2((float)Game1.getOldMouseX(), (float)Game1.getOldMouseY()), new Rectangle?(Game1.getSourceRectForStandardTileSheet(Game1.mouseCursors, 0, 16, 16)), Color.White, 0.0f, Vector2.Zero, (float)Game1.pixelZoom + Game1.dialogueButtonScale / 150f, SpriteEffects.None, 1f);
         }
 

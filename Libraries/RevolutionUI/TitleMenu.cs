@@ -3,26 +3,52 @@ using Revolution.Attributes;
 using StardewValley.Menus;
 using System;
 using Revolution.Registries;
-using StardewValley;
-using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using Revolution.UI.ClickableMenus;
+using System.Linq;
 
 namespace Revolution
 {
     namespace UI
-    {
+    {     
         [HookRedirectConstructorFromBase("StardewValley.Game1", "setGameMode")]
         public class TitleMenu : StardewValley.Menus.TitleMenu
         {
+            public class CustomTitleOption
+            {
+                public string Key { get; set; }
+                public Texture2D Texture { get; set; }
+                public Rectangle TextureSourceRect { get; set; }
+                public Action<Revolution.UI.TitleMenu, string> OnClick { get; set; }
+            }
+
+            public static List<CustomTitleOption> CustomOptions = new List<CustomTitleOption>();
+
             public TitleMenu()
             {
-                Console.WriteLine("Using Overloaded Title Menu!");
+            }
 
-                var texture = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("RevolutionContent\\customUI.png", FileMode.Open));
+            public static void RegisterNewTitleButton(CustomTitleOption button)
+            {
+                CustomOptions.Add(button);
+            }
 
-                TextureRegistry.RegisterItem("icon_menuModsButton", texture);
+            public static void RemoveCustomTileButton(string key)
+            {
+                var removedItems = CustomOptions.Where(n => n.Key == key);
+                foreach(var item in removedItems)
+                {
+                    CustomOptions.Remove(item);
+                }
+            }
+
+            public int getItemOffsetX(int index, int count)
+            {
+                int offset = 123 * (count - 3);
+                int itemSpacing = offset * 2;
+                int itemRoot = -381;
+
+                return itemRoot - offset + index * itemSpacing;
             }
 
             [HookMakeBaseVirtualCall("StardewValley.Menus.TitleMenu", ".ctor")]
@@ -32,11 +58,14 @@ namespace Revolution
             {
                 this.buttons.Clear();
 
-                int offset = 125;
-                this.buttons.Add(new ClickableTextureComponent(new Rectangle(this.width / 2 - 381 - offset, this.height - 174 - 24, 222, 174), "New", "", this.titleButtonsTexture, new Rectangle(0, 187, 74, 58), 3f, false, false));
-                this.buttons.Add(new ClickableTextureComponent(new Rectangle(this.width / 2 - 135 - offset, this.height - 174 - 24, 222, 174), "Load", "", this.titleButtonsTexture, new Rectangle(74, 187, 74, 58), 3f, false, false));
-                this.buttons.Add(new ClickableTextureComponent(new Rectangle(this.width / 2 + 111 - offset, this.height - 174 - 24, 222, 174), "Mods", "", TextureRegistry.GetItem("icon_menuModsButton"), new Rectangle(222, 187, 74, 58), 3f, false, false));
-                this.buttons.Add(new ClickableTextureComponent(new Rectangle(this.width / 2 + 357 - offset, this.height - 174 - 24, 222, 174), "Exit", "", this.titleButtonsTexture, new Rectangle(222, 187, 74, 58), 3f, false, false));
+                int index = 0;
+                this.buttons.Add(new ClickableTextureComponent(new Rectangle(this.width / 2 + getItemOffsetX(index++, 4), this.height - 174 - 24, 222, 174), "New", "", this.titleButtonsTexture, new Rectangle(0, 187, 74, 58), 3f, false, false));
+                this.buttons.Add(new ClickableTextureComponent(new Rectangle(this.width / 2 + getItemOffsetX(index++, 4), this.height - 174 - 24, 222, 174), "Load", "", this.titleButtonsTexture, new Rectangle(74, 187, 74, 58), 3f, false, false));
+                foreach(var customOption in CustomOptions)
+                {
+                    this.buttons.Add(new ClickableTextureComponent(new Rectangle(this.width / 2 + getItemOffsetX(index++, 4), this.height - 174 - 24, 222, 174), "Mods", "", TextureRegistry.GetItem("icon_menuModsButton"), new Rectangle(222, 187, 74, 58), 3f, false, false));
+                }
+                this.buttons.Add(new ClickableTextureComponent(new Rectangle(this.width / 2 + getItemOffsetX(index++, 4), this.height - 174 - 24, 222, 174), "Exit", "", this.titleButtonsTexture, new Rectangle(222, 187, 74, 58), 3f, false, false));
                 
                 int num = this.height < 800 ? 2 : 3;
                 this.eRect = new Rectangle(this.width / 2 - 200 * num + 251 * num, -300 * num - (int)((double)this.viewportY / 3.0) * num + 26 * num, 42 * num, 68 * num);
@@ -50,23 +79,32 @@ namespace Revolution
             {
                 base.performButtonAction(which);
 
-                if (which == "Mods")
+                var customPressed = CustomOptions.Where(n => n.Key == which);
+                foreach(var customAction in customPressed)
                 {
-                    this.buttonsDX = 1;
-                    this.isTransitioningButtons = true;
-                    Game1.resetPlayer();
-                    Game1.playSound("select");
-                    this.subMenu = (IClickableMenu)new ModMenu();
-                    Game1.changeMusicTrack("CloudCountry");
-                    Game1.player.favoriteThing = "";
-                }
+                    if(customAction.OnClick != null)
+                    {
+                        customAction.OnClick(this, which);
+                    }
+                }                
+            }
+
+            public void SetSubmenu(IClickableMenu menu)
+            {
+                this.subMenu = menu;
+            }
+
+            public void StartMenuTransitioning()
+            {
+                this.buttonsDX = 1;
+                this.isTransitioningButtons = true;
             }
 
             public override void update(GameTime time)
             {
                 base.update(time);
                 if (this.buttonsToShow == 3)
-                    this.buttonsToShow = 4;                               
+                    this.buttonsToShow = 3 + CustomOptions.Count;                               
             }
         }
     }

@@ -83,7 +83,7 @@ namespace Revolution
                 }
                 catch (System.Exception ex)
                 {
-                    Console.WriteLine("Error loading mod {0} by {1}", mod.Name, mod.Author);
+                    Console.WriteLine("Error loading mod {0} by {1}\n\t-{2}", mod.Name, mod.Author, ex.Message);
                     mod.ModState = ModState.Errored;
                     //TODO, well something broke. Do summut' 'bout it!
                 }
@@ -105,7 +105,7 @@ namespace Revolution
                     {
                         foreach (var dependency in mod.Dependencies)
                         {
-                            var dependencyMatch = registeredMods.FirstOrDefault(n => n.UniqueModId == dependency.UniqueModId);
+                            var dependencyMatch = registeredMods.FirstOrDefault(n => n.UniqueId == dependency.UniqueModId);
                             if (dependencyMatch == null)
                             {
                                 mod.ModState = ModState.MissingDependency;
@@ -158,7 +158,7 @@ namespace Revolution
                             ModInfo modInfo = JsonConvert.DeserializeObject<ModInfo>(json);
 
                             modInfo.ModRoot = modPath;
-                            ModRegistry.RegisterItem(modInfo.UniqueModId ?? Guid.NewGuid().ToString(), modInfo);
+                            ModRegistry.RegisterItem(modInfo.UniqueId ?? Guid.NewGuid().ToString(), modInfo);
                         }
                     }
                 }
