@@ -33,6 +33,11 @@ namespace Revolution.Registries
             return RegisteredItems.Select(n => n.Value);
         }
 
+        public virtual Dictionary<TKey, T> GetAll()
+        {
+            return RegisteredItems;
+        }
+
         public virtual void UnregisterItem(TKey key)
         {
             if (GetItem(key) != null)

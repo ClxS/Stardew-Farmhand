@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,6 +34,7 @@ namespace Revolution.Registries.Containers
         public string Description { get; set; }
         public string ConfigurationFile { get; set; }
         public List<ModDependency> Dependencies { get; set; }
+        public ModContent Content { get; set; }
 
         [JsonIgnore]
         public ModState ModState { get; set; }
@@ -43,7 +45,7 @@ namespace Revolution.Registries.Containers
         public bool HasConfig { get { return HasDLL && !string.IsNullOrWhiteSpace(ConfigurationFile); } }
 
         [JsonIgnore]
-        public bool HasContent { get { return false; } }
+        public bool HasContent { get { return Content != null && Content.HasContent; } }
 
         [JsonIgnore]
         public Mod Instance { get; set; }
@@ -92,6 +94,14 @@ namespace Revolution.Registries.Containers
             return Instance != null;
         }
 
+        public void LoadContent()
+        {
+            if (Content != null)
+            {
+                Content.LoadContent(this);
+            }
+        }
+
         internal void LoadConfig()
         {
             if (Instance == null)
@@ -104,6 +114,11 @@ namespace Revolution.Registries.Containers
             {
                 Instance.LoadConfigurationSettings(configPath);
             }
+        }
+        
+        public Texture2D GetModTexture(string id)
+        {
+            return TextureRegistry.GetItem(this, id).Texture;
         }
     }
 }

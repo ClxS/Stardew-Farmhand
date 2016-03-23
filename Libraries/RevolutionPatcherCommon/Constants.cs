@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Revolution
 {
-    public class Constants
+    public class PatcherConstants
     {
         public static string StardewExe => "Stardew Valley.exe";
 

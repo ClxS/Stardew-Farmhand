@@ -63,7 +63,7 @@ namespace Revolution
                 this.buttons.Add(new ClickableTextureComponent(new Rectangle(this.width / 2 + getItemOffsetX(index++, 4), this.height - 174 - 24, 222, 174), "Load", "", this.titleButtonsTexture, new Rectangle(74, 187, 74, 58), 3f, false, false));
                 foreach(var customOption in CustomOptions)
                 {
-                    this.buttons.Add(new ClickableTextureComponent(new Rectangle(this.width / 2 + getItemOffsetX(index++, 4), this.height - 174 - 24, 222, 174), "Mods", "", TextureRegistry.GetItem("icon_menuModsButton"), new Rectangle(222, 187, 74, 58), 3f, false, false));
+                    this.buttons.Add(new ClickableTextureComponent(new Rectangle(this.width / 2 + getItemOffsetX(index++, 4), this.height - 174 - 24, 222, 174), "Mods", "", customOption.Texture, customOption.TextureSourceRect, 3f, false, false));
                 }
                 this.buttons.Add(new ClickableTextureComponent(new Rectangle(this.width / 2 + getItemOffsetX(index++, 4), this.height - 174 - 24, 222, 174), "Exit", "", this.titleButtonsTexture, new Rectangle(222, 187, 74, 58), 3f, false, false));
                 

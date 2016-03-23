@@ -14,9 +14,9 @@ namespace Revolution
         {
             CecilContext cecilContext;
 
-            InjectRevolutionCoreClasses(Constants.PassTwoPackageResult, Constants.PassOneRevolutionExe, Constants.RevolutionUIDll);
-            cecilContext = new CecilContext(Constants.PassTwoPackageResult);
-            RevolutionDllAssembly = Assembly.LoadFrom(Constants.RevolutionUIDll);
+            InjectRevolutionCoreClasses(PatcherConstants.PassTwoPackageResult, PatcherConstants.PassOneRevolutionExe, PatcherConstants.RevolutionUIDll);
+            cecilContext = new CecilContext(PatcherConstants.PassTwoPackageResult);
+            RevolutionDllAssembly = Assembly.LoadFrom(PatcherConstants.RevolutionUIDll);
             
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations<HookAlterBaseProtectionAttribute>(cecilContext);
@@ -26,7 +26,7 @@ namespace Revolution
             
             Console.WriteLine("Second Pass Installation Completed");
             
-            cecilContext.WriteAssembly(Constants.RevolutionExe);
+            cecilContext.WriteAssembly(PatcherConstants.RevolutionExe);
         }
 
         protected override void AlterTypeBaseProtections(CecilContext context, Type type)

@@ -24,9 +24,9 @@ namespace ModLoaderMod
         {
             try
             {
-                var texture = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("RevolutionContent\\customUI.png", FileMode.Open));
-                TextureRegistry.RegisterItem("icon_menuModsButton", texture);
-
+                var texture = this.ModSettings.GetModTexture("icon_menuModsButton");
+                //var texture2 = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("RevolutionContent\\customUI.png", FileMode.Open));
+               
                 Revolution.UI.TitleMenu.RegisterNewTitleButton(new Revolution.UI.TitleMenu.CustomTitleOption()
                 {
                     Key = "Mods",

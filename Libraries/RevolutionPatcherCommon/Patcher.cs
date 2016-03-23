@@ -130,7 +130,7 @@ namespace Revolution
             {
                 options.InputAssemblies = inputs;
                 options.OutputFile = output; 
-                options.SearchDirectories = new string[] { System.IO.Path.GetDirectoryName(Constants.CurrentAssemblyPath) };
+                options.SearchDirectories = new string[] { System.IO.Path.GetDirectoryName(PatcherConstants.CurrentAssemblyPath) };
 
                 ILRepack repack = new ILRepack(options, logger);
                 repack.Repack();

@@ -4,5 +4,15 @@
 	"ModDLL": "ModLoaderMod",
 	"Author": "ClxS",
 	"Version" : "0.1",
-	"Description" : "Logs various events."
+	"Description" : "An example Mod Loader.",
+	"Content" : 
+	{
+		"Textures" : 
+		[
+			{
+				"Id" : "icon_menuModsButton",
+				"File" : "customUI.png"
+			}
+		]
+	}
 }

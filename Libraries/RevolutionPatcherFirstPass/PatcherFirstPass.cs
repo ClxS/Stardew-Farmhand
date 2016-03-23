@@ -17,9 +17,9 @@ namespace Revolution
         {
             CecilContext cecilContext;
             
-            InjectRevolutionCoreClasses(Constants.PassOnePackageResult, Constants.StardewExe, Constants.RevolutionDll, Constants.JsonLibrary);
-            cecilContext = new CecilContext(Constants.PassOnePackageResult);
-            RevolutionDllAssembly = Assembly.LoadFrom(Constants.RevolutionDll);
+            InjectRevolutionCoreClasses(PatcherConstants.PassOnePackageResult, PatcherConstants.StardewExe, PatcherConstants.RevolutionDll, PatcherConstants.JsonLibrary);
+            cecilContext = new CecilContext(PatcherConstants.PassOnePackageResult);
+            RevolutionDllAssembly = Assembly.LoadFrom(PatcherConstants.RevolutionDll);
                                     
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations<HookAlterBaseProtectionAttribute>(cecilContext);
@@ -29,7 +29,7 @@ namespace Revolution
 
             Console.WriteLine("First Pass Installation Completed");
 
-            cecilContext.WriteAssembly(Constants.PassOneRevolutionExe);
+            cecilContext.WriteAssembly(PatcherConstants.PassOneRevolutionExe);
         }
 
         protected override void AlterTypeBaseProtections(CecilContext context, Type type)

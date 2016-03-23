@@ -24,7 +24,7 @@ namespace Revolution
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void LoadMods()
         {
-           // try
+            try
             {
                 Console.WriteLine("Loading Mod Manifests");
                 LoadModManifests();
@@ -33,31 +33,13 @@ namespace Revolution
                 Console.WriteLine("Importing Mod DLLs, Settings, and Content");
                 LoadFinalMods();
             }
-            //catch (System.Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //    Console.WriteLine(ex.StackTrace);
-            //}            
-        }
-
-        //[HookRedirect("StardewValley.TitleScreenMenu", ".ctor")]
-        [Hook(HookType.Entry, "StardewValley.Menus.TitleMenu", ".ctor")]
-        internal static void RegisterModUI()
-        {
-            Console.WriteLine("In Title Screen");
-            //TitleScreenMenu @this = inst as TitleScreenMenu;
-            //if (@this != null)
+            catch (System.Exception ex)
             {
-                //@this.buttons = new List<ClickableComponent>();
-                //@this.texture = Game1.temporaryContent.Load<Texture2D>(@"LooseSprites\TitleButtons");
-                //@this.buttons.Add(new ClickableComponent(new Rectangle(xPositionOnScreen + 4, yPositionOnScreen, 0x100, 0x9d), "by ConcernedApe"));
-                //@this.buttons.Add(new ClickableComponent(new Rectangle(xPositionOnScreen + 4, yPositionOnScreen + 0xb8, 0x100, 0x80), "New Game"));
-                //@this.buttons.Add(new ClickableComponent(new Rectangle(xPositionOnScreen + 4, yPositionOnScreen + 0x13d, 0x100, 0x80), "Load Game"));
-                //@this.buttons.Add(new ClickableComponent(new Rectangle(xPositionOnScreen + 4, yPositionOnScreen + 0x1c0, 0x100, 0x80), "Co-op"));
-                //@this.buttons.Add(new ClickableComponent(new Rectangle(xPositionOnScreen + 4, yPositionOnScreen + 0x243, 0x100, 0x80), "Leave Stardew Valley"));
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
             }
         }
-
+        
         private static void LoadFinalMods()
         {
             var registeredMods = ModRegistry.GetRegisteredItems();
@@ -69,7 +51,7 @@ namespace Revolution
                 {
                     if (mod.HasContent)
                     {
-                        //TODO
+                        mod.LoadContent();
                     }                    
                     if (mod.HasDLL)
                     {
