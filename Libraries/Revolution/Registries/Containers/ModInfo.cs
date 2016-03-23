@@ -16,7 +16,8 @@ namespace Revolution.Registries.Containers
         Loaded,
         MissingDependency,
         Errored,
-        ForciblyUnloaded
+        ForciblyUnloaded,
+        InvalidManifest
     }
 
     public class ModInfo

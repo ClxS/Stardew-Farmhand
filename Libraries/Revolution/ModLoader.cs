@@ -28,6 +28,8 @@ namespace Revolution
             {
                 Console.WriteLine("Loading Mod Manifests");
                 LoadModManifests();
+                Console.WriteLine("Validating Mod Manifests");
+                ValidateModManifests();
                 Console.WriteLine("Resolving Mod Dependencies");
                 ResolveDependencies();
                 Console.WriteLine("Importing Mod DLLs, Settings, and Content");
@@ -39,14 +41,34 @@ namespace Revolution
                 Console.WriteLine(ex.StackTrace);
             }
         }
-        
+
+        private static void ValidateModManifests()
+        {
+            var registeredMods = ModRegistry.GetRegisteredItems();
+            foreach (var mod in registeredMods.Where(n => n.ModState == ModState.Unloaded))
+            {
+                try
+                {
+                    if(mod.UniqueId.Contains("\\") || mod.HasContent && mod.Content.Textures != null && mod.Content.Textures.Any(n => n.Id.Contains("\\")))
+                    {
+                        Console.WriteLine($"Error - {mod.Name} by {mod.Author} manifest is invalid. Mod UniqueID cannot contain \"\\\"");
+                        mod.ModState = ModState.InvalidManifest;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"Error validating mod {mod.Name} by {mod.Author}\n\t-{ex.Message}");
+                }
+            }
+        }
+
         private static void LoadFinalMods()
         {
             var registeredMods = ModRegistry.GetRegisteredItems();
             Console.WriteLine("Mod Count: " + registeredMods.Count());
             foreach(var mod in registeredMods.Where(n => n.ModState == ModState.Unloaded))
             {
-                Console.WriteLine("Loading mod {0} by {1}", mod.Name, mod.Author);      
+                Console.WriteLine($"Loading mod: {mod.Name} by {mod.Author}");      
                 try
                 {
                     if (mod.HasContent)
@@ -65,7 +87,7 @@ namespace Revolution
                 }
                 catch (System.Exception ex)
                 {
-                    Console.WriteLine("Error loading mod {0} by {1}\n\t-{2}", mod.Name, mod.Author, ex.Message);
+                    Console.WriteLine($"Error loading mod {mod.Name} by {mod.Author}\n\t-{ex.Message}");
                     mod.ModState = ModState.Errored;
                     //TODO, well something broke. Do summut' 'bout it!
                 }
@@ -94,14 +116,14 @@ namespace Revolution
                                 mod.ModState = ModState.MissingDependency;
                                 dependency.DependencyState = DependencyState.Missing;
                                 stateChange = true;
-                                Console.WriteLine("Failed to load {0} due to missing dependency: {1}}", mod.Name, dependency.UniqueId);
+                                Console.WriteLine($"Failed to load {mod.Name} due to missing dependency: {dependency.UniqueId}");
                             }
                             else if (dependencyMatch.ModState == ModState.MissingDependency)
                             {
                                 mod.ModState = ModState.MissingDependency;
                                 dependency.DependencyState = DependencyState.ParentMissing;
                                 stateChange = true;
-                                Console.WriteLine("Failed to load {0} due to missing dependency missing dependency: {1}", mod.Name, dependency.UniqueId);
+                                Console.WriteLine($"Failed to load {mod.Name} due to missing dependency missing dependency: {dependency.UniqueId}");
                             }
                             else
                             {
@@ -113,16 +135,16 @@ namespace Revolution
                                         mod.ModState = ModState.MissingDependency;
                                         dependency.DependencyState = DependencyState.TooLowVersion;
                                         stateChange = true;
-                                        Console.WriteLine("Failed to load {0} due to minimum version incompatibility with {1}: v.{2} < v.{3}",
-                                            mod.Name, dependency.UniqueId, dependencyMatch.Version.ToString(), dependency.MinimumVersion.ToString());
+                                        Console.WriteLine($"Failed to load {mod.Name} due to minimum version incompatibility with {dependency.UniqueId}: " +
+                                            $"v.{dependencyMatch.Version.ToString()} < v.{dependency.MinimumVersion.ToString()}");
                                     }
                                     else if (dependency.MaximumVersion != null && dependency.MaximumVersion < dependencyVersion)
                                     {
                                         mod.ModState = ModState.MissingDependency;
                                         dependency.DependencyState = DependencyState.TooHighVersion;
                                         stateChange = true;
-                                        Console.WriteLine("Failed to load {0} due to maximum version incompatibility with {1}: v.{2} > v.{3}",
-                                            mod.Name, dependency.UniqueId, dependencyMatch.Version.ToString(), dependency.MinimumVersion.ToString());
+                                        Console.WriteLine($"Failed to load {mod.Name} due to maximum version incompatibility with {dependency.UniqueId}: " +
+                                            $"v.{dependencyMatch.Version.ToString()} > v.{dependency.MinimumVersion.ToString()}");
                                     }
                                 }
                             }
@@ -145,13 +167,18 @@ namespace Revolution
                         {
                             string json = r.ReadToEnd();
                             ModInfo modInfo = JsonConvert.DeserializeObject<ModInfo>(json);
-
+                            
                             modInfo.ModRoot = modPath;
                             ModRegistry.RegisterItem(modInfo.UniqueId ?? Guid.NewGuid().ToString(), modInfo);
                         }
                     }
                 }
             }
+        }
+
+        private static void ValidateModInfo(ModInfo modInfo)
+        {
+            throw new NotImplementedException();
         }
 
         public static void DeactivateMod(Mod mod)
