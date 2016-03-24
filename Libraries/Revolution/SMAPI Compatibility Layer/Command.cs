@@ -59,12 +59,12 @@ namespace StardewModdingAPI
             Command c = new Command(command, cdesc, args);
             if (RegisteredCommands.Contains(c))
             {
-                Log.Error("Command already registered! [{0}]", c.CommandName);
+                Log.Error($"Command already registered! [{c.CommandName}]");
                 return RegisteredCommands.Find(x => x.Equals(c));
             }
 
             RegisteredCommands.Add(c);
-            Log.Verbose("Registered command: " + command);
+            Log.Verbose($"Registered command: {command}");
 
             return c;
         }

@@ -283,7 +283,7 @@ namespace StardewModdingAPI.Inheritance
         {
             if (modItem.HasBeenRegistered)
             {
-                Log.Error("The item {0} has already been registered with ID {1}", modItem.Name, modItem.RegisteredId);
+                Log.Error($"The item {modItem.Name} has already been registered with ID {modItem.RegisteredId}");
                 return modItem.RegisteredId;
             }
             Int32 newId = LowestModItemID;

@@ -34,13 +34,13 @@ namespace Revolution
                     }
                     catch (System.Exception ex)
                     {
-                        Console.WriteLine("Error setting protections for {0}: \n\t{1}", asmType.FullName, ex.Message);
+                        Console.WriteLine($"Error setting protections for {asmType.FullName}: \n\t{ex.Message}");
                     }
                 }
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine("Error setting method/field protections: \n\t{0}", ex.Message);
+                Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}");
             }
         }
         protected void HookMakeBaseVirtualCallAlterations<T>(CecilContext cecilContext)
@@ -57,13 +57,13 @@ namespace Revolution
                     }
                     catch (System.Exception ex)
                     {
-                        Console.WriteLine("Error setting protections for {0}.{1}: \n\t{1}", asmMethod.DeclaringType.FullName, asmMethod.Name, ex.Message);
+                        Console.WriteLine($"Error setting protections for {asmMethod.DeclaringType.FullName}.{asmMethod.Name}: \n\t{ex.Message}");
                     }
                 }
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine("Error setting method/field protections: \n\t{0}", ex.Message);
+                Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}");
             }
         }
 
@@ -83,13 +83,13 @@ namespace Revolution
                     }
                     catch (System.Exception ex)
                     {
-                        Console.WriteLine("Error setting protections for {0}: \n\t{1}", asmType.FullName, ex.Message);
+                        Console.WriteLine($"Error setting protections for {asmType.FullName}: \n\t{ex.Message}");
                     }
                 }
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine("Error setting method/field protections: \n\t{0}", ex.Message);
+                Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}");
             }
         }
 
@@ -106,13 +106,13 @@ namespace Revolution
                     }
                     catch (System.Exception ex)
                     {
-                        Console.WriteLine("Error setting protections for {0}: \n\t{1}", asmType.FullName, ex.Message);
+                        Console.WriteLine($"Error setting protections for {asmType.FullName}: \n\t{ex.Message}");
                     }
                 }
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine("Error setting method/field protections: \n\t{0}", ex.Message);
+                Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}");
             }
         }
 

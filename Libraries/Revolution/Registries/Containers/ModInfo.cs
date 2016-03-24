@@ -80,7 +80,7 @@ namespace Revolution.Registries.Containers
                     Instance = (Mod)mod.CreateInstance(tar.ToString());
                     Instance.ModSettings = this;
                     Instance.Entry();
-                    Console.WriteLine("Loaded mod: {0}", Name);
+                    Console.WriteLine($"Loaded mod: {Name}", Name);
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace Revolution.Registries.Containers
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("Failed to load mod '{0}'\n\t-{2}\n\t\t-{3}", modDllPath, ex.Message, ex.StackTrace), ex);
+                throw new Exception(string.Format($"Failed to load mod '{modDllPath}'\n\t-{ex.Message}\n\t\t-{ex.StackTrace}"), ex);
             }
 
             return Instance != null;

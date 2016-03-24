@@ -52,7 +52,7 @@ namespace ModLoaderMod.Menus
             {
                 if (mod.UniqueId != ModLoader.Instance.ModSettings.UniqueId)
                 {
-                    var checkbox = new DisableableOptionCheckbox(string.Format("{0} by {1}", mod.Name, mod.Author), 11, -1, -1);
+                    var checkbox = new DisableableOptionCheckbox($"{mod.Name} by {mod.Author}", 11, -1, -1);
                     checkbox.isChecked = mod.ModState == ModState.Loaded;
 
                     if(mod.ModState != ModState.Loaded && mod.ModState != ModState.Inactive)
@@ -91,7 +91,7 @@ namespace ModLoaderMod.Menus
                 else if (tooHigh.Any())
                 {
                     checkbox.disableReason = string.Format("{0}: {1}", "Dependency Version Too High: ", string.Join(",",
-                       tooHigh.Select(n => n.UniqueId + string.Format("(Maximum: {0})", n.MaximumVersion.ToString()))));
+                       tooHigh.Select(n => n.UniqueId + $"(Maximum: {n.MaximumVersion.ToString()})")));
                 }
             }
         }

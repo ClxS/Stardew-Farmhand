@@ -67,7 +67,7 @@ namespace Revolution
                         }
                         catch (System.Exception ex)
                         {
-                            Console.WriteLine("Failed to Inject {0}.{1} into {2}.{3}\n\t{4}", typeName, methodName, hookTypeName, hookMethodName, ex.Message);
+                            Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
                         }
                     }
                 }

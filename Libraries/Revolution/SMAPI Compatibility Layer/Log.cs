@@ -19,7 +19,7 @@ namespace StardewModdingAPI
         public static void Initialize(string logPath)
         {
             _logPath = logPath;
-            var logFile = string.Format("{0}\\MODDED_ProgramLog.Log_LATEST.txt", logPath);
+            var logFile = string.Format($"{logPath}\\MODDED_ProgramLog.Log_LATEST.txt");
             try
             {
                 _logStream = new StreamWriter(logFile, false);
