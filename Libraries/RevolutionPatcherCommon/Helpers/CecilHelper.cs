@@ -61,8 +61,8 @@ namespace Revolution.Helpers
         {
             MethodDefinition methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
             ILProcessor ilProcessor = stardewContext.GetMethodILProcessor(injecteeType, injecteeMethod);
-            InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition);
-            //InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
+            //InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition);
+            InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
         }
 
         public static void InjectExitMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod,

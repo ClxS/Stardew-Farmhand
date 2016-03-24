@@ -54,9 +54,9 @@ namespace Revolution.Events
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Update")]
-        internal static void InvokeBeforeUpdate()
+        internal static bool InvokeBeforeUpdate()
         {
-            EventCommon.SafeCancellableInvoke(OnBeforeUpdateTick, null, new CancelEventArgs());
+            return EventCommon.SafeCancellableInvoke(OnBeforeUpdateTick, null, new CancelEventArgs());
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "Update")]

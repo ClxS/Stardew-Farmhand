@@ -17,9 +17,9 @@ namespace Revolution.Events
         public static event EventHandler OnLevelUp = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.Game1", "farmerTakeDamage")]
-        internal static void InvokeBeforePlayerTakesDamage()
+        internal static bool InvokeBeforePlayerTakesDamage()
         {
-            EventCommon.SafeCancellableInvoke(OnBeforePlayerTakesDamage, null, new EventArgsOnBeforePlayerTakesDamage());
+            return EventCommon.SafeCancellableInvoke(OnBeforePlayerTakesDamage, null, new EventArgsOnBeforePlayerTakesDamage());
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "farmerTakeDamage")]
