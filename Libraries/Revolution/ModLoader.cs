@@ -112,7 +112,7 @@ namespace Revolution
                 }
                 catch (System.Exception ex)
                 {
-                    Log.Error($"Error loading mod {mod.Name} by {mod.Author}\n\t-{ex.Message}");
+                    Log.Exception($"Error loading mod {mod.Name} by {mod.Author}", ex);
                     mod.ModState = ModState.Errored;
                     //TODO, well something broke. Do summut' 'bout it!
                 }

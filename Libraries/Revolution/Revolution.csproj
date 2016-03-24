@@ -68,6 +68,7 @@
     <Compile Include="Attributes\HookRedirectConstructorFromBaseAttribute.cs" />
     <Compile Include="Attributes\PendingHookAttribute.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Content\ContentManager.cs" />
     <Compile Include="Events\ApiEvents.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAfterPlayerTakesDamage.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAnimalEatGrass.cs" />
@@ -100,9 +101,11 @@
     <Compile Include="Registries\Containers\ModDependency.cs" />
     <Compile Include="Registries\Containers\ModInfo.cs" />
     <Compile Include="Registries\Containers\ModTexture.cs" />
+    <Compile Include="Registries\Containers\ModXnb.cs" />
     <Compile Include="Registries\ModRegistry.cs" />
     <Compile Include="Registries\Registry.cs" />
     <Compile Include="Registries\TextureRegistry.cs" />
+    <Compile Include="Registries\XnbRegistry.cs" />
     <Compile Include="SMAPI Compatibility Layer\Command.cs" />
     <Compile Include="SMAPI Compatibility Layer\Entities\SPlayer.cs" />
     <Compile Include="SMAPI Compatibility Layer\Events\Controls.cs" />

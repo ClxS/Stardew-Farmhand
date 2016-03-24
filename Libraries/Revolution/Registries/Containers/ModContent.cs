@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Revolution.Logging;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -11,26 +13,45 @@ namespace Revolution.Registries.Containers
         {
             get
             {
-                return Textures.Any();
+                return (Textures != null && Textures.Any()) ||
+                    (XNB != null && XNB.Any());
             }
         }
 
+
         public List<ModTexture> Textures { get; set; }
+        public List<ModXnb> XNB { get; set; }
 
         public void LoadContent(ModInfo mod)
         {
-            foreach(var texture in Textures)
+            if (Textures != null)
             {
-                texture.AbsoluteFilePath = $"{mod.ModRoot}\\{Constants.ModContentDirectory}\\{texture.File}";
-
-                if (!texture.Exists())
+                foreach (var texture in Textures)
                 {
-                    throw new Exception($"Missing Texture: {texture.AbsoluteFilePath}");
-                }
+                    texture.AbsoluteFilePath = $"{mod.ModRoot}\\{Constants.ModContentDirectory}\\{texture.File}";
 
-                TextureRegistry.RegisterItem(mod, texture.Id, texture);
-            }           
-        }
-        
+                    if (!texture.Exists())
+                    {
+                        throw new Exception($"Missing Texture: {texture.AbsoluteFilePath}");
+                    }
+
+                    TextureRegistry.RegisterItem(mod, texture.Id, texture);
+                }
+            }
+            
+            if (XNB != null)
+            {
+                foreach (var file in XNB)
+                {
+                    file.AbsoluteFilePath = $"{mod.ModRoot}\\{Constants.ModContentDirectory}\\{file.File}";
+                    file.OwningMod = mod;
+                    if (!file.Exists())
+                    {
+                        throw new Exception($"Missing XNB: {file.AbsoluteFilePath}");
+                    }
+                    XnbRegistry.RegisterItem(file.File, file);
+                }
+            }
+        }        
     }
 }

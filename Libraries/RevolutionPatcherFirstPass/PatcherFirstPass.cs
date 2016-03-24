@@ -20,7 +20,7 @@ namespace Revolution
             InjectRevolutionCoreClasses(PatcherConstants.PassOnePackageResult, PatcherConstants.StardewExe, PatcherConstants.RevolutionDll, PatcherConstants.JsonLibrary);
             cecilContext = new CecilContext(PatcherConstants.PassOnePackageResult, true);
             RevolutionDllAssembly = Assembly.LoadFrom(PatcherConstants.RevolutionDll);
-                                    
+            
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations<HookAlterBaseProtectionAttribute>(cecilContext);
             HookApiVirtualAlterations<HookForceVirtualBaseAttribute>(cecilContext);

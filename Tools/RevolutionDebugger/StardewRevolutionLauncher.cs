@@ -23,7 +23,7 @@ namespace RevolutionDebugger
         {
             if (RevolutionAssembly == null)
                 return false;
-            
+                        
             Console.WriteLine("Starting Stardew Valley...");
             RevolutionAssembly.EntryPoint.Invoke(null, new object[] { new string[0] });
             return true;

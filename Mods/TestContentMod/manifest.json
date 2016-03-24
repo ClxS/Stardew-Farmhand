@@ -1,0 +1,16 @@
+﻿{
+	"UniqueId" : "Clxs'sAssetLoadingTest",
+	"Name" : "Test Content Mod",
+	"Author": "ClxS",
+	"Version" : "0.1",
+	"Description" : "An example Content only mod.",	
+	"Content" : 
+	{
+		"XNB" : 
+		[
+			{
+				"File" : "farmhouse_tiles"
+			}
+		]
+	}
+}

@@ -15,7 +15,6 @@ namespace LoggingMod
     {
         public override void Entry()
         {
-            Log.IsVerbose = false;
             Revolution.Events.GameEvents.OnBeforeGameInitialised += OnGameInitialising;
             Revolution.Events.GameEvents.OnAfterGameInitialised += OnGameInitialised;
             Revolution.Events.GameEvents.OnBeforeLoadContent += GameEvents_OnBeforeLoadContent;
@@ -53,12 +52,12 @@ namespace LoggingMod
 
         private void GraphicsEvents_OnAfterDraw(object sender, EventArgs e)
         {
-            Log.Verbose("GraphicsEvents_OnAfterDraw");
+            //Log.Verbose("GraphicsEvents_OnAfterDraw");
         }
 
         private void GraphicsEvents_OnBeforeDraw(object sender, EventArgs e)
         {
-            Log.Verbose("GraphicsEvents_OnBeforeDraw");
+            //Log.Verbose("GraphicsEvents_OnBeforeDraw");
         }
 
         private void GraphicsEvents_OnResize(object sender, EventArgs e)
@@ -68,12 +67,12 @@ namespace LoggingMod
 
         private void GameEvents_OnAfterUpdateTick(object sender, EventArgs e)
         {
-            Log.Verbose("GameEvents_OnAfterUpdateTick");
+           // Log.Verbose("GameEvents_OnAfterUpdateTick");
         }
 
         private void GameEvents_OnBeforeUpdateTick(object sender, EventArgs e)
         {
-            Log.Verbose("GameEvents_OnBeforeUpdateTick");
+            //Log.Verbose("GameEvents_OnBeforeUpdateTick");
         }
 
         private void GameEvents_OnAfterLoadedContent(object sender, EventArgs e)
