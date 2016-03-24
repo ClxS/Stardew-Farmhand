@@ -15,19 +15,19 @@ namespace Revolution.Events
         [PendingHook]
         internal static void InvokeResize()
         {
-            OnResize.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnResize, null);
         }
         
         [PendingHook]
         internal static void InvokeBeforeDraw(object sender, EventArgs e)
         {
-            OnBeforeDraw.Invoke(sender, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnBeforeDraw, null);
         }
         
         [PendingHook]
         internal static void InvokeAfterDraw(object sender, EventArgs e)
         {
-            OnAfterDraw.Invoke(sender, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnAfterDraw, null);
         }
     }
 }

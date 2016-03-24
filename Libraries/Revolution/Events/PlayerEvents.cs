@@ -17,41 +17,39 @@ namespace Revolution.Events
         public static event EventHandler OnLevelUp = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.Game1", "farmerTakeDamage")]
-        internal static bool InvokeBeforePlayerTakesDamage()
+        internal static void InvokeBeforePlayerTakesDamage()
         {
-            var args = new EventArgsOnBeforePlayerTakesDamage();
-            OnBeforePlayerTakesDamage.Invoke(null, args);
-            return args.Cancel;
+            EventCommon.SafeCancellableInvoke(OnBeforePlayerTakesDamage, null, new EventArgsOnBeforePlayerTakesDamage());
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "farmerTakeDamage")]
         internal static void InvokeAfterPlayerTakesDamage()
         {
-            OnAfterPlayerTakesDamage.Invoke(null, new EventArgsOnAfterPlayerTakesDamage());
+            EventCommon.SafeInvoke(OnAfterPlayerTakesDamage, null, new EventArgsOnAfterPlayerTakesDamage());
         }
         
         [Hook(HookType.Exit, "StardewValley.Game1", "doneEating")]
         internal static void InvokeOnPlayerDoneEating()
         {
-            OnPlayerDoneEating.Invoke(null, new EventArgsOnPlayerDoneEating());
+            EventCommon.SafeInvoke(OnPlayerDoneEating, null, new EventArgsOnPlayerDoneEating());
         }
         
         [PendingHook]
         internal static void InvokeFarmerChanged()
         {
-            OnFarmerChanged.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnFarmerChanged, null);
         }
         
         [Hook(HookType.Exit, "StardewValley.Game1", "addItemToInventory")]
         internal static void InvokeInventoryChanged()
         {
-            OnInventoryChanged.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnInventoryChanged, null);
         }
         
         [PendingHook]
         internal static void InvokeLevelUp()
         {
-            OnLevelUp.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnLevelUp, null);
         }  
 
     }

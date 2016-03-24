@@ -16,19 +16,19 @@ namespace Revolution.Events
         [Hook(HookType.Entry, "StardewValley.FarmAnimal", "eatGrass")]
         internal static void InvokeOnBeforeEatGrass()
         {
-            OnBeforeEatGrass.Invoke(null, new EventArgsOnAnimalEatGrass());
+            EventCommon.SafeInvoke(OnBeforeEatGrass, null, new EventArgsOnAnimalEatGrass());
         }
 
         [Hook(HookType.Entry, "StardewValley.FarmAnimal", "makeSound")]
         internal static void InvokeOnMakeSound()
         {
-            OnMakeSound.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnMakeSound, null);
         }
 
         [Hook(HookType.Entry, "StardewValley.FarmAnimal", "farmerPushing")]
         internal static void InvokeOnFarmerPushing()
         {
-            OnFarmerPushing.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnFarmerPushing, null);
         }
     }
 }

@@ -17,15 +17,15 @@ namespace Revolution
             InjectRevolutionCoreClasses(PatcherConstants.PassTwoPackageResult, PatcherConstants.PassOneRevolutionExe, PatcherConstants.RevolutionUIDll);
             cecilContext = new CecilContext(PatcherConstants.PassTwoPackageResult, true);
             RevolutionDllAssembly = Assembly.LoadFrom(PatcherConstants.RevolutionUIDll);
-            
+
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations<HookAlterBaseProtectionAttribute>(cecilContext);
             HookApiVirtualAlterations<HookForceVirtualBaseAttribute>(cecilContext);
             HookMakeBaseVirtualCallAlterations<HookMakeBaseVirtualCallAttribute>(cecilContext);
             HookConstructionRedirectors<HookRedirectConstructorFromBaseAttribute>(cecilContext);
-            
+
             Console.WriteLine("Second Pass Installation Completed");
-            
+
             cecilContext.WriteAssembly(PatcherConstants.RevolutionExe, true);
         }
 

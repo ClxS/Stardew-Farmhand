@@ -14,7 +14,7 @@ namespace Revolution.Events
         [PendingHook]
         internal static void InvokeMenuChanged(IClickableMenu priorMenu, IClickableMenu newMenu)
         {
-            OnMenuChanged.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnMenuChanged, null);
         }
     }
 }

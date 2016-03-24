@@ -19,47 +19,54 @@ namespace Revolution.Events
         public static event EventHandler OnAfterYearChanged = delegate { };
 
         [Hook(HookType.Entry, "StardewValley.Game1", "performTenMinuteClockUpdate")]
-        internal static void InvokeBeforeTimeChanged(Int32 priorInt, Int32 newInt)
+        internal static void InvokeBeforeTimeChanged()
         {
-            OnBeforeTimeChanged.Invoke(null, EventArgs.Empty);
+            try
+            {
+                EventCommon.SafeInvoke(OnBeforeTimeChanged, null);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Error(ex.Message);
+            }
         }
 
-        [Hook(HookType.Exit, "StardewValley.Game1", "performTenMinuteClockUpdate")]
-        internal static void InvokeAfterTimeChanged(Int32 priorInt, Int32 newInt)
+        /*[Hook(HookType.Exit, "StardewValley.Game1", "performTenMinuteClockUpdate")]
+        internal static void InvokeAfterTimeChanged()
         {
-            OnAfterTimeChanged.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnAfterTimeChanged, null);
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "newDayAfterFade")]
-        internal static void InvokeBeforeDayChanged(Int32 priorInt, Int32 newInt)
+        internal static void InvokeBeforeDayChanged()
         {
-            OnBeforeDayChanged.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnBeforeDayChanged, null);
         }
         [Hook(HookType.Exit, "StardewValley.Game1", "newDayAfterFade")]
-        internal static void InvokeAfterDayChanged(Int32 priorInt, Int32 newInt)
+        internal static void InvokeAfterDayChanged()
         {
-            OnAfterDayChanged.Invoke(null, EventArgs.Empty);
-        }
-        
+            EventCommon.SafeInvoke(OnAfterDayChanged, null);
+        }*/
+
         [Hook(HookType.Entry, "StardewValley.Game1", "newSeason")]
-        internal static void InvokeBeforeSeasonChanged(String priorString, String newString)
+        internal static void InvokeBeforeSeasonChanged()
         {
-            OnBeforeSeasonChanged.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnBeforeSeasonChanged, null);
         }
         [Hook(HookType.Exit, "StardewValley.Game1", "newSeason")]
-        internal static void InvokeAfterSeasonChanged(String priorString, String newString)
+        internal static void InvokeAfterSeasonChanged()
         {
-            OnAfterSeasonChanged.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnAfterSeasonChanged, null);
         }
         
         [PendingHook]
-        internal static void InvokeBeforeYearChanged(Int32 priorInt, Int32 newInt) 
+        internal static void InvokeBeforeYearChanged() 
         {
             throw new NotImplementedException();
         }
         
         [PendingHook]
-        internal static void InvokeAfterYearChanged(Int32 priorInt, Int32 newInt)
+        internal static void InvokeAfterYearChanged()
         {
             throw new NotImplementedException();
         }

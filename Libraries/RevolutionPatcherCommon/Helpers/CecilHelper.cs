@@ -34,15 +34,11 @@ namespace Revolution.Helpers
                 ilProcessor.InsertBefore(target, callEnterInstruction);
             }
 
-            if(cancelable)
+            if (cancelable)
             {
-                var stLoc = ilProcessor.Create(OpCodes.Stloc_0);
-                var ldLoc = ilProcessor.Create(OpCodes.Ldloc_0);
-                var branch = ilProcessor.Create(OpCodes.Brfalse, target);
+                var branch = ilProcessor.Create(OpCodes.Brtrue, ilProcessor.Body.Instructions.Last());
                 var ret = ilProcessor.Create(OpCodes.Ret);
-                
                 ilProcessor.InsertAfter(callEnterInstruction, branch);
-                ilProcessor.InsertAfter(branch, ret);
             }
 
         }
@@ -64,8 +60,9 @@ namespace Revolution.Helpers
             string injectedType, string injectedMethod)
         {
             MethodDefinition methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
-            ILProcessor ilProcessor = stardewContext.GetMethodILProcessor(injecteeType, injecteeMethod);            
-            InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
+            ILProcessor ilProcessor = stardewContext.GetMethodILProcessor(injecteeType, injecteeMethod);
+            InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition);
+            //InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
         }
 
         public static void InjectExitMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod,

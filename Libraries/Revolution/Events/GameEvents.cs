@@ -20,23 +20,23 @@ namespace Revolution.Events
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
         internal static void InvokeBeforeGameInitialise()
         {
-            OnBeforeGameInitialised.Invoke(null, new EventArgsOnGameInitialise());
+            EventCommon.SafeInvoke(OnBeforeGameInitialised, null, new EventArgsOnGameInitialise());
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "Initialize")]
         internal static void InvokeAfterGameInitialise()
         {
-            OnAfterGameInitialised.Invoke(null, new EventArgsOnGameInitialised());
+            EventCommon.SafeInvoke(OnAfterGameInitialised, null, new EventArgsOnGameInitialised());
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "LoadContent")]
         internal static void InvokeBeforeLoadContent()
         {
-            OnBeforeLoadContent.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnBeforeLoadContent, null);
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "LoadContent")]
-        public static void InvokeAfterLoadedContent()
+        internal static void InvokeAfterLoadedContent()
         {
             EventCommon.SafeInvoke(OnAfterLoadedContent, null);
         }
@@ -44,27 +44,25 @@ namespace Revolution.Events
         [Hook(HookType.Entry, "StardewValley.Game1", "UnloadContent")]
         internal static void InvokeBeforeUnloadContent()
         {
-            OnBeforeUnoadContent.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnBeforeUnoadContent, null);
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "UnloadContent")]
         internal static void InvokeAfterUnloadedContent()
         {
-            OnAfterUnloadedContent.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnAfterUnloadedContent, null);
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Update")]
-        internal static bool InvokeBeforeUpdate()
+        internal static void InvokeBeforeUpdate()
         {
-            var args = new CancelEventArgs();
-            OnBeforeUpdateTick.Invoke(null, args);
-            return args.Cancel;
+            EventCommon.SafeCancellableInvoke(OnBeforeUpdateTick, null, new CancelEventArgs());
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "Update")]
         internal static void InvokeAfterUpdate()
         {
-            OnAfterUpdateTick.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnAfterUpdateTick, null);
         }
     }
 }

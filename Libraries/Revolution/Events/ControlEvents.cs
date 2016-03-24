@@ -22,49 +22,49 @@ namespace Revolution.Events
         [PendingHook]
         internal static void InvokeKeyboardChanged(KeyboardState priorState, KeyboardState newState)
         {
-            OnKeyboardChanged.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnKeyboardChanged, null);
         }
 
         [PendingHook]
         internal static void InvokeMouseChanged(MouseState priorState, MouseState newState)
         {
-            OnMouseChanged.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnMouseChanged, null);
         }
 
         [PendingHook]
         internal static void InvokeKeyPressed(Keys key)
         {
-            OnKeyPressed.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnKeyPressed, null);
         }
 
         [PendingHook]
         internal static void InvokeKeyReleased(Keys key)
         {
-            OnKeyReleased.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnKeyReleased, null);
         }
 
         [PendingHook]
         internal static void InvokeButtonPressed(PlayerIndex playerIndex, Buttons buttons)
         {
-            OnControllerButtonPressed.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnControllerButtonPressed, null);
         }
 
         [PendingHook]
         internal static void InvokeButtonReleased(PlayerIndex playerIndex, Buttons buttons)
         {
-            OnControllerButtonReleased.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnControllerButtonReleased, null);
         }
 
         [PendingHook]
         internal static void InvokeTriggerPressed(PlayerIndex playerIndex, Buttons buttons, float value)
         {
-            OnControllerTriggerPressed.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnControllerTriggerPressed, null);
         }
 
         [PendingHook]
         internal static void InvokeTriggerReleased(PlayerIndex playerIndex, Buttons buttons, float value)
         {
-            OnControllerTriggerReleased.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnControllerTriggerReleased, null);
         }
     }
 }
