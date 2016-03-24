@@ -80,7 +80,7 @@ namespace Revolution.Registries.Containers
                     Instance = (Mod)mod.CreateInstance(tar.ToString());
                     Instance.ModSettings = this;
                     Instance.Entry();
-                    Console.WriteLine($"Loaded mod: {Name}", Name);
+                    Console.WriteLine($"Loaded mod: {Name}");
                 }
                 else
                 {
