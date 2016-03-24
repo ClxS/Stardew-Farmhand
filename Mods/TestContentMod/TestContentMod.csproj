@@ -43,9 +43,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\Data\Achievements.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Content\farmhouse_tiles.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
