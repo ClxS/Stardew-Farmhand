@@ -20,27 +20,20 @@ namespace ModLoaderMod
         {
             Instance = this;
             Revolution.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;
-        }
+        }        
 
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
         {
-            try
-            {
-                var texture = this.ModSettings.GetModTexture("icon_menuModsButton");
-                //var texture2 = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("RevolutionContent\\customUI.png", FileMode.Open));
+            var texture = this.ModSettings.GetModTexture("icon_menuModsButton");
+            //var texture2 = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("RevolutionContent\\customUI.png", FileMode.Open));
                
-                Revolution.UI.TitleMenu.RegisterNewTitleButton(new Revolution.UI.TitleMenu.CustomTitleOption()
-                {
-                    Key = "Mods",
-                    Texture = texture,
-                    TextureSourceRect = new Rectangle(222, 187, 74, 58),
-                    OnClick = new Action<Revolution.UI.TitleMenu, string>(OnModMenuItemClicked)
-                });
-            }
-            catch (System.Exception ex)
+            Revolution.UI.TitleMenu.RegisterNewTitleButton(new Revolution.UI.TitleMenu.CustomTitleOption()
             {
-            	
-            }            
+                Key = "Mods",
+                Texture = texture,
+                TextureSourceRect = new Rectangle(222, 187, 74, 58),
+                OnClick = new Action<Revolution.UI.TitleMenu, string>(OnModMenuItemClicked)
+            });     
         }
 
         public void OnModMenuItemClicked(Revolution.UI.TitleMenu menu, string choice)

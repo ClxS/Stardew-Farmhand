@@ -60,6 +60,20 @@ namespace Revolution
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
+        internal static void Exception(string message, Exception ex)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            if (IsVerbose)
+            {
+                LogInternal($"{message}\n\t{ex.Message}\n\t{ex.StackTrace}");
+            }
+            else
+            {
+                LogInternal($"{message}\n\t{ex.Message}");
+            }
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
         /// <summary>
         /// Important message indicating an error.
         /// </summary>

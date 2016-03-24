@@ -68,13 +68,16 @@
     <Compile Include="Attributes\HookRedirectConstructorFromBaseAttribute.cs" />
     <Compile Include="Attributes\PendingHookAttribute.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Events\ApiEvents.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAfterPlayerTakesDamage.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAnimalEatGrass.cs" />
     <Compile Include="Events\Arguments\EventArgsOnGameInitialise.cs" />
     <Compile Include="Events\Arguments\EventArgsOnGameInitialised.cs" />
+    <Compile Include="Events\Arguments\EventArgsOnModError.cs" />
     <Compile Include="Events\Arguments\EventArgsOnPlayerDoneEating.cs" />
     <Compile Include="Events\Arguments\EventArgsOnBeforePlayerTakesDamage.cs" />
     <Compile Include="Events\ControlEvents.cs" />
+    <Compile Include="Events\EventCommon.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\FarmAnimalEvents.cs" />
     <Compile Include="Events\GameEvents.cs" />
@@ -119,7 +122,6 @@
     <Compile Include="SMAPI Compatibility Layer\Log.cs" />
     <Compile Include="SMAPI Compatibility Layer\Mod.cs" />
     <Compile Include="SMAPI Compatibility Layer\ModItem.cs" />
-    <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\" />

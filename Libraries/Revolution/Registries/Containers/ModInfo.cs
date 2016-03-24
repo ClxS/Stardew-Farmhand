@@ -11,9 +11,9 @@ namespace Revolution.Registries.Containers
 {
     public enum ModState
     {
-        Inactive,
         Unloaded,
         Loaded,
+        Deactivated,
         MissingDependency,
         Errored,
         ForciblyUnloaded,
@@ -39,6 +39,8 @@ namespace Revolution.Registries.Containers
 
         [JsonIgnore]
         public ModState ModState { get; set; }
+        [JsonIgnore]
+        public Exception LastException { get; set; }
         [JsonIgnore]
         public bool HasDLL { get { return !string.IsNullOrWhiteSpace(ModDLL); } }
         [JsonIgnore]

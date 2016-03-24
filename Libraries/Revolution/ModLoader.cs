@@ -27,6 +27,8 @@ namespace Revolution
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void LoadMods()
         {
+            ApiEvents.OnModError += ApiEvents_OnModError;
+
             Log.Info("Loading Mods...");
             try
             {
@@ -46,6 +48,22 @@ namespace Revolution
             }
             var numModsLoaded = ModRegistry.GetRegisteredItems().Count(n => n.ModState == ModState.Loaded);
             Log.Info($"{numModsLoaded} Mods Loaded!");
+        }
+
+        private static void ApiEvents_OnModError(object sender, Events.Arguments.EventArgsOnModError e)
+        {
+            var mod = ModRegistry.GetRegisteredItems().FirstOrDefault(n => n.ModAssembly == e.Assembly);
+            if(mod != null)
+            {
+                Log.Exception($"Exception thrown by mod: {mod.Name} - {mod.Author}", e.Exception);
+                DeactivateMod(mod, ModState.Errored, e.Exception);
+            }
+            else
+            {
+                Log.Error($"Exception thrown by unknown mod with assembly: {e.Assembly.FullName}\n\t{e.Exception.Message}");
+                DetachAssemblyDelegates(e.Assembly);
+            }
+
         }
 
         private static void ValidateModManifests()
@@ -186,16 +204,23 @@ namespace Revolution
             throw new NotImplementedException();
         }
 
-        public static void DeactivateMod(Mod mod)
+        public static void DeactivateMod(Mod mod, ModState state = ModState.Deactivated, Exception error = null)
         {
             DeactivateMod(mod.ModSettings);
         }
 
-        public static void DeactivateMod(ModInfo mod)
+        public static void DeactivateMod(ModInfo mod, ModState state = ModState.Deactivated, Exception error = null)
         {
-            if(mod.ModAssembly != null)
+            DetachAssemblyDelegates(mod.ModAssembly);
+            mod.ModState = state;
+            mod.LastException = error;
+        }
+
+        public static void DetachAssemblyDelegates(Assembly assembly)
+        {
+            if (assembly != null)
             {
-                ModEventManager.DetachDelegates(mod.ModAssembly);
+                ModEventManager.DetachDelegates(assembly);
             }
         }
 

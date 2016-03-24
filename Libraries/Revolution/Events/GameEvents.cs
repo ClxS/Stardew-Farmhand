@@ -2,6 +2,7 @@
 using Revolution.Events.Arguments;
 using System;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace Revolution.Events
 {
@@ -35,11 +36,11 @@ namespace Revolution.Events
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "LoadContent")]
-        internal static void InvokeAfterLoadedContent()
+        public static void InvokeAfterLoadedContent()
         {
-            OnAfterLoadedContent.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OnAfterLoadedContent, null);
         }
-
+                
         [Hook(HookType.Entry, "StardewValley.Game1", "UnloadContent")]
         internal static void InvokeBeforeUnloadContent()
         {
