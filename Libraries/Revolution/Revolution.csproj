@@ -83,6 +83,7 @@
     <Compile Include="Events\PlayerEvents.cs" />
     <Compile Include="Events\TimeEvents.cs" />
     <Compile Include="HookManager.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Menus\TitleMenu.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="ModLoader.cs" />

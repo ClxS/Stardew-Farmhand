@@ -44,7 +44,6 @@ namespace Revolution.Registries
 
         public static Texture2D GetItem(string itemId)
         {
-            Console.WriteLine("Getting texture");
             return RegistryInstance.GetItem(itemId);
         }
         
@@ -78,7 +77,6 @@ namespace Revolution.Registries
 
         public static ModTexture GetItem(ModInfo mod, string itemId)
         {
-            Console.WriteLine("Getting mod texture");
             return ModTextureRegistryInstance.GetItem(GetModSpecificItemId(mod, itemId));
         }
 

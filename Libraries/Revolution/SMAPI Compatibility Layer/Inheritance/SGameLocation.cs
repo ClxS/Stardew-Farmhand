@@ -33,7 +33,6 @@ namespace StardewModdingAPI.Inheritance
                         if (fi != null && !fi.IsStatic)
                         {
                             fi.SetValue(s, v.GetValue(baseClass));
-                            //Console.WriteLine("SET {0} ON {1} TO {2}", fi.Name, s.name, v.GetValue(baseClass));
                         }
                     }
                     catch (Exception ex)

@@ -229,10 +229,7 @@ namespace StardewModdingAPI.Inheritance
 
             x = (x / Game1.tileSize);
             y = (y / Game1.tileSize);
-
-            //Program.LogDebug(x + " - " + y);
-            //Console.ReadKey();
-
+            
             Vector2 key = new Vector2(x, y);
 
             if (!canBePlacedHere(location, key))

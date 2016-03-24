@@ -17,13 +17,13 @@ namespace Revolution
 
         public static void Test3()
         {
-            Console.WriteLine("Test 1");
+            Log.Info("Test 1");
             if (Test2())
             {
-                Console.WriteLine("Test 2");
+                Log.Info("Test 2");
                 return;
             }
-            Console.WriteLine("Test 3");            
+            Log.Info("Test 3");            
             return;
         }
     }

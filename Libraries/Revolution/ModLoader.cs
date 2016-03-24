@@ -24,22 +24,25 @@ namespace Revolution
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void LoadMods()
         {
+            Log.Info("Loading Mods...");
             try
             {
-                Console.WriteLine("Loading Mod Manifests");
+                Log.Verbose("Loading Mod Manifests");
                 LoadModManifests();
-                Console.WriteLine("Validating Mod Manifests");
+                Log.Verbose("Validating Mod Manifests");
                 ValidateModManifests();
-                Console.WriteLine("Resolving Mod Dependencies");
+                Log.Verbose("Resolving Mod Dependencies");
                 ResolveDependencies();
-                Console.WriteLine("Importing Mod DLLs, Settings, and Content");
+                Log.Verbose("Importing Mod DLLs, Settings, and Content");
                 LoadFinalMods();
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
+                Log.Error(ex.Message);
+                Log.Error(ex.StackTrace);
             }
+            var numModsLoaded = ModRegistry.GetRegisteredItems().Count(n => n.ModState == ModState.Loaded);
+            Log.Info($"{numModsLoaded} Mods Loaded!");
         }
 
         private static void ValidateModManifests()
@@ -51,13 +54,13 @@ namespace Revolution
                 {
                     if(mod.UniqueId.Contains("\\") || mod.HasContent && mod.Content.Textures != null && mod.Content.Textures.Any(n => n.Id.Contains("\\")))
                     {
-                        Console.WriteLine($"Error - {mod.Name} by {mod.Author} manifest is invalid. Mod UniqueID cannot contain \"\\\"");
+                        Log.Error($"Error - {mod.Name} by {mod.Author} manifest is invalid. UniqueIDs cannot contain \"\\\"");
                         mod.ModState = ModState.InvalidManifest;
                     }
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine($"Error validating mod {mod.Name} by {mod.Author}\n\t-{ex.Message}");
+                    Log.Error($"Error validating mod {mod.Name} by {mod.Author}\n\t-{ex.Message}");
                 }
             }
         }
@@ -65,10 +68,9 @@ namespace Revolution
         private static void LoadFinalMods()
         {
             var registeredMods = ModRegistry.GetRegisteredItems();
-            Console.WriteLine("Mod Count: " + registeredMods.Count());
             foreach(var mod in registeredMods.Where(n => n.ModState == ModState.Unloaded))
             {
-                Console.WriteLine($"Loading mod: {mod.Name} by {mod.Author}");      
+                Log.Verbose($"Loading mod: {mod.Name} by {mod.Author}");      
                 try
                 {
                     if (mod.HasContent)
@@ -83,11 +85,12 @@ namespace Revolution
                     {
                         mod.LoadConfig();
                     }
-                    mod.ModState = ModState.Loaded;                 
+                    mod.ModState = ModState.Loaded;
+                    Log.Success($"Loaded Mod: {mod.Name} v{mod.Version} by {mod.Author}");              
                 }
                 catch (System.Exception ex)
                 {
-                    Console.WriteLine($"Error loading mod {mod.Name} by {mod.Author}\n\t-{ex.Message}");
+                    Log.Error($"Error loading mod {mod.Name} by {mod.Author}\n\t-{ex.Message}");
                     mod.ModState = ModState.Errored;
                     //TODO, well something broke. Do summut' 'bout it!
                 }
@@ -116,14 +119,14 @@ namespace Revolution
                                 mod.ModState = ModState.MissingDependency;
                                 dependency.DependencyState = DependencyState.Missing;
                                 stateChange = true;
-                                Console.WriteLine($"Failed to load {mod.Name} due to missing dependency: {dependency.UniqueId}");
+                                Log.Error($"Failed to load {mod.Name} due to missing dependency: {dependency.UniqueId}");
                             }
                             else if (dependencyMatch.ModState == ModState.MissingDependency)
                             {
                                 mod.ModState = ModState.MissingDependency;
                                 dependency.DependencyState = DependencyState.ParentMissing;
                                 stateChange = true;
-                                Console.WriteLine($"Failed to load {mod.Name} due to missing dependency missing dependency: {dependency.UniqueId}");
+                                Log.Error($"Failed to load {mod.Name} due to missing dependency missing dependency: {dependency.UniqueId}");
                             }
                             else
                             {
@@ -135,7 +138,7 @@ namespace Revolution
                                         mod.ModState = ModState.MissingDependency;
                                         dependency.DependencyState = DependencyState.TooLowVersion;
                                         stateChange = true;
-                                        Console.WriteLine($"Failed to load {mod.Name} due to minimum version incompatibility with {dependency.UniqueId}: " +
+                                        Log.Error($"Failed to load {mod.Name} due to minimum version incompatibility with {dependency.UniqueId}: " +
                                             $"v.{dependencyMatch.Version.ToString()} < v.{dependency.MinimumVersion.ToString()}");
                                     }
                                     else if (dependency.MaximumVersion != null && dependency.MaximumVersion < dependencyVersion)
@@ -143,7 +146,7 @@ namespace Revolution
                                         mod.ModState = ModState.MissingDependency;
                                         dependency.DependencyState = DependencyState.TooHighVersion;
                                         stateChange = true;
-                                        Console.WriteLine($"Failed to load {mod.Name} due to maximum version incompatibility with {dependency.UniqueId}: " +
+                                        Log.Error($"Failed to load {mod.Name} due to maximum version incompatibility with {dependency.UniqueId}: " +
                                             $"v.{dependencyMatch.Version.ToString()} > v.{dependency.MinimumVersion.ToString()}");
                                     }
                                 }
