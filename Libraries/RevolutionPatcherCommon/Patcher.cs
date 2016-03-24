@@ -129,7 +129,8 @@ namespace Revolution
             try
             {
                 options.InputAssemblies = inputs;
-                options.OutputFile = output; 
+                options.OutputFile = output;
+                options.DebugInfo = true;
                 options.SearchDirectories = new string[] { System.IO.Path.GetDirectoryName(PatcherConstants.CurrentAssemblyPath) };
 
                 ILRepack repack = new ILRepack(options, logger);

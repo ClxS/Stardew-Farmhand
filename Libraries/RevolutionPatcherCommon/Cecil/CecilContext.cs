@@ -1,5 +1,6 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
+using Mono.Cecil.Pdb;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,9 +15,19 @@ namespace Revolution.Cecil
     {
         private AssemblyDefinition _assemblyDefinition { get; set; }
 
-        public CecilContext(string assembly)
+        public CecilContext(string assembly, bool loadPdb = false)
         {
-            _assemblyDefinition = AssemblyDefinition.ReadAssembly(assembly);
+            if (loadPdb)
+            {
+                var readerParameters = new ReaderParameters();
+                readerParameters.SymbolReaderProvider = new PdbReaderProvider();
+                readerParameters.ReadSymbols = true;
+                _assemblyDefinition = AssemblyDefinition.ReadAssembly(assembly, readerParameters);
+            }
+            else
+            {
+                _assemblyDefinition = AssemblyDefinition.ReadAssembly(assembly);
+            }
         }
 
         public ILProcessor GetMethodILProcessor(string type, string method)
@@ -79,9 +90,19 @@ namespace Revolution.Cecil
             return reference;
         }
 
-        public void WriteAssembly(string file)
+        public void WriteAssembly(string file, bool writePdb = false)
         {
-            _assemblyDefinition.Write(file);
+            if(writePdb)
+            {
+                var writerParameters = new WriterParameters();
+                writerParameters.SymbolWriterProvider = new PdbWriterProvider();
+                writerParameters.WriteSymbols = true;
+                _assemblyDefinition.Write(file, writerParameters);
+            }
+            else
+            {
+                _assemblyDefinition.Write(file);
+            }
         }
 
         public void InsertType(TypeDefinition type)
