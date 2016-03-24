@@ -11,6 +11,7 @@ using Revolution.Registries;
 using Revolution.Registries.Containers;
 using Revolution.UI.Components;
 using Revolution;
+using Revolution.Logging;
 
 namespace ModLoaderMod.Menus
 {

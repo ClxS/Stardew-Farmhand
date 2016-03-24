@@ -1,6 +1,7 @@
 ﻿using Revolution;
 using Revolution.Events;
 using Revolution.Events.Arguments;
+using Revolution.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

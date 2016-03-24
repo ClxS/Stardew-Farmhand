@@ -13,6 +13,7 @@ using StardewValley.Menus;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Revolution.Events;
+using Revolution.Logging;
 
 namespace Revolution
 {

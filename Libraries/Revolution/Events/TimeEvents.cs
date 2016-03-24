@@ -1,4 +1,5 @@
 ﻿using Revolution.Attributes;
+using Revolution.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

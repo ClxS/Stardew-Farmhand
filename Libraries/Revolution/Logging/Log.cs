@@ -1,14 +1,21 @@
-﻿using System;
+﻿using Revolution.Logging.Loggers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Revolution
+namespace Revolution.Logging
 {
     public class Log
     {
-        public static bool IsVerbose { get; set; }
+        public static bool IsVerbose { get; set; } = false;
+        private static ILogger Logger { get; set; } = new ConsoleLogger();
 
+        public static void SetLoggerType<T>() where T : ILogger, new()
+        {
+            Logger = new T();
+        }
+        
         /// <summary>
         /// Print provided parameters to the console/file as applicable
         /// </summary>
@@ -28,9 +35,8 @@ namespace Revolution
         /// <param name="values"></param>
         public static void Success(string message)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            LogInternal(message);
-            Console.ForegroundColor = ConsoleColor.Gray;
+            LogEntry logItem = new LogEntry() { Message = message, Color = LogEntryColor.Green };
+            Logger.Write(logItem);
         }
 
         /// <summary>
@@ -42,9 +48,8 @@ namespace Revolution
         {
             if (IsVerbose)
             {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                LogInternal(message);
-                Console.ForegroundColor = ConsoleColor.Gray;
+                LogEntry logItem = new LogEntry() { Message = message, Color = LogEntryColor.DarkGrey };
+                Logger.Write(logItem);
             }
         }
 
@@ -55,9 +60,8 @@ namespace Revolution
         /// <param name="values"></param>
         public static void Info(string message)
         {
-            Console.ForegroundColor = ConsoleColor.Gray;
-            LogInternal(message);
-            Console.ForegroundColor = ConsoleColor.Gray;
+            LogEntry logItem = new LogEntry() { Message = message };
+            Logger.Write(logItem);
         }
 
         internal static void Exception(string message, Exception ex)
@@ -65,11 +69,13 @@ namespace Revolution
             Console.ForegroundColor = ConsoleColor.Red;
             if (IsVerbose)
             {
-                LogInternal($"{message}\n\t{ex.Message}\n\t{ex.StackTrace}");
+                LogEntry logItem = new LogEntry() { Message = $"{message}\n\t{ex.Message}\n\t{ex.StackTrace}", Color = LogEntryColor.Red };
+                Logger.Write(logItem);                
             }
             else
             {
-                LogInternal($"{message}\n\t{ex.Message}");
+                LogEntry logItem = new LogEntry() { Message = $"{message}\n\t{ex.Message}", Color = LogEntryColor.Red };
+                Logger.Write(logItem);
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
@@ -81,9 +87,8 @@ namespace Revolution
         /// <param name="values"></param>
         public static void Error(string message)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            LogInternal(message);
-            Console.ForegroundColor = ConsoleColor.Gray;
+            LogEntry logItem = new LogEntry() { Message = message, Color = LogEntryColor.Red };
+            Logger.Write(logItem);
         }
     }
 }

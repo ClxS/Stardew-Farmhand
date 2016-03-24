@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using Revolution.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
