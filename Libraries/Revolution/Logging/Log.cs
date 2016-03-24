@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Revolution.Logging
 {
-    public class Log
+    public static class Log
     {
         public static bool IsVerbose { get; set; } = false;
         private static ILogger Logger { get; set; } = new ConsoleLogger();
