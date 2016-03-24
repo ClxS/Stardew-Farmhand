@@ -39,21 +39,18 @@ namespace Revolution.Registries.Containers
 
         [JsonIgnore]
         public ModState ModState { get; set; }
-
         [JsonIgnore]
         public bool HasDLL { get { return !string.IsNullOrWhiteSpace(ModDLL); } }
         [JsonIgnore]
         public bool HasConfig { get { return HasDLL && !string.IsNullOrWhiteSpace(ConfigurationFile); } }
-
         [JsonIgnore]
         public bool HasContent { get { return Content != null && Content.HasContent; } }
-
+        [JsonIgnore]
+        public Assembly ModAssembly { get; set; }
         [JsonIgnore]
         public Mod Instance { get; set; }
-
         [JsonIgnore]
         public string ModRoot { get; set; }
-
         [JsonIgnore]
         private object ConfigurationSettings { get; set; }
         
@@ -73,11 +70,11 @@ namespace Revolution.Registries.Containers
 
             try
             {
-                Assembly mod = Assembly.LoadFrom(modDllPath);
-                if (mod.GetTypes().Count(x => x.BaseType == typeof(Mod)) > 0)
+                ModAssembly = Assembly.LoadFrom(modDllPath);
+                if (ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Mod)) > 0)
                 {
-                    Type tar = mod.GetTypes().First(x => x.BaseType == typeof(Mod));
-                    Instance = (Mod)mod.CreateInstance(tar.ToString());
+                    Type tar = ModAssembly.GetTypes().First(x => x.BaseType == typeof(Mod));
+                    Instance = (Mod)ModAssembly.CreateInstance(tar.ToString());
                     Instance.ModSettings = this;
                     Instance.Entry();
                     Log.Verbose ($"Loaded mod dll: {Name}");

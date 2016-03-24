@@ -1,12 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ModLoaderMod.Menus;
+using Revolution.Events;
 using Revolution.Events.Arguments;
 using Revolution.Registries;
 using StardewValley;
 using StardewValley.Menus;
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace ModLoaderMod
 {
@@ -17,7 +19,7 @@ namespace ModLoaderMod
         public override void Entry()
         {
             Instance = this;
-            Revolution.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;            
+            Revolution.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;
         }
 
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)

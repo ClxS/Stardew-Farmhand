@@ -1,7 +1,9 @@
 ﻿using Revolution;
+using Revolution.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +13,7 @@ namespace LoggingMod
     {
         public override void Entry()
         {
+            Log.IsVerbose = true;
             Revolution.Events.GameEvents.OnBeforeGameInitialised += OnGameInitialising;
             Revolution.Events.GameEvents.OnAfterGameInitialised += OnGameInitialised;
             Revolution.Events.GameEvents.OnBeforeLoadContent += GameEvents_OnBeforeLoadContent;
@@ -22,8 +25,7 @@ namespace LoggingMod
             Revolution.Events.GraphicsEvents.OnAfterDraw += GraphicsEvents_OnAfterDraw;
             Revolution.Events.LocationEvents.OnLocationsChanged += LocationEvents_OnLocationsChanged;
             Revolution.Events.LocationEvents.OnCurrentLocationChanged += LocationEvents_OnCurrentLocationChanged;
-            Revolution.Events.LocationEvents.OnLocationObjectsChanged += LocationEvents_OnLocationObjectsChanged;
-            
+            Revolution.Events.LocationEvents.OnLocationObjectsChanged += LocationEvents_OnLocationObjectsChanged;     
         }
 
         private void LocationEvents_OnLocationObjectsChanged(object sender, EventArgs e)

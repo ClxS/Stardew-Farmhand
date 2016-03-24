@@ -10,6 +10,7 @@ using System.Text;
 using Revolution.Registries;
 using Revolution.Registries.Containers;
 using Revolution.UI.Components;
+using Revolution;
 
 namespace ModLoaderMod.Menus
 {
@@ -108,9 +109,29 @@ namespace ModLoaderMod.Menus
                 if (this.optionSlots[index].bounds.Contains(x, y) && this.currentItemIndex + index < Enumerable.Count<OptionsElement>((IEnumerable<OptionsElement>)this.modToggles) && this.modToggles[this.currentItemIndex + index].bounds.Contains(x - this.optionSlots[index].bounds.X, y - this.optionSlots[index].bounds.Y))
                 {
                     this.modToggles[this.currentItemIndex + index].receiveLeftClick(x - this.optionSlots[index].bounds.X, y - this.optionSlots[index].bounds.Y);
+
+                    onTogglePress(this.modToggles[this.currentItemIndex + index]);
+
                     break;
                 }
             }
+        }
+
+        private void onTogglePress(DisableableOptionCheckbox disableableOptionCheckbox)
+        {
+            if(!disableableOptionCheckbox.isDisabled)
+            {
+                if (disableableOptionCheckbox.isChecked)
+                {
+                    Log.Info($"Loaded Mod: {modOptions[disableableOptionCheckbox].Name}");
+                    Revolution.ModLoader.ReactivateMod(modOptions[disableableOptionCheckbox]);
+                }
+                else
+                {
+                    Log.Info($"Unloaded Mod: {modOptions[disableableOptionCheckbox].Name}");
+                    Revolution.ModLoader.DeactivateMod(modOptions[disableableOptionCheckbox]);
+                }
+            }            
         }
 
         public override void performHoverAction(int x, int y)

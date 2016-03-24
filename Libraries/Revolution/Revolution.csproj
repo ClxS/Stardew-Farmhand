@@ -75,6 +75,7 @@
     <Compile Include="Events\Arguments\EventArgsOnPlayerDoneEating.cs" />
     <Compile Include="Events\Arguments\EventArgsOnBeforePlayerTakesDamage.cs" />
     <Compile Include="Events\ControlEvents.cs" />
+    <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\FarmAnimalEvents.cs" />
     <Compile Include="Events\GameEvents.cs" />
     <Compile Include="Events\GraphicsEvents.cs" />

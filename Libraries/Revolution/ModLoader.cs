@@ -12,6 +12,7 @@ using StardewValley;
 using StardewValley.Menus;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Revolution.Events;
 
 namespace Revolution
 {
@@ -20,6 +21,8 @@ namespace Revolution
         internal static List<string> ModPaths = new List<string>() {
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
         };
+
+        internal static EventManager ModEventManager = new EventManager();
         
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void LoadMods()
@@ -96,7 +99,6 @@ namespace Revolution
                 }
             }
         }
-
 
         private static void ResolveDependencies()
         {
@@ -186,8 +188,28 @@ namespace Revolution
 
         public static void DeactivateMod(Mod mod)
         {
-            //TODO Deactivate all events associated with mod
-            //TODO Unload mod's domain
+            DeactivateMod(mod.ModSettings);
+        }
+
+        public static void DeactivateMod(ModInfo mod)
+        {
+            if(mod.ModAssembly != null)
+            {
+                ModEventManager.DetachDelegates(mod.ModAssembly);
+            }
+        }
+
+        public static void ReactivateMod(Mod mod)
+        {
+            ReactivateMod(mod.ModSettings);
+        }
+
+        public static void ReactivateMod(ModInfo mod)
+        {
+            if (mod.ModAssembly != null)
+            {
+                ModEventManager.ReattachDelegates(mod.ModAssembly);
+            }
         }
     }
 }
