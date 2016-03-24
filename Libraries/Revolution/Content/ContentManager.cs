@@ -17,19 +17,17 @@ namespace Revolution.Content
         [Hook(HookType.Entry, "StardewValley.Game1", "LoadContent")]
         internal static void ConstructionHook()
         {
-            Log.Verbose("Rewriting ContentManager with our own");
+            Log.Verbose("Using Revolution's ContentManager");
             Game1.game1.Content = new ContentManager(Game1.game1.Content.ServiceProvider, Game1.game1.Content.RootDirectory);
         }
 
         public ContentManager(IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
-            Log.Success("test1");
         }
         public ContentManager(IServiceProvider serviceProvider, string rootDirectory)
             : base(serviceProvider, rootDirectory)
         {
-            Log.Success("test2");
         }
 
         public override T Load<T>(string assetName)
