@@ -1,4 +1,4 @@
-﻿using StardewModdingAPI.Inheritance;
+using StardewModdingAPI.Inheritance;
 using StardewValley;
 using System;
 using System.Collections.Generic;

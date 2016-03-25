@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Revolution.Logging;
@@ -104,37 +103,6 @@ namespace Revolution
                 Log.Error("An error occured when updating a config: " + ex);
                 return this as T;
             }
-        }
-    }
-
-    public static class ConfigExtensions
-    {
-        /// <summary>
-        /// Writes a config to a json blob on the disk specified in the config's properties.
-        /// </summary>
-        public static void WriteConfig<T>(this T baseConfig) where T : ModConfiguration
-        {
-            if (string.IsNullOrEmpty(baseConfig?.ConfigLocation) || string.IsNullOrEmpty(baseConfig.ConfigDir))
-            {
-                Log.Error("A config attempted to save when it itself or it's location were null.");
-                return;
-            }
-
-            var s = JsonConvert.SerializeObject(baseConfig, typeof(T), Formatting.Indented, new JsonSerializerSettings());
-
-            if (!Directory.Exists(baseConfig.ConfigDir))
-                Directory.CreateDirectory(baseConfig.ConfigDir);
-
-            if (!File.Exists(baseConfig.ConfigLocation) || !File.ReadAllText(baseConfig.ConfigLocation).SequenceEqual(s))
-                File.WriteAllText(baseConfig.ConfigLocation, s);
-        }
-
-        /// <summary>
-        /// Re-reads the json blob on the disk and merges its values with a default config
-        /// </summary>
-        public static T ReloadConfig<T>(this T baseConfig) where T : ModConfiguration
-        {
-            return baseConfig.UpdateConfig<T>();
         }
     }
 }

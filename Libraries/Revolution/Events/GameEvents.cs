@@ -1,10 +1,8 @@
 ﻿using Revolution.Attributes;
-using Revolution.Events.Arguments;
 using System;
 using System.ComponentModel;
 using Microsoft.Xna.Framework;
 using Revolution.Events.Arguments.GameEvents;
-using Revolution.Logging;
 
 namespace Revolution.Events
 {

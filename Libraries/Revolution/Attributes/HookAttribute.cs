@@ -2,12 +2,6 @@
 
 namespace Revolution.Attributes
 {
-    public enum HookType
-    {
-        Entry,
-        Exit
-    }
-
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public sealed class HookAttribute : Attribute
     {

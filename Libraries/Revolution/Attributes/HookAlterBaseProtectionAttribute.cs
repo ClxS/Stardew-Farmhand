@@ -2,13 +2,6 @@
 
 namespace Revolution.Attributes
 {
-    public enum LowestProtection
-    {
-        Private,
-        Protected,
-        Public
-    }
-
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class HookAlterBaseProtectionAttribute : Attribute
     {

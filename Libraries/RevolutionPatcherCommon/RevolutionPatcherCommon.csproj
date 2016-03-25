@@ -72,7 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cecil\CecilContext.cs" />
-    <Compile Include="Constants.cs" />
+    <Compile Include="PatcherConstants.cs" />
     <Compile Include="Helpers\AssemblyExtensionMethods.cs" />
     <Compile Include="Helpers\CecilHelper.cs" />
     <Compile Include="Helpers\TypeExtensionMethods.cs" />

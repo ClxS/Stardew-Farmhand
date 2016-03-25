@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using System.ComponentModel;
 using StardewValley;
 
 namespace Revolution.Events.Arguments.PlayerEvents
