@@ -1,9 +1,6 @@
 ﻿using StardewValley;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
+// ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Inheritance
 {
     public enum ChangeType

@@ -1,22 +1,22 @@
-﻿using Mono.Cecil;
-using System;
+﻿using System;
 using System.Reflection;
+using Mono.Cecil;
 
-namespace Revolution.Cecil
+namespace Revolution.Reflection
 {
     public class ReflectionContext
     {
-        private AssemblyDefinition _assemblyDefinition { get; set; }
+        private AssemblyDefinition AssemblyDefinition { get; }
 
         public ReflectionContext(string assemblyPath)
         {
-            //_assemblyDefinition = AssemblyDefinition.ReadAssembly(Assembly.GetExecutingAssembly().Location);
+            AssemblyDefinition = AssemblyDefinition.ReadAssembly(assemblyPath);
             //_assemblyDefinition = AssemblyDefinition.ReadAssembly(Constants.StardewExePath);
         }
         
-        public ConstructorInfo GetSMAPITypeContructor(string type)
+        public ConstructorInfo GetSmapiTypeContructor(string type)
         {
-            if (_assemblyDefinition == null)
+            if (AssemblyDefinition == null)
                 throw new Exception("ERROR Assembly not properly read. Cannot parse");
             
             ConstructorInfo methodInfo = null;
@@ -32,7 +32,7 @@ namespace Revolution.Cecil
 
         public MethodInfo GetMethodReference(string type, string method)
         {
-            if (_assemblyDefinition == null)
+            if (AssemblyDefinition == null)
                 throw new Exception("ERROR Assembly not properly read. Cannot parse");
 
             MethodInfo methodInfo = null;

@@ -4,7 +4,7 @@ namespace RevolutionDebugger
 {
     class Program
     {
-        static int Main(string[] args)
+        static int Main()
         {
             StardewRevolutionLauncher launcher = new StardewRevolutionLauncher();
             try
@@ -14,7 +14,7 @@ namespace RevolutionDebugger
                     throw new Exception("Could not launch Stardew Revolution");
                 }
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return -1;
             }

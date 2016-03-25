@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
+// ReSharper disable CheckNamespace
 namespace StardewModdingAPI
 {
     public static class Extensions
@@ -41,7 +40,8 @@ namespace StardewModdingAPI
 
         public static int GetHash(this IEnumerable enumerable)
         {
-            int hash = 0;
+            var hash = 0;
+            // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var v in enumerable)
             {
                 hash ^= v.GetHashCode();

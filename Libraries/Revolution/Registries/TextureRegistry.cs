@@ -1,40 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Revolution.Registries.Containers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Revolution.Registries
 {
     public class TextureRegistry
     {
         private static Registry<string, Texture2D> _textureRegistryInstance;
-        private static Registry<string, Texture2D> RegistryInstance
-        {
-            get
-            {
-                if (_textureRegistryInstance == null)
-                {
-                    _textureRegistryInstance = new Registry<string, Texture2D>();
-                }
-                return _textureRegistryInstance;
-            }
-        }
+        private static Registry<string, Texture2D> RegistryInstance => _textureRegistryInstance ?? (_textureRegistryInstance = new Registry<string, Texture2D>());
 
         private static Registry<string, ModTexture> _modTextureRegistryInstance;
-        private static Registry<string, ModTexture> ModTextureRegistryInstance
-        {
-            get
-            {
-                if (_modTextureRegistryInstance == null)
-                {
-                    _modTextureRegistryInstance = new Registry<string, ModTexture>();
-                }
-                return _modTextureRegistryInstance;
-            }
-        }
-        
+        private static Registry<string, ModTexture> ModTextureRegistryInstance => _modTextureRegistryInstance ?? (_modTextureRegistryInstance = new Registry<string, ModTexture>());
+
         #region Standard Texture Registry
 
         public static IEnumerable<Texture2D> GetRegisteredTextures()

@@ -4,7 +4,6 @@ using Revolution.Cecil;
 using System.Reflection;
 using Revolution.Helpers;
 using Revolution.Attributes;
-using System.ComponentModel;
 
 namespace Revolution
 {
@@ -12,11 +11,9 @@ namespace Revolution
     {
         public override void PatchStardew()
         {
-            CecilContext cecilContext;
-
-            InjectRevolutionCoreClasses(PatcherConstants.PassTwoPackageResult, PatcherConstants.PassOneRevolutionExe, PatcherConstants.RevolutionUIDll);
-            cecilContext = new CecilContext(PatcherConstants.PassTwoPackageResult, true);
-            RevolutionDllAssembly = Assembly.LoadFrom(PatcherConstants.RevolutionUIDll);
+            InjectRevolutionCoreClasses(PatcherConstants.PassTwoPackageResult, PatcherConstants.PassOneRevolutionExe, PatcherConstants.RevolutionUiDll);
+            var cecilContext = new CecilContext(PatcherConstants.PassTwoPackageResult, true);
+            RevolutionDllAssembly = Assembly.LoadFrom(PatcherConstants.RevolutionUiDll);
 
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations<HookAlterBaseProtectionAttribute>(cecilContext);
@@ -32,9 +29,10 @@ namespace Revolution
         protected override void AlterTypeBaseProtections(CecilContext context, Type type)
         {
             var attributeValue = type.GetCustomAttributes(typeof(HookAlterBaseProtectionAttribute), false).First() as HookAlterBaseProtectionAttribute;
-            CecilHelper.AlterProtectionOnTypeMembers(context, attributeValue.Protection == LowestProtection.Public, type.BaseType.FullName);
+            if (type.BaseType != null)
+                CecilHelper.AlterProtectionOnTypeMembers(context, attributeValue != null && attributeValue.Protection == LowestProtection.Public, type.BaseType.FullName);
         }
-        
+
         protected override void HookApiEvents(CecilContext cecilContext)
         {
             try
@@ -46,30 +44,34 @@ namespace Revolution
 
                 foreach (var method in methods)
                 {
-                    string typeName = method.DeclaringType.FullName;
-                    string methodName = method.Name;
+                    if (method.DeclaringType == null) continue;
+
+                    var typeName = method.DeclaringType.FullName;
+                    var methodName = method.Name;
                     var hookAttributes = method.GetCustomAttributes(typeof(HookAttribute), false).Cast<HookAttribute>();
 
                     foreach (var hook in hookAttributes)
                     {
-                        string hookTypeName = hook.Type;
-                        string hookMethodName = hook.Method;
+                        var hookTypeName = hook.Type;
+                        var hookMethodName = hook.Method;
                         try
                         {
                             switch (hook.HookType)
                             {
                                 case HookType.Entry: CecilHelper.InjectEntryMethod(cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
                                 case HookType.Exit: CecilHelper.InjectExitMethod(cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
+                                default:
+                                    throw new Exception("Unknown HookType");
                             }
                         }
-                        catch (System.Exception ex)
+                        catch (Exception ex)
                         {
                             Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
                         }
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -77,8 +79,8 @@ namespace Revolution
 
         protected override void RedirectConstructorInMethod(CecilContext cecilContext, Type asmType)
         {
-            var attributes = asmType.GetCustomAttributes(typeof(HookRedirectConstructorFromBaseAttribute), false).ToList().Cast<HookRedirectConstructorFromBaseAttribute>();
-            foreach(var attribute in attributes)
+            var attributes = asmType.GetCustomAttributes(typeof (HookRedirectConstructorFromBaseAttribute), false).ToList().Cast<HookRedirectConstructorFromBaseAttribute>();
+            foreach (var attribute in attributes)
             {
                 CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.Type, attribute.Method);
             }
@@ -86,10 +88,11 @@ namespace Revolution
 
         protected override void SetVirtualCallOnMethod(CecilContext cecilContext, MethodInfo asmMethod)
         {
-            var attributes = asmMethod.GetCustomAttributes(typeof(HookMakeBaseVirtualCallAttribute), false).ToList().Cast<HookMakeBaseVirtualCallAttribute>();
-            foreach (var attribute in attributes)
+            var attributes = asmMethod.GetCustomAttributes(typeof (HookMakeBaseVirtualCallAttribute), false).ToList().Cast<HookMakeBaseVirtualCallAttribute>();
+            foreach (var attribute in attributes.Where(attribute => asmMethod.DeclaringType?.BaseType != null))
             {
-                CecilHelper.SetVirtualCallOnMethod(cecilContext, asmMethod.DeclaringType.BaseType.FullName, asmMethod.Name, attribute.Type, attribute.Method);
+                if (asmMethod.DeclaringType?.BaseType != null)
+                    CecilHelper.SetVirtualCallOnMethod(cecilContext, asmMethod.DeclaringType.BaseType.FullName, asmMethod.Name, attribute.Type, attribute.Method);
             }
         }
     }

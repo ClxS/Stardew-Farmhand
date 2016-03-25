@@ -2,51 +2,46 @@
 using Mono.Cecil.Cil;
 using Mono.Cecil.Pdb;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Revolution.Cecil
 {
     public class CecilContext
     {
-        private AssemblyDefinition _assemblyDefinition { get; set; }
+        private AssemblyDefinition AssemblyDefinition { get; }
 
         public CecilContext(string assembly, bool loadPdb = false)
         {
             if (loadPdb)
             {
-                var readerParameters = new ReaderParameters();
-                readerParameters.SymbolReaderProvider = new PdbReaderProvider();
-                readerParameters.ReadSymbols = true;
-                _assemblyDefinition = AssemblyDefinition.ReadAssembly(assembly, readerParameters);
+                var readerParameters = new ReaderParameters
+                {
+                    SymbolReaderProvider = new PdbReaderProvider(),
+                    ReadSymbols = true
+                };
+                AssemblyDefinition = AssemblyDefinition.ReadAssembly(assembly, readerParameters);
             }
             else
             {
-                _assemblyDefinition = AssemblyDefinition.ReadAssembly(assembly);
+                AssemblyDefinition = AssemblyDefinition.ReadAssembly(assembly);
             }
         }
 
-        public ILProcessor GetMethodILProcessor(string type, string method)
+        public ILProcessor GetMethodIlProcessor(string type, string method)
         {
-            if (_assemblyDefinition == null)
+            if (AssemblyDefinition == null)
                 throw new Exception("ERROR Assembly not properly read. Cannot parse");
 
             if (string.IsNullOrWhiteSpace(type) || string.IsNullOrWhiteSpace(method))
-                throw new ArgumentNullException("Both type and method must be set");
+                throw new Exception("Both type and method must be set");
 
-            Mono.Cecil.Cil.ILProcessor ilProcessor = null;
-            TypeDefinition typeDef = GetTypeDefinition(type);
-            if (typeDef != null)
+            ILProcessor ilProcessor = null;
+            var typeDef = GetTypeDefinition(type);
+            var methodDef = typeDef?.Methods.FirstOrDefault(m => m.Name == method);
+            if (methodDef != null)
             {
-                MethodDefinition methodDef = typeDef.Methods.FirstOrDefault(m => m.Name == method);
-                if (methodDef != null)
-                {
-                    ilProcessor = methodDef.Body.GetILProcessor();
-                }
+                ilProcessor = methodDef.Body.GetILProcessor();
             }
 
             return ilProcessor;
@@ -54,13 +49,13 @@ namespace Revolution.Cecil
 
         public TypeDefinition GetTypeDefinition(string type)
         {
-            if (_assemblyDefinition == null)
+            if (AssemblyDefinition == null)
                 throw new Exception("ERROR Assembly not properly read. Cannot parse");
 
             if (string.IsNullOrWhiteSpace(type))
-                throw new ArgumentNullException("Both type and method must be set");
+                throw new Exception("Both type and method must be set");
 
-            TypeDefinition typeDef = _assemblyDefinition.MainModule.Types.FirstOrDefault(n => n.FullName == type);
+            TypeDefinition typeDef = AssemblyDefinition.MainModule.Types.FirstOrDefault(n => n.FullName == type);
             return typeDef;
         }
 
@@ -79,13 +74,13 @@ namespace Revolution.Cecil
         
         public MethodReference ImportMethod(MethodBase method)
         {
-            if (_assemblyDefinition == null)
+            if (AssemblyDefinition == null)
                 throw new Exception("ERROR Assembly not properly read. Cannot parse");
             
             MethodReference reference = null;
             if (method != null)
             {
-                reference = _assemblyDefinition.MainModule.Import(method);
+                reference = AssemblyDefinition.MainModule.Import(method);
             }
             return reference;
         }
@@ -94,27 +89,28 @@ namespace Revolution.Cecil
         {
             if(writePdb)
             {
-                var writerParameters = new WriterParameters();
-                writerParameters.SymbolWriterProvider = new PdbWriterProvider();
-                writerParameters.WriteSymbols = true;
-                _assemblyDefinition.Write(file, writerParameters);
+                var writerParameters = new WriterParameters
+                {
+                    SymbolWriterProvider = new PdbWriterProvider(),
+                    WriteSymbols = true
+                };
+                AssemblyDefinition.Write(file, writerParameters);
             }
             else
             {
-                _assemblyDefinition.Write(file);
+                AssemblyDefinition.Write(file);
             }
         }
 
         public void InsertType(TypeDefinition type)
         {
-            TypeDefinition sdvType = new TypeDefinition(type.Namespace, type.Name, type.Attributes);
-            foreach (MethodDefinition md in type.Methods)
+            var sdvType = new TypeDefinition(type.Namespace, type.Name, type.Attributes);
+            foreach (var md in type.Methods)
             {
-                MethodDefinition newMethod = new MethodDefinition(md.Name, md.Attributes, md.ReturnType);
                 sdvType.Methods.Add(md);
             }
 
-            _assemblyDefinition.MainModule.Types.Add(sdvType);
+            AssemblyDefinition.MainModule.Types.Add(sdvType);
         }
 
     }

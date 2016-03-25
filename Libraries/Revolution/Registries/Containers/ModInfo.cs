@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Revolution.Registries.Containers
 {
@@ -29,7 +28,7 @@ namespace Revolution.Registries.Containers
         }
 
         public string UniqueId { get; set; }
-        public string ModDLL { get; set; }
+        public string ModDll { get; set; }
         public string Name { get; set; }        
         public string Author { get; set; }
         public Version Version { get; set; }
@@ -43,11 +42,11 @@ namespace Revolution.Registries.Containers
         [JsonIgnore]
         public Exception LastException { get; set; }
         [JsonIgnore]
-        public bool HasDLL { get { return !string.IsNullOrWhiteSpace(ModDLL); } }
+        public bool HasDll => !string.IsNullOrWhiteSpace(ModDll);
         [JsonIgnore]
-        public bool HasConfig { get { return HasDLL && !string.IsNullOrWhiteSpace(ConfigurationFile); } }
+        public bool HasConfig => HasDll && !string.IsNullOrWhiteSpace(ConfigurationFile);
         [JsonIgnore]
-        public bool HasContent { get { return Content != null && Content.HasContent; } }
+        public bool HasContent => Content != null && Content.HasContent;
         [JsonIgnore]
         public Assembly ModAssembly { get; set; }
         [JsonIgnore]
@@ -57,14 +56,14 @@ namespace Revolution.Registries.Containers
         [JsonIgnore]
         private object ConfigurationSettings { get; set; }
         
-        public bool LoadModDLL()
+        public bool LoadModDll()
         {
             if (Instance != null)
             {
                 throw new Exception("Error! Mod has already been loaded!");
             }
             
-            var modDllPath = ModRoot + "\\" + ModDLL;
+            var modDllPath = ModRoot + "\\" + ModDll;
 
             if (!modDllPath.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -76,10 +75,13 @@ namespace Revolution.Registries.Containers
                 ModAssembly = Assembly.LoadFrom(modDllPath);
                 if (ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Mod)) > 0)
                 {
-                    Type tar = ModAssembly.GetTypes().First(x => x.BaseType == typeof(Mod));
+                    var tar = ModAssembly.GetTypes().First(x => x.BaseType == typeof(Mod));
                     Instance = (Mod)ModAssembly.CreateInstance(tar.ToString());
-                    Instance.ModSettings = this;
-                    Instance.Entry();
+                    if (Instance != null)
+                    {
+                        Instance.ModSettings = this;
+                        Instance.Entry();
+                    }
                     Log.Verbose ($"Loaded mod dll: {Name}");
                 }
                 else
@@ -97,10 +99,7 @@ namespace Revolution.Registries.Containers
 
         public void LoadContent()
         {
-            if (Content != null)
-            {
-                Content.LoadContent(this);
-            }
+            Content?.LoadContent(this);
         }
 
         internal void LoadConfig()

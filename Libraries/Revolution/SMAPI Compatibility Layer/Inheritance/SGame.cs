@@ -1,5 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Xml.Serialization;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using StardewModdingAPI.Events;
 using StardewValley;
@@ -8,23 +12,21 @@ using StardewValley.Menus;
 using StardewValley.Monsters;
 using StardewValley.Quests;
 using StardewValley.TerrainFeatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Xml.Serialization;
+using static StardewModdingAPI.Events.GameEvents;
+using Cat = StardewValley.Characters.Cat;
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Inheritance
 {
     public class SGame : Game1
     {
         public static List<SGameLocation> ModLocations = new List<SGameLocation>();
         public static SGameLocation CurrentLocation { get; internal set; }
-        public static Dictionary<Int32, SObject> ModItems { get; private set; }
-        public const Int32 LowestModItemID = 1000;
+        public static Dictionary<int, SObject> ModItems { get; private set; }
+        public const int LowestModItemID = 1000;
 
-        public static FieldInfo[] StaticFields { get { return GetStaticFields(); } }
+        public static FieldInfo[] StaticFields => GetStaticFields();
 
         public static FieldInfo[] GetStaticFields()
         {
@@ -73,34 +75,33 @@ namespace StardewModdingAPI.Inheritance
 
         public Buttons[] GetButtonsDown(PlayerIndex index)
         {
-            GamePadState state = GamePad.GetState((PlayerIndex)index);
-            List<Buttons> buttons = new List<Buttons>();
-            if (state.IsConnected)
-            {
-                if (state.Buttons.A == ButtonState.Pressed) buttons.Add(Buttons.A);
-                if (state.Buttons.B == ButtonState.Pressed) buttons.Add(Buttons.B);
-                if (state.Buttons.Back == ButtonState.Pressed) buttons.Add(Buttons.Back);
-                if (state.Buttons.BigButton == ButtonState.Pressed) buttons.Add(Buttons.BigButton);
-                if (state.Buttons.LeftShoulder == ButtonState.Pressed) buttons.Add(Buttons.LeftShoulder);
-                if (state.Buttons.LeftStick == ButtonState.Pressed) buttons.Add(Buttons.LeftStick);
-                if (state.Buttons.RightShoulder == ButtonState.Pressed) buttons.Add(Buttons.RightShoulder);
-                if (state.Buttons.RightStick == ButtonState.Pressed) buttons.Add(Buttons.RightStick);
-                if (state.Buttons.Start == ButtonState.Pressed) buttons.Add(Buttons.Start);
-                if (state.Buttons.X == ButtonState.Pressed) buttons.Add(Buttons.X);
-                if (state.Buttons.Y == ButtonState.Pressed) buttons.Add(Buttons.Y);
-                if (state.DPad.Up == ButtonState.Pressed) buttons.Add(Buttons.DPadUp);
-                if (state.DPad.Down == ButtonState.Pressed) buttons.Add(Buttons.DPadDown);
-                if (state.DPad.Left == ButtonState.Pressed) buttons.Add(Buttons.DPadLeft);
-                if (state.DPad.Right == ButtonState.Pressed) buttons.Add(Buttons.DPadRight);
-                if (state.Triggers.Left > 0.2f) buttons.Add(Buttons.LeftTrigger);
-                if (state.Triggers.Right > 0.2f) buttons.Add(Buttons.RightTrigger);
-            }
+            var state = GamePad.GetState(index);
+            var buttons = new List<Buttons>();
+            if (!state.IsConnected) return buttons.ToArray();
+
+            if (state.Buttons.A == ButtonState.Pressed) buttons.Add(Buttons.A);
+            if (state.Buttons.B == ButtonState.Pressed) buttons.Add(Buttons.B);
+            if (state.Buttons.Back == ButtonState.Pressed) buttons.Add(Buttons.Back);
+            if (state.Buttons.BigButton == ButtonState.Pressed) buttons.Add(Buttons.BigButton);
+            if (state.Buttons.LeftShoulder == ButtonState.Pressed) buttons.Add(Buttons.LeftShoulder);
+            if (state.Buttons.LeftStick == ButtonState.Pressed) buttons.Add(Buttons.LeftStick);
+            if (state.Buttons.RightShoulder == ButtonState.Pressed) buttons.Add(Buttons.RightShoulder);
+            if (state.Buttons.RightStick == ButtonState.Pressed) buttons.Add(Buttons.RightStick);
+            if (state.Buttons.Start == ButtonState.Pressed) buttons.Add(Buttons.Start);
+            if (state.Buttons.X == ButtonState.Pressed) buttons.Add(Buttons.X);
+            if (state.Buttons.Y == ButtonState.Pressed) buttons.Add(Buttons.Y);
+            if (state.DPad.Up == ButtonState.Pressed) buttons.Add(Buttons.DPadUp);
+            if (state.DPad.Down == ButtonState.Pressed) buttons.Add(Buttons.DPadDown);
+            if (state.DPad.Left == ButtonState.Pressed) buttons.Add(Buttons.DPadLeft);
+            if (state.DPad.Right == ButtonState.Pressed) buttons.Add(Buttons.DPadRight);
+            if (state.Triggers.Left > 0.2f) buttons.Add(Buttons.LeftTrigger);
+            if (state.Triggers.Right > 0.2f) buttons.Add(Buttons.RightTrigger);
             return buttons.ToArray();
         }
 
         public Buttons[] GetFramePressedButtons(PlayerIndex index)
         {
-            GamePadState state = GamePad.GetState((PlayerIndex)index);
+            GamePadState state = GamePad.GetState(index);
             List<Buttons> buttons = new List<Buttons>();
             if (state.IsConnected)
             {
@@ -127,7 +128,7 @@ namespace StardewModdingAPI.Inheritance
 
         public Buttons[] GetFrameReleasedButtons(PlayerIndex index)
         {
-            GamePadState state = GamePad.GetState((PlayerIndex)index);
+            GamePadState state = GamePad.GetState(index);
             List<Buttons> buttons = new List<Buttons>();
             if (state.IsConnected)
             {
@@ -174,17 +175,17 @@ namespace StardewModdingAPI.Inheritance
 
         public Farmer PreviousFarmer { get; private set; }
 
-        private static SGame instance;
-        public static SGame Instance { get { return instance; } }
+        public static SGame Instance { get; private set; }
 
-        public Farmer CurrentFarmer { get { return player; } }
+        public Farmer CurrentFarmer => player;
 
-        public SGame()
+        public SGame(int previousItems)
         {
-            instance = this;
+            PreviousItems_ = previousItems;
+            Instance = this;
 
 #if DEBUG
-            SaveGame.serializer = new XmlSerializer(typeof(SaveGame), new Type[28]
+            SaveGame.serializer = new XmlSerializer(typeof(SaveGame), new[]
                 {
                     typeof (Tool),
                     typeof (GameLocation),
@@ -197,7 +198,7 @@ namespace StardewModdingAPI.Inheritance
                     typeof (Child),
                     typeof (Pet),
                     typeof (Dog),
-                    typeof (StardewValley.Characters.Cat),
+                    typeof (Cat),
                     typeof (Horse),
                     typeof (GreenSlime),
                     typeof (LavaCrab),
@@ -227,14 +228,14 @@ namespace StardewModdingAPI.Inheritance
             for (int i = 0; i < 4; ++i) PreviouslyPressedButtons[i] = new Buttons[0];
 
             base.Initialize();
-            Events.GameEvents.InvokeInitialize();
+            InvokeInitialize();
         }
 
         protected override void LoadContent()
         {
             Log.Verbose("XNA LoadContent");
             base.LoadContent();
-            Events.GameEvents.InvokeLoadContent();
+            InvokeLoadContent();
         }
 
         protected override void Update(GameTime gameTime)
@@ -251,7 +252,7 @@ namespace StardewModdingAPI.Inheritance
                 Console.ReadKey();
             }
 
-            Events.GameEvents.InvokeUpdateTick();
+            InvokeUpdateTick();
 
             PreviouslyPressedKeys = CurrentlyPressedKeys;
             for (PlayerIndex i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
@@ -263,20 +264,7 @@ namespace StardewModdingAPI.Inheritance
         protected override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            Events.GraphicsEvents.InvokeDrawTick();
-
-            if (false)
-            {
-                spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
-
-                if (CurrentLocation != null)
-                    CurrentLocation.draw(spriteBatch);
-
-                if (player != null && player.position != null)
-                    spriteBatch.DrawString(dialogueFont, player.position.ToString(), new Vector2(0, 180), Color.Orange);
-
-                spriteBatch.End();
-            }
+            GraphicsEvents.InvokeDrawTick();
         }
 
         public static Int32 RegisterModItem(SObject modItem)
@@ -303,14 +291,14 @@ namespace StardewModdingAPI.Inheritance
                 {
                     return ModItems.ElementAt(id).Value.Clone();
                 }
-                Log.Error("ModItem Dictionary does not contain index: " + id.ToString());
+                Log.Error("ModItem Dictionary does not contain index: " + id);
                 return null;
             }
             if (ModItems.ContainsKey(id))
             {
                 return ModItems[id].Clone();
             }
-            Log.Error("ModItem Dictionary does not contain ID: " + id.ToString());
+            Log.Error("ModItem Dictionary does not contain ID: " + id);
             return null;
         }
 
@@ -352,10 +340,10 @@ namespace StardewModdingAPI.Inheritance
             MStateNow = Mouse.GetState();
 
             foreach (Keys k in FramePressedKeys)
-                Events.ControlEvents.InvokeKeyPressed(k);
+                ControlEvents.InvokeKeyPressed(k);
 
             foreach (Keys k in FrameReleasedKeys)
-                Events.ControlEvents.InvokeKeyReleased(k);
+                ControlEvents.InvokeKeyReleased(k);
 
             for (PlayerIndex i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
             {
@@ -364,11 +352,11 @@ namespace StardewModdingAPI.Inheritance
                 {
                     if (b == Buttons.LeftTrigger || b == Buttons.RightTrigger)
                     {
-                        Events.ControlEvents.InvokeTriggerPressed(i, b, b == Buttons.LeftTrigger ? GamePad.GetState(i).Triggers.Left : GamePad.GetState(i).Triggers.Right);
+                        ControlEvents.InvokeTriggerPressed(i, b, b == Buttons.LeftTrigger ? GamePad.GetState(i).Triggers.Left : GamePad.GetState(i).Triggers.Right);
                     }
                     else
                     {
-                        Events.ControlEvents.InvokeButtonPressed(i, b);
+                        ControlEvents.InvokeButtonPressed(i, b);
                     }
                 }
             }
@@ -379,11 +367,11 @@ namespace StardewModdingAPI.Inheritance
                 {
                     if (b == Buttons.LeftTrigger || b == Buttons.RightTrigger)
                     {
-                        Events.ControlEvents.InvokeTriggerReleased(i, b, b == Buttons.LeftTrigger ? GamePad.GetState(i).Triggers.Left : GamePad.GetState(i).Triggers.Right);
+                        ControlEvents.InvokeTriggerReleased(i, b, b == Buttons.LeftTrigger ? GamePad.GetState(i).Triggers.Left : GamePad.GetState(i).Triggers.Right);
                     }
                     else
                     {
-                        Events.ControlEvents.InvokeButtonReleased(i, b);
+                        ControlEvents.InvokeButtonReleased(i, b);
                     }
                 }
             }
@@ -391,111 +379,111 @@ namespace StardewModdingAPI.Inheritance
 
             if (KStateNow != KStatePrior)
             {
-                Events.ControlEvents.InvokeKeyboardChanged(KStatePrior, KStateNow);
+                ControlEvents.InvokeKeyboardChanged(KStatePrior, KStateNow);
                 KStatePrior = KStateNow;
             }
 
             if (MStateNow != MStatePrior)
             {
-                Events.ControlEvents.InvokeMouseChanged(MStatePrior, MStateNow);
+                ControlEvents.InvokeMouseChanged(MStatePrior, MStateNow);
                 MStatePrior = MStateNow;
             }
 
             if (activeClickableMenu != null && activeClickableMenu != PreviousActiveMenu)
             {
-                Events.MenuEvents.InvokeMenuChanged(PreviousActiveMenu, activeClickableMenu);
+                MenuEvents.InvokeMenuChanged(PreviousActiveMenu, activeClickableMenu);
                 PreviousActiveMenu = activeClickableMenu;
             }
 
             if (locations.GetHash() != PreviousGameLocations)
             {
-                Events.LocationEvents.InvokeLocationsChanged(locations);
+                LocationEvents.InvokeLocationsChanged(locations);
                 PreviousGameLocations = locations.GetHash();
             }
 
             if (currentLocation != PreviousGameLocation)
             {
-                Events.LocationEvents.InvokeCurrentLocationChanged(PreviousGameLocation, currentLocation);
+                LocationEvents.InvokeCurrentLocationChanged(PreviousGameLocation, currentLocation);
                 PreviousGameLocation = currentLocation;
             }
 
             if (player != null && player != PreviousFarmer)
             {
-                Events.PlayerEvents.InvokeFarmerChanged(PreviousFarmer, player);
+                PlayerEvents.InvokeFarmerChanged(PreviousFarmer, player);
                 PreviousFarmer = player;
             }
 
             if (player != null && player.combatLevel != PreviousCombatLevel)
             {
-                Events.PlayerEvents.InvokeLeveledUp(EventArgsLevelUp.LevelType.Combat, player.combatLevel);
+                PlayerEvents.InvokeLeveledUp(EventArgsLevelUp.LevelType.Combat, player.combatLevel);
                 PreviousCombatLevel = player.combatLevel;
             }
 
             if (player != null && player.farmingLevel != PreviousFarmingLevel)
             {
-                Events.PlayerEvents.InvokeLeveledUp(EventArgsLevelUp.LevelType.Farming, player.farmingLevel);
+                PlayerEvents.InvokeLeveledUp(EventArgsLevelUp.LevelType.Farming, player.farmingLevel);
                 PreviousFarmingLevel = player.farmingLevel;
             }
 
             if (player != null && player.fishingLevel != PreviousFishingLevel)
             {
-                Events.PlayerEvents.InvokeLeveledUp(EventArgsLevelUp.LevelType.Fishing, player.fishingLevel);
+                PlayerEvents.InvokeLeveledUp(EventArgsLevelUp.LevelType.Fishing, player.fishingLevel);
                 PreviousFishingLevel = player.fishingLevel;
             }
 
             if (player != null && player.foragingLevel != PreviousForagingLevel)
             {
-                Events.PlayerEvents.InvokeLeveledUp(EventArgsLevelUp.LevelType.Foraging, player.foragingLevel);
+                PlayerEvents.InvokeLeveledUp(EventArgsLevelUp.LevelType.Foraging, player.foragingLevel);
                 PreviousForagingLevel = player.foragingLevel;
             }
 
             if (player != null && player.miningLevel != PreviousMiningLevel)
             {
-                Events.PlayerEvents.InvokeLeveledUp(EventArgsLevelUp.LevelType.Mining, player.miningLevel);
+                PlayerEvents.InvokeLeveledUp(EventArgsLevelUp.LevelType.Mining, player.miningLevel);
                 PreviousMiningLevel = player.miningLevel;
             }
 
             if (player != null && player.luckLevel != PreviousLuckLevel)
             {
-                Events.PlayerEvents.InvokeLeveledUp(EventArgsLevelUp.LevelType.Luck, player.luckLevel);
+                PlayerEvents.InvokeLeveledUp(EventArgsLevelUp.LevelType.Luck, player.luckLevel);
                 PreviousLuckLevel = player.luckLevel;
             }
 
             List<ItemStackChange> changedItems;
             if (player != null && HasInventoryChanged(player.items, out changedItems))
             {
-                Events.PlayerEvents.InvokeInventoryChanged(player.items, changedItems);
+                PlayerEvents.InvokeInventoryChanged(player.items, changedItems);
                 PreviousItems = player.items.Where(n => n != null).ToDictionary(n => n, n => n.Stack);
             }
 
             var objectHash = currentLocation?.objects?.GetHash();
             if (objectHash != null && PreviousLocationObjects != objectHash)
             {
-                Events.LocationEvents.InvokeOnNewLocationObject(currentLocation.objects);
+                LocationEvents.InvokeOnNewLocationObject(currentLocation.objects);
                 PreviousLocationObjects = objectHash ?? -1;
             }
 
             if (timeOfDay != PreviousTimeOfDay)
             {
-                Events.TimeEvents.InvokeTimeOfDayChanged(PreviousTimeOfDay, timeOfDay);
+                TimeEvents.InvokeTimeOfDayChanged(PreviousTimeOfDay, timeOfDay);
                 PreviousTimeOfDay = timeOfDay;
             }
 
             if (dayOfMonth != PreviousDayOfMonth)
             {
-                Events.TimeEvents.InvokeDayOfMonthChanged(PreviousDayOfMonth, dayOfMonth);
+                TimeEvents.InvokeDayOfMonthChanged(PreviousDayOfMonth, dayOfMonth);
                 PreviousDayOfMonth = dayOfMonth;
             }
 
             if (currentSeason != PreviousSeasonOfYear)
             {
-                Events.TimeEvents.InvokeSeasonOfYearChanged(PreviousSeasonOfYear, currentSeason);
+                TimeEvents.InvokeSeasonOfYearChanged(PreviousSeasonOfYear, currentSeason);
                 PreviousSeasonOfYear = currentSeason;
             }
 
             if (year != PreviousYearOfGame)
             {
-                Events.TimeEvents.InvokeYearOfGameChanged(PreviousYearOfGame, year);
+                TimeEvents.InvokeYearOfGameChanged(PreviousYearOfGame, year);
                 PreviousYearOfGame = year;
             }
         }
@@ -503,29 +491,30 @@ namespace StardewModdingAPI.Inheritance
         private bool HasInventoryChanged(List<Item> items, out List<ItemStackChange> changedItems)
         {
             changedItems = new List<ItemStackChange>();
-            IEnumerable<Item> actualItems = items.Where(n => n != null);
+            var actualItems = items.Where(n => n != null).ToArray();
             foreach (var item in actualItems)
             {
                 if (PreviousItems != null && PreviousItems.ContainsKey(item))
                 {
                     if (PreviousItems[item] != item.Stack)
                     {
-                        changedItems.Add(new ItemStackChange() { Item = item, StackChange = item.Stack - PreviousItems[item], ChangeType = ChangeType.StackChange });
+                        changedItems.Add(new ItemStackChange { Item = item, StackChange = item.Stack - PreviousItems[item], ChangeType = ChangeType.StackChange });
                     }
                 }
                 else
                 {
-                    changedItems.Add(new ItemStackChange() { Item = item, StackChange = item.Stack, ChangeType = ChangeType.Added });
+                    changedItems.Add(new ItemStackChange { Item = item, StackChange = item.Stack, ChangeType = ChangeType.Added });
                 }
             }
 
             if (PreviousItems != null)
             {
+                // ReSharper disable once SimplifyLinqExpression
                 changedItems.AddRange(PreviousItems.Where(n => !actualItems.Any(i => i == n.Key)).Select(n =>
-                    new ItemStackChange() { Item = n.Key, StackChange = -n.Key.Stack, ChangeType = ChangeType.Removed }));
+                    new ItemStackChange { Item = n.Key, StackChange = -n.Key.Stack, ChangeType = ChangeType.Removed }));
             }
 
-            return (changedItems.Any());
+            return changedItems.Any();
         }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using StardewValley.Menus;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Inheritance.Menus
 {
-    public class SGameMenu : StardewValley.Menus.GameMenu
+    public class SGameMenu : GameMenu
     {
         public GameMenu BaseGameMenu { get; private set; }
 
@@ -25,9 +24,7 @@ namespace StardewModdingAPI.Inheritance.Menus
 
         public static SGameMenu ConstructFromBaseClass(GameMenu baseClass)
         {
-            SGameMenu s = new SGameMenu();
-            s.BaseGameMenu = baseClass;
-            return s;
+            return new SGameMenu {BaseGameMenu = baseClass};
         }
 
         public override void receiveRightClick(int x, int y, bool playSound = true)
@@ -35,9 +32,6 @@ namespace StardewModdingAPI.Inheritance.Menus
             if (pages[currentTab] is InventoryPage)
             {
                 Log.Verbose("INV SCREEN");
-            }
-            else
-            {
             }
             base.receiveRightClick(x, y, playSound);
         }

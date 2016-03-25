@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
 namespace Revolution
 {
@@ -14,7 +9,7 @@ namespace Revolution
         public static string RevolutionExe => "Z:\\Projects\\C#\\Revolution\\WorkingDirectory\\Stardew Revolution.exe";
         
         public static string RevolutionDll => "Revolution.dll";
-        public static string RevolutionUIDll => "RevolutionUI.dll";
+        public static string RevolutionUiDll => "RevolutionUI.dll";
 
         public static string PassOnePackageResult => "Stardew Revolution.int1-package.dll";
         public static string PassTwoPackageResult => "Stardew Revolution.int2-package.dll";

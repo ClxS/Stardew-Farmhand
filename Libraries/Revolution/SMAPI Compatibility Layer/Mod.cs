@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿// ReSharper disable InconsistentNaming
+// ReSharper disable CheckNamespace
 namespace StardewModdingAPI
 {
     public class Mod

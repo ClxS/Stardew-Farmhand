@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Inheritance
 {
     public class SGameLocation : GameLocation
@@ -17,28 +18,29 @@ namespace StardewModdingAPI.Inheritance
 
         public static SGameLocation ConstructFromBaseClass(GameLocation baseClass, bool copyAllData = false)
         {
-            SGameLocation s = new SGameLocation();
-            s.BaseGameLocation = baseClass;
-            s.name = baseClass.name;
+            SGameLocation s = new SGameLocation
+            {
+                BaseGameLocation = baseClass,
+                name = baseClass.name
+            };
 
             Log.Debug("CONSTRUCTED: " + s.name);
 
-            if (copyAllData)
+            if (!copyAllData) return s;
+
+            foreach (var v in baseClass.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
-                foreach (var v in baseClass.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+                try
                 {
-                    try
+                    var fi = s.GetType().GetField(v.Name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    if (fi != null && !fi.IsStatic)
                     {
-                        var fi = s.GetType().GetField(v.Name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                        if (fi != null && !fi.IsStatic)
-                        {
-                            fi.SetValue(s, v.GetValue(baseClass));
-                        }
+                        fi.SetValue(s, v.GetValue(baseClass));
                     }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
                 }
             }
 

@@ -1,14 +1,12 @@
 ﻿using Revolution.Attributes;
 using Revolution.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Revolution.Events
 {
     public class TimeEvents
     {
+#pragma warning disable 67
         public static event EventHandler OnBeforeTimeChanged = delegate { };
         public static event EventHandler OnAfterTimeChanged = delegate { };
         public static event EventHandler OnBeforeDayChanged = delegate { };
@@ -18,6 +16,7 @@ namespace Revolution.Events
 
         public static event EventHandler OnBeforeYearChanged = delegate { };
         public static event EventHandler OnAfterYearChanged = delegate { };
+#pragma warning restore 67
 
         [Hook(HookType.Entry, "StardewValley.Game1", "performTenMinuteClockUpdate")]
         internal static void InvokeBeforeTimeChanged()
@@ -26,7 +25,7 @@ namespace Revolution.Events
             {
                 EventCommon.SafeInvoke(OnBeforeTimeChanged, null);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex.Message);
             }
@@ -62,12 +61,6 @@ namespace Revolution.Events
         
         [PendingHook]
         internal static void InvokeBeforeYearChanged() 
-        {
-            throw new NotImplementedException();
-        }
-        
-        [PendingHook]
-        internal static void InvokeAfterYearChanged()
         {
             throw new NotImplementedException();
         }

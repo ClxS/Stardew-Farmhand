@@ -7,11 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using StardewValley;
-using StardewValley.Menus;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using Revolution.Events;
 using Revolution.Logging;
 
@@ -19,7 +14,8 @@ namespace Revolution
 {
     public static class ModLoader
     {
-        internal static List<string> ModPaths = new List<string>() {
+        internal static List<string> ModPaths = new List<string>
+        {
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
         };
 
@@ -42,7 +38,7 @@ namespace Revolution
                 Log.Verbose("Importing Mod DLLs, Settings, and Content");
                 LoadFinalMods();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex.Message);
                 Log.Error(ex.StackTrace);
@@ -99,18 +95,18 @@ namespace Revolution
                     {
                         mod.LoadContent();
                     }                    
-                    if (mod.HasDLL)
+                    if (mod.HasDll)
                     {
-                        mod.LoadModDLL();                        
+                        mod.LoadModDll();                        
                     }
-                    if (mod.HasDLL && mod.HasConfig)
+                    if (mod.HasDll && mod.HasConfig)
                     {
                         mod.LoadConfig();
                     }
                     mod.ModState = ModState.Loaded;
                     Log.Success($"Loaded Mod: {mod.Name} v{mod.Version} by {mod.Author}");              
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
                     Log.Exception($"Error loading mod {mod.Name} by {mod.Author}", ex);
                     mod.ModState = ModState.Errored;
@@ -125,52 +121,51 @@ namespace Revolution
 
             //Loop to verify every dependent mod is available. 
             bool stateChange = false;
+            var modInfos = registeredMods as ModInfo[] ?? registeredMods.ToArray();
             do 
             {
-                foreach (var mod in registeredMods)
+                foreach (var mod in modInfos)
                 {
-                    if (mod.ModState != ModState.MissingDependency && mod.Dependencies != null)
+                    if (mod.ModState == ModState.MissingDependency || mod.Dependencies == null) continue;
+
+                    foreach (var dependency in mod.Dependencies)
                     {
-                        foreach (var dependency in mod.Dependencies)
+                        var dependencyMatch = modInfos.FirstOrDefault(n => n.UniqueId == dependency.UniqueId);
+                        dependency.DependencyState = DependencyState.Ok;
+                        if (dependencyMatch == null)
                         {
-                            var dependencyMatch = registeredMods.FirstOrDefault(n => n.UniqueId == dependency.UniqueId);
-                            dependency.DependencyState = DependencyState.OK;
-                            if (dependencyMatch == null)
+                            mod.ModState = ModState.MissingDependency;
+                            dependency.DependencyState = DependencyState.Missing;
+                            stateChange = true;
+                            Log.Error($"Failed to load {mod.Name} due to missing dependency: {dependency.UniqueId}");
+                        }
+                        else if (dependencyMatch.ModState == ModState.MissingDependency)
+                        {
+                            mod.ModState = ModState.MissingDependency;
+                            dependency.DependencyState = DependencyState.ParentMissing;
+                            stateChange = true;
+                            Log.Error($"Failed to load {mod.Name} due to missing dependency missing dependency: {dependency.UniqueId}");
+                        }
+                        else
+                        {
+                            var dependencyVersion = dependencyMatch.Version;
+                            if (dependencyVersion == null) continue;
+
+                            if (dependency.MinimumVersion != null && dependency.MinimumVersion > dependencyVersion)
                             {
                                 mod.ModState = ModState.MissingDependency;
-                                dependency.DependencyState = DependencyState.Missing;
+                                dependency.DependencyState = DependencyState.TooLowVersion;
                                 stateChange = true;
-                                Log.Error($"Failed to load {mod.Name} due to missing dependency: {dependency.UniqueId}");
+                                Log.Error($"Failed to load {mod.Name} due to minimum version incompatibility with {dependency.UniqueId}: " +
+                                          $"v.{dependencyMatch.Version} < v.{dependency.MinimumVersion}");
                             }
-                            else if (dependencyMatch.ModState == ModState.MissingDependency)
+                            else if (dependency.MaximumVersion != null && dependency.MaximumVersion < dependencyVersion)
                             {
                                 mod.ModState = ModState.MissingDependency;
-                                dependency.DependencyState = DependencyState.ParentMissing;
+                                dependency.DependencyState = DependencyState.TooHighVersion;
                                 stateChange = true;
-                                Log.Error($"Failed to load {mod.Name} due to missing dependency missing dependency: {dependency.UniqueId}");
-                            }
-                            else
-                            {
-                                Version dependencyVersion = dependencyMatch.Version;
-                                if (dependencyVersion != null)
-                                {
-                                    if (dependency.MinimumVersion != null && dependency.MinimumVersion > dependencyVersion)
-                                    {
-                                        mod.ModState = ModState.MissingDependency;
-                                        dependency.DependencyState = DependencyState.TooLowVersion;
-                                        stateChange = true;
-                                        Log.Error($"Failed to load {mod.Name} due to minimum version incompatibility with {dependency.UniqueId}: " +
-                                            $"v.{dependencyMatch.Version.ToString()} < v.{dependency.MinimumVersion.ToString()}");
-                                    }
-                                    else if (dependency.MaximumVersion != null && dependency.MaximumVersion < dependencyVersion)
-                                    {
-                                        mod.ModState = ModState.MissingDependency;
-                                        dependency.DependencyState = DependencyState.TooHighVersion;
-                                        stateChange = true;
-                                        Log.Error($"Failed to load {mod.Name} due to maximum version incompatibility with {dependency.UniqueId}: " +
-                                            $"v.{dependencyMatch.Version.ToString()} > v.{dependency.MinimumVersion.ToString()}");
-                                    }
-                                }
+                                Log.Error($"Failed to load {mod.Name} due to maximum version incompatibility with {dependency.UniqueId}: " +
+                                          $"v.{dependencyMatch.Version} > v.{dependency.MaximumVersion}");
                             }
                         }
                     }
@@ -180,11 +175,11 @@ namespace Revolution
 
         private static void LoadModManifests()
         {
-            foreach (string ModPath in ModPaths)
+            foreach (string modPath in ModPaths)
             {
-                foreach (String modPath in Directory.GetDirectories(ModPath))
+                foreach (String perModPath in Directory.GetDirectories(modPath))
                 {
-                    var modJsonFiles = Directory.GetFiles(modPath, "manifest.json");
+                    var modJsonFiles = Directory.GetFiles(perModPath, "manifest.json");
                     foreach (var file in modJsonFiles)
                     {
                         using (StreamReader r = new StreamReader(file))
@@ -192,19 +187,14 @@ namespace Revolution
                             string json = r.ReadToEnd();
                             ModInfo modInfo = JsonConvert.DeserializeObject<ModInfo>(json);
                             
-                            modInfo.ModRoot = modPath;
+                            modInfo.ModRoot = perModPath;
                             ModRegistry.RegisterItem(modInfo.UniqueId ?? Guid.NewGuid().ToString(), modInfo);
                         }
                     }
                 }
             }
         }
-
-        private static void ValidateModInfo(ModInfo modInfo)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public static void DeactivateMod(Mod mod, ModState state = ModState.Deactivated, Exception error = null)
         {
             DeactivateMod(mod.ModSettings);

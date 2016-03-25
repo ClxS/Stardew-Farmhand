@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -8,9 +7,9 @@ namespace Revolution.Events
 {
     public class EventManager
     {
-        Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>> DetachedDelegates = new Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>>();
+        readonly Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>> _detachedDelegates = new Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>>();
 
-        private Type[] GetRevolutionEvents()
+        private IEnumerable<Type> GetRevolutionEvents()
         {
             return Assembly.GetExecutingAssembly().GetTypes().Where(t => String.Equals(t.Namespace, "Revolution.Events", StringComparison.Ordinal)).ToArray();
         }
@@ -22,7 +21,7 @@ namespace Revolution.Events
                 throw new Exception("Assembly cannot be null");
             }
 
-            if (DetachedDelegates.ContainsKey(assembly))
+            if (_detachedDelegates.ContainsKey(assembly))
             {
                 throw new Exception("Detached delegates already exist for this assembly");
             }
@@ -33,8 +32,10 @@ namespace Revolution.Events
             {
                 foreach (var evt in type.GetEvents())
                 {
-                    FieldInfo fi = type.GetField(evt.Name, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy);
-                    Delegate del = (Delegate)fi.GetValue(null);
+                    var fi = type.GetField(evt.Name, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy);
+                    if (fi == null) continue;
+
+                    var del = (Delegate)fi.GetValue(null);
                     var delegates = del.GetInvocationList().Where(n => n.Method.DeclaringType != null && n.Method.DeclaringType.Assembly == assembly).ToArray();
                     detachedDelegates[evt] = delegates;
 
@@ -45,14 +46,14 @@ namespace Revolution.Events
                 }
             }
 
-            DetachedDelegates[assembly] = detachedDelegates;
+            _detachedDelegates[assembly] = detachedDelegates;
         }
 
         public void ReattachDelegates(Assembly assembly)
         {
-            if (DetachedDelegates.ContainsKey(assembly))
+            if (_detachedDelegates.ContainsKey(assembly))
             {
-                var delegates = DetachedDelegates[assembly];
+                var delegates = _detachedDelegates[assembly];
 
                 foreach (var delegateEvent in delegates)
                 {
@@ -63,7 +64,7 @@ namespace Revolution.Events
                     }
                 }
 
-                DetachedDelegates.Remove(assembly);
+                _detachedDelegates.Remove(assembly);
             }
         }
     }

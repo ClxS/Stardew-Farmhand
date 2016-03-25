@@ -2,10 +2,8 @@
 using Mono.Cecil.Cil;
 using Revolution.Cecil;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System;
-using System.Reflection;
 
 namespace Revolution.Helpers
 {
@@ -37,7 +35,6 @@ namespace Revolution.Helpers
             if (cancelable)
             {
                 var branch = ilProcessor.Create(OpCodes.Brtrue, ilProcessor.Body.Instructions.Last());
-                var ret = ilProcessor.Create(OpCodes.Ret);
                 ilProcessor.InsertAfter(callEnterInstruction, branch);
             }
 
@@ -51,16 +48,11 @@ namespace Revolution.Helpers
             }
         }
 
-        private static List<Instruction> GetMatchingInstructions(Collection<Instruction> instructions, OpCode opcode, object @object)
-        {
-            return instructions.Where(n => n.OpCode == opcode && n.Operand == @object).ToList();
-        }
-        
         public static void InjectEntryMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod,
             string injectedType, string injectedMethod)
         {
             MethodDefinition methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
-            ILProcessor ilProcessor = stardewContext.GetMethodILProcessor(injecteeType, injecteeMethod);
+            ILProcessor ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
             //InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition);
             InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
         }
@@ -69,21 +61,24 @@ namespace Revolution.Helpers
             string injectedType, string injectedMethod)
         {
             MethodDefinition methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
-            ILProcessor ilProcessor = stardewContext.GetMethodILProcessor(injecteeType, injecteeMethod);
+            ILProcessor ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
             InjectMethod(ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition);
         }
 
         public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, string type, string method)
         {
-            ILProcessor processor = stardewContext.GetMethodILProcessor("Revolution.Test", "Test3");
-            ILProcessor processor2 = stardewContext.GetMethodILProcessor("Revolution.Test", "Test4");
-
             var newConstructor = asmType.GetConstructor(new Type[] { });
+
+            if (asmType.BaseType == null) return;
             var oldConstructor = asmType.BaseType.GetConstructor(new Type[] { });
+
+            if (newConstructor == null) return;
             var newConstructorReference = stardewContext.GetMethodDefinition(asmType.FullName, newConstructor.Name);
+
+            if (oldConstructor == null) return;
             var oldConstructorReference = stardewContext.GetMethodDefinition(asmType.BaseType.FullName, oldConstructor.Name);
 
-            ILProcessor ilProcessor = stardewContext.GetMethodILProcessor(type, method);
+            ILProcessor ilProcessor = stardewContext.GetMethodIlProcessor(type, method);
             var instructions = ilProcessor.Body.Instructions.Where(n => n.OpCode == OpCodes.Newobj && n.Operand == oldConstructorReference).ToList();
             foreach(var instruction in instructions)
             {
@@ -94,7 +89,7 @@ namespace Revolution.Helpers
         public static void SetVirtualCallOnMethod(CecilContext cecilContext, string fullName, string name, string type, string method)
         {
             MethodDefinition methodDefinition = cecilContext.GetMethodDefinition(fullName, name);
-            ILProcessor ilProcessor = cecilContext.GetMethodILProcessor(type, method);
+            ILProcessor ilProcessor = cecilContext.GetMethodIlProcessor(type, method);
 
             var instructions = ilProcessor.Body.Instructions.Where(n => n.OpCode == OpCodes.Call && n.Operand == methodDefinition).ToList();
             foreach (var instruction in instructions)

@@ -1,13 +1,9 @@
-﻿using Revolution;
-using Revolution.Attributes;
+﻿using Revolution.Attributes;
 using Revolution.Cecil;
 using Revolution.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Revolution
 {
@@ -15,10 +11,8 @@ namespace Revolution
     {
         public override void PatchStardew()
         {
-            CecilContext cecilContext;
-            
             InjectRevolutionCoreClasses(PatcherConstants.PassOnePackageResult, PatcherConstants.StardewExe, PatcherConstants.RevolutionDll, PatcherConstants.JsonLibrary);
-            cecilContext = new CecilContext(PatcherConstants.PassOnePackageResult, true);
+            var cecilContext = new CecilContext(PatcherConstants.PassOnePackageResult, true);
             RevolutionDllAssembly = Assembly.LoadFrom(PatcherConstants.RevolutionDll);
             
             HookApiEvents(cecilContext);
@@ -35,7 +29,8 @@ namespace Revolution
         protected override void AlterTypeBaseProtections(CecilContext context, Type type)
         {
             var attributeValue = type.GetCustomAttributes(typeof(HookAlterBaseProtectionAttribute), false).First() as HookAlterBaseProtectionAttribute;
-            CecilHelper.AlterProtectionOnTypeMembers(context, attributeValue.Protection == LowestProtection.Public, type.BaseType.FullName); 
+            if (type.BaseType != null)
+                CecilHelper.AlterProtectionOnTypeMembers(context, attributeValue != null && attributeValue.Protection == LowestProtection.Public, type.BaseType.FullName);
         }
 
         protected override void HookApiEvents(CecilContext cecilContext)
@@ -49,8 +44,10 @@ namespace Revolution
 
                 foreach (var method in methods)
                 {
-                    string typeName = method.DeclaringType.FullName;
-                    string methodName = method.Name;
+                    if (method.DeclaringType == null) continue;
+
+                    var typeName = method.DeclaringType.FullName;
+                    var methodName = method.Name;
                     var hookAttributes = method.GetCustomAttributes(typeof(HookAttribute), false).Cast<HookAttribute>();
 
                     foreach (var hook in hookAttributes)
@@ -65,14 +62,14 @@ namespace Revolution
                                 case HookType.Exit: CecilHelper.InjectExitMethod(cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
                             }
                         }
-                        catch (System.Exception ex)
+                        catch (Exception ex)
                         {
                             Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
                         }
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

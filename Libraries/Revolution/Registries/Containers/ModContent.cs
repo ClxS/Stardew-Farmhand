@@ -1,26 +1,17 @@
-﻿using Revolution.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Revolution.Registries.Containers
 {
     public class ModContent
     {
-        public bool HasContent
-        {
-            get
-            {
-                return (Textures != null && Textures.Any()) ||
-                    (XNB != null && XNB.Any());
-            }
-        }
+        public bool HasContent => (Textures != null && Textures.Any()) ||
+                                  (Xnb != null && Xnb.Any());
 
 
         public List<ModTexture> Textures { get; set; }
-        public List<ModXnb> XNB { get; set; }
+        public List<ModXnb> Xnb { get; set; }
 
         public void LoadContent(ModInfo mod)
         {
@@ -39,9 +30,9 @@ namespace Revolution.Registries.Containers
                 }
             }
             
-            if (XNB != null)
+            if (Xnb != null)
             {
-                foreach (var file in XNB)
+                foreach (var file in Xnb)
                 {
                     file.AbsoluteFilePath = $"{mod.ModRoot}\\{Constants.ModContentDirectory}\\{file.File}";
                     file.OwningMod = mod;

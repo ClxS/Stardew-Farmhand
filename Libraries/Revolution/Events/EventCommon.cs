@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Revolution.Events
 {
@@ -11,8 +9,9 @@ namespace Revolution.Events
     {
         internal static void SafeInvoke(EventHandler evt, object sender)
         {
-            foreach (EventHandler @delegate in evt.GetInvocationList())
+            foreach (var delegate1 in evt.GetInvocationList())
             {
+                var @delegate = (EventHandler) delegate1;
                 try
                 {
                     @delegate.Invoke(sender, EventArgs.Empty);
@@ -27,7 +26,7 @@ namespace Revolution.Events
 
         internal static void SafeInvoke<T>(EventHandler<T> evt, object sender, T args) where T : EventArgs
         {
-            foreach (EventHandler<T> @delegate in evt.GetInvocationList())
+            foreach (var @delegate in evt.GetInvocationList().Cast<EventHandler<T>>())
             {
                 try
                 {
@@ -40,11 +39,11 @@ namespace Revolution.Events
                 }
             }
         }
-        
+
         internal static bool SafeCancellableInvoke<T>(EventHandler<T> evt, object sender, T args) where T : CancelEventArgs
         {
-            bool cancel = false;
-            foreach (EventHandler<T> @delegate in evt.GetInvocationList())
+            var cancel = false;
+            foreach (var @delegate in evt.GetInvocationList().Cast<EventHandler<T>>())
             {
                 try
                 {

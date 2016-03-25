@@ -4,8 +4,5 @@ namespace Revolution.Events.Arguments
 {
     public class EventArgsOnBeforePlayerTakesDamage : CancelEventArgs
     {
-        public EventArgsOnBeforePlayerTakesDamage()
-        {
-        }
     }
 }

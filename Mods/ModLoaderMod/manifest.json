@@ -1,7 +1,7 @@
 ﻿{
 	"UniqueId" : "Clxs'sModLoadingMod",
 	"Name" : "Mod Manager Mod",
-	"ModDLL": "ModLoaderMod",
+	"ModDll": "ModLoaderMod",
 	"Author": "ClxS",
 	"Version" : "0.1",
 	"Description" : "An example Mod Loader.",

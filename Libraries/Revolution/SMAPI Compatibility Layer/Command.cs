@@ -1,9 +1,8 @@
 ﻿using StardewModdingAPI.Events;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
+// ReSharper disable CheckNamespace
 namespace StardewModdingAPI
 {
     public class Command
@@ -22,7 +21,7 @@ namespace StardewModdingAPI
         /// <param name="input">The command to run</param>
         public static void CallCommand(string input)
         {
-            input = input.TrimEnd(new[] { ' ' });
+            input = input.TrimEnd(' ');
             string[] args = new string[0];
             Command fnd;
             if (input.Contains(" "))

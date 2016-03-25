@@ -1,24 +1,13 @@
 ﻿using System;
 using System.Reflection;
-using Revolution;
 
 namespace RevolutionDebugger
 {
     public class StardewRevolutionLauncher
     {
-        private Assembly revolutionAssembly = null;
-        public Assembly RevolutionAssembly
-        {
-            get
-            {
-                if(revolutionAssembly == null)
-                {
-                    revolutionAssembly = Assembly.LoadFrom(Constants.RevolutionExeName);
-                }
-                return revolutionAssembly;
-            }
-        }
-        
+        private Assembly _revolutionAssembly;
+        public Assembly RevolutionAssembly => _revolutionAssembly ?? (_revolutionAssembly = Assembly.LoadFrom(Constants.RevolutionExeName));
+
         public bool Launch()
         {
             if (RevolutionAssembly == null)

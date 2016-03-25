@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
+// ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Events
 {
     public static class GraphicsEvents
@@ -18,7 +16,7 @@ namespace StardewModdingAPI.Events
             }
             catch (Exception ex)
             {
-                Log.Error("An exception occured in XNA DrawTick: " + ex.ToString());
+                Log.Error("An exception occured in XNA DrawTick: " + ex);
             }
         }
 

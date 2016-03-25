@@ -1,14 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using ModLoaderMod.Menus;
-using Revolution.Events;
 using Revolution.Events.Arguments;
-using Revolution.Registries;
 using StardewValley;
-using StardewValley.Menus;
-using System;
-using System.IO;
-using System.Reflection;
 
 namespace ModLoaderMod
 {
@@ -24,15 +17,15 @@ namespace ModLoaderMod
 
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
         {
-            var texture = this.ModSettings.GetModTexture("icon_menuModsButton");
+            var texture = ModSettings.GetModTexture("icon_menuModsButton");
             //var texture2 = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("RevolutionContent\\customUI.png", FileMode.Open));
                
-            Revolution.UI.TitleMenu.RegisterNewTitleButton(new Revolution.UI.TitleMenu.CustomTitleOption()
+            Revolution.UI.TitleMenu.RegisterNewTitleButton(new Revolution.UI.TitleMenu.CustomTitleOption
             {
                 Key = "Mods",
                 Texture = texture,
                 TextureSourceRect = new Rectangle(222, 187, 74, 58),
-                OnClick = new Action<Revolution.UI.TitleMenu, string>(OnModMenuItemClicked)
+                OnClick = OnModMenuItemClicked
             });     
         }
 

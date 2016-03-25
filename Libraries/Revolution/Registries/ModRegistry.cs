@@ -1,25 +1,12 @@
 ﻿using Revolution.Registries.Containers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Revolution.Registries
 {
     public class ModRegistry
     {
         private static Registry<string, ModInfo> _modRegistryInstance;
-        private static Registry<string, ModInfo> RegistryInstance
-        {
-            get
-            {
-                if(_modRegistryInstance == null)
-                {
-                    _modRegistryInstance = new Registry<string, ModInfo>();
-                }
-                return _modRegistryInstance;
-            }
-        }
+        private static Registry<string, ModInfo> RegistryInstance => _modRegistryInstance ?? (_modRegistryInstance = new Registry<string, ModInfo>());
 
         public static ModInfo GetItem(string key)
         {

@@ -1,16 +1,9 @@
 ﻿using ILRepacking;
-using Mono.Cecil;
-using Mono.Cecil.Cil;
 using Revolution.Cecil;
 using Revolution.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Revolution
 {
@@ -32,13 +25,13 @@ namespace Revolution
                     {
                         RedirectConstructorInMethod(cecilContext, asmType);
                     }
-                    catch (System.Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine($"Error setting protections for {asmType.FullName}: \n\t{ex.Message}");
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}");
             }
@@ -55,13 +48,14 @@ namespace Revolution
                     {
                         SetVirtualCallOnMethod(cecilContext, asmMethod);
                     }
-                    catch (System.Exception ex)
+                    catch (Exception ex)
                     {
-                        Console.WriteLine($"Error setting protections for {asmMethod.DeclaringType.FullName}.{asmMethod.Name}: \n\t{ex.Message}");
+                        if (asmMethod.DeclaringType != null)
+                            Console.WriteLine($"Error setting protections for {asmMethod.DeclaringType.FullName}.{asmMethod.Name}: \n\t{ex.Message}");
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}");
             }
@@ -79,15 +73,16 @@ namespace Revolution
                 {
                     try
                     {
-                        CecilHelper.SetVirtualOnBaseMethods(cecilContext, asmType.BaseType.FullName);
+                        if (asmType.BaseType != null)
+                            CecilHelper.SetVirtualOnBaseMethods(cecilContext, asmType.BaseType.FullName);
                     }
-                    catch (System.Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine($"Error setting protections for {asmType.FullName}: \n\t{ex.Message}");
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}");
             }
@@ -104,13 +99,13 @@ namespace Revolution
                     {
                         AlterTypeBaseProtections(cecilContext, asmType);
                     }
-                    catch (System.Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine($"Error setting protections for {asmType.FullName}: \n\t{ex.Message}");
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}");
             }
@@ -131,14 +126,14 @@ namespace Revolution
                 options.InputAssemblies = inputs;
                 options.OutputFile = output;
                 options.DebugInfo = true;
-                options.SearchDirectories = new string[] { System.IO.Path.GetDirectoryName(PatcherConstants.CurrentAssemblyPath) };
+                options.SearchDirectories = new[] { System.IO.Path.GetDirectoryName(PatcherConstants.CurrentAssemblyPath) };
 
-                ILRepack repack = new ILRepack(options, logger);
+                var repack = new ILRepack(options, logger);
                 repack.Repack();
-            }            
-            catch (Exception e)
+            }
+            catch (Exception )
             {
-                
+                // ignored
             }
             finally
             {                

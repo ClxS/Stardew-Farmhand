@@ -6,15 +6,15 @@ using StardewValley.Menus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
+// ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Events
 {
     public class EventArgsKeyboardStateChanged : EventArgs
     {
         public EventArgsKeyboardStateChanged(KeyboardState priorState, KeyboardState newState)
         {
-            NewState = newState;
+            PriorState = priorState;
             NewState = newState;
         }
         public KeyboardState NewState { get; private set; }
@@ -82,7 +82,7 @@ namespace StardewModdingAPI.Events
     {
         public EventArgsMouseStateChanged(MouseState priorState, MouseState newState)
         {
-            NewState = newState;
+            PriorState = priorState;
             NewState = newState;
         }
         public MouseState NewState { get; private set; }
@@ -133,11 +133,11 @@ namespace StardewModdingAPI.Events
     {
         public EventArgsFarmerChanged(Farmer priorFarmer, Farmer newFarmer)
         {
-            NewFarmer = NewFarmer;
-            PriorFarmer = PriorFarmer;
+            NewFarmer = newFarmer;
+            PriorFarmer = priorFarmer;
         }
-        public Farmer NewFarmer { get; private set; }
-        public Farmer PriorFarmer { get; private set; }
+        public Farmer NewFarmer { get; }
+        public Farmer PriorFarmer { get; }
     }
 
     public class EventArgsInventoryChanged : EventArgs
@@ -177,24 +177,24 @@ namespace StardewModdingAPI.Events
 
     public class EventArgsIntChanged : EventArgs
     {
-        public EventArgsIntChanged(Int32 priorInt, Int32 newInt)
+        public EventArgsIntChanged(int priorInt, int newInt)
         {
-            NewInt = NewInt;
-            PriorInt = PriorInt;
+            NewInt = newInt;
+            PriorInt = priorInt;
         }
-        public Int32 NewInt { get; private set; }
-        public Int32 PriorInt { get; private set; }
+        public int NewInt { get; }
+        public int PriorInt { get; }
     }
 
     public class EventArgsStringChanged : EventArgs
     {
-        public EventArgsStringChanged(String priorString, String newString)
+        public EventArgsStringChanged(string priorString, string newString)
         {
             NewString = newString;
             PriorString = priorString;
         }
-        public String NewString { get; private set; }
-        public String PriorString { get; private set; }
+        public string NewString { get; private set; }
+        public string PriorString { get; private set; }
     }
 
     public class EventArgsCommand : EventArgs

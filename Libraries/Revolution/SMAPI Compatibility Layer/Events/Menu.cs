@@ -1,9 +1,7 @@
 ﻿using StardewValley.Menus;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
+// ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Events
 {
     public static class MenuEvents

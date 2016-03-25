@@ -2,9 +2,6 @@
 using Revolution.Logging;
 using StardewValley;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Revolution.Registries;
 using System.IO;
 using System.Reflection;
@@ -33,27 +30,30 @@ namespace Revolution.Content
         public override T Load<T>(string assetName)
         {
             var item = XnbRegistry.GetItem(assetName);
-            if(item != null && item.OwningMod != null && item.OwningMod.ModState == ModState.Loaded)
+            if(item?.OwningMod != null && item.OwningMod.ModState == ModState.Loaded)
             {
                 try
                 {
-                    Uri relRoot = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + this.RootDirectory + "\\", UriKind.Absolute);
-                    Uri fullPath = new Uri(Path.GetDirectoryName(item.AbsoluteFilePath), UriKind.Absolute);                    
-                    string relPath = relRoot.MakeRelativeUri(fullPath).ToString() + "/" + item.File;
-                    
-                    Log.Verbose($"Using own asset replacement: {assetName} = {relPath}");
-                    return base.Load<T>(relPath);
+                    var currentDirectory = Path.GetDirectoryName(item.AbsoluteFilePath);
+                    var relPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" +
+                                   RootDirectory + "\\";
+                    if (currentDirectory != null)
+                    {
+                        var relRootUri = new Uri(relPath, UriKind.Absolute);
+                        var fullPath = new Uri(currentDirectory, UriKind.Absolute);
+                        var relUri = relRootUri.MakeRelativeUri(fullPath) + "/" + item.File;
+
+                        Log.Verbose($"Using own asset replacement: {assetName} = {relPath}");
+                        return base.Load<T>(relUri);
+                    }
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
                     Log.Exception("Error reading own file", ex);
                     return base.Load<T>(assetName);
                 }
             }
-            else
-            {
-                return base.Load<T>(assetName);
-            }
+            return base.Load<T>(assetName);
         }
     }
 }

@@ -1,13 +1,6 @@
-﻿using Revolution;
-using Revolution.Events;
-using Revolution.Events.Arguments;
+﻿using Revolution.Events.Arguments;
 using Revolution.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LoggingMod
 {

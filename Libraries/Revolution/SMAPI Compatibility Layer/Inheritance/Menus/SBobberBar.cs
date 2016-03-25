@@ -1,12 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using StardewValley.BellsAndWhistles;
 using StardewValley.Menus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Inheritance.Menus
 {
     public class SBobberBar : BobberBar
@@ -263,16 +261,11 @@ namespace StardewModdingAPI.Inheritance.Menus
             set { GetBaseFieldInfo("bobberBarAcceleration").SetValue(BaseBobberBar, value); }
         }
 
-        public static FieldInfo[] PrivateFields
-        {
-            get { return GetPrivateFields(); }
-        }
+        public static FieldInfo[] PrivateFields => GetPrivateFields();
 
         public static SBobberBar ConstructFromBaseClass(BobberBar baseClass)
         {
-            SBobberBar b = new SBobberBar(0, 0, false, 0);
-            b.BaseBobberBar = baseClass;
-            return b;
+            return new SBobberBar(0, 0, false, 0) {BaseBobberBar = baseClass};
         }
 
         /// <summary>

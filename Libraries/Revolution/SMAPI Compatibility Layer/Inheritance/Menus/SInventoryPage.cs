@@ -1,9 +1,7 @@
 ﻿using StardewValley.Menus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
+// ReSharper disable InconsistentNaming
+// ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Inheritance.Menus
 {
     public class SInventoryPage : InventoryPage
@@ -12,9 +10,7 @@ namespace StardewModdingAPI.Inheritance.Menus
 
         public static SInventoryPage ConstructFromBaseClass(InventoryPage baseClass)
         {
-            SInventoryPage s = new SInventoryPage(0, 0, 0, 0);
-            s.BaseInventoryPage = baseClass;
-            return s;
+            return new SInventoryPage(0, 0, 0, 0) {BaseInventoryPage = baseClass};
         }
 
         public SInventoryPage(int x, int y, int width, int height) : base(x, y, width, height)
