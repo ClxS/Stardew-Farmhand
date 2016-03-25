@@ -66,7 +66,10 @@
     <Compile Include="Attributes\HookMakeBaseVirtualCallAttribute.cs" />
     <Compile Include="Attributes\HookRedirectAttribute.cs" />
     <Compile Include="Attributes\HookRedirectConstructorFromBaseAttribute.cs" />
+    <Compile Include="Attributes\LocalBindAttribute.cs" />
+    <Compile Include="Attributes\ParameterBindAttribute.cs" />
     <Compile Include="Attributes\PendingHookAttribute.cs" />
+    <Compile Include="Attributes\ThisBindAttribute.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Content\ContentManager.cs" />
     <Compile Include="Events\ApiEvents.cs" />

@@ -92,6 +92,12 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Revolution\Revolution.csproj">
+      <Project>{a857e9eb-3c51-4d9d-92b3-acc90175eb7e}</Project>
+      <Name>Revolution</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

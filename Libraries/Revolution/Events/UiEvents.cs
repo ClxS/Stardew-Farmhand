@@ -9,13 +9,13 @@ namespace Revolution.Events
         public static event EventHandler OnAfterBundleConstructed = delegate { };
 
         [Hook(HookType.Exit, "StardewValley.Menus.IClickableMenu", "initialize")]
-        internal static void InvokeAfterIClickableMenuInitialized(object @this)
+        internal static void InvokeAfterIClickableMenuInitialized([ThisBind] object @this)
         {
             EventCommon.SafeInvoke(OnAfterIClickableMenuInitialized, null);
         }
         
         [Hook(HookType.Exit, "StardewValley.Menus.Bundle", ".ctor")]
-        internal static void InvokeAfterBundleConstructed(object @this)
+        internal static void InvokeAfterBundleConstructed([ThisBind] object @this)
         {
             EventCommon.SafeInvoke(OnAfterBundleConstructed, @this);
         }

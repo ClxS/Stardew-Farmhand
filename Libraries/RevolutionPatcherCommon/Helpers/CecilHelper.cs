@@ -4,6 +4,7 @@ using Revolution.Cecil;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Revolution.Attributes;
 
 namespace Revolution.Helpers
 {
@@ -23,9 +24,15 @@ namespace Revolution.Helpers
 
             if (method.HasParameters)
             {
-                Instruction loadObjInstruction = ilProcessor.Create(OpCodes.Ldarg_0);
-                ilProcessor.InsertBefore(target, loadObjInstruction);
-                ilProcessor.InsertAfter(loadObjInstruction, callEnterInstruction);
+                Instruction paramLdInstruction = target; 
+                foreach (var parameter in method.Parameters)
+                {
+                    paramLdInstruction = GetInstructionForParameter(ilProcessor, parameter);
+                    if(paramLdInstruction == null) throw new Exception($"Error parsing parameter setup on {parameter.Name}");
+                    ilProcessor.InsertBefore(target, paramLdInstruction);
+                }
+               
+                ilProcessor.InsertAfter(paramLdInstruction, callEnterInstruction);
             }
             else
             {
@@ -37,7 +44,27 @@ namespace Revolution.Helpers
                 var branch = ilProcessor.Create(OpCodes.Brtrue, ilProcessor.Body.Instructions.Last());
                 ilProcessor.InsertAfter(callEnterInstruction, branch);
             }
+        }
 
+        private static Instruction GetInstructionForParameter(ILProcessor ilProcessor, ParameterDefinition parameter)
+        {
+            if (!parameter.HasCustomAttributes) return null;
+
+            var attribute = parameter.CustomAttributes.FirstOrDefault(n => n.AttributeType.IsDefinition && n.AttributeType.Resolve().BaseType?.FullName == typeof(ParameterBindAttribute).FullName);
+
+            if (attribute == null) return null;
+
+            Instruction instruction;
+            if (typeof(ThisBindAttribute).FullName == attribute.AttributeType.FullName)
+            {
+                instruction = ilProcessor.Create(OpCodes.Ldarg_0);
+            }
+            else
+            {
+                throw new Exception("Unhandled parameter bind type");
+            }
+
+            return instruction;
         }
 
         private static void InjectMethod(ILProcessor ilProcessor, IEnumerable<Instruction> targets, MethodReference method)
