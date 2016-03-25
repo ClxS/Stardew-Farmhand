@@ -20,6 +20,9 @@ These projects are responsible for handling build flow.
 
 - Mod Loader Mod (DLL). A mod which will provide ingame loading and unloading of other mods.
 
+- Test Content Mod (DLL). This mod demonstrates using manifests to make a content only mod. As I wanted it to automatically put it's files in the right place, it's a class library with a post-build action to delete the empty .DLL and .PDB 
+
+
 ##Libraries
 
 - RevolutionPatcherCommon/FirstPass/SecondPass. These are used by the installer.They are separated into their own libraries to prevent conflicts due to the missing (not yet built) Stardew Revolution intermediate
