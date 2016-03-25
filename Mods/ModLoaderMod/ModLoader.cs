@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using ModLoaderMod.Menus;
-using Revolution.Events.Arguments;
+using Revolution.Events.Arguments.GameEvents;
 using StardewValley;
 
 namespace ModLoaderMod
