@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Revolution.Attributes;
+using Mono.Cecil.Rocks;
 
 namespace Revolution.Helpers
 {
@@ -14,6 +15,8 @@ namespace Revolution.Helpers
 
         private static void InjectMethod(ILProcessor ilProcessor, Instruction target, MethodReference method, bool cancelable = false)
         {
+            ilProcessor.Body.SimplifyMacros();
+            
             Instruction callEnterInstruction = ilProcessor.Create(OpCodes.Call, method);
 
             if (method.HasThis)
@@ -24,14 +27,14 @@ namespace Revolution.Helpers
 
             if (method.HasParameters)
             {
-                Instruction paramLdInstruction = target; 
+                Instruction paramLdInstruction = target;
                 foreach (var parameter in method.Parameters)
                 {
                     paramLdInstruction = GetInstructionForParameter(ilProcessor, parameter);
-                    if(paramLdInstruction == null) throw new Exception($"Error parsing parameter setup on {parameter.Name}");
+                    if (paramLdInstruction == null) throw new Exception($"Error parsing parameter setup on {parameter.Name}");
                     ilProcessor.InsertBefore(target, paramLdInstruction);
                 }
-               
+
                 ilProcessor.InsertAfter(paramLdInstruction, callEnterInstruction);
             }
             else
@@ -44,6 +47,8 @@ namespace Revolution.Helpers
                 var branch = ilProcessor.Create(OpCodes.Brtrue, ilProcessor.Body.Instructions.Last());
                 ilProcessor.InsertAfter(callEnterInstruction, branch);
             }
+
+            ilProcessor.Body.OptimizeMacros();
         }
 
         private static Instruction GetInstructionForParameter(ILProcessor ilProcessor, ParameterDefinition parameter)
@@ -54,13 +59,29 @@ namespace Revolution.Helpers
 
             if (attribute == null) return null;
 
-            Instruction instruction;
+            Instruction instruction = null;
             if (typeof(ThisBindAttribute).FullName == attribute.AttributeType.FullName)
             {
-                instruction = ilProcessor.Create(OpCodes.Ldarg_0);
+                instruction = ilProcessor.Create(OpCodes.Ldarg, ilProcessor.Body.ThisParameter);
             }
-            else
+            else if (typeof(InputBindAttribute).FullName == attribute.AttributeType.FullName)
             {
+                var type = attribute.ConstructorArguments[0].Value as TypeReference;
+                var name = attribute.ConstructorArguments[1].Value as string;
+
+                var inputParam =
+                    ilProcessor.Body.Method.Parameters.FirstOrDefault(
+                        p => p.Name == name && p.ParameterType.FullName == type?.FullName);
+
+                if (inputParam != null)
+                {
+                    instruction = ilProcessor.Create(OpCodes.Ldarg, inputParam);
+                }
+            }
+            else 
+            {
+                
+
                 throw new Exception("Unhandled parameter bind type");
             }
 
@@ -78,9 +99,8 @@ namespace Revolution.Helpers
         public static void InjectEntryMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod,
             string injectedType, string injectedMethod)
         {
-            MethodDefinition methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
-            ILProcessor ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
-            //InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition);
+            var methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
+            var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
             InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
         }
 
@@ -94,6 +114,9 @@ namespace Revolution.Helpers
 
         public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, string type, string method)
         {
+            //var test = stardewContext.GetMethodIlProcessor("Revolution.Test", "Test1");
+            //test.Body.SimplifyMacros();
+            //test.Body.OptimizeMacros();
             var newConstructor = asmType.GetConstructor(new Type[] { });
 
             if (asmType.BaseType == null) return;

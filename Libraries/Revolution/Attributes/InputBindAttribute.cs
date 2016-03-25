@@ -5,9 +5,10 @@ using System.Text;
 
 namespace Revolution.Attributes
 {
-    public class LocalBindAttribute : ParameterBindAttribute
+    [AttributeUsage(AttributeTargets.Parameter)]
+    public class InputBindAttribute : ParameterBindAttribute
     {
-        public LocalBindAttribute(Type type, string name)
+        public InputBindAttribute(Type type, string name)
         {
             Type = type;
             Name = name;

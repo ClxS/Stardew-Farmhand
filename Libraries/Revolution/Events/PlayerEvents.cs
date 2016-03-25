@@ -1,16 +1,18 @@
 ﻿using Revolution.Attributes;
 using Revolution.Events.Arguments;
 using System;
+using Revolution.Events.Arguments.PlayerEvents;
+using StardewValley;
 
 namespace Revolution.Events
 {
     public class PlayerEvents
     {
-        public static EventHandler<EventArgsOnBeforePlayerTakesDamage> OnBeforePlayerTakesDamage = delegate { };
-        public static EventHandler<EventArgsOnAfterPlayerTakesDamage> OnAfterPlayerTakesDamage = delegate { };
-        public static EventHandler<EventArgsOnPlayerDoneEating> OnPlayerDoneEating = delegate { };
+        public static event EventHandler<EventArgsOnBeforePlayerTakesDamage> OnBeforePlayerTakesDamage = delegate { };
+        public static event EventHandler<EventArgsOnAfterPlayerTakesDamage> OnAfterPlayerTakesDamage = delegate { };
+        public static event EventHandler<EventArgsOnPlayerDoneEating> OnPlayerDoneEating = delegate { };
+        public static event EventHandler<EventArgsOnItemAddedToInventory> OnItemAddedToInventory = delegate { };
         public static event EventHandler OnFarmerChanged = delegate { };
-        public static event EventHandler OnInventoryChanged = delegate { };
         public static event EventHandler OnLevelUp = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.Game1", "farmerTakeDamage")]
@@ -37,10 +39,12 @@ namespace Revolution.Events
             EventCommon.SafeInvoke(OnFarmerChanged, null);
         }
         
-        [Hook(HookType.Exit, "StardewValley.Game1", "addItemToInventory")]
-        internal static void InvokeInventoryChanged()
+        [Hook(HookType.Exit, "StardewValley.Farmer", "addItemToInventory")]
+        internal static bool InvokeItemAddedToInventory(
+            [ThisBind] object @this,
+            [InputBind(typeof(Item), "item")] Item item)
         {
-            EventCommon.SafeInvoke(OnInventoryChanged, null);
+            return EventCommon.SafeCancellableInvoke(OnItemAddedToInventory, @this, new EventArgsOnItemAddedToInventory(item));
         }
         
         [PendingHook]

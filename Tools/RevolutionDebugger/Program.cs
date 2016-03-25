@@ -14,7 +14,7 @@ namespace RevolutionDebugger
                     throw new Exception("Could not launch Stardew Revolution");
                 }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
                 return -1;
             }

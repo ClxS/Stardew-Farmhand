@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Revolution.Events.Arguments
+namespace Revolution.Events.Arguments.GameEvents
 {
     public class EventArgsOnGameInitialised : EventArgs
     {

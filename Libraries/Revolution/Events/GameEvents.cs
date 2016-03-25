@@ -2,6 +2,9 @@
 using Revolution.Events.Arguments;
 using System;
 using System.ComponentModel;
+using Microsoft.Xna.Framework;
+using Revolution.Events.Arguments.GameEvents;
+using Revolution.Logging;
 
 namespace Revolution.Events
 {
@@ -17,51 +20,53 @@ namespace Revolution.Events
         public static event EventHandler OnAfterUpdateTick = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
-        internal static void InvokeBeforeGameInitialise()
+        internal static void InvokeBeforeGameInitialise([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnBeforeGameInitialised, null, new EventArgsOnGameInitialise());
+            EventCommon.SafeInvoke(OnBeforeGameInitialised, @this, new EventArgsOnGameInitialise());
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "Initialize")]
-        internal static void InvokeAfterGameInitialise()
+        internal static void InvokeAfterGameInitialise([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnAfterGameInitialised, null, new EventArgsOnGameInitialised());
+            EventCommon.SafeInvoke(OnAfterGameInitialised, @this, new EventArgsOnGameInitialised());
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "LoadContent")]
-        internal static void InvokeBeforeLoadContent()
+        internal static void InvokeBeforeLoadContent([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnBeforeLoadContent, null);
+            EventCommon.SafeInvoke(OnBeforeLoadContent, @this);
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "LoadContent")]
-        internal static void InvokeAfterLoadedContent()
+        internal static void InvokeAfterLoadedContent([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnAfterLoadedContent, null);
+            EventCommon.SafeInvoke(OnAfterLoadedContent, @this);
         }
                 
         [Hook(HookType.Entry, "StardewValley.Game1", "UnloadContent")]
-        internal static void InvokeBeforeUnloadContent()
+        internal static void InvokeBeforeUnloadContent([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnBeforeUnoadContent, null);
+            EventCommon.SafeInvoke(OnBeforeUnoadContent, @this);
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "UnloadContent")]
-        internal static void InvokeAfterUnloadedContent()
+        internal static void InvokeAfterUnloadedContent([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnAfterUnloadedContent, null);
+            EventCommon.SafeInvoke(OnAfterUnloadedContent, @this);
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Update")]
-        internal static bool InvokeBeforeUpdate()
+        internal static bool InvokeBeforeUpdate(
+            [ThisBind] object @this, 
+            [InputBind(typeof(GameTime), "gameTime")] GameTime gt)
         {
-            return EventCommon.SafeCancellableInvoke(OnBeforeUpdateTick, null, new CancelEventArgs());
+            return EventCommon.SafeCancellableInvoke(OnBeforeUpdateTick, @this, new EventArgsOnBeforeGameUpdate(gt));
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "Update")]
-        internal static void InvokeAfterUpdate()
+        internal static void InvokeAfterUpdate([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnAfterUpdateTick, null);
+            EventCommon.SafeInvoke(OnAfterUpdateTick, @this);
         }
     }
 }
