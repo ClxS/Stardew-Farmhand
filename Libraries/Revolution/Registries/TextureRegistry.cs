@@ -42,29 +42,29 @@ namespace Revolution.Registries
             return RegistryInstance.GetRegisteredItems();
         }
 
-        public static void RegisterItem(ModInfo mod, string itemId, ModTexture item)
+        public static void RegisterItem(ModManifest mod, string itemId, ModTexture item)
         {
             ModTextureRegistryInstance.RegisterItem(GetModSpecificItemId(mod, itemId), item);
         }
 
-        public static void UnregisterItem(ModInfo mod, string itemId)
+        public static void UnregisterItem(ModManifest mod, string itemId)
         {
             ModTextureRegistryInstance.UnregisterItem(GetModSpecificItemId(mod, itemId));
         }
 
-        public static ModTexture GetItem(ModInfo mod, string itemId)
+        public static ModTexture GetItem(ModManifest mod, string itemId)
         {
             return ModTextureRegistryInstance.GetItem(GetModSpecificItemId(mod, itemId));
         }
 
         #endregion
         #region Helper Functions
-        private static string GetModSpecificPrefix(ModInfo mod)
+        private static string GetModSpecificPrefix(ModManifest mod)
         {
             return $"\\{mod.UniqueId}\\";
         }
 
-        private static string GetModSpecificItemId(ModInfo mod, string itemId)
+        private static string GetModSpecificItemId(ModManifest mod, string itemId)
         {
             var modPrefix = GetModSpecificPrefix(mod);
             return $"{modPrefix}{itemId}";

@@ -94,12 +94,14 @@
     <Compile Include="Logging\Loggers\FileLogger.cs" />
     <Compile Include="Logging\Loggers\ILogger.cs" />
     <Compile Include="Menus\TitleMenu.cs" />
-    <Compile Include="Mod.cs" />
-    <Compile Include="ModLoader.cs" />
+    <Compile Include="Mods\Mod.cs" />
+    <Compile Include="Mods\ModConfiguration.cs" />
+    <Compile Include="Mods\ModLoader.cs" />
+    <Compile Include="Mods\ModState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registries\Containers\ModContent.cs" />
     <Compile Include="Registries\Containers\ModDependency.cs" />
-    <Compile Include="Registries\Containers\ModInfo.cs" />
+    <Compile Include="Registries\Containers\ModManifest.cs" />
     <Compile Include="Registries\Containers\ModTexture.cs" />
     <Compile Include="Registries\Containers\ModXnb.cs" />
     <Compile Include="Registries\ModRegistry.cs" />

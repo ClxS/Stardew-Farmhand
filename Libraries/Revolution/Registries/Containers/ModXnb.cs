@@ -7,7 +7,7 @@ namespace Revolution.Registries.Containers
         public string File { get; set; }
 
         [JsonIgnore]
-        public ModInfo OwningMod { get; set; }
+        public ModManifest OwningMod { get; set; }
 
         [JsonIgnore]
         public string AbsoluteFilePath { get; set; }

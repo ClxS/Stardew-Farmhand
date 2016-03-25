@@ -4,6 +4,7 @@ using StardewValley;
 using StardewValley.Menus;
 using System.Collections.Generic;
 using System.Linq;
+using Revolution;
 using Revolution.Registries;
 using Revolution.Registries.Containers;
 using Revolution.UI.Components;
@@ -16,7 +17,7 @@ namespace ModLoaderMod.Menus
         private readonly List<ClickableComponent> _labels = new List<ClickableComponent>();
         private readonly List<DisableableOptionCheckbox> _modToggles = new List<DisableableOptionCheckbox>();
         private readonly List<ClickableComponent> _optionSlots = new List<ClickableComponent>();
-        private readonly Dictionary<DisableableOptionCheckbox, ModInfo> _modOptions = new Dictionary<DisableableOptionCheckbox, ModInfo>();
+        private readonly Dictionary<DisableableOptionCheckbox, ModManifest> _modOptions = new Dictionary<DisableableOptionCheckbox, ModManifest>();
         private int _currentItemIndex;
 
         public ModMenu()
@@ -48,24 +49,23 @@ namespace ModLoaderMod.Menus
 
             foreach (var mod in mods)
             {
-                if (mod.UniqueId != ModLoader.Instance.ModSettings.UniqueId)
-                {
-                    var checkbox = new DisableableOptionCheckbox($"{mod.Name} by {mod.Author}", 11)
-                    {
-                        IsChecked = mod.ModState == ModState.Loaded
-                    };
+                if (mod.UniqueId == ModLoader.Instance.ModSettings.UniqueId) continue;
 
-                    if(mod.ModState != ModState.Loaded && mod.ModState != ModState.Deactivated)
-                    {
-                        ResolveLoadingIssue(checkbox, mod);
-                    }
-                    _modToggles.Add(checkbox);
-                    _modOptions[checkbox] = mod;
+                var checkbox = new DisableableOptionCheckbox($"{mod.Name} by {mod.Author}", 11)
+                {
+                    IsChecked = mod.ModState == ModState.Loaded
+                };
+
+                if(mod.ModState != ModState.Loaded && mod.ModState != ModState.Deactivated)
+                {
+                    ResolveLoadingIssue(checkbox, mod);
                 }
+                _modToggles.Add(checkbox);
+                _modOptions[checkbox] = mod;
             }            
         }
 
-        private void ResolveLoadingIssue(DisableableOptionCheckbox checkbox, ModInfo mod)
+        private void ResolveLoadingIssue(DisableableOptionCheckbox checkbox, ModManifest mod)
         {
             checkbox.IsDisabled = true;
             if(mod.ModState == ModState.MissingDependency)

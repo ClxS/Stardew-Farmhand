@@ -1,13 +1,23 @@
 ﻿using Revolution.Events.Arguments;
 using Revolution.Logging;
 using System;
+using Revolution;
 
 namespace LoggingMod
 {
-    class Logging : Revolution.Mod
+    internal class Logging : Mod
     {
+        public ModConfig Configuration { get; set; }
+
         public override void Entry()
         {
+            Configuration = ModConfiguration.LoadConfig<ModConfig>(ModSettings.ConfigurationFile);
+
+            if (Configuration != null)
+            {
+                Log.IsVerbose = Configuration.UseVerboseLogging;
+            }
+
             Revolution.Events.GameEvents.OnBeforeGameInitialised += OnGameInitialising;
             Revolution.Events.GameEvents.OnAfterGameInitialised += OnGameInitialised;
             Revolution.Events.GameEvents.OnBeforeLoadContent += GameEvents_OnBeforeLoadContent;

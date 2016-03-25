@@ -5,20 +5,20 @@ namespace Revolution.Registries
 {
     public class ModRegistry
     {
-        private static Registry<string, ModInfo> _modRegistryInstance;
-        private static Registry<string, ModInfo> RegistryInstance => _modRegistryInstance ?? (_modRegistryInstance = new Registry<string, ModInfo>());
+        private static Registry<string, ModManifest> _modRegistryInstance;
+        private static Registry<string, ModManifest> RegistryInstance => _modRegistryInstance ?? (_modRegistryInstance = new Registry<string, ModManifest>());
 
-        public static ModInfo GetItem(string key)
+        public static ModManifest GetItem(string key)
         {
             return RegistryInstance.GetItem(key);
         }
 
-        public static IEnumerable<ModInfo> GetRegisteredItems()
+        public static IEnumerable<ModManifest> GetRegisteredItems()
         {
             return RegistryInstance.GetRegisteredItems();
         }
 
-        public static void RegisterItem(string itemId, ModInfo item)
+        public static void RegisterItem(string itemId, ModManifest item)
         {
             RegistryInstance.RegisterItem(itemId, item);
         }

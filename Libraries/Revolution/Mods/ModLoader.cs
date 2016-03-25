@@ -94,14 +94,10 @@ namespace Revolution
                     if (mod.HasContent)
                     {
                         mod.LoadContent();
-                    }                    
+                    }
                     if (mod.HasDll)
                     {
-                        mod.LoadModDll();                        
-                    }
-                    if (mod.HasDll && mod.HasConfig)
-                    {
-                        mod.LoadConfig();
+                        mod.LoadModDll();
                     }
                     mod.ModState = ModState.Loaded;
                     Log.Success($"Loaded Mod: {mod.Name} v{mod.Version} by {mod.Author}");              
@@ -121,7 +117,7 @@ namespace Revolution
 
             //Loop to verify every dependent mod is available. 
             bool stateChange = false;
-            var modInfos = registeredMods as ModInfo[] ?? registeredMods.ToArray();
+            var modInfos = registeredMods as ModManifest[] ?? registeredMods.ToArray();
             do 
             {
                 foreach (var mod in modInfos)
@@ -175,19 +171,19 @@ namespace Revolution
 
         private static void LoadModManifests()
         {
-            foreach (string modPath in ModPaths)
+            foreach (var modPath in ModPaths)
             {
-                foreach (String perModPath in Directory.GetDirectories(modPath))
+                foreach (var perModPath in Directory.GetDirectories(modPath))
                 {
                     var modJsonFiles = Directory.GetFiles(perModPath, "manifest.json");
                     foreach (var file in modJsonFiles)
                     {
-                        using (StreamReader r = new StreamReader(file))
+                        using (var r = new StreamReader(file))
                         {
-                            string json = r.ReadToEnd();
-                            ModInfo modInfo = JsonConvert.DeserializeObject<ModInfo>(json);
+                            var json = r.ReadToEnd();
+                            var modInfo = JsonConvert.DeserializeObject<ModManifest>(json);
                             
-                            modInfo.ModRoot = perModPath;
+                            modInfo.ModDirectory = perModPath;
                             ModRegistry.RegisterItem(modInfo.UniqueId ?? Guid.NewGuid().ToString(), modInfo);
                         }
                     }
@@ -200,7 +196,7 @@ namespace Revolution
             DeactivateMod(mod.ModSettings);
         }
 
-        public static void DeactivateMod(ModInfo mod, ModState state = ModState.Deactivated, Exception error = null)
+        public static void DeactivateMod(ModManifest mod, ModState state = ModState.Deactivated, Exception error = null)
         {
             DetachAssemblyDelegates(mod.ModAssembly);
             mod.ModState = state;
@@ -220,7 +216,7 @@ namespace Revolution
             ReactivateMod(mod.ModSettings);
         }
 
-        public static void ReactivateMod(ModInfo mod)
+        public static void ReactivateMod(ModManifest mod)
         {
             if (mod.ModAssembly != null)
             {

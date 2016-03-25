@@ -4,5 +4,6 @@
 	"ModDll": "LoggingMod",
 	"Author": "ClxS",
 	"Version" : "0.1",
-	"Description" : "Logs various events."
+	"Description" : "Logs various events.",
+	"ConfigurationFile" : "config.json"
 }

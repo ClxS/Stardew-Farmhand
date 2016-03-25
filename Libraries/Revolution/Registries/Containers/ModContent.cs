@@ -13,13 +13,13 @@ namespace Revolution.Registries.Containers
         public List<ModTexture> Textures { get; set; }
         public List<ModXnb> Xnb { get; set; }
 
-        public void LoadContent(ModInfo mod)
+        public void LoadContent(ModManifest mod)
         {
             if (Textures != null)
             {
                 foreach (var texture in Textures)
                 {
-                    texture.AbsoluteFilePath = $"{mod.ModRoot}\\{Constants.ModContentDirectory}\\{texture.File}";
+                    texture.AbsoluteFilePath = $"{mod.ModDirectory}\\{Constants.ModContentDirectory}\\{texture.File}";
 
                     if (!texture.Exists())
                     {
@@ -29,19 +29,18 @@ namespace Revolution.Registries.Containers
                     TextureRegistry.RegisterItem(mod, texture.Id, texture);
                 }
             }
-            
-            if (Xnb != null)
+
+            if (Xnb == null) return;
+
+            foreach (var file in Xnb)
             {
-                foreach (var file in Xnb)
+                file.AbsoluteFilePath = $"{mod.ModDirectory}\\{Constants.ModContentDirectory}\\{file.File}";
+                file.OwningMod = mod;
+                if (!file.Exists())
                 {
-                    file.AbsoluteFilePath = $"{mod.ModRoot}\\{Constants.ModContentDirectory}\\{file.File}";
-                    file.OwningMod = mod;
-                    if (!file.Exists())
-                    {
-                        throw new Exception($"Missing XNB: {file.AbsoluteFilePath}");
-                    }
-                    XnbRegistry.RegisterItem(file.File, file);
+                    throw new Exception($"Missing XNB: {file.AbsoluteFilePath}");
                 }
+                XnbRegistry.RegisterItem(file.File, file);
             }
         }        
     }

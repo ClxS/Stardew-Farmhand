@@ -3,26 +3,14 @@ using Newtonsoft.Json;
 using Revolution.Logging;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 
 namespace Revolution.Registries.Containers
 {
-    public enum ModState
+    public class ModManifest
     {
-        Unloaded,
-        Loaded,
-        Deactivated,
-        MissingDependency,
-        Errored,
-        ForciblyUnloaded,
-        InvalidManifest
-    }
-
-    public class ModInfo
-    {
-        public ModInfo()
+        public ModManifest()
         {
             ModState = ModState.Unloaded;
         }
@@ -33,9 +21,14 @@ namespace Revolution.Registries.Containers
         public string Author { get; set; }
         public Version Version { get; set; }
         public string Description { get; set; }
-        public string ConfigurationFile { get; set; }
         public List<ModDependency> Dependencies { get; set; }
         public ModContent Content { get; set; }
+        private string _configurationFile;
+        public string ConfigurationFile
+        {
+            get { return $"{ModDirectory}\\{_configurationFile}"; }
+            set { _configurationFile = value; }
+        }
 
         [JsonIgnore]
         public ModState ModState { get; set; }
@@ -52,18 +45,16 @@ namespace Revolution.Registries.Containers
         [JsonIgnore]
         public Mod Instance { get; set; }
         [JsonIgnore]
-        public string ModRoot { get; set; }
-        [JsonIgnore]
-        private object ConfigurationSettings { get; set; }
-        
-        public bool LoadModDll()
+        public string ModDirectory { get; set; }
+
+        internal bool LoadModDll()
         {
             if (Instance != null)
             {
                 throw new Exception("Error! Mod has already been loaded!");
             }
-            
-            var modDllPath = ModRoot + "\\" + ModDll;
+
+            var modDllPath = $"{ModDirectory}\\{ModDll}";
 
             if (!modDllPath.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -97,23 +88,9 @@ namespace Revolution.Registries.Containers
             return Instance != null;
         }
 
-        public void LoadContent()
+        internal void LoadContent()
         {
             Content?.LoadContent(this);
-        }
-
-        internal void LoadConfig()
-        {
-            if (Instance == null)
-            {
-                throw new Exception("Error! Configurations can only be loaded into an already loaded mod!");
-            }
-
-            var configPath = ModRoot + "\\" + ConfigurationFile;
-            if(File.Exists(configPath))
-            {
-                Instance.LoadConfigurationSettings(configPath);
-            }
         }
         
         public Texture2D GetModTexture(string id)

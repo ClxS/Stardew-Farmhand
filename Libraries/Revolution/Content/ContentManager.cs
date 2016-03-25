@@ -5,11 +5,10 @@ using System;
 using Revolution.Registries;
 using System.IO;
 using System.Reflection;
-using Revolution.Registries.Containers;
 
 namespace Revolution.Content
 {
-    class ContentManager : Microsoft.Xna.Framework.Content.ContentManager
+    public class ContentManager : Microsoft.Xna.Framework.Content.ContentManager
     {
         [Hook(HookType.Entry, "StardewValley.Game1", "LoadContent")]
         internal static void ConstructionHook()
