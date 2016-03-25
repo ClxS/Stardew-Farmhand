@@ -12,7 +12,7 @@ These projects are responsible for handling build flow.
 
 - Revolution Installer - Console (EXE). This runs RevolutionPatcher, expecting the Stardew Valley and Stardew Revolution files to be adjacent to it. 
 
-- Revolution Installer - UI (EXE). This runs RevolutionPatcher too. Though it's not complete, the completed version is the file we should distribute to users. Using ILRepacker, it's dependency DLLs (RevolutionPacker, Revolution) can be self contained. This one will also support downloading of the most recent Revolution DLL from the internet. 
+- Revolution Installer - UI (EXE). This runs RevolutionPatcher too. Once it's complete, this will be the file we actually distribute out. It should automatically bundle the required binaries (Revolution, RevolutionUI, RevolutionPatcherCommon, RevolutionPatcherFirstPass, RevolutionPatcherSecondPass) and extract them at runtime. At the final stages, this should allow for updated binaries to be fetched from the internet.
 
 ##Mods
 
