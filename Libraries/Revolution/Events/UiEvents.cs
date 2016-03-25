@@ -10,12 +10,12 @@ namespace Revolution.Events
         public static event EventHandler OnAfterBundleConstructed = delegate { };
 
         [Hook(HookType.Exit, "StardewValley.Menus.IClickableMenu", "initialize")]
-        internal static void InvokeAfterIClickableMenuInitialized([ThisBind] object @this//, 
-            //[InputBind(typeof(int), "x")] int x,
-            //[InputBind(typeof(int), "y")] int y,
-            //[InputBind(typeof(int), "width")] int width,
-            //[InputBind(typeof(int), "height")] int height,
-            //[InputBind(typeof(bool), "showUpperRightCloseButton")] bool showCloseBtn
+        internal static void InvokeAfterIClickableMenuInitialized([ThisBind] object @this, 
+            [InputBind(typeof(int), "x")] int x,
+            [InputBind(typeof(int), "y")] int y,
+            [InputBind(typeof(int), "width")] int width,
+            [InputBind(typeof(int), "height")] int height,
+            [InputBind(typeof(bool), "showUpperRightCloseButton")] bool showCloseBtn
             )
         {
             Log.Success("It works!");
