@@ -11,12 +11,12 @@ namespace LoggingMod
 
         public override void Entry()
         {
-            Configuration = ModConfiguration.LoadConfig<ModConfig>(ModSettings.ConfigurationFile);
+            //Configuration = ModConfiguration.LoadConfig<ModConfig>(ModSettings.ConfigurationFile);
 
-            if (Configuration != null)
-            {
-                Log.IsVerbose = Configuration.UseVerboseLogging;
-            }
+            //if (Configuration != null)
+            //{
+            //    Log.IsVerbose = Configuration.UseVerboseLogging;
+            //}
 
             Revolution.Events.GameEvents.OnBeforeGameInitialised += OnGameInitialising;
             Revolution.Events.GameEvents.OnAfterGameInitialised += OnGameInitialised;

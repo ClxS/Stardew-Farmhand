@@ -1,0 +1,8 @@
+﻿{
+	"UniqueId" : "ClxsJuminoDepositAnywhere",
+	"Name" : "Jumino Deposit Anywhere",
+	"ModDll": "JuminoDepositAnywhereMod",
+	"Author": "ClxS",
+	"Version" : "0.1",
+	"Description" : "Lets you complete bundles from anywhere."
+}

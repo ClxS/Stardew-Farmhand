@@ -87,6 +87,7 @@
     <Compile Include="Events\MenuEvents.cs" />
     <Compile Include="Events\PlayerEvents.cs" />
     <Compile Include="Events\TimeEvents.cs" />
+    <Compile Include="Events\UiEvents.cs" />
     <Compile Include="HookManager.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LogEntry.cs" />
