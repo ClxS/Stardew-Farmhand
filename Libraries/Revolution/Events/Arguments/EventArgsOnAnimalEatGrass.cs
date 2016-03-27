@@ -1,8 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Revolution.Events.Arguments
 {
-    public class EventArgsOnAnimalEatGrass : EventArgs
+    public class EventArgsOnAnimalEatGrass : CancelEventArgs
     {
     }
 }

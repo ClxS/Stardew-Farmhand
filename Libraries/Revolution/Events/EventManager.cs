@@ -9,9 +9,9 @@ namespace Revolution.Events
     {
         readonly Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>> _detachedDelegates = new Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>>();
 
-        private IEnumerable<Type> GetRevolutionEvents()
+        private static IEnumerable<Type> GetRevolutionEvents()
         {
-            return Assembly.GetExecutingAssembly().GetTypes().Where(t => String.Equals(t.Namespace, "Revolution.Events", StringComparison.Ordinal)).ToArray();
+            return Assembly.GetExecutingAssembly().GetTypes().Where(t => string.Equals(t.Namespace, "Revolution.Events", StringComparison.Ordinal)).ToArray();
         }
 
         public void DetachDelegates(Assembly assembly)
@@ -51,21 +51,20 @@ namespace Revolution.Events
 
         public void ReattachDelegates(Assembly assembly)
         {
-            if (_detachedDelegates.ContainsKey(assembly))
+            if (!_detachedDelegates.ContainsKey(assembly)) return;
+
+            var delegates = _detachedDelegates[assembly];
+
+            foreach (var delegateEvent in delegates)
             {
-                var delegates = _detachedDelegates[assembly];
-
-                foreach (var delegateEvent in delegates)
+                var evt = delegateEvent.Key;
+                foreach (var @delegate in delegateEvent.Value)
                 {
-                    var evt = delegateEvent.Key;
-                    foreach (var @delegate in delegateEvent.Value)
-                    {
-                        evt.AddEventHandler(@delegate.Target, @delegate);
-                    }
+                    evt.AddEventHandler(@delegate.Target, @delegate);
                 }
-
-                _detachedDelegates.Remove(assembly);
             }
+
+            _detachedDelegates.Remove(assembly);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Revolution.Events
             EventCommon.SafeInvoke(OnPlayerDoneEating, null, new EventArgsOnPlayerDoneEating());
         }
         
-        [PendingHook]
+        [Hook(HookType.Exit, "StardewValley.Farmer", ".ctor")]
         internal static void InvokeFarmerChanged()
         {
             EventCommon.SafeInvoke(OnFarmerChanged, null);

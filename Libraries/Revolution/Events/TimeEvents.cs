@@ -31,7 +31,7 @@ namespace Revolution.Events
             }
         }
 
-        /*[Hook(HookType.Exit, "StardewValley.Game1", "performTenMinuteClockUpdate")]
+        [Hook(HookType.Exit, "StardewValley.Game1", "performTenMinuteClockUpdate")]
         internal static void InvokeAfterTimeChanged()
         {
             EventCommon.SafeInvoke(OnAfterTimeChanged, null);
@@ -46,7 +46,7 @@ namespace Revolution.Events
         internal static void InvokeAfterDayChanged()
         {
             EventCommon.SafeInvoke(OnAfterDayChanged, null);
-        }*/
+        }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "newSeason")]
         internal static void InvokeBeforeSeasonChanged()
@@ -59,10 +59,10 @@ namespace Revolution.Events
             EventCommon.SafeInvoke(OnAfterSeasonChanged, null);
         }
         
-        [PendingHook]
-        internal static void InvokeBeforeYearChanged() 
-        {
-            throw new NotImplementedException();
-        }
+        //[PendingHook]
+        //internal static void InvokeBeforeYearChanged() 
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

@@ -14,7 +14,7 @@ namespace Revolution.Events
         public static event EventHandler OnAfterLoadedContent = delegate { };
         public static event EventHandler OnBeforeUnoadContent = delegate { };
         public static event EventHandler OnAfterUnloadedContent = delegate { };
-        public static event EventHandler<CancelEventArgs> OnBeforeUpdateTick = delegate { };
+        public static event EventHandler<EventArgsOnBeforeGameUpdate> OnBeforeUpdateTick = delegate { };
         public static event EventHandler OnAfterUpdateTick = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
