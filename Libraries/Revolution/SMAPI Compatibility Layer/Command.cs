@@ -42,7 +42,7 @@ namespace StardewModdingAPI
             }
             else
             {
-                Log.Error("Unknown Command");
+                Revolution.Logging.Log.Error("Unknown Command");
             }
         }
 
@@ -58,12 +58,12 @@ namespace StardewModdingAPI
             Command c = new Command(command, cdesc, args);
             if (RegisteredCommands.Contains(c))
             {
-                Log.Error($"Command already registered! [{c.CommandName}]");
+                Revolution.Logging.Log.Error($"Command already registered! [{c.CommandName}]");
                 return RegisteredCommands.Find(x => x.Equals(c));
             }
 
             RegisteredCommands.Add(c);
-            Log.Verbose($"Registered command: {command}");
+            Revolution.Logging.Log.Verbose($"Registered command: {command}");
 
             return c;
         }
@@ -100,7 +100,7 @@ namespace StardewModdingAPI
         {
             if (CommandFired == null)
             {
-                Log.Error("Command failed to fire because it's fire event is null: " + CommandName);
+                Revolution.Logging.Log.Error("Command failed to fire because it's fire event is null: " + CommandName);
                 return;
             }
             CommandFired.Invoke(this, new EventArgsCommand(this));

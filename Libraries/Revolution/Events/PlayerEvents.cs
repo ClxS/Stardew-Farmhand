@@ -37,10 +37,9 @@ namespace Revolution.Events
             EventCommon.SafeInvoke(OnPlayerDoneEating, null, new EventArgsOnPlayerDoneEating());
         }
         
-        [Hook(HookType.Exit, "StardewValley.Farmer", ".ctor")]
-        internal static void InvokeFarmerChanged([ThisBind] object @this)
+        internal static void InvokeFarmerChanged(Farmer priorFarmer, Farmer newFarmer)
         {
-            EventCommon.SafeInvoke(OnFarmerChanged, @this);
+            EventCommon.SafeInvoke(OnFarmerChanged, newFarmer);
         }
 
         //[Hook(HookType.Exit, "StardewValley.Farmer", "addItemToInventory")]

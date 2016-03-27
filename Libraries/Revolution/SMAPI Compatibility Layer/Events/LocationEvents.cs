@@ -2,6 +2,7 @@
 using StardewValley;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 // ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Events
@@ -12,19 +13,19 @@ namespace StardewModdingAPI.Events
         public static event EventHandler<EventArgsLocationObjectsChanged> LocationObjectsChanged = delegate { };
         public static event EventHandler<EventArgsCurrentLocationChanged> CurrentLocationChanged = delegate { };
 
-        public static void InvokeLocationsChanged(List<GameLocation> newLocations)
+        public static void InvokeLocationsChanged(object sender, EventArgs eventArgs)
         {
-            LocationsChanged.Invoke(null, new EventArgsGameLocationsChanged(newLocations));
+            LocationsChanged.Invoke(null, new EventArgsGameLocationsChanged(Game1.locations));
         }
 
-        public static void InvokeCurrentLocationChanged(GameLocation priorLocation, GameLocation newLocation)
+        public static void InvokeCurrentLocationChanged(object sender, EventArgs eventArgs)
         {
-            CurrentLocationChanged.Invoke(null, new EventArgsCurrentLocationChanged(priorLocation, newLocation));
+            //CurrentLocationChanged.Invoke(null, new EventArgsCurrentLocationChanged(priorLocation, newLocation));
         }
 
-        internal static void InvokeOnNewLocationObject(SerializableDictionary<Vector2, StardewValley.Object> newObjects)
+        internal static void InvokeOnNewLocationObject(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            LocationObjectsChanged.Invoke(null, new EventArgsLocationObjectsChanged(newObjects));
+            LocationObjectsChanged.Invoke(null, new EventArgsLocationObjectsChanged(Game1.currentLocation.objects));
         }
     }
 }

@@ -6,47 +6,18 @@ using System.Threading;
 // ReSharper disable CheckNamespace
 namespace StardewModdingAPI
 {
+    [Obsolete]
     public class Log
     {
-        private static StreamWriter _logStream;
-        private static string _logPath;
-
         /// <summary>
         /// Set up the logging stream
         /// </summary>
         /// <param name="logPath"></param>
         public static void Initialize(string logPath)
         {
-            _logPath = logPath;
-            var logFile = string.Format($"{logPath}\\MODDED_ProgramLog.Log_LATEST.txt");
-            try
-            {
-                _logStream = new StreamWriter(logFile, false);
-            }
-            catch (Exception)
-            {
-                // TODO: not use general exception
-                Error("Could not initialize LogStream - Logging is disabled");
-            }
+            
         }
-
-        /// <summary>
-        /// Print provided parameters to the console/file as applicable
-        /// </summary>
-        /// <param name="message">Desired message</param>
-        /// <param name="disableLogging">When true, writes to ONLY console and not the log file.</param>
-        /// <param name="values">Additional params to be added to the message</param>
-        private static void PrintLog(object message, bool disableLogging, params object[] values)
-        {
-            string logOutput = $"[{DateTime.Now.ToLongTimeString()}] {String.Format(message.ToString(), values)}";
-            Console.WriteLine(logOutput);
-
-            if (_logStream == null || disableLogging) return;
-
-            _logStream.WriteLine(logOutput);
-            _logStream.Flush();
-        }
-
+        
         /// <summary>
         /// Successful message to display to console and logging.
         /// </summary>
@@ -54,9 +25,7 @@ namespace StardewModdingAPI
         /// <param name="values"></param>
         public static void Success(object message, params object[] values)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            PrintLog(message?.ToString(), false, values);
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Revolution.Logging.Log.Success(string.Format(message.ToString(), values));
         }
 
         /// <summary>
@@ -66,7 +35,7 @@ namespace StardewModdingAPI
         /// <param name="values"></param>
         public static void Verbose(object message, params object[] values)
         {
-            PrintLog(message?.ToString(), false, values);
+            Revolution.Logging.Log.Verbose(string.Format(message.ToString(), values));
         }
 
         /// <summary>
@@ -76,9 +45,7 @@ namespace StardewModdingAPI
         /// <param name="values"></param>
         public static void Comment(object message, params object[] values)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            PrintLog(message?.ToString(), false, values);
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Revolution.Logging.Log.Info(string.Format(message.ToString(), values));
         }
 
         /// <summary>
@@ -88,7 +55,7 @@ namespace StardewModdingAPI
         /// <param name="values"></param>
         public static void Info(object message, params object[] values)
         {
-            PrintLog(message.ToString(), true, values);
+            Revolution.Logging.Log.Info(string.Format(message.ToString(), values));
         }
 
         /// <summary>
@@ -98,9 +65,7 @@ namespace StardewModdingAPI
         /// <param name="values"></param>
         public static void Error(object message, params object[] values)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            PrintLog(message.ToString(), false, values);
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Revolution.Logging.Log.Error(string.Format(message.ToString(), values));
         }
 
         /// <summary>
@@ -110,11 +75,7 @@ namespace StardewModdingAPI
         /// <param name="values"></param>
         public static void Debug(object message, params object[] values)
         {
-#if DEBUG
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            PrintLog(message.ToString(), false, values);
-            Console.ForegroundColor = ConsoleColor.Gray;
-#endif
+            Revolution.Logging.Log.Verbose(string.Format(message.ToString(), values));
         }
 
         /// <summary>
@@ -123,8 +84,6 @@ namespace StardewModdingAPI
         /// <remarks>Should be moved out of here if we do more than just log the exception.</remarks>
         public static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Console.WriteLine("An exception has been caught");
-            File.WriteAllText(_logPath + "\\MODDED_ErrorLog.Log_" + Extensions.Random.Next(100000000, 999999999) + ".txt", e.ExceptionObject.ToString());
         }
 
         /// <summary>
@@ -133,8 +92,6 @@ namespace StardewModdingAPI
         /// <remarks>Should be moved out of here if we do more than just log the exception.</remarks>
         public static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            Console.WriteLine("A thread exception has been caught");
-            File.WriteAllText(_logPath + "\\MODDED_ErrorLog.Log_" + Extensions.Random.Next(100000000, 999999999) + ".txt", e.Exception.ToString());
         }
 
         // I'm including the following for now because they have a lot of references with different uses.
@@ -142,27 +99,22 @@ namespace StardewModdingAPI
 
         public static void LogValueNotSpecified()
         {
-            Error("<value> must be specified");
         }
 
         public static void LogObjectValueNotSpecified()
         {
-            Error("<object> and <value> must be specified");
         }
 
         public static void LogValueInvalid()
         {
-            Error("<value> is invalid");
         }
 
         public static void LogObjectInvalid()
         {
-            Error("<object> is invalid");
         }
 
         public static void LogValueNotInt32()
         {
-            Error("<value> must be a whole number (Int32)");
         }
 
     }

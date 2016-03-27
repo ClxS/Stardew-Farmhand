@@ -9,7 +9,7 @@ namespace Revolution.Events
 {
     public class EventManager
     {
-        private PropertyWatcher watcher = new PropertyWatcher();
+        private static readonly PropertyWatcher watcher = new PropertyWatcher();
         readonly Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>> _detachedDelegates = new Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>>();
 
         private static IEnumerable<Type> GetRevolutionEvents()
@@ -18,7 +18,7 @@ namespace Revolution.Events
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Update")]
-        public void ManualEventChecks()
+        public static void ManualEventChecks()
         {
             watcher.CheckForChanges();
         }
@@ -74,6 +74,32 @@ namespace Revolution.Events
             }
 
             _detachedDelegates.Remove(assembly);
+        }
+
+        public void AttachSmapiEvents()
+        {
+            GameEvents.OnBeforeGameInitialised += StardewModdingAPI.Events.GameEvents.InvokeGameLoaded;
+            GameEvents.OnAfterGameInitialised += StardewModdingAPI.Events.GameEvents.InvokeInitialize;
+            GameEvents.OnAfterLoadedContent += StardewModdingAPI.Events.GameEvents.InvokeLoadContent;
+            GameEvents.OnAfterUpdateTick += StardewModdingAPI.Events.GameEvents.InvokeUpdateTick;
+
+            GraphicsEvents.OnAfterDraw += StardewModdingAPI.Events.GraphicsEvents.InvokeDrawTick;
+            GraphicsEvents.OnResize += StardewModdingAPI.Events.GraphicsEvents.InvokeResize;
+
+            LocationEvents.OnLocationsChanged += StardewModdingAPI.Events.LocationEvents.InvokeLocationsChanged;
+            LocationEvents.OnLocationObjectsChanged += StardewModdingAPI.Events.LocationEvents.InvokeOnNewLocationObject;
+            LocationEvents.OnCurrentLocationChanged += StardewModdingAPI.Events.LocationEvents.InvokeCurrentLocationChanged;
+
+            MenuEvents.OnMenuChanged += StardewModdingAPI.Events.MenuEvents.InvokeMenuChanged;
+
+            PlayerEvents.OnFarmerChanged += StardewModdingAPI.Events.PlayerEvents.InvokeFarmerChanged;
+            PlayerEvents.OnItemAddedToInventory += StardewModdingAPI.Events.PlayerEvents.InvokeInventoryChanged;
+            PlayerEvents.OnLevelUp += StardewModdingAPI.Events.PlayerEvents.InvokeLeveledUp;
+
+            TimeEvents.OnAfterTimeChanged += StardewModdingAPI.Events.TimeEvents.InvokeTimeOfDayChanged;
+            TimeEvents.OnAfterDayChanged += StardewModdingAPI.Events.TimeEvents.InvokeDayOfMonthChanged;
+            TimeEvents.OnAfterSeasonChanged += StardewModdingAPI.Events.TimeEvents.InvokeSeasonOfYearChanged;
+            TimeEvents.OnAfterYearChanged += StardewModdingAPI.Events.TimeEvents.InvokeYearOfGameChanged;
         }
     }
 }

@@ -2,6 +2,7 @@ using StardewModdingAPI.Inheritance;
 using StardewValley;
 using System;
 using System.Collections.Generic;
+using Revolution.Events.Arguments.PlayerEvents;
 
 // ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Events
@@ -12,19 +13,20 @@ namespace StardewModdingAPI.Events
         public static event EventHandler<EventArgsInventoryChanged> InventoryChanged = delegate { };
         public static event EventHandler<EventArgsLevelUp> LeveledUp = delegate { };
 
-        public static void InvokeFarmerChanged(Farmer priorFarmer, Farmer newFarmer)
+        public static void InvokeFarmerChanged(object sender, EventArgs eventArgs)
         {
-            FarmerChanged.Invoke(null, new EventArgsFarmerChanged(priorFarmer, newFarmer));
+            //FarmerChanged.Invoke(null, new EventArgsFarmerChanged(priorFarmer, newFarmer));
         }
 
-        public static void InvokeInventoryChanged(List<Item> inventory, List<ItemStackChange> changedItems)
+        public static void InvokeInventoryChanged(object sender, EventArgsOnItemAddedToInventory eventArgsOnItemAddedToInventory)
         {
-            InventoryChanged.Invoke(null, new EventArgsInventoryChanged(inventory, changedItems));
+            //InventoryChanged.Invoke(null, new EventArgsInventoryChanged(inventory, changedItems));
         }
 
-        public static void InvokeLeveledUp(EventArgsLevelUp.LevelType type, int newLevel)
+        public static void InvokeLeveledUp(object sender, EventArgsOnLevelUp eventArgsOnLevelUp)
         {
-            LeveledUp.Invoke(null, new EventArgsLevelUp(type, newLevel));
+           // LeveledUp.Invoke(null, new EventArgsLevelUp(type, newLevel));
         }
+        
     }
 }

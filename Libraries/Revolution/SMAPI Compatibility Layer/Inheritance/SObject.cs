@@ -209,7 +209,7 @@ namespace StardewModdingAPI.Inheritance
             s.boundingBox = new Rectangle(x / Game1.tileSize * Game1.tileSize, y / Game1.tileSize * Game1.tileSize, this.boundingBox.Width, this.boundingBox.Height);
 
             location.objects.Add(key, s);
-            Log.Verbose($"{this.GetHashCode()} - {s.GetHashCode()}");
+            Revolution.Logging.Log.Verbose($"{this.GetHashCode()} - {s.GetHashCode()}");
 
             return true;
         }

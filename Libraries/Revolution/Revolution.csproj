@@ -145,7 +145,6 @@
     <Compile Include="SMAPI Compatibility Layer\Events\GraphicsEvents.cs" />
     <Compile Include="SMAPI Compatibility Layer\Events\LocationEvents.cs" />
     <Compile Include="SMAPI Compatibility Layer\Events\MenuEvents.cs" />
-    <Compile Include="SMAPI Compatibility Layer\Events\MineEvents.cs" />
     <Compile Include="SMAPI Compatibility Layer\Events\PlayerEvents.cs" />
     <Compile Include="SMAPI Compatibility Layer\Events\TimeEvents.cs" />
     <Compile Include="SMAPI Compatibility Layer\Extensions.cs" />

@@ -24,7 +24,7 @@ namespace StardewModdingAPI.Inheritance
                 name = baseClass.name
             };
 
-            Log.Debug("CONSTRUCTED: " + s.name);
+            Revolution.Logging.Log.Verbose("CONSTRUCTED: " + s.name);
 
             if (!copyAllData) return s;
 
@@ -40,7 +40,7 @@ namespace StardewModdingAPI.Inheritance
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex);
+                    Revolution.Logging.Log.Exception("Error constructing from base class", ex);
                 }
             }
 

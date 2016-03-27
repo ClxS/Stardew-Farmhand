@@ -45,6 +45,8 @@ namespace Revolution.Registries.Containers
         [JsonIgnore]
         public Mod Instance { get; set; }
         [JsonIgnore]
+        public StardewModdingAPI.Mod SmapiInstance { get; set; }
+        [JsonIgnore]
         public string ModDirectory { get; set; }
 
         internal bool LoadModDll()
@@ -64,16 +66,23 @@ namespace Revolution.Registries.Containers
             try
             {
                 ModAssembly = Assembly.LoadFrom(modDllPath);
-                if (ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Mod)) > 0)
+                if (ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Revolution.Mod)) > 0)
                 {
-                    var tar = ModAssembly.GetTypes().First(x => x.BaseType == typeof(Mod));
-                    Instance = (Mod)ModAssembly.CreateInstance(tar.ToString());
+                    var type = ModAssembly.GetTypes().First(x => x.BaseType == typeof(Revolution.Mod));
+                    Instance = (Mod)ModAssembly.CreateInstance(type.ToString());
                     if (Instance != null)
                     {
                         Instance.ModSettings = this;
                         Instance.Entry();
                     }
                     Log.Verbose ($"Loaded mod dll: {Name}");
+                }
+                else if (ModAssembly.GetTypes().Count(x => x.BaseType == typeof(StardewModdingAPI.Mod)) > 0)
+                {
+                    var type = ModAssembly.GetTypes().First(x => x.BaseType == typeof(StardewModdingAPI.Mod));
+                    SmapiInstance = (StardewModdingAPI.Mod)ModAssembly.CreateInstance(type.ToString());
+                    SmapiInstance?.Entry();
+                    Log.Verbose($"Loaded mod dll: {Name}");
                 }
                 else
                 {

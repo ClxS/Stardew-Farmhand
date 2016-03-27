@@ -31,7 +31,7 @@ namespace StardewModdingAPI.Inheritance.Menus
         {
             if (pages[currentTab] is InventoryPage)
             {
-                Log.Verbose("INV SCREEN");
+                Revolution.Logging.Log.Verbose("INV SCREEN");
             }
             base.receiveRightClick(x, y, playSound);
         }

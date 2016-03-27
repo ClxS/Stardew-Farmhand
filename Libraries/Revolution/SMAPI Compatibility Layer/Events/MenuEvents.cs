@@ -8,9 +8,9 @@ namespace StardewModdingAPI.Events
     {
         public static event EventHandler<EventArgsClickableMenuChanged> MenuChanged = delegate { };
 
-        public static void InvokeMenuChanged(IClickableMenu priorMenu, IClickableMenu newMenu)
+        public static void InvokeMenuChanged(object sender, EventArgs eventArgs)
         {
-            MenuChanged.Invoke(null, new EventArgsClickableMenuChanged(priorMenu, newMenu));
+            //MenuChanged.Invoke(null, new EventArgsClickableMenuChanged(priorMenu, newMenu));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Revolution.Events
         }
 
         [PendingHook]
-        internal static void InvokeCurrentLocationChanged([ThisBind] object @this)
+        internal static void InvokeCurrentLocationChanged(GameLocation priorLocation, GameLocation newLocation)
         {
             EventCommon.SafeInvoke(OnCurrentLocationChanged, null);
         }

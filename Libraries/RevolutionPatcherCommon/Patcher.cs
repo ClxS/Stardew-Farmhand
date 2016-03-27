@@ -131,7 +131,7 @@ namespace Revolution
                 var repack = new ILRepack(options, logger);
                 repack.Repack();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ignored
             }

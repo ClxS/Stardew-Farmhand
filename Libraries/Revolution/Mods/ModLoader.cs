@@ -20,6 +20,8 @@ namespace Revolution
         };
 
         internal static EventManager ModEventManager = new EventManager();
+
+        public static bool UsingSmapiMods = false;
         
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void LoadMods()
@@ -37,6 +39,12 @@ namespace Revolution
                 ResolveDependencies();
                 Log.Verbose("Importing Mod DLLs, Settings, and Content");
                 LoadFinalMods();
+
+                if (UsingSmapiMods)
+                {
+                    Log.Verbose("Using SMAPI - Attaching SMAPI events");
+                    ModEventManager.AttachSmapiEvents();
+                }
             }
             catch (Exception ex)
             {

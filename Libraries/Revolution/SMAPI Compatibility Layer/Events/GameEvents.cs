@@ -1,4 +1,5 @@
 ﻿using System;
+using Revolution.Events.Arguments.GameEvents;
 
 // ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Events
@@ -10,12 +11,12 @@ namespace StardewModdingAPI.Events
         public static event EventHandler LoadContent = delegate { };
         public static event EventHandler UpdateTick = delegate { };
 
-        public static void InvokeGameLoaded()
+        public static void InvokeGameLoaded(object sender, EventArgsOnGameInitialise eventArgsOnGameInitialise)
         {
             GameLoaded.Invoke(null, EventArgs.Empty);
         }
 
-        public static void InvokeInitialize()
+        public static void InvokeInitialize(object sender, EventArgsOnGameInitialised eventArgsOnGameInitialised)
         {
             try
             {
@@ -23,11 +24,11 @@ namespace StardewModdingAPI.Events
             }
             catch (Exception ex)
             {
-                Log.Error("An exception occured in XNA Initialize: " + ex);
+                Revolution.Logging.Log.Error("An exception occured in XNA Initialize: " + ex);
             }
         }
 
-        public static void InvokeLoadContent()
+        public static void InvokeLoadContent(object sender, EventArgs eventArgs)
         {
             try
             {
@@ -35,11 +36,11 @@ namespace StardewModdingAPI.Events
             }
             catch (Exception ex)
             {
-                Log.Error("An exception occured in XNA LoadContent: " + ex);
+                Revolution.Logging.Log.Error("An exception occured in XNA LoadContent: " + ex);
             }
         }
 
-        public static void InvokeUpdateTick()
+        public static void InvokeUpdateTick(object sender, EventArgs eventArgs)
         {
             try
             {
@@ -47,7 +48,7 @@ namespace StardewModdingAPI.Events
             }
             catch (Exception ex)
             {
-                Log.Error("An exception occured in XNA UpdateTick: " + ex);
+                Revolution.Logging.Log.Error("An exception occured in XNA UpdateTick: " + ex);
             }
         }
     }
