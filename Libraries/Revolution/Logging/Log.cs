@@ -42,21 +42,21 @@ namespace Revolution.Logging
         /// <param name="message"></param>
         public static void Info(string message)
         {
-            LogEntry logItem = new LogEntry { Message = message };
+            var logItem = new LogEntry { Message = message };
             Logger.Write(logItem);
         }
 
-        internal static void Exception(string message, Exception ex)
+        public static void Exception(string message, Exception ex)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             if (IsVerbose)
             {
-                LogEntry logItem = new LogEntry { Message = $"{message}\n\t{ex.Message}\n\t{ex.StackTrace}", Color = LogEntryColor.Red };
+                var logItem = new LogEntry { Message = $"{message}\n\t{ex.Message}\n\t{ex.StackTrace}", Color = LogEntryColor.Red };
                 Logger.Write(logItem);                
             }
             else
             {
-                LogEntry logItem = new LogEntry { Message = $"{message}\n\t{ex.Message}", Color = LogEntryColor.Red };
+                var logItem = new LogEntry { Message = $"{message}\n\t{ex.Message}", Color = LogEntryColor.Red };
                 Logger.Write(logItem);
             }
             Console.ForegroundColor = ConsoleColor.Gray;

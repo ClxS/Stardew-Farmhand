@@ -12,7 +12,7 @@ namespace Revolution
         public static string RevolutionUiDll => "RevolutionUI.dll";
 
         public static string PassOnePackageResult => "Stardew Revolution.int1-package.dll";
-        public static string PassTwoPackageResult => "Stardew Revolution.int2-package.dll";
+        public static string PassTwoPackageResult => "Stardew Revolution.dll";
         
         public static string PassOneRevolutionExe => "Stardew Revolution.int1.dll";
         public static string PassTwoRevolutionExe => RevolutionExe;

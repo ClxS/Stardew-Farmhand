@@ -73,9 +73,9 @@ namespace Revolution.Registries.Containers
         [JsonIgnore]
         public Assembly ModAssembly { get; set; }
         [JsonIgnore]
-        public Mod Instance { get; set; }
-        [JsonIgnore]
-        public StardewModdingAPI.Mod SmapiInstance { get; set; }
+        public object Instance { get; set; }
+        //[JsonIgnore]
+        //public StardewModdingAPI.Mod SmapiInstance { get; set; }
         [JsonIgnore]
         public string ModDirectory { get; set; }
 
@@ -99,22 +99,29 @@ namespace Revolution.Registries.Containers
                 if (ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Revolution.Mod)) > 0)
                 {
                     var type = ModAssembly.GetTypes().First(x => x.BaseType == typeof(Revolution.Mod));
-                    Instance = (Mod)ModAssembly.CreateInstance(type.ToString());
-                    if (Instance != null)
+                    Mod instance = (Mod)ModAssembly.CreateInstance(type.ToString());
+                    if (instance != null)
                     {
-                        Instance.ModSettings = this;
-                        Instance.Entry();
+                        instance.ModSettings = this;
+                        instance.Entry();
                     }
+                    Instance = instance;
                     Log.Verbose ($"Loaded mod dll: {Name}");
                 }
-                else if (ModAssembly.GetTypes().Count(x => x.BaseType == typeof(StardewModdingAPI.Mod)) > 0)
-                {
-                    var type = ModAssembly.GetTypes().First(x => x.BaseType == typeof(StardewModdingAPI.Mod));
-                    SmapiInstance = (StardewModdingAPI.Mod)ModAssembly.CreateInstance(type.ToString());
-                    SmapiInstance?.Entry();
-                    Log.Verbose($"Loaded mod dll: {Name}");
-                }
                 else
+                {
+                    var types = ModAssembly.GetTypes();
+                    foreach (var layer in ModLoader.CompatibilityLayers)
+                    {
+                        if (!layer.ContainsOurModType(types)) continue;
+
+                        Instance = layer.LoadMod(ModAssembly, types);
+                        Log.Verbose($"Loaded mod dll: {Name}");
+                        break;
+                    }
+                }
+               
+                if(Instance == null)
                 {
                     throw new Exception("Invalid Mod DLL");
                 }

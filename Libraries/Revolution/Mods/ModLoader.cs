@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Converters;
 using Revolution.Events;
+using Revolution.Helpers;
 using Revolution.Logging;
 
 namespace Revolution
@@ -19,6 +20,8 @@ namespace Revolution
         {
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
         };
+
+        internal static List<ICompatibilityLayer> CompatibilityLayers { get; set; } = new List<ICompatibilityLayer>();
 
         internal static EventManager ModEventManager = new EventManager();
 
@@ -32,6 +35,7 @@ namespace Revolution
             Log.Info("Loading Mods...");
             try
             {
+                TryLoadModCompatiblityLayers();
                 Log.Verbose("Loading Mod Manifests");
                 LoadModManifests();
                 Log.Verbose("Validating Mod Manifests");
@@ -54,6 +58,34 @@ namespace Revolution
             }
             var numModsLoaded = ModRegistry.GetRegisteredItems().Count(n => n.ModState == ModState.Loaded);
             Log.Info($"{numModsLoaded} Mods Loaded!");
+        }
+
+        private static void TryLoadModCompatiblityLayers()
+        {
+            string[] layers = {"StardewModdingAPI.dll"};
+
+            foreach (var layer in layers)
+            {
+                try
+                {
+                    if (!File.Exists(layer)) continue;
+
+                    var assm = Assembly.LoadFrom(layer);
+                    if (assm.GetTypes().Count(x => x.BaseType == typeof (ICompatibilityLayer)) <= 0) continue;
+                    
+                    var type = assm.GetTypes().First(x => x.BaseType == typeof(ICompatibilityLayer));
+                    var inst = (ICompatibilityLayer)assm.CreateInstance(type.ToString());
+                    if (inst == null) continue;
+
+                    CompatibilityLayers.Add(inst);
+                    inst.AttachEvents();
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    var test = ex.LoaderExceptions;
+                    Log.Exception("Failed to load compatibility layer" + test[0].Message, ex);
+                }
+            }
         }
 
         private static void ApiEvents_OnModError(object sender, Events.Arguments.EventArgsOnModError e)
