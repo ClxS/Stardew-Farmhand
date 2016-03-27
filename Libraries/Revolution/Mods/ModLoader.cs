@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Newtonsoft.Json.Converters;
 using Revolution.Events;
 using Revolution.Logging;
 
@@ -189,7 +190,7 @@ namespace Revolution
                         using (var r = new StreamReader(file))
                         {
                             var json = r.ReadToEnd();
-                            var modInfo = JsonConvert.DeserializeObject<ModManifest>(json);
+                            var modInfo = JsonConvert.DeserializeObject<ModManifest>(json, new Revolution.Helpers.VersionConverter());
                             
                             modInfo.ModDirectory = perModPath;
                             ModRegistry.RegisterItem(modInfo.UniqueId ?? Guid.NewGuid().ToString(), modInfo);

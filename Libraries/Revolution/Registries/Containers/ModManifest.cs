@@ -16,19 +16,49 @@ namespace Revolution.Registries.Containers
         }
 
         public string UniqueId { get; set; }
+
         public string ModDll { get; set; }
-        public string Name { get; set; }        
+
+        public string Name { get; set; }    
+            
         public string Author { get; set; }
-        public Version Version { get; set; }
+
+        public System.Version Version { get; set; }
+
         public string Description { get; set; }
         public List<ModDependency> Dependencies { get; set; }
+
         public ModContent Content { get; set; }
+
         private string _configurationFile;
         public string ConfigurationFile
         {
             get { return $"{ModDirectory}\\{_configurationFile}"; }
             set { _configurationFile = value; }
         }
+
+        #region SMAPI Compatibility
+
+        public bool IsSmapiMod { get; set; }
+
+        public string Authour
+        {
+            set { Author = value; }
+        }
+
+        public string EntryDll
+        {
+            set
+            {
+                var index = value.LastIndexOf(".dll", StringComparison.Ordinal);
+                ModDll = index != -1 ? value.Remove(index) : value;
+            }
+        }
+        public bool PerSaveConfigs { get; set; }
+
+        #endregion
+
+        #region Manifest Instance Data
 
         [JsonIgnore]
         public ModState ModState { get; set; }
@@ -106,5 +136,7 @@ namespace Revolution.Registries.Containers
         {
             return TextureRegistry.GetItem(this, id).Texture;
         }
+
+#endregion
     }
 }

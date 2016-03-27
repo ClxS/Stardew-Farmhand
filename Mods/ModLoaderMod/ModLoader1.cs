@@ -1,13 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using ModLoaderMod.Menus;
 using Revolution.Events.Arguments.GameEvents;
+using Revolution.Registries;
 using StardewValley;
 
 namespace ModLoaderMod
 {
-    class ModLoader : Revolution.Mod
+    class ModLoader1 : Revolution.Mod
     {
-        public static ModLoader Instance { get; set; }
+        public static ModLoader1 Instance { get; set; }
 
         public override void Entry()
         {
@@ -17,6 +18,7 @@ namespace ModLoaderMod
 
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
         {
+            var test = ModRegistry.GetRegisteredItems();
             var texture = ModSettings.GetModTexture("icon_menuModsButton");
             //var texture2 = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("RevolutionContent\\customUI.png", FileMode.Open));
                

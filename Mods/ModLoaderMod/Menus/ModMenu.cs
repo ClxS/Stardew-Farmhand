@@ -49,7 +49,7 @@ namespace ModLoaderMod.Menus
 
             foreach (var mod in mods)
             {
-                if (mod.UniqueId == ModLoader.Instance.ModSettings.UniqueId) continue;
+                if (mod.UniqueId == ModLoader1.Instance.ModSettings.UniqueId) continue;
 
                 var checkbox = new DisableableOptionCheckbox($"{mod.Name} by {mod.Author}", 11)
                 {

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Version = System.Version;
 
 namespace Revolution.Registries.Containers
 {

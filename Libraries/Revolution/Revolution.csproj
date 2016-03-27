@@ -98,6 +98,7 @@
     <Compile Include="Events\PropertyWatcher.cs" />
     <Compile Include="Events\TimeEvents.cs" />
     <Compile Include="Events\UiEvents.cs" />
+    <Compile Include="Helpers\VersionConverter.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LogEntry.cs" />
     <Compile Include="Logging\LogEntryColor.cs" />
