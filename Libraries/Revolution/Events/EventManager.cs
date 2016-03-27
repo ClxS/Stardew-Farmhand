@@ -1,17 +1,26 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Revolution.Attributes;
 
 namespace Revolution.Events
 {
     public class EventManager
     {
+        private PropertyWatcher watcher = new PropertyWatcher();
         readonly Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>> _detachedDelegates = new Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>>();
 
         private static IEnumerable<Type> GetRevolutionEvents()
         {
             return Assembly.GetExecutingAssembly().GetTypes().Where(t => string.Equals(t.Namespace, "Revolution.Events", StringComparison.Ordinal)).ToArray();
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Game1", "Update")]
+        public void ManualEventChecks()
+        {
+            watcher.CheckForChanges();
         }
 
         public void DetachDelegates(Assembly assembly)

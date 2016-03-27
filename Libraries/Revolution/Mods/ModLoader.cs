@@ -25,7 +25,7 @@ namespace Revolution
         internal static void LoadMods()
         {
             ApiEvents.OnModError += ApiEvents_OnModError;
-
+            
             Log.Info("Loading Mods...");
             try
             {

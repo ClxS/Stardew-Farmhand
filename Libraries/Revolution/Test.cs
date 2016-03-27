@@ -2,8 +2,9 @@
 {
     public class Test
     {
-        public void Test1(int x, int y, int width, int height, bool test)
+        public void Test1(int y, int width, int height, bool test)
         {
+            var x = -1;
             Test2(this, x, y, width, height, test);
         }
 

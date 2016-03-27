@@ -9,9 +9,8 @@ namespace Revolution.Events
     {
         internal static void SafeInvoke(EventHandler evt, object sender)
         {
-            foreach (var delegate1 in evt.GetInvocationList())
+            foreach (var @delegate in evt.GetInvocationList().Cast<EventHandler>())
             {
-                var @delegate = (EventHandler) delegate1;
                 try
                 {
                     @delegate.Invoke(sender, EventArgs.Empty);

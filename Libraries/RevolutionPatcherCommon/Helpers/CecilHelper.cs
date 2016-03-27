@@ -17,17 +17,17 @@ namespace Revolution.Helpers
         {
             ilProcessor.Body.SimplifyMacros();
             
-            Instruction callEnterInstruction = ilProcessor.Create(OpCodes.Call, method);
+            var callEnterInstruction = ilProcessor.Create(OpCodes.Call, method);
 
             if (method.HasThis)
             {
-                Instruction loadObjInstruction = ilProcessor.Create(OpCodes.Ldarg_0);
+                var loadObjInstruction = ilProcessor.Create(OpCodes.Ldarg_0);
                 ilProcessor.InsertBefore(target, loadObjInstruction);
             }
 
             if (method.HasParameters)
             {
-                Instruction paramLdInstruction = target;
+                var paramLdInstruction = target;
                 foreach (var parameter in method.Parameters)
                 {
                     paramLdInstruction = GetInstructionForParameter(ilProcessor, parameter);
@@ -78,6 +78,20 @@ namespace Revolution.Helpers
                     instruction = ilProcessor.Create(OpCodes.Ldarg, inputParam);
                 }
             }
+            else if (typeof(LocalBindAttribute).FullName == attribute.AttributeType.FullName)
+            {
+                var type = attribute.ConstructorArguments[0].Value as TypeReference;
+                var index = attribute.ConstructorArguments[1].Value as int?;
+
+                var inputParam =
+                    ilProcessor.Body.Variables.FirstOrDefault(
+                        p => p.Index == index && p.VariableType.FullName == type?.FullName);
+
+                if (inputParam != null)
+                {
+                    instruction = ilProcessor.Create(OpCodes.Ldloc, inputParam);
+                }
+            }
             else 
             {
                 
@@ -114,9 +128,9 @@ namespace Revolution.Helpers
 
         public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, string type, string method)
         {
-            //var test = stardewContext.GetMethodIlProcessor("Revolution.Test", "Test1");
-            //test.Body.SimplifyMacros();
-            //test.Body.OptimizeMacros();
+            var test = stardewContext.GetMethodIlProcessor("Revolution.Test", "Test1");
+            test.Body.SimplifyMacros();
+            test.Body.OptimizeMacros();
             var newConstructor = asmType.GetConstructor(new Type[] { });
 
             if (asmType.BaseType == null) return;

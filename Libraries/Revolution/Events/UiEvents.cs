@@ -18,7 +18,6 @@ namespace Revolution.Events
             [InputBind(typeof(bool), "showUpperRightCloseButton")] bool showCloseBtn
             )
         {
-            Log.Success("It works!");
             EventCommon.SafeInvoke(OnAfterIClickableMenuInitialized, null);
         }
         

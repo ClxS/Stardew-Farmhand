@@ -68,6 +68,7 @@
     <Compile Include="Attributes\HookRedirectConstructorFromBaseAttribute.cs" />
     <Compile Include="Attributes\HookType.cs" />
     <Compile Include="Attributes\InputBindAttribute.cs" />
+    <Compile Include="Attributes\LocalBindAttribute.cs" />
     <Compile Include="Attributes\LowestProtection.cs" />
     <Compile Include="Attributes\ParameterBindAttribute.cs" />
     <Compile Include="Attributes\PendingHookAttribute.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Events\Arguments\EventArgsOnPlayerDoneEating.cs" />
     <Compile Include="Events\Arguments\EventArgsOnBeforePlayerTakesDamage.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnItemAddedToInventory.cs" />
+    <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnLevelUp.cs" />
     <Compile Include="Events\ControlEvents.cs" />
     <Compile Include="Events\EventCommon.cs" />
     <Compile Include="Events\EventManager.cs" />
@@ -93,9 +95,9 @@
     <Compile Include="Events\LocationEvents.cs" />
     <Compile Include="Events\MenuEvents.cs" />
     <Compile Include="Events\PlayerEvents.cs" />
+    <Compile Include="Events\PropertyWatcher.cs" />
     <Compile Include="Events\TimeEvents.cs" />
     <Compile Include="Events\UiEvents.cs" />
-    <Compile Include="HookManager.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LogEntry.cs" />
     <Compile Include="Logging\LogEntryColor.cs" />

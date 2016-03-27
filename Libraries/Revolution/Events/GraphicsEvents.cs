@@ -15,13 +15,13 @@ namespace Revolution.Events
             EventCommon.SafeInvoke(OnResize, null);
         }
         
-        [Hook(HookType.Entry, "StardewValley.Game1", "draw")]
+        [Hook(HookType.Entry, "StardewValley.Game1", "Draw")]
         internal static void InvokeBeforeDraw([ThisBind] object @this)
         {
             EventCommon.SafeInvoke(OnBeforeDraw, @this);
         }
         
-        [Hook(HookType.Exit, "StardewValley.Game1", "draw")]
+        [Hook(HookType.Exit, "StardewValley.Game1", "Draw")]
         internal static void InvokeAfterDraw([ThisBind] object @this)
         {
             EventCommon.SafeInvoke(OnAfterDraw, @this);

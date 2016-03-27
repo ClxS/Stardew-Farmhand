@@ -2,6 +2,7 @@
 using Revolution.Logging;
 using System;
 using Revolution;
+using StardewValley;
 
 namespace LoggingMod
 {
@@ -31,6 +32,12 @@ namespace LoggingMod
             Revolution.Events.LocationEvents.OnCurrentLocationChanged += LocationEvents_OnCurrentLocationChanged;
             Revolution.Events.LocationEvents.OnLocationObjectsChanged += LocationEvents_OnLocationObjectsChanged;
             Revolution.Events.PlayerEvents.OnBeforePlayerTakesDamage += PlayerEvents_OnBeforePlayerTakesDamage;
+            Revolution.Events.UiEvents.OnAfterIClickableMenuInitialized += UiEvents_OnAfterIClickableMenuInitialized;
+        }
+
+        private void UiEvents_OnAfterIClickableMenuInitialized(object sender, EventArgs e)
+        {
+            Game1.player.gainExperience(1, 2000);
         }
 
         private void PlayerEvents_OnBeforePlayerTakesDamage(object sender, EventArgsOnBeforePlayerTakesDamage e)

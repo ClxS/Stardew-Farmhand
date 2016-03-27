@@ -1,7 +1,9 @@
 ﻿using Revolution.Attributes;
 using Revolution.Events.Arguments;
 using System;
+using System.ComponentModel;
 using Revolution.Events.Arguments.PlayerEvents;
+using Revolution.Logging;
 using StardewValley;
 
 namespace Revolution.Events
@@ -12,8 +14,10 @@ namespace Revolution.Events
         public static event EventHandler<EventArgsOnAfterPlayerTakesDamage> OnAfterPlayerTakesDamage = delegate { };
         public static event EventHandler<EventArgsOnPlayerDoneEating> OnPlayerDoneEating = delegate { };
         public static event EventHandler<EventArgsOnItemAddedToInventory> OnItemAddedToInventory = delegate { };
+        public static event EventHandler<CancelEventArgs> OnBeforeGainExperience = delegate { };
+        public static event EventHandler OnAfterGainExperience = delegate { };
         public static event EventHandler OnFarmerChanged = delegate { };
-        public static event EventHandler OnLevelUp = delegate { };
+        public static event EventHandler<EventArgsOnLevelUp> OnLevelUp = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.Game1", "farmerTakeDamage")]
         internal static bool InvokeBeforePlayerTakesDamage()
@@ -34,24 +38,37 @@ namespace Revolution.Events
         }
         
         [Hook(HookType.Exit, "StardewValley.Farmer", ".ctor")]
-        internal static void InvokeFarmerChanged()
+        internal static void InvokeFarmerChanged([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnFarmerChanged, null);
+            EventCommon.SafeInvoke(OnFarmerChanged, @this);
         }
-        
-        [Hook(HookType.Exit, "StardewValley.Farmer", "addItemToInventory")]
-        internal static bool InvokeItemAddedToInventory(
-            [ThisBind] object @this,
-            [InputBind(typeof(Item), "item")] Item item)
+
+        //[Hook(HookType.Exit, "StardewValley.Farmer", "addItemToInventory")]
+        //internal static bool InvokeItemAddedToInventory(
+        //    [ThisBind] object @this,
+        //    [InputBind(typeof(Item), "item")] Item item)
+        //{
+        //    return EventCommon.SafeCancellableInvoke(OnItemAddedToInventory, @this, new EventArgsOnItemAddedToInventory(item));
+        //}
+
+        [Hook(HookType.Entry, "StardewValley.Farmer", "gainExperience")]
+        internal static bool InvokeOnBeforeGainExperience([ThisBind] object @this,
+            [InputBind(typeof(int), "which")] int which,
+            [InputBind(typeof(int), "howMuch")] int howMuch)
         {
-            return EventCommon.SafeCancellableInvoke(OnItemAddedToInventory, @this, new EventArgsOnItemAddedToInventory(item));
+            Log.Error($"Which: {which} -- Original Level: {howMuch}");
+            return EventCommon.SafeCancellableInvoke(OnBeforeGainExperience, @this, new CancelEventArgs());
         }
-        
-        [PendingHook]
-        internal static void InvokeLevelUp()
+
+        [Hook(HookType.Exit, "StardewValley.Farmer", "gainExperience")]
+        internal static void InvokeLevelUp([ThisBind] object @this,
+            [InputBind(typeof(int), "which")] int which,
+            [LocalBind(typeof(int), 1)] int originalLevel,
+            [LocalBind(typeof(int), 0)] int newLevel
+        )
         {
-            EventCommon.SafeInvoke(OnLevelUp, null);
-        }  
+            EventCommon.SafeInvoke(OnLevelUp, @this, new EventArgsOnLevelUp(newLevel, originalLevel));
+        }
 
     }
 }

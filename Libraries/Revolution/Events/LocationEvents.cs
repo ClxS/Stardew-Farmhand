@@ -15,9 +15,9 @@ namespace Revolution.Events
         public static event EventHandler OnCurrentLocationChanged = delegate { };
         
         [Hook(HookType.Exit, "StardewValley.Game1", "loadForNewGame")]
-        internal static void InvokeLocationsChanged([ThisBind] object @this)
+        internal static void InvokeLocationsChanged()
         {
-            EventCommon.SafeInvoke(OnLocationsChanged, @this);
+            EventCommon.SafeInvoke(OnLocationsChanged, null);
         }
 
         [PendingHook]
