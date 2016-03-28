@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6A6C072D-F3FE-4DE5-B6E5-944E16B910D1}</ProjectGuid>
+    <ProjectGuid>{A90B4825-47D2-4801-9E94-D37381B27F63}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RevolutionInstaller_UI</RootNamespace>
+    <RootNamespace>RevolutionInstaller</RootNamespace>
     <AssemblyName>RevolutionInstaller-UI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -15,6 +15,8 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -25,12 +27,13 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Bin\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -55,6 +58,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Constants.cs" />
+    <Compile Include="StyleableWindow\ControlDoubleClickBehavior.cs" />
+    <Compile Include="StyleableWindow\ShowSystemMenuBehavior.cs" />
+    <Compile Include="StyleableWindow\SystemMenuManager.cs" />
+    <Compile Include="StyleableWindow\WindowCloseCommand.cs" />
+    <Compile Include="StyleableWindow\WindowDragBehavior.cs" />
+    <Compile Include="StyleableWindow\WindowMaximizeCommand.cs" />
+    <Compile Include="StyleableWindow\WindowMinimizeCommand.cs" />
+    <Compile Include="StyleableWindow\WindowResizeBehavior.cs" />
+    <Compile Include="Themes\LeftMarginMultiplierConverter.cs" />
+    <Compile Include="Themes\TreeViewItemExtensions.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +81,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -86,6 +104,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -96,12 +115,43 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Revolution\Revolution.csproj">
-      <Project>{a857e9eb-3c51-4d9d-92b3-acc90175eb7e}</Project>
-      <Name>Revolution</Name>
+    <EmbeddedResource Include="Payload\ILRepack.dll" />
+    <EmbeddedResource Include="Payload\Mono.Cecil.dll" />
+    <EmbeddedResource Include="Payload\Mono.Cecil.Mdb.dll" />
+    <EmbeddedResource Include="Payload\Mono.Cecil.Pdb.dll" />
+    <EmbeddedResource Include="Payload\Mono.Cecil.Rocks.dll" />
+    <EmbeddedResource Include="Payload\Revolution Patcher.dll" />
+    <EmbeddedResource Include="Payload\Revolution.dll" />
+    <EmbeddedResource Include="Payload\RevolutionPatcherFirstPass.dll" />
+    <EmbeddedResource Include="Payload\RevolutionPatcherSecondPass.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Payload\Newtonsoft.Json.dll" />
+    <EmbeddedResource Include="Payload\RevolutionUI.dll" />
+    <EmbeddedResource Include="Payload\StardewModdingAPI.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\RevolutionPatcherCommon\RevolutionPatcherCommon.csproj">
+      <Project>{7f304954-a190-4003-b11e-a9043113396d}</Project>
+      <Name>RevolutionPatcherCommon</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy "$(SolutionDir)Bin\Revolution Patcher.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\RevolutionPatcherFirstPass.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\RevolutionPatcherSecondPass.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\Revolution.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\RevolutionUI.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\ILRepack.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\Mono.Cecil.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\Mono.Cecil.Mdb.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\Mono.Cecil.Pdb.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\Mono.Cecil.Rocks.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\Newtonsoft.Json.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)WorkingDirectory\StardewModdingAPI.dll" "$(ProjectDir)Payload" /Y</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
