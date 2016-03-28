@@ -9,9 +9,14 @@ namespace Revolution
 {
     public class PatcherFirstPass : Patcher
     {
-        public override void PatchStardew()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path">Stardew EXE Path</param>
+        public override void PatchStardew(string path = null)
         {
-            InjectRevolutionCoreClasses(PatcherConstants.PassOnePackageResult, PatcherConstants.StardewExe, PatcherConstants.RevolutionDll, PatcherConstants.JsonLibrary);
+            path = path ?? PatcherConstants.StardewExe;
+            InjectRevolutionCoreClasses(PatcherConstants.PassOnePackageResult, path, PatcherConstants.RevolutionDll, PatcherConstants.JsonLibrary);
             var cecilContext = new CecilContext(PatcherConstants.PassOnePackageResult, true);
             RevolutionDllAssembly = Assembly.LoadFrom(PatcherConstants.RevolutionDll);
             

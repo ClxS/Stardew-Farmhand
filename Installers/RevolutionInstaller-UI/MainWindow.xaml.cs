@@ -73,6 +73,7 @@ namespace WpfTest
                 var outputDirectory = Path.GetDirectoryName(fileName);
                 Directory.CreateDirectory(tempDirectory);
                 Directory.SetCurrentDirectory(tempDirectory);
+                File.Copy(fileName, tempDirectory + "\\Stardew Valley.exe");
 
                 //SetInstallationProgress("Unpackaging Contents", 20);
                 ExtractDll(tempDirectory);
@@ -110,7 +111,7 @@ namespace WpfTest
         private void DoInstallationPass1(string fileName)
         {
             var patcher = CreatePatcher(Pass.PassOne);
-            patcher.PatchStardew();
+            patcher.PatchStardew(Path.GetFileName(fileName));
         }
 
         private void DoInstallationPass2()
@@ -131,7 +132,7 @@ namespace WpfTest
                 using (System.IO.Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(file))
                 {
                     var shortName = file.Replace("RevolutionInstaller.Payload.", "");
-                    using (System.IO.FileStream fileStream = new System.IO.FileStream(System.IO.Path.Combine(path, file), System.IO.FileMode.Create))
+                    using (System.IO.FileStream fileStream = new System.IO.FileStream(System.IO.Path.Combine(path, shortName), System.IO.FileMode.Create))
                     {
                         for (int i = 0; i < stream.Length; i++)
                         {

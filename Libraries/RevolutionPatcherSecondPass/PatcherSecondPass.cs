@@ -9,7 +9,7 @@ namespace Revolution
 {
     public class PatcherSecondPass : Patcher
     {
-        public override void PatchStardew()
+        public override void PatchStardew(string path = null)
         {
             InjectRevolutionCoreClasses(PatcherConstants.PassTwoPackageResult, PatcherConstants.PassOneRevolutionExe, PatcherConstants.RevolutionUiDll);
             var cecilContext = new CecilContext(PatcherConstants.PassTwoPackageResult, true);
@@ -23,7 +23,8 @@ namespace Revolution
 
             Console.WriteLine("Second Pass Installation Completed");
 
-            cecilContext.WriteAssembly(PatcherConstants.RevolutionExe, true);
+            path = path ?? PatcherConstants.RevolutionExe;
+            cecilContext.WriteAssembly(path, true);
         }
 
         protected override void AlterTypeBaseProtections(CecilContext context, Type type)

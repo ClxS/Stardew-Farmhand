@@ -2,6 +2,7 @@
 using Mono.Cecil.Cil;
 using Mono.Cecil.Pdb;
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -13,7 +14,8 @@ namespace Revolution.Cecil
 
         public CecilContext(string assembly, bool loadPdb = false)
         {
-            if (loadPdb)
+            var pdbPath = Path.GetDirectoryName(assembly) + Path.GetFileNameWithoutExtension(assembly) + ".pdb";
+            if (loadPdb && File.Exists(pdbPath))
             {
                 var readerParameters = new ReaderParameters
                 {

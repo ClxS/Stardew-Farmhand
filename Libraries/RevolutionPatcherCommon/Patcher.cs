@@ -2,6 +2,7 @@
 using Revolution.Cecil;
 using Revolution.Helpers;
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -11,7 +12,11 @@ namespace Revolution
     {
         protected Assembly RevolutionDllAssembly { get; set; }
 
-        public abstract void PatchStardew();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path">Stardew Exe Path (Pass 1), or Revolution Output Path (Pass 2)</param>
+        public abstract void PatchStardew(string path = null);
         
         protected void HookConstructionRedirectors<T>(CecilContext cecilContext)
         {
@@ -126,7 +131,7 @@ namespace Revolution
                 options.InputAssemblies = inputs;
                 options.OutputFile = output;
                 options.DebugInfo = true;
-                options.SearchDirectories = new[] { System.IO.Path.GetDirectoryName(PatcherConstants.CurrentAssemblyPath) };
+                options.SearchDirectories = new[] { Directory.GetCurrentDirectory() };
 
                 var repack = new ILRepack(options, logger);
                 repack.Repack();
