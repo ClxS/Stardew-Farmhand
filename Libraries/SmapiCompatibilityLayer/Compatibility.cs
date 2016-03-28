@@ -60,8 +60,11 @@ namespace StardewModdingAPI
             {
                 var type = assemblyTypes.First(x => x.BaseType == typeof(StardewModdingAPI.Mod));
                 instance = (StardewModdingAPI.Mod)modAssembly.CreateInstance(type.ToString());
-                instance.PathOnDisk = manifest.ModDirectory;
-                instance?.Entry();
+                if (instance != null)
+                {
+                    instance.PathOnDisk = manifest.ModDirectory;
+                    instance.Entry();
+                }
             }
             catch (Exception ex)
             {

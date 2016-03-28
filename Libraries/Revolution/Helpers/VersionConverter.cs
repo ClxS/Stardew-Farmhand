@@ -29,36 +29,25 @@ namespace Revolution.Helpers
         }
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            Logging.Log.Success("1");
-            // Load JObject from stream
             JObject jObject = null;
             if (reader.TokenType == JsonToken.StartObject)
             {
                 jObject = JObject.Load(reader);
-                Logging.Log.Success("2" + jObject.Count);
             }
 
             object retValue = null;
             switch (reader.TokenType)
             {
                 case JsonToken.StartObject:
-                    Logging.Log.Success("3");
-                    Logging.Log.Error("Parsing SMAPI version");
                     break;
                 case JsonToken.EndObject:
-                    Logging.Log.Success("3");
-                    Logging.Log.Error("Parsing SMAPI version");
                     var tmp = jObject.ToObject<SmapiVersion>();
                     retValue = new Version(tmp.MajorVersion, tmp.MinorVersion, tmp.PatchVersion);
                     break;
                 case JsonToken.String:
-                    Logging.Log.Success("4");
-                    Logging.Log.Success((string)reader.Value);
                     retValue = new Version((string)reader.Value);
                     break;
                 default:
-                    Logging.Log.Success("5");
-                    Logging.Log.Error("Unknown type");
                     break;
             }
 
@@ -66,7 +55,6 @@ namespace Revolution.Helpers
             {
                 retValue = new Version(0, 0, 0);
             }
-            Logging.Log.Success($"{retValue}");
 
             return retValue;
         }
