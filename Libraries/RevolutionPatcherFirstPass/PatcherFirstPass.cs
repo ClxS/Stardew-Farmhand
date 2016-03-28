@@ -58,8 +58,10 @@ namespace Revolution
                         {
                             switch (hook.HookType)
                             {
-                                case HookType.Entry: CecilHelper.InjectEntryMethod(cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
-                                case HookType.Exit: CecilHelper.InjectExitMethod(cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
+                                case HookType.Entry: CecilHelper.InjectEntryMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>
+                                        (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
+                                case HookType.Exit: CecilHelper.InjectExitMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>
+                                        (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
                             }
                         }
                         catch (Exception ex)

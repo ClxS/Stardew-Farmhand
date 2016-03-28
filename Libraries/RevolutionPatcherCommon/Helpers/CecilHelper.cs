@@ -4,7 +4,6 @@ using Revolution.Cecil;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using Revolution.Attributes;
 using Mono.Cecil.Rocks;
 
 namespace Revolution.Helpers
@@ -13,7 +12,7 @@ namespace Revolution.Helpers
     {
         //System.Void StardewValley.Game1::.ctor()
 
-        private static void InjectMethod(ILProcessor ilProcessor, Instruction target, MethodReference method, bool cancelable = false)
+        private static void InjectMethod<TParam, TThis, TInput, TLocal>(ILProcessor ilProcessor, Instruction target, MethodReference method, bool cancelable = false)
         {
             ilProcessor.Body.SimplifyMacros();
             
@@ -30,7 +29,7 @@ namespace Revolution.Helpers
                 var paramLdInstruction = target;
                 foreach (var parameter in method.Parameters)
                 {
-                    paramLdInstruction = GetInstructionForParameter(ilProcessor, parameter);
+                    paramLdInstruction = GetInstructionForParameter<TParam, TThis, TInput, TLocal>(ilProcessor, parameter);
                     if (paramLdInstruction == null) throw new Exception($"Error parsing parameter setup on {parameter.Name}");
                     ilProcessor.InsertBefore(target, paramLdInstruction);
                 }
@@ -51,20 +50,20 @@ namespace Revolution.Helpers
             ilProcessor.Body.OptimizeMacros();
         }
 
-        private static Instruction GetInstructionForParameter(ILProcessor ilProcessor, ParameterDefinition parameter)
+        private static Instruction GetInstructionForParameter<TParam, TThis, TInput, TLocal>(ILProcessor ilProcessor, ParameterDefinition parameter)
         {
             if (!parameter.HasCustomAttributes) return null;
 
-            var attribute = parameter.CustomAttributes.FirstOrDefault(n => n.AttributeType.IsDefinition && n.AttributeType.Resolve().BaseType?.FullName == typeof(ParameterBindAttribute).FullName);
+            var attribute = parameter.CustomAttributes.FirstOrDefault(n => n.AttributeType.IsDefinition && n.AttributeType.Resolve().BaseType?.FullName == typeof(TParam).FullName);
 
             if (attribute == null) return null;
 
             Instruction instruction = null;
-            if (typeof(ThisBindAttribute).FullName == attribute.AttributeType.FullName)
+            if (typeof(TThis).FullName == attribute.AttributeType.FullName)
             {
                 instruction = ilProcessor.Create(OpCodes.Ldarg, ilProcessor.Body.ThisParameter);
             }
-            else if (typeof(InputBindAttribute).FullName == attribute.AttributeType.FullName)
+            else if (typeof(TInput).FullName == attribute.AttributeType.FullName)
             {
                 var type = attribute.ConstructorArguments[0].Value as TypeReference;
                 var name = attribute.ConstructorArguments[1].Value as string;
@@ -78,7 +77,7 @@ namespace Revolution.Helpers
                     instruction = ilProcessor.Create(OpCodes.Ldarg, inputParam);
                 }
             }
-            else if (typeof(LocalBindAttribute).FullName == attribute.AttributeType.FullName)
+            else if (typeof(TLocal).FullName == attribute.AttributeType.FullName)
             {
                 var type = attribute.ConstructorArguments[0].Value as TypeReference;
                 var index = attribute.ConstructorArguments[1].Value as int?;
@@ -102,28 +101,28 @@ namespace Revolution.Helpers
             return instruction;
         }
 
-        private static void InjectMethod(ILProcessor ilProcessor, IEnumerable<Instruction> targets, MethodReference method)
+        private static void InjectMethod<TParam, TThis, TInput, TLocal>(ILProcessor ilProcessor, IEnumerable<Instruction> targets, MethodReference method)
         {
             foreach (var target in targets.ToList())
             {
-                InjectMethod(ilProcessor, target, method);
+                InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, target, method);
             }
         }
 
-        public static void InjectEntryMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod,
+        public static void InjectEntryMethod<TParam, TThis, TInput, TLocal>(CecilContext stardewContext, string injecteeType, string injecteeMethod,
             string injectedType, string injectedMethod)
         {
             var methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
             var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
-            InjectMethod(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
+            InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
         }
 
-        public static void InjectExitMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod,
+        public static void InjectExitMethod<TParam, TThis, TInput, TLocal>(CecilContext stardewContext, string injecteeType, string injecteeMethod,
             string injectedType, string injectedMethod)
         {
             MethodDefinition methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
             ILProcessor ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
-            InjectMethod(ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition);
+            InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition);
         }
 
         public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, string type, string method)

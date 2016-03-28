@@ -65,7 +65,7 @@ namespace WpfTest
         private void Packer_DoWork(object sender, DoWorkEventArgs e)
         {
             var tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetFileNameWithoutExtension(Path.GetRandomFileName()));
-            
+
             try
             {
                 var fileName = @"Z:\Games\SteamLibrary\steamapps\common\Stardew Valley\Stardew Valley.exe";
@@ -82,6 +82,10 @@ namespace WpfTest
 
                 //SetInstallationProgress("Injecting Stardew Valley - Pass 2", 60);
                 DoInstallationPass2();
+            }
+            catch (Exception ex)
+            {
+                
             }
             finally
             {
