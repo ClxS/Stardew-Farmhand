@@ -89,7 +89,7 @@ namespace StardewModdingAPI.Events
         public EventArgsMouseStateChanged(MouseState priorState, MouseState newState)
         {
             NewState = newState;
-            NewState = newState;
+            PriorState = priorState;
         }
 
         public MouseState NewState { get; private set; }
@@ -212,8 +212,8 @@ namespace StardewModdingAPI.Events
     {
         public EventArgsIntChanged(int priorInt, int newInt)
         {
-            NewInt = NewInt;
-            PriorInt = PriorInt;
+            NewInt = newInt;
+            PriorInt = priorInt;
         }
 
         public int NewInt { get; }

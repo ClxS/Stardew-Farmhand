@@ -51,12 +51,14 @@ namespace Revolution.Logging
             Console.ForegroundColor = ConsoleColor.Red;
             if (IsVerbose)
             {
-                var logItem = new LogEntry { Message = $"{message}\n\t{ex.Message}\n\t{ex.StackTrace}", Color = LogEntryColor.Red };
+                var exInner = ex.InnerException ?? ex;
+                var logItem = new LogEntry { Message = $"{message}\n\t{exInner.Message}\n\t{exInner.StackTrace}", Color = LogEntryColor.Red };
                 Logger.Write(logItem);                
             }
             else
             {
-                var logItem = new LogEntry { Message = $"{message}\n\t{ex.Message}", Color = LogEntryColor.Red };
+                var exInner = ex.InnerException ?? ex;
+                var logItem = new LogEntry { Message = $"{message}\n\t{exInner.Message}", Color = LogEntryColor.Red };
                 Logger.Write(logItem);
             }
             Console.ForegroundColor = ConsoleColor.Gray;

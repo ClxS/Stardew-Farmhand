@@ -13,6 +13,15 @@ namespace StardewModdingAPI
     {
         public override void AttachEvents()
         {
+            ControlEvents.OnControllerButtonPressed += Events.ControlEvents.InvokeButtonPressed;
+            ControlEvents.OnControllerButtonReleased += Events.ControlEvents.InvokeButtonReleased;
+            ControlEvents.OnControllerTriggerPressed += Events.ControlEvents.InvokeTriggerPressed;
+            ControlEvents.OnControllerTriggerReleased += Events.ControlEvents.InvokeTriggerReleased;
+            ControlEvents.OnKeyPressed += Events.ControlEvents.InvokeKeyPressed;
+            ControlEvents.OnKeyReleased += Events.ControlEvents.InvokeKeyReleased;
+            ControlEvents.OnKeyboardChanged += Events.ControlEvents.InvokeKeyboardChanged;
+            ControlEvents.OnMouseChanged += Events.ControlEvents.InvokeMouseChanged;
+            
             GameEvents.OnBeforeGameInitialised += Events.GameEvents.InvokeGameLoaded;
             GameEvents.OnAfterGameInitialised += Events.GameEvents.InvokeInitialize;
             GameEvents.OnAfterLoadedContent += Events.GameEvents.InvokeLoadContent;

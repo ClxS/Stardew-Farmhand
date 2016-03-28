@@ -76,6 +76,13 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Content\ContentManager.cs" />
     <Compile Include="Events\ApiEvents.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsControllerButtonPressed.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsControllerButtonReleased.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsControllerTriggerPressed.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsControllerTriggerReleased.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsKeyboardStateChanged.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsKeyPressed.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsMouseStateChanged.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAfterPlayerTakesDamage.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAnimalEatGrass.cs" />
     <Compile Include="Events\Arguments\GameEvents\EventArgsOnBeforeGameUpdate.cs" />
