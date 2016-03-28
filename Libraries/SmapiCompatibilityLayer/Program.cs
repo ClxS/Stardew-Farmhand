@@ -5,6 +5,6 @@ namespace StardewModdingAPI
 {
     public class Program
     {
-        public static SGame gamePtr;
+        public static SGame gamePtr = new SGame();
     }
 }

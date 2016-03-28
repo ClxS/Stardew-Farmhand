@@ -19,7 +19,7 @@ namespace Revolution.Events
             return Assembly.GetExecutingAssembly().GetTypes().Where(t => string.Equals(t.Namespace, "Revolution.Events", StringComparison.Ordinal)).ToArray();
         }
 
-        [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
+        [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
         public static void ManualHookup()
         {
             Game1.game1.Window.ClientSizeChanged += GraphicsEvents.InvokeResize;

@@ -90,8 +90,11 @@ namespace StardewModdingAPI.Inheritance
         public Farmer CurrentFarmer => Game1.player;
 
         public GraphicsDevice GraphicsDevice => Game1.game1.GraphicsDevice;
+
         public GameComponentCollection Components => Game1.game1.Components;
+
         public ContentManager Content => Game1.game1.Content;
+
         public TimeSpan InactiveSleepTime => Game1.game1.InactiveSleepTime;
         public bool IsActive => Game1.game1.IsActive;
         public bool IsFixedTimeStep => Game1.game1.IsFixedTimeStep;

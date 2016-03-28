@@ -68,6 +68,11 @@ namespace StardewModdingAPI.Events
         {
             try
             {
+                if (!FirstUpdateFired)
+                {
+                    FirstUpdateFired = true;
+                    FirstUpdateTick.Invoke(null, EventArgs.Empty);
+                }
                 LoadContent.Invoke(null, EventArgs.Empty);
             }
             catch (Exception ex)
@@ -80,11 +85,7 @@ namespace StardewModdingAPI.Events
         {
             try
             {
-                if (!FirstUpdateFired)
-                {
-                    FirstUpdateFired = true;
-                    FirstUpdateTick.Invoke(null, EventArgs.Empty);
-                }
+                
                 UpdateTick.Invoke(null, EventArgs.Empty);
             }
             catch (Exception ex)

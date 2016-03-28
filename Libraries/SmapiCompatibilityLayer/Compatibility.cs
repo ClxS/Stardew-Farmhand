@@ -35,11 +35,7 @@ namespace StardewModdingAPI
             TimeEvents.OnAfterDayChanged += Events.TimeEvents.InvokeDayOfMonthChanged;
             TimeEvents.OnAfterSeasonChanged += Events.TimeEvents.InvokeSeasonOfYearChanged;
             TimeEvents.OnAfterYearChanged += Events.TimeEvents.InvokeYearOfGameChanged;
-
-            if (Program.gamePtr == null)
-            {
-                Program.gamePtr = new SGame();
-            }
+            
         }
 
         public override bool ContainsOurModType(Type[] assemblyTypes)
@@ -49,10 +45,18 @@ namespace StardewModdingAPI
 
         public override object LoadMod(Assembly modAssembly, Type[] assemblyTypes, ModManifest manifest)
         {
-            var type = assemblyTypes.First(x => x.BaseType == typeof(StardewModdingAPI.Mod));
-            var instance = (StardewModdingAPI.Mod)modAssembly.CreateInstance(type.ToString());
-            instance.PathOnDisk = manifest.ModDirectory;
-            instance?.Entry();
+            StardewModdingAPI.Mod instance = null;
+            try
+            {
+                var type = assemblyTypes.First(x => x.BaseType == typeof(StardewModdingAPI.Mod));
+                instance = (StardewModdingAPI.Mod)modAssembly.CreateInstance(type.ToString());
+                instance.PathOnDisk = manifest.ModDirectory;
+                instance?.Entry();
+            }
+            catch (Exception ex)
+            {
+                Revolution.Logging.Log.Exception("Error in Entry on SMAPI mod", ex);
+            }
             return instance;
         }
     }

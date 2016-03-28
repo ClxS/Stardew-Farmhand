@@ -31,7 +31,9 @@ namespace Revolution
         internal static void LoadMods()
         {
             ApiEvents.OnModError += ApiEvents_OnModError;
-            
+            AppDomain currentDomain = AppDomain.CurrentDomain;
+            currentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
+
             Log.Info("Loading Mods...");
             try
             {
@@ -58,6 +60,18 @@ namespace Revolution
             }
             var numModsLoaded = ModRegistry.GetRegisteredItems().Count(n => n.ModState == ModState.Loaded);
             Log.Info($"{numModsLoaded} Mods Loaded!");
+        }
+
+        private static Assembly CurrentDomainOnAssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            Assembly ret = null;
+
+            if (args.Name.StartsWith("Stardew Valley"))
+            {
+                return Assembly.GetExecutingAssembly();
+            }
+
+            return ret;
         }
 
         private static void TryLoadModCompatiblityLayers()
@@ -111,7 +125,8 @@ namespace Revolution
             {
                 try
                 {
-                    if(mod.UniqueId.Contains("\\") || mod.HasContent && mod.Content.Textures != null && mod.Content.Textures.Any(n => n.Id.Contains("\\")))
+                    mod.UniqueId = mod.UniqueId ?? Guid.NewGuid().ToString();
+                    if (mod.UniqueId.Contains("\\") || mod.HasContent && mod.Content.Textures != null && mod.Content.Textures.Any(n => n.Id.Contains("\\")))
                     {
                         Log.Error($"Error - {mod.Name} by {mod.Author} manifest is invalid. UniqueIDs cannot contain \"\\\"");
                         mod.ModState = ModState.InvalidManifest;
