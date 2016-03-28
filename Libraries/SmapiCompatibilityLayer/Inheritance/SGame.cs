@@ -27,9 +27,12 @@ namespace StardewModdingAPI.Inheritance
         /// Useless right now.
         /// </summary>
         public const int LowestModItemID = 1000;
+
+        private Game1 GameInstance { get; set; }
         
-        internal SGame()
+        internal SGame(Game1 inst)
         {
+            GameInstance = inst;
             Instance = this;
         }
 
@@ -45,8 +48,8 @@ namespace StardewModdingAPI.Inheritance
         /// </summary>
         public RenderTarget2D Screen
         {
-            get { return typeof (Game1).GetBaseFieldValue<RenderTarget2D>(Game1.game1, "screen"); }
-            set { typeof (Game1).SetBaseFieldValue<RenderTarget2D>(this, "screen", value); }
+            get { return typeof (Game1).GetBaseFieldValue<RenderTarget2D>(GameInstance, "screen"); }
+            set { typeof (Game1).SetBaseFieldValue<RenderTarget2D>(GameInstance, "screen", value); }
         }
 
         /// <summary>
@@ -54,8 +57,8 @@ namespace StardewModdingAPI.Inheritance
         /// </summary>
         public int ThumbstickMotionMargin
         {
-            get { return (int)typeof(Game1).GetBaseFieldValue<object>(Game1.game1, "thumbstickMotionMargin"); }
-            set { typeof(Game1).SetBaseFieldValue<object>(this, "thumbstickMotionMargin", value); }
+            get { return (int)typeof(Game1).GetBaseFieldValue<object>(GameInstance, "thumbstickMotionMargin"); }
+            set { typeof(Game1).SetBaseFieldValue<object>(GameInstance, "thumbstickMotionMargin", value); }
         }
 
         /// <summary>
@@ -63,8 +66,8 @@ namespace StardewModdingAPI.Inheritance
         /// </summary>
         public Color BgColour
         {
-            get { return (Color)typeof(Game1).GetBaseFieldValue<object>(Game1.game1, "bgColor"); }
-            set { typeof(Game1).SetBaseFieldValue<object>(this, "bgColor", value); }
+            get { return (Color)typeof(Game1).GetBaseFieldValue<object>(GameInstance, "bgColor"); }
+            set { typeof(Game1).SetBaseFieldValue<object>(GameInstance, "bgColor", value); }
         }
 
         /// <summary>
@@ -89,20 +92,20 @@ namespace StardewModdingAPI.Inheritance
         [Obsolete("Use Farmer.Player instead")]
         public Farmer CurrentFarmer => Game1.player;
 
-        public GraphicsDevice GraphicsDevice => Game1.game1.GraphicsDevice;
+        public GraphicsDevice GraphicsDevice => GameInstance.GraphicsDevice;
 
-        public GameComponentCollection Components => Game1.game1.Components;
+        public GameComponentCollection Components => GameInstance.Components;
 
-        public ContentManager Content => Game1.game1.Content;
+        public ContentManager Content => GameInstance.Content;
 
-        public TimeSpan InactiveSleepTime => Game1.game1.InactiveSleepTime;
-        public bool IsActive => Game1.game1.IsActive;
-        public bool IsFixedTimeStep => Game1.game1.IsFixedTimeStep;
-        public bool IsMouseVisible => Game1.game1.IsMouseVisible;
-        public LaunchParameters LaunchParameters => Game1.game1.LaunchParameters;
-        public GameServiceContainer Services => Game1.game1.Services;
-        public TimeSpan TargetElapsedTime => Game1.game1.TargetElapsedTime;
-        public GameWindow Window => Game1.game1.Window;
+        public TimeSpan InactiveSleepTime => GameInstance.InactiveSleepTime;
+        public bool IsActive => GameInstance.IsActive;
+        public bool IsFixedTimeStep => GameInstance.IsFixedTimeStep;
+        public bool IsMouseVisible => GameInstance.IsMouseVisible;
+        public LaunchParameters LaunchParameters => GameInstance.LaunchParameters;
+        public GameServiceContainer Services => GameInstance.Services;
+        public TimeSpan TargetElapsedTime => GameInstance.TargetElapsedTime;
+        public GameWindow Window => GameInstance.Window;
 
         /// <summary>
         /// Gets ALL static fields that belong to 'Game1'

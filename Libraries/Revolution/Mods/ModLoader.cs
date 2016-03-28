@@ -11,6 +11,7 @@ using Newtonsoft.Json.Converters;
 using Revolution.Events;
 using Revolution.Helpers;
 using Revolution.Logging;
+using StardewValley;
 
 namespace Revolution
 {
@@ -92,7 +93,7 @@ namespace Revolution
                     if (inst == null) continue;
 
                     CompatibilityLayers.Add(inst);
-                    inst.AttachEvents();
+                    inst.AttachEvents(Game1.game1);
                 }
                 catch (ReflectionTypeLoadException ex)
                 {

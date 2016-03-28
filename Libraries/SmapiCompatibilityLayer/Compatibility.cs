@@ -11,7 +11,7 @@ namespace StardewModdingAPI
 {
     public class Compatibility : ICompatibilityLayer
     {
-        public override void AttachEvents()
+        public override void AttachEvents(Game1 inst)
         {
             ControlEvents.OnControllerButtonPressed += Events.ControlEvents.InvokeButtonPressed;
             ControlEvents.OnControllerButtonReleased += Events.ControlEvents.InvokeButtonReleased;
@@ -45,6 +45,7 @@ namespace StardewModdingAPI
             TimeEvents.OnAfterSeasonChanged += Events.TimeEvents.InvokeSeasonOfYearChanged;
             TimeEvents.OnAfterYearChanged += Events.TimeEvents.InvokeYearOfGameChanged;
             
+            Program.gamePtr = new SGame(inst);
         }
 
         public override bool ContainsOurModType(Type[] assemblyTypes)
