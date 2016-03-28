@@ -1,12 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using StardewValley.Minigames;
 
-// ReSharper disable InconsistentNaming
-// ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Inheritance.Minigames
 {
-    abstract class SMinigameBase : StardewValley.Minigames.IMinigame
+    internal abstract class SMinigameBase : IMinigame
     {
         public abstract bool tick(GameTime time);
 

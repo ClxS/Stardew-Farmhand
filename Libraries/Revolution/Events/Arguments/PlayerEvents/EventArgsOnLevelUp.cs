@@ -7,12 +7,14 @@ namespace Revolution.Events.Arguments.PlayerEvents
 {
     public class EventArgsOnLevelUp : EventArgs
     {
-        public EventArgsOnLevelUp(int newLevel, int oldLevel)
+        public EventArgsOnLevelUp(int which, int newLevel, int oldLevel)
         {
+            Which = which;
             NewLevel = newLevel;
             OldLevel = oldLevel;
         }
 
+        public int Which { get; set; }
         public int NewLevel { get; set; }
         public int OldLevel { get; set; }
     }

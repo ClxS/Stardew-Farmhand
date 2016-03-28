@@ -66,7 +66,7 @@ namespace Revolution.Events
             [LocalBind(typeof(int), 0)] int newLevel
         )
         {
-            EventCommon.SafeInvoke(OnLevelUp, @this, new EventArgsOnLevelUp(newLevel, originalLevel));
+            EventCommon.SafeInvoke(OnLevelUp, @this, new EventArgsOnLevelUp(which, newLevel, originalLevel));
         }
 
     }

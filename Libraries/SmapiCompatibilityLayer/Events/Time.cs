@@ -1,6 +1,5 @@
 ﻿using System;
 
-// ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Events
 {
     public static class TimeEvents
@@ -10,24 +9,34 @@ namespace StardewModdingAPI.Events
         public static event EventHandler<EventArgsIntChanged> YearOfGameChanged = delegate { };
         public static event EventHandler<EventArgsStringChanged> SeasonOfYearChanged = delegate { };
 
-        public static void InvokeTimeOfDayChanged(object sender, EventArgs eventArgs)
+        /// <summary>
+        /// Occurs when Game1.newDay changes. True directly before saving, and False directly after.
+        /// </summary>
+        public static event EventHandler<EventArgsNewDay> OnNewDay = delegate { };
+
+        internal static void InvokeTimeOfDayChanged(object sender, EventArgs eventArgs)
         {
             TimeOfDayChanged.Invoke(null, new EventArgsIntChanged(0, 0));
         }
 
-        public static void InvokeDayOfMonthChanged(object sender, EventArgs eventArgs)
+        internal static void InvokeDayOfMonthChanged(object sender, EventArgs eventArgs)
         {
             DayOfMonthChanged.Invoke(null, new EventArgsIntChanged(0, 0));
         }
 
-        public static void InvokeYearOfGameChanged(object sender, EventArgs eventArgs)
+        internal static void InvokeYearOfGameChanged(object sender, EventArgs eventArgs)
         {
             YearOfGameChanged.Invoke(null, new EventArgsIntChanged(0, 0));
         }
 
-        public static void InvokeSeasonOfYearChanged(object sender, EventArgs eventArgs)
+        internal static void InvokeSeasonOfYearChanged(object sender, EventArgs eventArgs)
         {
             SeasonOfYearChanged.Invoke(null, new EventArgsStringChanged("", ""));
+        }
+
+        internal static void InvokeOnNewDay(int priorInt, int newInt, bool newDay)
+        {
+            OnNewDay.Invoke(null, new EventArgsNewDay(priorInt, newInt, newDay));
         }
     }
 }

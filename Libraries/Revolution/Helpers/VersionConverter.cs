@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,13 @@ namespace Revolution.Helpers
 {
     public class VersionConverter : JsonConverter
     {
+        private class SmapiVersion
+        {
+            public int MajorVersion;
+            public int MinorVersion;
+            public int PatchVersion;
+            public string Build;
+        }
         private readonly Type[] _types;
 
         public VersionConverter(params Type[] types)
@@ -22,30 +30,45 @@ namespace Revolution.Helpers
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             Logging.Log.Success("1");
-            return null;
-            //// Load JObject from stream
-            //JObject jObject = JObject.Load(reader);
-            //Logging.Log.Success("2");
+            // Load JObject from stream
+            JObject jObject = null;
+            if (reader.TokenType == JsonToken.StartObject)
+            {
+                jObject = JObject.Load(reader);
+                Logging.Log.Success("2" + jObject.Count);
+            }
 
-            //object retValue = null;
-            //switch (reader.TokenType)
-            //{
-            //    case JsonToken.StartObject:
-            //Logging.Log.Success("3");
-            //        Logging.Log.Error("Parsing SMAPI version");
-            //        break;
-            //    case JsonToken.String:
-            //Logging.Log.Success("4");
-            //        retValue = serializer.Deserialize(reader, typeof(Version));
-            //        break;
-            //    default:
-            //Logging.Log.Success("5");
-            //        Logging.Log.Error("Unknown type");
-            //        break;
-            //}
-            //Logging.Log.Success("6");
+            object retValue = null;
+            switch (reader.TokenType)
+            {
+                case JsonToken.StartObject:
+                    Logging.Log.Success("3");
+                    Logging.Log.Error("Parsing SMAPI version");
+                    break;
+                case JsonToken.EndObject:
+                    Logging.Log.Success("3");
+                    Logging.Log.Error("Parsing SMAPI version");
+                    var tmp = jObject.ToObject<SmapiVersion>();
+                    retValue = new Version(tmp.MajorVersion, tmp.MinorVersion, tmp.PatchVersion);
+                    break;
+                case JsonToken.String:
+                    Logging.Log.Success("4");
+                    Logging.Log.Success((string)reader.Value);
+                    retValue = new Version((string)reader.Value);
+                    break;
+                default:
+                    Logging.Log.Success("5");
+                    Logging.Log.Error("Unknown type");
+                    break;
+            }
 
-            //return retValue;
+            if (retValue == null)
+            {
+                retValue = new Version(0, 0, 0);
+            }
+            Logging.Log.Success($"{retValue}");
+
+            return retValue;
         }
 
         public override bool CanRead => true;
@@ -54,7 +77,7 @@ namespace Revolution.Helpers
 
         public override bool CanConvert(Type objectType)
         {
-            return _types.Any(t => t == objectType);
+            return typeof(System.Version) == objectType;
         }
     }
 }

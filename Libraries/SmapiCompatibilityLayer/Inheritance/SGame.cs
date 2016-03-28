@@ -2,77 +2,109 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using StardewModdingAPI.Events;
 using StardewValley;
-using StardewValley.Characters;
+using StardewValley.BellsAndWhistles;
+using StardewValley.Locations;
 using StardewValley.Menus;
-using StardewValley.Monsters;
-using StardewValley.Quests;
-using StardewValley.TerrainFeatures;
-using static StardewModdingAPI.Events.GameEvents;
-using Cat = StardewValley.Characters.Cat;
+using StardewValley.Tools;
+using xTile.Dimensions;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
-// ReSharper disable InconsistentNaming
-// ReSharper disable CheckNamespace
 namespace StardewModdingAPI.Inheritance
 {
-    [Obsolete("SMAPI methods are obsolete. These will not work in Revolution mods")]
+    /// <summary>
+    /// The 'SGame' class.
+    /// This summary, and many others, only exists because XML doc tags.
+    /// </summary>
     public class SGame : Game1
     {
-        public static List<SGameLocation> ModLocations = new List<SGameLocation>();
-        public static SGameLocation CurrentLocation { get; internal set; }
-        public static Dictionary<int, SObject> ModItems { get; private set; }
+        /// <summary>
+        /// Useless right now.
+        /// </summary>
         public const int LowestModItemID = 1000;
-
-        public static FieldInfo[] StaticFields => GetStaticFields();
-
-        public static FieldInfo[] GetStaticFields()
-        {
-            return typeof(Game1).GetFields();
-        }
         
-        public int PreviousGameLocations { get; private set; }
-        public int PreviousLocationObjects { get; private set; }
-        public int PreviousItems_ { get; private set; }
-        public Dictionary<Item, int> PreviousItems { get; private set; }
-
-        public int PreviousCombatLevel { get; private set; }
-        public int PreviousFarmingLevel { get; private set; }
-        public int PreviousFishingLevel { get; private set; }
-        public int PreviousForagingLevel { get; private set; }
-        public int PreviousMiningLevel { get; private set; }
-        public int PreviousLuckLevel { get; private set; }
-
-        public GameLocation PreviousGameLocation { get; private set; }
-        public IClickableMenu PreviousActiveMenu { get; private set; }
-        
-        public Farmer PreviousFarmer { get; private set; }
-
-        public static SGame Instance { get; private set; }
-
-        public Farmer CurrentFarmer => player;
-
-        public SGame(int previousItems)
+        internal SGame()
         {
-            PreviousItems_ = previousItems;
             Instance = this;
         }
-        
-        protected override void Initialize()
-        {
-            ModItems = new Dictionary<Int32, SObject>();
-            base.Initialize();
-        }
-        
+
+        /// <summary>
+        /// Useless at this time.
+        /// </summary>
         [Obsolete]
-        public static int RegisterModItem(SObject modItem)
+        // ReSharper disable once UnusedAutoPropertyAccessor.Local
+        public static Dictionary<int, SObject> ModItems { get; private set; }
+        
+        /// <summary>
+        /// The current RenderTarget in Game1 (Private field, uses reflection)
+        /// </summary>
+        public RenderTarget2D Screen
+        {
+            get { return typeof (Game1).GetBaseFieldValue<RenderTarget2D>(Game1.game1, "screen"); }
+            set { typeof (Game1).SetBaseFieldValue<RenderTarget2D>(this, "screen", value); }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int ThumbstickMotionMargin
+        {
+            get { return (int)typeof(Game1).GetBaseFieldValue<object>(Game1.game1, "thumbstickMotionMargin"); }
+            set { typeof(Game1).SetBaseFieldValue<object>(this, "thumbstickMotionMargin", value); }
+        }
+
+        /// <summary>
+        /// The current Colour in Game1 (Private field, uses reflection)
+        /// </summary>
+        public Color BgColour
+        {
+            get { return (Color)typeof(Game1).GetBaseFieldValue<object>(Game1.game1, "bgColor"); }
+            set { typeof(Game1).SetBaseFieldValue<object>(this, "bgColor", value); }
+        }
+
+        /// <summary>
+        /// Static accessor for an Instance of the class SGame
+        /// </summary>
+        public static SGame Instance { get; private set; }
+
+        /// <summary>
+        /// The game's FPS. Re-determined every Draw update.
+        /// </summary>
+        public static float FramesPerSecond { get; private set; }
+
+        /// <summary>
+        /// Whether or not we're in a pseudo 'debug' mode. Mostly for displaying information like FPS.
+        /// </summary>
+        public static bool Debug { get; private set; }
+        internal static Queue<String> DebugMessageQueue { get; private set; }
+
+        /// <summary>
+        /// The current player (equal to Farmer.Player)
+        /// </summary>
+        [Obsolete("Use Farmer.Player instead")]
+        public Farmer CurrentFarmer => player;
+
+        /// <summary>
+        /// Gets ALL static fields that belong to 'Game1'
+        /// </summary>
+        public static FieldInfo[] GetStaticFields => typeof (Game1).GetFields();
+        
+        /// <summary>
+        /// Whether or not the game's zoom level is 1.0f
+        /// </summary>
+        public bool ZoomLevelIsOne => options.zoomLevel.Equals(1.0f);
+        
+        [Obsolete("Do not use at this time.")]
+        // ReSharper disable once UnusedMember.Local
+        private static int RegisterModItem(SObject modItem)
         {
             if (modItem.HasBeenRegistered)
             {
-                Log.Error($"The item {modItem.Name} has already been registered with ID {modItem.RegisteredId}");
+                Log.AsyncR($"The item {modItem.Name} has already been registered with ID {modItem.RegisteredId}");
                 return modItem.RegisteredId;
             }
             var newId = LowestModItemID;
@@ -84,8 +116,9 @@ namespace StardewModdingAPI.Inheritance
             return newId;
         }
 
-        [Obsolete]
-        public static SObject PullModItemFromDict(Int32 id, bool isIndex)
+        [Obsolete("Do not use at this time.")]
+        // ReSharper disable once UnusedMember.Local
+        private static SObject PullModItemFromDict(int id, bool isIndex)
         {
             if (isIndex)
             {
@@ -93,51 +126,50 @@ namespace StardewModdingAPI.Inheritance
                 {
                     return ModItems.ElementAt(id).Value.Clone();
                 }
-                Log.Error("ModItem Dictionary does not contain index: " + id);
+                Log.AsyncR("ModItem Dictionary does not contain index: " + id);
                 return null;
             }
             if (ModItems.ContainsKey(id))
             {
                 return ModItems[id].Clone();
             }
-            Log.Error("ModItem Dictionary does not contain ID: " + id);
+            Log.AsyncR("ModItem Dictionary does not contain ID: " + id);
             return null;
         }
-
-        [Obsolete]
-        public static SGameLocation GetLocationFromName(String name)
+        
+        /// <summary>
+        /// Invokes a private, non-static method in Game1 via Reflection
+        /// </summary>
+        /// <param name="name">The name of the method</param>
+        /// <param name="parameters">Any parameters needed</param>
+        /// <returns>Whatever the method normally returns. Null if void.</returns>
+        public static object InvokeBasePrivateInstancedMethod(string name, params object[] parameters)
         {
-            return ModLocations.FirstOrDefault(n => n.name == name);
+            try
+            {
+                return typeof (Game1).GetMethod(name, BindingFlags.NonPublic | BindingFlags.Instance).Invoke(Game1.game1, parameters);
+            }
+            catch
+            {
+                Log.AsyncR("Failed to call base method: " + name);
+                return null;
+            }
         }
 
-        [Obsolete]
-        public static SGameLocation LoadOrCreateSGameLocationFromName(String name)
+        /// <summary>
+        /// Queue's a message to be drawn in Debug mode (F3)
+        /// </summary>
+        /// <returns></returns>
+        public static bool QueueDebugMessage(string message)
         {
-            if (GetLocationFromName(name) != null)
-                return GetLocationFromName(name);
-            var gl = locations.FirstOrDefault(x => x.name == name);
-            if (gl != null)
-            {
-                Log.Debug("A custom location was created for the new name: " + name);
-                var s = SGameLocation.ConstructFromBaseClass(gl);
-                ModLocations.Add(s);
-                return s;
-            }
-            if (currentLocation != null && currentLocation.name == name)
-            {
-                gl = currentLocation;
-                Log.Debug("A custom location was created from the current location for the new name: " + name);
-                var s = SGameLocation.ConstructFromBaseClass(gl);
-                ModLocations.Add(s);
-                return s;
-            }
+            if (!Debug)
+                return false;
 
-            Log.Debug("A custom location could not be created for: " + name);
-            return null;
-        }
+            if (DebugMessageQueue.Count > 32)
+                return false;
 
-        public void UpdateEventCalls()
-        {
+            DebugMessageQueue.Enqueue(message);
+            return true;
         }
     }
 }

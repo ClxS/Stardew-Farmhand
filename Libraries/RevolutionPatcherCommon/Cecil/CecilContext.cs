@@ -92,7 +92,7 @@ namespace Revolution.Cecil
                 var writerParameters = new WriterParameters
                 {
                     SymbolWriterProvider = new PdbWriterProvider(),
-                    WriteSymbols = true
+                    WriteSymbols = true,
                 };
                 AssemblyDefinition.Write(file, writerParameters);
             }

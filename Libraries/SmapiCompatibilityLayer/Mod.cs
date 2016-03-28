@@ -1,35 +1,51 @@
-﻿// ReSharper disable InconsistentNaming
-// ReSharper disable CheckNamespace
+﻿using System.IO;
+
 namespace StardewModdingAPI
 {
     public class Mod
     {
         /// <summary>
-        /// The name of your mod.
+        ///     The mod's manifest
         /// </summary>
-        public virtual string Name { get; protected set; }
+        public Manifest Manifest { get; internal set; }
 
         /// <summary>
-        /// The name of the mod's authour.
+        ///     Where the mod is located on the disk.
         /// </summary>
-        public virtual string Authour { get; protected set; }
+        public string PathOnDisk { get; internal set; }
 
         /// <summary>
-        /// The version of the mod.
+        ///     A basic path to store your mod's config at.
         /// </summary>
-        public virtual string Version { get; protected set; }
+        public string BaseConfigPath => PathOnDisk + "\\config.json";
 
         /// <summary>
-        /// A description of the mod.
+        ///     A basic path to where per-save configs are stored
         /// </summary>
-        public virtual string Description { get; protected set; }
+        public string PerSaveConfigFolder => GetPerSaveConfigFolder();
 
         /// <summary>
-        /// A basic method that is the entry-point of your mod. It will always be called once when the mod loads.
+        ///     A basic path to store your mod's config at, dependent on the current save.
+        ///     The Manifest must allow for per-save configs. This is to keep from having an
+        ///     empty directory in every mod folder.
+        /// </summary>
+        public string PerSaveConfigPath => Constants.CurrentSavePathExists ? Path.Combine(PerSaveConfigFolder, Constants.SaveFolderName + ".json") : "";
+
+        /// <summary>
+        ///     A basic method that is the entry-point of your mod. It will always be called once when the mod loads.
         /// </summary>
         public virtual void Entry(params object[] objects)
         {
+        }
 
+        private string GetPerSaveConfigFolder()
+        {
+            if (Manifest.PerSaveConfigs)
+            {
+                return Path.Combine(PathOnDisk, "psconfigs");
+            }
+            Log.AsyncR($"The mod [{Manifest.Name}] is not configured to use per-save configs.");
+            return "";
         }
     }
 }

@@ -1,34 +1,49 @@
-﻿using StardewModdingAPI.Events;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using StardewModdingAPI.Events;
 
-// ReSharper disable CheckNamespace
 namespace StardewModdingAPI
 {
     public class Command
     {
         internal static List<Command> RegisteredCommands = new List<Command>();
+        public string[] CalledArgs;
+        public string[] CommandArgs;
+        public string CommandDesc;
 
-        public String CommandName;
-        public String CommandDesc;
-        public String[] CommandArgs;
-        public String[] CalledArgs;
+        public string CommandName;
+
+        /// <summary>
+        ///     Creates a Command from a Name, Description, and Arguments
+        /// </summary>
+        /// <param name="cname">Name</param>
+        /// <param name="cdesc">Description</param>
+        /// <param name="args">Arguments</param>
+        public Command(string cname, string cdesc, string[] args = null)
+        {
+            CommandName = cname;
+            CommandDesc = cdesc;
+            if (args == null)
+                args = new string[0];
+            CommandArgs = args;
+        }
+
         public event EventHandler<EventArgsCommand> CommandFired;
 
         /// <summary>
-        /// Calls the specified command. (It runs the command)
+        ///     Calls the specified command. (It runs the command)
         /// </summary>
         /// <param name="input">The command to run</param>
         public static void CallCommand(string input)
         {
             input = input.TrimEnd(' ');
-            string[] args = new string[0];
+            var args = new string[0];
             Command fnd;
             if (input.Contains(" "))
             {
-                args = input.Split(new[] { " " }, 2, StringSplitOptions.RemoveEmptyEntries);
+                args = input.Split(new[] {" "}, 2, StringSplitOptions.RemoveEmptyEntries);
                 fnd = FindCommand(args[0]);
-                args = args[1].Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                args = args[1].Split(new[] {" "}, StringSplitOptions.RemoveEmptyEntries);
             }
             else
             {
@@ -42,12 +57,12 @@ namespace StardewModdingAPI
             }
             else
             {
-                Revolution.Logging.Log.Error("Unknown Command");
+                Log.AsyncR("Unknown Command");
             }
         }
 
         /// <summary>
-        /// Registers a command to the list of commands properly
+        ///     Registers a command to the list of commands properly
         /// </summary>
         /// <param name="command">Name of the command to register</param>
         /// <param name="cdesc">Description</param>
@@ -55,21 +70,21 @@ namespace StardewModdingAPI
         /// <returns></returns>
         public static Command RegisterCommand(string command, string cdesc, string[] args = null)
         {
-            Command c = new Command(command, cdesc, args);
+            var c = new Command(command, cdesc, args);
             if (RegisteredCommands.Contains(c))
             {
-                Revolution.Logging.Log.Error($"Command already registered! [{c.CommandName}]");
+                Log.AsyncR($"Command already registered! [{c.CommandName}]");
                 return RegisteredCommands.Find(x => x.Equals(c));
             }
 
             RegisteredCommands.Add(c);
-            Revolution.Logging.Log.Verbose($"Registered command: {command}");
+            Log.Async("Registered command: " + command);
 
             return c;
         }
 
         /// <summary>
-        /// Looks up a command in the list of registered commands. Returns null if it doesn't exist (I think)
+        ///     Looks up a command in the list of registered commands. Returns null if it doesn't exist (I think)
         /// </summary>
         /// <param name="name">Name of command to find</param>
         /// <returns></returns>
@@ -79,28 +94,13 @@ namespace StardewModdingAPI
         }
 
         /// <summary>
-        /// Creates a Command from a Name, Description, and Arguments
-        /// </summary>
-        /// <param name="cname">Name</param>
-        /// <param name="cdesc">Description</param>
-        /// <param name="args">Arguments</param>
-        public Command(String cname, String cdesc, String[] args = null)
-        {
-            CommandName = cname;
-            CommandDesc = cdesc;
-            if (args == null)
-                args = new string[0];
-            CommandArgs = args;
-        }
-
-        /// <summary>
-        /// Runs a command. Fires it. Calls it. Any of those.
+        ///     Runs a command. Fires it. Calls it. Any of those.
         /// </summary>
         public void Fire()
         {
             if (CommandFired == null)
             {
-                Revolution.Logging.Log.Error("Command failed to fire because it's fire event is null: " + CommandName);
+                Log.AsyncR("Command failed to fire because it's fire event is null: " + CommandName);
                 return;
             }
             CommandFired.Invoke(this, new EventArgsCommand(this));
