@@ -3,6 +3,9 @@ using System.Linq;
 using System.Reflection;
 using Revolution.Events;
 using Revolution.Helpers;
+using Revolution.Registries.Containers;
+using StardewModdingAPI.Inheritance;
+using StardewValley;
 
 namespace StardewModdingAPI
 {
@@ -32,6 +35,11 @@ namespace StardewModdingAPI
             TimeEvents.OnAfterDayChanged += Events.TimeEvents.InvokeDayOfMonthChanged;
             TimeEvents.OnAfterSeasonChanged += Events.TimeEvents.InvokeSeasonOfYearChanged;
             TimeEvents.OnAfterYearChanged += Events.TimeEvents.InvokeYearOfGameChanged;
+
+            if (Program.gamePtr == null)
+            {
+                Program.gamePtr = new SGame();
+            }
         }
 
         public override bool ContainsOurModType(Type[] assemblyTypes)
@@ -39,10 +47,11 @@ namespace StardewModdingAPI
             return assemblyTypes.Any(x => x.BaseType == typeof(StardewModdingAPI.Mod));
         }
 
-        public override object LoadMod(Assembly modAssembly, Type[] assemblyTypes)
+        public override object LoadMod(Assembly modAssembly, Type[] assemblyTypes, ModManifest manifest)
         {
             var type = assemblyTypes.First(x => x.BaseType == typeof(StardewModdingAPI.Mod));
             var instance = (StardewModdingAPI.Mod)modAssembly.CreateInstance(type.ToString());
+            instance.PathOnDisk = manifest.ModDirectory;
             instance?.Entry();
             return instance;
         }

@@ -25,7 +25,8 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeOnNewLocationObject(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            LocationObjectsChanged.Invoke(null, new EventArgsLocationObjectsChanged(Game1.currentLocation.objects));
+            var location = sender as GameLocation;
+            LocationObjectsChanged.Invoke(null, new EventArgsLocationObjectsChanged(location?.objects));
         }
     }
 }

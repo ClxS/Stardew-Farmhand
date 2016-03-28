@@ -45,6 +45,8 @@ namespace StardewModdingAPI.Events
         /// </summary>
         public static event EventHandler OneSecondTick = delegate { };
 
+        private static bool FirstUpdateFired { get; set; } = false;
+
         internal static void InvokeGameLoaded(object sender, EventArgsOnGameInitialise eventArgsOnGameInitialise)
         {
             GameLoaded.Invoke(null, EventArgs.Empty);
@@ -78,6 +80,11 @@ namespace StardewModdingAPI.Events
         {
             try
             {
+                if (!FirstUpdateFired)
+                {
+                    FirstUpdateFired = true;
+                    FirstUpdateTick.Invoke(null, EventArgs.Empty);
+                }
                 UpdateTick.Invoke(null, EventArgs.Empty);
             }
             catch (Exception ex)

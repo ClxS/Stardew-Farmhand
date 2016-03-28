@@ -115,7 +115,7 @@ namespace Revolution.Registries.Containers
                     {
                         if (!layer.ContainsOurModType(types)) continue;
 
-                        Instance = layer.LoadMod(ModAssembly, types);
+                        Instance = layer.LoadMod(ModAssembly, types, this);
                         Log.Verbose($"Loaded mod dll: {Name}");
                         break;
                     }
@@ -128,7 +128,8 @@ namespace Revolution.Registries.Containers
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format($"Failed to load mod '{modDllPath}'\n\t-{ex.Message}\n\t\t-{ex.StackTrace}"), ex);
+                Log.Exception("Test", ex);
+                //throw new Exception(string.Format($"Failed to load mod '{modDllPath}'\n\t-{ex.Message}\n\t\t-{ex.StackTrace}"), ex);
             }
 
             return Instance != null;

@@ -3,7 +3,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Xna.Framework;
 using Revolution.Attributes;
+using StardewValley;
 
 namespace Revolution.Events
 {
@@ -15,6 +17,12 @@ namespace Revolution.Events
         private static IEnumerable<Type> GetRevolutionEvents()
         {
             return Assembly.GetExecutingAssembly().GetTypes().Where(t => string.Equals(t.Namespace, "Revolution.Events", StringComparison.Ordinal)).ToArray();
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
+        public static void ManualHookup()
+        {
+            Game1.game1.Window.ClientSizeChanged += GraphicsEvents.InvokeResize;
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Update")]

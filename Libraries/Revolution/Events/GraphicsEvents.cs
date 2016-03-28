@@ -10,9 +10,9 @@ namespace Revolution.Events
         public static event EventHandler OnAfterDraw = delegate { };
         
         [PendingHook]
-        internal static void InvokeResize()
+        internal static void InvokeResize(object sender, EventArgs eventArgs)
         {
-            EventCommon.SafeInvoke(OnResize, null);
+            EventCommon.SafeInvoke(OnResize, sender);
         }
         
         [Hook(HookType.Entry, "StardewValley.Game1", "Draw")]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using StardewModdingAPI.Events;
@@ -20,7 +21,7 @@ namespace StardewModdingAPI.Inheritance
     /// The 'SGame' class.
     /// This summary, and many others, only exists because XML doc tags.
     /// </summary>
-    public class SGame : Game1
+    public class SGame
     {
         /// <summary>
         /// Useless right now.
@@ -86,7 +87,19 @@ namespace StardewModdingAPI.Inheritance
         /// The current player (equal to Farmer.Player)
         /// </summary>
         [Obsolete("Use Farmer.Player instead")]
-        public Farmer CurrentFarmer => player;
+        public Farmer CurrentFarmer => Game1.player;
+
+        public GraphicsDevice GraphicsDevice => Game1.game1.GraphicsDevice;
+        public GameComponentCollection Components => Game1.game1.Components;
+        public ContentManager Content => Game1.game1.Content;
+        public TimeSpan InactiveSleepTime => Game1.game1.InactiveSleepTime;
+        public bool IsActive => Game1.game1.IsActive;
+        public bool IsFixedTimeStep => Game1.game1.IsFixedTimeStep;
+        public bool IsMouseVisible => Game1.game1.IsMouseVisible;
+        public LaunchParameters LaunchParameters => Game1.game1.LaunchParameters;
+        public GameServiceContainer Services => Game1.game1.Services;
+        public TimeSpan TargetElapsedTime => Game1.game1.TargetElapsedTime;
+        public GameWindow Window => Game1.game1.Window;
 
         /// <summary>
         /// Gets ALL static fields that belong to 'Game1'
@@ -96,7 +109,7 @@ namespace StardewModdingAPI.Inheritance
         /// <summary>
         /// Whether or not the game's zoom level is 1.0f
         /// </summary>
-        public bool ZoomLevelIsOne => options.zoomLevel.Equals(1.0f);
+        public bool ZoomLevelIsOne => Game1.options.zoomLevel.Equals(1.0f);
         
         [Obsolete("Do not use at this time.")]
         // ReSharper disable once UnusedMember.Local

@@ -98,7 +98,7 @@ namespace Revolution
             }
             else
             {
-                Log.Error($"Exception thrown by unknown mod with assembly: {e.Assembly.FullName}\n\t{e.Exception.Message}");
+                Log.Exception($"Exception thrown by unknown mod with assembly: {e.Assembly.FullName}", e.Exception);
                 DetachAssemblyDelegates(e.Assembly);
             }
 
