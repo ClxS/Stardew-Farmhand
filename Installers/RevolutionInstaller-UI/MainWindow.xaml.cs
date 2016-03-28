@@ -20,6 +20,9 @@ namespace WpfTest
             PassTwo
         }
 
+        private string StardewFile { get; set; }
+        private BackgroundWorker Packer { get; set; }
+
         public MainWindow()
         {
             //Add Constants
@@ -27,8 +30,7 @@ namespace WpfTest
 
             InitializeComponent();
             canvasLoading.IsHitTestVisible = false;
-
-            buttonInstall_Click(null, new RoutedEventArgs());
+            canvasComplete.IsHitTestVisible = false;
         }
 
         private void buttonFindFile_Click(object sender, RoutedEventArgs e)
@@ -42,24 +44,34 @@ namespace WpfTest
 
             // Display OpenFileDialog by calling ShowDialog method 
             Nullable<bool> result = dlg.ShowDialog();
-
-
+            
             // Get the selected file name and display in a TextBox 
             if (result == true)
             {
                 // Open document 
                 string filename = dlg.FileName;
                 textBoxExecPath.Text = filename;
+                StardewFile = filename;
             }
         }
 
         private void buttonInstall_Click(object sender, RoutedEventArgs e)
         {
             SwitchToInstallationUI();
-            BackgroundWorker packer = new BackgroundWorker();
-            packer.DoWork += Packer_DoWork;
-            packer.ProgressChanged += Packer_ProgressChanged;
-            packer.RunWorkerAsync();
+            Packer = new BackgroundWorker();
+            Packer.DoWork += Packer_DoWork;
+            Packer.ProgressChanged += Packer_ProgressChanged;
+            Packer.RunWorkerCompleted += Packer_RunWorkerCompleted;
+            Packer.WorkerReportsProgress = true;
+            Packer.RunWorkerAsync();
+        }
+
+        private void Packer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            canvasComplete.Opacity = 1.0f;
+            canvasLoading.Opacity = 0.0f;
+            canvasComplete.IsHitTestVisible = true;
+            canvasLoading.IsHitTestVisible = false;
         }
 
         private void Packer_DoWork(object sender, DoWorkEventArgs e)
@@ -68,21 +80,22 @@ namespace WpfTest
 
             try
             {
-                var fileName = @"Z:\Games\SteamLibrary\steamapps\common\Stardew Valley\Stardew Valley.exe";
-                //SetInstallationProgress("Creating Temp Directory", 1);
-                var outputDirectory = Path.GetDirectoryName(fileName);
+                var revolutionExe = Path.GetDirectoryName(StardewFile) + "\\Stardew Revolution.exe";
+
+                Packer.ReportProgress(10, "Creating Temp Directory");
+                var outputDirectory = Path.GetDirectoryName(StardewFile);
                 Directory.CreateDirectory(tempDirectory);
                 Directory.SetCurrentDirectory(tempDirectory);
-                File.Copy(fileName, tempDirectory + "\\Stardew Valley.exe");
-
-                //SetInstallationProgress("Unpackaging Contents", 20);
+                File.Copy(StardewFile, tempDirectory + "\\Stardew Valley.exe");
+                
+                Packer.ReportProgress(20, "Unpackaging Contents");
                 ExtractDll(tempDirectory);
-
-                //SetInstallationProgress("Injecting Stardew Valley - Pass 1", 40);
-                DoInstallationPass1(fileName);
-
-                //SetInstallationProgress("Injecting Stardew Valley - Pass 2", 60);
-                DoInstallationPass2();
+                
+                Packer.ReportProgress(40, "Injecting Stardew Valley - Pass 1");
+                DoInstallationPass1(StardewFile);
+                
+                Packer.ReportProgress(60, "Injecting Stardew Valley - Pass 2");
+                DoInstallationPass2(revolutionExe);
             }
             catch (Exception ex)
             {
@@ -90,14 +103,20 @@ namespace WpfTest
             }
             finally
             {
-                //SetInstallationProgress("Clearing Temporary Files", 80);
+                Packer.ReportProgress(80, "Clearing Temporary Files");
                 if (Directory.Exists(tempDirectory))
                 {
-                    Directory.Delete(tempDirectory, true);
+                    try
+                    {
+                        Directory.Delete(tempDirectory, true);
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
 
-            //SetInstallationProgress("Installation Complete", 100);
+            Packer.ReportProgress(100, "Installation Complete");
         }
 
         static Patcher CreatePatcher(Pass pass)
@@ -114,14 +133,19 @@ namespace WpfTest
             patcher.PatchStardew(Path.GetFileName(fileName));
         }
 
-        private void DoInstallationPass2()
+        private void DoInstallationPass2(string fileName)
         {
-
+            var patcher = CreatePatcher(Pass.PassTwo);
+            patcher.PatchStardew(fileName);
         }
 
         private void Packer_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            
+            var text = e.UserState as string;
+            if (text != null)
+            {
+                SetInstallationProgress(text, e.ProgressPercentage);
+            }
         }
 
         private void ExtractDll(string path)
@@ -179,6 +203,11 @@ namespace WpfTest
         private void buttonCancelInstallation_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void ButtonClose_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

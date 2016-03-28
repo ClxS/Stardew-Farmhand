@@ -38,5 +38,13 @@
                 </Button.LayoutTransform>
             </Button>
         </Canvas>
+        <Canvas x:Name="canvasComplete" Margin="0,89,0,0" Opacity="0">
+            <Label x:Name="labelComplete" Content="Installation Complete" Canvas.Left="147" Canvas.Top="80" Width="211" HorizontalAlignment="Center"/>
+            <Button x:Name="buttonClose" Content="Close" HorizontalAlignment="Left" VerticalAlignment="Top" Width="104" Canvas.Left="181" Canvas.Top="179" Click="ButtonClose_OnClick">
+                <Button.LayoutTransform>
+                    <ScaleTransform ScaleX="1.4" ScaleY="1.4"></ScaleTransform>
+                </Button.LayoutTransform>
+            </Button>
+        </Canvas>
     </Grid>
 </Window>
