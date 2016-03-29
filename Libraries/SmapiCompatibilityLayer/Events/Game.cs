@@ -1,4 +1,5 @@
 ﻿using System;
+using Revolution.Events;
 using Revolution.Events.Arguments.GameEvents;
 
 namespace StardewModdingAPI.Events
@@ -49,14 +50,14 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeGameLoaded(object sender, EventArgsOnGameInitialise eventArgsOnGameInitialise)
         {
-            GameLoaded.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(GameLoaded, null);
         }
 
         internal static void InvokeInitialize(object sender, EventArgsOnGameInitialised eventArgsOnGameInitialised)
         {
             try
             {
-                Initialize.Invoke(null, EventArgs.Empty);
+                EventCommon.SafeInvoke(Initialize, null);
             }
             catch (Exception ex)
             {
@@ -71,9 +72,9 @@ namespace StardewModdingAPI.Events
                 if (!FirstUpdateFired)
                 {
                     FirstUpdateFired = true;
-                    FirstUpdateTick.Invoke(null, EventArgs.Empty);
+                    EventCommon.SafeInvoke(FirstUpdateTick, null);
                 }
-                LoadContent.Invoke(null, EventArgs.Empty);
+                EventCommon.SafeInvoke(LoadContent, null);
             }
             catch (Exception ex)
             {
@@ -85,8 +86,7 @@ namespace StardewModdingAPI.Events
         {
             try
             {
-                
-                UpdateTick.Invoke(null, EventArgs.Empty);
+                EventCommon.SafeInvoke(UpdateTick, null);
             }
             catch (Exception ex)
             {
@@ -96,37 +96,37 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeSecondUpdateTick()
         {
-            SecondUpdateTick.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(SecondUpdateTick, null);
         }
 
         internal static void InvokeFourthUpdateTick()
         {
-            FourthUpdateTick.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(FourthUpdateTick, null);
         }
 
         internal static void InvokeEighthUpdateTick()
         {
-            EighthUpdateTick.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(EighthUpdateTick, null);
         }
 
         internal static void InvokeQuarterSecondTick()
         {
-            QuarterSecondTick.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(QuarterSecondTick, null);
         }
 
         internal static void InvokeHalfSecondTick()
         {
-            HalfSecondTick.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(HalfSecondTick, null);
         }
 
         internal static void InvokeOneSecondTick()
         {
-            OneSecondTick.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(OneSecondTick, null);
         }
 
         internal static void InvokeFirstUpdateTick()
         {
-            FirstUpdateTick.Invoke(null, EventArgs.Empty);
+            EventCommon.SafeInvoke(FirstUpdateTick, null);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Revolution.Logging
     public static class Log
     {
         public static bool IsVerbose { get; set; } = true;
-        private static ILogger Logger { get; set; } = new FileLogger();
+        private static ILogger Logger { get; set; } = new ConsoleLogger();
 
         public static void SetLoggerType<T>() where T : ILogger, new()
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Revolution.Events;
 
 namespace StardewModdingAPI.Events
 {
@@ -17,42 +18,42 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeKeyboardChanged(object sender, Revolution.Events.Arguments.ControlEvents.EventArgsKeyboardStateChanged e)
         {
-            KeyboardChanged.Invoke(null, new EventArgsKeyboardStateChanged(e.PriorState, e.NewState));
+            EventCommon.SafeInvoke(KeyboardChanged, null, new EventArgsKeyboardStateChanged(e.PriorState, e.NewState));
         }
 
         internal static void InvokeMouseChanged(object sender, Revolution.Events.Arguments.ControlEvents.EventArgsMouseStateChanged e)
         {
-            MouseChanged.Invoke(null, new EventArgsMouseStateChanged(e.PriorState, e.NewState));
+            EventCommon.SafeInvoke(MouseChanged, null, new EventArgsMouseStateChanged(e.PriorState, e.NewState));
         }
 
         internal static void InvokeKeyPressed(object sender, Revolution.Events.Arguments.ControlEvents.EventArgsKeyPressed e)
         {
-            KeyPressed.Invoke(null, new EventArgsKeyPressed(e.KeyPressed));
+            EventCommon.SafeInvoke(KeyPressed, null, new EventArgsKeyPressed(e.KeyPressed));
         }
 
         internal static void InvokeKeyReleased(object sender, Revolution.Events.Arguments.ControlEvents.EventArgsKeyPressed e)
         {
-            KeyReleased.Invoke(null, new EventArgsKeyPressed(e.KeyPressed));
+            EventCommon.SafeInvoke(KeyReleased, null, new EventArgsKeyPressed(e.KeyPressed));
         }
 
         internal static void InvokeButtonPressed(object sender, Revolution.Events.Arguments.ControlEvents.EventArgsControllerButtonPressed e)
         {
-            ControllerButtonPressed.Invoke(null, new EventArgsControllerButtonPressed(e.PlayerIndex, e.ButtonPressed));
+            EventCommon.SafeInvoke(ControllerButtonPressed, null, new EventArgsControllerButtonPressed(e.PlayerIndex, e.ButtonPressed));
         }
 
         internal static void InvokeButtonReleased(object sender, Revolution.Events.Arguments.ControlEvents.EventArgsControllerButtonReleased e)
         {
-            ControllerButtonReleased.Invoke(null, new EventArgsControllerButtonReleased(e.PlayerIndex, e.ButtonReleased));
+            EventCommon.SafeInvoke(ControllerButtonReleased, null, new EventArgsControllerButtonReleased(e.PlayerIndex, e.ButtonReleased));
         }
 
         internal static void InvokeTriggerPressed(object sender, Revolution.Events.Arguments.ControlEvents.EventArgsControllerTriggerPressed e)
         {
-            ControllerTriggerPressed.Invoke(null, new EventArgsControllerTriggerPressed(e.PlayerIndex, e.ButtonPressed, e.Value));
+            EventCommon.SafeInvoke(ControllerTriggerPressed, null, new EventArgsControllerTriggerPressed(e.PlayerIndex, e.ButtonPressed, e.Value));
         }
 
         internal static void InvokeTriggerReleased(object sender, Revolution.Events.Arguments.ControlEvents.EventArgsControllerTriggerReleased e)
         {
-            ControllerTriggerReleased.Invoke(null, new EventArgsControllerTriggerReleased(e.PlayerIndex, e.ButtonReleased, e.Value));
+            EventCommon.SafeInvoke(ControllerTriggerReleased, null, new EventArgsControllerTriggerReleased(e.PlayerIndex, e.ButtonReleased, e.Value));
         }
     }
 }

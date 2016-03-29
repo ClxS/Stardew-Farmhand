@@ -45,7 +45,7 @@ namespace StardewModdingAPI
             TimeEvents.OnAfterSeasonChanged += Events.TimeEvents.InvokeSeasonOfYearChanged;
             TimeEvents.OnAfterYearChanged += Events.TimeEvents.InvokeYearOfGameChanged;
             
-            Program.gamePtr = new SGame(inst);
+            //Program.gamePtr = new SGame(inst);
         }
 
         public override bool ContainsOurModType(Type[] assemblyTypes)

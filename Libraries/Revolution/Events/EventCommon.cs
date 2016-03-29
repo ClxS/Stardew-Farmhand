@@ -7,7 +7,7 @@ namespace Revolution.Events
 {
     public static class EventCommon
     {
-        internal static void SafeInvoke(EventHandler evt, object sender)
+        public static void SafeInvoke(EventHandler evt, object sender)
         {
             foreach (var @delegate in evt.GetInvocationList().Cast<EventHandler>())
             {
@@ -23,7 +23,7 @@ namespace Revolution.Events
             }
         }
 
-        internal static void SafeInvoke<T>(EventHandler<T> evt, object sender, T args) where T : EventArgs
+        public static void SafeInvoke<T>(EventHandler<T> evt, object sender, T args) where T : EventArgs
         {
             foreach (var @delegate in evt.GetInvocationList().Cast<EventHandler<T>>())
             {
@@ -39,7 +39,7 @@ namespace Revolution.Events
             }
         }
 
-        internal static bool SafeCancellableInvoke<T>(EventHandler<T> evt, object sender, T args) where T : CancelEventArgs
+        public static bool SafeCancellableInvoke<T>(EventHandler<T> evt, object sender, T args) where T : CancelEventArgs
         {
             var cancel = false;
             foreach (var @delegate in evt.GetInvocationList().Cast<EventHandler<T>>())
