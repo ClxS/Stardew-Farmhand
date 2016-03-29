@@ -110,6 +110,7 @@
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LogEntry.cs" />
     <Compile Include="Logging\LogEntryColor.cs" />
+    <Compile Include="Logging\LogEntryType.cs" />
     <Compile Include="Logging\Loggers\ConsoleLogger.cs" />
     <Compile Include="Logging\Loggers\FileLogger.cs" />
     <Compile Include="Logging\Loggers\ILogger.cs" />

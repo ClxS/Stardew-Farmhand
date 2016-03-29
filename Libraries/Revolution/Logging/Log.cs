@@ -6,7 +6,7 @@ namespace Revolution.Logging
     public static class Log
     {
         public static bool IsVerbose { get; set; } = true;
-        private static ILogger Logger { get; set; } = new ConsoleLogger();
+        private static ILogger Logger { get; set; } = new FileLogger();
 
         public static void SetLoggerType<T>() where T : ILogger, new()
         {
@@ -19,7 +19,7 @@ namespace Revolution.Logging
         /// <param name="message"></param>
         public static void Success(string message)
         {
-            LogEntry logItem = new LogEntry { Message = message, Color = LogEntryColor.Green };
+            var logItem = new LogEntry { Message = message, Type = LogEntryType.Success };
             Logger.Write(logItem);
         }
 
@@ -31,7 +31,7 @@ namespace Revolution.Logging
         {
             if (IsVerbose)
             {
-                LogEntry logItem = new LogEntry { Message = message, Color = LogEntryColor.DarkGrey };
+                var logItem = new LogEntry { Message = message, Type = LogEntryType.Verbose };
                 Logger.Write(logItem);
             }
         }
@@ -48,20 +48,18 @@ namespace Revolution.Logging
 
         public static void Exception(string message, Exception ex)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
             if (IsVerbose)
             {
                 var exInner = ex.InnerException ?? ex;
-                var logItem = new LogEntry { Message = $"{message}\n\t{exInner.Message}\n\t{exInner.StackTrace}", Color = LogEntryColor.Red };
+                var logItem = new LogEntry { Message = $"{message}\n\t{exInner.Message}\n\t{exInner.StackTrace}", Type = LogEntryType.Error };
                 Logger.Write(logItem);                
             }
             else
             {
                 var exInner = ex.InnerException ?? ex;
-                var logItem = new LogEntry { Message = $"{message}\n\t{exInner.Message}", Color = LogEntryColor.Red };
+                var logItem = new LogEntry { Message = $"{message}\n\t{exInner.Message}", Type = LogEntryType.Error };
                 Logger.Write(logItem);
             }
-            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         /// <summary>
@@ -70,7 +68,7 @@ namespace Revolution.Logging
         /// <param name="message"></param>
         public static void Error(string message)
         {
-            LogEntry logItem = new LogEntry { Message = message, Color = LogEntryColor.Red };
+            var logItem = new LogEntry { Message = message, Type = LogEntryType.Error };
             Logger.Write(logItem);
         }
     }

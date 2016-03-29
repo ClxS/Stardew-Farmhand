@@ -6,29 +6,29 @@ namespace Revolution.Logging.Loggers
     {
         public void Write(LogEntry logItem)
         {
-            SetConsoleColour(logItem.Color);
+            SetConsoleColour(logItem.Type);
             Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {logItem.Message}");
-            SetConsoleColour(logItem.Color);
+            SetConsoleColour(logItem.Type);
         }
 
-        private void SetConsoleColour(LogEntryColor colour)
+        private void SetConsoleColour(LogEntryType type)
         {
-            Console.ForegroundColor = ConvertConsoleColour(colour);
+            Console.ForegroundColor = ConvertConsoleColour(type);
         }
 
-        private ConsoleColor ConvertConsoleColour(LogEntryColor colour)
+        private ConsoleColor ConvertConsoleColour(LogEntryType type)
         {
-            switch (colour)
+            switch (type)
             {
-                case LogEntryColor.DarkGrey:
+                case LogEntryType.Verbose:
                     return ConsoleColor.DarkGray;
-                case LogEntryColor.Grey:
+                case LogEntryType.Info:
                     return ConsoleColor.Gray;
-                case LogEntryColor.Green:
+                case LogEntryType.Success:
                     return ConsoleColor.Green;
-                case LogEntryColor.Red:
+                case LogEntryType.Error:
                     return ConsoleColor.Red;
-                case LogEntryColor.Yellow:
+                case LogEntryType.Comment:
                     return ConsoleColor.Yellow;
                 default: return ConsoleColor.Gray;
             }

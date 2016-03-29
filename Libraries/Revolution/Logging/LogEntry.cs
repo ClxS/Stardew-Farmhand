@@ -3,6 +3,6 @@
     public class LogEntry
     {
         public string Message { get; set; }
-        public LogEntryColor Color { get; set; } = LogEntryColor.Default;
+        public LogEntryType Type { get; set; } = LogEntryType.Info;
     }
 }
