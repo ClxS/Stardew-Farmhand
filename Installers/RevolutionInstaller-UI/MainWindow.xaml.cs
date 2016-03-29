@@ -77,13 +77,13 @@ namespace WpfTest
         private void Packer_DoWork(object sender, DoWorkEventArgs e)
         {
             var tempDirectory = Path.Combine(Path.GetTempPath(), Path.GetFileNameWithoutExtension(Path.GetRandomFileName()));
+            var outputDirectory = Path.GetDirectoryName(StardewFile);
 
             try
             {
-                var revolutionExe = Path.GetDirectoryName(StardewFile) + "\\Stardew Revolution.exe";
+                var revolutionExe = outputDirectory + "\\Stardew Revolution.exe";
 
                 Packer.ReportProgress(10, "Creating Temp Directory");
-                var outputDirectory = Path.GetDirectoryName(StardewFile);
                 Directory.CreateDirectory(tempDirectory);
                 Directory.SetCurrentDirectory(tempDirectory);
                 File.Copy(StardewFile, tempDirectory + "\\Stardew Valley.exe");
@@ -96,6 +96,9 @@ namespace WpfTest
                 
                 Packer.ReportProgress(60, "Injecting Stardew Valley - Pass 2");
                 DoInstallationPass2(revolutionExe);
+
+                Packer.ReportProgress(60, "Copying SMAPI Compatibility Layer");
+                File.Copy("StardewModdingAPI.dll", outputDirectory + "\\StardewModdingAPI.dll");
             }
             catch (Exception ex)
             {
