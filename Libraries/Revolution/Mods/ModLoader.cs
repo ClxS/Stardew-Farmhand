@@ -35,6 +35,9 @@ namespace Revolution
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
 
+            Log.Success(Test.TestFunction() ? "TEST FUNCTION RETURNED TRUE" : "TEST FUNCTION RETURNED FALSE");
+            return;
+
             Log.Info("Loading Mods...");
             try
             {

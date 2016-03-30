@@ -96,31 +96,37 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeSecondUpdateTick()
         {
+            //DODO Hook this
             EventCommon.SafeInvoke(SecondUpdateTick, null);
         }
 
         internal static void InvokeFourthUpdateTick()
         {
+            //DODO Hook this
             EventCommon.SafeInvoke(FourthUpdateTick, null);
         }
 
         internal static void InvokeEighthUpdateTick()
         {
+            //DODO Hook this
             EventCommon.SafeInvoke(EighthUpdateTick, null);
         }
 
         internal static void InvokeQuarterSecondTick()
         {
+            //DODO Hook this
             EventCommon.SafeInvoke(QuarterSecondTick, null);
         }
 
         internal static void InvokeHalfSecondTick()
         {
+            //DODO Hook this
             EventCommon.SafeInvoke(HalfSecondTick, null);
         }
 
         internal static void InvokeOneSecondTick()
         {
+            //DODO Hook this
             EventCommon.SafeInvoke(OneSecondTick, null);
         }
 

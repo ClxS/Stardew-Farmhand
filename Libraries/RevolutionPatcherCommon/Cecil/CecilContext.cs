@@ -56,9 +56,16 @@ namespace Revolution.Cecil
 
             if (string.IsNullOrWhiteSpace(type))
                 throw new Exception("Both type and method must be set");
-
+            AssemblyDefinition.MainModule.Import(typeof(void));
             TypeDefinition typeDef = AssemblyDefinition.MainModule.Types.FirstOrDefault(n => n.FullName == type);
             return typeDef;
+        }
+
+        public TypeReference GetInbuiltTypeReference(Type type)
+        {
+            if (type == null)
+                throw new Exception("Both type must be set");
+            return AssemblyDefinition.MainModule.Import(type);
         }
 
         public MethodDefinition GetMethodDefinition(string type, string method)
@@ -73,7 +80,33 @@ namespace Revolution.Cecil
 
             return methodDef;
         }
-        
+
+        public PropertyDefinition GetPropertyDefinition(string type, string property)
+        {
+            PropertyDefinition propertyDefinition = null;
+            TypeDefinition typeDef = GetTypeDefinition(type);
+
+            if (typeDef != null)
+            {
+                propertyDefinition = typeDef.Properties.FirstOrDefault(m => m.Name == property);
+            }
+
+            return propertyDefinition;
+        }
+
+        public FieldDefinition GetFieldDefinition(string type, string field)
+        {
+            FieldDefinition fieldDefinition = null;
+            TypeDefinition typeDef = GetTypeDefinition(type);
+
+            if (typeDef != null)
+            {
+                fieldDefinition = typeDef.Fields.FirstOrDefault(m => m.Name == field);
+            }
+
+            return fieldDefinition;
+        }
+
         public MethodReference ImportMethod(MethodBase method)
         {
             if (AssemblyDefinition == null)

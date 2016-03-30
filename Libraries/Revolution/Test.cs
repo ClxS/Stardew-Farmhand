@@ -2,15 +2,22 @@
 {
     public class Test
     {
-        public void Test1(int y, int width, int height, bool test)
+        public static bool IsEnabled = false;
+
+        public T Test1<T>(T @in, int y, int width, int height, bool test)
         {
-            var x = -1;
-            Test2(this, x, y, width, height, test);
+            return @in;
         }
 
-        public void Test2(Test @this, int x, int y, int width, int height, bool test)
+        public static bool Test2(string type, string method, out object @out, params object[] param)
         {
-            
+            @out = null;
+            return false;
+        }
+
+        public static bool TestFunction()
+        {
+            return false;
         }
     }
 }

@@ -21,6 +21,8 @@ namespace Revolution
             HookMakeBaseVirtualCallAlterations<HookMakeBaseVirtualCallAttribute>(cecilContext);
             HookConstructionRedirectors<HookRedirectConstructorFromBaseAttribute>(cecilContext);
 
+            CecilHelper.InjectGlobalRouteMethod(cecilContext, "Revolution.Test", "TestFunction");
+
             Console.WriteLine("Second Pass Installation Completed");
 
             path = path ?? PatcherConstants.RevolutionExe;
