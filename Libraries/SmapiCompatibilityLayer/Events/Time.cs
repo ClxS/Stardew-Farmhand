@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Revolution.Events;
+using System;
 
 namespace StardewModdingAPI.Events
 {
@@ -16,27 +17,28 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeTimeOfDayChanged(object sender, EventArgs eventArgs)
         {
-            TimeOfDayChanged.Invoke(null, new EventArgsIntChanged(0, 0));
+            EventCommon.SafeInvoke(TimeOfDayChanged, null, new EventArgsIntChanged(0, 0));
         }
 
         internal static void InvokeDayOfMonthChanged(object sender, EventArgs eventArgs)
         {
-            DayOfMonthChanged.Invoke(null, new EventArgsIntChanged(0, 0));
+            EventCommon.SafeInvoke(DayOfMonthChanged, null, new EventArgsIntChanged(0, 0));
         }
 
         internal static void InvokeYearOfGameChanged(object sender, EventArgs eventArgs)
         {
-            YearOfGameChanged.Invoke(null, new EventArgsIntChanged(0, 0));
+            EventCommon.SafeInvoke(YearOfGameChanged, null, new EventArgsIntChanged(0, 0));
         }
 
         internal static void InvokeSeasonOfYearChanged(object sender, EventArgs eventArgs)
         {
-            SeasonOfYearChanged.Invoke(null, new EventArgsStringChanged("", ""));
+            EventCommon.SafeInvoke(SeasonOfYearChanged, null, new EventArgsStringChanged("", ""));
         }
 
         internal static void InvokeOnNewDay(int priorInt, int newInt, bool newDay)
         {
-            OnNewDay.Invoke(null, new EventArgsNewDay(priorInt, newInt, newDay));
+            //TODO Hook this up
+            EventCommon.SafeInvoke(OnNewDay, null, new EventArgsNewDay(priorInt, newInt, newDay));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using StardewValley;
 using StardewValley.Menus;
+using Revolution.Events;
 
 namespace StardewModdingAPI.Events
 {
@@ -10,7 +11,7 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeMenuChanged(object sender, EventArgs eventArgs)
         {
-            MenuChanged.Invoke(null, new EventArgsClickableMenuChanged(null, Game1.activeClickableMenu));
+            EventCommon.SafeInvoke(MenuChanged, null, new EventArgsClickableMenuChanged(null, Game1.activeClickableMenu));
         }
     }
 }

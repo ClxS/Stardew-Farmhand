@@ -50,14 +50,14 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeGameLoaded(object sender, EventArgsOnGameInitialise eventArgsOnGameInitialise)
         {
-            EventCommon.SafeInvoke(GameLoaded, null);
+            EventCommon.SafeInvoke(GameLoaded, sender);
         }
 
         internal static void InvokeInitialize(object sender, EventArgsOnGameInitialised eventArgsOnGameInitialised)
         {
             try
             {
-                EventCommon.SafeInvoke(Initialize, null);
+                EventCommon.SafeInvoke(Initialize, sender);
             }
             catch (Exception ex)
             {
@@ -72,9 +72,9 @@ namespace StardewModdingAPI.Events
                 if (!FirstUpdateFired)
                 {
                     FirstUpdateFired = true;
-                    EventCommon.SafeInvoke(FirstUpdateTick, null);
+                    EventCommon.SafeInvoke(FirstUpdateTick, sender);
                 }
-                EventCommon.SafeInvoke(LoadContent, null);
+                EventCommon.SafeInvoke(LoadContent, sender);
             }
             catch (Exception ex)
             {
@@ -86,7 +86,7 @@ namespace StardewModdingAPI.Events
         {
             try
             {
-                EventCommon.SafeInvoke(UpdateTick, null);
+                EventCommon.SafeInvoke(UpdateTick, sender);
             }
             catch (Exception ex)
             {

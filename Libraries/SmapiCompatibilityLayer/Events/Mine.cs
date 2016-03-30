@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Revolution.Events;
+using System;
 
 namespace StardewModdingAPI.Events
 {
@@ -8,7 +9,8 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeMineLevelChanged(int previousMinelevel, int currentMineLevel)
         {
-            MineLevelChanged.Invoke(null, new EventArgsMineLevelChanged(previousMinelevel, currentMineLevel));
+            //TODO Hook this up
+            EventCommon.SafeInvoke(MineLevelChanged, null, new EventArgsMineLevelChanged(previousMinelevel, currentMineLevel));
         }
     }
 }
