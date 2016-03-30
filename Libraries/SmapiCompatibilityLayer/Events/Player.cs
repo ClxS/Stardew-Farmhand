@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Revolution.Events.Arguments.PlayerEvents;
 using StardewModdingAPI.Inheritance;
 using StardewValley;
+using Revolution.Events;
 
 namespace StardewModdingAPI.Events
 {
@@ -15,22 +16,22 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeFarmerChanged(object sender, EventArgs eventArgs)
         {
-            FarmerChanged.Invoke(null, new EventArgsFarmerChanged(null, Game1.player));
+            EventCommon.SafeInvoke(FarmerChanged, sender, new EventArgsFarmerChanged(null, Game1.player));
         }
 
         internal static void InvokeInventoryChanged(object sender, EventArgsOnItemAddedToInventory eventArgsOnItemAddedToInventory)
         {
-            InventoryChanged.Invoke(null, new EventArgsInventoryChanged(null, null));
+            EventCommon.SafeInvoke(InventoryChanged, sender, new EventArgsInventoryChanged(null, null));
         }
 
         internal static void InvokeLeveledUp(object sender, EventArgsOnLevelUp eventArgsOnLevelUp)
         {
-            LeveledUp.Invoke(null, new EventArgsLevelUp(eventArgsOnLevelUp.Which, eventArgsOnLevelUp.NewLevel));
+            EventCommon.SafeInvoke(LeveledUp, sender, new EventArgsLevelUp(eventArgsOnLevelUp.Which, eventArgsOnLevelUp.NewLevel));
         }
 
         internal static void InvokeLoadedGame(EventArgsLoadedGameChanged loaded)
         {
-            LoadedGame.Invoke(null, loaded);
+            EventCommon.SafeInvoke(LoadedGame, null, loaded);
         }
     }
 }

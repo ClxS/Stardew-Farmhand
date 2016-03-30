@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Revolution.Events;
+using System;
 
 namespace StardewModdingAPI.Events
 {
@@ -52,42 +53,50 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeDrawDebug(object sender, EventArgs e)
         {
-            DrawDebug.Invoke(sender, e);
+            //TODO Hook this up
+            EventCommon.SafeInvoke(DrawDebug, sender);
         }
 
         internal static void InvokeOnPreRenderEvent(object sender, EventArgs e)
         {
-            OnPreRenderEvent.Invoke(sender, e);
+            //TODO Hook this up
+            EventCommon.SafeInvoke(OnPreRenderEvent, sender);
         }
 
         internal static void InvokeOnPreRenderGuiEvent(object sender, EventArgs e)
         {
-            OnPreRenderGuiEvent.Invoke(sender, e);
+            //TODO Hook this up
+            EventCommon.SafeInvoke(OnPreRenderGuiEvent, sender);
         }
 
         internal static void InvokeOnPostRenderGuiEvent(object sender, EventArgs e)
         {
-            OnPostRenderGuiEvent.Invoke(sender, e);
+            //TODO Hook this up
+            EventCommon.SafeInvoke(OnPostRenderGuiEvent, sender);
         }
 
         internal static void InvokeOnPreRenderHudEvent(object sender, EventArgs e)
         {
-            OnPreRenderHudEvent.Invoke(sender, e);
+            //TODO Hook this up
+            EventCommon.SafeInvoke(OnPreRenderHudEvent, sender);
         }
 
         internal static void InvokeOnPostRenderHudEvent(object sender, EventArgs e)
         {
-            OnPostRenderHudEvent.Invoke(sender, e);
+            //TODO Hook this up
+            EventCommon.SafeInvoke(OnPostRenderHudEvent, sender);
         }
 
         internal static void InvokeOnPostRenderEvent(object sender, EventArgs e)
         {
-            OnPostRenderEvent.Invoke(sender, e);
+            //TODO Hook this up
+            EventCommon.SafeInvoke(OnPostRenderEvent, sender);
         }
 
         internal static void InvokeResize(object sender, EventArgs e)
         {
-            Resize.Invoke(sender, e);
+            //TODO Hook this up
+            EventCommon.SafeInvoke(Resize, sender);
         }
 
         #region To Remove

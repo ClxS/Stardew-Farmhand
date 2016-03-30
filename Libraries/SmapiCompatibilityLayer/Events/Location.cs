@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using Object = StardewValley.Object;
+using Revolution.Events;
 
 namespace StardewModdingAPI.Events
 {
@@ -15,18 +16,18 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeLocationsChanged(object sender, EventArgs eventArgs)
         {
-            LocationsChanged.Invoke(null, new EventArgsGameLocationsChanged(Game1.locations));
+            EventCommon.SafeInvoke(LocationsChanged, sender, new EventArgsGameLocationsChanged(Game1.locations));
         }
 
         internal static void InvokeCurrentLocationChanged(object sender, EventArgs eventArgs)
         {
-            CurrentLocationChanged.Invoke(null, new EventArgsCurrentLocationChanged(null, Game1.currentLocation));
+            EventCommon.SafeInvoke(CurrentLocationChanged, sender, new EventArgsCurrentLocationChanged(null, Game1.currentLocation));
         }
 
         internal static void InvokeOnNewLocationObject(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
             var location = sender as GameLocation;
-            LocationObjectsChanged.Invoke(null, new EventArgsLocationObjectsChanged(location?.objects));
+            EventCommon.SafeInvoke(LocationObjectsChanged, sender, new EventArgsLocationObjectsChanged(location?.objects));
         }
     }
 }
