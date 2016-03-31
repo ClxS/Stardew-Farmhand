@@ -139,63 +139,65 @@ namespace Revolution.Helpers
 
             Instruction first = ilProcessor.Body.Instructions.First();
             Instruction last = ilProcessor.Body.Instructions.Last();
+            Instruction prelast = ilProcessor.Body.Instructions[ilProcessor.Body.Instructions.Count - 2];
             var objectType = stardewContext.GetInbuiltTypeReference(typeof(object));
             var voidType = stardewContext.GetInbuiltTypeReference(typeof(void));
 
             var newInstructions = new List<Instruction>();
-            //newInstructions.Add(ilProcessor.Create(OpCodes.Ldsfld, fieldDefinition));
-            //newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldsfld, fieldDefinition));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
 
-            //newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeType));
-            //newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeMethod));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeType));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeMethod));
 
             //if (method.ReturnType != null && method.ReturnType != voidType)
-            //{
-            //    outputVar = new VariableDefinition("GlobalRouteOutput", objectType);
-            //    ilProcessor.Body.Variables.Add(outputVar);
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Ldloca, outputVar));
-            //}
+            {
+                outputVar = new VariableDefinition("GlobalRouteOutput", objectType);
+                ilProcessor.Body.Variables.Add(outputVar);
+                newInstructions.Add(ilProcessor.Create(OpCodes.Ldloca, outputVar));
+            }
 
-            //newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, method.Parameters.Count + (hasThis ? 1 : 0)));
-            //newInstructions.Add(ilProcessor.Create(OpCodes.Newarr, objectType));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, method.Parameters.Count + (hasThis ? 1 : 0)));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Newarr, objectType));
 
-            //if (hasThis)
-            //{
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Dup));
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, argIndex++));
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Ldarg));
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Stelem_Ref));
-            //}
+            if (hasThis)
+            {
+                newInstructions.Add(ilProcessor.Create(OpCodes.Dup));
+                newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, argIndex++));
+                newInstructions.Add(ilProcessor.Create(OpCodes.Ldarg));
+                newInstructions.Add(ilProcessor.Create(OpCodes.Stelem_Ref));
+            }
 
-            //foreach (var param in method.Parameters)
-            //{
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Dup));
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, argIndex++));
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Ldloc, param));
-            //    if(param.ParameterType.IsPrimitive)
-            //        newInstructions.Add(ilProcessor.Create(OpCodes.Box, param.ParameterType));
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Stelem_Ref));
-            //}
+            foreach (var param in method.Parameters)
+            {
+                newInstructions.Add(ilProcessor.Create(OpCodes.Dup));
+                newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, argIndex++));
+                newInstructions.Add(ilProcessor.Create(OpCodes.Ldarg, param));
+                if (param.ParameterType.IsPrimitive)
+                    newInstructions.Add(ilProcessor.Create(OpCodes.Box, param.ParameterType));
+                newInstructions.Add(ilProcessor.Create(OpCodes.Stelem_Ref));
+            }
 
-            //newInstructions.Add(ilProcessor.Create(OpCodes.Call, methodDefinition));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Call, methodDefinition));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
 
-            //if (method.ReturnType != null && method.ReturnType != stardewContext.GetTypeDefinition("System.Void"))
-            //{
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Ldloc, outputVar));
-            //    if (method.ReturnType.IsPrimitive || method.ReturnType.IsGenericParameter)
-            //    {
-            //        newInstructions.Add(ilProcessor.Create(OpCodes.Unbox_Any, method.ReturnType));
-            //    }
-            //    else
-            //    {
-            //        newInstructions.Add(ilProcessor.Create(OpCodes.Castclass, method.ReturnType));
-            //    }
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Br, last));
-            //}
-            //var = ilProcessor.Create(OpCodes.Brtrue, ilProcessor.Body.Instructions.Last());
-            //ilProcessor.InsertAfter(callEnterInstruction, branch);
-
+            if (method.ReturnType != null && method.ReturnType.FullName != voidType.FullName)
+            {
+                newInstructions.Add(ilProcessor.Create(OpCodes.Ldloc, outputVar));
+                if (method.ReturnType.IsPrimitive || method.ReturnType.IsGenericParameter)
+                {
+                    newInstructions.Add(ilProcessor.Create(OpCodes.Unbox_Any, method.ReturnType));
+                }
+                else
+                {
+                    newInstructions.Add(ilProcessor.Create(OpCodes.Castclass, method.ReturnType));
+                }
+                newInstructions.Add(ilProcessor.Create(OpCodes.Br, last));
+            }
+            else
+            {
+                newInstructions.Add(ilProcessor.Create(OpCodes.Br, prelast));
+            }
 
             ilProcessor.Body.SimplifyMacros();
             if (newInstructions.Any())

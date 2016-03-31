@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Revolution.Logging;
 
 namespace Revolution.Events
 {
@@ -10,9 +11,10 @@ namespace Revolution.Events
         public static bool IsEnabled = false;
 
         //public static void GlobalRouteInvoke(string type, string method, out object output, params object[] @parans)
-        public static void GlobalRouteInvoke()
+        public static bool GlobalRouteInvoke(string type, string method, out object output, params object[] @params)
         {
-            //output = null;
+            output = null;
+            return false;
         }
     }
 }
