@@ -71,6 +71,10 @@ namespace Revolution
             {
                 return Assembly.GetExecutingAssembly();
             }
+            else if (args.Name.StartsWith("StardewModdingAPI"))
+            {
+                return Assembly.GetExecutingAssembly();
+            }
 
             return ret;
         }
@@ -91,6 +95,8 @@ namespace Revolution
                     var type = assm.GetTypes().First(x => x.BaseType == typeof(ICompatibilityLayer));
                     var inst = (ICompatibilityLayer)assm.CreateInstance(type.ToString());
                     if (inst == null) continue;
+
+                    inst.OwnAssembly = assm;
 
                     CompatibilityLayers.Add(inst);
                     inst.AttachEvents(Game1.game1);
@@ -255,9 +261,17 @@ namespace Revolution
 
         public static void DeactivateMod(ModManifest mod, ModState state = ModState.Deactivated, Exception error = null)
         {
-            DetachAssemblyDelegates(mod.ModAssembly);
-            mod.ModState = state;
-            mod.LastException = error;
+            try
+            {
+                DetachAssemblyDelegates(mod.ModAssembly);
+                mod.ModState = state;
+                mod.LastException = error;
+                Log.Success($"Successfully unloaded mod {mod.Name} by {mod.Author}");
+            }
+            catch (Exception ex)
+            { 
+                // Ignored
+            }
         }
 
         public static void DetachAssemblyDelegates(Assembly assembly)

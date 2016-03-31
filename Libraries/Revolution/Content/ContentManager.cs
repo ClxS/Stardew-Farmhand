@@ -1,10 +1,10 @@
 ﻿using Revolution.Attributes;
 using Revolution.Logging;
-using StardewValley;
 using System;
 using Revolution.Registries;
 using System.IO;
 using System.Reflection;
+using StardewValley;
 
 namespace Revolution.Content
 {

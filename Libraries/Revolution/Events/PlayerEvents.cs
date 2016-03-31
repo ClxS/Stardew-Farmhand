@@ -55,7 +55,6 @@ namespace Revolution.Events
             [InputBind(typeof(int), "which")] int which,
             [InputBind(typeof(int), "howMuch")] int howMuch)
         {
-            Log.Error($"Which: {which} -- Original Level: {howMuch}");
             return EventCommon.SafeCancellableInvoke(OnBeforeGainExperience, @this, new CancelEventArgs());
         }
 

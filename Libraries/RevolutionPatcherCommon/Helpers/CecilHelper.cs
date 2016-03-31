@@ -216,9 +216,9 @@ namespace Revolution.Helpers
 
         public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, string type, string method)
         {
-            var test = stardewContext.GetMethodIlProcessor("Revolution.Test", "Test1");
-            test.Body.SimplifyMacros();
-            test.Body.OptimizeMacros();
+            //var test = stardewContext.GetMethodIlProcessor("Revolution.Test", "Test1");
+            //test.Body.SimplifyMacros();
+            //test.Body.OptimizeMacros();
             var newConstructor = asmType.GetConstructor(new Type[] { });
 
             if (asmType.BaseType == null) return;

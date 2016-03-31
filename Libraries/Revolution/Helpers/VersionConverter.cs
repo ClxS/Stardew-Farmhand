@@ -10,12 +10,12 @@ namespace Revolution.Helpers
 {
     public class VersionConverter : JsonConverter
     {
-        private class SmapiVersion
+        public class SmapiVersion
         {
-            public int MajorVersion;
-            public int MinorVersion;
-            public int PatchVersion;
-            public string Build;
+            public int MajorVersion = 0;
+            public int MinorVersion = 0;
+            public int PatchVersion = 0;
+            public string Build = "";
         }
         private readonly Type[] _types;
 

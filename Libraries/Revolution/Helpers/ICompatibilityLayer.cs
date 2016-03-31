@@ -10,8 +10,11 @@ namespace Revolution.Helpers
 {
     public abstract class ICompatibilityLayer
     {
+        public Assembly OwnAssembly { get; set; }
         public abstract void AttachEvents(Game1 inst);
         public abstract bool ContainsOurModType(Type[] assemblyTypes);
         public abstract object LoadMod(Assembly modAssembly, Type[] assemblyTypes, ModManifest manifest);
+
+        public abstract IEnumerable<Type> GetEventClasses();
     }
 }

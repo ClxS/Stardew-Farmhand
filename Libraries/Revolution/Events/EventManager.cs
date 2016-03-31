@@ -16,7 +16,18 @@ namespace Revolution.Events
 
         private static IEnumerable<Type> GetRevolutionEvents()
         {
-            return Assembly.GetExecutingAssembly().GetTypes().Where(t => string.Equals(t.Namespace, "Revolution.Events", StringComparison.Ordinal)).ToArray();
+            var revolutionTypes = Assembly.GetExecutingAssembly()
+                    .GetTypes()
+                    .Where(t => string.Equals(t.Namespace, "Revolution.Events", StringComparison.Ordinal)
+                                || string.Equals(t.Namespace, "StardewModdingAPI.Events", StringComparison.Ordinal))
+                    .ToList();
+
+            foreach (var layer in ModLoader.CompatibilityLayers)
+            {
+                revolutionTypes.AddRange(layer.GetEventClasses());
+            }
+
+            return revolutionTypes;
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
@@ -45,7 +56,9 @@ namespace Revolution.Events
 
 
             Dictionary<EventInfo, Delegate[]> detachedDelegates = new Dictionary<EventInfo, Delegate[]>();
-            foreach (var type in GetRevolutionEvents())
+
+            var testTypes = GetRevolutionEvents();
+            foreach (var type in testTypes)
             {
                 foreach (var evt in type.GetEvents())
                 {
