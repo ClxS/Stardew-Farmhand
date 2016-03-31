@@ -21,14 +21,18 @@ namespace Revolution
             HookMakeBaseVirtualCallAlterations<HookMakeBaseVirtualCallAttribute>(cecilContext);
             HookConstructionRedirectors<HookRedirectConstructorFromBaseAttribute>(cecilContext);
 
-            CecilHelper.InjectGlobalRouteMethod(cecilContext, "Revolution.Test", "TestString");
-            CecilHelper.InjectGlobalRouteMethod(cecilContext, "Revolution.Test", "VoidFunction");
-            CecilHelper.InjectGlobalRouteMethod(cecilContext, "Revolution.Test", "TestFunction");
-
+            //TODO: Broken!
+            HookGlobalRouting(cecilContext);
+           
             Console.WriteLine("Second Pass Installation Completed");
 
             path = path ?? PatcherConstants.RevolutionExe;
             cecilContext.WriteAssembly(path, true);
+        }
+
+        private void HookGlobalRouting(CecilContext cecilContext)
+        {
+            CecilHelper.HookAllGlobalRouteMethods(cecilContext);
         }
 
         protected override void AlterTypeBaseProtections(CecilContext context, Type type)

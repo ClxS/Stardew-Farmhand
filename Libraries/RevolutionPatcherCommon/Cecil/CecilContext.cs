@@ -2,9 +2,11 @@
 using Mono.Cecil.Cil;
 using Mono.Cecil.Pdb;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Mono.Collections.Generic;
 
 namespace Revolution.Cecil
 {
@@ -41,7 +43,7 @@ namespace Revolution.Cecil
             ILProcessor ilProcessor = null;
             var typeDef = GetTypeDefinition(type);
             var methodDef = typeDef?.Methods.FirstOrDefault(m => m.Name == method);
-            if (methodDef != null)
+            if (methodDef != null && methodDef.HasBody)
             {
                 ilProcessor = methodDef.Body.GetILProcessor();
             }
@@ -59,6 +61,16 @@ namespace Revolution.Cecil
             AssemblyDefinition.MainModule.Import(typeof(void));
             TypeDefinition typeDef = AssemblyDefinition.MainModule.Types.FirstOrDefault(n => n.FullName == type);
             return typeDef;
+        }
+
+        public IEnumerable<TypeDefinition> GetTypes()
+        {
+            return AssemblyDefinition.MainModule.Types;
+        }
+
+        public IEnumerable<MethodDefinition> GetMethods()
+        {
+            return GetTypes().SelectMany(n => n.Methods);
         }
 
         public TypeReference GetInbuiltTypeReference(Type type)

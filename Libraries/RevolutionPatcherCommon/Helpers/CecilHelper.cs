@@ -131,6 +131,9 @@ namespace Revolution.Helpers
             var methodDefinition = stardewContext.GetMethodDefinition("Revolution.Events.GlobalRouteManager", "GlobalRouteInvoke");
             var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
 
+            if (ilProcessor == null || methodDefinition == null || fieldDefinition == null)
+                return;
+
             var method = ilProcessor.Body.Method;
             var hasThis = method.HasThis;
             var argIndex = 0;
@@ -139,7 +142,15 @@ namespace Revolution.Helpers
 
             Instruction first = ilProcessor.Body.Instructions.First();
             Instruction last = ilProcessor.Body.Instructions.Last();
-            Instruction prelast = ilProcessor.Body.Instructions[ilProcessor.Body.Instructions.Count - 2];
+            Instruction prelast;
+            if (ilProcessor.Body.Instructions.Count > 1)
+            {
+                prelast = ilProcessor.Body.Instructions[ilProcessor.Body.Instructions.Count - 2];
+            }
+            else
+            {
+                prelast = first;
+            }
             var objectType = stardewContext.GetInbuiltTypeReference(typeof(object));
             var voidType = stardewContext.GetInbuiltTypeReference(typeof(void));
 
@@ -150,7 +161,7 @@ namespace Revolution.Helpers
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeType));
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeMethod));
 
-            //if (method.ReturnType != null && method.ReturnType != voidType)
+            /*//if (method.ReturnType != null && method.ReturnType != voidType)
             {
                 outputVar = new VariableDefinition("GlobalRouteOutput", objectType);
                 ilProcessor.Body.Variables.Add(outputVar);
@@ -164,7 +175,7 @@ namespace Revolution.Helpers
             {
                 newInstructions.Add(ilProcessor.Create(OpCodes.Dup));
                 newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, argIndex++));
-                newInstructions.Add(ilProcessor.Create(OpCodes.Ldarg));
+                newInstructions.Add(ilProcessor.Create(OpCodes.Ldarg, ilProcessor.Body.ThisParameter));
                 newInstructions.Add(ilProcessor.Create(OpCodes.Stelem_Ref));
             }
 
@@ -176,28 +187,28 @@ namespace Revolution.Helpers
                 if (param.ParameterType.IsPrimitive)
                     newInstructions.Add(ilProcessor.Create(OpCodes.Box, param.ParameterType));
                 newInstructions.Add(ilProcessor.Create(OpCodes.Stelem_Ref));
-            }
+            }*/
 
             newInstructions.Add(ilProcessor.Create(OpCodes.Call, methodDefinition));
-            newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
+            //newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
 
-            if (method.ReturnType != null && method.ReturnType.FullName != voidType.FullName)
-            {
-                newInstructions.Add(ilProcessor.Create(OpCodes.Ldloc, outputVar));
-                if (method.ReturnType.IsPrimitive || method.ReturnType.IsGenericParameter)
-                {
-                    newInstructions.Add(ilProcessor.Create(OpCodes.Unbox_Any, method.ReturnType));
-                }
-                else
-                {
-                    newInstructions.Add(ilProcessor.Create(OpCodes.Castclass, method.ReturnType));
-                }
-                newInstructions.Add(ilProcessor.Create(OpCodes.Br, last));
-            }
-            else
-            {
-                newInstructions.Add(ilProcessor.Create(OpCodes.Br, prelast));
-            }
+            //if (method.ReturnType != null && method.ReturnType.FullName != voidType.FullName)
+            //{
+            //    newInstructions.Add(ilProcessor.Create(OpCodes.Ldloc, outputVar));
+            //    if (method.ReturnType.IsPrimitive || method.ReturnType.IsGenericParameter)
+            //    {
+            //        newInstructions.Add(ilProcessor.Create(OpCodes.Unbox_Any, method.ReturnType));
+            //    }
+            //    else
+            //    {
+            //        newInstructions.Add(ilProcessor.Create(OpCodes.Castclass, method.ReturnType));
+            //    }
+            //    newInstructions.Add(ilProcessor.Create(OpCodes.Br, last));
+            //}
+            //else
+            //{
+            //    newInstructions.Add(ilProcessor.Create(OpCodes.Br, prelast));
+            //}
 
             ilProcessor.Body.SimplifyMacros();
             if (newInstructions.Any())
@@ -317,6 +328,15 @@ namespace Revolution.Helpers
                         }
                     }
                 }
+            }
+        }
+
+        public static void HookAllGlobalRouteMethods(CecilContext cecilContext)
+        {
+            var methods = cecilContext.GetMethods().Where(n => n.DeclaringType.Namespace.StartsWith("StardewValley"));
+            foreach (var method in methods)
+            {
+                InjectGlobalRouteMethod(cecilContext, method.DeclaringType.FullName, method.Name);
             }
         }
     }

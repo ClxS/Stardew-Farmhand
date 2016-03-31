@@ -11,10 +11,11 @@ namespace Revolution.Events
         public static bool IsEnabled = false;
 
         //public static void GlobalRouteInvoke(string type, string method, out object output, params object[] @parans)
-        public static bool GlobalRouteInvoke(string type, string method, out object output, params object[] @params)
+        //public static void GlobalRouteInvoke(string type, string method, out object output, params object[] @params)
+        public static void GlobalRouteInvoke(string type, string method)
         {
-            output = null;
-            return false;
+            Log.Success($"Entered {type}.{method}");
+           // output = null;
         }
     }
 }
