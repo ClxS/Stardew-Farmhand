@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Revolution.Registries
 {
-    public class ModRegistry
+    public static class ModRegistry
     {
         private static Registry<string, ModManifest> _modRegistryInstance;
         private static Registry<string, ModManifest> RegistryInstance => _modRegistryInstance ?? (_modRegistryInstance = new Registry<string, ModManifest>());

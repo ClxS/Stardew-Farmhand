@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Revolution
 {
-    public class PatcherConstants
+    public static class PatcherConstants
     {
         public static string StardewExe => "Stardew Valley.exe";
 

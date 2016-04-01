@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Revolution.Registries
 {
-    public class TextureRegistry
+    public static class TextureRegistry
     {
         private static Registry<string, Texture2D> _textureRegistryInstance;
         private static Registry<string, Texture2D> RegistryInstance => _textureRegistryInstance ?? (_textureRegistryInstance = new Registry<string, Texture2D>());
