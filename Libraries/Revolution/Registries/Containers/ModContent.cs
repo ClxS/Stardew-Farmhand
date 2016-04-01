@@ -26,6 +26,7 @@ namespace Revolution.Registries.Containers
                         throw new Exception($"Missing Texture: {texture.AbsoluteFilePath}");
                     }
 
+                    Logging.Log.Verbose("Registering new texture");
                     TextureRegistry.RegisterItem(mod, texture.Id, texture);
                 }
             }
@@ -34,13 +35,20 @@ namespace Revolution.Registries.Containers
 
             foreach (var file in Xnb)
             {
-                file.AbsoluteFilePath = $"{mod.ModDirectory}\\{Constants.ModContentDirectory}\\{file.File}";
-                file.OwningMod = mod;
-                if (!file.Exists())
+                if (file.IsXnb)
                 {
-                    throw new Exception($"Missing XNB: {file.AbsoluteFilePath}");
+                    file.AbsoluteFilePath = $"{mod.ModDirectory}\\{Constants.ModContentDirectory}\\{file.File}";
                 }
-                XnbRegistry.RegisterItem(file.File, file);
+                file.OwningMod = mod;
+                if (!file.Exists(mod))
+                {
+                    if (file.IsXnb)
+                        throw new Exception($"Replacement File: {file.AbsoluteFilePath}");
+                    if(file.IsTexture)
+                        throw new Exception($"Replacement Texture: {file.Texture}");
+                }
+                Logging.Log.Verbose("Registering new texture XNB override");
+                XnbRegistry.RegisterItem(file.Original, file);
             }
         }        
     }

@@ -9,7 +9,15 @@
 		"XNB" : 
 		[
 			{
-				"File" : "farmhouse_tiles"
+				"Original" : "farmhouse_tiles",
+				"Texture" : "icon_menuModsButton"
+			}, 
+		],
+		"Textures" : 
+		[
+			{
+				"Id" : "icon_menuModsButton",
+				"File" : "output.png"
 			}
 		]
 	}
