@@ -10,14 +10,20 @@
 		[
 			{
 				"Original" : "farmhouse_tiles",
-				"Texture" : "icon_menuModsButton"
+				"Texture" : "icon_menuModsButton",
+				"Destination" : {
+					"X" : "16",
+					"Y" : "192",
+					"Width" : "81",
+					"Height" : "47"
+				}
 			}, 
 		],
 		"Textures" : 
 		[
 			{
 				"Id" : "icon_menuModsButton",
-				"File" : "output.png"
+				"File" : "Untitled.png"
 			}
 		]
 	}
