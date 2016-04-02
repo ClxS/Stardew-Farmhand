@@ -77,6 +77,8 @@ namespace Revolution.Content
 
             if (item.Destination != null)
             {
+                //TODO, Error checking on this.
+                //TODO, Multiple mods should be able to edit this
                 var originalTexture = base.Load<Texture2D>(assetName);
 
                 Log.Verbose("Is A Constructed Texture");
