@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Revolution.Registries;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +15,9 @@ namespace Revolution.Content
 {
     public class ContentManager : Microsoft.Xna.Framework.Content.ContentManager
     {
-        private Dictionary<string, Texture2D> _cachedAlteredTextures = new Dictionary<string, Texture2D>();
+        private static List<Microsoft.Xna.Framework.Content.ContentManager> _modManagers;
+
+        private readonly Dictionary<string, Texture2D> _cachedAlteredTextures = new Dictionary<string, Texture2D>();
 
         [Hook(HookType.Entry, "StardewValley.Game1", "LoadContent")]
         internal static void ConstructionHook()
@@ -26,10 +29,29 @@ namespace Revolution.Content
         public ContentManager(IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
+            LoadModManagers();
         }
         public ContentManager(IServiceProvider serviceProvider, string rootDirectory)
             : base(serviceProvider, rootDirectory)
         {
+            LoadModManagers();
+        }
+        
+        private void LoadModManagers()
+        {
+            if (_modManagers != null) return;
+
+            _modManagers = new List<Microsoft.Xna.Framework.Content.ContentManager>();
+            foreach (var modPath in ModLoader.ModPaths)
+            {
+                _modManagers.Add(new Microsoft.Xna.Framework.Content.ContentManager(this.ServiceProvider, modPath));
+            }
+        }
+
+        private Microsoft.Xna.Framework.Content.ContentManager GetContentManagerForMod(ModXnb mod)
+        {
+            //;mod.OwningMod.ModDirectory
+            return _modManagers.FirstOrDefault(n => mod.OwningMod.ModDirectory.Contains(n.RootDirectory));
         }
 
         public override T Load<T>(string assetName)
@@ -42,16 +64,16 @@ namespace Revolution.Content
                 if (item.IsXnb)
                 {
                     var currentDirectory = Path.GetDirectoryName(item.AbsoluteFilePath);
-                    var relPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" +
-                                  RootDirectory + "\\";
+                    var modContentManager = GetContentManagerForMod(item);
+                    var relPath = modContentManager.RootDirectory + "\\";
                     if (currentDirectory != null)
                     {
                         var relRootUri = new Uri(relPath, UriKind.Absolute);
                         var fullPath = new Uri(currentDirectory, UriKind.Absolute);
                         var relUri = relRootUri.MakeRelativeUri(fullPath) + "/" + item.File;
 
-                        Log.Verbose($"Using own asset replacement: {assetName} = {relPath}");
-                        return base.Load<T>(relUri);
+                        Log.Verbose($"Using own asset replacement: {assetName} = {relUri}");
+                        return modContentManager.Load<T>(relUri);
                     }
                 }
                 else if (item.IsTexture && typeof(T) == typeof(Texture2D))

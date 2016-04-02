@@ -17,7 +17,7 @@ namespace Revolution
 {
     public static class ModLoader
     {
-        internal static List<string> ModPaths = new List<string>
+        public static List<string> ModPaths = new List<string>
         {
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
         };
