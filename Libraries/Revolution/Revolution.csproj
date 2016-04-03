@@ -83,6 +83,7 @@
     <Compile Include="Events\Arguments\ControlEvents\EventArgsKeyboardStateChanged.cs" />
     <Compile Include="Events\Arguments\ControlEvents\EventArgsKeyPressed.cs" />
     <Compile Include="Events\Arguments\ControlEvents\EventArgsMouseStateChanged.cs" />
+    <Compile Include="Events\Arguments\EventArgsGlobalRouteManager.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAfterPlayerTakesDamage.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAnimalEatGrass.cs" />
     <Compile Include="Events\Arguments\GameEvents\EventArgsOnBeforeGameUpdate.cs" />

@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using ModLoaderMod.Menus;
+using Revolution.Events.Arguments;
 using Revolution.Events.Arguments.GameEvents;
 using Revolution.Registries;
 using StardewValley;
@@ -14,7 +16,14 @@ namespace ModLoaderMod
         {
             Instance = this;
             Revolution.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;
-        }        
+
+            Revolution.Events.GlobalRouteManager.Listen("StardewValley.Menus.TitleMenu", ".ctor", TitleMenuCreated);
+        }
+
+        private void TitleMenuCreated(EventArgsGlobalRouteManager eventArgsGlobalRouteManager)
+        {
+            //Revolution.Events.GlobalRouteManager.Remove("StardewValley.Menus.TitleMenu", ".ctor", TitleMenuCreated);
+        }
 
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
         {
