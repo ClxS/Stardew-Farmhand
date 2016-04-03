@@ -33,7 +33,6 @@ namespace Revolution.Events
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
         public static void ManualHookup()
         {
-            Game1.game1.Window.ClientSizeChanged += GraphicsEvents.InvokeResize;
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Update")]

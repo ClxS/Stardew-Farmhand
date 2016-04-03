@@ -92,6 +92,7 @@
     <Compile Include="Events\Arguments\EventArgsOnModError.cs" />
     <Compile Include="Events\Arguments\EventArgsOnPlayerDoneEating.cs" />
     <Compile Include="Events\Arguments\EventArgsOnBeforePlayerTakesDamage.cs" />
+    <Compile Include="Events\Arguments\GraphicsEvents\EventArgsClientSizeChanged.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnItemAddedToInventory.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnLevelUp.cs" />
     <Compile Include="Events\ControlEvents.cs" />

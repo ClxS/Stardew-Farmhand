@@ -44,22 +44,22 @@ namespace LoggingMod
 
         private void PlayerEvents_OnBeforePlayerTakesDamage(object sender, EventArgsOnBeforePlayerTakesDamage e)
         {
-            Log.Info("PlayerEvents_OnBeforePlayerTakesDamage");
+            //Log.Info("PlayerEvents_OnBeforePlayerTakesDamage");
         }
 
         private void LocationEvents_OnLocationObjectsChanged(object sender, EventArgs e)
         {
-            Log.Verbose("LocationEvents_OnLocationObjectsChanged");
+            //Log.Verbose("LocationEvents_OnLocationObjectsChanged");
         }
 
         private void LocationEvents_OnCurrentLocationChanged(object sender, EventArgs e)
         {
-            Log.Verbose("LocationEvents_OnCurrentLocationChanged");
+            //Log.Verbose("LocationEvents_OnCurrentLocationChanged");
         }
 
         private void LocationEvents_OnLocationsChanged(object sender, EventArgs e)
         {
-            Log.Verbose("LocationEvents_OnLocationsChanged");
+            //Log.Verbose("LocationEvents_OnLocationsChanged");
         }
 
         private void GraphicsEvents_OnAfterDraw(object sender, EventArgs e)
@@ -89,22 +89,22 @@ namespace LoggingMod
 
         private void GameEvents_OnAfterLoadedContent(object sender, EventArgs e)
         {
-            Log.Verbose("GameEvents_OnAfterLoadedContent");
+            //Log.Verbose("GameEvents_OnAfterLoadedContent");
         }
 
         private void GameEvents_OnBeforeLoadContent(object sender, EventArgs e)
         {
-            Log.Verbose("GameEvents_OnBeforeLoadContent");
+            //Log.Verbose("GameEvents_OnBeforeLoadContent");
         }
 
         private void OnGameInitialising(object sender, EventArgs e)
         {
-            Log.Verbose("OnGameInitialising");
+            //Log.Verbose("OnGameInitialising");
         }
 
         private void OnGameInitialised(object sender, EventArgs e)
         {
-            Log.Verbose("OnGameInitialised");
+            //Log.Verbose("OnGameInitialised");
         }
     }
 }
