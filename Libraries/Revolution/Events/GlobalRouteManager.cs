@@ -23,9 +23,7 @@ namespace Revolution.Events
         {
             if (!IsEnabled)
                 return;
-
-            Log.Success("Checking route table");
-
+            
             var key = $"{type}.{method}";
             if (!Listeners.ContainsKey(key))
                 return;
