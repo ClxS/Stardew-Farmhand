@@ -19,6 +19,8 @@ namespace Revolution.Content
 
         private readonly Dictionary<string, Texture2D> _cachedAlteredTextures = new Dictionary<string, Texture2D>();
 
+        //TODO Do not redirect this way. There are so many (pointless) separate instances of ContentManager, and we'll need to override them all as soon as they're 
+        //created. It's something more suited to the ConstructionRedirect hook.
         [Hook(HookType.Entry, "StardewValley.Game1", "LoadContent")]
         internal static void ConstructionHook()
         {
