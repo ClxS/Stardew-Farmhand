@@ -12,7 +12,7 @@ Building the project for the first time can seem a little daunting given the num
 - "Libraries/Revolution" (Stardew Valley and xTile) 
 - "Mods/ModLoaderMod" (xTile only)
 - "Libraries/SmapiCompatibilityLayer" (xTile only) 
-(**do not touch the Stardew Revolution references or try to add new references to fix errors**) 
+- (**do not touch the Stardew Revolution references or try to add new references to fix errors**) 
 
 2) Build the project "BuildTasks/BuildRevolutionFinal", this should have fixed all reference errors and built the API in <RepositoryPath>/WorkingDirectory. Intermediate build binaries will be in <RepositoryPath>/Bin....... IF YOU GET NEWTONSOFT.JSON ERRORS: It's been known to incorrectly download the 4.5 version when we need to 4.0 version. To fix this, right click the Revolution project, Manage NuGet Packages, uninstall Newtonsoft.Json and readd it.
 
