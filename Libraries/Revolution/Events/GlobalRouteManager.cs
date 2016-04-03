@@ -45,14 +45,16 @@ namespace Revolution.Events
         /// <param name="type">The type containing the method to listen for</param>
         /// <param name="method">The method to listen for</param>
         /// <param name="callback">The delegate to add</param>
+        [Obsolete("This method will currently not work")]
         public static void Listen(string type, string method, Action<EventArgsGlobalRouteManager> callback)
         {
-            var key = $"{type}.{method}";
+            return;
+            /*var key = $"{type}.{method}";
             if (!Listeners.ContainsKey(key) || Listeners[key] == null)
                 Listeners[key] = new List<Action<EventArgsGlobalRouteManager>>();
 
             Listeners[key].Add(callback);
-            IsEnabled = true;
+            IsEnabled = true;*/
         }
 
         /// <summary>
@@ -61,9 +63,11 @@ namespace Revolution.Events
         /// <param name="type">The type containing the method to listen for</param>
         /// <param name="method">The method to listen for</param>
         /// <param name="callback">The delegate to remove. This must be the same instance used when first registering the listener</param>
+        [Obsolete("This method will currently not work")]
         public static void Remove(string type, string method, Action<EventArgsGlobalRouteManager> callback)
         {
-            var key = $"{type}.{method}";
+            return;
+            /*var key = $"{type}.{method}";
             if (Listeners.ContainsKey(key))
             {
                 if (Listeners[key] != null)
@@ -84,7 +88,7 @@ namespace Revolution.Events
             if (Listeners.Count <= 0)
             {
                 IsEnabled = false;
-            }
+            }*/
         }
     }
 }

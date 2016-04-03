@@ -21,8 +21,8 @@ namespace Revolution
             HookMakeBaseVirtualCallAlterations<HookMakeBaseVirtualCallAttribute>(cecilContext);
             HookConstructionRedirectors<HookRedirectConstructorFromBaseAttribute>(cecilContext);
 
-            //TODO: Broken!
-            HookGlobalRouting(cecilContext);
+            //TODO: Broken! Terrible performance
+            //HookGlobalRouting(cecilContext);
            
             Console.WriteLine("Second Pass Installation Completed");
 
