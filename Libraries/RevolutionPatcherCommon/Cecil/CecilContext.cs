@@ -16,8 +16,8 @@ namespace Revolution.Cecil
 
         public CecilContext(string assembly, bool loadPdb = false)
         {
-            //var pdbPath = Path.GetDirectoryName(assembly) + Path.GetFileNameWithoutExtension(assembly) + ".pdb";
-            if (loadPdb /*&& File.Exists(pdbPath)*/)
+            var pdbPath = Path.GetDirectoryName(assembly) + Path.GetFileNameWithoutExtension(assembly) + ".pdb";
+            if (loadPdb && File.Exists(pdbPath))
             {
                 var readerParameters = new ReaderParameters
                 {
