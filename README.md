@@ -2,6 +2,8 @@
 
 Stardew Revolution is the new in-development API intended to replace SMAPI!
 
+Trello: https://trello.com/b/fECRPUOA/revolutionapi
+
 ##My First Build
 
 Building the project for the first time can seem a little daunting given the number of projects and no doubt countless missing references you'll see but be unable to resolve. Fear not, it only takes about as many steps as SMAPI to be up and running! :)
