@@ -136,8 +136,10 @@ namespace Revolution
                 var repack = new ILRepack(options, logger);
                 repack.Repack();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"FATAL ERROR: ILRepack: {ex.Message}");
+                throw new Exception("ILRepack Error", ex);
                 // ignored
             }
             finally
