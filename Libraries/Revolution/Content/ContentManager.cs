@@ -116,9 +116,19 @@ namespace Revolution.Content
                 {
                     Log.Verbose("Trying to construct texture from scratch");
                     var originalData = new Color[originalTexture.Width * originalTexture.Height];
-                    var modData = new Color[obj.Width * obj.Height];
+                    Color[] modData;
                     originalTexture.GetData<Color>(originalData);
-                    obj.GetData<Color>(modData);
+
+                    if (item.Source == null)
+                    {
+                        modData = new Color[obj.Width * obj.Height];
+                        obj.GetData<Color>(modData);
+                    }
+                    else
+                    {
+                        modData = new Color[item.Source.Width * item.Source.Height];
+                        obj.GetData<Color>(0, item.Source, modData, 0, item.Source.Width * item.Source.Height);
+                    }
 
                     var newObject = new Texture2D(Game1.graphics.GraphicsDevice, originalTexture.Width, originalTexture.Height);
                     newObject.SetData<Color>(originalData);
