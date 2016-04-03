@@ -8,7 +8,7 @@ Trello: https://trello.com/b/fECRPUOA/revolutionapi
 
 Building the project for the first time can seem a little daunting given the number of projects and no doubt countless missing references you'll see but be unable to resolve. Fear not, it only takes about as many steps as SMAPI to be up and running! :)
 
-1) Repair Stardew Valley and xTile references. These will be located in: "Libraries/Revolution" and "Mods/ModLoaderMod" (xTile only)  (**do not touch the Stardew Revolution references or try to add new references to fix errors**) 
+1) Repair Stardew Valley and xTile references. These will be located in: "Libraries/Revolution", "Mods/ModLoaderMod" (xTile only), and "Libraries/SmapiCompatibilityLayer" (xTile only) (**do not touch the Stardew Revolution references or try to add new references to fix errors**) 
 
 2) Build the project "BuildTasks/BuildRevolutionFinal", this should have fixed all reference errors and built the API in <RepositoryPath>/WorkingDirectory. Intermediate build binaries will be in <RepositoryPath>/Bin....... IF YOU GET NEWTONSOFT.JSON ERRORS: It's been known to incorrectly download the 4.5 version when we need to 4.0 version. To fix this, right click the Revolution project, Manage NuGet Packages, uninstall Newtonsoft.Json and readd it.
 
