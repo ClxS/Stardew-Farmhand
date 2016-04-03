@@ -4,7 +4,7 @@
 
 Building the project for the first time can seem a little daunting given the number of projects and no doubt countless missing references you'll see but be unable to resolve. Fear not, it only takes about as many steps as SMAPI to be up and running! :)
 
-1) Fix missing references to Stardew **Valley** and xTile. These will be located in: Libraries/Revolution, Mods/ModLoaderMod (xTile only) 
+1) Fix missing references to Stardew **Valley** (do not touch the Stardew Revolution references) and xTile. These will be located in: Libraries/Revolution, Mods/ModLoaderMod (xTile only) 
 
 2) Build the project "BuildTasks/BuildRevolutionFinal", this should have fixed all reference errors and built the API in <RepositoryPath>/WorkingDirectory. Intermediate build binaries will be in <RepositoryPath>/Bin
 
