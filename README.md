@@ -14,8 +14,9 @@ Building the project for the first time can seem a little daunting given the num
 - "Libraries/SmapiCompatibilityLayer" (xTile only) 
 - (**do not touch the Stardew Revolution references or try to add new references to fix errors**) 
 
-2) Build the project "BuildTasks/BuildRevolutionFinal", this should have fixed all reference errors and built the API in <RepositoryPath>/WorkingDirectory. Intermediate build binaries will be in <RepositoryPath>/Bin....... 
-- IF YOU GET NEWTONSOFT.JSON ERRORS: It's been known to incorrectly download the 4.5 version when we need to 4.0 version. To fix this, right click the Revolution project, Manage NuGet Packages, uninstall Newtonsoft.Json and readd it.
+2) Build the project "BuildTasks/BuildRevolutionFinal" in **Debug** mode, this should have fixed all reference errors and built the API in <RepositoryPath>/WorkingDirectory. Intermediate build binaries will be in <RepositoryPath>/Bin. See below for potential issues: 
+- If you get Newtonsoft.Json errors: It's been known to incorrectly download the 4.5 version when we need to 4.0 version. To fix this, right click the Revolution project, Manage NuGet Packages, uninstall Newtonsoft.Json and readd it.
+- If you get warnings like " There was a mismatch between the processor architecture of the project being built "MSIL" and the processor architecture of the reference ", right click the project causing it, click properties, and in the Build tab set Platform Target to "x86".
 
 3) To ease your workflow, copy the Stardew Valley Contents folder into <RepositoryPath>/WorkingDirectory, and the same with Stardew Valley's DLLs (i.e. xTile.dll and Steamworks.NET.dll). You are now ready to start working on the API! :)
 
