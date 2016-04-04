@@ -7,8 +7,17 @@ namespace Revolution.Events
 {
     public static class FarmAnimalEvents
     {
+        /// <summary>
+        /// Triggers when an animal eats grass
+        /// </summary>
         public static EventHandler<EventArgsOnAnimalEatGrass> OnBeforeEatGrass = delegate { };
+        /// <summary>
+        /// Triggers when an animal makes sound
+        /// </summary>
         public static EventHandler<CancelEventArgs> OnMakeSound = delegate { };
+        /// <summary>
+        /// Triggers when an animal is pushed by a player
+        /// </summary>
         public static EventHandler<CancelEventArgs> OnFarmerPushing = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.FarmAnimal", "eatGrass")]

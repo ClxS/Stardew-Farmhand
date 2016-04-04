@@ -6,6 +6,9 @@ namespace Revolution.Events
 {
     public static class ApiEvents
     {
+        /// <summary>
+        /// Triggered when a mod throws an unhandled exception
+        /// </summary>
         public static event EventHandler<EventArgsOnModError> OnModError = delegate { };
 
         internal static void InvokeOnModError(Assembly erroredAssembly, Exception ex)

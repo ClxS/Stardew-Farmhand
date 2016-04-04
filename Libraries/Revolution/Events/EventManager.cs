@@ -11,7 +11,7 @@ namespace Revolution.Events
 {
     public class EventManager
     {
-        private static readonly PropertyWatcher watcher = new PropertyWatcher();
+        private static readonly PropertyWatcher Watcher = new PropertyWatcher();
         readonly Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>> _detachedDelegates = new Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>>();
 
         private static IEnumerable<Type> GetRevolutionEvents()
@@ -38,7 +38,7 @@ namespace Revolution.Events
         [Hook(HookType.Entry, "StardewValley.Game1", "Update")]
         public static void ManualEventChecks()
         {
-            watcher.CheckForChanges();
+            Watcher.CheckForChanges();
         }
 
         public void DetachDelegates(Assembly assembly)

@@ -13,6 +13,10 @@ using Revolution.Registries.Containers;
 
 namespace Revolution.Content
 {
+    /// <summary>
+    /// An override for the XNA ContentManager which deals with loading custom XNBs when mods have registered custom overrides. Can also be used by mods
+    /// to load their own XNB data
+    /// </summary>
     public class ContentManager : Microsoft.Xna.Framework.Content.ContentManager
     {
         private static List<Microsoft.Xna.Framework.Content.ContentManager> _modManagers;
@@ -56,6 +60,12 @@ namespace Revolution.Content
             return _modManagers.FirstOrDefault(n => mod.OwningMod.ModDirectory.Contains(n.RootDirectory));
         }
 
+        /// <summary>
+        /// Load an asset by via a relative (extensionless) path
+        /// </summary>
+        /// <typeparam name="T">Type of content to return</typeparam>
+        /// <param name="assetName">Content to load</param>
+        /// <returns>Loaded content</returns>
         public override T Load<T>(string assetName)
         {
             var item = XnbRegistry.GetItem(assetName);

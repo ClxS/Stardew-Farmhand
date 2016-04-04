@@ -8,13 +8,37 @@ namespace Revolution.Events
 {
     public class ControlEvents
     {
+        /// <summary>
+        /// Triggered on keyboard state change
+        /// </summary>
         public static event EventHandler<EventArgsKeyboardStateChanged> OnKeyboardChanged = delegate { };
+        /// <summary>
+        /// Triggered on key press
+        /// </summary>
         public static event EventHandler<EventArgsKeyPressed> OnKeyPressed = delegate { };
+        /// <summary>
+        /// Triggered on key release
+        /// </summary>
         public static event EventHandler<EventArgsKeyPressed> OnKeyReleased = delegate { };
+        /// <summary>
+        /// Triggered on mouse state change
+        /// </summary>
         public static event EventHandler<EventArgsMouseStateChanged> OnMouseChanged = delegate { };
+        /// <summary>
+        /// Triggered on controller button pressed
+        /// </summary>
         public static event EventHandler<EventArgsControllerButtonPressed> OnControllerButtonPressed = delegate { };
+        /// <summary>
+        /// Triggered on controller button released
+        /// </summary>
         public static event EventHandler<EventArgsControllerButtonReleased> OnControllerButtonReleased = delegate { };
+        /// <summary>
+        /// Triggered on controller trigger pressed
+        /// </summary>
         public static event EventHandler<EventArgsControllerTriggerPressed> OnControllerTriggerPressed = delegate { };
+        /// <summary>
+        /// Triggered on controller trigger released
+        /// </summary>
         public static event EventHandler<EventArgsControllerTriggerReleased> OnControllerTriggerReleased = delegate { };
         
         internal static void InvokeKeyboardChanged(KeyboardState priorState, KeyboardState newState)
