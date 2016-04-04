@@ -33,8 +33,18 @@ namespace LoggingMod
             Revolution.Events.LocationEvents.OnLocationObjectsChanged += LocationEvents_OnLocationObjectsChanged;
             Revolution.Events.PlayerEvents.OnBeforePlayerTakesDamage += PlayerEvents_OnBeforePlayerTakesDamage;
             Revolution.Events.UiEvents.OnAfterIClickableMenuInitialized += UiEvents_OnAfterIClickableMenuInitialized;
+            Revolution.Events.LocationEvents.OnBeforeLocationLoadObjects += LocationEvents_OnBeforeLocationLoadObjects;
+            Revolution.Events.LocationEvents.OnAfterLocationLoadObjects += LocationEvents_OnAfterLocationLoadObjects; 
+        }
 
-            Log.Info("test");
+        private void LocationEvents_OnAfterLocationLoadObjects(object sender, EventArgs e)
+        {
+            //Log.Info("LocationEvents_OnAfterLocationLoadObjects");
+        }
+
+        private void LocationEvents_OnBeforeLocationLoadObjects(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //Log.Info("LocationEvents_OnBeforeLocationLoadObjects");
         }
 
         private void UiEvents_OnAfterIClickableMenuInitialized(object sender, EventArgs e)

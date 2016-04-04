@@ -22,7 +22,7 @@ namespace Revolution
         {
             try
             {
-                var types = RevolutionDllAssembly.GetTypesWithCustomAttribute(typeof(T).FullName).ToArray();
+                var types = RevolutionDllAssembly.GetTypesWithCustomAttribute(typeof (T).FullName).ToArray();
 
                 foreach (var asmType in types)
                 {
@@ -35,6 +35,10 @@ namespace Revolution
                         Console.WriteLine($"Error setting protections for {asmType.FullName}: \n\t{ex.Message}");
                     }
                 }
+            }
+            catch (System.Reflection.ReflectionTypeLoadException ex)
+            {
+                Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}\n\t\t{ex.LoaderExceptions[0].Message}");
             }
             catch (Exception ex)
             {
@@ -59,6 +63,10 @@ namespace Revolution
                             Console.WriteLine($"Error setting protections for {asmMethod.DeclaringType.FullName}.{asmMethod.Name}: \n\t{ex.Message}");
                     }
                 }
+            }
+            catch (System.Reflection.ReflectionTypeLoadException ex)
+            {
+                Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}\n\t\t{ex.LoaderExceptions[0].Message}");
             }
             catch (Exception ex)
             {
@@ -87,6 +95,10 @@ namespace Revolution
                     }
                 }
             }
+            catch (System.Reflection.ReflectionTypeLoadException ex)
+            {
+                Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}\n\t\t{ex.LoaderExceptions[0].Message}");
+            }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}");
@@ -109,6 +121,10 @@ namespace Revolution
                         Console.WriteLine($"Error setting protections for {asmType.FullName}: \n\t{ex.Message}");
                     }
                 }
+            }
+            catch (System.Reflection.ReflectionTypeLoadException ex)
+            {
+                Console.WriteLine($"Error setting method/field protections: \n\t{ex.Message}\n\t\t{ex.LoaderExceptions[0].Message}");
             }
             catch (Exception ex)
             {
