@@ -15,8 +15,14 @@ using StardewValley;
 
 namespace Revolution
 {
+    /// <summary>
+    /// Handles loading mods
+    /// </summary>
     public static class ModLoader
     {
+        /// <summary>
+        /// This value stores all the valid mod search directories
+        /// </summary>
         public static List<string> ModPaths = new List<string>
         {
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
@@ -26,6 +32,10 @@ namespace Revolution
 
         internal static EventManager ModEventManager = new EventManager();
 
+        /// <summary>
+        /// States whether or not we're using SMAPI mods, so that certain things can be disabled if not. Defaults to false and is automatically set by
+        /// the ModLoader when encountering a SMAPI mod
+        /// </summary>
         public static bool UsingSmapiMods = false;
         
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
@@ -65,8 +75,6 @@ namespace Revolution
 
         private static Assembly CurrentDomainOnAssemblyResolve(object sender, ResolveEventArgs args)
         {
-            Assembly ret = null;
-
             if (args.Name.StartsWith("Stardew Valley"))
             {
                 return Assembly.GetExecutingAssembly();
@@ -76,7 +84,7 @@ namespace Revolution
                 return Assembly.GetExecutingAssembly();
             }
 
-            return ret;
+            return null;
         }
 
         private static void TryLoadModCompatiblityLayers()
@@ -253,12 +261,24 @@ namespace Revolution
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Forcibly deactivates a mod by detaching it's event listeners.
+        /// </summary>
+        /// <param name="mod">The mod to deactive</param>
+        /// <param name="state">The new state of this mod. Defaults to ModState.Deactivated</param>
+        /// <param name="error">The exception encountered causing the mod to be unloaded. Defaults to null</param>
         public static void DeactivateMod(Mod mod, ModState state = ModState.Deactivated, Exception error = null)
         {
             DeactivateMod(mod.ModSettings);
         }
 
+        /// <summary>
+        /// Forcibly deactivates a mod by detaching it's event listeners.
+        /// </summary>
+        /// <param name="mod">The manifest of the mod to deactive</param>
+        /// <param name="state">The new state of this mod. Defaults to ModState.Deactivated</param>
+        /// <param name="error">The exception encountered causing the mod to be unloaded. Defaults to null</param>
         public static void DeactivateMod(ModManifest mod, ModState state = ModState.Deactivated, Exception error = null)
         {
             try
@@ -274,6 +294,10 @@ namespace Revolution
             }
         }
 
+        /// <summary>
+        /// Forcibly detaches event delegates associated with a particular assembly
+        /// </summary>
+        /// <param name="assembly">The assembly the detach</param>
         public static void DetachAssemblyDelegates(Assembly assembly)
         {
             if (assembly != null)
@@ -282,11 +306,19 @@ namespace Revolution
             }
         }
 
+        /// <summary>
+        /// Reattaches disabled delegates for previously disabled mods
+        /// </summary>
+        /// <param name="mod">The mod to reactivate</param>
         public static void ReactivateMod(Mod mod)
         {
             ReactivateMod(mod.ModSettings);
         }
 
+        /// <summary>
+        /// Reattaches disabled delegates for previously disabled mods
+        /// </summary>
+        /// <param name="mod">The manifest of the mod to reactivate</param>
         public static void ReactivateMod(ModManifest mod)
         {
             if (mod.ModAssembly != null)

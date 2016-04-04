@@ -10,7 +10,7 @@ namespace Revolution.Events
         public static EventHandler<EventArgsOnAnimalEatGrass> OnBeforeEatGrass = delegate { };
         public static EventHandler<CancelEventArgs> OnMakeSound = delegate { };
         public static EventHandler<CancelEventArgs> OnFarmerPushing = delegate { };
-
+        
         [Hook(HookType.Entry, "StardewValley.FarmAnimal", "eatGrass")]
         internal static bool InvokeOnBeforeEatGrass([ThisBind] object @this)
         {

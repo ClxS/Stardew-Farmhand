@@ -3,6 +3,9 @@ using System;
 
 namespace Revolution.Logging
 {
+    /// <summary>
+    /// Contains general purpose logging functionality
+    /// </summary>
     public static class Log
     {
         public static bool IsVerbose { get; set; } = true;

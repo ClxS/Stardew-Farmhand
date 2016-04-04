@@ -6,14 +6,28 @@ using Revolution.Logging;
 
 namespace Revolution
 {
+    /// <summary>
+    /// This class provides an editable configuration file which mods can save data to. It is useful for things such as saving a Mod's options.
+    /// </summary>
     public class ModConfiguration
     {
+        /// <summary>
+        /// The location of the mod file
+        /// </summary>
         [JsonIgnore]
         public virtual string ConfigLocation { get; protected internal set; }
 
+        /// <summary>
+        /// The directory of the mod file
+        /// </summary>
         [JsonIgnore]
         public virtual string ConfigDir => Path.GetDirectoryName(ConfigLocation);
 
+        /// <summary>
+        /// Creates an instance of a ModConfiguration when called.
+        /// </summary>
+        /// <typeparam name="T">The mod configuration type. This must derive from ModConfiguration</typeparam>
+        /// <returns></returns>
         public virtual ModConfiguration Instance<T>() where T : ModConfiguration => Activator.CreateInstance<T>();
         
         /// <summary>
@@ -65,7 +79,7 @@ namespace Revolution
         }
 
         /// <summary>
-        /// MUST be implemented in inheriting class!
+        /// This is intended to allow developers to populate their Mod Configurations with default data when creating a new one.
         /// </summary>
         public virtual T GenerateDefaultConfig<T>() where T : ModConfiguration
         {
@@ -100,7 +114,7 @@ namespace Revolution
             }
             catch (Exception ex)
             {
-                Log.Error("An error occured when updating a config: " + ex);
+                Log.Error("An error occurred when updating a config: " + ex);
                 return this as T;
             }
         }

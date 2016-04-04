@@ -5,6 +5,9 @@ using Revolution.Logging;
 
 namespace Revolution
 {
+    /// <summary>
+    /// Contains useful extension methods used by the ModConfiguration class
+    /// </summary>
     public static class ConfigExtensions
     {
         /// <summary>

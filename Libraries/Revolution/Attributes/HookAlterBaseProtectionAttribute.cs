@@ -1,4 +1,5 @@
 ﻿using System;
+#pragma warning disable 1591
 
 namespace Revolution.Attributes
 {
@@ -13,3 +14,5 @@ namespace Revolution.Attributes
         public LowestProtection Protection { get; set; }
     }
 }
+
+#pragma warning restore 1591

@@ -1,5 +1,6 @@
 ﻿using System;
 
+#pragma warning disable 1591
 namespace Revolution.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
@@ -18,3 +19,4 @@ namespace Revolution.Attributes
 
     }
 }
+#pragma warning restore 1591
