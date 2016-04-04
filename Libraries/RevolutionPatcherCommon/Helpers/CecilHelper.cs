@@ -12,7 +12,7 @@ namespace Revolution.Helpers
     {
         //System.Void StardewValley.Game1::.ctor()
 
-        private static void InjectMethod<TParam, TThis, TInput, TLocal>(ILProcessor ilProcessor, Instruction target, MethodReference method, bool cancelable = false)
+        private static void InjectMethod<TParam, TThis, TInput, TLocal>(ILProcessor ilProcessor, Instruction target, MethodReference method, bool isExit = false, bool cancelable = false)
         {
             ilProcessor.Body.SimplifyMacros();
             
@@ -26,19 +26,62 @@ namespace Revolution.Helpers
 
             if (method.HasParameters)
             {
+                Instruction prevInstruction = null;
                 var paramLdInstruction = target;
+                var first = true;
                 foreach (var parameter in method.Parameters)
                 {
                     paramLdInstruction = GetInstructionForParameter<TParam, TThis, TInput, TLocal>(ilProcessor, parameter);
                     if (paramLdInstruction == null) throw new Exception($"Error parsing parameter setup on {parameter.Name}");
-                    ilProcessor.InsertBefore(target, paramLdInstruction);
+
+                    if (isExit)
+                    {
+                        if (first)
+                        {
+                            first = false;
+                            ilProcessor.Replace(target, paramLdInstruction);
+                        }
+                        else
+                        {
+                            ilProcessor.InsertAfter(prevInstruction, paramLdInstruction);
+                        }
+                        prevInstruction = paramLdInstruction;
+                    }
+                    else
+                    {
+                        ilProcessor.InsertBefore(target, paramLdInstruction);
+                    }
                 }
 
-                ilProcessor.InsertAfter(paramLdInstruction, callEnterInstruction);
+                if (isExit)
+                {
+                    if (first)
+                    {
+                        ilProcessor.Replace(target, callEnterInstruction);
+                        ilProcessor.InsertAfter(callEnterInstruction, ilProcessor.Create(OpCodes.Ret));
+                    }
+                    else
+                    {
+                        ilProcessor.InsertAfter(prevInstruction, callEnterInstruction);
+                        ilProcessor.InsertAfter(callEnterInstruction, ilProcessor.Create(OpCodes.Ret));
+                    }
+                }
+                else
+                {
+                    ilProcessor.InsertAfter(paramLdInstruction, callEnterInstruction);
+                }
             }
             else
             {
-                ilProcessor.InsertBefore(target, callEnterInstruction);
+                if (isExit)
+                {
+                    ilProcessor.Replace(target, callEnterInstruction);
+                    ilProcessor.InsertAfter(callEnterInstruction, ilProcessor.Create(OpCodes.Ret));
+                }
+                else
+                {
+                    ilProcessor.InsertBefore(target, callEnterInstruction);
+                }
             }
 
             if (cancelable)
@@ -101,11 +144,11 @@ namespace Revolution.Helpers
             return instruction;
         }
 
-        private static void InjectMethod<TParam, TThis, TInput, TLocal>(ILProcessor ilProcessor, IEnumerable<Instruction> targets, MethodReference method)
+        private static void InjectMethod<TParam, TThis, TInput, TLocal>(ILProcessor ilProcessor, IEnumerable<Instruction> targets, MethodReference method, bool isExit = false)
         {
             foreach (var target in targets.ToList())
             {
-                InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, target, method);
+                InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, target, method, isExit);
             }
         }
 
@@ -114,15 +157,15 @@ namespace Revolution.Helpers
         {
             var methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
             var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
-            InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
+            InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, false, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
         }
 
         public static void InjectExitMethod<TParam, TThis, TInput, TLocal>(CecilContext stardewContext, string injecteeType, string injecteeMethod,
             string injectedType, string injectedMethod)
         {
-            MethodDefinition methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
-            ILProcessor ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
-            InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition);
+            var methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
+            var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
+            InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition, true);
         }
 
         public static void InjectGlobalRouteMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod)

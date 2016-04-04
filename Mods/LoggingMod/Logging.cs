@@ -39,7 +39,7 @@ namespace LoggingMod
 
         private void UiEvents_OnAfterIClickableMenuInitialized(object sender, EventArgs e)
         {
-            Game1.player.gainExperience(1, 2000);
+
         }
 
         private void PlayerEvents_OnBeforePlayerTakesDamage(object sender, EventArgsOnBeforePlayerTakesDamage e)
@@ -64,12 +64,12 @@ namespace LoggingMod
 
         private void GraphicsEvents_OnAfterDraw(object sender, EventArgs e)
         {
-            //Log.Verbose("GraphicsEvents_OnAfterDraw");
+            //Log.Error("GraphicsEvents_OnAfterDraw");
         }
 
         private void GraphicsEvents_OnBeforeDraw(object sender, EventArgs e)
         {
-            //Log.Verbose("GraphicsEvents_OnBeforeDraw");
+            //Log.Success("GraphicsEvents_OnBeforeDraw");
         }
 
         private void GraphicsEvents_OnResize(object sender, EventArgs e)
