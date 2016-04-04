@@ -5,6 +5,7 @@
 /WorkingDirectory/*.exe.config
 
 *.dll
+!xml2json-xsl.dll
 
 packages/
 *.symlink
