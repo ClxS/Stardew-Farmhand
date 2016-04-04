@@ -4,11 +4,11 @@ using StardewValley;
 using StardewValley.Menus;
 using System.Collections.Generic;
 using System.Linq;
-using Revolution;
-using Revolution.Registries;
-using Revolution.Registries.Containers;
-using Revolution.UI.Components;
-using Revolution.Logging;
+using Farmhand;
+using Farmhand.Registries;
+using Farmhand.Registries.Containers;
+using Farmhand.UI.Components;
+using Farmhand.Logging;
 
 namespace ModLoaderMod.Menus
 {
@@ -136,12 +136,12 @@ namespace ModLoaderMod.Menus
             if (disableableOptionCheckbox.IsChecked)
             {
                 Log.Info($"Loaded Mod: {_modOptions[disableableOptionCheckbox].Name}");
-                Revolution.ModLoader.ReactivateMod(_modOptions[disableableOptionCheckbox]);
+                Farmhand.ModLoader.ReactivateMod(_modOptions[disableableOptionCheckbox]);
             }
             else
             {
                 Log.Info($"Unloaded Mod: {_modOptions[disableableOptionCheckbox].Name}");
-                Revolution.ModLoader.DeactivateMod(_modOptions[disableableOptionCheckbox]);
+                Farmhand.ModLoader.DeactivateMod(_modOptions[disableableOptionCheckbox]);
             }
         }
 

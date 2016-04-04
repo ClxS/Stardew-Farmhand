@@ -1,7 +1,7 @@
 ﻿using System;
 using StardewValley;
 using StardewValley.Menus;
-using Revolution.Events;
+using Farmhand.Events;
 
 namespace StardewModdingAPI.Events
 {

@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A857E9EB-3C51-4D9D-92B3-ACC90175EB7E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Farmhand</RootNamespace>
+    <AssemblyName>Farmhand</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>..\..\Bin\Farmhand.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Graphics\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Stardew Valley">
+      <HintPath>..\..\..\..\..\..\Games\SteamLibrary\steamapps\common\Stardew Valley\Stardew Valley.exe</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="xTile">
+      <HintPath>..\..\..\..\..\..\Games\SteamLibrary\steamapps\common\Stardew Valley\xTile.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\HookAttribute.cs" />
+    <Compile Include="Attributes\HookAlterBaseProtectionAttribute.cs" />
+    <Compile Include="Attributes\HookForceVirtualBaseAttribute.cs" />
+    <Compile Include="Attributes\HookMakeBaseVirtualCallAttribute.cs" />
+    <Compile Include="Attributes\HookRedirectAttribute.cs" />
+    <Compile Include="Attributes\HookRedirectConstructorFromBaseAttribute.cs" />
+    <Compile Include="Attributes\HookType.cs" />
+    <Compile Include="Attributes\InputBindAttribute.cs" />
+    <Compile Include="Attributes\LocalBindAttribute.cs" />
+    <Compile Include="Attributes\LowestProtection.cs" />
+    <Compile Include="Attributes\ParameterBindAttribute.cs" />
+    <Compile Include="Attributes\PendingHookAttribute.cs" />
+    <Compile Include="Attributes\ThisBindAttribute.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Content\ContentManager.cs" />
+    <Compile Include="Events\ApiEvents.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsControllerButtonPressed.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsControllerButtonReleased.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsControllerTriggerPressed.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsControllerTriggerReleased.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsKeyboardStateChanged.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsKeyPressed.cs" />
+    <Compile Include="Events\Arguments\ControlEvents\EventArgsMouseStateChanged.cs" />
+    <Compile Include="Events\Arguments\EventArgsGlobalRouteManager.cs" />
+    <Compile Include="Events\Arguments\EventArgsOnAfterPlayerTakesDamage.cs" />
+    <Compile Include="Events\Arguments\EventArgsOnAnimalEatGrass.cs" />
+    <Compile Include="Events\Arguments\GameEvents\EventArgsOnBeforeGameUpdate.cs" />
+    <Compile Include="Events\Arguments\GameEvents\EventArgsOnGameInitialise.cs" />
+    <Compile Include="Events\Arguments\GameEvents\EventArgsOnGameInitialised.cs" />
+    <Compile Include="Events\Arguments\EventArgsOnModError.cs" />
+    <Compile Include="Events\Arguments\EventArgsOnPlayerDoneEating.cs" />
+    <Compile Include="Events\Arguments\EventArgsOnBeforePlayerTakesDamage.cs" />
+    <Compile Include="Events\Arguments\GraphicsEvents\EventArgsClientSizeChanged.cs" />
+    <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnItemAddedToInventory.cs" />
+    <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnLevelUp.cs" />
+    <Compile Include="Events\ControlEvents.cs" />
+    <Compile Include="Events\EventCommon.cs" />
+    <Compile Include="Events\EventManager.cs" />
+    <Compile Include="Events\FarmAnimalEvents.cs" />
+    <Compile Include="Events\GameEvents.cs" />
+    <Compile Include="Events\GlobalRouteManager.cs" />
+    <Compile Include="Events\GraphicsEvents.cs" />
+    <Compile Include="Events\LocationEvents.cs" />
+    <Compile Include="Events\MenuEvents.cs" />
+    <Compile Include="Events\PlayerEvents.cs" />
+    <Compile Include="Events\PropertyWatcher.cs" />
+    <Compile Include="Events\TimeEvents.cs" />
+    <Compile Include="Events\UiEvents.cs" />
+    <Compile Include="Helpers\ICompatibilityLayer.cs" />
+    <Compile Include="Helpers\VersionConverter.cs" />
+    <Compile Include="Logging\Log.cs" />
+    <Compile Include="Logging\LogEntry.cs" />
+    <Compile Include="Logging\LogEntryColor.cs" />
+    <Compile Include="Logging\LogEntryType.cs" />
+    <Compile Include="Logging\Loggers\ConsoleLogger.cs" />
+    <Compile Include="Logging\Loggers\FileLogger.cs" />
+    <Compile Include="Logging\Loggers\ILogger.cs" />
+    <Compile Include="Menus\TitleMenu.cs" />
+    <Compile Include="Mods\ConfigExtensions.cs" />
+    <Compile Include="Mods\Mod.cs" />
+    <Compile Include="Mods\ModConfiguration.cs" />
+    <Compile Include="Mods\ModLoader.cs" />
+    <Compile Include="Mods\ModState.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registries\Containers\DependencyState.cs" />
+    <Compile Include="Registries\Containers\ModContent.cs" />
+    <Compile Include="Registries\Containers\ModDependency.cs" />
+    <Compile Include="Registries\Containers\ModManifest.cs" />
+    <Compile Include="Registries\Containers\ModTexture.cs" />
+    <Compile Include="Registries\Containers\ModXnb.cs" />
+    <Compile Include="Registries\ModRegistry.cs" />
+    <Compile Include="Registries\Registry.cs" />
+    <Compile Include="Registries\TextureRegistry.cs" />
+    <Compile Include="Registries\XnbRegistry.cs" />
+    <Compile Include="Test.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="API\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>$(SolutionDir)Tools\xml2json\xml2json.exe $(TargetDir)$(TargetName).xml $(SolutionDir)Documentation\$(ProjectName).json</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -38,9 +38,8 @@
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553" />
-    <Reference Include="Stardew Revolution, Version=1.0.5924.126, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\WorkingDirectory\Stardew Revolution.exe</HintPath>
+    <Reference Include="Stardew Farmhand">
+      <HintPath>..\..\WorkingDirectory\Stardew Farmhand.exe</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

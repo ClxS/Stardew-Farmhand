@@ -1,6 +1,6 @@
 ﻿using System;
-using Revolution.Events;
-using Revolution.Events.Arguments.GameEvents;
+using Farmhand.Events;
+using Farmhand.Events.Arguments.GameEvents;
 
 namespace StardewModdingAPI.Events
 {

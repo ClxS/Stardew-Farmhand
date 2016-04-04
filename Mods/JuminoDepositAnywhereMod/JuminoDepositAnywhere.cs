@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Revolution.Events;
+using Farmhand.Events;
 using StardewValley;
 using StardewValley.Menus;
 
 namespace JuminoDepositAnywhereMod
 {
-    public class JuminoDepositAnywhere : Revolution.Mod
+    public class JuminoDepositAnywhere : Farmhand.Mod
     {
         public override void Entry()
         {

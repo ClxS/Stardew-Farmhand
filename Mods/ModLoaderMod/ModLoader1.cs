@@ -1,37 +1,37 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using ModLoaderMod.Menus;
-using Revolution.Events.Arguments;
-using Revolution.Events.Arguments.GameEvents;
-using Revolution.Registries;
+using Farmhand.Events.Arguments;
+using Farmhand.Events.Arguments.GameEvents;
+using Farmhand.Registries;
 using StardewValley;
 
 namespace ModLoaderMod
 {
-    class ModLoader1 : Revolution.Mod
+    class ModLoader1 : Farmhand.Mod
     {
         public static ModLoader1 Instance { get; set; }
 
         public override void Entry()
         {
             Instance = this;
-            Revolution.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;
+            Farmhand.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;
 
-            Revolution.Events.GlobalRouteManager.Listen("StardewValley.Menus.TitleMenu", ".ctor", TitleMenuCreated);
+            Farmhand.Events.GlobalRouteManager.Listen("StardewValley.Menus.TitleMenu", ".ctor", TitleMenuCreated);
         }
 
         private void TitleMenuCreated(EventArgsGlobalRouteManager eventArgsGlobalRouteManager)
         {
-            //Revolution.Events.GlobalRouteManager.Remove("StardewValley.Menus.TitleMenu", ".ctor", TitleMenuCreated);
+            //Farmhand.Events.GlobalRouteManager.Remove("StardewValley.Menus.TitleMenu", ".ctor", TitleMenuCreated);
         }
 
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
         {
             var test = ModRegistry.GetRegisteredItems();
             var texture = ModSettings.GetModTexture("icon_menuModsButton");
-            //var texture2 = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("RevolutionContent\\customUI.png", FileMode.Open));
+            //var texture2 = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("FarmhandContent\\customUI.png", FileMode.Open));
                
-            Revolution.UI.TitleMenu.RegisterNewTitleButton(new Revolution.UI.TitleMenu.CustomTitleOption
+            Farmhand.UI.TitleMenu.RegisterNewTitleButton(new Farmhand.UI.TitleMenu.CustomTitleOption
             {
                 Key = "Mods",
                 Texture = texture,
@@ -40,7 +40,7 @@ namespace ModLoaderMod
             });     
         }
 
-        public void OnModMenuItemClicked(Revolution.UI.TitleMenu menu, string choice)
+        public void OnModMenuItemClicked(Farmhand.UI.TitleMenu menu, string choice)
         {
             if (choice == "Mods")
             {

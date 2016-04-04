@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Revolution.Events.Arguments.PlayerEvents;
+using Farmhand.Events.Arguments.PlayerEvents;
 using StardewModdingAPI.Inheritance;
 using StardewValley;
-using Revolution.Events;
+using Farmhand.Events;
 
 namespace StardewModdingAPI.Events
 {

@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using Object = StardewValley.Object;
-using Revolution.Events;
+using Farmhand.Events;
 
 namespace StardewModdingAPI.Events
 {

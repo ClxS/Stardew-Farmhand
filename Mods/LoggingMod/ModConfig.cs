@@ -1,6 +1,6 @@
 ﻿namespace LoggingMod
 {
-    class ModConfig : Revolution.ModConfiguration
+    class ModConfig : Farmhand.ModConfiguration
     {
         public bool UseVerboseLogging { get; set; }
     }

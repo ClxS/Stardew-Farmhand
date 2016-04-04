@@ -1,4 +1,4 @@
-﻿using Revolution.Events;
+﻿using Farmhand.Events;
 using System;
 
 namespace StardewModdingAPI.Events
