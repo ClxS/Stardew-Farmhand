@@ -4,6 +4,9 @@ using System;
 
 namespace Farmhand.Events
 {
+    /// <summary>
+    /// Contains events relating to time
+    /// </summary>
     public class TimeEvents
     {
 #pragma warning disable 67

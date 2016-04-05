@@ -4,6 +4,9 @@ using Farmhand.Logging;
 
 namespace Farmhand.Events
 {
+    /// <summary>
+    /// Contains events relating to the UI
+    /// </summary>
     public static class UiEvents
     {
         public static event EventHandler OnAfterIClickableMenuInitialized = delegate { };

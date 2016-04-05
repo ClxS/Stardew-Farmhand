@@ -6,6 +6,9 @@ using Farmhand.Events.Arguments.GameEvents;
 
 namespace Farmhand.Events
 {
+    /// <summary>
+    /// Contains events relating to the main game state
+    /// </summary>
     public static class GameEvents
     {
         public static EventHandler<EventArgsOnGameInitialise> OnBeforeGameInitialised = delegate { };

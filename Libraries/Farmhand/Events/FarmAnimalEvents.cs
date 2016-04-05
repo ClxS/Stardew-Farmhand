@@ -5,6 +5,9 @@ using System.ComponentModel;
 
 namespace Farmhand.Events
 {
+    /// <summary>
+    /// Contains events relating to farm animals
+    /// </summary>
     public static class FarmAnimalEvents
     {
         /// <summary>

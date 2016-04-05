@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace Farmhand.Events
 {
+    /// <summary>
+    /// Contains events relating to the API
+    /// </summary>
     public static class ApiEvents
     {
         /// <summary>

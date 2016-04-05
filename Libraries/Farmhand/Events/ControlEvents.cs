@@ -6,6 +6,9 @@ using Farmhand.Events.Arguments.ControlEvents;
 
 namespace Farmhand.Events
 {
+    /// <summary>
+    /// Contains events relating to controls. (Keyboard/Mouse/Gamepad)
+    /// </summary>
     public class ControlEvents
     {
         /// <summary>

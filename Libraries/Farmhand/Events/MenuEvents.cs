@@ -4,6 +4,9 @@ using System;
 
 namespace Farmhand.Events
 {
+    /// <summary>
+    /// Contains events relating to menus
+    /// </summary>
     public class MenuEvents
     {
         public static event EventHandler OnMenuChanged = delegate { };

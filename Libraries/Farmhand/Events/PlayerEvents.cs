@@ -8,6 +8,9 @@ using StardewValley;
 
 namespace Farmhand.Events
 {
+    /// <summary>
+    /// Contains events relating to players
+    /// </summary>
     public class PlayerEvents
     {
         public static event EventHandler<EventArgsOnBeforePlayerTakesDamage> OnBeforePlayerTakesDamage = delegate { };
