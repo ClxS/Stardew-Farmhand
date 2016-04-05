@@ -70,7 +70,10 @@ namespace Farmhand
                 Log.Error(ex.StackTrace);
             }
             var numModsLoaded = ModRegistry.GetRegisteredItems().Count(n => n.ModState == ModState.Loaded);
-            Log.Info($"{numModsLoaded} Mods Loaded!");
+            Log.Info($"Stardew Farmhand v{Constants.Version}: {numModsLoaded} Mods Loaded!");
+
+            Game1.version += $"Stardew Farmhand v{Constants.Version}: {numModsLoaded} mods loaded";
+
         }
 
         private static Assembly CurrentDomainOnAssemblyResolve(object sender, ResolveEventArgs args)
