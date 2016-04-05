@@ -16,8 +16,6 @@ namespace ModLoaderMod
         {
             Instance = this;
             Farmhand.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;
-
-            Farmhand.Events.GlobalRouteManager.Listen("StardewValley.Menus.TitleMenu", ".ctor", TitleMenuCreated);
         }
 
         private void TitleMenuCreated(EventArgsGlobalRouteManager eventArgsGlobalRouteManager)
@@ -30,14 +28,14 @@ namespace ModLoaderMod
             var test = ModRegistry.GetRegisteredItems();
             var texture = ModSettings.GetModTexture("icon_menuModsButton");
             //var texture2 = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("FarmhandContent\\customUI.png", FileMode.Open));
-               
-            Farmhand.UI.TitleMenu.RegisterNewTitleButton(new Farmhand.UI.TitleMenu.CustomTitleOption
-            {
-                Key = "Mods",
-                Texture = texture,
-                TextureSourceRect = new Rectangle(222, 187, 74, 58),
-                OnClick = OnModMenuItemClicked
-            });     
+
+            //Farmhand.UI.TitleMenu.RegisterNewTitleButton(new Farmhand.UI.TitleMenu.CustomTitleOption
+            //{
+            //    Key = "Mods",
+            //    Texture = texture,
+            //    TextureSourceRect = new Rectangle(222, 187, 74, 58),
+            //    OnClick = OnModMenuItemClicked
+            //});
         }
 
         public void OnModMenuItemClicked(Farmhand.UI.TitleMenu menu, string choice)

@@ -37,9 +37,9 @@ namespace Farmhand.UI
 
         public int GetItemOffsetX(int index, int count)
         {
-            int offset = 123 * (count - 3);
-            int itemSpacing = offset * 2;
-            int itemRoot = -381;
+            var offset = 123 * (count-3);
+            var itemSpacing = 249;
+            var itemRoot = -354;
 
             return itemRoot - offset + index * itemSpacing;
         }
@@ -52,13 +52,13 @@ namespace Farmhand.UI
             buttons.Clear();
 
             var index = 0;
-            buttons.Add(new ClickableTextureComponent(new Rectangle(width / 2 + GetItemOffsetX(index++, 4), height - 174 - 24, 222, 174), "New", "", titleButtonsTexture, new Rectangle(0, 187, 74, 58), 3f, false));
-            buttons.Add(new ClickableTextureComponent(new Rectangle(width / 2 + GetItemOffsetX(index++, 4), height - 174 - 24, 222, 174), "Load", "", titleButtonsTexture, new Rectangle(74, 187, 74, 58), 3f, false));
+            buttons.Add(new ClickableTextureComponent(new Rectangle(width / 2 + GetItemOffsetX(index++, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "New", "", titleButtonsTexture, new Rectangle(0, 187, 74, 58), 3f, false));
+            buttons.Add(new ClickableTextureComponent(new Rectangle(width / 2 + GetItemOffsetX(index++, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "Load", "", titleButtonsTexture, new Rectangle(74, 187, 74, 58), 3f, false));
             foreach (var customOption in CustomOptions)
             {
-                buttons.Add(new ClickableTextureComponent(new Rectangle(width / 2 + GetItemOffsetX(index++, 4), height - 174 - 24, 222, 174), "Mods", "", customOption.Texture, customOption.TextureSourceRect, 3f, false));
+                buttons.Add(new ClickableTextureComponent(new Rectangle(width / 2 + GetItemOffsetX(index++, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "Mods", "", customOption.Texture, customOption.TextureSourceRect, 3f, false));
             }
-            buttons.Add(new ClickableTextureComponent(new Rectangle(width / 2 + GetItemOffsetX(index, 4), height - 174 - 24, 222, 174), "Exit", "", titleButtonsTexture, new Rectangle(222, 187, 74, 58), 3f, false));
+            buttons.Add(new ClickableTextureComponent(new Rectangle(width / 2 + GetItemOffsetX(index, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "Exit", "", titleButtonsTexture, new Rectangle(222, 187, 74, 58), 3f, false));
 
             var num = height < 800 ? 2 : 3;
             eRect = new Rectangle(width / 2 - 200 * num + 251 * num, -300 * num - (int)(viewportY / 3.0) * num + 26 * num, 42 * num, 68 * num);
