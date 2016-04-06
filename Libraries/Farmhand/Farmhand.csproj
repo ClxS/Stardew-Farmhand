@@ -97,6 +97,8 @@
     <Compile Include="Events\Arguments\GraphicsEvents\EventArgsClientSizeChanged.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnItemAddedToInventory.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnLevelUp.cs" />
+    <Compile Include="Events\Arguments\SaveEvents\EventArgsOnAfterLoad.cs" />
+    <Compile Include="Events\Arguments\SaveEvents\EventArgsOnBeforeLoad.cs" />
     <Compile Include="Events\ControlEvents.cs" />
     <Compile Include="Events\EventCommon.cs" />
     <Compile Include="Events\EventManager.cs" />
@@ -108,6 +110,7 @@
     <Compile Include="Events\MenuEvents.cs" />
     <Compile Include="Events\PlayerEvents.cs" />
     <Compile Include="Events\PropertyWatcher.cs" />
+    <Compile Include="Events\Save.cs" />
     <Compile Include="Events\TimeEvents.cs" />
     <Compile Include="Events\UiEvents.cs" />
     <Compile Include="Helpers\ICompatibilityLayer.cs" />
@@ -138,9 +141,7 @@
     <Compile Include="Registries\XnbRegistry.cs" />
     <Compile Include="Test.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="API\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

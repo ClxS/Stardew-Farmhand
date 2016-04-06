@@ -11,7 +11,7 @@ namespace Farmhand.Events
     /// <summary>
     /// Contains events relating to players
     /// </summary>
-    public class PlayerEvents
+    public static class PlayerEvents
     {
         public static event EventHandler<EventArgsOnBeforePlayerTakesDamage> OnBeforePlayerTakesDamage = delegate { };
         public static event EventHandler<EventArgsOnAfterPlayerTakesDamage> OnAfterPlayerTakesDamage = delegate { };

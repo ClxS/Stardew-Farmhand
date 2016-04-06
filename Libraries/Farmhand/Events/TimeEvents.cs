@@ -7,7 +7,7 @@ namespace Farmhand.Events
     /// <summary>
     /// Contains events relating to time
     /// </summary>
-    public class TimeEvents
+    public static class TimeEvents
     {
 #pragma warning disable 67
         public static event EventHandler OnBeforeTimeChanged = delegate { };

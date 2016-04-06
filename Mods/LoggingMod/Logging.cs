@@ -34,7 +34,31 @@ namespace LoggingMod
             Farmhand.Events.PlayerEvents.OnBeforePlayerTakesDamage += PlayerEvents_OnBeforePlayerTakesDamage;
             Farmhand.Events.UiEvents.OnAfterIClickableMenuInitialized += UiEvents_OnAfterIClickableMenuInitialized;
             Farmhand.Events.LocationEvents.OnBeforeLocationLoadObjects += LocationEvents_OnBeforeLocationLoadObjects;
-            Farmhand.Events.LocationEvents.OnAfterLocationLoadObjects += LocationEvents_OnAfterLocationLoadObjects; 
+            Farmhand.Events.LocationEvents.OnAfterLocationLoadObjects += LocationEvents_OnAfterLocationLoadObjects;
+            Farmhand.Events.SaveEvents.OnBeforeSave += SaveEvents_OnBeforeSave;
+            Farmhand.Events.SaveEvents.OnAfterSave += SaveEvents_OnAfterSave;
+            Farmhand.Events.SaveEvents.OnBeforeLoad += SaveEvents_OnBeforeLoad;
+            Farmhand.Events.SaveEvents.OnAfterLoad += SaveEvents_OnAfterLoad;
+        }
+
+        private void SaveEvents_OnAfterLoad(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnAfterLoad e)
+        {
+            Log.Success($"SaveEvents_OnAfterLoad {e.Filename}");
+        }
+
+        private void SaveEvents_OnBeforeLoad(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnBeforeLoad e)
+        {
+            Log.Success($"SaveEvents_OnBeforeLoad {e.Filename}");
+        }
+
+        private void SaveEvents_OnAfterSave(object sender, EventArgs e)
+        {
+            Log.Success($"SaveEvents_OnAfterSave");
+        }
+
+        private void SaveEvents_OnBeforeSave(object sender, EventArgs e)
+        {
+            Log.Success($"SaveEvents_OnBeforeSave");
         }
 
         private void LocationEvents_OnAfterLocationLoadObjects(object sender, EventArgs e)

@@ -8,7 +8,7 @@ namespace Farmhand.Events
     /// <summary>
     /// Contains events relating to graphics
     /// </summary>
-    public class GraphicsEvents
+    public static class GraphicsEvents
     {
         public static event EventHandler<EventArgsClientSizeChanged> OnResize = delegate { };
         public static event EventHandler OnBeforeDraw = delegate { };

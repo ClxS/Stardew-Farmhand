@@ -11,7 +11,7 @@ namespace Farmhand.Events
     /// <summary>
     /// Contains events relating to locations
     /// </summary>
-    public class LocationEvents
+    public static class LocationEvents
     {
         public static event EventHandler OnLocationsChanged = delegate { };
         public static event EventHandler<NotifyCollectionChangedEventArgs> OnLocationObjectsChanged = delegate { };

@@ -9,7 +9,7 @@ namespace Farmhand.Events
     /// <summary>
     /// Contains events relating to controls. (Keyboard/Mouse/Gamepad)
     /// </summary>
-    public class ControlEvents
+    public static class ControlEvents
     {
         /// <summary>
         /// Triggered on keyboard state change
