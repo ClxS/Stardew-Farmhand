@@ -62,6 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\CraftingRecipe.cs" />
+    <Compile Include="API\Player.cs" />
+    <Compile Include="API\RecipeUnlockType.cs" />
     <Compile Include="Attributes\HookAttribute.cs" />
     <Compile Include="Attributes\HookAlterBaseProtectionAttribute.cs" />
     <Compile Include="Attributes\HookForceVirtualBaseAttribute.cs" />
