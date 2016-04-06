@@ -1,4 +1,6 @@
-﻿namespace LoggingMod
+﻿using System;
+
+namespace LoggingMod
 {
     class ModConfig : Farmhand.ModConfiguration
     {

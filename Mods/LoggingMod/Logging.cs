@@ -12,12 +12,12 @@ namespace LoggingMod
 
         public override void Entry()
         {
-            //Configuration = ModConfiguration.LoadConfig<ModConfig>(ModSettings.ConfigurationFile);
+            Configuration = ModConfiguration.Load<ModConfig>(ModSettings.ConfigurationFile);
 
-            //if (Configuration != null)
-            //{
-            //    Log.IsVerbose = Configuration.UseVerboseLogging;
-            //}
+            if (Configuration != null)
+            {
+                Log.IsVerbose = Configuration.UseVerboseLogging;
+            }
 
             Farmhand.Events.GameEvents.OnBeforeGameInitialised += OnGameInitialising;
             Farmhand.Events.GameEvents.OnAfterGameInitialised += OnGameInitialised;

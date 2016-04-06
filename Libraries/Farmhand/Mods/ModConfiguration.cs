@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Farmhand.Logging;
@@ -35,7 +36,7 @@ namespace Farmhand
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T LoadConfig<T>(string configLocation) where T : ModConfiguration, new()
+        public static T Load<T>(string configLocation) where T : ModConfiguration, new()
         {
             if (string.IsNullOrEmpty(configLocation))
             {
@@ -58,11 +59,8 @@ namespace Farmhand
                 {
                     //try to load the config from a json blob on disk
                     T c = JsonConvert.DeserializeObject<T>(File.ReadAllText(configLocation));
-
                     c.ConfigLocation = configLocation;
-
-                    //update the config with default values if needed
-                    ret = c.UpdateConfig<T>();
+                    ret = c;
                 }
                 catch (Exception ex)
                 {
@@ -73,50 +71,16 @@ namespace Farmhand
                     ret = c;
                 }
             }
-
-            ret.WriteConfig();
+            
             return ret;
         }
-
+        
         /// <summary>
         /// This is intended to allow developers to populate their Mod Configurations with default data when creating a new one.
         /// </summary>
         public virtual T GenerateDefaultConfig<T>() where T : ModConfiguration
         {
             return null;
-        }
-
-        /// <summary>
-        /// Merges a default-value config with the user-config on disk.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public virtual T UpdateConfig<T>() where T : ModConfiguration
-        {
-            try
-            {
-                //default config
-                var b = JObject.FromObject(Instance<T>().GenerateDefaultConfig<T>());
-
-                //user config
-                var u = JObject.FromObject(this);
-
-                //overwrite default values with user values
-                b.Merge(u, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Replace });
-
-                //cast json object to config
-                var c = b.ToObject<T>();
-
-                //re-write the location on disk to the object
-                c.ConfigLocation = ConfigLocation;
-
-                return c;
-            }
-            catch (Exception ex)
-            {
-                Log.Error("An error occurred when updating a config: " + ex);
-                return this as T;
-            }
         }
     }
 }

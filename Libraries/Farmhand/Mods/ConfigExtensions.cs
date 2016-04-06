@@ -13,7 +13,7 @@ namespace Farmhand
         /// <summary>
         /// Writes a config to a json blob on the disk specified in the config's properties.
         /// </summary>
-        public static void WriteConfig<T>(this T baseConfig) where T : ModConfiguration
+        public static void Save<T>(this T baseConfig) where T : ModConfiguration
         {
             if (string.IsNullOrEmpty(baseConfig?.ConfigLocation) || string.IsNullOrEmpty(baseConfig.ConfigDir))
             {
@@ -28,14 +28,6 @@ namespace Farmhand
 
             if (!File.Exists(baseConfig.ConfigLocation) || !File.ReadAllText(baseConfig.ConfigLocation).SequenceEqual(s))
                 File.WriteAllText(baseConfig.ConfigLocation, s);
-        }
-
-        /// <summary>
-        /// Re-reads the json blob on the disk and merges its values with a default config
-        /// </summary>
-        public static T ReloadConfig<T>(this T baseConfig) where T : ModConfiguration
-        {
-            return baseConfig.UpdateConfig<T>();
         }
     }
 }
