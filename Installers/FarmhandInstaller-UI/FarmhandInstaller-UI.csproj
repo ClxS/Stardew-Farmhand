@@ -146,7 +146,7 @@
     <EmbeddedResource Include="Payload\StardewModdingAPI.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\FarmhandPatcherCommon\FarmhandPatcherCommon.csproj">
+    <ProjectReference Include="..\Patcher\FarmhandPatcherCommon\FarmhandPatcherCommon.csproj">
       <Project>{7f304954-a190-4003-b11e-a9043113396d}</Project>
       <Name>FarmhandPatcherCommon</Name>
       <Private>True</Private>
