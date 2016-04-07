@@ -2,6 +2,12 @@
 
 Stardew Farmhand is the new in-development API intended to replace SMAPI
 
+##License
+
+SMAPI Compatibility Layer: LGPL
+Farmhand: MIT
+xml2json: Not Specified (http://www.bjelic.net/2012/08/01/coding/convert-xml-to-json-using-xslt/)
+
 ##My First Build
 
 Building the project for the first time can seem a little daunting given the number of projects and no doubt countless missing references you'll see but be unable to resolve. Fear not, it only takes about as many steps as SMAPI to be up and running! :)
@@ -41,6 +47,8 @@ These projects are responsible for handling build flow.
 
 - Farmhand Installer - UI (EXE). This runs FarmhandPatcher too. Once it's complete, this will be the file we actually distribute out. It should automatically bundle the required binaries (Farmhand, FarmhandUI, FarmhandPatcherCommon, FarmhandPatcherFirstPass, FarmhandPatcherSecondPass) and extract them at runtime. At the final stages, this should allow for updated binaries to be fetched from the internet.
 
+- FarmhandPatcherCommon/FirstPass/SecondPass. These are used by the installer.They are separated into their own libraries to prevent conflicts due to the missing (not yet built) Stardew Farmhand intermediate
+
 ##Mods
 
 - Logging Mod (DLL). A mod, just used to log events when they fire
@@ -52,8 +60,6 @@ These projects are responsible for handling build flow.
 - Jumino Deposit Mod (DLL). A test functional mod. This is mainly used to test UI event callbacks, and address crash issues.
 
 ##Libraries
-
-- FarmhandPatcherCommon/FirstPass/SecondPass. These are used by the installer.They are separated into their own libraries to prevent conflicts due to the missing (not yet built) Stardew Farmhand intermediate
 
 - Farmhand (DLL). The core code which is injected into Stardew
 
