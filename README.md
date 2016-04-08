@@ -5,8 +5,11 @@ Stardew Farmhand is the new in-development API intended to replace SMAPI
 ##License
 
 SMAPI Compatibility Layer: LGPL
+
 Farmhand: MIT
+
 xml2json: Not Specified (http://www.bjelic.net/2012/08/01/coding/convert-xml-to-json-using-xslt/)
+
 
 ##My First Build
 
