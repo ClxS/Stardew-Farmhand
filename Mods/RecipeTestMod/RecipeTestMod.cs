@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
 using Farmhand;
 using Farmhand.API;
+using Farmhand.API.Crafting;
+using Farmhand.API.Generic;
 using Farmhand.Logging;
 using StardewValley;
-using CraftingRecipe = Farmhand.API.CraftingRecipe;
 
 namespace RecipeTestMod
 {
     internal class RecipeTestMod : Mod
     {
-        private CraftingRecipe _voidRecipe;
+        private Farmhand.API.Crafting.CraftingRecipe _voidRecipe;
 
         public override void Entry()
         {
-            _voidRecipe = new CraftingRecipe
+            _voidRecipe = new Farmhand.API.Crafting.CraftingRecipe
             {
                 Name = "Void Stuff",
                 Category = "Home",
@@ -35,13 +36,13 @@ namespace RecipeTestMod
 
         private void GameEvents_OnAfterLoadedContent(object sender, System.EventArgs e)
         {
-            CraftingRecipe.RegisterRecipe(_voidRecipe);
+            Farmhand.API.Crafting.CraftingRecipe.RegisterRecipe(_voidRecipe);
         }
 
         private void PlayerEvents_OnFarmerChanged(object sender, System.EventArgs e)
         {
             var player = sender as Farmer;
-            Farmhand.API.Player.AddRecipe(_voidRecipe.PrivateName);
+            Farmhand.API.Player.Player.AddRecipe(_voidRecipe.PrivateName);
         }
         
     }

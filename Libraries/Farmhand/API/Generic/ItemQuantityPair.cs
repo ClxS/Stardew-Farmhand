@@ -1,4 +1,4 @@
-﻿namespace Farmhand.API
+﻿namespace Farmhand.API.Generic
 {
     public class ItemQuantityPair
     {

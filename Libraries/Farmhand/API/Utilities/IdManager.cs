@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace Farmhand.API
+namespace Farmhand.API.Utilities
 {
     internal static class IdManager
     {

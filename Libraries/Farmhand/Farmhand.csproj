@@ -62,14 +62,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\CraftingRecipe.cs" />
-    <Compile Include="API\CraftingRecipeCategory.cs" />
-    <Compile Include="API\IdManager.cs" />
-    <Compile Include="API\ItemQuantityPair.cs" />
-    <Compile Include="API\Player.cs" />
-    <Compile Include="API\RecipeUnlockType.cs" />
-    <Compile Include="API\RequiredSkill.cs" />
-    <Compile Include="API\Skill.cs" />
+    <Compile Include="API\Crafting\CraftingRecipe.cs" />
+    <Compile Include="API\Crafting\CraftingRecipeCategory.cs" />
+    <Compile Include="API\Utilities\IdManager.cs" />
+    <Compile Include="API\Generic\ItemQuantityPair.cs" />
+    <Compile Include="API\Player\Player.cs" />
+    <Compile Include="API\Crafting\RecipeUnlockType.cs" />
+    <Compile Include="API\Generic\RequiredSkill.cs" />
+    <Compile Include="API\Generic\Skill.cs" />
     <Compile Include="Attributes\HookAttribute.cs" />
     <Compile Include="Attributes\HookAlterBaseProtectionAttribute.cs" />
     <Compile Include="Attributes\HookForceVirtualBaseAttribute.cs" />
@@ -150,7 +150,11 @@
     <Compile Include="Registries\XnbRegistry.cs" />
     <Compile Include="Test.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="API\Buildings\" />
+    <Folder Include="API\Items\" />
+    <Folder Include="API\Locations\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

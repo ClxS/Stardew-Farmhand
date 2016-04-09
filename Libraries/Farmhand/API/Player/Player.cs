@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using StardewValley;
+﻿using StardewValley;
 
-namespace Farmhand.API
+namespace Farmhand.API.Player
 {
     /// <summary>
     /// API layer to interact with the player

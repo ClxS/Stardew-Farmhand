@@ -1,4 +1,4 @@
-﻿namespace Farmhand.API
+﻿namespace Farmhand.API.Crafting
 {
     public enum CraftingRecipeCategory
     {

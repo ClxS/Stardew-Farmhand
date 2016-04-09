@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using Farmhand.API.Generic;
+using Farmhand.API.Utilities;
 using Farmhand.Helpers;
-using StardewValley;
 
-namespace Farmhand.API
+namespace Farmhand.API.Crafting
 {
     public class CraftingRecipe
     {
