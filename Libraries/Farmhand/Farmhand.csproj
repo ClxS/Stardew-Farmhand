@@ -63,8 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\CraftingRecipe.cs" />
+    <Compile Include="API\CraftingRecipeCategory.cs" />
+    <Compile Include="API\IdManager.cs" />
+    <Compile Include="API\ItemQuantityPair.cs" />
     <Compile Include="API\Player.cs" />
     <Compile Include="API\RecipeUnlockType.cs" />
+    <Compile Include="API\RequiredSkill.cs" />
+    <Compile Include="API\Skill.cs" />
     <Compile Include="Attributes\HookAttribute.cs" />
     <Compile Include="Attributes\HookAlterBaseProtectionAttribute.cs" />
     <Compile Include="Attributes\HookForceVirtualBaseAttribute.cs" />
@@ -116,6 +121,7 @@
     <Compile Include="Events\Save.cs" />
     <Compile Include="Events\TimeEvents.cs" />
     <Compile Include="Events\UiEvents.cs" />
+    <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\ICompatibilityLayer.cs" />
     <Compile Include="Helpers\VersionConverter.cs" />
     <Compile Include="Logging\Log.cs" />

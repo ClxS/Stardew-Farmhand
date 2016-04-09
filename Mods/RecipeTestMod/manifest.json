@@ -1,0 +1,8 @@
+﻿{
+	"UniqueId" : "RecipeTestMod",
+	"Name" : "Recipe Test Mod",
+	"Author": "ClxS",
+	"ModDll": "RecipeTestMod",
+	"Version" : "0.1",
+	"Description" : "An example recipe mod.",
+}

@@ -12,24 +12,18 @@ namespace Farmhand.API
     public static class Player
     {
         /// <summary>
-        /// Contains all custom crafting recipes added to the API
+        /// Adds a recipe to the provided player
         /// </summary>
-        public static List<CraftingRecipe> CraftingRecipes = new List<CraftingRecipe>();
-         
-        /// <summary>
-        /// Adds custom save-safe crafting recipes
-        /// </summary>
-        /// <param name="recipe">The recipe to add</param>
-        /// <param name="farmer">The farmer to add. Will default to Game1.player when null</param>
-        /// <returns>The internal id assigned to this recipe</returns>
-        public static int AddRecipe(CraftingRecipe recipe, Farmer farmer = null)
+        /// <param name="name">The name of the recipe to enable</param>
+        /// <param name="player">The player. Defaults to null. If null, will use Game1.player</param>
+        public static void AddRecipe(string name, Farmer player = null)
         {
-            if (farmer == null)
+            if (player == null)
             {
-                farmer = Game1.player;
+                player = Game1.player;
             }
-            
-            return 0;
+
+            player.craftingRecipes.Add(name, 1);
         }
     }
 }
