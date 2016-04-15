@@ -44,9 +44,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Graphics\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Graphics.dll</HintPath>
     </Reference>
-    <Reference Include="Stardew Farmhand, Version=1.0.5924.126, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Stardew Farmhand, Version=1.0.5940.39991, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\WorkingDirectory\Stardew Farmhand.exe</HintPath>
+      <HintPath>..\..\..\..\Farmhand\WorkingDirectory\Stardew Farmhand.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,9 +55,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="xTile, Version=2.0.4.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Games\SteamLibrary\steamapps\common\Stardew Valley\xTile.dll</HintPath>
+    <Reference Include="xTile">
+      <HintPath>C:\GOG Games\Stardew Valley\xTile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
