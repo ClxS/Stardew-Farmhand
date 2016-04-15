@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Farmhand
 {
@@ -13,5 +14,7 @@ namespace Farmhand
         public static string ModContentDirectory => "Content";
 
         public static Version Version { get; } = new Version(0, 1, 0, 1);
+
+        public static Assembly Assembly => Assembly.GetExecutingAssembly();
     }
 }

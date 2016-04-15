@@ -47,7 +47,7 @@ namespace StardewModdingAPI
         {
             Name = "";
             Authour = "";
-            Version = new Version(0, 0, 0);
+            Version = new Version(0, 0, 0, "");
             Description = "";
             UniqueID = Guid.NewGuid().ToString();
             PerSaveConfigs = false;

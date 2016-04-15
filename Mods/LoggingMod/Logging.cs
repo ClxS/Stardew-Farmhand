@@ -1,6 +1,10 @@
 ﻿using Farmhand.Events.Arguments;
 using Farmhand.Logging;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Xml.Serialization;
 using Farmhand;
 using StardewValley;
 
@@ -16,7 +20,7 @@ namespace LoggingMod
 
             if (Configuration != null)
             {
-                Log.IsVerbose = Configuration.UseVerboseLogging;
+                //Log.IsVerbose = Configuration.UseVerboseLogging;
             }
 
             Farmhand.Events.GameEvents.OnBeforeGameInitialised += OnGameInitialising;

@@ -75,7 +75,7 @@ namespace Farmhand.Registries
         /// <param name="item">Texture to register</param>
         public static void RegisterItem(ModManifest mod, string itemId, ModTexture item)
         {
-            ModTextureRegistryInstance.RegisterItem(GetModSpecificItemId(mod, itemId), item);
+            ModTextureRegistryInstance.RegisterItem(GetModSpecificId(mod, itemId), item);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Farmhand.Registries
         /// <param name="itemId">Id of texture</param>
         public static void UnregisterItem(ModManifest mod, string itemId)
         {
-            ModTextureRegistryInstance.UnregisterItem(GetModSpecificItemId(mod, itemId));
+            ModTextureRegistryInstance.UnregisterItem(GetModSpecificId(mod, itemId));
         }
 
         /// <summary>
@@ -96,7 +96,17 @@ namespace Farmhand.Registries
         /// <returns>Matching mod texture</returns>
         public static ModTexture GetItem(ModManifest mod, string itemId)
         {
-            return ModTextureRegistryInstance.GetItem(GetModSpecificItemId(mod, itemId));
+            return ModTextureRegistryInstance.GetItem(GetModSpecificId(mod, itemId));
+        }
+
+        /// <summary>
+        /// Gets a mods texture. Use this if you have the already altered id
+        /// </summary>
+        /// <param name="itemId">Id of texture</param>
+        /// <returns>Matching mod texture</returns>
+        public static ModTexture GetModItem(string itemId)
+        {
+            return ModTextureRegistryInstance.GetItem(itemId);
         }
 
         #endregion
@@ -106,7 +116,7 @@ namespace Farmhand.Registries
             return $"\\{mod.UniqueId}\\";
         }
 
-        private static string GetModSpecificItemId(ModManifest mod, string itemId)
+        public static string GetModSpecificId(ModManifest mod, string itemId)
         {
             var modPrefix = GetModSpecificPrefix(mod);
             return $"{modPrefix}{itemId}";

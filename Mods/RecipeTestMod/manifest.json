@@ -5,4 +5,14 @@
 	"ModDll": "RecipeTestMod",
 	"Version" : "0.1",
 	"Description" : "An example recipe mod.",
+	"Content" : 
+	{
+		"Textures" : 
+		[
+			{
+				"Id" : "icon_Heart",
+				"File" : "Heart.png"
+			}
+		]
+	}
 }

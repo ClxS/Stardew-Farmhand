@@ -15,6 +15,7 @@ namespace Farmhand.Registries.Containers
 
         public void LoadContent(ModManifest mod)
         {
+            Logging.Log.Verbose("Loading Content");
             if (Textures != null)
             {
                 foreach (var texture in Textures)
@@ -26,7 +27,7 @@ namespace Farmhand.Registries.Containers
                         throw new Exception($"Missing Texture: {texture.AbsoluteFilePath}");
                     }
 
-                    Logging.Log.Verbose("Registering new texture");
+                    Logging.Log.Verbose($"Registering new texture: {texture.Id}");
                     TextureRegistry.RegisterItem(mod, texture.Id, texture);
                 }
             }

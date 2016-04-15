@@ -2,6 +2,9 @@
 using Farmhand.API.Generic;
 using Farmhand.API.Utilities;
 using Farmhand.Helpers;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using StardewValley;
 
 namespace Farmhand.API.Crafting
 {
@@ -10,7 +13,7 @@ namespace Farmhand.API.Crafting
         /// <summary>
         /// Contains all custom crafting recipes added to the API
         /// </summary>
-        public static List<CraftingRecipe> CraftingRecipes = new List<CraftingRecipe>();
+        public static List<CraftingRecipe> CraftingRecipes { get; } = new List<CraftingRecipe>();
 
         /// <summary>
         /// Adds custom save-safe crafting recipes
@@ -20,7 +23,7 @@ namespace Farmhand.API.Crafting
         public static string RegisterRecipe(CraftingRecipe recipe)
         {
             CraftingRecipes.Add(recipe);
-            recipe.PrivateName = $"{recipe.Name}:{IdManager.AssignNewId(200)}";
+            recipe.PrivateName = $"{recipe.Name}:{IdManager.AssignUniqueId(200)}";
             StardewValley.CraftingRecipe.craftingRecipes.Add(recipe.PrivateName, recipe.RecipeString);
             return recipe.PrivateName;
         }

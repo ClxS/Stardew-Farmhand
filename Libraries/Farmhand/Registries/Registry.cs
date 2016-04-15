@@ -42,6 +42,7 @@ namespace Farmhand.Registries
         {
             if (GetItem(key) == null)
             {
+                Logging.Log.Verbose($"Texture Registered- Key: {key}, Item: {item}");
                 RegisteredItems[key] = item;
             }
         }
