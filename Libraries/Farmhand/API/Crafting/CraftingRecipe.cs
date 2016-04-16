@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Farmhand.API.Generic;
 using Farmhand.API.Utilities;
 using Farmhand.Helpers;
@@ -22,6 +24,11 @@ namespace Farmhand.API.Crafting
         /// <returns>The internal id assigned to this recipe</returns>
         public static string RegisterRecipe(CraftingRecipe recipe)
         {
+            if (StardewValley.CraftingRecipe.craftingRecipes == null || !StardewValley.CraftingRecipe.craftingRecipes.Any())
+            {
+                throw new Exception("craftingRecipes is empty! This likely occurs if you try to register an item before AfterContentLoaded");
+            }
+
             CraftingRecipes.Add(recipe);
             recipe.PrivateName = $"{recipe.Name}:{IdManager.AssignUniqueId(200)}";
             StardewValley.CraftingRecipe.craftingRecipes.Add(recipe.PrivateName, recipe.RecipeString);

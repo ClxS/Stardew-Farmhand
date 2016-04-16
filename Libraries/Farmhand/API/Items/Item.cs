@@ -22,6 +22,11 @@ namespace Farmhand.API.Items
         /// <param name="item">Information of item to register</param>
         public static void RegisterItem(ItemInformation item)
         {
+            if (Game1.objectSpriteSheet == null)
+            {
+                throw new Exception("objectInformation is null! This likely occurs if you try to register an item before AfterContentLoaded");
+            }
+
             item.Id = IdManager.AssignNewIdSequential(Game1.objectInformation); 
             Items.Add(item);
             TextureUtility.AddSpriteToSpritesheet(ref Game1.objectSpriteSheet, TextureRegistry.GetModItem(item.Texture).Texture, item.Id, 16, 16);
