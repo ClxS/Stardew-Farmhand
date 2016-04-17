@@ -14,19 +14,32 @@ namespace Farmhand.API.Utilities
         {
             var rect = Game1.getSourceRectForStandardTileSheet(Game1.objectSpriteSheet, spritesheetIndex, spriteWidth,
                 spriteHeight);
+            spritesheet = PatchTexture(spritesheet, sprite, new Rectangle(0, 0, spriteWidth, spriteHeight), rect);
+        }
 
-            var originalSize = spritesheet.Width * spritesheet.Height;
-            Rectangle originalRect = new Rectangle(0, 0, spritesheet.Width, spritesheet.Height);
-            var originalData = new Color[originalSize];
-            var newData = new Color[spriteWidth * spriteHeight];
-            spritesheet.GetData<Color>(originalData);
-            sprite.GetData<Color>(newData);
-            if (rect.Bottom > spritesheet.Height || rect.Right > spritesheet.Width)
+        public static Texture2D PatchTexture(Texture2D @base, Texture2D input, Rectangle source, Rectangle destination, bool asNewTexture = false)
+        {
+            if ((source.Width*source.Height) != (destination.Width*destination.Height))
             {
-                spritesheet = new Texture2D(Game1.graphics.GraphicsDevice, Math.Max(rect.Right, spritesheet.Width), Math.Max(rect.Bottom, spritesheet.Height));
-                spritesheet.SetData<Color>(0, originalRect, originalData, 0, originalSize);
+                Logging.Log.Exception("Error patching texture", new Exception("Texture source and destination must match when trying to patch a texture"));
             }
-            spritesheet.SetData<Color>(0, rect, newData, 0, spriteWidth * spriteHeight);
+            
+            var newData = new Color[source.Width * source.Height];
+            input.GetData<Color>(0, source, newData, 0, source.Width * source.Height);
+
+            if (asNewTexture || destination.Bottom > @base.Height || destination.Right > @base.Width)
+            {
+                Rectangle originalRect = new Rectangle(0, 0, @base.Width, @base.Height);
+                var originalSize = @base.Width * @base.Height;
+                var originalData = new Color[originalSize];
+                @base.GetData<Color>(originalData);
+                @base = new Texture2D(Game1.graphics.GraphicsDevice, Math.Max(destination.Right, @base.Width), Math.Max(destination.Bottom, @base.Height));
+                @base.SetData<Color>(0, originalRect, originalData, 0, originalSize);
+            }
+
+            @base.SetData<Color>(0, destination, newData, 0, destination.Width * destination.Height);
+
+            return @base;
         }
     }
 }

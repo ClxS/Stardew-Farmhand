@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Farmhand.API.Utilities;
 using Farmhand.Logging;
 using Farmhand.Registries;
 using Farmhand.Registries.Containers;
@@ -96,27 +97,9 @@ namespace Farmhand.Content
                 }
                 else
                 {
-                    var originalData = new Color[originalTexture.Width * originalTexture.Height];
-                    Color[] modData;
-                    originalTexture.GetData<Color>(originalData);
-
-                    if (item.Source == null)
-                    {
-                        modData = new Color[obj.Width * obj.Height];
-                        obj.GetData<Color>(modData);
-                    }
-                    else
-                    {
-                        modData = new Color[item.Source.Width * item.Source.Height];
-                        obj.GetData<Color>(0, item.Source, modData, 0, item.Source.Width * item.Source.Height);
-                    }
-
-                    var newObject = new Texture2D(Game1.graphics.GraphicsDevice, originalTexture.Width, originalTexture.Height);
-                    newObject.SetData<Color>(originalData);
-                    newObject.SetData<Color>(0, item.Destination, modData, 0, obj.Width * obj.Height);
-
-                    _cachedAlteredTextures[assetKey] = newObject;
-                    obj = newObject;
+                    var texture = TextureUtility.PatchTexture(originalTexture, obj, item.Source ?? new Rectangle(0, 0, obj.Width, obj.Height), item.Destination);
+                    _cachedAlteredTextures[assetKey] = texture;
+                    obj = texture;
                 }
             }
 

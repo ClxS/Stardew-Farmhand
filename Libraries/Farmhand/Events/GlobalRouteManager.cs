@@ -18,7 +18,6 @@ namespace Farmhand.Events
         private static readonly Dictionary<string, List<Action<EventArgsGlobalRouteManager>>> Listeners = new Dictionary<string, List<Action<EventArgsGlobalRouteManager>>>();
 
         //public static void GlobalRouteInvoke(string type, string method, out object output, params object[] @parans) //TODO Add once implemented
-        //public static void GlobalRouteInvoke(string type, string method, out object output, params object[] @params) //TODO Add once implemented
         public static void GlobalRouteInvoke(string type, string method)
         {
             if (!IsEnabled)
