@@ -15,6 +15,9 @@ namespace Farmhand.Registries.Containers
             ModState = ModState.Unloaded;
         }
 
+        public static event EventHandler BeforeLoaded;
+        public static event EventHandler AfterLoaded;
+
         public string UniqueId { get; set; }
 
         public string ModDll { get; set; }
@@ -146,5 +149,15 @@ namespace Farmhand.Registries.Containers
         }
 
 #endregion
+
+        public void OnBeforeLoaded()
+        {
+            BeforeLoaded?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnAfterLoaded()
+        {
+            AfterLoaded?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

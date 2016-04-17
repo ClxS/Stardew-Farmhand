@@ -165,6 +165,7 @@ namespace Farmhand
                 Log.Verbose($"Loading mod: {mod.Name} by {mod.Author}");      
                 try
                 {
+                    mod.OnBeforeLoaded();
                     if (mod.HasContent)
                     {
                         mod.LoadContent();
@@ -174,6 +175,7 @@ namespace Farmhand
                         mod.LoadModDll();
                     }
                     mod.ModState = ModState.Loaded;
+                    mod.OnAfterLoaded();
                     Log.Success($"Loaded Mod: {mod.Name} v{mod.Version} by {mod.Author}");              
                 }
                 catch (Exception ex)
