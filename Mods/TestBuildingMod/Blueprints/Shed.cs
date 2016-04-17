@@ -21,7 +21,7 @@ namespace TestBuildingMod.Blueprints
             },
             TileSize = new Vector2(4, 2),
             HumanDoor = new Vector2(2, 2),
-            MapWarpTo = "SlimeHutch",
+            MapWarpTo = "Shed",
             Description = "A place to store all your tools!",
             BlueprintType = BlueprintType.Buildings,
             BuildingToUpdate = "none",

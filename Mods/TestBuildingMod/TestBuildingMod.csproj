@@ -51,6 +51,9 @@
     <Compile Include="TestBuildingMod.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\Shed.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="manifest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

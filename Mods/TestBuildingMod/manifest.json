@@ -13,6 +13,10 @@
 				"Original" : "Buildings\\Shed",
 				"Texture" : "building_shed",				
 			}, 
+			{
+				"Original" : "Maps\\Shed",
+				"File" : "Shed"
+			}
 		],
 		"Textures" : 
 		[
