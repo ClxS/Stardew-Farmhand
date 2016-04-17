@@ -32,8 +32,8 @@ namespace RecipeTestMod
         {
             Farmhand.API.Items.Item.RegisterItem(Heart.Information);
             Farmhand.API.Items.Item.RegisterItem(PuppyTail.Information);
-            VoidStar.Recipe.RequiredMaterials.Add(new ItemQuantityPair() { Count = 10, ItemId = Heart.Information.Id });
-            VoidStar.Recipe.RequiredMaterials.Add(new ItemQuantityPair() { Count = 2, ItemId = PuppyTail.Information.Id });
+            VoidStar.Recipe.MaterialsRequired.Add(new ItemQuantityPair() { Count = 10, ItemId = Heart.Information.Id });
+            VoidStar.Recipe.MaterialsRequired.Add(new ItemQuantityPair() { Count = 2, ItemId = PuppyTail.Information.Id });
             Farmhand.API.Crafting.CraftingRecipe.RegisterRecipe(VoidStar.Recipe);
         }
         

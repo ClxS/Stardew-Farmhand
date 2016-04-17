@@ -29,6 +29,8 @@ namespace Farmhand.Logging.Loggers
                 case LogEntryType.Error:
                     return ConsoleColor.Red;
                 case LogEntryType.Comment:
+                    return ConsoleColor.DarkGreen;
+                case LogEntryType.Warning:
                     return ConsoleColor.Yellow;
                 default: return ConsoleColor.Gray;
             }

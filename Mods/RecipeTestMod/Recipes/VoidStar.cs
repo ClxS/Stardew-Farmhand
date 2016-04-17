@@ -24,7 +24,7 @@ namespace RecipeTestMod.Recipes
                         Category = "Home",
                         IsBigCraftable = false,
                         RecipeUnlockType = RecipeUnlockType.Manual,
-                        RequiredMaterials = new List<ItemQuantityPair>()
+                        MaterialsRequired = new List<ItemQuantityPair>()
                         {
                             new ItemQuantityPair() { ItemId = 390, Count = 10}
                         },

@@ -27,6 +27,16 @@ namespace Farmhand.Logging
         }
 
         /// <summary>
+        /// Warning message to display to console and logging.
+        /// </summary>
+        /// <param name="message"></param>
+        public static void Warning(string message)
+        {
+            var logItem = new LogEntry { Message = message, Type = LogEntryType.Warning };
+            Logger.Write(logItem);
+        }
+
+        /// <summary>
         /// Generic comment to display to console and logging.
         /// </summary>
         /// <param name="message"></param>

@@ -37,7 +37,7 @@ namespace Farmhand.API.Crafting
 
         private string DefaultSkillRequirement => IsBigCraftable ? "null" : "l 0";
         private string SkillString => RequiredSkill?.ToString() ?? DefaultSkillRequirement;
-        public string RecipeString => $"{RequiredMaterials.ToItemSetString()}/{Category}/{ItemsProduced.ToItemSetString()}/{IsBigCraftable}/{SkillString}";
+        public string RecipeString => $"{MaterialsRequired.ToItemSetString()}/{Category}/{ItemsProduced.ToItemSetString()}/{IsBigCraftable}/{SkillString}";
 
         public string Name { get; set; }
         public string PrivateName { get; internal set; }
@@ -47,7 +47,7 @@ namespace Farmhand.API.Crafting
         public RequiredSkill RequiredSkill;
         public RecipeUnlockType RecipeUnlockType;
         public List<ItemQuantityPair> ItemsProduced;
-        public List<ItemQuantityPair> RequiredMaterials;
+        public List<ItemQuantityPair> MaterialsRequired;
         public bool IsBigCraftable;
     }
 }

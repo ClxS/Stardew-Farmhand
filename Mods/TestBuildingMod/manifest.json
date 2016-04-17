@@ -1,0 +1,25 @@
+﻿{
+	"UniqueId" : "BuildingTestMod",
+	"Name" : "Build Test Mod",
+	"Author": "ClxS",
+	"ModDll": "TestBuildingMod",
+	"Version" : "0.1",
+	"Description" : "An example building mod.",
+	"Content" : 
+	{
+		"XNB" : 
+		[
+			{
+				"Original" : "Buildings\\Shed",
+				"Texture" : "building_shed",				
+			}, 
+		],
+		"Textures" : 
+		[
+			{
+				"Id" : "building_shed",
+				"File" : "shed.png"
+			}
+		]
+	}
+}

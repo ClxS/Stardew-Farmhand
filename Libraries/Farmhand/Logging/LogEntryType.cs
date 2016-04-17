@@ -10,6 +10,7 @@ namespace Farmhand.Logging
         Info,
         Verbose,
         Success,
+        Warning,
         Error,
         Comment
     }
