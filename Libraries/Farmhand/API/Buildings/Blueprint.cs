@@ -21,7 +21,7 @@ namespace Farmhand.API.Buildings
             if (bpField != null)
             {
                 Logging.Log.Success("Injecting custom BluePrints");
-                var blueprints = (List<StardewValley.BluePrint>) bpField.GetValue(@this);
+                var blueprints = (List<StardewValley.BluePrint>)bpField.GetValue(@this);
                 blueprints.AddRange(Blueprints.Where(n => n.IsCarpenterBlueprint).Select(n => new BluePrint(n.Name)));
             }
             else

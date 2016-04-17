@@ -15,17 +15,22 @@ namespace TestBuildingMod.Blueprints
         public static BuildingBlueprint Information => _information ?? (_information = new BuildingBlueprint()
         {
             Name = "Shed",
-            MaterialsRequired = new List<ItemQuantityPair>(),
-            TileSize = new Vector2(3, 3),
-            HumanDoor = new Vector2(6, 3),
-            MapWarpTo = "Farm",
+            MaterialsRequired = new List<ItemQuantityPair>()
+            {
+                new ItemQuantityPair() { ItemId = 390, Count = 1}
+            },
+            TileSize = new Vector2(4, 2),
+            HumanDoor = new Vector2(2, 2),
+            MapWarpTo = "SlimeHutch",
             Description = "A place to store all your tools!",
             BlueprintType = BlueprintType.Buildings,
             BuildingToUpdate = "none",
-            SourceViewRect = new Vector2(384, 320),
+            SourceViewRect = new Vector2(48, 48),
+            MaxOccupants = 0,
             ActionBehaviour = null,
             SuitableBuildingLocations = new List<string>() {"Farm"},
-            MoneyRequired = 1000
+            MoneyRequired = 100
         });
     }
 }
+

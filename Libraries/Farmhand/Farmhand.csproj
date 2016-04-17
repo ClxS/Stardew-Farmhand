@@ -94,6 +94,7 @@
     <Compile Include="Attributes\PendingHookAttribute.cs" />
     <Compile Include="Attributes\ThisBindAttribute.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Content\BlueprintInjector.cs" />
     <Compile Include="Content\ContentManager.cs" />
     <Compile Include="Content\IContentInjector.cs" />
     <Compile Include="Content\ModXnbInjector.cs" />

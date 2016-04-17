@@ -82,25 +82,20 @@ namespace Farmhand.Content
             var obj = TextureRegistry.GetItem(item.OwningMod, item.Texture).Texture;
 
             if (obj == null) return null;
-
-            Log.Success(item.Destination.ToString());
-
+            
             if (item.Destination != null)
             {
                 //TODO, Error checking on this.
                 //TODO, Multiple mods should be able to edit this
                 var originalTexture = contentManager.LoadDirect<Texture2D>(assetName);
 
-                Log.Verbose("Is A Constructed Texture");
                 string assetKey = $"{assetName}-\u2764-modified";
                 if (_cachedAlteredTextures.ContainsKey(assetKey))
                 {
-                    Log.Verbose("Which we already had cached");
-                    return _cachedAlteredTextures[assetKey];
+                    obj = _cachedAlteredTextures[assetKey];
                 }
                 else
                 {
-                    Log.Verbose("Trying to construct texture from scratch");
                     var originalData = new Color[originalTexture.Width * originalTexture.Height];
                     Color[] modData;
                     originalTexture.GetData<Color>(originalData);
