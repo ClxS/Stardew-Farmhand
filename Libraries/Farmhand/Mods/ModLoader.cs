@@ -143,8 +143,12 @@ namespace Farmhand
             {
                 try
                 {
-                    mod.UniqueId = mod.UniqueId ?? Guid.NewGuid().ToString();
-                    if (mod.UniqueId.Contains("\\") || mod.HasContent && mod.Content.Textures != null && mod.Content.Textures.Any(n => n.Id.Contains("\\")))
+                    if (mod.UniqueId == null)
+                    {
+                        mod.UniqueId = new UniqueId<string>(Guid.NewGuid().ToString());
+                    }
+
+                    if (mod.UniqueId.ThisId.Contains("\\") || mod.HasContent && mod.Content.Textures != null && mod.Content.Textures.Any(n => n.Id.Contains("\\")))
                     {
                         Log.Error($"Error - {mod.Name} by {mod.Author} manifest is invalid. UniqueIDs cannot contain \"\\\"");
                         mod.ModState = ModState.InvalidManifest;
@@ -202,7 +206,7 @@ namespace Farmhand
 
                     foreach (var dependency in mod.Dependencies)
                     {
-                        var dependencyMatch = modInfos.FirstOrDefault(n => n.UniqueId == dependency.UniqueId);
+                        var dependencyMatch = modInfos.FirstOrDefault(n => n.UniqueId.Equals(dependency.UniqueId));
                         dependency.DependencyState = DependencyState.Ok;
                         if (dependencyMatch == null)
                         {
@@ -260,7 +264,7 @@ namespace Farmhand
                             var modInfo = JsonConvert.DeserializeObject<ModManifest>(json, new Farmhand.Helpers.VersionConverter());
                             
                             modInfo.ModDirectory = perModPath;
-                            ModRegistry.RegisterItem(modInfo.UniqueId ?? Guid.NewGuid().ToString(), modInfo);
+                            ModRegistry.RegisterItem(modInfo.UniqueId ?? new UniqueId<string>(Guid.NewGuid().ToString()), modInfo);
                         }
                     }
                 }

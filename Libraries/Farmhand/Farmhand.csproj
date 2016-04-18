@@ -136,6 +136,8 @@
     <Compile Include="Events\UiEvents.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\ICompatibilityLayer.cs" />
+    <Compile Include="Helpers\UniqueId.cs" />
+    <Compile Include="Helpers\UniqueIdConverter.cs" />
     <Compile Include="Helpers\VersionConverter.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LogEntry.cs" />

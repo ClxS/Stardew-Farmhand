@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Farmhand.Helpers;
 
 namespace Farmhand.Registries.Containers
 {
@@ -18,7 +19,8 @@ namespace Farmhand.Registries.Containers
         public static event EventHandler BeforeLoaded;
         public static event EventHandler AfterLoaded;
 
-        public string UniqueId { get; set; }
+        [JsonConverter(typeof(UniqueIdConverter))]
+        public UniqueId<string> UniqueId { get; set; }
 
         public string ModDll { get; set; }
 
