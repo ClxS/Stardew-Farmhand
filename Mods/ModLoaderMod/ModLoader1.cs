@@ -26,7 +26,7 @@ namespace ModLoaderMod
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
         {
             var test = ModRegistry.GetRegisteredItems();
-            var texture = ModSettings.GetModTexture("icon_menuModsButton");
+            var texture = ModSettings.GetTexture("icon_menuModsButton");
             //var texture2 = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("FarmhandContent\\customUI.png", FileMode.Open));
 
             Farmhand.UI.TitleMenu.RegisterNewTitleButton(new Farmhand.UI.TitleMenu.CustomTitleOption

@@ -12,16 +12,36 @@ namespace Farmhand.API.Utilities
     {
         public static void AddSpriteToSpritesheet(ref Texture2D spritesheet, Texture2D sprite, int spritesheetIndex, int spriteWidth, int spriteHeight)
         {
-            var rect = Game1.getSourceRectForStandardTileSheet(Game1.objectSpriteSheet, spritesheetIndex, spriteWidth,
+            if (spritesheet == null)
+                throw new ArgumentNullException(nameof(spritesheet));
+
+            if (sprite == null)
+                throw new ArgumentNullException(nameof(sprite));
+
+            var rect = Game1.getSourceRectForStandardTileSheet(Game1.objectSpriteSheet, spritesheetIndex,
+                spriteWidth,
                 spriteHeight);
             spritesheet = PatchTexture(spritesheet, sprite, new Rectangle(0, 0, spriteWidth, spriteHeight), rect);
         }
 
         public static Texture2D PatchTexture(Texture2D @base, Texture2D input, Rectangle source, Rectangle destination, bool asNewTexture = false)
         {
-            if ((source.Width*source.Height) != (destination.Width*destination.Height))
+            if (@base == null)
+                throw new ArgumentNullException(nameof(@base));
+
+            if (@base == null)
+                throw new ArgumentNullException(nameof(input));
+
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            if (destination == null)
+                throw new ArgumentNullException(nameof(destination));
+
+            if ((source.Width * source.Height) != (destination.Width*destination.Height))
             {
-                Logging.Log.Exception("Error patching texture", new Exception("Texture source and destination must match when trying to patch a texture"));
+                Logging.Log.Exception("Error patching texture", new Exception($"Texture source and destination must match when trying to patch a texture ({source.Width}x{source.Height}) " +
+                                                                              $"vs ({destination.Width}x{destination.Height})"));
             }
             
             var newData = new Color[source.Width * source.Height];

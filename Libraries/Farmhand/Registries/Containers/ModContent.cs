@@ -10,7 +10,7 @@ namespace Farmhand.Registries.Containers
                                   (Xnb != null && Xnb.Any());
 
 
-        public List<ModTexture> Textures { get; set; }
+        public List<DiskTexture> Textures { get; set; }
         public List<ModXnb> Xnb { get; set; }
 
         public void LoadContent(ModManifest mod)
@@ -28,7 +28,7 @@ namespace Farmhand.Registries.Containers
                     }
 
                     Logging.Log.Verbose($"Registering new texture: {texture.Id}");
-                    TextureRegistry.RegisterItem(mod, texture.Id, texture);
+                    TextureRegistry.RegisterItem(texture.Id, texture, mod);
                 }
             }
 

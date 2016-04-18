@@ -145,9 +145,9 @@ namespace Farmhand.Registries.Containers
             Content?.LoadContent(this);
         }
         
-        public Texture2D GetModTexture(string id)
+        public Texture2D GetTexture(string id)
         {
-            return TextureRegistry.GetItem(this, id).Texture;
+            return TextureRegistry.GetItem(id, this).Texture;
         }
 
 #endregion

@@ -106,8 +106,7 @@ namespace StardewModdingAPI.Events
 
         [Obsolete("Use the other Pre/Post render events instead. All of them will automatically be drawn into the render target if needed.")]
         public static event EventHandler DrawInRenderTargetTick = delegate { };
-
-        [Obsolete("Should not be used.")]
+        
         public static void InvokeDrawTick(object sender, EventArgs eventArgs)
         {
             try

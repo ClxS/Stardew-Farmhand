@@ -297,7 +297,7 @@ namespace Farmhand
                 mod.LastException = error;
                 Log.Success($"Successfully unloaded mod {mod.Name} by {mod.Author}");
             }
-            catch (Exception ex)
+            catch (Exception )
             { 
                 // Ignored
             }

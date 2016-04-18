@@ -100,7 +100,7 @@ namespace WpfTest
                 Packer.ReportProgress(60, "Copying SMAPI Compatibility Layer");
                 File.Copy("StardewModdingAPI.dll", outputDirectory + "\\StardewModdingAPI.dll");
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 
             }

@@ -29,7 +29,7 @@ namespace Farmhand.API.Items
 
             item.Id = IdManager.AssignNewIdSequential(Game1.objectInformation); 
             Items.Add(item);
-            TextureUtility.AddSpriteToSpritesheet(ref Game1.objectSpriteSheet, TextureRegistry.GetModItem(item.Texture).Texture, item.Id, 16, 16);
+            TextureUtility.AddSpriteToSpritesheet(ref Game1.objectSpriteSheet, TextureRegistry.GetItem(item.Texture)?.Texture, item.Id, 16, 16);
             Game1.objectInformation[item.Id] = item.ToString();
         }
 

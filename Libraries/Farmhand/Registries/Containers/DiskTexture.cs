@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Farmhand.Registries.Containers
 {
-    public class ModTexture
+    public class DiskTexture
     {
         public string File { get; set; }
         public string Id { get; set; }

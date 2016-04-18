@@ -157,7 +157,7 @@
     <Compile Include="Registries\Containers\ModContent.cs" />
     <Compile Include="Registries\Containers\ModDependency.cs" />
     <Compile Include="Registries\Containers\ModManifest.cs" />
-    <Compile Include="Registries\Containers\ModTexture.cs" />
+    <Compile Include="Registries\Containers\DiskTexture.cs" />
     <Compile Include="Registries\Containers\ModXnb.cs" />
     <Compile Include="Registries\ModRegistry.cs" />
     <Compile Include="Registries\Registry.cs" />

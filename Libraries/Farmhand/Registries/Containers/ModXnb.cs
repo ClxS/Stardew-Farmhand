@@ -50,7 +50,7 @@ namespace Farmhand.Registries.Containers
             }
             if(IsTexture)
             {
-                return TextureRegistry.GetItem(mod, Texture) != null;
+                return TextureRegistry.GetItem(Texture, mod) != null;
             }
             return false;
         }

@@ -80,7 +80,8 @@ namespace Farmhand.Content
 
         private object LoadTexture(ContentManager contentManager, string assetName, ModXnb item)
         {
-            var obj = TextureRegistry.GetItem(item.OwningMod, item.Texture).Texture;
+            var modItem = TextureRegistry.GetItem(item.Texture, item.OwningMod);
+            var obj = modItem?.Texture;
 
             if (obj == null) return null;
             
