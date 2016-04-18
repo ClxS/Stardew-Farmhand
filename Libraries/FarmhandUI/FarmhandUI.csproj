@@ -52,6 +52,7 @@
     <Reference Include="xTile, Version=2.0.4.0, Culture=neutral, PublicKeyToken=null" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameMenu.cs" />
     <Compile Include="TitleMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\DisableableOptionCheckbox.cs" />
