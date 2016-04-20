@@ -32,5 +32,15 @@ namespace Farmhand.API.Player
             
             player.addItemToInventory(new Object(Vector2.Zero, id, "", true, true, false, false));
         }
+
+        public static void AddObject<T>(Farmer player = null) where T : StardewValley.Object, new()
+        {
+            if (player == null)
+            {
+                player = Game1.player;
+            }
+
+            player.addItemToInventory(new T());
+        }
     }
 }

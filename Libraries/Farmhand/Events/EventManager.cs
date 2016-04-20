@@ -33,6 +33,38 @@ namespace Farmhand.Events
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
         public static void ManualHookup()
         {
+            SaveGame.farmerSerializer.UnknownElement += FarmerSerializer_UnknownElement;
+            SaveGame.farmerSerializer.UnknownAttribute += FarmerSerializer_UnknownAttribute;
+            SaveGame.farmerSerializer.UnknownNode += FarmerSerializer_UnknownNode;
+            SaveGame.farmerSerializer.UnreferencedObject += FarmerSerializer_UnreferencedObject;
+            SaveGame.serializer.UnknownElement += FarmerSerializer_UnknownElement;
+            SaveGame.serializer.UnknownAttribute += FarmerSerializer_UnknownAttribute;
+            SaveGame.serializer.UnknownNode += FarmerSerializer_UnknownNode;
+            SaveGame.serializer.UnreferencedObject += FarmerSerializer_UnreferencedObject;
+            SaveGame.locationSerializer.UnknownElement += FarmerSerializer_UnknownElement;
+            SaveGame.locationSerializer.UnknownAttribute += FarmerSerializer_UnknownAttribute;
+            SaveGame.locationSerializer.UnknownNode += FarmerSerializer_UnknownNode;
+            SaveGame.locationSerializer.UnreferencedObject += FarmerSerializer_UnreferencedObject;
+        }
+
+        private static void FarmerSerializer_UnreferencedObject(object sender, System.Xml.Serialization.UnreferencedObjectEventArgs e)
+        {
+            SerializerEvents.OnUnreferencedObject(sender, e);
+        }
+
+        private static void FarmerSerializer_UnknownNode(object sender, System.Xml.Serialization.XmlNodeEventArgs e)
+        {
+            SerializerEvents.OnUnknownNode(sender, e);
+        }
+
+        private static void FarmerSerializer_UnknownAttribute(object sender, System.Xml.Serialization.XmlAttributeEventArgs e)
+        {
+            SerializerEvents.OnUnknownAttribute(sender, e);
+        }
+
+        private static void FarmerSerializer_UnknownElement(object sender, System.Xml.Serialization.XmlElementEventArgs e)
+        {
+            SerializerEvents.OnUnknownElement(sender, e);
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Update")]

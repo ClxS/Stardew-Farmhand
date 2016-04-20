@@ -73,6 +73,7 @@
     <Compile Include="API\Items\ItemCategory.cs" />
     <Compile Include="API\Items\ItemInformation.cs" />
     <Compile Include="API\Items\ItemType.cs" />
+    <Compile Include="API\Serializer.cs" />
     <Compile Include="API\Utilities\IdManager.cs" />
     <Compile Include="API\Generic\ItemQuantityPair.cs" />
     <Compile Include="API\Player\Player.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Events\PlayerEvents.cs" />
     <Compile Include="Events\PropertyWatcher.cs" />
     <Compile Include="Events\Save.cs" />
+    <Compile Include="Events\SerializerEvents.cs" />
     <Compile Include="Events\TimeEvents.cs" />
     <Compile Include="Events\UiEvents.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
@@ -168,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\Locations\" />
+    <Folder Include="API\Machines\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -16,6 +16,8 @@ namespace FarmhandDebugger
             }
             catch(Exception ex)
             {
+                Console.WriteLine("FATAL EXCEPTION: " + ex.InnerException.Message);
+
                 return -1;
             }
             return 0;

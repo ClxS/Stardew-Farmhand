@@ -26,12 +26,15 @@ namespace RecipeTestMod
             
             Farmhand.Events.GameEvents.OnAfterLoadedContent += GameEvents_OnAfterLoadedContent;
             Farmhand.Events.PlayerEvents.OnFarmerChanged += PlayerEvents_OnFarmerChanged;
+
+            Farmhand.API.Serializer.RegisterType<Heart>();
+            Farmhand.API.Serializer.RegisterType<PuppyTail>();
         }
 
         private void GameEvents_OnAfterLoadedContent(object sender, System.EventArgs e)
         {
-            Farmhand.API.Items.Item.RegisterItem(Heart.Information);
-            Farmhand.API.Items.Item.RegisterItem(PuppyTail.Information);
+            Farmhand.API.Items.Item.RegisterItem<Heart>(Heart.Information);
+            Farmhand.API.Items.Item.RegisterItem<PuppyTail>(PuppyTail.Information);
             VoidStar.Recipe.MaterialsRequired.Add(new ItemQuantityPair() { Count = 10, ItemId = Heart.Information.Id });
             VoidStar.Recipe.MaterialsRequired.Add(new ItemQuantityPair() { Count = 2, ItemId = PuppyTail.Information.Id });
             Farmhand.API.Crafting.CraftingRecipe.RegisterRecipe(VoidStar.Recipe);
@@ -40,8 +43,8 @@ namespace RecipeTestMod
         private void PlayerEvents_OnFarmerChanged(object sender, System.EventArgs e)
         {
             Farmhand.API.Player.Player.AddRecipe(VoidStar.Recipe.PrivateName);
-            Farmhand.API.Player.Player.AddObject(Heart.Information.Id);
-            Farmhand.API.Player.Player.AddObject(PuppyTail.Information.Id);
+            Farmhand.API.Player.Player.AddObject<Heart>();
+            Farmhand.API.Player.Player.AddObject<PuppyTail>();
         }
         
     }

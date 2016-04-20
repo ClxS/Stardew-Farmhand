@@ -7,7 +7,7 @@ using Farmhand.Registries;
 
 namespace RecipeTestMod.Items
 {
-    class PuppyTail : StardewValley.Object
+    public class PuppyTail : StardewValley.Object
     {
         private static ItemInformation _information;
         public static ItemInformation Information => _information ?? (_information = new Farmhand.API.Items.ItemInformation

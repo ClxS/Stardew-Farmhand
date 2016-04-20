@@ -43,6 +43,26 @@ namespace LoggingMod
             Farmhand.Events.SaveEvents.OnAfterSave += SaveEvents_OnAfterSave;
             Farmhand.Events.SaveEvents.OnBeforeLoad += SaveEvents_OnBeforeLoad;
             Farmhand.Events.SaveEvents.OnAfterLoad += SaveEvents_OnAfterLoad;
+            Farmhand.Events.SerializerEvents.UnknownNode += SerializerEvents_UnknownNode;
+            Farmhand.Events.SerializerEvents.UnknownElement += SerializerEvents_UnknownElement;
+            Farmhand.Events.SerializerEvents.UnknownAttribute += SerializerEvents_UnknownAttribute;
+            Farmhand.Events.SerializerEvents.UnreferencedObject += SerializerEvents_UnreferencedObject;
+        }
+
+        private void SerializerEvents_UnreferencedObject(object sender, UnreferencedObjectEventArgs e)
+        {
+        }
+
+        private void SerializerEvents_UnknownAttribute(object sender, XmlAttributeEventArgs e)
+        {
+        }
+
+        private void SerializerEvents_UnknownElement(object sender, XmlElementEventArgs e)
+        {
+        }
+
+        private void SerializerEvents_UnknownNode(object sender, XmlNodeEventArgs e)
+        {
         }
 
         private void SaveEvents_OnAfterLoad(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnAfterLoad e)

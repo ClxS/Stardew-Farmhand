@@ -1,9 +1,10 @@
 ﻿using Farmhand.API.Items;
 using Farmhand.Registries;
+using Microsoft.Xna.Framework;
 
 namespace RecipeTestMod.Items
 {
-    class Heart : StardewValley.Object
+    public class Heart : StardewValley.Object
     {
         private static ItemInformation _information;
         public static ItemInformation Information => _information ?? (_information = new Farmhand.API.Items.ItemInformation
@@ -15,5 +16,11 @@ namespace RecipeTestMod.Items
             Texture = TextureRegistry.GetModSpecificId(RecipeTestMod.Instance.ModSettings, "icon_Heart"),
             Type = ItemType.Other
         });
+
+        public Heart()
+            : base(Vector2.Zero, Information.Id, Information.Name, true, true, false, false)
+        {
+            Farmhand.Logging.Log.Success("Using Heart Class");
+        }
     }
 }
