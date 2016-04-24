@@ -9,7 +9,7 @@ using StardewValley.Menus;
 
 namespace Farmhand.Events
 {
-    internal class PropertyWatcher
+    public class PropertyWatcher
     {
         internal KeyboardState KStateNow { get; private set; }
         internal KeyboardState KStatePrior { get; private set; }
@@ -51,7 +51,7 @@ namespace Farmhand.Events
             return WasButtonJustReleased(button, value > 0.2f ? ButtonState.Pressed : ButtonState.Released, stateIndex);
         }
 
-        private Buttons[] GetButtonsDown(PlayerIndex index)
+        public Buttons[] GetButtonsDown(PlayerIndex index)
         {
             var state = GamePad.GetState(index);
             var buttons = new List<Buttons>();
@@ -77,7 +77,7 @@ namespace Farmhand.Events
             return buttons.ToArray();
         }
 
-        private Buttons[] GetFramePressedButtons(PlayerIndex index)
+        public Buttons[] GetFramePressedButtons(PlayerIndex index)
         {
             GamePadState state = GamePad.GetState(index);
             List<Buttons> buttons = new List<Buttons>();
@@ -104,7 +104,7 @@ namespace Farmhand.Events
             return buttons.ToArray();
         }
 
-        private Buttons[] GetFrameReleasedButtons(PlayerIndex index)
+        public Buttons[] GetFrameReleasedButtons(PlayerIndex index)
         {
             GamePadState state = GamePad.GetState(index);
             List<Buttons> buttons = new List<Buttons>();

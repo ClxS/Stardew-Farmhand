@@ -11,7 +11,7 @@ namespace Farmhand.Events
 {
     public class EventManager
     {
-        private static readonly PropertyWatcher Watcher = new PropertyWatcher();
+        public static readonly PropertyWatcher Watcher = new PropertyWatcher();
         readonly Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>> _detachedDelegates = new Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>>();
 
         private static IEnumerable<Type> GetFarmhandEvents()

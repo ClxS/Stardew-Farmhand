@@ -21,19 +21,24 @@ namespace StardewModdingAPI.Inheritance
     /// The 'SGame' class.
     /// This summary, and many others, only exists because XML doc tags.
     /// </summary>
-    public class SGame
+    public class SGame : Farmhand.Overrides.Game1
     {
         /// <summary>
         /// Useless right now.
         /// </summary>
         public const int LowestModItemID = 1000;
-
-        private Game1 GameInstance { get; set; }
         
-        internal SGame(Game1 inst)
+        /// <summary>
+        /// Gets a jagged array of all buttons pressed on the gamepad the prior frame.
+        /// </summary>
+        public Buttons[][] PreviouslyPressedButtons;
+
+        public SGame()
         {
-            GameInstance = inst;
+            graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            Farmhand.Logging.Log.Success("Using SMAPI game override");
             Instance = this;
+            FirstUpdate = true;
         }
 
         /// <summary>
@@ -42,23 +47,153 @@ namespace StardewModdingAPI.Inheritance
         [Obsolete]
         // ReSharper disable once UnusedAutoPropertyAccessor.Local
         public static Dictionary<int, SObject> ModItems { get; private set; }
+
+        /// <summary>
+        /// The current KeyboardState
+        /// </summary>
+        public KeyboardState KStateNow { get; private set; } = Keyboard.GetState();
+        /// <summary>
+        /// The prior KeyboardState
+        /// </summary>
+        public KeyboardState KStatePrior { get; private set; } = Keyboard.GetState();
+
+        /// <summary>
+        /// The current MouseState
+        /// </summary>
+        public MouseState MStateNow { get; private set; } = Mouse.GetState();
+
+        /// <summary>
+        /// The prior MouseState
+        /// </summary>
+        public MouseState MStatePrior { get; private set; } = Mouse.GetState();
+
+        /// <summary>
+        /// All keys pressed on the current frame
+        /// </summary>
+        public Keys[] CurrentlyPressedKeys => KStateNow.GetPressedKeys();
+
+        /// <summary>
+        /// All keys pressed on the prior frame
+        /// </summary>
+        public Keys[] PreviouslyPressedKeys => KStatePrior.GetPressedKeys();
+
+        /// <summary>
+        /// All keys pressed on this frame except for the ones pressed on the prior frame
+        /// </summary>
+        public Keys[] FramePressedKeys => CurrentlyPressedKeys.Except(PreviouslyPressedKeys).ToArray();
+
+        /// <summary>
+        /// All keys pressed on the prior frame except for the ones pressed on the current frame
+        /// </summary>
+        public Keys[] FrameReleasedKeys => PreviouslyPressedKeys.Except(CurrentlyPressedKeys).ToArray();
+
+        /// <summary>
+        /// Whether or not a save was tagged as 'Loaded' the prior frame.
+        /// </summary>
+        public bool PreviouslyLoadedGame { get; private set; }
+
+        /// <summary>
+        /// The list of GameLocations on the prior frame
+        /// </summary>
+        public int PreviousGameLocations { get; private set; }
+
+        /// <summary>
+        /// The list of GameObjects on the prior frame
+        /// </summary>
+        public int PreviousLocationObjects { get; private set; }
+
+        /// <summary>
+        /// The list of Items in the player's inventory on the prior frame
+        /// </summary>
+        public Dictionary<Item, int> PreviousItems { get; private set; }
+
+        /// <summary>
+        /// The player's Combat level on the prior frame
+        /// </summary>
+        public int PreviousCombatLevel { get; private set; }
+        /// <summary>
+        /// The player's Farming level on the prior frame
+        /// </summary>
+        public int PreviousFarmingLevel { get; private set; }
+        /// <summary>
+        /// The player's Fishing level on the prior frame
+        /// </summary>
+        public int PreviousFishingLevel { get; private set; }
+        /// <summary>
+        /// The player's Foraging level on the prior frame
+        /// </summary>
+        public int PreviousForagingLevel { get; private set; }
+        /// <summary>
+        /// The player's Mining level on the prior frame
+        /// </summary>
+        public int PreviousMiningLevel { get; private set; }
+        /// <summary>
+        /// The player's Luck level on the prior frame
+        /// </summary>
+        public int PreviousLuckLevel { get; private set; }
         
+        /// <summary>
+        /// The player's previous game location
+        /// </summary>
+        public GameLocation PreviousGameLocation { get; private set; }
+
+        /// <summary>
+        /// The previous ActiveGameMenu in Game1
+        /// </summary>
+        public IClickableMenu PreviousActiveMenu { get; private set; }
+        
+        /// <summary>
+        /// The previous mine level
+        /// </summary>
+        public int PreviousMineLevel { get; private set; }
+
+        /// <summary>
+        /// The previous TimeOfDay (Int32 between 600 and 2400?)
+        /// </summary>
+        public int PreviousTimeOfDay { get; private set; }
+
+        /// <summary>
+        /// The previous DayOfMonth (Int32 between 1 and 28?)
+        /// </summary>
+        public int PreviousDayOfMonth { get; private set; }
+
+        /// <summary>
+        /// The previous Season (String as follows: "winter", "spring", "summer", "fall")
+        /// </summary>
+        public string PreviousSeasonOfYear { get; private set; }
+
+        /// <summary>
+        /// The previous Year
+        /// </summary>
+        public int PreviousYearOfGame { get; private set; }
+
+        /// <summary>
+        /// The previous result of Game1.newDay
+        /// </summary>
+        public bool PreviousIsNewDay { get; private set; }
+
+        /// <summary>
+        /// The previous 'Farmer' (Player)
+        /// </summary>
+        public Farmer PreviousFarmer { get; private set; }
+
+        /// <summary>
+        /// The current index of the update tick. Recycles every 60th tick to 0. (Int32 between 0 and 59)
+        /// </summary>
+        public int CurrentUpdateTick { get; private set; }
+
+        /// <summary>
+        /// Whether or not this update frame is the very first of the entire game
+        /// </summary>
+        public bool FirstUpdate { get; private set; }
+
         /// <summary>
         /// The current RenderTarget in Game1 (Private field, uses reflection)
         /// </summary>
         public RenderTarget2D Screen
         {
-            get { return typeof (Game1).GetBaseFieldValue<RenderTarget2D>(GameInstance, "screen"); }
-            set { typeof (Game1).SetBaseFieldValue<RenderTarget2D>(GameInstance, "screen", value); }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int ThumbstickMotionMargin
-        {
-            get { return (int)typeof(Game1).GetBaseFieldValue<object>(GameInstance, "thumbstickMotionMargin"); }
-            set { typeof(Game1).SetBaseFieldValue<object>(GameInstance, "thumbstickMotionMargin", value); }
+            get { return this.screen; }
+            set { this.screen = value; }
         }
 
         /// <summary>
@@ -66,8 +201,8 @@ namespace StardewModdingAPI.Inheritance
         /// </summary>
         public Color BgColour
         {
-            get { return (Color)typeof(Game1).GetBaseFieldValue<object>(GameInstance, "bgColor"); }
-            set { typeof(Game1).SetBaseFieldValue<object>(GameInstance, "bgColor", value); }
+            get { return this.bgColor; }
+            set { this.bgColor = value; }
         }
 
         /// <summary>
@@ -84,97 +219,71 @@ namespace StardewModdingAPI.Inheritance
         /// Whether or not we're in a pseudo 'debug' mode. Mostly for displaying information like FPS.
         /// </summary>
         public static bool Debug { get; private set; }
-        internal static Queue<String> DebugMessageQueue { get; private set; }
+        internal static Queue<string> DebugMessageQueue { get; private set; }
 
         /// <summary>
         /// The current player (equal to Farmer.Player)
         /// </summary>
         [Obsolete("Use Farmer.Player instead")]
-        public Farmer CurrentFarmer => Game1.player;
-
-        public GraphicsDevice GraphicsDevice => GameInstance.GraphicsDevice;
-
-        public GameComponentCollection Components => GameInstance.Components;
-
-        public ContentManager Content => GameInstance.Content;
-
-        public TimeSpan InactiveSleepTime => GameInstance.InactiveSleepTime;
-        public bool IsActive => GameInstance.IsActive;
-        public bool IsFixedTimeStep => GameInstance.IsFixedTimeStep;
-        public bool IsMouseVisible => GameInstance.IsMouseVisible;
-        public LaunchParameters LaunchParameters => GameInstance.LaunchParameters;
-        public GameServiceContainer Services => GameInstance.Services;
-        public TimeSpan TargetElapsedTime => GameInstance.TargetElapsedTime;
-        public GameWindow Window => GameInstance.Window;
+        public Farmer CurrentFarmer => player;
 
         /// <summary>
         /// Gets ALL static fields that belong to 'Game1'
         /// </summary>
-        public static FieldInfo[] GetStaticFields => typeof (Game1).GetFields();
+        public static FieldInfo[] GetStaticFields => typeof(Game1).GetFields();
+        
+        /// <summary>
+        /// Gets an array of all Buttons pressed on a joystick
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Buttons[] GetButtonsDown(PlayerIndex index)
+        {
+            return Farmhand.Events.EventManager.Watcher.GetButtonsDown(index);
+        }
+
+        /// <summary>
+        /// Gets all buttons that were pressed on the current frame of a joystick
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Buttons[] GetFramePressedButtons(PlayerIndex index)
+        {
+            return Farmhand.Events.EventManager.Watcher.GetFramePressedButtons(index);
+        }
+
+        /// <summary>
+        /// Gets all buttons that were released on the current frame of a joystick
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Buttons[] GetFrameReleasedButtons(PlayerIndex index)
+        {
+            return Farmhand.Events.EventManager.Watcher.GetFrameReleasedButtons(index);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static MethodInfo DrawFarmBuildings = typeof(Game1).GetMethod("drawFarmBuildings", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static MethodInfo DrawHUD = typeof(Game1).GetMethod("drawHUD", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static MethodInfo DrawDialogueBox = typeof(Game1).GetMethod("drawDialogueBox", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        public static MethodInfo CheckForEscapeKeys = typeof(Game1).GetMethod("checkForEscapeKeys", BindingFlags.NonPublic | BindingFlags.Instance);
         
         /// <summary>
         /// Whether or not the game's zoom level is 1.0f
         /// </summary>
-        public bool ZoomLevelIsOne => Game1.options.zoomLevel.Equals(1.0f);
+        public bool ZoomLevelIsOne => options.zoomLevel.Equals(1.0f);
         
-        [Obsolete("Do not use at this time.")]
-        // ReSharper disable once UnusedMember.Local
-        private static int RegisterModItem(SObject modItem)
-        {
-            if (modItem.HasBeenRegistered)
-            {
-                Log.AsyncR($"The item {modItem.Name} has already been registered with ID {modItem.RegisteredId}");
-                return modItem.RegisteredId;
-            }
-            var newId = LowestModItemID;
-            if (ModItems.Count > 0)
-                newId = Math.Max(LowestModItemID, ModItems.OrderBy(x => x.Key).First().Key + 1);
-            ModItems.Add(newId, modItem);
-            modItem.HasBeenRegistered = true;
-            modItem.RegisteredId = newId;
-            return newId;
-        }
-
-        [Obsolete("Do not use at this time.")]
-        // ReSharper disable once UnusedMember.Local
-        private static SObject PullModItemFromDict(int id, bool isIndex)
-        {
-            if (isIndex)
-            {
-                if (ModItems.ElementAtOrDefault(id).Value != null)
-                {
-                    return ModItems.ElementAt(id).Value.Clone();
-                }
-                Log.AsyncR("ModItem Dictionary does not contain index: " + id);
-                return null;
-            }
-            if (ModItems.ContainsKey(id))
-            {
-                return ModItems[id].Clone();
-            }
-            Log.AsyncR("ModItem Dictionary does not contain ID: " + id);
-            return null;
-        }
-        
-        /// <summary>
-        /// Invokes a private, non-static method in Game1 via Reflection
-        /// </summary>
-        /// <param name="name">The name of the method</param>
-        /// <param name="parameters">Any parameters needed</param>
-        /// <returns>Whatever the method normally returns. Null if void.</returns>
-        public static object InvokeBasePrivateInstancedMethod(string name, params object[] parameters)
-        {
-            try
-            {
-                return typeof (Game1).GetMethod(name, BindingFlags.NonPublic | BindingFlags.Instance).Invoke(Game1.game1, parameters);
-            }
-            catch
-            {
-                Log.AsyncR("Failed to call base method: " + name);
-                return null;
-            }
-        }
-
         /// <summary>
         /// Queue's a message to be drawn in Debug mode (F3)
         /// </summary>

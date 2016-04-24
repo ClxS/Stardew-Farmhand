@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mods", "Mods", "{D8EB8FAC-BCAC-499D-BD13-81672F19F0E9}"
 EndProject
@@ -105,6 +105,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeTestMod", "Mods\Recip
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBuildingMod", "Mods\TestBuildingMod\TestBuildingMod.csproj", "{7D84422C-8D1D-406C-8462-707B937FAE8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmhandGame", "Libraries\FarmhandGame\FarmhandGame.csproj", "{B2D9D9D6-F121-4797-8BB8-5263EF26FBF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -179,6 +181,10 @@ Global
 		{7D84422C-8D1D-406C-8462-707B937FAE8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D84422C-8D1D-406C-8462-707B937FAE8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D84422C-8D1D-406C-8462-707B937FAE8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2D9D9D6-F121-4797-8BB8-5263EF26FBF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2D9D9D6-F121-4797-8BB8-5263EF26FBF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2D9D9D6-F121-4797-8BB8-5263EF26FBF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2D9D9D6-F121-4797-8BB8-5263EF26FBF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -202,5 +208,6 @@ Global
 		{24ADB72A-FE6B-4334-B5E2-42B8CE12B75D} = {8090819E-F6FF-4299-AA01-8088ABCA8D05}
 		{E7943E87-1406-4D83-AAC0-727DC8116E9C} = {D8EB8FAC-BCAC-499D-BD13-81672F19F0E9}
 		{7D84422C-8D1D-406C-8462-707B937FAE8F} = {D8EB8FAC-BCAC-499D-BD13-81672F19F0E9}
+		{B2D9D9D6-F121-4797-8BB8-5263EF26FBF8} = {F96238FE-3853-4742-8770-F07296FF08CF}
 	EndGlobalSection
 EndGlobal

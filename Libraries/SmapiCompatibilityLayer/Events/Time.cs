@@ -37,7 +37,6 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeOnNewDay(int priorInt, int newInt, bool newDay)
         {
-            //TODO Hook this up
             EventCommon.SafeInvoke(OnNewDay, null, new EventArgsNewDay(priorInt, newInt, newDay));
         }
     }

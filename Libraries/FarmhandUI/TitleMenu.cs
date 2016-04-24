@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Farmhand.Attributes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Farmhand.Attributes;
 using StardewValley.Menus;
 
-namespace Farmhand.UI
+namespace Farmhand.Overrides.UI
 {
     [HookRedirectConstructorFromBase("StardewValley.Game1", "setGameMode")]
     public class TitleMenu : StardewValley.Menus.TitleMenu

@@ -29,7 +29,7 @@ namespace ModLoaderMod
             var texture = ModSettings.GetTexture("icon_menuModsButton");
             //var texture2 = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("FarmhandContent\\customUI.png", FileMode.Open));
 
-            Farmhand.UI.TitleMenu.RegisterNewTitleButton(new Farmhand.UI.TitleMenu.CustomTitleOption
+            Farmhand.Overrides.UI.TitleMenu.RegisterNewTitleButton(new Farmhand.Overrides.UI.TitleMenu.CustomTitleOption
             {
                 Key = "Mods",
                 Texture = texture,
@@ -38,15 +38,14 @@ namespace ModLoaderMod
             });
         }
 
-        public void OnModMenuItemClicked(Farmhand.UI.TitleMenu menu, string choice)
+        public void OnModMenuItemClicked(Farmhand.Overrides.UI.TitleMenu menu, string choice)
         {
-            if (choice == "Mods")
-            {
-                menu.StartMenuTransitioning();
-                Game1.playSound("select");
-                Game1.changeMusicTrack("CloudCountry");
-                menu.SetSubmenu(new ModMenu());
-            }
+            if (choice != "Mods") return;
+
+            menu.StartMenuTransitioning();
+            Game1.playSound("select");
+            Game1.changeMusicTrack("CloudCountry");
+            menu.SetSubmenu(new ModMenu());
         }
     }
 }

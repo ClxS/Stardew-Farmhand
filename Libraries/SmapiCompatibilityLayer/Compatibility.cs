@@ -11,8 +11,11 @@ using StardewValley;
 
 namespace StardewModdingAPI
 {
-    public class Compatibility : ICompatibilityLayer
+    public class Compatibility : CompatibilityLayer
     {
+        public override Type GameOverrideType => typeof(SGame);
+        //public override Type GameOverrideType => null;
+
         public override void AttachEvents(Game1 inst)
         {
             Farmhand.Events.ControlEvents.OnControllerButtonPressed += Events.ControlEvents.InvokeButtonPressed;
@@ -28,9 +31,20 @@ namespace StardewModdingAPI
             Farmhand.Events.GameEvents.OnAfterGameInitialised += Events.GameEvents.InvokeInitialize;
             Farmhand.Events.GameEvents.OnAfterLoadedContent += Events.GameEvents.InvokeLoadContent;
             Farmhand.Events.GameEvents.OnAfterUpdateTick += Events.GameEvents.InvokeUpdateTick;
-
-            Farmhand.Events.GraphicsEvents.OnAfterDraw += Events.GraphicsEvents.InvokeDrawTick;
+            
+            Farmhand.Events.GraphicsEvents.OnPreRenderEvent += Events.GraphicsEvents.InvokeOnPreRenderEvent;
+            Farmhand.Events.GraphicsEvents.OnPreRenderGuiEvent += Events.GraphicsEvents.InvokeOnPreRenderGuiEvent;
+            Farmhand.Events.GraphicsEvents.OnPostRenderGuiEvent += Events.GraphicsEvents.InvokeOnPostRenderGuiEvent;
+            Farmhand.Events.GraphicsEvents.OnPreRenderHudEvent += Events.GraphicsEvents.InvokeOnPreRenderHudEvent;
+            Farmhand.Events.GraphicsEvents.OnPostRenderHudEvent += Events.GraphicsEvents.InvokeOnPostRenderHudEvent;
+            Farmhand.Events.GraphicsEvents.OnPostRenderEvent += Events.GraphicsEvents.InvokeOnPostRenderEvent;
+            Farmhand.Events.GraphicsEvents.OnPreRenderGuiEventNoCheck += Events.GraphicsEvents.InvokeOnPreRenderGuiEventNoCheck;
+            Farmhand.Events.GraphicsEvents.OnPostRenderGuiEventNoCheck += Events.GraphicsEvents.InvokeOnPostRenderGuiEventNoCheck;
+            Farmhand.Events.GraphicsEvents.OnPreRenderHudEventNoCheck += Events.GraphicsEvents.InvokeOnPreRenderHudEventNoCheck;
+            Farmhand.Events.GraphicsEvents.OnPostRenderHudEventNoCheck += Events.GraphicsEvents.InvokeOnPostRenderHudEventNoCheck;
             Farmhand.Events.GraphicsEvents.OnResize += Events.GraphicsEvents.InvokeResize;
+            Farmhand.Events.GraphicsEvents.OnAfterDraw += Events.GraphicsEvents.InvokeDrawTick;
+            Farmhand.Events.GraphicsEvents.OnDrawInRenderTick += Events.GraphicsEvents.InvokeDrawInRenderTargetTick;
 
             Farmhand.Events.LocationEvents.OnLocationsChanged += Events.LocationEvents.InvokeLocationsChanged;
             Farmhand.Events.LocationEvents.OnLocationObjectsChanged += Events.LocationEvents.InvokeOnNewLocationObject;

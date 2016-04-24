@@ -44,6 +44,27 @@ namespace StardewModdingAPI.Events
         public static event EventHandler OnPostRenderEvent = delegate { };
 
         /// <summary>
+        /// Occurs before the GUI is drawn. Does not check for conditional statements.
+        /// </summary>
+
+        public static event EventHandler OnPreRenderGuiEventNoCheck = delegate { };
+        /// <summary>
+        /// Occurs after the GUI is drawn. Does not check for conditional statements.
+        /// </summary>
+
+        public static event EventHandler OnPostRenderGuiEventNoCheck = delegate { };
+        /// <summary>
+        /// Occurs before the HUD is drawn. Does not check for conditional statements.
+        /// </summary>
+
+        public static event EventHandler OnPreRenderHudEventNoCheck = delegate { };
+        /// <summary>
+        /// Occurs after the HUD is drawn. Does not check for conditional statements.
+        /// </summary>
+
+        public static event EventHandler OnPostRenderHudEventNoCheck = delegate { };
+
+        /// <summary>
         /// Draws when SGame.Debug is true. F3 toggles this.
         /// Game1.spriteBatch.Begin() is pre-called.
         /// Do not make end or begin calls to the spritebatch.
@@ -51,52 +72,64 @@ namespace StardewModdingAPI.Events
         /// </summary>
         public static event EventHandler DrawDebug = delegate { };
 
-        internal static void InvokeDrawDebug(object sender, EventArgs e)
+        public static void InvokeDrawDebug(object sender, EventArgs e)
         {
-            //TODO Hook this up
-            EventCommon.SafeInvoke(DrawDebug, sender);
+            DrawDebug.Invoke(sender, e);
         }
 
-        internal static void InvokeOnPreRenderEvent(object sender, EventArgs e)
+        public static void InvokeOnPreRenderEvent(object sender, EventArgs e)
         {
-            //TODO Hook this up
-            EventCommon.SafeInvoke(OnPreRenderEvent, sender);
+            OnPreRenderEvent.Invoke(sender, e);
         }
 
-        internal static void InvokeOnPreRenderGuiEvent(object sender, EventArgs e)
+        public static void InvokeOnPreRenderGuiEvent(object sender, EventArgs e)
         {
-            //TODO Hook this up
-            EventCommon.SafeInvoke(OnPreRenderGuiEvent, sender);
+            OnPreRenderGuiEvent.Invoke(sender, e);
         }
 
-        internal static void InvokeOnPostRenderGuiEvent(object sender, EventArgs e)
+        public static void InvokeOnPostRenderGuiEvent(object sender, EventArgs e)
         {
-            //TODO Hook this up
-            EventCommon.SafeInvoke(OnPostRenderGuiEvent, sender);
+            OnPostRenderGuiEvent.Invoke(sender, e);
         }
 
-        internal static void InvokeOnPreRenderHudEvent(object sender, EventArgs e)
+        public static void InvokeOnPreRenderHudEvent(object sender, EventArgs e)
         {
-            //TODO Hook this up
-            EventCommon.SafeInvoke(OnPreRenderHudEvent, sender);
+            OnPreRenderHudEvent.Invoke(sender, e);
         }
 
-        internal static void InvokeOnPostRenderHudEvent(object sender, EventArgs e)
+        public static void InvokeOnPostRenderHudEvent(object sender, EventArgs e)
         {
-            //TODO Hook this up
-            EventCommon.SafeInvoke(OnPostRenderHudEvent, sender);
+            OnPostRenderHudEvent.Invoke(sender, e);
         }
 
-        internal static void InvokeOnPostRenderEvent(object sender, EventArgs e)
+        public static void InvokeOnPostRenderEvent(object sender, EventArgs e)
         {
-            //TODO Hook this up
-            EventCommon.SafeInvoke(OnPostRenderEvent, sender);
+            OnPostRenderEvent.Invoke(sender, e);
         }
 
-        internal static void InvokeResize(object sender, EventArgs e)
+        public static void InvokeOnPreRenderGuiEventNoCheck(object sender, EventArgs e)
         {
-            //TODO Hook this up
-            EventCommon.SafeInvoke(Resize, sender);
+            OnPreRenderGuiEventNoCheck.Invoke(sender, e);
+        }
+
+        public static void InvokeOnPostRenderGuiEventNoCheck(object sender, EventArgs e)
+        {
+            OnPostRenderGuiEventNoCheck.Invoke(sender, e);
+        }
+
+        public static void InvokeOnPreRenderHudEventNoCheck(object sender, EventArgs e)
+        {
+            OnPreRenderHudEventNoCheck.Invoke(sender, e);
+        }
+
+        public static void InvokeOnPostRenderHudEventNoCheck(object sender, EventArgs e)
+        {
+            OnPostRenderHudEventNoCheck.Invoke(sender, e);
+        }
+
+        public static void InvokeResize(object sender, EventArgs e)
+        {
+            Resize.Invoke(sender, e);
         }
 
         #region To Remove
@@ -106,25 +139,18 @@ namespace StardewModdingAPI.Events
 
         [Obsolete("Use the other Pre/Post render events instead. All of them will automatically be drawn into the render target if needed.")]
         public static event EventHandler DrawInRenderTargetTick = delegate { };
-        
-        public static void InvokeDrawTick(object sender, EventArgs eventArgs)
-        {
-            try
-            {
-                DrawTick.Invoke(null, EventArgs.Empty);
-            }
-            catch (Exception ex)
-            {
-                Log.AsyncR("An exception occured in a Mod's DrawTick: " + ex);
-            }
-        }
 
         [Obsolete("Should not be used.")]
-        public static void InvokeDrawInRenderTargetTick()
+        public static void InvokeDrawInRenderTargetTick(object sender, EventArgs e)
         {
             DrawInRenderTargetTick.Invoke(null, EventArgs.Empty);
         }
 
+        public static void InvokeDrawTick(object sender, EventArgs e)
+        {
+            DrawTick.Invoke(null, EventArgs.Empty);
+        }
         #endregion
+
     }
 }

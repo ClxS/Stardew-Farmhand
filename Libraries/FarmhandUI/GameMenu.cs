@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using Farmhand.Attributes;
 using StardewValley.Menus;
 
-namespace Farmhand.UI
+namespace Farmhand.Overrides.UI
 {
     [HookRedirectConstructorFromBase("StardewValley.Game1", "Window_ClientSizeChanged")]
     [HookRedirectConstructorFromBase("StardewValley.Game1", "updateActiveMenu")]

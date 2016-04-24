@@ -7,8 +7,8 @@ using System.Linq;
 using Farmhand;
 using Farmhand.Registries;
 using Farmhand.Registries.Containers;
-using Farmhand.UI.Components;
 using Farmhand.Logging;
+using Farmhand.Overrides.UI.Components;
 
 namespace ModLoaderMod.Menus
 {

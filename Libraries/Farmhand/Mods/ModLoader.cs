@@ -28,7 +28,7 @@ namespace Farmhand
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
         };
 
-        internal static List<ICompatibilityLayer> CompatibilityLayers { get; set; } = new List<ICompatibilityLayer>();
+        internal static List<CompatibilityLayer> CompatibilityLayers { get; set; } = new List<CompatibilityLayer>();
 
         internal static EventManager ModEventManager = new EventManager();
 
@@ -48,7 +48,6 @@ namespace Farmhand
             Log.Info("Loading Mods...");
             try
             {
-                TryLoadModCompatiblityLayers();
                 Log.Verbose("Loading Mod Manifests");
                 LoadModManifests();
                 Log.Verbose("Validating Mod Manifests");
@@ -90,24 +89,36 @@ namespace Farmhand
             return null;
         }
 
-        private static void TryLoadModCompatiblityLayers()
+        internal static void TryLoadModCompatiblityLayers()
         {
+            Logging.Log.Verbose("Loading Compatibility Layers");
             string[] layers = {"StardewModdingAPI.dll"};
 
             foreach (var layer in layers)
             {
                 try
                 {
-                    if (!File.Exists(layer)) continue;
+                    Logging.Log.Verbose($"Trying to load {layer}");
+                    if (!File.Exists(layer))
+                    {
+                        Logging.Log.Verbose($"{layer} not present");
+                        continue;
+                    }
 
                     var assm = Assembly.LoadFrom(layer);
-                    if (assm.GetTypes().Count(x => x.BaseType == typeof (ICompatibilityLayer)) <= 0) continue;
+                    if (assm.GetTypes().Count(x => x.BaseType == typeof (CompatibilityLayer)) <= 0) continue;
                     
-                    var type = assm.GetTypes().First(x => x.BaseType == typeof(ICompatibilityLayer));
-                    var inst = (ICompatibilityLayer)assm.CreateInstance(type.ToString());
+                    var type = assm.GetTypes().First(x => x.BaseType == typeof(CompatibilityLayer));
+                    var inst = (CompatibilityLayer)assm.CreateInstance(type.ToString());
                     if (inst == null) continue;
 
                     inst.OwnAssembly = assm;
+
+                    if (inst.GameOverrideType != null)
+                    {
+                        Logging.Log.Verbose($"Override {inst.GameOverrideType}");
+                        API.Game.RegisterGameOverride(inst.GameOverrideType);
+                    }
 
                     CompatibilityLayers.Add(inst);
                     inst.AttachEvents(Game1.game1);
