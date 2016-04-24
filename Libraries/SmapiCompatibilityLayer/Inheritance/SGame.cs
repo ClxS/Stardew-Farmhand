@@ -39,6 +39,7 @@ namespace StardewModdingAPI.Inheritance
             Farmhand.Logging.Log.Success("Using SMAPI game override");
             Instance = this;
             FirstUpdate = true;
+            Program.gamePtr = this;
         }
 
         /// <summary>
