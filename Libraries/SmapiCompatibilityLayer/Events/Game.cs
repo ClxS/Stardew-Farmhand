@@ -47,6 +47,7 @@ namespace StardewModdingAPI.Events
         public static event EventHandler OneSecondTick = delegate { };
 
         private static bool FirstUpdateFired { get; set; } = false;
+        private static int CurrentUpdateTick { get; set; } = 0;
 
         internal static void InvokeGameLoaded(object sender, EventArgsOnGameInitialise eventArgsOnGameInitialise)
         {
@@ -92,6 +93,33 @@ namespace StardewModdingAPI.Events
             {
                 Log.AsyncR("An exception occured in XNA UpdateTick: " + ex);
             }
+
+            if(FirstUpdateFired)
+            {
+                InvokeFirstUpdateTick();
+            }
+
+            if (CurrentUpdateTick % 2 == 0)
+                InvokeSecondUpdateTick();
+
+            if (CurrentUpdateTick % 4 == 0)
+                InvokeFourthUpdateTick();
+
+            if (CurrentUpdateTick % 8 == 0)
+                InvokeEighthUpdateTick();
+
+            if (CurrentUpdateTick % 15 == 0)
+                InvokeQuarterSecondTick();
+
+            if (CurrentUpdateTick % 30 == 0)
+                InvokeHalfSecondTick();
+
+            if (CurrentUpdateTick % 60 == 0)
+                InvokeOneSecondTick();
+
+            CurrentUpdateTick += 1;
+            if (CurrentUpdateTick >= 60)
+                CurrentUpdateTick = 0;
         }
 
         internal static void InvokeSecondUpdateTick()
