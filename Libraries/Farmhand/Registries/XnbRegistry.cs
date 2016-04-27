@@ -15,11 +15,12 @@ namespace Farmhand.Registries
         /// <summary>
         /// Get ModXnb with key
         /// </summary>
-        /// <param name="key">Id of ModXnb to return</param>
+        /// <param name="itemId">Id of ModXnb to return</param>
+        /// <param name="mod">Mod this ModXnb belongs to</param>
         /// <returns>Matching ModXnb</returns>
-        public static ModXnb GetItem(string key)
+        public static ModXnb GetItem(string itemId, ModManifest mod = null)
         {
-            return RegistryInstance.GetItem(key);
+            return RegistryInstance.GetItem(mod == null ? itemId : GetModSpecificId(mod, itemId));
         }
 
         /// <summary>
@@ -36,18 +37,33 @@ namespace Farmhand.Registries
         /// </summary>
         /// <param name="itemId">Id of ModXnb to return</param>
         /// <param name="item">ModXnb to register</param>
-        public static void RegisterItem(string itemId, ModXnb item)
+        /// <param name="mod">Mod this ModXnb belongs to</param>
+        public static void RegisterItem(string itemId, ModXnb item, ModManifest mod = null)
         {
-            RegistryInstance.RegisterItem(itemId, item);
+            RegistryInstance.RegisterItem(mod == null ? itemId : GetModSpecificId(mod, itemId), item);
         }
 
         /// <summary>
         /// Remove ModXnb
         /// </summary>
         /// <param name="itemId">Id of ModXnb to remove</param>
-        public static void UnregisterItem(string itemId)
+        /// <param name="mod">Mod this ModXnb belongs to</param>
+        public static void UnregisterItem(string itemId, ModManifest mod = null)
         {
-            RegistryInstance.UnregisterItem(itemId);
+            RegistryInstance.UnregisterItem(mod == null ? itemId : GetModSpecificId(mod, itemId));
         }
+
+        #region Helper Functions
+        private static string GetModSpecificPrefix(ModManifest mod)
+        {
+            return $"\\{mod.UniqueId.ThisId}\\";
+        }
+
+        public static string GetModSpecificId(ModManifest mod, string itemId)
+        {
+            var modPrefix = GetModSpecificPrefix(mod);
+            return $"{modPrefix}{itemId}";
+        }
+        #endregion
     }
 }

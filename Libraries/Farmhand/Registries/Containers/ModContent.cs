@@ -49,7 +49,7 @@ namespace Farmhand.Registries.Containers
                         throw new Exception($"Replacement Texture: {file.Texture}");
                 }
                 Logging.Log.Verbose("Registering new texture XNB override");
-                XnbRegistry.RegisterItem(file.Original, file);
+                XnbRegistry.RegisterItem(file.Original, file, mod);
             }
         }        
     }
