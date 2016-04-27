@@ -69,12 +69,7 @@ namespace StardewModdingAPI.Events
         internal static void InvokeLoadContent(object sender, EventArgs eventArgs)
         {
             try
-            {
-                if (!FirstUpdateFired)
-                {
-                    FirstUpdateFired = true;
-                    EventCommon.SafeInvoke(FirstUpdateTick, sender);
-                }
+            {                
                 EventCommon.SafeInvoke(LoadContent, sender);
             }
             catch (Exception ex)
@@ -94,7 +89,8 @@ namespace StardewModdingAPI.Events
                 Log.AsyncR("An exception occured in XNA UpdateTick: " + ex);
             }
 
-            if(FirstUpdateFired)
+
+            if (!FirstUpdateFired)
             {
                 InvokeFirstUpdateTick();
             }
@@ -124,42 +120,37 @@ namespace StardewModdingAPI.Events
 
         internal static void InvokeSecondUpdateTick()
         {
-            //DODO Hook this
             EventCommon.SafeInvoke(SecondUpdateTick, null);
         }
 
         internal static void InvokeFourthUpdateTick()
         {
-            //DODO Hook this
             EventCommon.SafeInvoke(FourthUpdateTick, null);
         }
 
         internal static void InvokeEighthUpdateTick()
         {
-            //DODO Hook this
             EventCommon.SafeInvoke(EighthUpdateTick, null);
         }
 
         internal static void InvokeQuarterSecondTick()
         {
-            //DODO Hook this
             EventCommon.SafeInvoke(QuarterSecondTick, null);
         }
 
         internal static void InvokeHalfSecondTick()
         {
-            //DODO Hook this
             EventCommon.SafeInvoke(HalfSecondTick, null);
         }
 
         internal static void InvokeOneSecondTick()
         {
-            //DODO Hook this
             EventCommon.SafeInvoke(OneSecondTick, null);
         }
 
         internal static void InvokeFirstUpdateTick()
         {
+            FirstUpdateFired = true;
             EventCommon.SafeInvoke(FirstUpdateTick, null);
         }
     }
