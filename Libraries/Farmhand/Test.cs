@@ -1,5 +1,8 @@
 ﻿namespace Farmhand
 {
+    /// <summary>
+    /// Used for testing IL generation. Do not use this class since it's entirely useless.
+    /// </summary>
     public class Test
     {
         public static bool IsEnabled = false;

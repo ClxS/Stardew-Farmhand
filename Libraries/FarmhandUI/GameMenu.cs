@@ -4,6 +4,9 @@ using StardewValley.Menus;
 
 namespace Farmhand.Overrides.UI
 {
+    /// <summary>
+    /// Override for Stardew's Game Menu, providing methods to add custom pages/tabs
+    /// </summary>
     [HookRedirectConstructorFromBase("StardewValley.Game1", "Window_ClientSizeChanged")]
     [HookRedirectConstructorFromBase("StardewValley.Game1", "updateActiveMenu")]
     [HookRedirectConstructorFromBase("StardewValley.Game1", "checkForEscapeKeys")]

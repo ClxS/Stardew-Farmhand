@@ -15,6 +15,9 @@ using Farmhand.Events;
 // ReSharper disable once CheckNamespace
 namespace Farmhand.Overrides
 {
+    /// <summary>
+    /// Overrides Stardew's Game1, allowing for advanced callback events to be added
+    /// </summary>
     public class Game1 : Farmhand.Overrides.GameOverrideBase
     {
         private readonly Dictionary<string, Action<GameTime>> _versionSpecificOverrides = new Dictionary<string, Action<GameTime>>();

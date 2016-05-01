@@ -5,6 +5,9 @@ using StardewValley.Menus;
 
 namespace Farmhand.Overrides.UI.Components
 {    
+    /// <summary>
+    /// Custom UI control providing a checkbox which can be disabled.
+    /// </summary>
     public class DisableableOptionCheckbox : OptionsElement
     {
         public static Rectangle SourceRectUnchecked = new Rectangle(227, 425, 9, 9);

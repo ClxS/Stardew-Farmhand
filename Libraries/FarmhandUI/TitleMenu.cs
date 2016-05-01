@@ -8,6 +8,9 @@ using StardewValley.Menus;
 
 namespace Farmhand.Overrides.UI
 {
+    /// <summary>
+    /// Override of Stardew's TitleMenu, providing methods to add custom titlemenu buttons
+    /// </summary>
     [HookRedirectConstructorFromBase("StardewValley.Game1", "setGameMode")]
     public class TitleMenu : StardewValley.Menus.TitleMenu
     {
