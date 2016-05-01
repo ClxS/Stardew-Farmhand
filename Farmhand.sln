@@ -48,6 +48,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmhandPatcherFirstPass", "Installers\Patcher\FarmhandPatcherFirstPass\FarmhandPatcherFirstPass.csproj", "{5694F858-4837-4354-A808-0C7941D45B58}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmhandPatcherSecondPass", "Installers\Patcher\FarmhandPatcherSecondPass\FarmhandPatcherSecondPass.csproj", "{54E08588-2A70-4545-9FCE-0E3B6B04158A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B2D9D9D6-F121-4797-8BB8-5263EF26FBF8} = {B2D9D9D6-F121-4797-8BB8-5263EF26FBF8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmhandPatcherCommon", "Installers\Patcher\FarmhandPatcherCommon\FarmhandPatcherCommon.csproj", "{7F304954-A190-4003-B11E-A9043113396D}"
 EndProject

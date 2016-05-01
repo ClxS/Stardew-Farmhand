@@ -10,3 +10,4 @@ namespace WpfTest
         public static string ProgramName => "Farmhand";
     }
 }
+ 

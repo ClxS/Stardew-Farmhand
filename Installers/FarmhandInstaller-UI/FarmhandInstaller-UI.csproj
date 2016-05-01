@@ -130,22 +130,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Payload\ILRepack.dll" />
-    <EmbeddedResource Include="Payload\Mono.Cecil.dll" />
-    <EmbeddedResource Include="Payload\Mono.Cecil.Mdb.dll" />
-    <EmbeddedResource Include="Payload\Mono.Cecil.Pdb.dll" />
-    <EmbeddedResource Include="Payload\Mono.Cecil.Rocks.dll" />
-    <EmbeddedResource Include="Payload\Revolution Patcher.dll" />
-    <EmbeddedResource Include="Payload\Revolution.dll" />
-    <EmbeddedResource Include="Payload\RevolutionPatcherFirstPass.dll" />
-    <EmbeddedResource Include="Payload\RevolutionPatcherSecondPass.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Payload\Newtonsoft.Json.dll" />
-    <EmbeddedResource Include="Payload\RevolutionUI.dll" />
-    <EmbeddedResource Include="Payload\StardewModdingAPI.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Patcher\FarmhandPatcherCommon\FarmhandPatcherCommon.csproj">
       <Project>{7f304954-a190-4003-b11e-a9043113396d}</Project>
       <Name>FarmhandPatcherCommon</Name>
@@ -173,13 +157,28 @@
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Payload\Farmhand Patcher.dll" />
+    <EmbeddedResource Include="Payload\Farmhand.dll" />
+    <EmbeddedResource Include="Payload\FarmhandPatcherFirstPass.dll" />
+    <EmbeddedResource Include="Payload\FarmhandPatcherSecondPass.dll" />
+    <EmbeddedResource Include="Payload\FarmhandUI.dll" />
+    <EmbeddedResource Include="Payload\ILRepack.dll" />
+    <EmbeddedResource Include="Payload\Mono.Cecil.dll" />
+    <EmbeddedResource Include="Payload\Mono.Cecil.Mdb.dll" />
+    <EmbeddedResource Include="Payload\Mono.Cecil.Pdb.dll" />
+    <EmbeddedResource Include="Payload\Mono.Cecil.Rocks.dll" />
+    <EmbeddedResource Include="Payload\Newtonsoft.Json.dll" />
+    <EmbeddedResource Include="Payload\StardewModdingAPI.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>xcopy "$(SolutionDir)Bin\Revolution Patcher.dll" "$(ProjectDir)Payload" /Y
-xcopy "$(SolutionDir)Bin\RevolutionPatcherFirstPass.dll" "$(ProjectDir)Payload" /Y
-xcopy "$(SolutionDir)Bin\RevolutionPatcherSecondPass.dll" "$(ProjectDir)Payload" /Y
-xcopy "$(SolutionDir)Bin\Revolution.dll" "$(ProjectDir)Payload" /Y
-xcopy "$(SolutionDir)Bin\RevolutionUI.dll" "$(ProjectDir)Payload" /Y
+    <PreBuildEvent>xcopy "$(SolutionDir)Bin\Farmhand Patcher.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\FarmhandPatcherFirstPass.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\FarmhandPatcherSecondPass.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\Farmhand.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\FarmhandUI.dll" "$(ProjectDir)Payload" /Y
 xcopy "$(SolutionDir)Bin\ILRepack.dll" "$(ProjectDir)Payload" /Y
 xcopy "$(SolutionDir)Bin\Mono.Cecil.dll" "$(ProjectDir)Payload" /Y
 xcopy "$(SolutionDir)Bin\Mono.Cecil.Mdb.dll" "$(ProjectDir)Payload" /Y
