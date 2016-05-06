@@ -133,7 +133,7 @@ namespace Farmhand.Registries.Containers
             }
             catch (Exception ex)
             {
-                Log.Exception("Test", ex);
+                Log.Exception("Error loading mod DLL", ex);
                 //throw new Exception(string.Format($"Failed to load mod '{modDllPath}'\n\t-{ex.Message}\n\t\t-{ex.StackTrace}"), ex);
             }
 

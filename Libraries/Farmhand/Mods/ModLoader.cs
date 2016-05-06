@@ -44,7 +44,12 @@ namespace Farmhand
             ApiEvents.OnModError += ApiEvents_OnModError;
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
-            
+
+
+            Log.Success("Initializing Mappings");
+            GlobalRouteManager.InitialiseMappings();
+            Log.Success("Mappings Initialized");
+
             Log.Info("Loading Mods...");
             try
             {

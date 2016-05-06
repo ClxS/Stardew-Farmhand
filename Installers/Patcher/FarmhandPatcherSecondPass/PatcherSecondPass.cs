@@ -20,8 +20,7 @@ namespace Farmhand
             HookApiVirtualAlterations<HookForceVirtualBaseAttribute>(cecilContext);
             HookMakeBaseVirtualCallAlterations<HookMakeBaseVirtualCallAttribute>(cecilContext);
             HookConstructionRedirectors<HookRedirectConstructorFromBaseAttribute>(cecilContext);
-
-            //TODO: Broken! Terrible performance
+            
             HookGlobalRouting(cecilContext);
            
             Console.WriteLine("Second Pass Installation Completed");

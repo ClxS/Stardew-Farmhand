@@ -19,17 +19,17 @@ namespace ModLoaderMod
             Farmhand.Events.GlobalRouteManager.Listen("StardewValley.Menus.TitleMenu", ".ctor", TitleMenuCreated);
         }
 
+
         private void TitleMenuCreated(EventArgsGlobalRouteManager eventArgsGlobalRouteManager)
         {
-            Farmhand.Events.GlobalRouteManager.Remove("StardewValley.Menus.TitleMenu", ".ctor", TitleMenuCreated);
+            //Farmhand.Events.GlobalRouteManager.Remove("StardewValley.Menus.TitleMenu", ".ctor", TitleMenuCreated);
         }
 
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
         {
             var test = ModRegistry.GetRegisteredItems();
             var texture = ModSettings.GetTexture("icon_menuModsButton");
-            //var texture2 = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream("FarmhandContent\\customUI.png", FileMode.Open));
-
+            
             Farmhand.Overrides.UI.TitleMenu.RegisterNewTitleButton(new Farmhand.Overrides.UI.TitleMenu.CustomTitleOption
             {
                 Key = "Mods",

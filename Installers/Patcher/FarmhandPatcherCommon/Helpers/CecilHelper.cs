@@ -10,8 +10,6 @@ namespace Farmhand.Helpers
 {
     public static class CecilHelper
     {
-        //System.Void StardewValley.Game1::.ctor()
-
         private static void InjectMethod<TParam, TThis, TInput, TLocal>(ILProcessor ilProcessor, Instruction target, MethodReference method, bool isExit = false, bool cancelable = false)
         {
             ilProcessor.Body.SimplifyMacros();
@@ -168,7 +166,7 @@ namespace Farmhand.Helpers
             InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition, true);
         }
 
-        public static void InjectGlobalRouteMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod)
+        public static void InjectGlobalRouteMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod, int index)
         {
             var fieldDefinition = stardewContext.GetFieldDefinition("Farmhand.Events.GlobalRouteManager", "IsEnabled");
             var methodIsListenedTo = stardewContext.GetMethodDefinition("Farmhand.Events.GlobalRouteManager", "IsBeingListenedTo");
@@ -202,14 +200,13 @@ namespace Farmhand.Helpers
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldsfld, fieldDefinition));
             newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
 
-            newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeType));
-            newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeMethod));
-
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, index));
             newInstructions.Add(ilProcessor.Create(OpCodes.Call, methodIsListenedTo));
             newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
 
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, index));
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeType));
-            newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeMethod));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeType));
 
             /*//if (method.ReturnType != null && method.ReturnType != voidType)
             {
@@ -380,15 +377,53 @@ namespace Farmhand.Helpers
             }
         }
 
-        public static void HookAllGlobalRouteMethods(CecilContext cecilContext)
+        public static void HookAllGlobalRouteMethods(CecilContext stardewContext)
         {
-            ILProcessor ilProcessor = cecilContext.GetMethodIlProcessor("Farmhand.Test", "Test1");
-            ilProcessor.Body.SimplifyMacros();
-            var methods = cecilContext.GetMethods().Where(n => n.DeclaringType.Namespace.StartsWith("StardewValley"));
-            foreach (var method in methods)
+            var methods = stardewContext.GetMethods().Where(n => n.DeclaringType.Namespace.StartsWith("StardewValley")).ToArray();
+
             {
-                InjectGlobalRouteMethod(cecilContext, method.DeclaringType.FullName, method.Name);
+                var listenedMethodField = stardewContext.GetFieldDefinition("Farmhand.Events.GlobalRouteManager", "ListenedMethods");
+                var ilProcessor = stardewContext.GetMethodIlProcessor("Farmhand.Events.GlobalRouteManager", ".cctor");
+                var loadInt = ilProcessor.Create(OpCodes.Ldc_I4, methods.Length);
+                var setValue = ilProcessor.Create(OpCodes.Stsfld, listenedMethodField);
+                ilProcessor.InsertAfter(ilProcessor.Body.Instructions[ilProcessor.Body.Instructions.Count - 2], loadInt);
+                ilProcessor.InsertAfter(loadInt, setValue);                
             }
+
+            for (int i = 0; i < methods.Length; ++i)
+            {
+                InjectGlobalRouteMethod(stardewContext, methods[i].DeclaringType.FullName, methods[i].Name, i);
+                InjectMappingInformation(stardewContext, methods[i].DeclaringType.FullName, methods[i].Name, i);
+            }            
+        }
+
+        private static void InjectMappingInformation(CecilContext stardewContext, string className, string methodName, int index)
+        {
+            var mapMethodDefinition = stardewContext.GetMethodDefinition("Farmhand.Events.GlobalRouteManager", "MapIndex");
+            var ilProcessor = stardewContext.GetMethodIlProcessor("Farmhand.Events.GlobalRouteManager", "InitialiseMappings");
+
+            if (ilProcessor == null || mapMethodDefinition == null)
+                return;
+
+            var newInstructions = new List<Instruction>();
+
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, className));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, methodName));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, index));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Call, mapMethodDefinition));
+
+            ilProcessor.Body.SimplifyMacros();
+            if (newInstructions.Any())
+            {
+                var previousInstruction = newInstructions.First();
+                ilProcessor.InsertAfter(ilProcessor.Body.Instructions[ilProcessor.Body.Instructions.Count - 2], previousInstruction);
+                for (var i = 1; i < newInstructions.Count; ++i)
+                {
+                    ilProcessor.InsertAfter(previousInstruction, newInstructions[i]);
+                    previousInstruction = newInstructions[i];
+                }
+            }
+            ilProcessor.Body.OptimizeMacros();
         }
     }
 }

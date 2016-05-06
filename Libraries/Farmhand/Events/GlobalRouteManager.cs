@@ -12,38 +12,62 @@ namespace Farmhand.Events
     //provide an alternative until I get around to implementing your requests.)
     public static class GlobalRouteManager
     {
+        public static int ListenedMethods = 0;
+                
         //IsEnabled could be a property which returns Listeners.Any or Listeners.Count > 0 but it's being accessed potentailly thousands of times per frame.
         public static bool IsEnabled = false;
-        
-        private static readonly Dictionary<string, List<Action<EventArgsGlobalRouteManager>>> Listeners = new Dictionary<string, List<Action<EventArgsGlobalRouteManager>>>();
 
-
-
-        //public static void GlobalRouteInvoke(string type, string method, out object output, params object[] @parans) //TODO Add once implemented
-        public static void GlobalRouteInvoke(string type, string method)
+        private static List<Action<EventArgsGlobalRouteManager>>[] _listeners;        
+        private static List<Action<EventArgsGlobalRouteManager>>[] Listeners
         {
-            if (!IsEnabled)
-                return;
-            
-            var key = $"{type}.{method}";
-            if (!Listeners.ContainsKey(key))
-                return;
-
-            var evtCallbacks = Listeners[key];
-            if (evtCallbacks == null)
-                return;
-
-            var evtArgs = new EventArgsGlobalRouteManager(type, method, null, null);
-            foreach (var evt in evtCallbacks)
+            get
             {
-                evt.Invoke(evtArgs);
+                if (_listeners == null)
+                {
+                    _listeners = new List<Action<EventArgsGlobalRouteManager>>[ListenedMethods];
+                }
+                return _listeners;
             }
         }
 
-        public static bool IsBeingListenedTo(string type, string method)
+        private static readonly Dictionary<string, int> MapIndexes = new Dictionary<string, int>();
+
+        public static void MapIndex(string type, string method, int index)
         {
             var key = $"{type}.{method}";
-            return Listeners.ContainsKey(key);
+            if (MapIndexes.ContainsKey(key))
+                return;
+
+            MapIndexes[key] = index;
+        }
+
+        public static void InitialiseMappings()
+        {
+        }
+
+
+        //public static void GlobalRouteInvoke(string type, string method, out object output, params object[] @parans) //TODO Add once implemented
+        public static void GlobalRouteInvoke(int index, string type, string method)
+        {
+            if (!IsEnabled)
+                return;
+                        
+
+            if (Listeners[index] != null)
+            {
+                var evtArgs = new EventArgsGlobalRouteManager(type, method, null, null);
+                foreach (var evt in Listeners[index])
+                {
+                    evt.Invoke(evtArgs);
+                }
+            }
+        }
+
+        //public static bool IsBeingListenedTo(string type, string method)
+        public static bool IsBeingListenedTo(int method)
+        {
+           // Logging.Log.Success($"BLAH {method}");
+            return Listeners[method] != null;
         }
 
         /// <summary>
@@ -55,11 +79,20 @@ namespace Farmhand.Events
         public static void Listen(string type, string method, Action<EventArgsGlobalRouteManager> callback)
         {
             var key = $"{type}.{method}";
-            if (!Listeners.ContainsKey(key) || Listeners[key] == null)
-                Listeners[key] = new List<Action<EventArgsGlobalRouteManager>>();
+            int index;
+            if (MapIndexes.TryGetValue(key, out index))
+            {
+                if (Listeners[index] == null)
+                    Listeners[index] = new List<Action<EventArgsGlobalRouteManager>>();
 
-            Listeners[key].Add(callback);
-            IsEnabled = true;
+                Listeners[index].Add(callback);
+                IsEnabled = true;
+            }
+            else
+            {
+                throw new Exception("The method ({key}) is not available for listening");
+            }
+            
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿namespace Farmhand
+﻿using Farmhand.Events;
+namespace Farmhand
 {
     /// <summary>
     /// Used for testing IL generation. Do not use this class since it's entirely useless.
@@ -9,13 +10,8 @@
 
         public void Test1(Mod @in, int y, int width, int height, bool test)
         {
-            if (Farmhand.Events.GlobalRouteManager.IsEnabled)
-            {
-                if(Farmhand.Events.GlobalRouteManager.IsBeingListenedTo("Farmhand.Test", "Test"))
-                {
-                    Farmhand.Events.GlobalRouteManager.GlobalRouteInvoke("Farmhand.Test", "Test");
-                }
-            }
+            GlobalRouteManager.ListenedMethods = 3423;
+            GlobalRouteManager.MapIndex("Farmhand.Test", "Test", 0);
         }
 
         public static bool Test2(string type, string method, out object @out, params object[] param)
