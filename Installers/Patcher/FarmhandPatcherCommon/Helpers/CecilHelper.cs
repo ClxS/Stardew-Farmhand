@@ -171,6 +171,7 @@ namespace Farmhand.Helpers
         public static void InjectGlobalRouteMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod)
         {
             var fieldDefinition = stardewContext.GetFieldDefinition("Farmhand.Events.GlobalRouteManager", "IsEnabled");
+            var methodIsListenedTo = stardewContext.GetMethodDefinition("Farmhand.Events.GlobalRouteManager", "IsBeingListenedTo");
             var methodDefinition = stardewContext.GetMethodDefinition("Farmhand.Events.GlobalRouteManager", "GlobalRouteInvoke");
             var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
 
@@ -199,6 +200,12 @@ namespace Farmhand.Helpers
 
             var newInstructions = new List<Instruction>();
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldsfld, fieldDefinition));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
+
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeType));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeMethod));
+
+            newInstructions.Add(ilProcessor.Create(OpCodes.Call, methodIsListenedTo));
             newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
 
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeType));
@@ -375,6 +382,8 @@ namespace Farmhand.Helpers
 
         public static void HookAllGlobalRouteMethods(CecilContext cecilContext)
         {
+            ILProcessor ilProcessor = cecilContext.GetMethodIlProcessor("Farmhand.Test", "Test1");
+            ilProcessor.Body.SimplifyMacros();
             var methods = cecilContext.GetMethods().Where(n => n.DeclaringType.Namespace.StartsWith("StardewValley"));
             foreach (var method in methods)
             {

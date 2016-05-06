@@ -122,7 +122,7 @@ namespace Farmhand.Helpers
         }
         
         [Hook(HookType.Entry, "StardewValley.Program", "Main")]
-        internal static bool InvokeBeforePlayerTakesDamage()
+        internal static bool MainRedirectFunction()
         {
             ModLoader.TryLoadModCompatiblityLayers();
 

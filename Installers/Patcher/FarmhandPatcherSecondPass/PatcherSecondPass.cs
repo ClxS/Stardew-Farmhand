@@ -22,7 +22,7 @@ namespace Farmhand
             HookConstructionRedirectors<HookRedirectConstructorFromBaseAttribute>(cecilContext);
 
             //TODO: Broken! Terrible performance
-            //HookGlobalRouting(cecilContext);
+            HookGlobalRouting(cecilContext);
            
             Console.WriteLine("Second Pass Installation Completed");
 

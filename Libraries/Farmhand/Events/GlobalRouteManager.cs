@@ -14,8 +14,10 @@ namespace Farmhand.Events
     {
         //IsEnabled could be a property which returns Listeners.Any or Listeners.Count > 0 but it's being accessed potentailly thousands of times per frame.
         public static bool IsEnabled = false;
-
+        
         private static readonly Dictionary<string, List<Action<EventArgsGlobalRouteManager>>> Listeners = new Dictionary<string, List<Action<EventArgsGlobalRouteManager>>>();
+
+
 
         //public static void GlobalRouteInvoke(string type, string method, out object output, params object[] @parans) //TODO Add once implemented
         public static void GlobalRouteInvoke(string type, string method)
@@ -38,22 +40,26 @@ namespace Farmhand.Events
             }
         }
 
+        public static bool IsBeingListenedTo(string type, string method)
+        {
+            var key = $"{type}.{method}";
+            return Listeners.ContainsKey(key);
+        }
+
         /// <summary>
         /// Attach a listener and enable the global route table
         /// </summary>
         /// <param name="type">The type containing the method to listen for</param>
         /// <param name="method">The method to listen for</param>
         /// <param name="callback">The delegate to add</param>
-        [Obsolete("This method will currently not work")]
         public static void Listen(string type, string method, Action<EventArgsGlobalRouteManager> callback)
         {
-            return;
-            /*var key = $"{type}.{method}";
+            var key = $"{type}.{method}";
             if (!Listeners.ContainsKey(key) || Listeners[key] == null)
                 Listeners[key] = new List<Action<EventArgsGlobalRouteManager>>();
 
             Listeners[key].Add(callback);
-            IsEnabled = true;*/
+            IsEnabled = true;
         }
 
         /// <summary>
@@ -62,32 +68,31 @@ namespace Farmhand.Events
         /// <param name="type">The type containing the method to listen for</param>
         /// <param name="method">The method to listen for</param>
         /// <param name="callback">The delegate to remove. This must be the same instance used when first registering the listener</param>
-        [Obsolete("This method will currently not work")]
+        [Obsolete("Something wrong with this")]
         public static void Remove(string type, string method, Action<EventArgsGlobalRouteManager> callback)
         {
-            return;
-            /*var key = $"{type}.{method}";
-            if (Listeners.ContainsKey(key))
-            {
-                if (Listeners[key] != null)
-                {
-                    Listeners[key].Remove(callback);
-                    if (Listeners[key].Count <= 0)
-                    {
-                        Listeners[key] = null;
-                    }
-                }
+            //var key = $"{type}.{method}";
+            //if (Listeners.ContainsKey(key))
+            //{
+            //    if (Listeners[key] != null)
+            //    {
+            //        Listeners[key].Remove(callback);
+            //        if (Listeners[key].Count <= 0)
+            //        {
+            //            Listeners[key] = null;
+            //        }
+            //    }
 
-                if (Listeners[key] == null)
-                {
-                    Listeners.Remove(key);
-                }   
-            }
+            //    if (Listeners[key] == null)
+            //    {
+            //        Listeners.Remove(key);
+            //    }   
+            //}
 
-            if (Listeners.Count <= 0)
-            {
-                IsEnabled = false;
-            }*/
+            //if (Listeners.Count <= 0)
+            //{
+            //    IsEnabled = false;
+            //}
         }
     }
 }
