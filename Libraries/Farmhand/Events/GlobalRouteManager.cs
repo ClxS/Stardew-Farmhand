@@ -46,16 +46,18 @@ namespace Farmhand.Events
         }
 
 
-        //public static void GlobalRouteInvoke(string type, string method, out object output, params object[] @parans) //TODO Add once implemented
-        public static void GlobalRouteInvoke(int index, string type, string method)
+        //public static void GlobalRouteInvoke(int index, string type, string method, out object output, params object[] @parans) //TODO Add once implemented
+        public static void GlobalRouteInvoke(int index, string type, string method, params object[] @params) //TODO Add once implemented
+        //public static void GlobalRouteInvoke(int index, string type, string method)
         {
             if (!IsEnabled)
                 return;
-                        
+
+            Logging.Log.Success($"{index} - {type} - {method}");            
 
             if (Listeners[index] != null)
             {
-                var evtArgs = new EventArgsGlobalRouteManager(type, method, null, null);
+                var evtArgs = new EventArgsGlobalRouteManager(type, method, @params, null);
                 foreach (var evt in Listeners[index])
                 {
                     evt.Invoke(evtArgs);

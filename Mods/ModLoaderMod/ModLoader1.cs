@@ -16,7 +16,7 @@ namespace ModLoaderMod
         {
             Instance = this;
             Farmhand.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;
-            Farmhand.Events.GlobalRouteManager.Listen("StardewValley.Menus.TitleMenu", ".ctor", TitleMenuCreated);
+            Farmhand.Events.GlobalRouteManager.Listen("StardewValley.Menus.TitleMenu", "receiveLeftClick", TitleMenuCreated);
         }
 
 
@@ -45,7 +45,6 @@ namespace ModLoaderMod
 
             menu.StartMenuTransitioning();
             Game1.playSound("select");
-            Game1.changeMusicTrack("CloudCountry");
             menu.SetSubmenu(new ModMenu());
         }
     }

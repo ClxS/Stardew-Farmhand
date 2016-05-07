@@ -206,14 +206,14 @@ namespace Farmhand.Helpers
 
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, index));
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeType));
-            newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeType));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeMethod));
 
             /*//if (method.ReturnType != null && method.ReturnType != voidType)
             {
                 outputVar = new VariableDefinition("GlobalRouteOutput", objectType);
                 ilProcessor.Body.Variables.Add(outputVar);
                 newInstructions.Add(ilProcessor.Create(OpCodes.Ldloca, outputVar));
-            }
+            }*/
 
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, method.Parameters.Count + (hasThis ? 1 : 0)));
             newInstructions.Add(ilProcessor.Create(OpCodes.Newarr, objectType));
@@ -234,7 +234,7 @@ namespace Farmhand.Helpers
                 if (param.ParameterType.IsPrimitive)
                     newInstructions.Add(ilProcessor.Create(OpCodes.Box, param.ParameterType));
                 newInstructions.Add(ilProcessor.Create(OpCodes.Stelem_Ref));
-            }*/
+            }
 
             newInstructions.Add(ilProcessor.Create(OpCodes.Call, methodDefinition));
             //newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
