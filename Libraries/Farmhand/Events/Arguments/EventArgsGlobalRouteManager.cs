@@ -8,19 +8,19 @@ namespace Farmhand.Events.Arguments
 {
     public class EventArgsGlobalRouteManager : CancelEventArgs
     {
-        public EventArgsGlobalRouteManager(string type, string method, object[] parameters, object output)
+        public EventArgsGlobalRouteManager(string type, string method, object[] parameters, object output = null)
         {
             Type = type;
             Method = method;
             Parameters = parameters;
             Output = output;
-            IsOutputSet = false;
+            DoesMethodReturnValue = output != null;
         }
 
         public string Type;
         public string Method;
         public object[] Parameters;
-
+        public bool DoesMethodReturnValue;
 
         public object _output;
         public object Output
@@ -31,11 +31,9 @@ namespace Farmhand.Events.Arguments
             }
             set
             {
-                IsOutputSet = true;
+                Cancel = true;
                 _output = value;
             }
         }
-
-        internal bool IsOutputSet = false;
     }
 }

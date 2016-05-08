@@ -5,6 +5,7 @@ using Farmhand.Events.Arguments;
 using Farmhand.Events.Arguments.GameEvents;
 using Farmhand.Registries;
 using StardewValley;
+using Farmhand.Events;
 
 namespace ModLoaderMod
 {
@@ -16,8 +17,13 @@ namespace ModLoaderMod
         {
             Instance = this;
             Farmhand.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;
+            Farmhand.Events.GlobalRouteManager.Listen(ListenerType.Post, "StardewValley.Farmer", "getHisOrHer", Test);
+        }        
+
+        void Test(EventArgsGlobalRouteManager e)
+        {
+
         }
-        
 
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
         {

@@ -67,16 +67,29 @@ namespace Farmhand.Events
         public static void InitialiseMappings()
         {
         }
-        
-        public static bool GlobalRoutePreInvoke(int index, string type, string method, out object output, params object[] @params) //TODO Add once implemented
+
+        public static void GlobalRoutePreInvoke(int index, string type, string method, params object[] @params)
+        {
+            if (!IsEnabled)
+                return;
+
+            if (PreListeners[index] != null)
+            {
+                var evtArgs = new EventArgsGlobalRouteManager(type, method, @params);
+                foreach (var evt in PreListeners[index])
+                {
+                    evt.Invoke(evtArgs);
+                }
+            }
+        }
+
+        public static bool GlobalRoutePreInvoke(int index, string type, string method, out object output, params object[] @params)
         {
             output = null;
 
             if (!IsEnabled)
                 return false;
-
-            Logging.Log.Success($"{index} - {type} - {method}");            
-
+            
             if (PreListeners[index] != null)
             {
                 var evtArgs = new EventArgsGlobalRouteManager(type, method, @params, output);
@@ -87,11 +100,48 @@ namespace Farmhand.Events
 
                 output = evtArgs.Output;
 
-                return evtArgs.IsOutputSet;
+                return evtArgs.Cancel;
             }
             return false;
         }
-        
+
+        public static void GlobalRoutePostInvoke(int index, string type, string method, params object[] @params)
+        {
+            if (!IsEnabled)
+                return;
+
+            if (PostListeners[index] != null)
+            {
+                var evtArgs = new EventArgsGlobalRouteManager(type, method, @params);
+                foreach (var evt in PostListeners[index])
+                {
+                    evt.Invoke(evtArgs);
+                }
+            }
+        }
+
+        public static bool GlobalRoutePostInvoke(int index, string type, string method, out object output, params object[] @params) 
+        {
+            output = null;
+
+            if (!IsEnabled)
+                return false;
+            
+            if (PostListeners[index] != null)
+            {
+                var evtArgs = new EventArgsGlobalRouteManager(type, method, @params, output);
+                foreach (var evt in PostListeners[index])
+                {
+                    evt.Invoke(evtArgs);
+                }
+
+                output = evtArgs.Output;
+
+                return evtArgs.Cancel;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Returns whether any listeners are attached to this method
         /// </summary>

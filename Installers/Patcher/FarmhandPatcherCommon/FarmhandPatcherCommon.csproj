@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cecil\CecilContext.cs" />
+    <Compile Include="Helpers\ILProcessorExtensionMethods.cs" />
     <Compile Include="PatcherConstants.cs" />
     <Compile Include="Helpers\AssemblyExtensionMethods.cs" />
     <Compile Include="Helpers\CecilHelper.cs" />
