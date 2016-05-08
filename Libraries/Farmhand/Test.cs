@@ -6,12 +6,22 @@ namespace Farmhand
     /// </summary>
     public class Test
     {
-        public static bool IsEnabled = false;
-
-        public void Test1(Mod @in, int y, int width, int height, bool test)
+        public bool IsEnabled = false;
+                
+        public string Test1(Mod @in, int y, int width, int height, bool test)
         {
-            GlobalRouteManager.ListenedMethods = 3423;
-            GlobalRouteManager.MapIndex("Farmhand.Test", "Test", 0);
+            if(GlobalRouteManager.IsEnabled)
+            {
+                if(GlobalRouteManager.IsBeingPreListenedTo(0))
+                {
+                    object output;
+                    if(GlobalRouteManager.GlobalRoutePreInvoke(0, "F", "2", out output, @in, y, width, height, test))
+                    {
+                        return (string)output;
+                    }
+                }
+            }
+            return !this.IsEnabled ? "her" : "his";
         }
 
         public static bool Test2(string type, string method, out object @out, params object[] param)
@@ -20,9 +30,10 @@ namespace Farmhand
             return false;
         }
 
-        public static bool TestFunction()
+        public static bool TestFunction(out object output)
         {
-            return false;
+            output = "sfesfse";
+            return true;
         }
 
         public static void VoidFunction(string someTest)

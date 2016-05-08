@@ -14,11 +14,28 @@ namespace Farmhand.Events.Arguments
             Method = method;
             Parameters = parameters;
             Output = output;
+            IsOutputSet = false;
         }
 
         public string Type;
         public string Method;
-        public object[] Parameters; //TODO - Implement
-        public object Output; //TODO - Implement
+        public object[] Parameters;
+
+
+        public object _output;
+        public object Output
+        {
+            get
+            {
+                return _output;
+            }
+            set
+            {
+                IsOutputSet = true;
+                _output = value;
+            }
+        }
+
+        internal bool IsOutputSet = false;
     }
 }

@@ -169,8 +169,8 @@ namespace Farmhand.Helpers
         public static void InjectGlobalRouteMethod(CecilContext stardewContext, string injecteeType, string injecteeMethod, int index)
         {
             var fieldDefinition = stardewContext.GetFieldDefinition("Farmhand.Events.GlobalRouteManager", "IsEnabled");
-            var methodIsListenedTo = stardewContext.GetMethodDefinition("Farmhand.Events.GlobalRouteManager", "IsBeingListenedTo");
-            var methodDefinition = stardewContext.GetMethodDefinition("Farmhand.Events.GlobalRouteManager", "GlobalRouteInvoke");
+            var methodIsListenedTo = stardewContext.GetMethodDefinition("Farmhand.Events.GlobalRouteManager", "IsBeingPreListenedTo");
+            var methodDefinition = stardewContext.GetMethodDefinition("Farmhand.Events.GlobalRouteManager", "GlobalRoutePreInvoke");
             var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
 
             if (ilProcessor == null || methodDefinition == null || fieldDefinition == null)
@@ -208,12 +208,12 @@ namespace Farmhand.Helpers
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeType));
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeMethod));
 
-            /*//if (method.ReturnType != null && method.ReturnType != voidType)
+            //if (method.ReturnType != null && method.ReturnType != voidType)
             {
                 outputVar = new VariableDefinition("GlobalRouteOutput", objectType);
                 ilProcessor.Body.Variables.Add(outputVar);
                 newInstructions.Add(ilProcessor.Create(OpCodes.Ldloca, outputVar));
-            }*/
+            }
 
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldc_I4, method.Parameters.Count + (hasThis ? 1 : 0)));
             newInstructions.Add(ilProcessor.Create(OpCodes.Newarr, objectType));
@@ -237,25 +237,28 @@ namespace Farmhand.Helpers
             }
 
             newInstructions.Add(ilProcessor.Create(OpCodes.Call, methodDefinition));
-            //newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
+            newInstructions.Add(ilProcessor.Create(OpCodes.Brfalse, first));
 
-            //if (method.ReturnType != null && method.ReturnType.FullName != voidType.FullName)
-            //{
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Ldloc, outputVar));
-            //    if (method.ReturnType.IsPrimitive || method.ReturnType.IsGenericParameter)
-            //    {
-            //        newInstructions.Add(ilProcessor.Create(OpCodes.Unbox_Any, method.ReturnType));
-            //    }
-            //    else
-            //    {
-            //        newInstructions.Add(ilProcessor.Create(OpCodes.Castclass, method.ReturnType));
-            //    }
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Br, last));
-            //}
-            //else
-            //{
-            //    newInstructions.Add(ilProcessor.Create(OpCodes.Br, prelast));
-            //}
+            if (method.ReturnType != null && method.ReturnType.FullName != voidType.FullName)
+            {
+                if (outputVar == null)
+                    throw new Exception("outputVar is null");
+
+                newInstructions.Add(ilProcessor.Create(OpCodes.Ldloc, outputVar));
+                if (method.ReturnType.IsPrimitive || method.ReturnType.IsGenericParameter)
+                {
+                    newInstructions.Add(ilProcessor.Create(OpCodes.Unbox_Any, method.ReturnType));
+                }
+                else
+                {
+                    newInstructions.Add(ilProcessor.Create(OpCodes.Castclass, method.ReturnType));
+                }
+                newInstructions.Add(ilProcessor.Create(OpCodes.Br, last));
+            }
+            else
+            {
+                //newInstructions.Add(ilProcessor.Create(OpCodes.Br, prelast));
+            }
 
             ilProcessor.Body.SimplifyMacros();
             if (newInstructions.Any())
@@ -380,6 +383,9 @@ namespace Farmhand.Helpers
         public static void HookAllGlobalRouteMethods(CecilContext stardewContext)
         {
             var methods = stardewContext.GetMethods().Where(n => n.DeclaringType.Namespace.StartsWith("StardewValley")).ToArray();
+
+            var ilProcessor2 = stardewContext.GetMethodIlProcessor("Farmhand.Test", "Test1");
+
 
             {
                 var listenedMethodField = stardewContext.GetFieldDefinition("Farmhand.Events.GlobalRouteManager", "ListenedMethods");

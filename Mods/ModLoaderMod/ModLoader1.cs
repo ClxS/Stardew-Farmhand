@@ -16,14 +16,8 @@ namespace ModLoaderMod
         {
             Instance = this;
             Farmhand.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;
-            Farmhand.Events.GlobalRouteManager.Listen("StardewValley.Menus.TitleMenu", "receiveLeftClick", TitleMenuCreated);
         }
-
-
-        private void TitleMenuCreated(EventArgsGlobalRouteManager eventArgsGlobalRouteManager)
-        {
-            //Farmhand.Events.GlobalRouteManager.Remove("StardewValley.Menus.TitleMenu", ".ctor", TitleMenuCreated);
-        }
+        
 
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
         {

@@ -7,9 +7,16 @@ using Farmhand.Logging;
 
 namespace Farmhand.Events
 {
-    //TODO This can have it's performance improved by quite a bit. Important considering the GlobalRouteInvoke will be called upwards of 100 times PER FRAME on heavily used
-    //methods like draw. (Which modders should never, ever do. Modders if you're reading this - please ask me! Always happy to add an event. This class' sole purpose is to 
-    //provide an alternative until I get around to implementing your requests.)
+    /// <summary>
+    /// States which the listener is a pre listener, triggered prior to the function being executed and is cancellation, or
+    /// a post listener which passes the current returning value of the function prior to returning
+    /// </summary>
+    public enum ListenerType
+    {
+        Pre,
+        Post
+    }
+
     public static class GlobalRouteManager
     {
         public static int ListenedMethods = 0;
@@ -17,16 +24,29 @@ namespace Farmhand.Events
         //IsEnabled could be a property which returns Listeners.Any or Listeners.Count > 0 but it's being accessed potentailly thousands of times per frame.
         public static bool IsEnabled = false;
 
-        private static List<Action<EventArgsGlobalRouteManager>>[] _listeners;        
-        private static List<Action<EventArgsGlobalRouteManager>>[] Listeners
+        private static List<Action<EventArgsGlobalRouteManager>>[] _preListeners;        
+        private static List<Action<EventArgsGlobalRouteManager>>[] PreListeners
         {
             get
             {
-                if (_listeners == null)
+                if (_preListeners == null)
                 {
-                    _listeners = new List<Action<EventArgsGlobalRouteManager>>[ListenedMethods];
+                    _preListeners = new List<Action<EventArgsGlobalRouteManager>>[ListenedMethods];
                 }
-                return _listeners;
+                return _preListeners;
+            }
+        }
+
+        private static List<Action<EventArgsGlobalRouteManager>>[] _postListeners;
+        private static List<Action<EventArgsGlobalRouteManager>>[] PostListeners
+        {
+            get
+            {
+                if (_postListeners == null)
+                {
+                    _postListeners = new List<Action<EventArgsGlobalRouteManager>>[ListenedMethods];
+                }
+                return _postListeners;
             }
         }
 
@@ -41,53 +61,83 @@ namespace Farmhand.Events
             MapIndexes[key] = index;
         }
 
+        /// <summary>
+        /// This method is populated by the installer and contains the index mapping information for GRMable methods
+        /// </summary>
         public static void InitialiseMappings()
         {
         }
-
-
-        //public static void GlobalRouteInvoke(int index, string type, string method, out object output, params object[] @parans) //TODO Add once implemented
-        public static void GlobalRouteInvoke(int index, string type, string method, params object[] @params) //TODO Add once implemented
-        //public static void GlobalRouteInvoke(int index, string type, string method)
+        
+        public static bool GlobalRoutePreInvoke(int index, string type, string method, out object output, params object[] @params) //TODO Add once implemented
         {
+            output = null;
+
             if (!IsEnabled)
-                return;
+                return false;
 
             Logging.Log.Success($"{index} - {type} - {method}");            
 
-            if (Listeners[index] != null)
+            if (PreListeners[index] != null)
             {
-                var evtArgs = new EventArgsGlobalRouteManager(type, method, @params, null);
-                foreach (var evt in Listeners[index])
+                var evtArgs = new EventArgsGlobalRouteManager(type, method, @params, output);
+                foreach (var evt in PreListeners[index])
                 {
                     evt.Invoke(evtArgs);
                 }
-            }
-        }
 
-        //public static bool IsBeingListenedTo(string type, string method)
-        public static bool IsBeingListenedTo(int method)
+                output = evtArgs.Output;
+
+                return evtArgs.IsOutputSet;
+            }
+            return false;
+        }
+        
+        /// <summary>
+        /// Returns whether any listeners are attached to this method
+        /// </summary>
+        /// <param name="method">Index of method</param>
+        /// <returns></returns>
+        public static bool IsBeingPreListenedTo(int method)
         {
-           // Logging.Log.Success($"BLAH {method}");
-            return Listeners[method] != null;
+            return PreListeners[method] != null;
         }
 
         /// <summary>
+        /// Returns whether any listeners are attached to this method
+        /// </summary>
+        /// <param name="method">Index of method</param>
+        /// <returns></returns>
+        public static bool IsBeingPostListenedTo(int method)
+        {
+            return PostListeners[method] != null;
+        }
+        
+        /// <summary>
         /// Attach a listener and enable the global route table
         /// </summary>
+        /// <param name="listenerType"></param>
         /// <param name="type">The type containing the method to listen for</param>
         /// <param name="method">The method to listen for</param>
         /// <param name="callback">The delegate to add</param>
-        public static void Listen(string type, string method, Action<EventArgsGlobalRouteManager> callback)
+        public static void Listen(ListenerType listenerType, string type, string method, Action<EventArgsGlobalRouteManager> callback)
         {
             var key = $"{type}.{method}";
             int index;
             if (MapIndexes.TryGetValue(key, out index))
             {
-                if (Listeners[index] == null)
-                    Listeners[index] = new List<Action<EventArgsGlobalRouteManager>>();
+                if (listenerType == ListenerType.Pre)
+                {
+                    if (PreListeners[index] == null)
+                        PreListeners[index] = new List<Action<EventArgsGlobalRouteManager>>();
+                    PreListeners[index].Add(callback);
+                }
+                else
+                {
+                    if (PostListeners[index] == null)
+                        PostListeners[index] = new List<Action<EventArgsGlobalRouteManager>>();
+                    PostListeners[index].Add(callback);
+                }
 
-                Listeners[index].Add(callback);
                 IsEnabled = true;
             }
             else
