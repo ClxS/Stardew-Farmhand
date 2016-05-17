@@ -23,7 +23,7 @@ namespace Farmhand.Helpers
         {
             return il.Create(OpCodes.Ldloca, var);
         }
-
+        
         public static Instruction[] CreateArray(this ILProcessor il, TypeReference type, int count)
         {
             return new Instruction[] {

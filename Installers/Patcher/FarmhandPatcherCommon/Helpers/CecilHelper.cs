@@ -283,51 +283,91 @@ namespace Farmhand.Helpers
             var voidType = stardewContext.GetInbuiltTypeReference(typeof(void));
             var boolType = stardewContext.GetInbuiltTypeReference(typeof(bool));
             var method = ilProcessor.Body.Method;
+            var hasThis = method.HasThis;
+            var returnsValue = method.ReturnType != null && method.ReturnType.FullName != voidType.FullName;
+
+            VariableDefinition outputVar = null;
 
             var isEnabledField = stardewContext.GetFieldDefinition("Farmhand.Events.GlobalRouteManager", "IsEnabled");
             var methodIsListenedTo = stardewContext.GetMethodDefinition("Farmhand.Events.GlobalRouteManager", "IsBeingPostListenedTo");
-            var methodDefinition = stardewContext.GetMethodDefinition("Farmhand.Events.GlobalRouteManager", "GlobalRoutePostInvoke",
-                (method.ReturnType == null || method.ReturnType.FullName == voidType.FullName) ? null : boolType);
+            MethodDefinition methodDefinition;
 
+            methodDefinition = stardewContext.GetMethodDefinition("Farmhand.Events.GlobalRouteManager", "GlobalRoutePostInvoke", 
+                    n => n.Parameters.Count == (returnsValue ? 5 : 4));
+            
             if (methodDefinition == null || isEnabledField == null)
                 return;
+
+            var retInstructions = ilProcessor.Body.Instructions.Where(n => n.OpCode == OpCodes.Ret).ToArray();
             
-            if (method.ReturnType.FullName == voidType.FullName)
+            foreach (var ret in retInstructions)
             {
-                var retInstructions = ilProcessor.Body.Instructions.Where(n => n.OpCode == OpCodes.Ret).ToArray();
-
-                foreach (var ret in retInstructions)
+                var newInstructions = new List<Instruction>();
+                
+                newInstructions.Add(ilProcessor.PushFieldToStack(isEnabledField));
+                newInstructions.Add(ilProcessor.BranchIfFalse(ret));
+                
+                newInstructions.Add(ilProcessor.PushInt32ToStack(index));
+                newInstructions.Add(ilProcessor.Call(methodIsListenedTo));
+                newInstructions.Add(ilProcessor.BranchIfFalse(ret));
+                
+                if (returnsValue)
                 {
-                    var newInstructions = new List<Instruction>();
-
-                    newInstructions.Add(ilProcessor.PushFieldToStack(isEnabledField));
-                    newInstructions.Add(ilProcessor.BranchIfFalse(ret));
-
-                    newInstructions.Add(ilProcessor.PushInt32ToStack(index));
-                    newInstructions.Add(ilProcessor.Call(methodIsListenedTo));
-                    newInstructions.Add(ilProcessor.BranchIfFalse(ret));    
-                    
-                    //Call invoke.
-
-                    //If invoke returns false, branch to ret
-
-                    //Push the converted return from the output variable back onto the stack.
-
-                    ilProcessor.Body.SimplifyMacros();
-                    if (newInstructions.Any())
-                    {
-                        var previousInstruction = newInstructions.First();
-                        ilProcessor.InsertBefore(ret, previousInstruction);
-                        for (var i = 1; i < newInstructions.Count; ++i)
-                        {
-                            ilProcessor.InsertAfter(previousInstruction, newInstructions[i]);
-                            previousInstruction = newInstructions[i];
-                        }
-                    }
-                    ilProcessor.Body.OptimizeMacros();
+                    outputVar = new VariableDefinition("GlobalRouteOutput", objectType);
+                    ilProcessor.Body.Variables.Add(outputVar);
+                    newInstructions.Add(ilProcessor.Create(OpCodes.Stloc, outputVar));
                 }
-            }
+                newInstructions.Add(ilProcessor.PushInt32ToStack(index));
+                newInstructions.Add(ilProcessor.PushStringToStack(injecteeType));
+                newInstructions.Add(ilProcessor.PushStringToStack(injecteeMethod));
 
+                if (returnsValue)
+                {
+                    newInstructions.Add(ilProcessor.Create(OpCodes.Ldloca, outputVar));
+                }
+
+                int argIndex = 0;
+                newInstructions.AddRange(ilProcessor.CreateArray(objectType, method.Parameters.Count + (hasThis ? 1 : 0)));
+
+                if (method.HasThis)
+                {
+                    newInstructions.AddRange(ilProcessor.InsertParameterIntoArray(ilProcessor.Body.ThisParameter, argIndex++));
+                }
+                    
+                foreach (var param in method.Parameters)
+                {
+                    newInstructions.AddRange(ilProcessor.InsertParameterIntoArray(param, argIndex++));
+                }
+
+                newInstructions.Add(ilProcessor.Call(methodDefinition));
+
+                if (returnsValue)
+                {
+                    newInstructions.Add(ilProcessor.Create(OpCodes.Ldloc, outputVar));
+                    if (method.ReturnType.IsPrimitive || method.ReturnType.IsGenericParameter)
+                    {
+                        newInstructions.Add(ilProcessor.Create(OpCodes.Unbox_Any, method.ReturnType));
+                    }
+                    else
+                    {
+                        newInstructions.Add(ilProcessor.Create(OpCodes.Castclass, method.ReturnType));
+                    }
+                }
+                                
+                ilProcessor.Body.SimplifyMacros();
+                if (newInstructions.Any())
+                {
+                    var previousInstruction = newInstructions.First();
+                    ilProcessor.InsertBefore(ret, previousInstruction);
+                    for (var i = 1; i < newInstructions.Count; ++i)
+                    {
+                        ilProcessor.InsertAfter(previousInstruction, newInstructions[i]);
+                        previousInstruction = newInstructions[i];
+                    }
+                }
+                ilProcessor.Body.OptimizeMacros();
+            }
+            
         }
 
 

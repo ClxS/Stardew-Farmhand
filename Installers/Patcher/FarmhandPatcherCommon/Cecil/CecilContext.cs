@@ -80,20 +80,20 @@ namespace Farmhand.Cecil
             return AssemblyDefinition.MainModule.Import(type);
         }
 
-        public MethodDefinition GetMethodDefinition(string type, string method, TypeReference typeRef = null)
+        public MethodDefinition GetMethodDefinition(string type, string method, Func<MethodDefinition, bool> selector = null)
         {
             MethodDefinition methodDef = null;
             TypeDefinition typeDef = GetTypeDefinition(type);
 
             if (typeDef != null)
             {
-                if(typeRef == null)
+                if(selector == null)
                 {
                     methodDef = typeDef.Methods.FirstOrDefault(m => m.Name == method);
                 }
                 else
                 {
-                    methodDef = typeDef.Methods.FirstOrDefault(m => m.Name == method && m.ReturnType == typeRef);
+                    methodDef = typeDef.Methods.Where(m => m.Name == method).FirstOrDefault(selector);
                 }
             }
 

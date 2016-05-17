@@ -43,7 +43,7 @@ namespace Farmhand.API.Utilities
                 Logging.Log.Exception("Error patching texture", new Exception($"Texture source and destination must match when trying to patch a texture ({source.Width}x{source.Height}) " +
                                                                               $"vs ({destination.Width}x{destination.Height})"));
             }
-            
+
             var newData = new Color[source.Width * source.Height];
             input.GetData<Color>(0, source, newData, 0, source.Width * source.Height);
 

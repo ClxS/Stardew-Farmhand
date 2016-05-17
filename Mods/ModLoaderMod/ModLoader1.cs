@@ -17,12 +17,28 @@ namespace ModLoaderMod
         {
             Instance = this;
             Farmhand.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;
-            Farmhand.Events.GlobalRouteManager.Listen(ListenerType.Post, "StardewValley.Farmer", "getHisOrHer", Test);
-        }        
+            Farmhand.Events.PlayerEvents.OnFarmerChanged += PlayerEvents_OnFarmerChanged;
+            Farmhand.Events.GlobalRouteManager.Listen(ListenerType.Pre, "StardewValley.Farmer", "getHisOrHer", TestPre);
+            Farmhand.Events.GlobalRouteManager.Listen(ListenerType.Post, "StardewValley.Farmer", "getHisOrHer", TestPost);
+        }
 
-        void Test(EventArgsGlobalRouteManager e)
+        private void PlayerEvents_OnFarmerChanged(object sender, EventArgs e)
+        {
+            var player = sender as Farmer;
+            if(player != null)
+            {
+                var himOrHer = player.getHisOrHer();
+            }
+        }
+
+        void TestPre(EventArgsGlobalRouteManager e)
         {
 
+        }
+
+        void TestPost(EventArgsGlobalRouteManager e)
+        {
+            e.Output = "Nir";
         }
 
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)

@@ -68,20 +68,20 @@ namespace Farmhand.Events
         {
         }
 
-        public static void GlobalRoutePreInvoke(int index, string type, string method, params object[] @params)
-        {
-            if (!IsEnabled)
-                return;
+        //public static void GlobalRoutePreInvoke(int index, string type, string method, params object[] @params)
+        //{
+        //    if (!IsEnabled)
+        //        return;
 
-            if (PreListeners[index] != null)
-            {
-                var evtArgs = new EventArgsGlobalRouteManager(type, method, @params);
-                foreach (var evt in PreListeners[index])
-                {
-                    evt.Invoke(evtArgs);
-                }
-            }
-        }
+        //    if (PreListeners[index] != null)
+        //    {
+        //        var evtArgs = new EventArgsGlobalRouteManager(type, method, @params);
+        //        foreach (var evt in PreListeners[index])
+        //        {
+        //            evt.Invoke(evtArgs);
+        //        }
+        //    }
+        //}
 
         public static bool GlobalRoutePreInvoke(int index, string type, string method, out object output, params object[] @params)
         {
@@ -107,6 +107,8 @@ namespace Farmhand.Events
 
         public static void GlobalRoutePostInvoke(int index, string type, string method, params object[] @params)
         {
+            Logging.Log.Error($"{type} - {method}");
+
             if (!IsEnabled)
                 return;
 
@@ -120,13 +122,13 @@ namespace Farmhand.Events
             }
         }
 
-        public static bool GlobalRoutePostInvoke(int index, string type, string method, out object output, params object[] @params) 
+        public static void GlobalRoutePostInvoke(int index, string type, string method, ref object output, params object[] @params) 
         {
-            output = null;
-
-            if (!IsEnabled)
-                return false;
+            Logging.Log.Error($"{type} - {method}: {output}");
             
+            if (!IsEnabled)
+                return;
+
             if (PostListeners[index] != null)
             {
                 var evtArgs = new EventArgsGlobalRouteManager(type, method, @params, output);
@@ -136,10 +138,7 @@ namespace Farmhand.Events
                 }
 
                 output = evtArgs.Output;
-
-                return evtArgs.Cancel;
             }
-            return false;
         }
 
         /// <summary>
@@ -149,6 +148,7 @@ namespace Farmhand.Events
         /// <returns></returns>
         public static bool IsBeingPreListenedTo(int method)
         {
+            Log.Success($"Post Check - {method}");
             return PreListeners[method] != null;
         }
 
@@ -159,6 +159,7 @@ namespace Farmhand.Events
         /// <returns></returns>
         public static bool IsBeingPostListenedTo(int method)
         {
+            Log.Error($"Post Check - {method}");
             return PostListeners[method] != null;
         }
         

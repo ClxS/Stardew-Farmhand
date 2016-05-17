@@ -10,18 +10,14 @@ namespace Farmhand
                 
         public string Test1(Mod @in, int y, int width, int height, bool test)
         {
-            if(GlobalRouteManager.IsEnabled)
+            if(IsEnabled)
             {
-                if(GlobalRouteManager.IsBeingPreListenedTo(0))
-                {
-                    object output;
-                    if(GlobalRouteManager.GlobalRoutePreInvoke(0, "F", "2", out output, @in, y, width, height, test))
-                    {
-                        return (string)output;
-                    }
-                }
+                return "sfes";
             }
-            return !this.IsEnabled ? "her" : "his";
+            else
+            {
+                return null;
+            }
         }
 
         public static bool Test2(string type, string method, out object @out, params object[] param)

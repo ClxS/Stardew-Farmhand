@@ -15,6 +15,7 @@ namespace Farmhand.Events.Arguments
             Parameters = parameters;
             Output = output;
             DoesMethodReturnValue = output != null;
+            Cancel = false;
         }
 
         public string Type;
