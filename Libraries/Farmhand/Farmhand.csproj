@@ -108,7 +108,6 @@
     <Compile Include="Events\Arguments\ControlEvents\EventArgsKeyboardStateChanged.cs" />
     <Compile Include="Events\Arguments\ControlEvents\EventArgsKeyPressed.cs" />
     <Compile Include="Events\Arguments\ControlEvents\EventArgsMouseStateChanged.cs" />
-    <Compile Include="Events\Arguments\EventArgsGlobalRouteManager.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAfterPlayerTakesDamage.cs" />
     <Compile Include="Events\Arguments\EventArgsOnAnimalEatGrass.cs" />
     <Compile Include="Events\Arguments\GameEvents\EventArgsOnBeforeGameUpdate.cs" />
@@ -117,6 +116,9 @@
     <Compile Include="Events\Arguments\EventArgsOnModError.cs" />
     <Compile Include="Events\Arguments\EventArgsOnPlayerDoneEating.cs" />
     <Compile Include="Events\Arguments\EventArgsOnBeforePlayerTakesDamage.cs" />
+    <Compile Include="Events\Arguments\GlobalRoute\EventArgsGlobalRoute.cs" />
+    <Compile Include="Events\Arguments\GlobalRoute\EventArgsGlobalRouteCancellable.cs" />
+    <Compile Include="Events\Arguments\GlobalRoute\EventArgsGlobalRouteReturnable.cs" />
     <Compile Include="Events\Arguments\GraphicsEvents\EventArgsClientSizeChanged.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnItemAddedToInventory.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnLevelUp.cs" />

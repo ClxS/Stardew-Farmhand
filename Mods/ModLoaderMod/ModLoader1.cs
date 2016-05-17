@@ -6,6 +6,7 @@ using Farmhand.Events.Arguments.GameEvents;
 using Farmhand.Registries;
 using StardewValley;
 using Farmhand.Events;
+using Farmhand.Events.Arguments.GlobalRoute;
 
 namespace ModLoaderMod
 {
@@ -31,14 +32,15 @@ namespace ModLoaderMod
             }
         }
 
-        void TestPre(EventArgsGlobalRouteManager e)
+        void TestPre(EventArgsGlobalRoute e)
         {
 
         }
 
-        void TestPost(EventArgsGlobalRouteManager e)
+        void TestPost(EventArgsGlobalRoute e)
         {
-            e.Output = "Nir";
+            var args = e as EventArgsGlobalRouteReturnable;
+            args.Output = "Nir";
         }
 
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)

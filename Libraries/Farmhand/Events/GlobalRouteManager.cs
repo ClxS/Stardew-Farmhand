@@ -21,30 +21,29 @@ namespace Farmhand.Events
     {
         public static int ListenedMethods = 0;
                 
-        //IsEnabled could be a property which returns Listeners.Any or Listeners.Count > 0 but it's being accessed potentailly thousands of times per frame.
-        public static bool IsEnabled = false;
+       public static bool IsEnabled = false;
 
-        private static List<Action<EventArgsGlobalRouteManager>>[] _preListeners;        
-        private static List<Action<EventArgsGlobalRouteManager>>[] PreListeners
+        private static List<Action<Arguments.GlobalRoute.EventArgsGlobalRoute>>[] _preListeners;        
+        private static List<Action<Arguments.GlobalRoute.EventArgsGlobalRoute>>[] PreListeners
         {
             get
             {
                 if (_preListeners == null)
                 {
-                    _preListeners = new List<Action<EventArgsGlobalRouteManager>>[ListenedMethods];
+                    _preListeners = new List<Action<Arguments.GlobalRoute.EventArgsGlobalRoute>>[ListenedMethods];
                 }
                 return _preListeners;
             }
         }
 
-        private static List<Action<EventArgsGlobalRouteManager>>[] _postListeners;
-        private static List<Action<EventArgsGlobalRouteManager>>[] PostListeners
+        private static List<Action<Arguments.GlobalRoute.EventArgsGlobalRoute>>[] _postListeners;
+        private static List<Action<Arguments.GlobalRoute.EventArgsGlobalRoute>>[] PostListeners
         {
             get
             {
                 if (_postListeners == null)
                 {
-                    _postListeners = new List<Action<EventArgsGlobalRouteManager>>[ListenedMethods];
+                    _postListeners = new List<Action<Arguments.GlobalRoute.EventArgsGlobalRoute>>[ListenedMethods];
                 }
                 return _postListeners;
             }
@@ -92,7 +91,7 @@ namespace Farmhand.Events
             
             if (PreListeners[index] != null)
             {
-                var evtArgs = new EventArgsGlobalRouteManager(type, method, @params, output);
+                var evtArgs = new Arguments.GlobalRoute.EventArgsGlobalRouteReturnable(type, method, @params, output);
                 foreach (var evt in PreListeners[index])
                 {
                     evt.Invoke(evtArgs);
@@ -107,14 +106,12 @@ namespace Farmhand.Events
 
         public static void GlobalRoutePostInvoke(int index, string type, string method, params object[] @params)
         {
-            Logging.Log.Error($"{type} - {method}");
-
             if (!IsEnabled)
                 return;
 
             if (PostListeners[index] != null)
             {
-                var evtArgs = new EventArgsGlobalRouteManager(type, method, @params);
+                var evtArgs = new Arguments.GlobalRoute.EventArgsGlobalRoute(type, method, @params);
                 foreach (var evt in PostListeners[index])
                 {
                     evt.Invoke(evtArgs);
@@ -124,14 +121,12 @@ namespace Farmhand.Events
 
         public static void GlobalRoutePostInvoke(int index, string type, string method, ref object output, params object[] @params) 
         {
-            Logging.Log.Error($"{type} - {method}: {output}");
-            
             if (!IsEnabled)
                 return;
 
             if (PostListeners[index] != null)
             {
-                var evtArgs = new EventArgsGlobalRouteManager(type, method, @params, output);
+                var evtArgs = new Arguments.GlobalRoute.EventArgsGlobalRouteReturnable(type, method, @params, output);
                 foreach (var evt in PostListeners[index])
                 {
                     evt.Invoke(evtArgs);
@@ -148,7 +143,6 @@ namespace Farmhand.Events
         /// <returns></returns>
         public static bool IsBeingPreListenedTo(int method)
         {
-            Log.Success($"Post Check - {method}");
             return PreListeners[method] != null;
         }
 
@@ -159,7 +153,6 @@ namespace Farmhand.Events
         /// <returns></returns>
         public static bool IsBeingPostListenedTo(int method)
         {
-            Log.Error($"Post Check - {method}");
             return PostListeners[method] != null;
         }
         
@@ -170,7 +163,8 @@ namespace Farmhand.Events
         /// <param name="type">The type containing the method to listen for</param>
         /// <param name="method">The method to listen for</param>
         /// <param name="callback">The delegate to add</param>
-        public static void Listen(ListenerType listenerType, string type, string method, Action<EventArgsGlobalRouteManager> callback)
+        public static void Listen(ListenerType listenerType, string type, string method, 
+            Action<Arguments.GlobalRoute.EventArgsGlobalRoute> callback)
         {
             var key = $"{type}.{method}";
             int index;
@@ -179,13 +173,13 @@ namespace Farmhand.Events
                 if (listenerType == ListenerType.Pre)
                 {
                     if (PreListeners[index] == null)
-                        PreListeners[index] = new List<Action<EventArgsGlobalRouteManager>>();
+                        PreListeners[index] = new List<Action<Arguments.GlobalRoute.EventArgsGlobalRoute>>();
                     PreListeners[index].Add(callback);
                 }
                 else
                 {
                     if (PostListeners[index] == null)
-                        PostListeners[index] = new List<Action<EventArgsGlobalRouteManager>>();
+                        PostListeners[index] = new List<Action<Arguments.GlobalRoute.EventArgsGlobalRoute>>();
                     PostListeners[index].Add(callback);
                 }
 
@@ -205,7 +199,7 @@ namespace Farmhand.Events
         /// <param name="method">The method to listen for</param>
         /// <param name="callback">The delegate to remove. This must be the same instance used when first registering the listener</param>
         [Obsolete("Something wrong with this")]
-        public static void Remove(string type, string method, Action<EventArgsGlobalRouteManager> callback)
+        public static void Remove(string type, string method, Action<Arguments.GlobalRoute.EventArgsGlobalRoute> callback)
         {
             //var key = $"{type}.{method}";
             //if (Listeners.ContainsKey(key))
