@@ -41,6 +41,9 @@ namespace Farmhand
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void LoadMods()
         {
+            Log.Info($"Stardew Valley v{Game1.version}");
+            Log.Info($"Stardew Farmhand v{Constants.Version}");
+
             ApiEvents.OnModError += ApiEvents_OnModError;
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
@@ -74,7 +77,7 @@ namespace Farmhand
                 Log.Error(ex.StackTrace);
             }
             var numModsLoaded = ModRegistry.GetRegisteredItems().Count(n => n.ModState == ModState.Loaded);
-            Log.Info($"Stardew Farmhand v{Constants.Version}: {numModsLoaded} Mods Loaded!");
+            Log.Info($"{numModsLoaded} Mods Loaded!");
 
             Game1.version += $"Stardew Farmhand v{Constants.Version}: {numModsLoaded} mods loaded";
 

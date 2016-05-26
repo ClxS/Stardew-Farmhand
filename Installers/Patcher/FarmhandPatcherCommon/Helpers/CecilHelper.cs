@@ -478,7 +478,8 @@ namespace Farmhand.Helpers
 
         public static void HookAllGlobalRouteMethods(CecilContext stardewContext)
         {
-            var methods = stardewContext.GetMethods().Where(n => n.DeclaringType.Namespace.StartsWith("StardewValley")).ToArray();
+            var methods = stardewContext.GetMethods().Where(n => n.DeclaringType.Namespace.StartsWith("StardewValley") &&
+            !n.DeclaringType.Name.Contains("MultiplayerUtility")).ToArray();
 
             var ilProcessor2 = stardewContext.GetMethodIlProcessor("Farmhand.Test", "Test1");
 

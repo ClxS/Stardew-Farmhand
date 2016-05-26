@@ -14,7 +14,14 @@ namespace FarmhandDebugger
                 return false;
                         
             Console.WriteLine("Starting Stardew Valley...");
-            FarmhandAssembly.EntryPoint.Invoke(null, new object[] { new string[0] });
+            try
+            {
+                FarmhandAssembly.EntryPoint.Invoke(null, new object[] { new string[0] });
+            }
+            catch (System.Exception ex)
+            {
+                return false;
+            }
             return true;
         }
     }
