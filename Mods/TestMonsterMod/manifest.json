@@ -1,0 +1,18 @@
+﻿{
+	"UniqueId" : "TestMonsterMod",
+	"Name" : "Test Monster Mod",
+	"Author": "TownEater",
+	"ModDll": "TestMonsterMod",
+	"Version" : "0.1",
+	"Description" : "An example monster mod.",
+	"Content" : 
+	{
+		"Textures" : 
+		[
+			{
+				"Id" : "sprite_TestMonster",
+				"File" : "TestMonster.png"
+			}
+		]
+	}
+}
