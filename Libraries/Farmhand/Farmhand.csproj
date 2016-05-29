@@ -70,10 +70,13 @@
     <Compile Include="API\Crafting\CraftingRecipe.cs" />
     <Compile Include="API\Crafting\CraftingRecipeCategory.cs" />
     <Compile Include="API\Game.cs" />
+    <Compile Include="API\Generic\ItemChancePair.cs" />
     <Compile Include="API\Items\Item.cs" />
     <Compile Include="API\Items\ItemCategory.cs" />
     <Compile Include="API\Items\ItemInformation.cs" />
     <Compile Include="API\Items\ItemType.cs" />
+    <Compile Include="API\Monsters\Monster.cs" />
+    <Compile Include="API\Monsters\MonsterInformation.cs" />
     <Compile Include="API\Serializer.cs" />
     <Compile Include="API\Utilities\IdManager.cs" />
     <Compile Include="API\Generic\ItemQuantityPair.cs" />
@@ -97,6 +100,8 @@
     <Compile Include="Attributes\ThisBindAttribute.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Content\BlueprintInjector.cs" />
+    <Compile Include="Content\MonsterInjector.cs" />
+    <Compile Include="Content\MonsterLoader.cs" />
     <Compile Include="Content\ContentManager.cs" />
     <Compile Include="Content\IContentInjector.cs" />
     <Compile Include="Content\ModXnbInjector.cs" />
@@ -120,6 +125,7 @@
     <Compile Include="Events\Arguments\GlobalRoute\EventArgsGlobalRouteCancellable.cs" />
     <Compile Include="Events\Arguments\GlobalRoute\EventArgsGlobalRouteReturnable.cs" />
     <Compile Include="Events\Arguments\GraphicsEvents\EventArgsClientSizeChanged.cs" />
+    <Compile Include="Events\Arguments\LocationEvents\EventArgsGetMonsterForThisLevel.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnItemAddedToInventory.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnLevelUp.cs" />
     <Compile Include="Events\Arguments\SaveEvents\EventArgsOnAfterLoad.cs" />
@@ -133,6 +139,7 @@
     <Compile Include="Events\GraphicsEvents.cs" />
     <Compile Include="Events\LocationEvents.cs" />
     <Compile Include="Events\MenuEvents.cs" />
+    <Compile Include="Events\MineShaftEvents.cs" />
     <Compile Include="Events\PlayerEvents.cs" />
     <Compile Include="Events\PropertyWatcher.cs" />
     <Compile Include="Events\Save.cs" />
@@ -159,6 +166,7 @@
     <Compile Include="Mods\ModConfiguration.cs" />
     <Compile Include="Mods\ModLoader.cs" />
     <Compile Include="Mods\ModState.cs" />
+    <Compile Include="Overrides\Characters\Monster.cs" />
     <Compile Include="Overrides\Game1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registries\Containers\DependencyState.cs" />

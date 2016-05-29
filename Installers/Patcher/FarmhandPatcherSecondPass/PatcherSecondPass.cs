@@ -11,7 +11,7 @@ namespace Farmhand
     {
         public override void PatchStardew(string path = null)
         {
-            InjectFarmhandCoreClasses(PatcherConstants.PassTwoPackageResult, PatcherConstants.PassOneFarmhandExe, PatcherConstants.FarmhandUiDll, PatcherConstants.FarmhandGameDll);
+            InjectFarmhandCoreClasses(PatcherConstants.PassTwoPackageResult, PatcherConstants.PassOneFarmhandExe, PatcherConstants.FarmhandUiDll, PatcherConstants.FarmhandGameDll, PatcherConstants.FarmhandCharacterDll);
             var cecilContext = new CecilContext(PatcherConstants.PassTwoPackageResult, true);
             FarmhandDllAssembly = Assembly.LoadFrom(PatcherConstants.FarmhandUiDll);
 

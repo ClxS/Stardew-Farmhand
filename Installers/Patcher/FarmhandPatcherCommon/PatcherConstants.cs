@@ -12,6 +12,7 @@ namespace Farmhand
         public static string FarmhandDll => "Farmhand.dll";
         public static string FarmhandUiDll => "FarmhandUI.dll";
         public static string FarmhandGameDll => "FarmhandGame.dll";
+        public static string FarmhandCharacterDll => "FarmhandCharacter.dll";
         public static string SmapiDll => "StardewModdingAPI.dll";
 
         public static string PassOnePackageResult => "Stardew Farmhand.int1-package.dll";
