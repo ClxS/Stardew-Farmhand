@@ -69,6 +69,8 @@
     <Compile Include="API\Buildings\BuildingBlueprint.cs" />
     <Compile Include="API\Crafting\CraftingRecipe.cs" />
     <Compile Include="API\Crafting\CraftingRecipeCategory.cs" />
+    <Compile Include="API\Crops\Crop.cs" />
+    <Compile Include="API\Crops\CropInformation.cs" />
     <Compile Include="API\Game.cs" />
     <Compile Include="API\Generic\ItemChancePair.cs" />
     <Compile Include="API\Items\Item.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="Attributes\ThisBindAttribute.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Content\BlueprintInjector.cs" />
+    <Compile Include="Content\CropInjector.cs" />
     <Compile Include="Content\MonsterInjector.cs" />
     <Compile Include="Content\MonsterLoader.cs" />
     <Compile Include="Content\ContentManager.cs" />
