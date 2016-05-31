@@ -20,7 +20,7 @@ namespace TestCropMod.Items
             Description = "Plant these in the spring or summer or fall. Takes 4 days to mature.",
             Price = 10,
             Texture = TextureRegistry.GetModSpecificId(TestCropMod.Instance.ModSettings, "icon_BluemelonSeeds"),
-            Type = ItemType.Other
+            Type = ItemType.Basic
         });
 
         public BluemelonSeeds()

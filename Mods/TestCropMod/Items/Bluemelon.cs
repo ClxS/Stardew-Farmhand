@@ -19,7 +19,7 @@ namespace TestCropMod.Items
             Description = "A shiny, tasty, simple melon. It's also blue.",
             Price = 30,
             Texture = TextureRegistry.GetModSpecificId(TestCropMod.Instance.ModSettings, "icon_Bluemelon"),
-            Type = ItemType.Food,
+            Type = ItemType.Basic,
             Editibility = 15
         });
 
