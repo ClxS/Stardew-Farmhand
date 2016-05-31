@@ -24,7 +24,8 @@ namespace Farmhand.Content
             new ModXnbInjector(),
             new BlueprintInjector(),
             new MonsterLoader(),
-            new MonsterInjector()
+            new MonsterInjector(),
+            new CropInjector()
         };
 
         //TODO Do not redirect this way. There are so many (pointless) separate instances of ContentManager, and we'll need to override them all as soon as they're 

@@ -1,0 +1,26 @@
+﻿{
+	"UniqueId" : "TestCropMod",
+	"Name" : "Test Crop Mod",
+	"Author": "TownEater",
+	"ModDll": "TestCropMod",
+	"Version" : "0.1",
+	"Description" : "An example crop mod.",
+	"Content" : 
+	{
+		"Textures" : 
+		[
+			{
+				"Id" : "sprite_TestCrop",
+				"File" : "TestCrop.png"
+			},
+            {
+				"Id" : "icon_Bluemelon",
+				"File" : "Bluemelon.png"
+			},
+            {
+				"Id" : "icon_BluemelonSeeds",
+				"File" : "BluemelonSeeds.png"
+			}
+		]
+	}
+}

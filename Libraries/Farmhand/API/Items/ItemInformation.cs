@@ -21,7 +21,28 @@ namespace Farmhand.API.Items
 
         public override string ToString()
         {
-            return $"{Name}/{Price}/{Editibility}/{Category}/{Description}";
+            // TODO this is a primitive patch fix to allow the parsing of categorization for a few items.
+            // I wasn't sure why the Category and Type systems were set up the way they were, or if there
+            // was a reason for not passing the category number along, but it broke a few things when
+            // trying to create seeds.
+            string CategoryNumberString = "";
+            if (Category == ItemCategory.Seeds)
+            {
+                CategoryNumberString += "Seeds -74";
+            }
+            if (Category == ItemCategory.Fruit)
+            {
+                CategoryNumberString += "Basic -79";
+            }
+
+            if (CategoryNumberString != "")
+            { 
+                return $"{Name}/{Price}/{Editibility}/{CategoryNumberString}/{Description}";
+            }
+            else
+            {
+                return $"{Name}/{Price}/{Editibility}/{Category}/{Description}";
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Farmhand.API.Utilities
             if (sprite == null)
                 throw new ArgumentNullException(nameof(sprite));
 
-            var rect = Game1.getSourceRectForStandardTileSheet(Game1.objectSpriteSheet, spritesheetIndex,
+            var rect = Game1.getSourceRectForStandardTileSheet(spritesheet, spritesheetIndex,
                 spriteWidth,
                 spriteHeight);
             spritesheet = PatchTexture(spritesheet, sprite, new Rectangle(0, 0, spriteWidth, spriteHeight), rect);

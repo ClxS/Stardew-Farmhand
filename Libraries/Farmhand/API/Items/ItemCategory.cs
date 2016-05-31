@@ -17,6 +17,7 @@ namespace Farmhand.API.Items
         Crafting,
         Cooking,
         Quest,
-        Fish
+        Fish,
+        Fruit
     }
 }
