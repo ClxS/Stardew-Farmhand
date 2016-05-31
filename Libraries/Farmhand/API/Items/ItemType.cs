@@ -10,9 +10,17 @@ namespace Farmhand.API.Items
     /// </summary>
     public enum ItemType
     {
+        Basic,
+        Minerals,
+        Crafting,
+        Arch,
+        asdf,
+        Fish,
+        Cooking,
+        Seeds,
         Ring,
         Drink,
         Food,
-        Other
+        Quest
     }
 }

@@ -13,11 +13,11 @@ namespace RecipeTestMod.Items
         public static ItemInformation Information => _information ?? (_information = new Farmhand.API.Items.ItemInformation
         {
             Name = "Puppy Tail",
-            Category = ItemCategory.Basic,
+            Category = ItemCategory.None,
             Description = "Hopefully Organic!",
             Price = 3000,
             Texture = TextureRegistry.GetModSpecificId(RecipeTestMod.Instance.ModSettings, "icon_Heart"),
-            Type = ItemType.Other
+            Type = ItemType.Basic
         });
     }
 }
