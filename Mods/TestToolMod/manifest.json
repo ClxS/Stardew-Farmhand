@@ -1,0 +1,18 @@
+﻿{
+	"UniqueId" : "TestToolMod",
+	"Name" : "Test Tool Mod",
+	"Author": "TownEater",
+	"ModDll": "TestToolMod",
+	"Version" : "0.1",
+	"Description" : "An example tool mod.",
+	"Content" : 
+	{
+		"Textures" : 
+		[
+			{
+				"Id" : "sprite_TestTool",
+				"File" : "TestTool.png"
+			}
+		]
+	}
+}
