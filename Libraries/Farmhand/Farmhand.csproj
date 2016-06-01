@@ -80,6 +80,8 @@
     <Compile Include="API\Monsters\Monster.cs" />
     <Compile Include="API\Monsters\MonsterInformation.cs" />
     <Compile Include="API\Serializer.cs" />
+    <Compile Include="API\Tools\Tool.cs" />
+    <Compile Include="API\Tools\ToolInformation.cs" />
     <Compile Include="API\Utilities\IdManager.cs" />
     <Compile Include="API\Generic\ItemQuantityPair.cs" />
     <Compile Include="API\Player\Player.cs" />
