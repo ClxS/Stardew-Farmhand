@@ -35,8 +35,21 @@ namespace TestToolMod
 
         private void PlayerEvents_OnFarmerChanged(object sender, System.EventArgs e)
         {
+            // Check if the player already has this tool
+            bool hasTool = false;
+            for(int i=0; i<Game1.player.items.Count; i++)
+            {
+                if(Game1.player.items[i] is TestTool)
+                {
+                    hasTool = true;
+                }
+            }
+
             // Give the player the tool
-            Farmhand.API.Player.Player.AddTool<TestTool>();
+            if(!hasTool)
+            {
+                Farmhand.API.Player.Player.AddTool<TestTool>();
+            }
         }
     }
 }

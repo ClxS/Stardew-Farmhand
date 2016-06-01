@@ -30,6 +30,11 @@ namespace TestToolMod.Tools
             this.upgradeLevel = Information.UpgradeLevel;
         }
 
+        // Overriding this to return without any chances keeps base from altering our sprite sheet index
+        public override void setNewTileIndexForUpgradeLevel()
+        {
+            return;
+        }
 
         public override void beginUsing(GameLocation location, int x, int y, Farmer who)
         {
