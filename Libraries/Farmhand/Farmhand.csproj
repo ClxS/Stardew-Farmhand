@@ -135,6 +135,7 @@
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnLevelUp.cs" />
     <Compile Include="Events\Arguments\SaveEvents\EventArgsOnAfterLoad.cs" />
     <Compile Include="Events\Arguments\SaveEvents\EventArgsOnBeforeLoad.cs" />
+    <Compile Include="Events\Arguments\UtilityEvents\EventArgsOnGetDwarfShopStock.cs" />
     <Compile Include="Events\ControlEvents.cs" />
     <Compile Include="Events\EventCommon.cs" />
     <Compile Include="Events\EventManager.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Events\SerializerEvents.cs" />
     <Compile Include="Events\TimeEvents.cs" />
     <Compile Include="Events\UiEvents.cs" />
+    <Compile Include="Events\UtilityEvents.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\CompatibilityLayer.cs" />
     <Compile Include="Helpers\MainRedirect.cs" />
