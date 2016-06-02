@@ -12,6 +12,10 @@
 			{
 				"Id" : "sprite_TestTool",
 				"File" : "TestTool.png"
+			},
+			{
+				"Id" : "sprite_TestWeapon",
+				"File" : "TestWeapon.png"
 			}
 		]
 	}

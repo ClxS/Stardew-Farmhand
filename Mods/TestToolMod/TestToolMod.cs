@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestToolMod.Tools;
+using TestToolMod.Weapons;
 
 namespace TestToolMod
 {
@@ -21,6 +22,7 @@ namespace TestToolMod
             Instance = this;
 
             Farmhand.API.Serializer.RegisterType<TestTool>();
+            Farmhand.API.Serializer.RegisterType<TestWeapon>();
 
             Farmhand.Events.GameEvents.OnAfterLoadedContent += GameEvents_OnAfterLoadedContent;
             Farmhand.Events.PlayerEvents.OnFarmerChanged += PlayerEvents_OnFarmerChanged;
@@ -30,7 +32,9 @@ namespace TestToolMod
         {
             // Register the tool so it can be added to the sprite sheet
             Farmhand.API.Tools.Tool.RegisterTool<StardewValley.Tool>(TestTool.Information);
-                
+
+            // Register the weapon
+            Farmhand.API.Tools.Weapon.RegisterWeapon<StardewValley.Tools.MeleeWeapon>(TestWeapon.Information);
         }
 
         private void PlayerEvents_OnFarmerChanged(object sender, System.EventArgs e)
@@ -49,6 +53,23 @@ namespace TestToolMod
             if(!hasTool)
             {
                 Farmhand.API.Player.Player.AddTool<TestTool>();
+            }
+
+
+            // Check if the player already has this weapon
+            bool hasWeapon = false;
+            for (int i = 0; i < Game1.player.items.Count; i++)
+            {
+                if (Game1.player.items[i] is TestWeapon)
+                {
+                    hasWeapon = true;
+                }
+            }
+
+            // Give the player the tool
+            if (!hasWeapon)
+            {
+                Farmhand.API.Player.Player.AddTool<TestWeapon>();
             }
         }
     }
