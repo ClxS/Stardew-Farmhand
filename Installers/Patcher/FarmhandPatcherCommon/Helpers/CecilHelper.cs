@@ -285,7 +285,7 @@ namespace Farmhand.Helpers
             var method = ilProcessor.Body.Method;
             var hasThis = method.HasThis;
             var returnsValue = method.ReturnType != null && method.ReturnType.FullName != voidType.FullName;
-
+            
             VariableDefinition outputVar = null;
 
             var isEnabledField = stardewContext.GetFieldDefinition("Farmhand.Events.GlobalRouteManager", "IsEnabled");
@@ -315,8 +315,13 @@ namespace Farmhand.Helpers
                 {
                     outputVar = new VariableDefinition("GlobalRouteOutput", objectType);
                     ilProcessor.Body.Variables.Add(outputVar);
+                    if (method.ReturnType.IsPrimitive || method.ReturnType.IsGenericParameter)
+                    {
+                        newInstructions.Add(ilProcessor.Create(OpCodes.Box, method.ReturnType));
+                    }
                     newInstructions.Add(ilProcessor.Create(OpCodes.Stloc, outputVar));
                 }
+
                 newInstructions.Add(ilProcessor.PushInt32ToStack(index));
                 newInstructions.Add(ilProcessor.PushStringToStack(injecteeType));
                 newInstructions.Add(ilProcessor.PushStringToStack(injecteeMethod));
@@ -353,7 +358,7 @@ namespace Farmhand.Helpers
                         newInstructions.Add(ilProcessor.Create(OpCodes.Castclass, method.ReturnType));
                     }
                 }
-                                
+
                 ilProcessor.Body.SimplifyMacros();
                 if (newInstructions.Any())
                 {
@@ -478,10 +483,10 @@ namespace Farmhand.Helpers
 
         public static void HookAllGlobalRouteMethods(CecilContext stardewContext)
         {
-            var methods = stardewContext.GetMethods().Where(n => n.DeclaringType.Namespace.StartsWith("StardewValley") &&
-            !n.DeclaringType.Name.Contains("MultiplayerUtility")).ToArray();
+            var methods = stardewContext.GetMethods().Where(n => n.DeclaringType.Namespace.StartsWith("StardewValley")).ToArray();
 
-            var ilProcessor2 = stardewContext.GetMethodIlProcessor("Farmhand.Test", "Test1");
+            var ilProcessor2 = stardewContext.GetMethodIlProcessor("Farmhand.Test", "TesttttgetNewID");
+            ilProcessor2.Body.SimplifyMacros();
 
 
             {
@@ -495,7 +500,7 @@ namespace Farmhand.Helpers
 
             for (int i = 0; i < methods.Length; ++i)
             {
-                InjectGlobalRoutePreMethod(stardewContext, methods[i].DeclaringType.FullName, methods[i].Name, i);
+                //InjectGlobalRoutePreMethod(stardewContext, methods[i].DeclaringType.FullName, methods[i].Name, i);
                 InjectGlobalRoutePostMethod(stardewContext, methods[i].DeclaringType.FullName, methods[i].Name, i);
                 InjectMappingInformation(stardewContext, methods[i].DeclaringType.FullName, methods[i].Name, i);
             }            

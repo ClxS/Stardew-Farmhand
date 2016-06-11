@@ -1,4 +1,6 @@
 ﻿using Farmhand.Events;
+using StardewValley;
+
 namespace Farmhand
 {
     /// <summary>
@@ -20,10 +22,16 @@ namespace Farmhand
             }
         }
 
-        public static bool Test2(string type, string method, out object @out, params object[] param)
+        public static long TesttttgetNewID()
         {
-            @out = null;
-            return false;
+            if (!GlobalRouteManager.IsEnabled || !GlobalRouteManager.IsBeingPostListenedTo(1557))
+                return MultiplayerUtility.latestID++;
+            else
+            {
+                object output = MultiplayerUtility.latestID++;
+                GlobalRouteManager.GlobalRoutePostInvoke(1557, "StardewValley.MultiplayerUtility", "getNewID", ref output, new object[0]);
+                return (long)output;
+            }
         }
 
         public static bool TestFunction(out object output)
