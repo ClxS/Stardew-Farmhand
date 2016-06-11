@@ -17,29 +17,9 @@ namespace ModLoaderMod
         public override void Entry()
         {
             Instance = this;
-            Farmhand.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;
-            Farmhand.Events.PlayerEvents.OnFarmerChanged += PlayerEvents_OnFarmerChanged;           
+            Farmhand.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;         
         }
-
-        private void PlayerEvents_OnFarmerChanged(object sender, EventArgs e)
-        {
-            var player = sender as Farmer;
-            if(player != null)
-            {
-                var himOrHer = player.getHisOrHer();
-            }
-        }
-
-        void TestPre(EventArgsGlobalRoute e)
-        {
-
-        }
-
-        void TestPost(EventArgsGlobalRoute e)
-        {
-            var args = e as EventArgsGlobalRouteReturnable;
-        }
-
+        
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
         {
             var test = ModRegistry.GetRegisteredItems();
