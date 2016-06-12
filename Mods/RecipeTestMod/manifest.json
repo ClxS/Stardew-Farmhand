@@ -12,6 +12,14 @@
 			{
 				"Id" : "icon_Heart",
 				"File" : "Heart.png"
+			},
+			{
+				"Id" : "icon_Puppy",
+				"File" : "Puppy.png"
+			},
+			{
+				"Id" : "icon_Rabbit",
+				"File" : "Rabbit.png"
 			}
 		]
 	}

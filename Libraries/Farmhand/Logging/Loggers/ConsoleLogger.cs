@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Farmhand.Logging.Loggers
 {
@@ -6,6 +7,7 @@ namespace Farmhand.Logging.Loggers
     {
         public void Write(LogEntry logItem)
         {
+            Debug.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {logItem.Message}");
             SetConsoleColour(logItem.Type);
             Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {logItem.Message}");
             SetConsoleColour(logItem.Type);

@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Items\Heart.cs" />
     <Compile Include="Items\PuppyTail.cs" />
+    <Compile Include="Items\RabbitsPaw.cs" />
     <Compile Include="Recipes\VoidStar.cs" />
     <Compile Include="RecipeTestMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +62,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Heart.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\puppy.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\rabbit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

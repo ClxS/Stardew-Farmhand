@@ -45,6 +45,9 @@ namespace Farmhand.Events
             SaveGame.locationSerializer.UnknownAttribute += FarmerSerializer_UnknownAttribute;
             SaveGame.locationSerializer.UnknownNode += FarmerSerializer_UnknownNode;
             SaveGame.locationSerializer.UnreferencedObject += FarmerSerializer_UnreferencedObject;
+
+            Farmhand.Events.SaveEvents.OnAfterLoad += Farmhand.Events.PropertyWatcher.LoadFired;
+            //Farmhand.Events.PlayerEvents.OnFarmerChanged += Farmhand.API.Items.Item.FixupItemIds;
         }
 
         private static void FarmerSerializer_UnreferencedObject(object sender, System.Xml.Serialization.UnreferencedObjectEventArgs e)

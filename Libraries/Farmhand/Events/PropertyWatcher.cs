@@ -6,11 +6,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using StardewValley;
 using StardewValley.Menus;
+using Farmhand.Logging;
 
 namespace Farmhand.Events
 {
     public class PropertyWatcher
     {
+        private static bool HasLoadFired { get; set; } = false;
+
         internal KeyboardState KStateNow { get; private set; }
         internal KeyboardState KStatePrior { get; private set; }
         
@@ -30,6 +33,15 @@ namespace Farmhand.Events
         }
 
         internal Buttons[][] PreviouslyPressedButtons { get; set; } = new Buttons[4][];
+
+        private IClickableMenu PreviousActiveMenu { get; set; } = null;
+        public GameLocation PreviousGameLocation { get; private set; }
+        public Farmer PreviousFarmer { get; private set; }
+
+        internal static void LoadFired(object sender, Events.Arguments.SaveEvents.EventArgsOnAfterLoad e)
+        {
+            HasLoadFired = true;
+        }
 
         private bool WasButtonJustPressed(Buttons button, ButtonState buttonState, PlayerIndex stateIndex)
         {
@@ -130,11 +142,7 @@ namespace Farmhand.Events
             }
             return buttons.ToArray();
         }
-
-        private IClickableMenu PreviousActiveMenu { get; set; } = null;
-        public GameLocation PreviousGameLocation { get; private set; }
-        public Farmer PreviousFarmer { get; private set; }
-
+        
         internal void CheckForChanges()
         {
             try
@@ -161,13 +169,16 @@ namespace Farmhand.Events
                 Farmhand.Events.LocationEvents.InvokeCurrentLocationChanged(PreviousGameLocation, Game1.currentLocation);
                 PreviousGameLocation = Game1.currentLocation;
             }
-
-            if (Game1.player != null && Game1.player != PreviousFarmer)
+                        
+            if (PropertyWatcher.HasLoadFired && Game1.player != PreviousFarmer)
             {
-                Farmhand.Events.PlayerEvents.InvokeFarmerChanged(PreviousFarmer, Game1.player);
+                var previous = PreviousFarmer;
                 PreviousFarmer = Game1.player;
+                Log.Success($"Farmer Changed: {Game1.player?.name} - previous: {PreviousFarmer?.name}");
+                Farmhand.Events.PlayerEvents.InvokeFarmerChanged(previous, Game1.player);                
             }
         }
+
 
         private void CheckControlChanges()
         {

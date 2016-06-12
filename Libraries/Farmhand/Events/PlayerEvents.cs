@@ -19,7 +19,7 @@ namespace Farmhand.Events
         public static event EventHandler<EventArgsOnItemAddedToInventory> OnItemAddedToInventory = delegate { };
         public static event EventHandler<CancelEventArgs> OnBeforeGainExperience = delegate { };
         public static event EventHandler OnAfterGainExperience = delegate { };
-        public static event EventHandler OnFarmerChanged = delegate { };
+        public static event EventHandler<EventArgsOnFarmerChanged> OnFarmerChanged = delegate { };
         public static event EventHandler<EventArgsOnLevelUp> OnLevelUp = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.Game1", "farmerTakeDamage")]
@@ -42,7 +42,8 @@ namespace Farmhand.Events
         
         internal static void InvokeFarmerChanged(Farmer priorFarmer, Farmer newFarmer)
         {
-            EventCommon.SafeInvoke(OnFarmerChanged, newFarmer);
+            Farmhand.API.Items.Item.FixupItemIds(null, null);
+            EventCommon.SafeInvoke(OnFarmerChanged, newFarmer, new EventArgsOnFarmerChanged(priorFarmer, newFarmer));
         }
 
         //[Hook(HookType.Exit, "StardewValley.Farmer", "addItemToInventory")]

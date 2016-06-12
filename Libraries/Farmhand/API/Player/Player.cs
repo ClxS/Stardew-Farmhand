@@ -20,7 +20,14 @@ namespace Farmhand.API.Player
                 player = Game1.player;
             }
 
-            player.craftingRecipes.Add(name, 1);
+            if(player.craftingRecipes.ContainsKey(name))
+            {
+                player.craftingRecipes[name] = 1;
+            }
+            else
+            {
+                player.craftingRecipes.Add(name, 1);
+            }
         }
 
         public static void AddObject(int id, Farmer player = null)
