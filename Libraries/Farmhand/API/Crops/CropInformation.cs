@@ -56,7 +56,7 @@ namespace Farmhand.API.Crops
 
 
         // ToString Method
-        public string ToString()
+        public override string ToString()
         {
             // Determine if Min/Max harvest options need to be included
             bool IncludeMinMax = (MinimumHarvest > 1 || MaximumHarvest > 1);
