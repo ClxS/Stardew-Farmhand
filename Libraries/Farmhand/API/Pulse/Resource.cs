@@ -5,26 +5,18 @@ using System.Text;
 
 namespace Farmhand.API.Pulse
 {
-    [Obsolete("This utility is experimental and may be subject to change in a later version - breaking mod compatibility.")]
-    public class Resource
+    [Obsolete("This utility is experimental and may be subject to change in a later version and will break mod compatibility.")]
+    public interface IPulsableObject
     {
-        private dynamic _Value;
-        private Type _Type;
-        public bool Set<T>(T value)
-        {
-            if (_Value != null)
-                return false;
-            _Value = value;
-            _Type = typeof(T);
-            return true;
-        }
-        public dynamic Get()
-        {
-            return _Value;
-        }
-        public Type Type()
-        {
-            return _Type;
-        }
+        T Get<T>(string propertyName);
+        void Set<TReturn>(string propertyName);
+
+        TReturn Call<TReturn>(string methodName);
+        TReturn Call<TReturn, TParam1>(string methodName, TParam1 param1);
+        TReturn Call<TReturn, TParam1, TParam2>(string methodName, TParam1 param1, TParam2 param2);
+        TReturn Call<TReturn, TParam1, TParam2, TParam3>(string methodName, TParam1 param1, TParam2 param2, TParam3 param3);
+
+        IEnumerable<string> GetPropertyNames();
+        IEnumerable<string> GetMethodNames();
     }
 }
