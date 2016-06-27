@@ -79,6 +79,9 @@
     <Compile Include="API\Items\ItemType.cs" />
     <Compile Include="API\Monsters\Monster.cs" />
     <Compile Include="API\Monsters\MonsterInformation.cs" />
+    <Compile Include="API\Pulse\Pulse.cs" />
+    <Compile Include="API\Pulse\PulseEventArgs.cs" />
+    <Compile Include="API\Pulse\Resource.cs" />
     <Compile Include="API\Serializer.cs" />
     <Compile Include="API\Tools\Tool.cs" />
     <Compile Include="API\Tools\ToolInformation.cs" />
@@ -163,7 +166,6 @@
     <Compile Include="Helpers\UniqueId.cs" />
     <Compile Include="Helpers\UniqueIdConverter.cs" />
     <Compile Include="Helpers\VersionConverter.cs" />
-    <Compile Include="API\InterModAPI.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LogEntry.cs" />
     <Compile Include="Logging\LogEntryColor.cs" />
