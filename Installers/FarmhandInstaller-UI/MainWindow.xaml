@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
         Title="Installer" Height="350" Width="525"
-        Style="{StaticResource {x:Type Window}}">
+        >
     <Grid x:Name="gridMainContainer">
         <Label x:Name="label2" Content="" FontSize="30" Margin="10,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial Black" Height="55" />
         <Canvas x:Name="canvasSelectLocation" Margin="0,89,0,0" Opacity="1">
-            <CheckBox IsEnabled="False" x:Name="checkBox" IsChecked="False" Content="Download latest version" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="137" Canvas.Left="175" Canvas.Top="138">
+            <CheckBox Visibility="Hidden"  IsEnabled="False" x:Name="checkBox" IsChecked="False" Content="Download latest version" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="137" Canvas.Left="175" Canvas.Top="138">
                 <CheckBox.LayoutTransform>
                     <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
                 </CheckBox.LayoutTransform>

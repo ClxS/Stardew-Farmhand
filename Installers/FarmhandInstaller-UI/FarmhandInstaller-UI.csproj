@@ -157,7 +157,10 @@
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Payload\FarmhandCharacter.dll" />
+    <EmbeddedResource Include="Payload\FarmhandGame.dll" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Payload\Farmhand Patcher.dll" />
     <EmbeddedResource Include="Payload\Farmhand.dll" />
@@ -179,6 +182,8 @@ xcopy "$(SolutionDir)Bin\FarmhandPatcherFirstPass.dll" "$(ProjectDir)Payload" /Y
 xcopy "$(SolutionDir)Bin\FarmhandPatcherSecondPass.dll" "$(ProjectDir)Payload" /Y
 xcopy "$(SolutionDir)Bin\Farmhand.dll" "$(ProjectDir)Payload" /Y
 xcopy "$(SolutionDir)Bin\FarmhandUI.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\FarmhandCharacter.dll" "$(ProjectDir)Payload" /Y
+xcopy "$(SolutionDir)Bin\FarmhandGame.dll" "$(ProjectDir)Payload" /Y
 xcopy "$(SolutionDir)Bin\ILRepack.dll" "$(ProjectDir)Payload" /Y
 xcopy "$(SolutionDir)Bin\Mono.Cecil.dll" "$(ProjectDir)Payload" /Y
 xcopy "$(SolutionDir)Bin\Mono.Cecil.Mdb.dll" "$(ProjectDir)Payload" /Y

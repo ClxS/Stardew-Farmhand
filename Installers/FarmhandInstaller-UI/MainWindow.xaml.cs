@@ -87,6 +87,7 @@ namespace WpfTest
                 Directory.CreateDirectory(tempDirectory);
                 Directory.SetCurrentDirectory(tempDirectory);
                 File.Copy(StardewFile, tempDirectory + "\\Stardew Valley.exe");
+                File.Copy(outputDirectory + "\\xTile.dll", tempDirectory + "\\xTile.dll");
                 
                 Packer.ReportProgress(20, "Unpackaging Contents");
                 ExtractDll(tempDirectory);
