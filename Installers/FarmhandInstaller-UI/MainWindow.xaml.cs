@@ -57,6 +57,7 @@ namespace WpfTest
 
         private void buttonInstall_Click(object sender, RoutedEventArgs e)
         {
+            StardewFile = textBoxExecPath.Text;
             SwitchToInstallationUI();
             Packer = new BackgroundWorker();
             Packer.DoWork += Packer_DoWork;
