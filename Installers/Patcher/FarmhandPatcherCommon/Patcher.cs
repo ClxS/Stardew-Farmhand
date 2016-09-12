@@ -87,7 +87,9 @@ namespace Farmhand
                     try
                     {
                         if (asmType.BaseType != null)
-                            CecilHelper.SetVirtualOnBaseMethods(cecilContext, asmType.BaseType.FullName);
+                        {
+                            CecilHelper.SetVirtualOnBaseMethods(cecilContext, asmType.BaseType.FullName ?? asmType.BaseType.Namespace + "." + asmType.BaseType.Name);
+                        }
                     }
                     catch (Exception ex)
                     {

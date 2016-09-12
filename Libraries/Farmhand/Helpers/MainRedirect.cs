@@ -130,8 +130,15 @@ namespace Farmhand.Helpers
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(HandleException);
             using (var game1 = API.Game.CreateGameInstance())
             {
-                GamePtr = game1;
-                game1.Run();
+                try
+                {
+                    GamePtr = game1;
+                    game1.Run();
+                }
+                catch (System.Exception ex)
+                {
+                }
+                
             }
             return false;
         }

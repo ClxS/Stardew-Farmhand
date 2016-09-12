@@ -173,6 +173,7 @@
     <Compile Include="Logging\Loggers\ConsoleLogger.cs" />
     <Compile Include="Logging\Loggers\FileLogger.cs" />
     <Compile Include="Logging\Loggers\ILogger.cs" />
+    <Compile Include="Logging\Loggers\VisualStudioLogger.cs" />
     <Compile Include="Menus\GameMenu.cs" />
     <Compile Include="Menus\TitleMenu.cs" />
     <Compile Include="Mods\ConfigExtensions.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Mods\ModState.cs" />
     <Compile Include="Overrides\Characters\Monster.cs" />
     <Compile Include="Overrides\Game1.cs" />
+    <Compile Include="Overrides\SerializableDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registries\Containers\DependencyState.cs" />
     <Compile Include="Registries\Containers\ModContent.cs" />
