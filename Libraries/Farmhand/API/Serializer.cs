@@ -56,6 +56,7 @@ namespace Farmhand.API
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
         internal static void InjectSerializers()
         {
+            var typeArray = InjectedTypes.ToArray();
             SaveGame.serializer = new XmlSerializer(typeof(SaveGame), _serialiserTypes.Concat(InjectedTypes).ToArray());
             SaveGame.farmerSerializer = new XmlSerializer(typeof(Farmer), _farmerTypes.Concat(InjectedTypes).ToArray());
             SaveGame.locationSerializer = new XmlSerializer(typeof(GameLocation), _locationTypes.Concat(InjectedTypes).ToArray());

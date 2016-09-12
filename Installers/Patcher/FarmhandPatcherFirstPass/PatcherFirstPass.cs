@@ -1,6 +1,7 @@
 ﻿using Farmhand.Attributes;
 using Farmhand.Cecil;
 using Farmhand.Helpers;
+using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -87,7 +88,14 @@ namespace Farmhand
             var attributes = asmType.GetCustomAttributes(typeof(HookRedirectConstructorFromBaseAttribute), false).ToList().Cast<HookRedirectConstructorFromBaseAttribute>();
             foreach (var attribute in attributes)
             {
-                CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.Type, attribute.Method);
+                if (attribute.GenericArguments != null && attribute.GenericArguments.Any())
+                {
+                    CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.GenericArguments, attribute.Type, attribute.Method);
+                }
+                else
+                {
+                    CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.Type, attribute.Method);
+                }
             }
         }
 

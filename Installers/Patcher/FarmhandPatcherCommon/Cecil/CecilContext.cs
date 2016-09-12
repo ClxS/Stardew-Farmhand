@@ -62,7 +62,7 @@ namespace Farmhand.Cecil
             TypeDefinition typeDef = AssemblyDefinition.MainModule.Types.FirstOrDefault(n => n.FullName == type);
             return typeDef;
         }
-
+        
         public IEnumerable<TypeDefinition> GetTypes()
         {
             return AssemblyDefinition.MainModule.Types;
@@ -73,7 +73,7 @@ namespace Farmhand.Cecil
             return GetTypes().SelectMany(n => n.Methods);
         }
 
-        public TypeReference GetInbuiltTypeReference(Type type)
+        public TypeReference GetTypeReference(Type type)
         {
             if (type == null)
                 throw new Exception("Both type must be set");
@@ -98,6 +98,28 @@ namespace Farmhand.Cecil
             }
 
             return methodDef;
+        }
+
+        public MethodReference GetConstructorReference(TypeReference typeReference, Func<MethodDefinition, bool> selector = null)
+        {
+            if (selector == null)
+            {
+                return typeReference.Resolve().Methods.FirstOrDefault(m => m.IsConstructor);
+            }
+            else
+            {
+                return typeReference.Resolve().Methods.Where(m => m.IsConstructor).FirstOrDefault(selector);
+            }
+        }
+
+        public MethodReference GetConstructorReference(TypeReference typeReference, string method)
+        {
+            var typeDefinition = typeReference.Resolve();
+
+            MethodDefinition methodDefinition;
+            methodDefinition = typeDefinition.Methods.FirstOrDefault(m => m.Name == method);
+
+            return AssemblyDefinition.MainModule.Import(methodDefinition);
         }
 
         public PropertyDefinition GetPropertyDefinition(string type, string property)

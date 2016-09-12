@@ -193,8 +193,8 @@ namespace Farmhand.Helpers
             {
                 prelast = first;
             }
-            var objectType = stardewContext.GetInbuiltTypeReference(typeof(object));
-            var voidType = stardewContext.GetInbuiltTypeReference(typeof(void));
+            var objectType = stardewContext.GetTypeReference(typeof(object));
+            var voidType = stardewContext.GetTypeReference(typeof(void));
 
             var newInstructions = new List<Instruction>();
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldsfld, fieldDefinition));
@@ -279,9 +279,9 @@ namespace Farmhand.Helpers
             if (ilProcessor == null)
                 return;
 
-            var objectType = stardewContext.GetInbuiltTypeReference(typeof(object));
-            var voidType = stardewContext.GetInbuiltTypeReference(typeof(void));
-            var boolType = stardewContext.GetInbuiltTypeReference(typeof(bool));
+            var objectType = stardewContext.GetTypeReference(typeof(object));
+            var voidType = stardewContext.GetTypeReference(typeof(void));
+            var boolType = stardewContext.GetTypeReference(typeof(bool));
             var method = ilProcessor.Body.Method;
             var hasThis = method.HasThis;
             var returnsValue = method.ReturnType != null && method.ReturnType.FullName != voidType.FullName;
@@ -371,15 +371,67 @@ namespace Farmhand.Helpers
                     }
                 }
                 ilProcessor.Body.OptimizeMacros();
-            }
-            
+            }            
         }
 
+        public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, Type[] test, string type, string method)
+        {
+            var types = test.Select(n => stardewContext.GetTypeReference(n)).ToArray();
+            var typeDef = stardewContext.GetTypeDefinition(asmType.Namespace + "." + asmType.Name).MakeGenericInstanceType(types);
+            var typeDefBase = stardewContext.GetTypeDefinition(asmType.BaseType.Namespace + "." + asmType.BaseType.Name).MakeGenericInstanceType(types);
+
+            var newConstructorReference = stardewContext.GetConstructorReference(typeDef);
+            var oldConstructorReference = stardewContext.GetConstructorReference(typeDefBase);
+
+            var concreteFromConstructor = MakeHostInstanceGeneric(oldConstructorReference, types);
+            var concreteToConstructor = MakeHostInstanceGeneric(newConstructorReference, types);
+            
+            ILProcessor ilProcessor = stardewContext.GetMethodIlProcessor(type, method);
+
+            var instructions = ilProcessor.Body.Instructions.Where(n => n.OpCode == OpCodes.Newobj && n.Operand is MethodReference && 
+                ((MethodReference)n.Operand).FullName == concreteFromConstructor.FullName).ToList();
+            
+            foreach (var instruction in instructions)
+            {
+                ilProcessor.Replace(instruction, ilProcessor.Create(OpCodes.Newobj, concreteToConstructor));
+            }
+        }
+
+        public static MethodReference MakeHostInstanceGeneric(this MethodReference self, params TypeReference[] arguments)
+        {
+            var reference = new MethodReference(self.Name, self.ReturnType, self.DeclaringType.MakeGenericInstanceType(arguments))
+            {
+                HasThis = self.HasThis,
+                ExplicitThis = self.ExplicitThis,
+                CallingConvention = self.CallingConvention
+            };
+
+            foreach (var parameter in self.Parameters)
+                reference.Parameters.Add(new ParameterDefinition(parameter.ParameterType));
+
+            foreach (var generic_parameter in self.GenericParameters)
+                reference.GenericParameters.Add(new GenericParameter(generic_parameter.Name, reference));
+
+            return reference;
+        }
+
+        public static MethodReference MakeGenericInstanceMethod(this MethodReference self, TypeReference[] arguments)
+        {
+            if (self == null)
+                throw new ArgumentException("self");
+            if (arguments == null)
+                throw new ArgumentNullException("arguments");
+            if (!arguments.Any())
+                throw new ArgumentException("{0} cannot be empty", "arguments");
+
+            var refernce = new GenericInstanceMethod(self);
+            foreach (var methodArg in arguments)
+                refernce.GenericArguments.Add(methodArg);
+            return refernce;
+        }
 
         public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, string type, string method)
         {
-            var test = stardewContext.GetTypeDefinition("StardewValley.SaveGame");
-            
             var newConstructor = asmType.GetConstructor(new Type[] { });
 
             if (asmType.BaseType == null) return;
@@ -389,9 +441,11 @@ namespace Farmhand.Helpers
             var newConstructorReference = stardewContext.GetMethodDefinition(asmType.FullName, newConstructor.Name);
 
             if (oldConstructor == null) return;
-            var oldConstructorReference = stardewContext.GetMethodDefinition(asmType.BaseType.FullName, oldConstructor.Name);
+            var oldConstructorReference = stardewContext.GetMethodDefinition(asmType.BaseType.FullName ?? asmType.BaseType.Namespace + "." + asmType.BaseType.Name, oldConstructor.Name);
+
 
             ILProcessor ilProcessor = stardewContext.GetMethodIlProcessor(type, method);
+
             var instructions = ilProcessor.Body.Instructions.Where(n => n.OpCode == OpCodes.Newobj && n.Operand == oldConstructorReference).ToList();
             foreach(var instruction in instructions)
             {
@@ -426,6 +480,7 @@ namespace Farmhand.Helpers
                         method.IsReuseSlot = false;
                         method.IsHideBySig = true;
                     }
+                    method.IsFinal = false;
                 }
             }
         }
