@@ -1,5 +1,6 @@
 ﻿using Farmhand.Attributes;
 using Microsoft.Xna.Framework;
+using StardewValley;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +10,23 @@ using System.Xml.Serialization;
 
 namespace Farmhand.Overrides.Game
 {
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", ".ctor", typeof(FhSerializableDictionary<Vector2, StardewValley.Object>), typeof(SerializableOverride<Vector2, StardewValley.Object>))]
-    class FhSerializableDictionary<TKey, TValue> : Farmhand.Overrides.SerializableOverride<TKey, TValue>
+    //[HookRedirectConstructorFromBase("StardewValley.GameLocation", "shiftObjects", typeof(Vector2), typeof(StardewValley.Object))]
+    //[HookRedirectConstructorFromBase("StardewValley.GameLocation", ".ctor", typeof(Vector2), typeof(StardewValley.Object))]
+    //[HookRedirectConstructorFromBase("StardewValley.GameLocation", "System.Void StardewValley.GameLocation::.ctor(xTile.Map,System.String)", typeof(Vector2), typeof(StardewValley.Object))]
+    public class FhSerializableDictionary<TKey, TValue> : SerializableDictionary<TKey, TValue>
     {
         FhSerializableDictionary()
         {
-            Farmhand.Logging.Log.Error("Using overwrited serialized dictionary");
+            Farmhand.Logging.Log.Error("Using overwritten serialized dictionary");
         }
 
-        public override void ReadXml(XmlReader reader)
+        public new void ReadXml(XmlReader reader)
         {
-            XmlSerializer xmlSerializer1 = new XmlSerializer(typeof(TKey), API.Serializer.InjectedTypes.ToArray());
-            XmlSerializer xmlSerializer2 = new XmlSerializer(typeof(TValue), API.Serializer.InjectedTypes.ToArray());
-            bool isEmptyElement = reader.IsEmptyElement;
+            base.ReadXml(reader);
+            return;
+            var xmlSerializer1 = new XmlSerializer(typeof(TKey));
+            var xmlSerializer2 = new XmlSerializer(typeof(TValue));
+            var isEmptyElement = reader.IsEmptyElement;
             reader.Read();
             if (isEmptyElement)
                 return;
@@ -29,30 +34,32 @@ namespace Farmhand.Overrides.Game
             {
                 reader.ReadStartElement("item");
                 reader.ReadStartElement("key");
-                TKey key = (TKey)xmlSerializer1.Deserialize(reader);
+                var key = (TKey)xmlSerializer1.Deserialize(reader);
                 reader.ReadEndElement();
                 reader.ReadStartElement("value");
-                TValue obj = (TValue)xmlSerializer2.Deserialize(reader);
+                var obj = (TValue)xmlSerializer2.Deserialize(reader);
                 reader.ReadEndElement();
                 this.Add(key, obj);
                 reader.ReadEndElement();
-                int num = (int)reader.MoveToContent();
+                var num = (int)reader.MoveToContent();
             }
             reader.ReadEndElement();
         }
 
-        public override void WriteXml(XmlWriter writer)
+        public new void WriteXml(XmlWriter writer)
         {
-            XmlSerializer xmlSerializer1 = new XmlSerializer(typeof(TKey), API.Serializer.InjectedTypes.ToArray());
-            XmlSerializer xmlSerializer2 = new XmlSerializer(typeof(TValue), API.Serializer.InjectedTypes.ToArray());
-            foreach (TKey index in this.Keys)
+            base.WriteXml(writer);
+            return;
+            var xmlSerializer1 = new XmlSerializer(typeof(TKey), API.Serializer.InjectedTypes.ToArray());
+            var xmlSerializer2 = new XmlSerializer(typeof(TValue), API.Serializer.InjectedTypes.ToArray());
+            foreach (var index in this.Keys)
             {
                 writer.WriteStartElement("item");
                 writer.WriteStartElement("key");
                 xmlSerializer1.Serialize(writer, (object)index);
                 writer.WriteEndElement();
                 writer.WriteStartElement("value");
-                TValue obj = this[index];
+                var obj = this[index];
                 xmlSerializer2.Serialize(writer, (object)obj);
                 writer.WriteEndElement();
                 writer.WriteEndElement();

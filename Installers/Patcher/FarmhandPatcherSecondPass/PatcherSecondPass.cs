@@ -13,7 +13,9 @@ namespace Farmhand
         {
             InjectFarmhandCoreClasses(PatcherConstants.PassTwoPackageResult, PatcherConstants.PassOneFarmhandExe, PatcherConstants.FarmhandUiDll, PatcherConstants.FarmhandGameDll, PatcherConstants.FarmhandCharacterDll);
             var cecilContext = new CecilContext(PatcherConstants.PassTwoPackageResult, true);
-            FarmhandDllAssembly = Assembly.LoadFrom(PatcherConstants.FarmhandUiDll);
+            FarmhandAssemblies.Add(Assembly.LoadFrom(PatcherConstants.FarmhandUiDll));
+            FarmhandAssemblies.Add(Assembly.LoadFrom(PatcherConstants.FarmhandGameDll));
+            FarmhandAssemblies.Add(Assembly.LoadFrom(PatcherConstants.FarmhandCharacterDll));
 
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations<HookAlterBaseProtectionAttribute>(cecilContext);
@@ -45,7 +47,7 @@ namespace Farmhand
         {
             try
             {
-                var methods = FarmhandDllAssembly.GetTypes()
+                var methods = FarmhandAssemblies.SelectMany(a => a.GetTypes())
                             .SelectMany(t => t.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
                             .Where(m => m.GetCustomAttributes(typeof(HookAttribute), false).Any())
                             .ToArray();
@@ -92,7 +94,14 @@ namespace Farmhand
             var attributes = asmType.GetCustomAttributes(typeof (HookRedirectConstructorFromBaseAttribute), false).ToList().Cast<HookRedirectConstructorFromBaseAttribute>();
             foreach (var attribute in attributes)
             {
-                CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.Type, attribute.Method);
+                if (attribute.GenericArguments != null && attribute.GenericArguments.Any())
+                {
+                    CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.GenericArguments, attribute.Type, attribute.Method);
+                }
+                else
+                {
+                    CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.Type, attribute.Method);
+                }
             }
         }
 

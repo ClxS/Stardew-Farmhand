@@ -43,6 +43,11 @@ namespace Farmhand.Cecil
             ILProcessor ilProcessor = null;
             var typeDef = GetTypeDefinition(type);
             var methodDef = typeDef?.Methods.FirstOrDefault(m => m.Name == method);
+            if (methodDef == null)
+            {
+                methodDef = typeDef?.Methods.FirstOrDefault(m => m.FullName == method);
+            }
+
             if (methodDef != null && methodDef.HasBody)
             {
                 ilProcessor = methodDef.Body.GetILProcessor();

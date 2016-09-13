@@ -5,12 +5,13 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace Farmhand
 {
     public abstract class Patcher
     {
-        protected Assembly FarmhandDllAssembly { get; set; }
+        protected List<Assembly> FarmhandAssemblies { get; set; } = new List<Assembly>();
 
         /// <summary>
         /// 
@@ -22,7 +23,8 @@ namespace Farmhand
         {
             try
             {
-                var types = FarmhandDllAssembly.GetTypesWithCustomAttribute(typeof (T).FullName).ToArray();
+                var test = FarmhandAssemblies.SelectMany(a => a.GetTypes());
+                var types = FarmhandAssemblies.SelectMany(a => a.GetTypesWithCustomAttribute(typeof (T).FullName)).ToArray();
 
                 foreach (var asmType in types)
                 {
@@ -49,7 +51,7 @@ namespace Farmhand
         {
             try
             {
-                var methods = FarmhandDllAssembly.GetMethodsWithCustomAttribute(typeof(T).FullName).ToArray();
+                var methods = FarmhandAssemblies.SelectMany(a => a.GetMethodsWithCustomAttribute(typeof(T).FullName)).ToArray();
                                 
                 foreach (var asmMethod in methods)
                 {
@@ -80,7 +82,7 @@ namespace Farmhand
         {
             try
             {
-                var types = FarmhandDllAssembly.GetTypesWithCustomAttribute(typeof(T).FullName).ToArray();
+                var types = FarmhandAssemblies.SelectMany(a => a.GetTypesWithCustomAttribute(typeof(T).FullName)).ToArray();
 
                 foreach (var asmType in types)
                 {
@@ -111,7 +113,7 @@ namespace Farmhand
         {
             try
             {
-                var types = FarmhandDllAssembly.GetTypesWithCustomAttribute(typeof(T).FullName).ToArray();
+                var types = FarmhandAssemblies.SelectMany(a => a.GetTypesWithCustomAttribute(typeof(T).FullName)).ToArray();
                 foreach (var asmType in types)
                 {
                     try

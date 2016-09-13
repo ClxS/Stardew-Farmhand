@@ -19,7 +19,7 @@ namespace Farmhand
             path = path ?? PatcherConstants.StardewExe;
             InjectFarmhandCoreClasses(PatcherConstants.PassOnePackageResult, path, PatcherConstants.FarmhandDll, PatcherConstants.JsonLibrary);
             var cecilContext = new CecilContext(PatcherConstants.PassOnePackageResult, true);
-            FarmhandDllAssembly = Assembly.LoadFrom(PatcherConstants.FarmhandDll);
+            FarmhandAssemblies.Add(Assembly.LoadFrom(PatcherConstants.FarmhandDll));
             
             HookApiEvents(cecilContext);
             HookApiProtectionAlterations<HookAlterBaseProtectionAttribute>(cecilContext);
@@ -43,7 +43,7 @@ namespace Farmhand
         {
             try
             {
-                var methods = FarmhandDllAssembly.GetTypes()
+                var methods = FarmhandAssemblies.SelectMany(a => a.GetTypes())
                             .SelectMany(t => t.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
                             .Where(m => m.GetCustomAttributes(typeof(HookAttribute), false).Any())
                             .ToArray();
