@@ -15,7 +15,7 @@ namespace Farmhand.Overrides.Game
     //[HookRedirectConstructorFromBase("StardewValley.GameLocation", "System.Void StardewValley.GameLocation::.ctor(xTile.Map,System.String)", typeof(Vector2), typeof(StardewValley.Object))]
     public class FhSerializableDictionary<TKey, TValue> : SerializableDictionary<TKey, TValue>
     {
-        FhSerializableDictionary()
+        public FhSerializableDictionary()
         {
             Farmhand.Logging.Log.Error("Using overwritten serialized dictionary");
         }

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Farmhand.Overrides
 {
-    [HookForceVirtualBase]
+    //[HookForceVirtualBase]
     public class SerializableOverride<TKey, TValue> : SerializableDictionary<TKey, TValue>
     {
     }
