@@ -105,25 +105,21 @@ namespace Farmhand.Cecil
             return methodDef;
         }
 
-        public MethodReference GetConstructorReference(TypeReference typeReference, Func<MethodDefinition, bool> selector = null)
+        public MethodReference GetConstructorReference(TypeDefinition typeDefinition, Func<MethodDefinition, bool> selector = null)
         {
             if (selector == null)
             {
-                return typeReference.Resolve().Methods.FirstOrDefault(m => m.IsConstructor);
+                return typeDefinition.Methods.FirstOrDefault(m => m.IsConstructor);
             }
             else
             {
-                return typeReference.Resolve().Methods.Where(m => m.IsConstructor).FirstOrDefault(selector);
+                return typeDefinition.Methods.Where(m => m.IsConstructor).FirstOrDefault(selector);
             }
         }
 
-        public MethodReference GetConstructorReference(TypeReference typeReference, string method)
+        public MethodReference GetConstructorReference(TypeDefinition typeDefinition, string method)
         {
-            var typeDefinition = typeReference.Resolve();
-
-            MethodDefinition methodDefinition;
-            methodDefinition = typeDefinition.Methods.FirstOrDefault(m => m.Name == method);
-
+            var methodDefinition = typeDefinition.Methods.FirstOrDefault(m => m.Name == method);
             return AssemblyDefinition.MainModule.Import(methodDefinition);
         }
 
@@ -158,6 +154,19 @@ namespace Farmhand.Cecil
             if (AssemblyDefinition == null)
                 throw new Exception("ERROR Assembly not properly read. Cannot parse");
             
+            MethodReference reference = null;
+            if (method != null)
+            {
+                reference = AssemblyDefinition.MainModule.Import(method);
+            }
+            return reference;
+        }
+
+        public MethodReference ImportMethod(MethodReference method)
+        {
+            if (AssemblyDefinition == null)
+                throw new Exception("ERROR Assembly not properly read. Cannot parse");
+
             MethodReference reference = null;
             if (method != null)
             {

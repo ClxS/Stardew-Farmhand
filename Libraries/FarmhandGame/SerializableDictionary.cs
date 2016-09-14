@@ -10,9 +10,9 @@ using System.Xml.Serialization;
 
 namespace Farmhand.Overrides.Game
 {
-    //[HookRedirectConstructorFromBase("StardewValley.GameLocation", "shiftObjects", typeof(Vector2), typeof(StardewValley.Object))]
-    //[HookRedirectConstructorFromBase("StardewValley.GameLocation", ".ctor", typeof(Vector2), typeof(StardewValley.Object))]
-    //[HookRedirectConstructorFromBase("StardewValley.GameLocation", "System.Void StardewValley.GameLocation::.ctor(xTile.Map,System.String)", typeof(Vector2), typeof(StardewValley.Object))]
+    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "shiftObjects", typeof(Vector2), typeof(StardewValley.Object))]
+    [HookRedirectConstructorFromBase("StardewValley.GameLocation", ".ctor", typeof(Vector2), typeof(StardewValley.Object))]
+    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "System.Void StardewValley.GameLocation::.ctor(xTile.Map,System.String)", typeof(Vector2), typeof(StardewValley.Object))]
     public class FhSerializableDictionary<TKey, TValue> : SerializableDictionary<TKey, TValue>
     {
         public FhSerializableDictionary()

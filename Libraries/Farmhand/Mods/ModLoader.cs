@@ -93,7 +93,10 @@ namespace Farmhand
             {
                 return Assembly.GetExecutingAssembly();
             }
-
+            else if (args.Name.StartsWith("Stardew Farmhand.int1")) // Problematic injection - never got Assembly corrected from a intermediate assembly
+            {
+                return Assembly.GetExecutingAssembly();
+            }
             return null;
         }
 

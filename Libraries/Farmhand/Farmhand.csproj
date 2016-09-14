@@ -48,7 +48,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Stardew Valley">
-      <HintPath>C:\GOG Games\Stardew Valley\Stardew Valley.exe</HintPath>
+      <HintPath>..\..\..\..\..\Games\SteamLibrary\steamapps\common\Stardew Valley\Stardew Valley.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,7 +58,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="xTile">
-      <HintPath>C:\GOG Games\Stardew Valley\xTile.dll</HintPath>
+      <HintPath>..\..\..\..\..\Games\SteamLibrary\steamapps\common\Stardew Valley\xTile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

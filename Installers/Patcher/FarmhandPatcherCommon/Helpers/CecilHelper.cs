@@ -377,8 +377,8 @@ namespace Farmhand.Helpers
         public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, Type[] test, string type, string method)
         {
             var types = test.Select(n => stardewContext.GetTypeReference(n)).ToArray();
-            var typeDef = stardewContext.GetTypeDefinition(asmType.Namespace + "." + asmType.Name).MakeGenericInstanceType(types);
-            var typeDefBase = stardewContext.GetTypeDefinition(asmType.BaseType.Namespace + "." + asmType.BaseType.Name).MakeGenericInstanceType(types);
+            var typeDef = stardewContext.GetTypeDefinition(asmType.Namespace + "." + asmType.Name);
+            var typeDefBase = stardewContext.GetTypeDefinition(asmType.BaseType.Namespace + "." + asmType.BaseType.Name);
 
             var newConstructorReference = stardewContext.GetConstructorReference(typeDef);
             var oldConstructorReference = stardewContext.GetConstructorReference(typeDefBase);
