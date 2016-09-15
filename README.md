@@ -13,13 +13,9 @@ xml2json: Not Specified (http://www.bjelic.net/2012/08/01/coding/convert-xml-to-
 
 ##My First Build
 
-Building the project for the first time can seem a little daunting given the number of projects and no doubt countless missing references you'll see but be unable to resolve. Fear not, it only takes about as many steps as SMAPI to be up and running! :)
+Building the project for the first time can seem a little daunting given the number of projects and no doubt countless missing references you'll see but be unable to resolve. Follow these steps in order and it should build first time!
 
-1) Repair Stardew Valley and xTile references. These will be located in: 
-- "Libraries/Farmhand" (Stardew Valley and xTile) 
-- "Mods/ModLoaderMod" (xTile only)
-- "Libraries/SmapiCompatibilityLayer" (xTile only) 
-- (**do not touch the Stardew Farmhand references or try to add new references to fix errors**) 
+1) Copy the contents of your Stardew Valley game folder(Stardew Valley.exe, xtile.dll, Content folder, and other dlls alongside it) to the <Farmhand>/WorkingDirectory folder. Visual Studio should now have recognised these references.
 
 2) Build the project "BuildTasks/BuildFarmhandFinal" in **Debug** mode, this should have fixed all reference errors and built the API in <RepositoryPath>/WorkingDirectory. Intermediate build binaries will be in <RepositoryPath>/Bin. See below for potential issues: 
 - If you get Newtonsoft.Json errors: It's been known to incorrectly download the 4.5 version when we need to 4.0 version. To fix this, right click the Farmhand project, Manage NuGet Packages, uninstall Newtonsoft.Json and readd it.
