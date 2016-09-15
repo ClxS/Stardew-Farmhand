@@ -261,3 +261,6 @@ _Pvt_Extensions
 *.sln.iml
 
 
+/WorkingDirectory/Stardew Valley.application
+/WorkingDirectory/Stardew Valley.exe.manifest
+/WorkingDirectory/steam_appid.txt

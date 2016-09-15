@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="xTile, Version=2.0.4.0, Culture=neutral, PublicKeyToken=null">
       <Private>False</Private>
+      <HintPath>..\..\WorkingDirectory\xTile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
