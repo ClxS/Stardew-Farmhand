@@ -4,56 +4,53 @@ using StardewValley;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using Farmhand.Events;
+using Farmhand.Events.Arguments;
+using Object = StardewValley.Object;
 
 namespace Farmhand.Overrides.Game
 {
-    [HookRedirectConstructorFromBase("StardewValley.AnimalHouse", ".ctor", typeof(long), typeof(StardewValley.FarmAnimal))]
-    [HookRedirectConstructorFromBase("StardewValley.AnimalHouse", "System.Void StardewValley.AnimalHouse::.ctor(xTile.Map,System.String)", typeof(long), typeof(StardewValley.FarmAnimal))]
-    [HookRedirectConstructorFromBase("StardewValley.Buildings.Building", "getIndoors", typeof(Vector2), typeof(StardewValley.TerrainFeatures.TerrainFeature))]
-    [HookRedirectConstructorFromBase("StardewValley.Buildings.Building", "load", typeof(Vector2), typeof(StardewValley.TerrainFeatures.TerrainFeature))]
-    [HookRedirectConstructorFromBase("StardewValley.Farm", ".ctor", typeof(long), typeof(StardewValley.FarmAnimal))]
-    [HookRedirectConstructorFromBase("StardewValley.Farm", "System.Void StardewValley.Farm::.ctor(xTile.Map,System.String)", typeof(long), typeof(StardewValley.FarmAnimal))]
-    [HookRedirectConstructorFromBase("StardewValley.Farmer", ".ctor", typeof(string), typeof(int))]
-    [HookRedirectConstructorFromBase("StardewValley.Farmer", "System.Void StardewValley.Farmer::.ctor(StardewValley.FarmerSprite,Microsoft.Xna.Framework.Vector2,System.Int32,System.String,System.Collections.Generic.List`1<StardewValley.Item>,System.Boolean)", typeof(string), typeof(int))]
-    [HookRedirectConstructorFromBase("StardewValley.Farmer", "System.Void StardewValley.Farmer::.ctor(StardewValley.FarmerSprite,Microsoft.Xna.Framework.Vector2,System.Int32,System.String,System.Collections.Generic.List`1<StardewValley.Item>,System.Boolean)", typeof(int), typeof(int))]
-    [HookRedirectConstructorFromBase("StardewValley.Farmer", "System.Void StardewValley.Farmer::.ctor(StardewValley.FarmerSprite,Microsoft.Xna.Framework.Vector2,System.Int32,System.String,System.Collections.Generic.List`1<StardewValley.Item>,System.Boolean)", typeof(int), typeof(int[]))]
-    [HookRedirectConstructorFromBase("StardewValley.Farmer", "System.Void StardewValley.Farmer::.ctor(StardewValley.FarmerSprite,Microsoft.Xna.Framework.Vector2,System.Int32,System.String,System.Collections.Generic.List`1<StardewValley.Item>,System.Boolean)", typeof(string), typeof(int[]))]
-    [HookRedirectConstructorFromBase("StardewValley.Farmer", "caughtFish", typeof(int), typeof(int[]))]
-    [HookRedirectConstructorFromBase("StardewValley.Farmer", "cookedRecipe", typeof(int), typeof(int))]
-    [HookRedirectConstructorFromBase("StardewValley.Farmer", "foundArtifact", typeof(int), typeof(int[]))]
-    [HookRedirectConstructorFromBase("StardewValley.Farmer", "foundMineral", typeof(int), typeof(int))]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "shiftObjects", typeof(Vector2), typeof(StardewValley.Object))]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", ".ctor", typeof(Vector2), typeof(StardewValley.Object))]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", ".ctor", typeof(Vector2), typeof(StardewValley.TerrainFeatures.TerrainFeature))]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "System.Void StardewValley.GameLocation::.ctor(xTile.Map,System.String)", typeof(Vector2), typeof(StardewValley.Object))]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "System.Void StardewValley.GameLocation::.ctor(xTile.Map,System.String)", typeof(Vector2), typeof(StardewValley.TerrainFeatures.TerrainFeature))]
-    [HookRedirectConstructorFromBase("StardewValley.Locations.CommunityCenter", "System.Void StardewValley.Locations.CommunityCenter::.ctor(System.String)", typeof(int), typeof(bool))]
-    [HookRedirectConstructorFromBase("StardewValley.Locations.CommunityCenter", "System.Void StardewValley.Locations.CommunityCenter::.ctor(System.String)", typeof(int), typeof(bool[]))]
-    [HookRedirectConstructorFromBase("StardewValley.Locations.FarmHouse", "shiftObjects", typeof(Vector2), typeof(StardewValley.TerrainFeatures.TerrainFeature))]
-    [HookRedirectConstructorFromBase("StardewValley.Locations.LibraryMuseum", "System.Void StardewValley.Locations.LibraryMuseum::.ctor(xTile.Map,System.String)", typeof(Vector2), typeof(int))]
-    [HookRedirectConstructorFromBase("StardewValley.Locations.MineShaft", ".ctor", typeof(int), typeof(StardewValley.Locations.MineInfo))]
-    [HookRedirectConstructorFromBase("StardewValley.Menus.CraftingPage", ".ctor", typeof(string), typeof(int))]
-    [HookRedirectConstructorFromBase("StardewValley.Stats", ".ctor", typeof(string), typeof(int))]
-    public class FhSerializableDictionary<TKey, TValue> : SerializableDictionary<TKey, TValue>
+    public static class SerializableDictionaryOverrides
     {
-        public FhSerializableDictionary()
+        [Hook(HookType.Entry, "StardewValley.SerializableDictionary`2", "ReadXml")]
+        internal static bool ReadXmlOverride([ThisBind] object @this,
+            [InputBind(typeof(XmlReader), "reader")] XmlReader reader)
         {
-            
+            var method = typeof(SerializableDictionaryOverrides).GetMethod("ReadXmlGeneric", BindingFlags.NonPublic | BindingFlags.Static);
+            var methodRef = method.MakeGenericMethod(@this.GetType().GetGenericArguments());
+            return (bool)methodRef.Invoke(null, new object[] { @this, reader });
         }
 
-        public new void ReadXml(XmlReader reader)
+        [Hook(HookType.Entry, "StardewValley.SerializableDictionary`2", "WriteXml")]
+        internal static bool WriteXmlOverride([ThisBind] object @this,
+            [InputBind(typeof(XmlWriter), "writer")] XmlWriter writer)
         {
-            base.ReadXml(reader);
-            return;
-            var xmlSerializer1 = new XmlSerializer(typeof(TKey));
-            var xmlSerializer2 = new XmlSerializer(typeof(TValue));
+            var method = typeof(SerializableDictionaryOverrides).GetMethod("WriteXmlGeneric", BindingFlags.NonPublic | BindingFlags.Static);
+            var methodRef = method.MakeGenericMethod(@this.GetType().GetGenericArguments());
+            return (bool)methodRef.Invoke(null, new object[] { @this, writer });
+        }
+
+        private static bool ReadXmlGeneric<TKey, TValue>(object @this, XmlReader reader)
+        {
+            var serializableDictionary = @this as SerializableDictionary<TKey, TValue>;
+
+            if (serializableDictionary == null) return false;
+
+            var dictionary = serializableDictionary;
+            var xmlSerializer1 = new XmlSerializer(typeof(TKey), API.Serializer.InjectedTypes.ToArray());
+            var xmlSerializer2 = new XmlSerializer(typeof(TValue), API.Serializer.InjectedTypes.ToArray());
             var isEmptyElement = reader.IsEmptyElement;
             reader.Read();
+
             if (isEmptyElement)
-                return;
+            {
+                return true;
+            }
+
             while (reader.NodeType != XmlNodeType.EndElement)
             {
                 reader.ReadStartElement("item");
@@ -63,31 +60,45 @@ namespace Farmhand.Overrides.Game
                 reader.ReadStartElement("value");
                 var obj = (TValue)xmlSerializer2.Deserialize(reader);
                 reader.ReadEndElement();
-                this.Add(key, obj);
+                dictionary.Add(key, obj);
                 reader.ReadEndElement();
                 var num = (int)reader.MoveToContent();
             }
             reader.ReadEndElement();
+
+            return true;
         }
 
-        public new void WriteXml(XmlWriter writer)
+        private static bool WriteXmlGeneric<TKey, TValue>(object @this, XmlWriter writer)
         {
-            base.WriteXml(writer);
-            return;
-            var xmlSerializer1 = new XmlSerializer(typeof(TKey), API.Serializer.InjectedTypes.ToArray());
-            var xmlSerializer2 = new XmlSerializer(typeof(TValue), API.Serializer.InjectedTypes.ToArray());
-            foreach (var index in this.Keys)
+            var serializableDictionary = @this as SerializableDictionary<TKey, TValue>;
+
+            if (serializableDictionary == null) return false;
+
+            XmlSerializer serializer = new XmlSerializer(typeof(TKey), API.Serializer.InjectedTypes.ToArray());
+            XmlSerializer serializer2 = new XmlSerializer(typeof(TValue), API.Serializer.InjectedTypes.ToArray());
+            Dictionary<TKey, TValue>.KeyCollection.Enumerator enumerator = serializableDictionary.Keys.GetEnumerator();
+            try
             {
-                writer.WriteStartElement("item");
-                writer.WriteStartElement("key");
-                xmlSerializer1.Serialize(writer, (object)index);
-                writer.WriteEndElement();
-                writer.WriteStartElement("value");
-                var obj = this[index];
-                xmlSerializer2.Serialize(writer, (object)obj);
-                writer.WriteEndElement();
-                writer.WriteEndElement();
+                while (enumerator.MoveNext())
+                {
+                    TKey current = enumerator.Current;
+                    writer.WriteStartElement("item");
+                    writer.WriteStartElement("key");
+                    serializer.Serialize(writer, current);
+                    writer.WriteEndElement();
+                    writer.WriteStartElement("value");
+                    TValue o = serializableDictionary[current];
+                    serializer2.Serialize(writer, o);
+                    writer.WriteEndElement();
+                    writer.WriteEndElement();
+                }
             }
+            finally
+            {
+                enumerator.Dispose();
+            }
+            return true;
         }
     }
 }
