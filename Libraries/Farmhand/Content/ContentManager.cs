@@ -19,6 +19,9 @@ namespace Farmhand.Content
     /// </summary>
     public class ContentManager : Microsoft.Xna.Framework.Content.ContentManager
     {
+        // A tracker, so we can check if the current Game1.temporaryContent is our override, to prevent uneccesary overriding
+        protected static Microsoft.Xna.Framework.Content.ContentManager _tempManagerTracker = null;
+
         public static List<IContentInjector> ContentInjectors = new List<IContentInjector>()
         {
             new ModXnbInjector(),
@@ -36,6 +39,17 @@ namespace Farmhand.Content
         {
             Log.Verbose("Using Farmhand's ContentManager");
             Game1.game1.Content = new ContentManager(Game1.game1.Content.ServiceProvider, Game1.game1.Content.RootDirectory);
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Object", "performObjectDropInAction")]
+        internal static void ConstructionHookObject()
+        {
+            if (Game1.temporaryContent != _tempManagerTracker)
+            {
+                Log.Verbose("Using Farmhand's ContentManager on Temporary Content Manager");
+                Game1.temporaryContent = new ContentManager(Game1.game1.Content.ServiceProvider, Game1.game1.Content.RootDirectory);
+                _tempManagerTracker = Game1.temporaryContent;
+            }
         }
 
         public ContentManager(IServiceProvider serviceProvider)
