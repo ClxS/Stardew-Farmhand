@@ -3,8 +3,10 @@ using Microsoft.Xna.Framework;
 using StardewValley;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -16,22 +18,34 @@ namespace Farmhand.Overrides.Game
 {
     public static class SerializableDictionaryOverrides
     {
+        private static Dictionary<Type, XmlSerializer> SerializerCache = new Dictionary<Type, XmlSerializer>();
+
         [Hook(HookType.Entry, "StardewValley.SerializableDictionary`2", "ReadXml")]
-        internal static bool ReadXmlOverride([ThisBind] object @this,
+        internal static bool ReadXmlOverride<TKey, TValue>([ThisBind] object @this,
             [InputBind(typeof(XmlReader), "reader")] XmlReader reader)
         {
-            var method = typeof(SerializableDictionaryOverrides).GetMethod("ReadXmlGeneric", BindingFlags.NonPublic | BindingFlags.Static);
-            var methodRef = method.MakeGenericMethod(@this.GetType().GetGenericArguments());
-            return (bool)methodRef.Invoke(null, new object[] { @this, reader });
-        }
+            return ReadXmlGeneric<TKey, TValue>(@this, reader);
+;        }
 
         [Hook(HookType.Entry, "StardewValley.SerializableDictionary`2", "WriteXml")]
-        internal static bool WriteXmlOverride([ThisBind] object @this,
+        internal static bool WriteXmlOverride<TKey, TValue>([ThisBind] object @this,
             [InputBind(typeof(XmlWriter), "writer")] XmlWriter writer)
         {
-            var method = typeof(SerializableDictionaryOverrides).GetMethod("WriteXmlGeneric", BindingFlags.NonPublic | BindingFlags.Static);
-            var methodRef = method.MakeGenericMethod(@this.GetType().GetGenericArguments());
-            return (bool)methodRef.Invoke(null, new object[] { @this, writer });
+            return WriteXmlGeneric<TKey, TValue>(@this, writer);
+        }
+
+        private static XmlSerializer GetSerializerForType(Type type)
+        {
+            if (SerializerCache.ContainsKey(type))
+            {
+                return SerializerCache[type];
+            }
+            else
+            {
+                var serializer = new XmlSerializer(type, API.Serializer.InjectedTypes.ToArray());
+                SerializerCache[type] = serializer;
+                return serializer;
+            }
         }
 
         private static bool ReadXmlGeneric<TKey, TValue>(object @this, XmlReader reader)
@@ -41,8 +55,8 @@ namespace Farmhand.Overrides.Game
             if (serializableDictionary == null) return false;
 
             var dictionary = serializableDictionary;
-            var xmlSerializer1 = new XmlSerializer(typeof(TKey), API.Serializer.InjectedTypes.ToArray());
-            var xmlSerializer2 = new XmlSerializer(typeof(TValue), API.Serializer.InjectedTypes.ToArray());
+            var xmlSerializer1 = GetSerializerForType(typeof(TKey));
+            var xmlSerializer2 = GetSerializerForType(typeof(TValue));
             var isEmptyElement = reader.IsEmptyElement;
             reader.Read();
 
@@ -50,7 +64,7 @@ namespace Farmhand.Overrides.Game
             {
                 return true;
             }
-
+            
             while (reader.NodeType != XmlNodeType.EndElement)
             {
                 reader.ReadStartElement("item");
@@ -65,7 +79,7 @@ namespace Farmhand.Overrides.Game
                 var num = (int)reader.MoveToContent();
             }
             reader.ReadEndElement();
-
+            
             return true;
         }
 

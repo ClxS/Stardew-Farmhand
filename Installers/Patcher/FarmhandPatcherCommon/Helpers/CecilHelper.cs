@@ -154,8 +154,24 @@ namespace Farmhand.Helpers
             string injectedType, string injectedMethod)
         {
             var methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
-            var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
-            InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, false, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
+            if (methodDefinition.HasGenericParameters)
+            {
+                var injecteeMethodDef = stardewContext.GetMethodDefinition(injecteeType, injecteeMethod);
+
+                var inst = new GenericInstanceMethod(methodDefinition);
+                for (var i = 0; i < methodDefinition.GenericParameters.Count; ++i)
+                {
+                    inst.GenericArguments.Add(injecteeMethodDef.DeclaringType.GenericParameters[i]);
+                }
+
+                var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
+                InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, ilProcessor.Body.Instructions.First(), inst, false, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
+            }
+            else
+            {
+                var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
+                InjectMethod<TParam, TThis, TInput, TLocal>(ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, false, methodDefinition.ReturnType != null && methodDefinition.ReturnType.FullName == typeof(bool).FullName);
+            }
         }
 
         public static void InjectExitMethod<TParam, TThis, TInput, TLocal>(CecilContext stardewContext, string injecteeType, string injecteeMethod,
