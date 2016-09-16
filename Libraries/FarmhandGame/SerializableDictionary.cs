@@ -25,7 +25,7 @@ namespace Farmhand.Overrides.Game
             [InputBind(typeof(XmlReader), "reader")] XmlReader reader)
         {
             return ReadXmlGeneric<TKey, TValue>(@this, reader);
-;        }
+        }
 
         [Hook(HookType.Entry, "StardewValley.SerializableDictionary`2", "WriteXml")]
         internal static bool WriteXmlOverride<TKey, TValue>([ThisBind] object @this,
