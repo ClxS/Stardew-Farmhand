@@ -109,7 +109,7 @@ namespace Farmhand
             }
         }
 
-        protected void HookApiProtectionAlterations<T>(CecilContext cecilContext)
+        protected void HookApiFieldProtectionAlterations<T>(CecilContext cecilContext)
         {
             try
             {
@@ -118,7 +118,7 @@ namespace Farmhand
                 {
                     try
                     {
-                        AlterTypeBaseProtections(cecilContext, asmType);
+                        AlterTypeBaseFieldProtections(cecilContext, asmType);
                     }
                     catch (Exception ex)
                     {
@@ -136,9 +136,38 @@ namespace Farmhand
             }
         }
 
+        protected void HookApiTypeProtectionAlterations<T>(CecilContext cecilContext)
+        {
+            try
+            {
+                var types = FarmhandAssemblies.SelectMany(a => a.GetTypesWithCustomAttribute(typeof(T).FullName)).ToArray();
+                foreach (var asmType in types)
+                {
+                    try
+                    {
+                        AlterTypeProtections(cecilContext, asmType);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error setting protections for {asmType.FullName}: \n\t{ex.Message}");
+                    }
+                }
+            }
+            catch (System.Reflection.ReflectionTypeLoadException ex)
+            {
+                Console.WriteLine($"Error setting type protections: \n\t{ex.Message}\n\t\t{ex.LoaderExceptions[0].Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error setting type protections: \n\t{ex.Message}");
+            }
+        }
+
         protected abstract void RedirectConstructorInMethod(CecilContext cecilContext, Type asmType);
 
-        protected abstract void AlterTypeBaseProtections(CecilContext context, Type type);
+        protected abstract void AlterTypeBaseFieldProtections(CecilContext context, Type type);
+
+        protected abstract void AlterTypeProtections(CecilContext context, Type type);
 
         protected abstract void HookApiEvents(CecilContext cecilContext);
 

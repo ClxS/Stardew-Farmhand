@@ -15,7 +15,7 @@ using xTile.Dimensions;
 namespace Farmhand.Overrides
 {
     [HookForceVirtualBase]
-    [HookAlterBaseProtection(LowestProtection.Protected)]
+    [HookAlterBaseFieldProtection(LowestProtection.Protected)]
     public class GameOverrideBase : StardewValley.Game1
     {
     }

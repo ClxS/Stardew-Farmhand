@@ -22,7 +22,8 @@ namespace Farmhand
             FarmhandAssemblies.Add(Assembly.LoadFrom(PatcherConstants.FarmhandDll));
             
             HookApiEvents(cecilContext);
-            HookApiProtectionAlterations<HookAlterBaseProtectionAttribute>(cecilContext);
+            HookApiFieldProtectionAlterations<HookAlterBaseFieldProtectionAttribute>(cecilContext);
+            HookApiTypeProtectionAlterations<HookAlterProtectionAttribute>(cecilContext);
             HookApiVirtualAlterations<HookForceVirtualBaseAttribute>(cecilContext);
             HookMakeBaseVirtualCallAlterations<HookMakeBaseVirtualCallAttribute>(cecilContext);
             HookConstructionRedirectors<HookRedirectConstructorFromBaseAttribute>(cecilContext);
@@ -32,11 +33,18 @@ namespace Farmhand
             cecilContext.WriteAssembly(PatcherConstants.PassOneFarmhandExe, true);
         }
 
-        protected override void AlterTypeBaseProtections(CecilContext context, Type type)
+        protected override void AlterTypeBaseFieldProtections(CecilContext context, Type type)
         {
-            var attributeValue = type.GetCustomAttributes(typeof(HookAlterBaseProtectionAttribute), false).First() as HookAlterBaseProtectionAttribute;
+            var attributeValue = type.GetCustomAttributes(typeof(HookAlterBaseFieldProtectionAttribute), false).First() as HookAlterBaseFieldProtectionAttribute;
             if (type.BaseType != null)
                 CecilHelper.AlterProtectionOnTypeMembers(context, attributeValue != null && attributeValue.Protection == LowestProtection.Public, type.BaseType.FullName);
+        }
+
+        protected override void AlterTypeProtections(CecilContext context, Type type)
+        {
+            var attributeValue = type.GetCustomAttributes(typeof(HookAlterProtectionAttribute), false).First() as HookAlterProtectionAttribute;
+            if (type.BaseType != null)
+                CecilHelper.AlterProtectionOnType(context, attributeValue != null && attributeValue.Protection == LowestProtection.Public, attributeValue.ClassName);
         }
 
         protected override void HookApiEvents(CecilContext cecilContext)

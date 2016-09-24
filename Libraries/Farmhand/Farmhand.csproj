@@ -94,8 +94,9 @@
     <Compile Include="API\Generic\RequiredSkill.cs" />
     <Compile Include="API\Generic\Skill.cs" />
     <Compile Include="API\Utilities\TextureUtility.cs" />
+    <Compile Include="Attributes\HookAlterProtectionAttribute.cs" />
     <Compile Include="Attributes\HookAttribute.cs" />
-    <Compile Include="Attributes\HookAlterBaseProtectionAttribute.cs" />
+    <Compile Include="Attributes\HookAlterBaseFieldProtectionAttribute.cs" />
     <Compile Include="Attributes\HookForceVirtualBaseAttribute.cs" />
     <Compile Include="Attributes\HookMakeBaseVirtualCallAttribute.cs" />
     <Compile Include="Attributes\HookRedirectAttribute.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Logging\Loggers\GameLogger.cs" />
     <Compile Include="Logging\Loggers\ILogger.cs" />
     <Compile Include="Logging\Loggers\VisualStudioLogger.cs" />
+    <Compile Include="Menus\ChatBox.cs" />
     <Compile Include="Menus\GameMenu.cs" />
     <Compile Include="Menus\TitleMenu.cs" />
     <Compile Include="Mods\ConfigExtensions.cs" />

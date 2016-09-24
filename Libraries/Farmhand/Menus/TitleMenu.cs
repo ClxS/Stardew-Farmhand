@@ -3,7 +3,7 @@
 namespace Farmhand.Menus
 {
     [HookForceVirtualBase]
-    [HookAlterBaseProtection(LowestProtection.Protected)]
+    [HookAlterBaseFieldProtection(LowestProtection.Protected)]
     internal class TitleMenu : StardewValley.Menus.TitleMenu
     {
 

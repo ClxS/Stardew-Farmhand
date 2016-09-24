@@ -7,7 +7,7 @@ using Farmhand.Attributes;
 namespace Farmhand.Menus
 {
     [HookForceVirtualBase]
-    [HookAlterBaseProtection(LowestProtection.Protected)]
+    [HookAlterBaseFieldProtection(LowestProtection.Protected)]
     class GameMenu : StardewValley.Menus.GameMenu
     {
     }

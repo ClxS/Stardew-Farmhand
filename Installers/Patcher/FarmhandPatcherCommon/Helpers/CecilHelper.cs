@@ -502,7 +502,7 @@ namespace Farmhand.Helpers
         }
 
         public static void AlterProtectionOnTypeMembers(CecilContext stardewContext, bool @public, string typeName)
-        {            
+        {
             var type = stardewContext.GetTypeDefinition(typeName);
 
             if (type.HasMethods)
@@ -545,7 +545,7 @@ namespace Farmhand.Helpers
                         if (field.IsPrivate || field.IsFamily)
                         {
                             field.IsPrivate = false;
-                            field.IsPublic = false;
+                            field.IsPublic = true;
                         }
                     }
                 }
@@ -604,6 +604,13 @@ namespace Farmhand.Helpers
                 }
             }
             ilProcessor.Body.OptimizeMacros();
+        }
+
+        public static void AlterProtectionOnType(CecilContext stardewContext, bool isPublic, string typeName)
+        {
+            var type = stardewContext.GetTypeDefinition(typeName);
+            type.IsPublic = isPublic;
+            type.IsNotPublic = !isPublic;
         }
     }
 }
