@@ -172,6 +172,7 @@
     <Compile Include="Logging\LogEntryType.cs" />
     <Compile Include="Logging\Loggers\ConsoleLogger.cs" />
     <Compile Include="Logging\Loggers\FileLogger.cs" />
+    <Compile Include="Logging\Loggers\GameLogger.cs" />
     <Compile Include="Logging\Loggers\ILogger.cs" />
     <Compile Include="Logging\Loggers\VisualStudioLogger.cs" />
     <Compile Include="Menus\GameMenu.cs" />

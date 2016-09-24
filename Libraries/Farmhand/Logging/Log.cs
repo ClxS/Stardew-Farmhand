@@ -9,7 +9,7 @@ namespace Farmhand.Logging
     public static class Log
     {
         public static bool IsVerbose { get; set; } = true;
-        private static ILogger Logger { get; set; } = new ConsoleLogger();
+        private static ILogger Logger { get; set; } = new GameLogger();
 
         public static void SetLoggerType<T>() where T : ILogger, new()
         {
