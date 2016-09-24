@@ -22,6 +22,54 @@ namespace Farmhand.Overrides.UI
             public Action<TitleMenu, string> OnClick { get; set; }
         }
 
+        public int ChuckleFishTimer
+        {
+            get { return this.chuckleFishTimer; }
+            set { this.chuckleFishTimer = value; }
+        }
+
+        public int FadeFromWhiteTimer
+        {
+            get { return this.fadeFromWhiteTimer; }
+            set { this.fadeFromWhiteTimer = value; }
+        }
+
+        public int LogoFadeTimer
+        {
+            get { return this.logoFadeTimer; }
+            set { this.logoFadeTimer = value; }
+        }
+
+        public int LogoSurprisedTimer
+        {
+            get { return this.logoSurprisedTimer; }
+            set { this.logoSurprisedTimer = value; }
+        }
+
+        public float LogoSwipeTimer
+        {
+            get { return this.logoSwipeTimer; }
+            set { this.logoSwipeTimer = value; }
+        }
+
+        public int PauseBeforeViewportRiseTimer
+        {
+            get { return this.pauseBeforeViewportRiseTimer; }
+            set { this.pauseBeforeViewportRiseTimer = value; }
+        }
+
+        public int QuitTimer
+        {
+            get { return this.quitTimer; }
+            set { this.quitTimer = value; }
+        }
+
+        public int ShowButtonsTimer
+        {
+            get { return this.showButtonsTimer; }
+            set { this.showButtonsTimer = value; }
+        }
+
         public static List<CustomTitleOption> CustomOptions = new List<CustomTitleOption>();
 
         public static void RegisterNewTitleButton(CustomTitleOption button)
