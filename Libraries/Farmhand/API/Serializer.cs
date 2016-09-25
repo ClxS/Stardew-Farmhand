@@ -62,7 +62,6 @@ namespace Farmhand.API
         {
             if (_injected)
             {
-                Logging.Log.Info("Checking serializers");
                 SaveGame.serializer = injectedSerializer;
                 SaveGame.farmerSerializer = injectedFarmerSerializer;
                 SaveGame.locationSerializer = injectedLocationSerializer;
