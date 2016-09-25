@@ -46,20 +46,39 @@ namespace Farmhand.API
       
         #endregion
 
+        private static XmlSerializer injectedSerializer;
+        private static XmlSerializer injectedFarmerSerializer;
+        private static XmlSerializer injectedLocationSerializer;
+
         private static bool _injected = false;
 
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void AttachListeners()
         {
+            Farmhand.Events.GameEvents.OnBeforeUpdateTick += GameEvents_OnBeforeUpdateTick;
+        }
+
+        private static void GameEvents_OnBeforeUpdateTick(object sender, Events.Arguments.GameEvents.EventArgsOnBeforeGameUpdate e)
+        {
+            if (_injected)
+            {
+                Logging.Log.Info("Checking serializers");
+                SaveGame.serializer = injectedSerializer;
+                SaveGame.farmerSerializer = injectedFarmerSerializer;
+                SaveGame.locationSerializer = injectedLocationSerializer;
+            }
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
         internal static void InjectSerializers()
         {
             var typeArray = InjectedTypes.ToArray();
-            SaveGame.serializer = new XmlSerializer(typeof(SaveGame), _serialiserTypes.Concat(InjectedTypes).ToArray());
-            SaveGame.farmerSerializer = new XmlSerializer(typeof(Farmer), _farmerTypes.Concat(InjectedTypes).ToArray());
-            SaveGame.locationSerializer = new XmlSerializer(typeof(GameLocation), _locationTypes.Concat(InjectedTypes).ToArray());
+            injectedSerializer = new XmlSerializer(typeof(SaveGame), _serialiserTypes.Concat(InjectedTypes).ToArray());
+            injectedFarmerSerializer = new XmlSerializer(typeof(Farmer), _farmerTypes.Concat(InjectedTypes).ToArray());
+            injectedLocationSerializer = new XmlSerializer(typeof(GameLocation), _locationTypes.Concat(InjectedTypes).ToArray());
+            SaveGame.serializer = injectedSerializer;
+            SaveGame.farmerSerializer = injectedFarmerSerializer;
+            SaveGame.locationSerializer = injectedLocationSerializer;
             _injected = true;
         }
 
