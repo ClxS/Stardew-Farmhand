@@ -78,7 +78,6 @@ namespace Farmhand.Overrides.UI
             var num = 0;
             for (int index = Enumerable.Count<ChatMessage>((IEnumerable<ChatMessage>)@this.messages) - 1; index >= 0; --index)
             {
-                Debug.WriteLine(@this.messages[index].message);
                 if (@this.messages[index].message.StartsWith(":: [FHLOG"))
                 {
                     var text = @this.messages[index].message;
