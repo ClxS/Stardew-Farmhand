@@ -17,7 +17,7 @@ namespace Farmhand.Content
     /// An override for the XNA ContentManager which deals with loading custom XNBs when mods have registered custom overrides. Can also be used by mods
     /// to load their own XNB data
     /// </summary>
-    public class ContentManager : Microsoft.Xna.Framework.Content.ContentManager
+    public class ContentManager : StardewValley.LocalizedContentManager
     {
         // A tracker, so we can check if the current Game1.temporaryContent is our override, to prevent uneccesary overriding
         protected static Microsoft.Xna.Framework.Content.ContentManager _tempManagerTracker = null;
@@ -52,10 +52,11 @@ namespace Farmhand.Content
             }
         }
 
-        public ContentManager(IServiceProvider serviceProvider)
-            : base(serviceProvider)
+        public ContentManager(IServiceProvider serviceProvider, string rootDirectory, System.Globalization.CultureInfo currentCulture, string languageCodeOverride)
+            : base(serviceProvider, rootDirectory, currentCulture, languageCodeOverride)
         {
         }
+
         public ContentManager(IServiceProvider serviceProvider, string rootDirectory)
             : base(serviceProvider, rootDirectory)
         {

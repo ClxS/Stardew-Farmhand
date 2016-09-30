@@ -135,7 +135,7 @@ namespace Farmhand.Helpers
                     GamePtr = game1;
                     game1.Run();
                 }
-                catch (System.Exception ex)
+                catch (System.Exception)
                 {
                 }
                 
