@@ -105,6 +105,26 @@ namespace Farmhand.Cecil
             return methodDef;
         }
 
+        public MethodDefinition GetMethodDefinitionFullName(string type, string method, Func<MethodDefinition, bool> selector = null)
+        {
+            MethodDefinition methodDef = null;
+            TypeDefinition typeDef = GetTypeDefinition(type);
+
+            if (typeDef != null)
+            {
+                if (selector == null)
+                {
+                    methodDef = typeDef.Methods.FirstOrDefault(m => m.FullName == method);
+                }
+                else
+                {
+                    methodDef = typeDef.Methods.Where(m => m.FullName == method).FirstOrDefault(selector);
+                }
+            }
+
+            return methodDef;
+        }
+
         public MethodReference GetConstructorReference(TypeDefinition typeDefinition, Func<MethodDefinition, bool> selector = null)
         {
             if (selector == null)

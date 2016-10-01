@@ -390,7 +390,7 @@ namespace Farmhand.Helpers
             }            
         }
 
-        public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, Type[] test, string type, string method)
+        public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, Type[] test, string type, string method, Type[] parameters)
         {
             var types = test.Select(n => stardewContext.GetTypeReference(n)).ToArray();
             var typeDef = stardewContext.GetTypeDefinition(asmType.Namespace + "." + asmType.Name);
@@ -446,18 +446,33 @@ namespace Farmhand.Helpers
             return refernce;
         }
 
-        public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, string type, string method)
+        public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, string type, string method, Type[] parameters)
         {
-            var newConstructor = asmType.GetConstructor(new Type[] { });
+            // Get a single string containing the full names of all parameters, comma separated
+            string parametersString = "";
+            for(int i=0; i<parameters.Length; i++)
+            {
+                parametersString += parameters[i].FullName;
+                if(i != parameters.Length-1)
+                {
+                    parametersString += ",";
+                }
+            }
+
+            var newConstructor = asmType.GetConstructor(parameters);
 
             if (asmType.BaseType == null) return;
-            var oldConstructor = asmType.BaseType.GetConstructor(new Type[] { });
+            var oldConstructor = asmType.BaseType.GetConstructor(parameters);
 
             if (newConstructor == null) return;
-            var newConstructorReference = stardewContext.GetMethodDefinition(asmType.FullName, newConstructor.Name);
+            // Build a FullName version of newConstructor.Name
+            string newConstructorFullName = "System.Void " + asmType.FullName + "::.ctor" + "(" + parametersString + ")";
+            var newConstructorReference = stardewContext.GetMethodDefinitionFullName(asmType.FullName, newConstructorFullName);
 
             if (oldConstructor == null) return;
-            var oldConstructorReference = stardewContext.GetMethodDefinition(asmType.BaseType.FullName ?? asmType.BaseType.Namespace + "." + asmType.BaseType.Name, oldConstructor.Name);
+            // Build a FullName version of oldConstructor.Name
+            string oldConstructorFullName = "System.Void " + asmType.BaseType.FullName + "::.ctor" + "(" + parametersString + ")";
+            var oldConstructorReference = stardewContext.GetMethodDefinitionFullName(asmType.BaseType.FullName ?? asmType.BaseType.Namespace + "." + asmType.BaseType.Name, oldConstructorFullName);
 
 
             ILProcessor ilProcessor = stardewContext.GetMethodIlProcessor(type, method);

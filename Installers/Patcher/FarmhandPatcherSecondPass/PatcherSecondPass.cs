@@ -105,11 +105,11 @@ namespace Farmhand
             {
                 if (attribute.GenericArguments != null && attribute.GenericArguments.Any())
                 {
-                    CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.GenericArguments, attribute.Type, attribute.Method);
+                    CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.GenericArguments, attribute.Type, attribute.Method, attribute.Parameters);
                 }
                 else
                 {
-                    CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.Type, attribute.Method);
+                    CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.Type, attribute.Method, attribute.Parameters);
                 }
             }
         }

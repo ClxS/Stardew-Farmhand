@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
 using Farmhand.Registries.Containers;
+using System.Globalization;
 
 namespace Farmhand.Content
 {
@@ -17,11 +18,12 @@ namespace Farmhand.Content
     /// An override for the XNA ContentManager which deals with loading custom XNBs when mods have registered custom overrides. Can also be used by mods
     /// to load their own XNB data
     /// </summary>
+    [HookRedirectConstructorFromBase("StardewValley.Game1", ".ctor", new Type[]{ typeof(IServiceProvider), typeof(System.String) })]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", "dummyLoad", new Type[] { typeof(IServiceProvider), typeof(System.String) })]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", "LoadContent", new Type[] { typeof(IServiceProvider), typeof(System.String) })]
+    [HookRedirectConstructorFromBase("StardewValley.LocalizedContentManager", "CreateTemporary", new Type[] { typeof(IServiceProvider), typeof(System.String), typeof(CultureInfo), typeof(string) } )]
     public class ContentManager : StardewValley.LocalizedContentManager
     {
-        // A tracker, so we can check if the current Game1.temporaryContent is our override, to prevent uneccesary overriding
-        protected static Microsoft.Xna.Framework.Content.ContentManager _tempManagerTracker = null;
-
         public static List<IContentInjector> ContentInjectors = new List<IContentInjector>()
         {
             new ModXnbInjector(),
@@ -31,26 +33,6 @@ namespace Farmhand.Content
             new CropInjector(),
             new WeaponInjector()
         };
-
-        //TODO Do not redirect this way. There are so many (pointless) separate instances of ContentManager, and we'll need to override them all as soon as they're 
-        //created. It's something more suited to the ConstructionRedirect hook.
-        [Hook(HookType.Entry, "StardewValley.Game1", "LoadContent")]
-        internal static void ConstructionHook()
-        {
-            Log.Verbose("Using Farmhand's ContentManager");
-            Game1.game1.Content = new ContentManager(Game1.game1.Content.ServiceProvider, Game1.game1.Content.RootDirectory);
-        }
-
-        [Hook(HookType.Entry, "StardewValley.Object", "performObjectDropInAction")]
-        internal static void ConstructionHookObject()
-        {
-            if (Game1.temporaryContent != _tempManagerTracker)
-            {
-                Log.Verbose("Using Farmhand's ContentManager on Temporary Content Manager");
-                Game1.temporaryContent = new ContentManager(Game1.game1.Content.ServiceProvider, Game1.game1.Content.RootDirectory);
-                _tempManagerTracker = Game1.temporaryContent;
-            }
-        }
 
         public ContentManager(IServiceProvider serviceProvider, string rootDirectory, System.Globalization.CultureInfo currentCulture, string languageCodeOverride)
             : base(serviceProvider, rootDirectory, currentCulture, languageCodeOverride)
