@@ -13,7 +13,7 @@ namespace Farmhand.Attributes
             GenericArguments = genericArguments;
         }
 
-        public HookRedirectConstructorFromBaseAttribute(string type, string method, params Type[] GenericArguments)
+        public HookRedirectConstructorFromBaseAttribute(string type, string method)
         {
             Type = type;
             Method = method;
