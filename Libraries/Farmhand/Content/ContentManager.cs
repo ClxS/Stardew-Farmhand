@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
 using Farmhand.Registries.Containers;
+using System.Globalization;
 
 namespace Farmhand.Content
 {
@@ -17,6 +18,10 @@ namespace Farmhand.Content
     /// An override for the XNA ContentManager which deals with loading custom XNBs when mods have registered custom overrides. Can also be used by mods
     /// to load their own XNB data
     /// </summary>
+    [HookRedirectConstructorFromBase("StardewValley.Game1", ".ctor", new Type[]{ typeof(IServiceProvider), typeof(System.String) })]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", "dummyLoad", new Type[] { typeof(IServiceProvider), typeof(System.String) })]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", "LoadContent", new Type[] { typeof(IServiceProvider), typeof(System.String) })]
+    [HookRedirectConstructorFromBase("StardewValley.LocalizedContentManager", "CreateTemporary", new Type[] { typeof(IServiceProvider), typeof(System.String), typeof(CultureInfo), typeof(string) } )]
     public class ContentManager : StardewValley.LocalizedContentManager
     {
         // A tracker, so we can check if the current Game1.temporaryContent is our override, to prevent uneccesary overriding
