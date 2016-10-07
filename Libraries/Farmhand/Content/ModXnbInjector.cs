@@ -35,8 +35,15 @@ namespace Farmhand.Content
             try
             {
                 if (items.Any(x => x.IsXnb))
-                {
+                {                    
                     var item = items.First(x => x.IsXnb);
+
+                    if (items.Count() > 1)
+                    {
+                        var outputMessage = items.Skip(1).Select(n => n.OwningMod.Name + " (" + n.Texture + ")").Aggregate((a, b) => a + ", " + b);
+                        Log.Warning($"XNB Conflict on asset {assetName}. Using {item.OwningMod} ({item.File}) and ignoring: {outputMessage}");
+                    }
+
                     var currentDirectory = Path.GetDirectoryName(item.AbsoluteFilePath);
                     var modContentManager = GetContentManagerForMod(contentManager, item);
                     var relPath = modContentManager.RootDirectory + "\\";
