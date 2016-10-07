@@ -188,9 +188,10 @@ namespace Farmhand
             var registeredMods = ModRegistry.GetRegisteredItems();
             foreach(var mod in registeredMods.Where(n => n.ModState == ModState.Unloaded))
             {
-                Log.Verbose($"Loading mod: {mod.Name} by {mod.Author}");      
+                Log.Verbose($"Loading mod: {mod.Name} by {mod.Author}");
                 try
                 {
+                    ApiEvents.InvokeModPreLoad(mod);
                     mod.OnBeforeLoaded();
                     if (mod.HasContent)
                     {
@@ -202,13 +203,14 @@ namespace Farmhand
                     }
                     mod.ModState = ModState.Loaded;
                     mod.OnAfterLoaded();
-                    Log.Success($"Loaded Mod: {mod.Name} v{mod.Version} by {mod.Author}");              
+                    Log.Success($"Loaded Mod: {mod.Name} v{mod.Version} by {mod.Author}");
+                    ApiEvents.InvokeModPostLoad(mod);
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception($"Error loading mod {mod.Name} by {mod.Author}", ex);
                     mod.ModState = ModState.Errored;
-                    //TODO, well something broke. Do summut' 'bout it!
+                    Log.Exception($"Error loading mod {mod.Name} by {mod.Author}", ex);
+                    ApiEvents.InvokeModLoadError(mod);
                 }
             }
         }

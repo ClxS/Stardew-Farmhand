@@ -14,7 +14,7 @@ namespace Farmhand
 
         public string Test1(Mod @in, int y, int width, int height, bool test)
         {
-            if(IsEnabled)
+            if (IsEnabled)
             {
                 return "sfes";
             }
@@ -44,7 +44,7 @@ namespace Farmhand
 
         public static void VoidFunction(string someTest)
         {
-            
+
         }
 
         public static string TestString()
