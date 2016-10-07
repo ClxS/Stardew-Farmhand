@@ -10,9 +10,9 @@ namespace Farmhand.API.Monsters
     {
         public static Dictionary<string, MonsterInformation> Monsters { get; } = new Dictionary<string, MonsterInformation>();
 
-        public static void AddMonster(MonsterInformation monsterInformation)
+        public static void RegisterMonster(MonsterInformation monsterInformation)
         {
-            Monsters.Add(monsterInformation.Name, monsterInformation);
+            Monsters[monsterInformation.Name] = monsterInformation;
         }
     }
 }

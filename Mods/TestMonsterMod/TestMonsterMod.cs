@@ -31,7 +31,7 @@ namespace TestMonsterMod
 
         private void GameEvents_OnAfterLoadedContent(object sender, System.EventArgs e)
         {
-            Farmhand.API.Monsters.Monster.AddMonster(new MonsterInformation
+            Farmhand.API.Monsters.Monster.RegisterMonster(new MonsterInformation
             {
                 Name = "TestMonster",
                 Texture = ModSettings.GetTexture("sprite_TestMonster"),
