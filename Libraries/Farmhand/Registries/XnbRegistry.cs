@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Farmhand.Registries.Containers;
+using System.Linq;
 
 namespace Farmhand.Registries
 {
@@ -9,18 +10,26 @@ namespace Farmhand.Registries
     /// </summary>
     public static class XnbRegistry
     {
-        private static Registry<string, ModXnb> _modRegistryInstance;
-        private static Registry<string, ModXnb> RegistryInstance => _modRegistryInstance ?? (_modRegistryInstance = new Registry<string, ModXnb>());
+        private static Registry<string, List<ModXnb>> _modRegistryInstance;
+        private static Registry<string, List<ModXnb>> RegistryInstance => _modRegistryInstance ?? (_modRegistryInstance = new Registry<string, List<ModXnb>>());
 
         /// <summary>
         /// Get ModXnb with key
         /// </summary>
         /// <param name="itemId">Id of ModXnb to return</param>
         /// <param name="mod">Mod this ModXnb belongs to</param>
+        /// <param name="ignoreModPrefixes">Whether this search should ignore mod-filtering prefixes</param>
         /// <returns>Matching ModXnb</returns>
-        public static ModXnb GetItem(string itemId, ModManifest mod = null)
+        public static IEnumerable<ModXnb> GetItem(string itemId, ModManifest mod = null, bool ignoreModPrefixes = false)
         {
-            return RegistryInstance.GetItem(mod == null ? itemId : GetModSpecificId(mod, itemId));
+            if (ignoreModPrefixes)
+            {
+                return GetRegisteredItems().Where(n => n.Original == itemId);
+            }
+            else
+            {
+                return RegistryInstance.GetItem(mod == null ? itemId : GetModSpecificId(mod, itemId));
+            }
         }
 
         /// <summary>
@@ -29,7 +38,7 @@ namespace Farmhand.Registries
         /// <returns>All ModXnbs</returns>
         public static IEnumerable<ModXnb> GetRegisteredItems()
         {
-            return RegistryInstance.GetRegisteredItems();
+            return RegistryInstance.GetRegisteredItems().SelectMany(x => x);
         }
 
         /// <summary>
@@ -40,7 +49,15 @@ namespace Farmhand.Registries
         /// <param name="mod">Mod this ModXnb belongs to</param>
         public static void RegisterItem(string itemId, ModXnb item, ModManifest mod = null)
         {
-            RegistryInstance.RegisterItem(mod == null ? itemId : GetModSpecificId(mod, itemId), item);
+            var xnb = RegistryInstance.GetItem(mod == null ? itemId : GetModSpecificId(mod, itemId));
+            if (xnb != null)
+            {
+                xnb.Add(item);
+            }
+            else
+            {
+                RegistryInstance.RegisterItem(mod == null ? itemId : GetModSpecificId(mod, itemId), new List<ModXnb>() { item });
+            }
         }
 
         /// <summary>

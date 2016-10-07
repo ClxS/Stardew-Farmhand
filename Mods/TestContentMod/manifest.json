@@ -6,25 +6,43 @@
 	"Description" : "An example Content only mod.",	
 	"Content" : 
 	{
-		"XNB" : 
-		[
-			{
-				"Original" : "farmhouse_tiles",
-				"Texture" : "icon_menuModsButton",
-				"Destination" : {
-					"X" : "16",
-					"Y" : "192",
-					"Width" : "81",
-					"Height" : "47"
-				}
-			}, 
-		],
-		"Textures" : 
-		[
-			{
-				"Id" : "icon_menuModsButton",
-				"File" : "Untitled.png"
-			}
-		]
+    "XNB": [
+      {
+        "Original": "farmhouse_tiles",
+        "Texture": "fridgeReplacementRed",
+        "Destination": {
+          "X": "45",
+          "Y": "192",
+          "Width": "52",
+          "Height": "47"
+        },
+        "Source": {
+          "X": "29",
+          "Y": "0",
+          "Width": "52",
+          "Height": "47"
+        }
+      },
+      {
+        "Original": "farmhouse_tiles",
+        "Texture": "fridgeReplacementGreen",
+        "Destination": {
+          "X": "16",
+          "Y": "192",
+          "Width": "29",
+          "Height": "47"
+        }
+      }
+    ],
+    "Textures": [
+      {
+        "Id": "fridgeReplacementRed",
+        "File": "Untitled.png"
+      },
+      {
+        "Id": "fridgeReplacementGreen",
+        "File": "UntitledGreen.png"
+      }
+    ]
 	}
 }

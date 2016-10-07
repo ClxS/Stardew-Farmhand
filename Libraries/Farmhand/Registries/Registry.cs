@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Farmhand.Registries
@@ -32,6 +33,7 @@ namespace Farmhand.Registries
             var registryItem = RegisteredItems.ContainsKey(key) ? RegisteredItems[key] : null;
             return registryItem;
         }
+        
 
         /// <summary>
         /// Registers a new item

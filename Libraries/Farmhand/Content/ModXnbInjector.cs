@@ -23,19 +23,20 @@ namespace Farmhand.Content
 
         public bool HandlesAsset(Type type, string assetName)
         {
-            var item = XnbRegistry.GetItem(assetName);
-            return (item?.OwningMod?.ModState != null && item.OwningMod.ModState == ModState.Loaded);
+            var item = XnbRegistry.GetItem(assetName, null, true);
+            return item?.Any(x => x.OwningMod?.ModState != null && x.OwningMod.ModState == ModState.Loaded) ?? false;
         }
 
         public T Load<T>(ContentManager contentManager, string assetName)
         {
             var output = default(T);
 
-            var item = XnbRegistry.GetItem(assetName);
+            var items = XnbRegistry.GetItem(assetName, null, true);
             try
             {
-                if (item.IsXnb)
+                if (items.Any(x => x.IsXnb))
                 {
+                    var item = items.First(x => x.IsXnb);
                     var currentDirectory = Path.GetDirectoryName(item.AbsoluteFilePath);
                     var modContentManager = GetContentManagerForMod(contentManager, item);
                     var relPath = modContentManager.RootDirectory + "\\";
@@ -49,9 +50,9 @@ namespace Farmhand.Content
                         output = modContentManager.Load<T>(relUri);
                     }
                 }
-                else if (item.IsTexture && typeof(T) == typeof(Texture2D))
+                else if (items.Any(i => i.IsTexture) && typeof(T) == typeof(Texture2D))
                 {
-                    output = (T)(LoadTexture(contentManager, assetName, item));
+                    output = (T)(LoadTexture(contentManager, assetName, items));
                 }
             }
             catch (Exception ex)
@@ -78,33 +79,32 @@ namespace Farmhand.Content
             return _modManagers.FirstOrDefault(n => mod.OwningMod.ModDirectory.Contains(n.RootDirectory));
         }
 
-        private object LoadTexture(ContentManager contentManager, string assetName, ModXnb item)
+        private object LoadTexture(ContentManager contentManager, string assetName, IEnumerable<ModXnb> items)
         {
-            var modItem = TextureRegistry.GetItem(item.Texture, item.OwningMod);
-            var obj = modItem?.Texture;
+            var originalTexture = contentManager.LoadDirect<Texture2D>(assetName);
+            var obj = originalTexture;
 
-            if (obj == null) return null;
-            
-            if (item.Destination != null)
+            string assetKey = $"{assetName}-\u2764-modified";
+            if (_cachedAlteredTextures.ContainsKey(assetKey))
             {
-                //TODO, Error checking on this.
-                //TODO, Multiple mods should be able to edit this
-                var originalTexture = contentManager.LoadDirect<Texture2D>(assetName);
-
-                string assetKey = $"{assetName}-\u2764-modified";
-                if (_cachedAlteredTextures.ContainsKey(assetKey))
-                {
-                    obj = _cachedAlteredTextures[assetKey];
-                }
-                else
-                {
-                    var texture = TextureUtility.PatchTexture(originalTexture, obj, item.Source ?? new Rectangle(0, 0, obj.Width, obj.Height), item.Destination);
-                    _cachedAlteredTextures[assetKey] = texture;
-                    obj = texture;
-                }
+                obj = _cachedAlteredTextures[assetKey];
             }
-
-            Log.Verbose($"Using own asset replacement: {assetName} = {item.OwningMod.Name}.{item.Texture}");
+            else
+            {
+                foreach (var item in items)
+                {
+                    var modItem = TextureRegistry.GetItem(item.Texture, item.OwningMod);
+                    var modTexture = modItem?.Texture;
+                    if (item.Destination != null)
+                    {
+                        var texture = TextureUtility.PatchTexture(obj, modTexture, item.Source ?? new Rectangle(0, 0, modTexture.Width, modTexture.Height), item.Destination);
+                        obj = texture;
+                    }
+                }
+                _cachedAlteredTextures[assetKey] = obj;
+            }
+            var outputMessage = items.Select(n => n.OwningMod.Name + " (" + n.Texture + ")").Aggregate((a, b) => a + ", " + b);
+            Log.Verbose($"Using own asset replacement: {assetName} = " + outputMessage);
             return obj;
         }
 
