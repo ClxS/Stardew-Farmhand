@@ -44,7 +44,9 @@ namespace StardewModdingAPI
             Farmhand.Events.GraphicsEvents.OnPostRenderHudEventNoCheck += Events.GraphicsEvents.InvokeOnPostRenderHudEventNoCheck;
             Farmhand.Events.GraphicsEvents.OnResize += Events.GraphicsEvents.InvokeResize;
             Farmhand.Events.GraphicsEvents.OnAfterDraw += Events.GraphicsEvents.InvokeDrawTick;
+#pragma warning disable CS0618
             Farmhand.Events.GraphicsEvents.OnDrawInRenderTick += Events.GraphicsEvents.InvokeDrawInRenderTargetTick;
+#pragma warning restore CS0618
 
             Farmhand.Events.LocationEvents.OnLocationsChanged += Events.LocationEvents.InvokeLocationsChanged;
             Farmhand.Events.LocationEvents.OnLocationObjectsChanged += Events.LocationEvents.InvokeOnNewLocationObject;

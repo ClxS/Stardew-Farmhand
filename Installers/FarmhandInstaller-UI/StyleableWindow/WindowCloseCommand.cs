@@ -8,6 +8,7 @@ using System.Windows.Input;
 
 namespace WpfStyleableWindow.StyleableWindow
 {
+#pragma warning disable CS0067
     public class WindowCloseCommand :ICommand
     {     
 
@@ -28,4 +29,5 @@ namespace WpfStyleableWindow.StyleableWindow
             }
         }
     }
+#pragma warning restore CS0067
 }

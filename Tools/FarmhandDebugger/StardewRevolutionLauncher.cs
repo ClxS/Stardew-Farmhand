@@ -18,7 +18,7 @@ namespace FarmhandDebugger
             {
                 FarmhandAssembly.EntryPoint.Invoke(null, new object[] { new string[0] });
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 return false;
             }

@@ -10,7 +10,6 @@ namespace Farmhand
     {
         public bool IsEnabled = false;
         protected bool IsEnabled2 = false;
-        private bool IsEnabled3 = false;
 
         public string Test1(Mod @in, int y, int width, int height, bool test)
         {

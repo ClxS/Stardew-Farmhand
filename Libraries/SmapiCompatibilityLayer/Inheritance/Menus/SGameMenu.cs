@@ -8,13 +8,13 @@ namespace StardewModdingAPI.Inheritance.Menus
     {
         public GameMenu BaseGameMenu { get; private set; }
 
-        public List<ClickableComponent> tabs
+        public new List<ClickableComponent> tabs
         {
             get { return (List<ClickableComponent>) GetBaseFieldInfo("tabs").GetValue(BaseGameMenu); }
             set { GetBaseFieldInfo("tabs").SetValue(BaseGameMenu, value); }
         }
 
-        public List<IClickableMenu> pages
+        public new List<IClickableMenu> pages
         {
             get { return (List<IClickableMenu>) GetBaseFieldInfo("pages").GetValue(BaseGameMenu); }
             set { GetBaseFieldInfo("pages").SetValue(BaseGameMenu, value); }

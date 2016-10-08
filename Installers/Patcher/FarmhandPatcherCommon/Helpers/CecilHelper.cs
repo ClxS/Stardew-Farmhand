@@ -611,7 +611,16 @@ namespace Farmhand.Helpers
             if (newInstructions.Any())
             {
                 var previousInstruction = newInstructions.First();
-                ilProcessor.InsertAfter(ilProcessor.Body.Instructions[ilProcessor.Body.Instructions.Count - 2], previousInstruction);
+                if (ilProcessor.Body.Instructions.Count > 1)
+                {
+                    ilProcessor.InsertAfter(ilProcessor.Body.Instructions[ilProcessor.Body.Instructions.Count - 2],
+                        previousInstruction);
+                }
+                else
+                {
+                    ilProcessor.InsertBefore(ilProcessor.Body.Instructions[0], previousInstruction);
+                }
+
                 for (var i = 1; i < newInstructions.Count; ++i)
                 {
                     ilProcessor.InsertAfter(previousInstruction, newInstructions[i]);
