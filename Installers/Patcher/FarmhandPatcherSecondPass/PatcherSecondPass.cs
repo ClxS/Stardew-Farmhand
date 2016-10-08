@@ -34,7 +34,14 @@ namespace Farmhand
 
         private void HookGlobalRouting(CecilContext cecilContext)
         {
-            CecilHelper.HookAllGlobalRouteMethods(cecilContext);
+            if (!Options.DisableGrm)
+            {
+                CecilHelper.HookAllGlobalRouteMethods(cecilContext);
+            }
+            else
+            {
+                Console.WriteLine("Skipping GRM injection");
+            }
         }
 
         protected override void AlterTypeBaseFieldProtections(CecilContext context, Type type)

@@ -13,6 +13,8 @@ namespace Farmhand
     {
         protected List<Assembly> FarmhandAssemblies { get; set; } = new List<Assembly>();
 
+        public PatcherOptions Options { get; } = new PatcherOptions();
+
         /// <summary>
         /// 
         /// </summary>

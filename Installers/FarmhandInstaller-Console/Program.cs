@@ -12,24 +12,30 @@ namespace FarmhandInstaller_Console
             PassOne,
             PassTwo
         }
-
+        
         static void Main(string[] args)
         {
             Patcher patcher;
-            if(args.Any() && args[0] == "-pass1")
+            bool grmDisabled = args.Any(a => a.Equals("-disablegrm"));
+
+            if (args.Any(a => a.Equals("-pass1")))
             {
                 patcher = CreatePatcher(Pass.PassOne);
+                patcher.Options.DisableGrm = grmDisabled;
                 patcher.PatchStardew();
             }
-            else if(args.Any() && args[0] == "-pass2")
+            else if (args.Any(a => a.Equals("-pass2")))
             {
                 patcher = CreatePatcher(Pass.PassTwo);
+                patcher.Options.DisableGrm = grmDisabled;
                 patcher.PatchStardew();
             }
             else
             {
                 Console.WriteLine("Invalid build pass");
             }
+
+            
         }
 
         static Patcher CreatePatcher(Pass pass)
