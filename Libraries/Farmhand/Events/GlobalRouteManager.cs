@@ -187,7 +187,14 @@ namespace Farmhand.Events
             }
             else
             {
-                throw new Exception("The method ({key}) is not available for listening");
+                if (MapIndexes.Any())
+                {
+                    throw new Exception("The method ({key}) is not available for listening");
+                }
+                else
+                {
+                    Log.Warning("GRM disabled at install time. Event will not be hooked");
+                }
             }
             
         }
