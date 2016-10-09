@@ -36,12 +36,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
+      <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.Game.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
+      <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.Graphics.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Stardew Farmhand">
