@@ -140,7 +140,7 @@ namespace Farmhand.Overrides.UI
             buttonsDX = 1;
             isTransitioningButtons = true;
         }
-
+        
         public override void update(GameTime time)
         {
             base.update(time);
