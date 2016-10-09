@@ -82,5 +82,19 @@ namespace Farmhand.Registries
             return $"{modPrefix}{itemId}";
         }
         #endregion
+
+        public static bool IsDirty(string itemId, ModManifest mod = null, bool ignoreModPrefixes = false)
+        {
+            return GetItem(itemId, mod, ignoreModPrefixes).Any(n => n.IsDirty);
+        }
+
+        public static void ClearDirtyFlag(string itemId, ModManifest mod = null, bool ignoreModPrefixes = false)
+        {
+            var items = GetItem(itemId, mod, ignoreModPrefixes);
+            foreach (var item in items)
+            {
+                item.IsDirty = false;
+            }
+        }
     }
 }

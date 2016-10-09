@@ -40,7 +40,9 @@ namespace Farmhand.Registries.Containers
 
         [JsonIgnore]
         public bool IsXnb => !string.IsNullOrEmpty(File);
-        
+
+        [JsonIgnore]
+        public bool IsDirty { get; set; } = false;
 
         public bool Exists(ModManifest mod)
         {

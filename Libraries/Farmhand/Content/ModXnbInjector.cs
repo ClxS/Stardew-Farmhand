@@ -32,6 +32,7 @@ namespace Farmhand.Content
             var output = default(T);
 
             var items = XnbRegistry.GetItem(assetName, null, true);
+            var isDirty = XnbRegistry.IsDirty(assetName, null, true);
             try
             {
                 if (items.Any(x => x.IsXnb))
@@ -59,7 +60,7 @@ namespace Farmhand.Content
                 }
                 else if (items.Any(i => i.IsTexture) && typeof(T) == typeof(Texture2D))
                 {
-                    output = (T)(LoadTexture(contentManager, assetName, items));
+                    output = (T)(LoadTexture(contentManager, assetName, items, isDirty));
                 }
             }
             catch (Exception ex)
@@ -86,13 +87,13 @@ namespace Farmhand.Content
             return _modManagers.FirstOrDefault(n => mod.OwningMod.ModDirectory.Contains(n.RootDirectory));
         }
 
-        private object LoadTexture(ContentManager contentManager, string assetName, IEnumerable<ModXnb> items)
+        private object LoadTexture(ContentManager contentManager, string assetName, IEnumerable<ModXnb> items, bool isDirty)
         {
             var originalTexture = contentManager.LoadDirect<Texture2D>(assetName);
             var obj = originalTexture;
 
             string assetKey = $"{assetName}-\u2764-modified";
-            if (_cachedAlteredTextures.ContainsKey(assetKey))
+            if (_cachedAlteredTextures.ContainsKey(assetKey) && !isDirty)
             {
                 obj = _cachedAlteredTextures[assetKey];
             }
