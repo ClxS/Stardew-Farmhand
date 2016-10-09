@@ -4,7 +4,9 @@ using System;
 using System.ComponentModel;
 using Farmhand.Events.Arguments.PlayerEvents;
 using Farmhand.Logging;
+using Microsoft.Xna.Framework;
 using StardewValley;
+using StardewValley.Objects;
 
 namespace Farmhand.Events
 {
@@ -18,9 +20,18 @@ namespace Farmhand.Events
         public static event EventHandler<EventArgsOnPlayerDoneEating> OnPlayerDoneEating = delegate { };
         public static event EventHandler<EventArgsOnItemAddedToInventory> OnItemAddedToInventory = delegate { };
         public static event EventHandler<CancelEventArgs> OnBeforeGainExperience = delegate { };
-        public static event EventHandler OnAfterGainExperience = delegate { };
         public static event EventHandler<EventArgsOnFarmerChanged> OnFarmerChanged = delegate { };
         public static event EventHandler<EventArgsOnLevelUp> OnLevelUp = delegate { };
+        public static event EventHandler<CancelEventArgs> OnChangeShirt = delegate { };
+        public static event EventHandler<CancelEventArgs> OnChangeHairStyle = delegate { };
+        public static event EventHandler<CancelEventArgs> OnChangeShoeColour = delegate { };
+        public static event EventHandler<CancelEventArgs> OnChangeHairColour = delegate { };
+        public static event EventHandler<CancelEventArgs> OnChangePantsColour = delegate { };
+        public static event EventHandler<CancelEventArgs> OnChangeHat = delegate { };
+        public static event EventHandler<CancelEventArgs> OnChangeAccessory = delegate { };
+        public static event EventHandler<CancelEventArgs> OnChangeSkinColour = delegate { };
+        public static event EventHandler<CancelEventArgs> OnChangeEyeColour = delegate { };
+        public static event EventHandler<CancelEventArgs> OnChangeGender = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.Game1", "farmerTakeDamage")]
         internal static bool InvokeBeforePlayerTakesDamage()
@@ -44,6 +55,76 @@ namespace Farmhand.Events
         {
             Farmhand.API.Items.Item.FixupItemIds(null, null);
             EventCommon.SafeInvoke(OnFarmerChanged, newFarmer, new EventArgsOnFarmerChanged(priorFarmer, newFarmer));
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Farmer", "changeShirt")]
+        internal static bool InvokeOnPlayerChangeShirt([ThisBind] object @this,
+            [InputBind(typeof(int), "whichShirt")] int which)
+        {
+            return EventCommon.SafeCancellableInvoke(OnChangeShirt, @this, new CancelEventArgs());
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Farmer", "changeHairStyle")]
+        internal static bool InvokeOnPlayerChangeHairStyle([ThisBind] object @this,
+            [InputBind(typeof(int), "whichHair")] int which)
+        {
+            return EventCommon.SafeCancellableInvoke(OnChangeHairStyle, @this, new CancelEventArgs());
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Farmer", "changeShoeColor")]
+        internal static bool InvokeOnPlayerChangeShoeColour([ThisBind] object @this,
+            [InputBind(typeof(int), "which")] int which)
+        {
+            return EventCommon.SafeCancellableInvoke(OnChangeShoeColour, @this, new CancelEventArgs());
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Farmer", "changeHairColor")]
+        internal static bool InvokeOnPlayerChangeHairColour([ThisBind] object @this,
+            [InputBind(typeof(Color), "c")] Color which)
+        {
+            return EventCommon.SafeCancellableInvoke(OnChangeHairColour, @this, new CancelEventArgs());
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Farmer", "changePants")]
+        internal static bool InvokeOnPlayerChangePants([ThisBind] object @this,
+            [InputBind(typeof(Color), "color")] Color which)
+        {
+            return EventCommon.SafeCancellableInvoke(OnChangePantsColour, @this, new CancelEventArgs());
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Farmer", "changeHat")]
+        internal static bool InvokeOnPlayerChangeHat([ThisBind] object @this,
+            [InputBind(typeof(int), "newHat")] int which)
+        {
+            return EventCommon.SafeCancellableInvoke(OnChangeHat, @this, new CancelEventArgs());
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Farmer", "changeAccessory")]
+        internal static bool InvokeOnPlayerChangeAccessory([ThisBind] object @this,
+            [InputBind(typeof(int), "which")] int which)
+        {
+            return EventCommon.SafeCancellableInvoke(OnChangeAccessory, @this, new CancelEventArgs());
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Farmer", "changeSkinColor")]
+        internal static bool InvokeOnPlayerChangeSkinColour([ThisBind] object @this,
+            [InputBind(typeof(int), "which")] int which)
+        {
+            return EventCommon.SafeCancellableInvoke(OnChangeSkinColour, @this, new CancelEventArgs());
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Farmer", "changeEyeColor")]
+        internal static bool InvokeOnPlayerChangeEyeColour([ThisBind] object @this,
+            [InputBind(typeof(Color), "c")] Color which)
+        {
+            return EventCommon.SafeCancellableInvoke(OnChangeEyeColour, @this, new CancelEventArgs());
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Farmer", "changeGender")]
+        internal static bool InvokeOnPlayerChangeGender([ThisBind] object @this,
+            [InputBind(typeof(bool), "male")] bool male)
+        {
+            return EventCommon.SafeCancellableInvoke(OnChangeGender, @this, new CancelEventArgs());
         }
 
         //[Hook(HookType.Exit, "StardewValley.Farmer", "addItemToInventory")]
