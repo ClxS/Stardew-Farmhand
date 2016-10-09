@@ -67,6 +67,7 @@ namespace Farmhand.Content
             {
                 Log.Exception("Error reading own file", ex);
             }
+            XnbRegistry.ClearDirtyFlag(assetName, null, true);
             return output;
         }
 
