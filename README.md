@@ -1,5 +1,5 @@
 ## Current Build Status
-[![Build status](https://ci.appveyor.com/api/projects/status/310apgoy7d8f8vkl?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand)
+[![Build status](https://ci.appveyor.com/api/projects/status/qb4uusw7r669ly3d?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand)
 
 # Project Details
 
