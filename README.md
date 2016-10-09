@@ -1,3 +1,6 @@
+## Current Build Status
+[![Build status](https://ci.appveyor.com/api/projects/status/qb4uusw7r669ly3d?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand)
+
 # Project Details
 
 Stardew Farmhand is the new in-development API intended to replace SMAPI
