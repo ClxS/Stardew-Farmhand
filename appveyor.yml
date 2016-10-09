@@ -1,9 +1,4 @@
 version: 1.0.{build}
-environment:
-  GitlabUsr:
-    secure: OHqX4MUJkciXyaPO+OpTSg==
-  GitlabPass:
-    secure: ZJAVYNzPiH1IlCwmdyZecA==
 install:
 - cmd: >-
     git clone https://%GITLABUSR%:%GITLABPASS%@gitlab.com/ClxS/Tool.git C:\projects\stardew-farmhand\WorkingDirectory\tmp
