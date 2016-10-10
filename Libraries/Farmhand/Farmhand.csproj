@@ -46,8 +46,8 @@
       <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
-        <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Graphics\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Game.dll</HintPath>
-        <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.Game.dll</HintPath>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Graphics\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Game.dll</HintPath>
+      <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.Game.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -88,6 +88,7 @@
     <Compile Include="API\Items\ItemCategory.cs" />
     <Compile Include="API\Items\ItemInformation.cs" />
     <Compile Include="API\Items\ItemType.cs" />
+    <Compile Include="API\Locations\MineShaft.cs" />
     <Compile Include="API\Monsters\Monster.cs" />
     <Compile Include="API\Monsters\MonsterInformation.cs" />
     <Compile Include="API\Pulse\Pulse.cs" />
@@ -215,7 +216,6 @@
     <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="API\Locations\" />
     <Folder Include="API\Machines\" />
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,7 @@ namespace Farmhand
             FarmhandAssemblies.Add(Assembly.LoadFrom(PatcherConstants.FarmhandDll));
             
             HookApiEvents(cecilContext);
+            HookOutputableApiEvents(cecilContext);
             HookApiFieldProtectionAlterations<HookAlterBaseFieldProtectionAttribute>(cecilContext);
             HookApiTypeProtectionAlterations<HookAlterProtectionAttribute>(cecilContext);
             HookApiVirtualAlterations<HookForceVirtualBaseAttribute>(cecilContext);
@@ -76,6 +77,56 @@ namespace Farmhand
                                         (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
                                 case HookType.Exit: CecilHelper.InjectExitMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>
                                         (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void HookOutputableApiEvents(CecilContext cecilContext)
+        {
+            try
+            {
+                var methods = FarmhandAssemblies.SelectMany(a => a.GetTypes())
+                            .SelectMany(t => t.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
+                            .Where(m => m.GetCustomAttributes(typeof(HookReturnableAttribute), false).Any())
+                            .ToArray();
+
+                foreach (var method in methods)
+                {
+                    if (method.DeclaringType == null) continue;
+
+                    var typeName = method.DeclaringType.FullName;
+                    var methodName = method.Name;
+                    var hookAttributes = method.GetCustomAttributes(typeof(HookReturnableAttribute), false).Cast<HookReturnableAttribute>();
+
+                    foreach (var hook in hookAttributes)
+                    {
+                        var hookTypeName = hook.Type;
+                        var hookMethodName = hook.Method;
+                        try
+                        {
+                            switch (hook.HookType)
+                            {
+                                case HookType.Entry:
+                                    CecilHelper.InjectReturnableEntryMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute,
+                                        UseOutputBindAttribute>
+                                        (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
+                                case HookType.Exit:
+                                    CecilHelper.InjectReturnableExitMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute,
+                                        UseOutputBindAttribute>
+                        (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
+                                default:
+                                    throw new Exception("Unknown HookType");
                             }
                         }
                         catch (Exception ex)

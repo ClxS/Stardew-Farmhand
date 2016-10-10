@@ -149,9 +149,9 @@ namespace Farmhand.Helpers
                 var loadOld = ilProcessor.Create(OpCodes.Ldloc, oldContainerVariable);
                 var loadNew = ilProcessor.Create(OpCodes.Ldloc, containerVariable);
                 instructions.Add(ilProcessor.Create(OpCodes.Brfalse, loadOld));
-                instructions.Add(loadOld);
-                instructions.Add(brToRet);
                 instructions.Add(loadNew);
+                instructions.Add(brToRet);
+                instructions.Add(loadOld);
             }
 
             foreach (var inst in instructions)
