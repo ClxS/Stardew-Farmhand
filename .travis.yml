@@ -10,7 +10,7 @@ language: csharp
 solution: Farmhand.sln
 install:
 - nuget restore Farmhand.sln
-- git clone %TOOL_URL% C:\projects\stardew-farmhand\WorkingDirectory\tmp
+- git clone ${TOOL_URL} C:\projects\stardew-farmhand\WorkingDirectory\tmp
 - move C:\projects\stardew-farmhand\WorkingDirectory\tmp\*.* C:\projects\stardew-farmhand\WorkingDirectory
 addons:
   coverity_scan:
