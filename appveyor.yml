@@ -46,9 +46,6 @@ install:
     git clone https://%GITLABUSR%:%GITLABPASS%@gitlab.com/ClxS/Tool.git C:\projects\stardew-farmhand\WorkingDirectory\tmp
     move C:\projects\stardew-farmhand\WorkingDirectory\tmp\*.* C:\projects\stardew-farmhand\WorkingDirectory
 # Build configuration. --------------------------------------------------------
-platform:
-- x86
-- x64
 configuration:
 - Release
 build_script:
@@ -59,8 +56,7 @@ build_script:
     $buildArgs = @(
       "/m",
       "/l:C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll",
-      "/p:Configuration=$env:CONFIGURATION",
-      "/p:Platform=$env:PLATFORM")
+      "/p:Configuration=$env:CONFIGURATION")
     
     # If build is not a scheduled one, than simply build project with MSBuild.
     if ($env:APPVEYOR_SCHEDULED_BUILD -ne "True") {
