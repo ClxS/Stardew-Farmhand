@@ -1,5 +1,8 @@
 ## Current Build Status
-[![Build status](https://ci.appveyor.com/api/projects/status/qb4uusw7r669ly3d?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand)
+
+| Branch        | Windows CI    | Static Analysis  |
+| ------------- | ------------  | --- |
+| Master      | [![Build status](https://ci.appveyor.com/api/projects/status/isjopx9h6gv9vv2x?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand) |  [![Static Analysis](https://scan.coverity.com/projects/10466/badge.svg?flat=1)](https://scan.coverity.com/projects/10466) |
 
 # Project Details
 
