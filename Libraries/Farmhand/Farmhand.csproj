@@ -84,6 +84,8 @@
     <Compile Include="API\Crops\CropInformation.cs" />
     <Compile Include="API\Game.cs" />
     <Compile Include="API\Generic\ItemChancePair.cs" />
+    <Compile Include="API\Items\BigCraftable.cs" />
+    <Compile Include="API\Items\BigCraftableInformation.cs" />
     <Compile Include="API\Items\Item.cs" />
     <Compile Include="API\Items\ItemCategory.cs" />
     <Compile Include="API\Items\ItemInformation.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="Attributes\ThisBindAttribute.cs" />
     <Compile Include="Attributes\UseOutputBindAttribute.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Content\BigCraftableInjector.cs" />
     <Compile Include="Content\BlueprintInjector.cs" />
     <Compile Include="Content\CropInjector.cs" />
     <Compile Include="Content\MonsterInjector.cs" />
