@@ -81,27 +81,27 @@ build_script:
     # Fill token field.
     [Net.Http.HttpContent]$formField =
       New-Object Net.Http.StringContent($env:CoverityProjectToken)
-    $form.Add($formField, "\"token\"")
+    $form.Add($formField, "token")
     # Fill email field.
     $formField =
       New-Object Net.Http.StringContent($env:CoverityNotificationEmail)
-    $form.Add($formField, "\"email\"")
+    $form.Add($formField, "email")
     # Fill file field.
     $fs = New-Object IO.FileStream(
       "$env:APPVEYOR_BUILD_FOLDER\$env:APPVEYOR_PROJECT_NAME.zip",
       [IO.FileMode]::Open,
       [IO.FileAccess]::Read)
     $formField = New-Object Net.Http.StreamContent($fs)
-    $form.Add($formField, "\"file\"", "$env:APPVEYOR_PROJECT_NAME.zip")
+    $form.Add($formField, "file", "$env:APPVEYOR_PROJECT_NAME.zip")
     # Fill version field.
     $version = "$env:VersionMajor.$env:VersionMinor.$env:VersionPatch" +
       "-$env:VersionStage+$env:VersionBuild"
     $formField = New-Object Net.Http.StringContent($version)
-    $form.Add($formField, "\"version\"")
+    $form.Add($formField, "version")
     # Fill description field.
     $formField =
       New-Object Net.Http.StringContent("Scheduled CI server build.")
-    $form.Add($formField, "\"description\"")
+    $form.Add($formField, "description")
     # Submit form.
     $url = "https://scan.coverity.com/builds?project=ClxS%2FStardew-Farmhand"
     $task = $client.PostAsync($url, $form)
