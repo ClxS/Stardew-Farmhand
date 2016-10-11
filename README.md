@@ -51,21 +51,9 @@ These projects are responsible for handling build flow.
 
 - FarmhandPatcherCommon/FirstPass/SecondPass. These are used by the installer.They are separated into their own libraries to prevent conflicts due to the missing (not yet built) Stardew Farmhand intermediate
 
-##Mods
-
-- Logging Mod (DLL). A mod, just used to log events when they fire
-
-- Mod Loader Mod (DLL). A mod which will provide ingame loading and unloading of other mods.
-
-- Test Content Mod (DLL). This mod demonstrates using manifests to make a content only mod. As I wanted it to automatically put it's files in the right place, it's a class library with a post-build action to delete the empty .DLL and .PDB 
-
-- Jumino Deposit Mod (DLL). A test functional mod. This is mainly used to test UI event callbacks, and address crash issues.
-
 ##Libraries
 
 - Farmhand (DLL). The core code which is injected into Stardew
-
-- FarmhandUI (DLL). This is an extension of Farmhand which provides easy to use overrides for the inbuild UI classes.
 
 ##Tools
 
