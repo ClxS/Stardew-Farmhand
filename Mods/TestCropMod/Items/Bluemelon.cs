@@ -20,7 +20,7 @@ namespace TestCropMod.Items
             Price = 30,
             Texture = TextureRegistry.GetModSpecificId(TestCropMod.Instance.ModSettings, "icon_Bluemelon"),
             Type = ItemType.Basic,
-            Editibility = 15
+            Edibility = 15
         });
 
         public Bluemelon()

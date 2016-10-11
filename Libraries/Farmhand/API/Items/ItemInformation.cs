@@ -17,7 +17,7 @@ namespace Farmhand.API.Items
         public ItemCategory Category { get; set; } = ItemCategory.None;
         public int Price { get; set; }
         public string Texture { get; set; }
-        public int Editibility { get; set; } = -300;
+        public int Edibility { get; set; } = -300;
 
         public override string ToString()
         {
@@ -28,7 +28,7 @@ namespace Farmhand.API.Items
                 TypeAndCategoryString += $" {(int)Category}";
             }
 
-            return $"{Name}/{Price}/{Editibility}/{TypeAndCategoryString}/{Description}";
+            return $"{Name}/{Price}/{Edibility}/{TypeAndCategoryString}/{Description}";
         }
     }
 }

@@ -1,0 +1,18 @@
+﻿{
+	"UniqueId" : "TestBigCraftableMod",
+	"Name" : "Test Big Craftable Mod",
+	"Author": "TownEater",
+	"ModDll": "TestBigCraftableMod",
+	"Version" : "0.1",
+	"Description" : "An example big craftable mod.",
+	"Content" : 
+	{
+		"Textures" : 
+		[
+			{
+				"Id" : "sprite_TestBigCraftable",
+				"File" : "TestBigCraftable.png"
+			}
+		]
+	}
+}

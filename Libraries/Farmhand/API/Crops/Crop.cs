@@ -12,8 +12,6 @@ namespace Farmhand.API.Crops
     {
         public static Dictionary<int, CropInformation> Crops { get; } = new Dictionary<int, CropInformation>();
 
-        public static int NextAvailableIndex = 40;
-
         /// <summary>
         /// Registers a new crop
         /// </summary>
@@ -25,8 +23,7 @@ namespace Farmhand.API.Crops
                 throw new Exception("objectInformation is null! This likely occurs if you try to register a crop before AfterContentLoaded");
             }
 
-            crop.Id = NextAvailableIndex;
-            NextAvailableIndex++;
+            crop.Id = StardewValley.Game1.content.Load<Dictionary<int, string>>("Data\\Crops").Count()+1;
 
             Crops.Add(crop.Seed, crop);
             TextureUtility.AddSpriteToSpritesheet(ref Game1.cropSpriteSheet, crop.Texture, crop.Id, 128, 32);
