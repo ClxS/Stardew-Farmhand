@@ -31,7 +31,6 @@ configuration:
 build_script:
 - ps: |
     nuget restore
-    nuget install PublishCoverity -Version 0.10.0
 
     $buildCmd = "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
     $buildArgs = @(
@@ -45,7 +44,9 @@ build_script:
       & $buildCmd $buildArgs
       return
     }
-    
+
+    nuget install PublishCoverity -Version 0.10.0
+        
     # Else, build project with Coverity Scan.
     "Building project with Coverity..."
     & "cov-build.exe" `
@@ -63,5 +64,3 @@ build_script:
 # Other configuration. --------------------------------------------------------
 # Use GitHub API for fast repository fetching.
 shallow_clone: true
-# Keep directory with third party tools between builds.
-cache: third-party
