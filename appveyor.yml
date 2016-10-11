@@ -22,26 +22,6 @@ services:
 # Enable IIS, which is needed for web client testing.
 - iis
 install:
-- ps: |
-    # Enable IIS modules in background (needed for tests). 
-    Start-Job -Name "EnableWindowsFeatures" -ScriptBlock {
-      Set-Service "TrustedInstaller" -StartupType "Manual"
-      Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName `
-        "IIS-BasicAuthentication"
-    }
-    
-    # Download Coverity Scan toolset, if we are doing scheduled build.
-    if ($env:APPVEYOR_SCHEDULED_BUILD -eq "True") {
-      Invoke-WebRequest `
-        -Uri "https://scan.coverity.com/download/cxx/win_64" `
-        -Body @{ project = "$env:APPVEYOR_REPO_NAME";
-                 token = "$env:CoverityProjectToken" } `
-        -OutFile "$env:APPVEYOR_BUILD_FOLDER\coverity.zip"
-      Add-Type -AssemblyName "System.IO.Compression.FileSystem"
-      [IO.Compression.ZipFile]::ExtractToDirectory(
-        "$env:APPVEYOR_BUILD_FOLDER\coverity.zip",
-        "$env:APPVEYOR_BUILD_FOLDER")
-    }
 - cmd: |
     git clone https://%GITLABUSR%:%GITLABPASS%@gitlab.com/ClxS/Tool.git C:\projects\stardew-farmhand\WorkingDirectory\tmp
     move C:\projects\stardew-farmhand\WorkingDirectory\tmp\*.* C:\projects\stardew-farmhand\WorkingDirectory
@@ -67,7 +47,7 @@ build_script:
     
     # Else, build project with Coverity Scan.
     "Building project with Coverity..."
-    & ".\cov-analysis-win64-7.6.0\bin\cov-build.exe" `
+    & "cov-build.exe" `
       --dir cov-int `
       --encoding=UTF-8 `
       $buildCmd $buildArgs
