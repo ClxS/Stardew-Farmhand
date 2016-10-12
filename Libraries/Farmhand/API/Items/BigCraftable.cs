@@ -1,4 +1,5 @@
 ﻿using Farmhand.API.Utilities;
+using Farmhand.Attributes;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using System;
@@ -43,6 +44,12 @@ namespace Farmhand.API.Items
             base(Vector2.Zero, information.Id, false)
         {
             Information = information;
+        }
+
+        [HookRedirectConstructorToMethod("StardewValley.Utility","tryToAddObjectToHome")]
+        public static StardewValley.Object Create(Vector2 vector, int Id, string name, bool canBeSetDown, bool canBeGrabbed, bool isHoeDirt, bool isSpawnedObject)
+        {
+            return new StardewValley.Object(vector, Id, name, canBeSetDown, canBeGrabbed, isHoeDirt, isSpawnedObject);
         }
     }
 }

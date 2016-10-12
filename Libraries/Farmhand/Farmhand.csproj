@@ -111,6 +111,7 @@
     <Compile Include="Attributes\HookMakeBaseVirtualCallAttribute.cs" />
     <Compile Include="Attributes\HookRedirectAttribute.cs" />
     <Compile Include="Attributes\HookRedirectConstructorFromBaseAttribute.cs" />
+    <Compile Include="Attributes\HookRedirectConstructorToMethodAttribute.cs" />
     <Compile Include="Attributes\HookReturnableAttribute.cs" />
     <Compile Include="Attributes\HookType.cs" />
     <Compile Include="Attributes\InputBindAttribute.cs" />
