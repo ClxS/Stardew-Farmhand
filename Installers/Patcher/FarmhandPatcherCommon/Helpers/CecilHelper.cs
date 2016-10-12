@@ -29,7 +29,7 @@ namespace Farmhand.Helpers
                 var first = true;
                 foreach (var parameter in method.Parameters)
                 {
-                    paramLdInstruction = GetInstructionForParameter<TParam, TThis, TInput, TLocal, Patcher>(stardewContext, ilProcessor, parameter);
+                    paramLdInstruction = GetInstructionForParameter<TParam, TThis, TInput, TLocal, Patcher, Patcher>(stardewContext, ilProcessor, parameter);
                     if (paramLdInstruction == null) throw new Exception($"Error parsing parameter setup on {parameter.Name}");
 
                     if (isExit)
@@ -91,7 +91,7 @@ namespace Farmhand.Helpers
             ilProcessor.Body.OptimizeMacros();
         }
 
-        private static void InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput>(CecilContext stardewContext, ILProcessor ilProcessor, Instruction target, MethodReference method, bool isExit = false)
+        private static void InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(CecilContext stardewContext, ILProcessor ilProcessor, Instruction target, MethodReference method, bool isExit = false)
         {
             ilProcessor.Body.SimplifyMacros();
 
@@ -109,13 +109,13 @@ namespace Farmhand.Helpers
             }
             if (isExit)
             {
-                if (ilProcessor.Body.Variables.All(n => n.Name != "OldReturnContainer-" + method.ReturnType.Name))
+                if (ilProcessor.Body.Variables.All(n => n.Name != "OldReturnContainer"))
                 {
-                    ilProcessor.Body.Variables.Add(new VariableDefinition("OldReturnContainer-" + method.ReturnType.Name, method.ReturnType));
+                    ilProcessor.Body.Variables.Add(new VariableDefinition("OldReturnContainer", method.ReturnType));
                 }
             }
             var containerVariable = ilProcessor.Body.Variables.First(n => n.Name == "ReturnContainer-" + method.ReturnType.Name);
-            var oldContainerVariable = ilProcessor.Body.Variables.FirstOrDefault(n => n.Name == "OldReturnContainer-" + method.ReturnType.Name);
+            var oldContainerVariable = ilProcessor.Body.Variables.FirstOrDefault(n => n.Name == "OldReturnContainer");
             
             List<Instruction> instructions = new List<Instruction>();
             if (isExit)
@@ -127,7 +127,7 @@ namespace Farmhand.Helpers
             {
                 foreach (var parameter in method.Parameters)
                 {
-                    var paramLdInstruction = GetInstructionForParameter<TParam, TThis, TInput, TLocal, TUseOutput>(stardewContext, ilProcessor, parameter);
+                    var paramLdInstruction = GetInstructionForParameter<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(stardewContext, ilProcessor, parameter);
                     if (paramLdInstruction == null) throw new Exception($"Error parsing parameter setup on {parameter.Name}");
 
                     instructions.Add(paramLdInstruction);
@@ -162,7 +162,7 @@ namespace Farmhand.Helpers
             ilProcessor.Body.OptimizeMacros();
         }
 
-        private static Instruction GetInstructionForParameter<TParam, TThis, TInput, TLocal, TUseOutput>(CecilContext stardewContext, ILProcessor ilProcessor, ParameterDefinition parameter)
+        private static Instruction GetInstructionForParameter<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(CecilContext stardewContext, ILProcessor ilProcessor, ParameterDefinition parameter)
         {
             if (!parameter.HasCustomAttributes) return null;
 
@@ -208,6 +208,11 @@ namespace Farmhand.Helpers
                 var outputVar = ilProcessor.Body.Variables.First(n => n.Name == "UseReturnVal");
                 instruction = ilProcessor.Create(OpCodes.Ldloca, outputVar);
             }
+            else if (typeof(TMethodOutputBind).FullName == attribute.AttributeType.FullName)
+            {
+                var outputVar = ilProcessor.Body.Variables.First(n => n.Name == "OldReturnContainer");
+                instruction = ilProcessor.Create(OpCodes.Ldloc, outputVar);
+            }
             else
             {
 
@@ -226,11 +231,11 @@ namespace Farmhand.Helpers
             }
         }
 
-        private static void InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput>(CecilContext stardewContext, ILProcessor ilProcessor, IEnumerable<Instruction> targets, MethodReference method, bool isExit = false)
+        private static void InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(CecilContext stardewContext, ILProcessor ilProcessor, IEnumerable<Instruction> targets, MethodReference method, bool isExit = false)
         {
             foreach (var target in targets.ToList())
             {
-                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput>(stardewContext, ilProcessor, target, method, isExit);
+                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(stardewContext, ilProcessor, target, method, isExit);
             }
         }
 
@@ -258,7 +263,7 @@ namespace Farmhand.Helpers
             }
         }
 
-        public static void InjectReturnableEntryMethod<TParam, TThis, TInput, TLocal, TUseOutput>(CecilContext stardewContext, string injecteeType, string injecteeMethod,
+        public static void InjectReturnableEntryMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(CecilContext stardewContext, string injecteeType, string injecteeMethod,
             string injectedType, string injectedMethod)
         {
             var methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
@@ -273,12 +278,12 @@ namespace Farmhand.Helpers
                 }
 
                 var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
-                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput>(stardewContext, ilProcessor, ilProcessor.Body.Instructions.First(), inst, false);
+                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(stardewContext, ilProcessor, ilProcessor.Body.Instructions.First(), inst, false);
             }
             else
             {
                 var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
-                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput>(stardewContext, ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, false);
+                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(stardewContext, ilProcessor, ilProcessor.Body.Instructions.First(), methodDefinition, false);
             }
         }
 
@@ -306,7 +311,7 @@ namespace Farmhand.Helpers
             }
         }
 
-        public static void InjectReturnableExitMethod<TParam, TThis, TInput, TLocal, TUseOutput>(CecilContext stardewContext, string injecteeType, string injecteeMethod,
+        public static void InjectReturnableExitMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(CecilContext stardewContext, string injecteeType, string injecteeMethod,
             string injectedType, string injectedMethod)
         {
             var methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
@@ -321,12 +326,12 @@ namespace Farmhand.Helpers
                 }
 
                 var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
-                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput>(stardewContext, ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition, true);
+                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(stardewContext, ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition, true);
             }
             else
             {
                 var ilProcessor = stardewContext.GetMethodIlProcessor(injecteeType, injecteeMethod);
-                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput>(stardewContext, ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition, true);
+                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(stardewContext, ilProcessor, ilProcessor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret), methodDefinition, true);
             }
         }
 

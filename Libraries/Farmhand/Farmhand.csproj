@@ -116,6 +116,7 @@
     <Compile Include="Attributes\InputBindAttribute.cs" />
     <Compile Include="Attributes\LocalBindAttribute.cs" />
     <Compile Include="Attributes\LowestProtection.cs" />
+    <Compile Include="Attributes\MethodOutputBindAttribute.cs" />
     <Compile Include="Attributes\ParameterBindAttribute.cs" />
     <Compile Include="Attributes\PendingHookAttribute.cs" />
     <Compile Include="Attributes\ThisBindAttribute.cs" />

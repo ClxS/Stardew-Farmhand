@@ -118,11 +118,11 @@ namespace Farmhand
                             {
                                 case HookType.Entry:
                                     CecilHelper.InjectReturnableEntryMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute,
-                                        UseOutputBindAttribute>
+                                        UseOutputBindAttribute, MethodOutputBindAttribute>
                                         (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
                                 case HookType.Exit:
                                     CecilHelper.InjectReturnableExitMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute,
-                                        UseOutputBindAttribute>
+                                        UseOutputBindAttribute, MethodOutputBindAttribute>
                         (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
                                 default:
                                     throw new Exception("Unknown HookType");
