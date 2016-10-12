@@ -25,7 +25,7 @@ namespace TestBigCraftableMod
 
         private void PlayerEvents_OnFarmerChanged(object sender, System.EventArgs e)
         {
-            Farmhand.API.Player.Player.AddBigCraftable<TestBigCraftable>();
+            Farmhand.API.Player.Player.AddObject<TestBigCraftable>();
         }
     }
 }

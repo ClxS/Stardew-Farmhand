@@ -203,6 +203,7 @@
     <Compile Include="Overrides\Characters\Monster.cs" />
     <Compile Include="Overrides\Game1.cs" />
     <Compile Include="Overrides\SerializableDictionary.cs" />
+    <Compile Include="Overrides\StardewObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registries\Containers\DependencyState.cs" />
     <Compile Include="Registries\Containers\ModContent.cs" />
