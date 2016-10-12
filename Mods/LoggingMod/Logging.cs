@@ -1,12 +1,8 @@
 ﻿using Farmhand.Events.Arguments;
 using Farmhand.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Xml.Serialization;
 using Farmhand;
-using StardewValley;
 
 namespace LoggingMod
 {
@@ -77,12 +73,12 @@ namespace LoggingMod
 
         private void SaveEvents_OnAfterSave(object sender, EventArgs e)
         {
-            Log.Success($"SaveEvents_OnAfterSave");
+            Log.Success("SaveEvents_OnAfterSave");
         }
 
         private void SaveEvents_OnBeforeSave(object sender, EventArgs e)
         {
-            Log.Success($"SaveEvents_OnBeforeSave");
+            Log.Success("SaveEvents_OnBeforeSave");
         }
 
         private void LocationEvents_OnAfterLocationLoadObjects(object sender, EventArgs e)

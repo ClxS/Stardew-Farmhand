@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
 using Farmhand.Attributes;
 using StardewValley;
@@ -17,8 +16,7 @@ namespace Farmhand.API
     {
         #region Default Serialiser Types
         //TODO See whether this could be automatically set by the installer for future proofing.
-        private static Type[] _serialiserTypes = new Type[27]
-        {
+        private static readonly Type[] SerialiserTypes = {
             typeof (Tool), typeof (GameLocation), typeof (Crow), typeof (Duggy), typeof (Bug), typeof (BigSlime),
             typeof (Fireball), typeof (Ghost), typeof (Child), typeof (Pet), typeof (Dog),
             typeof (StardewValley.Characters.Cat),
@@ -29,12 +27,11 @@ namespace Farmhand.API
             typeof (Monster), typeof (TerrainFeature)
         };
 
-        private static Type[] _farmerTypes = new Type[1] {
+        private static readonly Type[] FarmerTypes = {
             typeof (Tool)
         };
 
-        private static Type[] _locationTypes = new Type[26]
-        {
+        private static readonly Type[] LocationTypes = {
             typeof (Tool), typeof (Crow), typeof (Duggy), typeof (Fireball), typeof (Ghost),
             typeof (GreenSlime), typeof (LavaCrab), typeof (RockCrab), typeof (ShadowGuy), typeof (SkeletonWarrior),
             typeof (Child), typeof (Pet), typeof (Dog), typeof (StardewValley.Characters.Cat), typeof (Horse),
@@ -46,9 +43,9 @@ namespace Farmhand.API
       
         #endregion
 
-        private static XmlSerializer injectedSerializer;
-        private static XmlSerializer injectedFarmerSerializer;
-        private static XmlSerializer injectedLocationSerializer;
+        private static XmlSerializer _injectedSerializer;
+        private static XmlSerializer _injectedFarmerSerializer;
+        private static XmlSerializer _injectedLocationSerializer;
 
         private static bool _injected = false;
 
@@ -60,24 +57,23 @@ namespace Farmhand.API
 
         private static void GameEvents_OnBeforeUpdateTick(object sender, Events.Arguments.GameEvents.EventArgsOnBeforeGameUpdate e)
         {
-            if (_injected)
-            {
-                SaveGame.serializer = injectedSerializer;
-                SaveGame.farmerSerializer = injectedFarmerSerializer;
-                SaveGame.locationSerializer = injectedLocationSerializer;
-            }
+            if (!_injected) return;
+
+            SaveGame.serializer = _injectedSerializer;
+            SaveGame.farmerSerializer = _injectedFarmerSerializer;
+            SaveGame.locationSerializer = _injectedLocationSerializer;
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
         internal static void InjectSerializers()
         {
             var typeArray = InjectedTypes.ToArray();
-            injectedSerializer = new XmlSerializer(typeof(SaveGame), _serialiserTypes.Concat(InjectedTypes).ToArray());
-            injectedFarmerSerializer = new XmlSerializer(typeof(Farmer), _farmerTypes.Concat(InjectedTypes).ToArray());
-            injectedLocationSerializer = new XmlSerializer(typeof(GameLocation), _locationTypes.Concat(InjectedTypes).ToArray());
-            SaveGame.serializer = injectedSerializer;
-            SaveGame.farmerSerializer = injectedFarmerSerializer;
-            SaveGame.locationSerializer = injectedLocationSerializer;
+            _injectedSerializer = new XmlSerializer(typeof(SaveGame), SerialiserTypes.Concat(InjectedTypes).ToArray());
+            _injectedFarmerSerializer = new XmlSerializer(typeof(Farmer), FarmerTypes.Concat(InjectedTypes).ToArray());
+            _injectedLocationSerializer = new XmlSerializer(typeof(GameLocation), LocationTypes.Concat(InjectedTypes).ToArray());
+            SaveGame.serializer = _injectedSerializer;
+            SaveGame.farmerSerializer = _injectedFarmerSerializer;
+            SaveGame.locationSerializer = _injectedLocationSerializer;
             _injected = true;
         }
 

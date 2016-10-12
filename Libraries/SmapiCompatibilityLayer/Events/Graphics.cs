@@ -1,5 +1,4 @@
-﻿using Farmhand.Events;
-using System;
+﻿using System;
 
 namespace StardewModdingAPI.Events
 {
@@ -148,7 +147,9 @@ namespace StardewModdingAPI.Events
 
         public static void InvokeDrawTick(object sender, EventArgs e)
         {
+#pragma warning disable 618
             DrawTick.Invoke(null, EventArgs.Empty);
+#pragma warning restore 618
         }
         #endregion
 

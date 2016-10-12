@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using Farmhand.Events.Arguments.PlayerEvents;
-using StardewModdingAPI.Inheritance;
 using StardewValley;
 using Farmhand.Events;
 

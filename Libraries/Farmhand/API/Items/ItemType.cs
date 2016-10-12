@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Farmhand.API.Items
+﻿namespace Farmhand.API.Items
 {
     /// <summary>
     /// Item Type (Alters internal string format)

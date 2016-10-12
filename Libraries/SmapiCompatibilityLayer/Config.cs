@@ -33,7 +33,7 @@ namespace StardewModdingAPI
                 return null;
             }
 
-            T ret = null;
+            T ret;
 
             if (!File.Exists(ConfigLocation))
             {
@@ -53,8 +53,6 @@ namespace StardewModdingAPI
 
                     //update the config with default values if needed
                     ret = c.UpdateConfig<T>();
-
-                    c = null;
                 }
                 catch (Exception ex)
                 {

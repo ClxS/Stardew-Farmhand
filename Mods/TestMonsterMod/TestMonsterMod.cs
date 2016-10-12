@@ -1,11 +1,7 @@
 ﻿using Farmhand;
 using Farmhand.API.Generic;
 using Farmhand.API.Monsters;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestMonsterMod.Monsters;
 
 namespace TestMonsterMod
@@ -32,9 +28,9 @@ namespace TestMonsterMod
                 DurationOfRandomMovements = 1000,
                 ObjectsToDrop = new List<ItemChancePair>
                 {
-                    new ItemChancePair() { ItemId = 167, Chance = .50},
-                    new ItemChancePair() { ItemId = 167, Chance = .05},
-                    new ItemChancePair() { ItemId = 472, Chance = .10}
+                    new ItemChancePair { ItemId = 167, Chance = .50},
+                    new ItemChancePair { ItemId = 167, Chance = .05},
+                    new ItemChancePair { ItemId = 472, Chance = .10}
                 },
                 Resilience = 0,
                 Jitteriness = 0,

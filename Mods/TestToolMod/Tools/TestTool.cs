@@ -1,10 +1,5 @@
 ﻿using Farmhand.API.Tools;
-using Microsoft.Xna.Framework;
 using StardewValley;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace TestToolMod.Tools
 {
@@ -15,7 +10,7 @@ namespace TestToolMod.Tools
         {
             Name = "TestTool",
             Texture = TestToolMod.Instance.ModSettings.GetTexture("sprite_TestTool"),
-            Description = "Waving this will summon a Parsnip.",
+            Description = "Waving this will summon a Parsnip."
         });
 
         public TestTool() :
@@ -33,12 +28,11 @@ namespace TestToolMod.Tools
         // Overriding this to return without any chances keeps base from altering our sprite sheet index
         public override void setNewTileIndexForUpgradeLevel()
         {
-            return;
         }
 
         public override void beginUsing(GameLocation location, int x, int y, Farmer who)
         {
-            base.Update(who.facingDirection, 0, who);
+            Update(who.facingDirection, 0, who);
             if (who.IsMainPlayer)
             {
                 Game1.releaseUseToolButton();

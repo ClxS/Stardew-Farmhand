@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Farmhand.Events.Arguments.GlobalRoute
+﻿namespace Farmhand.Events.Arguments.GlobalRoute
 {
     public class EventArgsGlobalRouteReturnable : EventArgsGlobalRoute
     {

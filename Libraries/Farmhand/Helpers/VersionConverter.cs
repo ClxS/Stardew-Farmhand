@@ -1,8 +1,4 @@
 ﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -46,8 +42,6 @@ namespace Farmhand.Helpers
                     break;
                 case JsonToken.String:
                     retValue = new Version((string)reader.Value);
-                    break;
-                default:
                     break;
             }
 

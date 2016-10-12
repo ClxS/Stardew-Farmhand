@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Farmhand.API.Buildings;
 using Farmhand.API.Generic;
 using Microsoft.Xna.Framework;
@@ -12,12 +9,12 @@ namespace TestBuildingMod.Blueprints
     {
         private static BuildingBlueprint _information;
 
-        public static BuildingBlueprint Information => _information ?? (_information = new BuildingBlueprint()
+        public static BuildingBlueprint Information => _information ?? (_information = new BuildingBlueprint
         {
             Name = "Shed",
-            MaterialsRequired = new List<ItemQuantityPair>()
+            MaterialsRequired = new List<ItemQuantityPair>
             {
-                new ItemQuantityPair() { ItemId = 390, Count = 1}
+                new ItemQuantityPair { ItemId = 390, Count = 1}
             },
             TileSize = new Vector2(4, 2),
             HumanDoor = new Vector2(2, 2),
@@ -28,7 +25,7 @@ namespace TestBuildingMod.Blueprints
             SourceViewRect = new Vector2(48, 48),
             MaxOccupants = 0,
             ActionBehaviour = null,
-            SuitableBuildingLocations = new List<string>() {"Farm"},
+            SuitableBuildingLocations = new List<string> {"Farm"},
             MoneyRequired = 100
         });
     }

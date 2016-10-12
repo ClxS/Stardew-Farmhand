@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
@@ -45,19 +42,19 @@ namespace Farmhand.API.Utilities
             }
 
             var newData = new Color[source.Width * source.Height];
-            input.GetData<Color>(0, source, newData, 0, source.Width * source.Height);
+            input.GetData(0, source, newData, 0, source.Width * source.Height);
 
             if (asNewTexture || destination.Bottom > @base.Height || destination.Right > @base.Width)
             {
                 Rectangle originalRect = new Rectangle(0, 0, @base.Width, @base.Height);
                 var originalSize = @base.Width * @base.Height;
                 var originalData = new Color[originalSize];
-                @base.GetData<Color>(originalData);
+                @base.GetData(originalData);
                 @base = new Texture2D(Game1.graphics.GraphicsDevice, Math.Max(destination.Right, @base.Width), Math.Max(destination.Bottom, @base.Height));
-                @base.SetData<Color>(0, originalRect, originalData, 0, originalSize);
+                @base.SetData(0, originalRect, originalData, 0, originalSize);
             }
 
-            @base.SetData<Color>(0, destination, newData, 0, destination.Width * destination.Height);
+            @base.SetData(0, destination, newData, 0, destination.Width * destination.Height);
 
             return @base;
         }

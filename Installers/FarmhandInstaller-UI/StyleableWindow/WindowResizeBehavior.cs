@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Controls.Primitives;
 
-namespace WpfStyleableWindow.StyleableWindow
+namespace FarmhandInstaller.StyleableWindow
 {
     public static class WindowResizeBehavior
     {
@@ -326,17 +320,16 @@ namespace WpfStyleableWindow.StyleableWindow
             if (result <= window.MinWidth)
             {
                 return 0;
-            } else if(result >= window.MaxWidth)
-            {
-                return 0;
-            } else if(result < 0)
+            }
+            if(result >= window.MaxWidth)
             {
                 return 0;
             }
-            else
+            if(result < 0)
             {
-                return change;
+                return 0;
             }
+            return change;
         }
 
         private static double SafeHeightChange(this Window window, double change, bool positive = true)
@@ -347,18 +340,15 @@ namespace WpfStyleableWindow.StyleableWindow
             {
                 return 0;
             }
-            else if (result >= window.MaxHeight)
+            if (result >= window.MaxHeight)
             {
                 return 0;
             }
-            else if (result < 0)
+            if (result < 0)
             {
                 return 0;
             }
-            else
-            {
-                return change;
-            }
+            return change;
         }
     }
 }

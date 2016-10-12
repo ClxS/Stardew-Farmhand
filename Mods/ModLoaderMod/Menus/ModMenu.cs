@@ -79,12 +79,12 @@ namespace ModLoaderMod.Menus
                 if (modDependencies.Any())
                 {
                     checkbox.DisableReason =
-                        $"{"Missing Dependencies: "}: {string.Join(", ", modDependencies.Select(n => n.UniqueId))}";
+                        $"Missing Dependencies: : {string.Join(", ", modDependencies.Select(n => n.UniqueId))}";
                 }
                 else if (modDependencies.Any())
                 {
                     checkbox.DisableReason =
-                        $"{"Dependent Mods Missing Dependencies: "}: {string.Join(", ", missingParents.Select(n => n.UniqueId))}";
+                        $"Dependent Mods Missing Dependencies: : {string.Join(", ", missingParents.Select(n => n.UniqueId))}";
                 }
                 else
                 {
@@ -92,7 +92,7 @@ namespace ModLoaderMod.Menus
                     if (tooLowDependencies.Any())
                     {
                         checkbox.DisableReason =
-                            $"{"Dependency Version Too Low: "}: {string.Join(", ", tooLowDependencies.Select(n => n.UniqueId + $"(Minimum: {n.MinimumVersion.ToString()})"))}";
+                            $"Dependency Version Too Low: : {string.Join(", ", tooLowDependencies.Select(n => n.UniqueId + $"(Minimum: {n.MinimumVersion.ToString()})"))}";
                     }
                     else
                     {
@@ -100,7 +100,7 @@ namespace ModLoaderMod.Menus
                         if (tooHighDependencies.Any())
                         {
                             checkbox.DisableReason =
-                                $"{"Dependency Version Too High: "}: {string.Join(",", tooHighDependencies.Select(n => n.UniqueId + $"(Maximum: {n.MaximumVersion.ToString()})"))}";
+                                $"Dependency Version Too High: : {string.Join(",", tooHighDependencies.Select(n => n.UniqueId + $"(Maximum: {n.MaximumVersion.ToString()})"))}";
                         }
                     }
                 }

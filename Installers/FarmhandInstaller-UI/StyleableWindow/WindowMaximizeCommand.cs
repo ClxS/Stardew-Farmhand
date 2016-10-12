@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace WpfStyleableWindow.StyleableWindow
+namespace FarmhandInstaller.StyleableWindow
 {
 #pragma warning disable CS0067
     public class WindowMaximizeCommand :ICommand

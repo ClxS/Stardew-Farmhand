@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Farmhand;
-using Farmhand.API;
-using Farmhand.API.Crafting;
+﻿using Farmhand;
 using Farmhand.API.Generic;
-using Farmhand.API.Items;
-using Farmhand.Logging;
-using Farmhand.Registries;
-using Farmhand.Registries.Containers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using RecipeTestMod.Items;
 using RecipeTestMod.Recipes;
 using Farmhand.Events.Arguments.PlayerEvents;
@@ -37,8 +27,8 @@ namespace RecipeTestMod
             Farmhand.API.Items.Item.RegisterItem<Heart>(Heart.Information);
             Farmhand.API.Items.Item.RegisterItem<PuppyTail>(PuppyTail.Information);
             Farmhand.API.Items.Item.RegisterItem<RabbitsPaw>(RabbitsPaw.Information);
-            VoidStar.Recipe.MaterialsRequired.Add(new ItemQuantityPair() { Count = 10, ItemId = Heart.Information.Id });
-            VoidStar.Recipe.MaterialsRequired.Add(new ItemQuantityPair() { Count = 2, ItemId = PuppyTail.Information.Id });
+            VoidStar.Recipe.MaterialsRequired.Add(new ItemQuantityPair { Count = 10, ItemId = Heart.Information.Id });
+            VoidStar.Recipe.MaterialsRequired.Add(new ItemQuantityPair { Count = 2, ItemId = PuppyTail.Information.Id });
             Farmhand.API.Crafting.CraftingRecipe.RegisterRecipe(VoidStar.Recipe);
         }
         

@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using Farmhand.Attributes;
-using Farmhand.Events;
-using Farmhand.Events.Arguments;
 using StardewValley;
 
 namespace Farmhand.Helpers
@@ -127,7 +122,7 @@ namespace Farmhand.Helpers
             ModLoader.TryLoadModCompatiblityLayers();
 
             GameTesterMode = true;
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(HandleException);
+            AppDomain.CurrentDomain.UnhandledException += HandleException;
             using (var game1 = API.Game.CreateGameInstance())
             {
                 try
@@ -148,7 +143,7 @@ namespace Farmhand.Helpers
         {
             if (HandlingException || !GameTesterMode)
                 return;
-            Game1.gameMode = (byte)11;
+            Game1.gameMode = 11;
             HandlingException = true;
             var exception = (Exception)args.ExceptionObject;
             Game1.errorMessage = "Message: " + (object)exception.Message + Environment.NewLine + "InnerException: " + (string)(object)exception.InnerException + Environment.NewLine + "Stack Trace: " + exception.StackTrace;
@@ -173,7 +168,7 @@ namespace Farmhand.Helpers
                     // ignored
                 }
             }
-            Game1.gameMode = (byte)3;
+            Game1.gameMode = 3;
         }
     }
 }

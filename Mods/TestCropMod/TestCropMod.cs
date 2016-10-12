@@ -2,11 +2,7 @@
 using StardewValley;
 using Farmhand.Events;
 using Farmhand.Events.Arguments.GlobalRoute;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestCropMod.Crops;
 using TestCropMod.Items;
 using Microsoft.Xna.Framework;
@@ -66,7 +62,7 @@ namespace TestCropMod
 
             Dictionary<Item, int[]> normalStock = (Dictionary<Item, int[]>)args.Output;
 
-            normalStock.Add(new StardewValley.Object(773, 1, false, -1, 0), new int[]
+            normalStock.Add(new StardewValley.Object(773, 1, false, -1, 0), new[]
             {
             3000,
             2147483647

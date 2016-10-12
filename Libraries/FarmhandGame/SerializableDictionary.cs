@@ -1,18 +1,9 @@
 ﻿using Farmhand.Attributes;
-using Microsoft.Xna.Framework;
 using StardewValley;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Farmhand.Events;
-using Farmhand.Events.Arguments;
-using Object = StardewValley.Object;
 
 namespace Farmhand.Overrides.Game
 {
@@ -40,12 +31,10 @@ namespace Farmhand.Overrides.Game
             {
                 return SerializerCache[type];
             }
-            else
-            {
-                var serializer = new XmlSerializer(type, API.Serializer.InjectedTypes.ToArray());
-                SerializerCache[type] = serializer;
-                return serializer;
-            }
+
+            var serializer = new XmlSerializer(type, API.Serializer.InjectedTypes.ToArray());
+            SerializerCache[type] = serializer;
+            return serializer;
         }
 
         private static bool ReadXmlGeneric<TKey, TValue>(object @this, XmlReader reader)

@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Farmhand.Registries.Containers;
+﻿using Farmhand.Registries.Containers;
 using System.Collections.Generic;
 
 namespace Farmhand.Registries

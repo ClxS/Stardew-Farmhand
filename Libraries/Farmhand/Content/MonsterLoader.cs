@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Farmhand.Content
 {
@@ -12,8 +9,7 @@ namespace Farmhand.Content
 
         // This exceptions list is used to prevent this loader from trying to load vanilla game assets
         // TODO this feels more like a hotfix, I'm sure there's a more elegant solution
-        public string[] MonsterExceptions = new string[] 
-        {
+        public string[] MonsterExceptions = {
             "Characters\\Monsters\\Armored Bug",
             "Characters\\Monsters\\Bat",
             "Characters\\Monsters\\Big Slime",
@@ -50,7 +46,7 @@ namespace Farmhand.Content
             "Characters\\Monsters\\Squid Kid",
             "Characters\\Monsters\\Stone Golem",
             "Characters\\Monsters\\Turtle",
-            "Characters\\Monsters\\Yeti",
+            "Characters\\Monsters\\Yeti"
         };
 
         public bool HandlesAsset(Type type, string asset)

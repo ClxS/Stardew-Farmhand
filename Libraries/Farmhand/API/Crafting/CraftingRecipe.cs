@@ -4,9 +4,6 @@ using System.Linq;
 using Farmhand.API.Generic;
 using Farmhand.API.Utilities;
 using Farmhand.Helpers;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using StardewValley;
 
 namespace Farmhand.API.Crafting
 {

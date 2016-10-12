@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace StardewModdingAPI
 {

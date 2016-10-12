@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
-using StardewValley;
-
-namespace Farmhand.API.Buildings
+﻿namespace Farmhand.API.Buildings
 {
     public interface IBlueprint
     {

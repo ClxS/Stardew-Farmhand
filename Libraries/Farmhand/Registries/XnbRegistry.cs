@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Farmhand.Registries.Containers;
 using System.Linq;
 
@@ -22,14 +21,9 @@ namespace Farmhand.Registries
         /// <returns>Matching ModXnb</returns>
         public static IEnumerable<ModXnb> GetItem(string itemId, ModManifest mod = null, bool ignoreModPrefixes = false)
         {
-            if (ignoreModPrefixes)
-            {
-                return GetRegisteredItems().Where(n => n.Original == itemId);
-            }
-            else
-            {
-                return RegistryInstance.GetItem(mod == null ? itemId : GetModSpecificId(mod, itemId));
-            }
+            return ignoreModPrefixes 
+                ? GetRegisteredItems().Where(n => n.Original == itemId) 
+                : RegistryInstance.GetItem(mod == null ? itemId : GetModSpecificId(mod, itemId));
         }
 
         /// <summary>
@@ -56,7 +50,7 @@ namespace Farmhand.Registries
             }
             else
             {
-                RegistryInstance.RegisterItem(mod == null ? itemId : GetModSpecificId(mod, itemId), new List<ModXnb>() { item });
+                RegistryInstance.RegisterItem(mod == null ? itemId : GetModSpecificId(mod, itemId), new List<ModXnb> { item });
             }
         }
 

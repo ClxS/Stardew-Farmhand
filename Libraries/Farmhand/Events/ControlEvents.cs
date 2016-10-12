@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Farmhand.Attributes;
 using System;
 using Farmhand.Events.Arguments.ControlEvents;
 

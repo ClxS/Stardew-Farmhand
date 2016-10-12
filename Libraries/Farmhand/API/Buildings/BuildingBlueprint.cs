@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Farmhand.API.Generic;
 using Farmhand.Helpers;
 using Microsoft.Xna.Framework;
-using StardewValley;
 
 namespace Farmhand.API.Buildings
 {
@@ -27,7 +23,7 @@ namespace Farmhand.API.Buildings
         public virtual int MoneyRequired { get; set; } = -1;
 
         public string BlueprintString => $"{MaterialsRequired.ToItemSetString()}/{TileSize.X}/{TileSize.Y}/{HumanDoor.X}/{HumanDoor.Y}/{AnimalDoor.X}/{AnimalDoor.Y}/{MapWarpTo}/" +
-                                      $"{Description}/{BlueprintType.ToString()}/{BuildingToUpdate}/{SourceViewRect.X}/{SourceViewRect.Y}/{MaxOccupants}/{ActionBehaviour ?? "null"}/" +
+                                      $"{Description}/{BlueprintType}/{BuildingToUpdate}/{SourceViewRect.X}/{SourceViewRect.Y}/{MaxOccupants}/{ActionBehaviour ?? "null"}/" +
                                       $"{SuitableBuildingLocations.ToSpaceSeparatedString()}" + ((MoneyRequired >= 0) ? $"/{MoneyRequired}" : "");
         
         public virtual bool IsCarpenterBlueprint => MoneyRequired >= 0;

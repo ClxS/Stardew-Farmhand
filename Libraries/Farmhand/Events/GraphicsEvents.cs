@@ -1,7 +1,6 @@
 ﻿using Farmhand.Attributes;
 using System;
 using Farmhand.Events.Arguments.GraphicsEvents;
-using Farmhand.Logging;
 using StardewValley;
 
 namespace Farmhand.Events

@@ -1,9 +1,6 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Farmhand.Helpers
 {
@@ -26,7 +23,7 @@ namespace Farmhand.Helpers
         
         public static Instruction[] CreateArray(this ILProcessor il, TypeReference type, int count)
         {
-            return new Instruction[] {
+            return new[] {
                 il.Create(OpCodes.Ldc_I4, count),
                 il.Create(OpCodes.Newarr, type)
             };
@@ -37,7 +34,7 @@ namespace Farmhand.Helpers
         {
             var instructions = new List<Instruction>();
             instructions.Add(il.Create(OpCodes.Dup));
-            instructions.Add(il.Create(OpCodes.Ldc_I4, index++));
+            instructions.Add(il.Create(OpCodes.Ldc_I4, index));
             instructions.Add(il.Create(OpCodes.Ldarg, param));
             if (param.ParameterType.IsPrimitive)
                 instructions.Add(il.Create(OpCodes.Box, param.ParameterType));

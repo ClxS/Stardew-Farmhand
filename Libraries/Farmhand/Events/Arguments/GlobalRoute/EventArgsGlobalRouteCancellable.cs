@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Farmhand.Events.Arguments.GlobalRoute
+﻿namespace Farmhand.Events.Arguments.GlobalRoute
 {
-    public class EventArgsGlobalRouteCancellable : EventArgsGlobalRoute
+    public sealed class EventArgsGlobalRouteCancellable : EventArgsGlobalRoute
     {
         public EventArgsGlobalRouteCancellable(string type, string method, object[] parameters)
             : base(type, method, parameters)
@@ -16,6 +11,6 @@ namespace Farmhand.Events.Arguments.GlobalRoute
             Cancel = false;
         }
 
-        public virtual bool Cancel { get; set; }
+        public bool Cancel { get; set; }
     }
 }

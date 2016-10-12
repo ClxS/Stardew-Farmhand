@@ -3,10 +3,8 @@ using Farmhand.Events.Arguments;
 using System;
 using System.ComponentModel;
 using Farmhand.Events.Arguments.PlayerEvents;
-using Farmhand.Logging;
 using Microsoft.Xna.Framework;
 using StardewValley;
-using StardewValley.Objects;
 
 namespace Farmhand.Events
 {

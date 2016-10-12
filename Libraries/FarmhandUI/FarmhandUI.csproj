@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
-      <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.dll</HintPath>        
+      <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
       <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.Game.dll</HintPath>
@@ -56,11 +56,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="xTile, Version=2.0.4.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\WorkingDirectory\xTile.dll</HintPath>
     </Reference>

@@ -4,8 +4,6 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace Farmhand.API.Locations
 {
@@ -43,7 +41,7 @@ namespace Farmhand.API.Locations
             [InputBind(typeof(int), "yTile")] int yTile)
         {
             // Create the spawning location vector the same way it's handled in the hooked method
-            Vector2 vector = new Vector2((float)xTile, (float)yTile) * (float)StardewValley.Game1.tileSize;
+            Vector2 vector = new Vector2(xTile, yTile) * StardewValley.Game1.tileSize;
 
             // Create a new sub-list of spawn chances that apply to this level
             var ApplicableChances = MonsterSpawnChances.Where(c => c.MinLevel <= level && c.MaxLevel >= level);

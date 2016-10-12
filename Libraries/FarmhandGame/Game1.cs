@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
@@ -10,8 +9,6 @@ using StardewValley.Locations;
 using StardewValley.Menus;
 using StardewValley.Tools;
 using Farmhand.Events;
-
-using Retangle = Microsoft.Xna.Framework.Rectangle;
 
 // ReSharper disable once CheckNamespace
 namespace Farmhand.Overrides
@@ -52,10 +49,10 @@ namespace Farmhand.Overrides
         {
             if (options.zoomLevel != 1f)
             {
-                base.GraphicsDevice.SetRenderTarget(screen);
+                GraphicsDevice.SetRenderTarget(screen);
             }
             framesThisSecond++;
-            base.GraphicsDevice.Clear(bgColor);
+            GraphicsDevice.Clear(bgColor);
             if ((options.showMenuBackground && (activeClickableMenu != null)) && activeClickableMenu.showWithoutTransparencyIfOptionIsSet())
             {
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
@@ -66,10 +63,10 @@ namespace Farmhand.Overrides
                 spriteBatch.End();
                 if (options.zoomLevel != 1f)
                 {
-                    base.GraphicsDevice.SetRenderTarget(null);
-                    base.GraphicsDevice.Clear(bgColor);
+                    GraphicsDevice.SetRenderTarget(null);
+                    GraphicsDevice.Clear(bgColor);
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
-                    spriteBatch.Draw(screen, Vector2.Zero, new Microsoft.Xna.Framework.Rectangle?(screen.Bounds), Color.White, 0f, Vector2.Zero, options.zoomLevel, SpriteEffects.None, 1f);
+                    spriteBatch.Draw(screen, Vector2.Zero, screen.Bounds, Color.White, 0f, Vector2.Zero, options.zoomLevel, SpriteEffects.None, 1f);
                     spriteBatch.End();
                 }
             }
@@ -87,15 +84,15 @@ namespace Farmhand.Overrides
                 if ((globalFade && !menuUp) && (!nameSelectUp || messagePause))
                 {
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
-                    spriteBatch.Draw(fadeToBlackRect, graphics.GraphicsDevice.Viewport.Bounds, (Color)(Color.Black * ((gameMode == 0) ? (1f - fadeToBlackAlpha) : fadeToBlackAlpha)));
+                    spriteBatch.Draw(fadeToBlackRect, graphics.GraphicsDevice.Viewport.Bounds, Color.Black * ((gameMode == 0) ? (1f - fadeToBlackAlpha) : fadeToBlackAlpha));
                     spriteBatch.End();
                 }
                 if (options.zoomLevel != 1f)
                 {
-                    base.GraphicsDevice.SetRenderTarget(null);
-                    base.GraphicsDevice.Clear(bgColor);
+                    GraphicsDevice.SetRenderTarget(null);
+                    GraphicsDevice.Clear(bgColor);
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
-                    spriteBatch.Draw(screen, Vector2.Zero, new Microsoft.Xna.Framework.Rectangle?(screen.Bounds), Color.White, 0f, Vector2.Zero, options.zoomLevel, SpriteEffects.None, 1f);
+                    spriteBatch.Draw(screen, Vector2.Zero, screen.Bounds, Color.White, 0f, Vector2.Zero, options.zoomLevel, SpriteEffects.None, 1f);
                     spriteBatch.End();
                 }
             }
@@ -109,10 +106,10 @@ namespace Farmhand.Overrides
                 spriteBatch.End();
                 if (options.zoomLevel != 1f)
                 {
-                    base.GraphicsDevice.SetRenderTarget(null);
-                    base.GraphicsDevice.Clear(bgColor);
+                    GraphicsDevice.SetRenderTarget(null);
+                    GraphicsDevice.Clear(bgColor);
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
-                    spriteBatch.Draw(screen, Vector2.Zero, new Rectangle?(screen.Bounds), Color.White, 0f, Vector2.Zero, options.zoomLevel, SpriteEffects.None, 1f);
+                    spriteBatch.Draw(screen, Vector2.Zero, screen.Bounds, Color.White, 0f, Vector2.Zero, options.zoomLevel, SpriteEffects.None, 1f);
                     spriteBatch.End();
                 }
             }
@@ -128,10 +125,10 @@ namespace Farmhand.Overrides
                 spriteBatch.End();
                 if (options.zoomLevel != 1f)
                 {
-                    base.GraphicsDevice.SetRenderTarget(null);
-                    base.GraphicsDevice.Clear(bgColor);
+                    GraphicsDevice.SetRenderTarget(null);
+                    GraphicsDevice.Clear(bgColor);
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
-                    spriteBatch.Draw(screen, Vector2.Zero, new Rectangle?(screen.Bounds), Color.White, 0f, Vector2.Zero, options.zoomLevel, SpriteEffects.None, 1f);
+                    spriteBatch.Draw(screen, Vector2.Zero, screen.Bounds, Color.White, 0f, Vector2.Zero, options.zoomLevel, SpriteEffects.None, 1f);
                     spriteBatch.End();
                 }
             }
@@ -145,25 +142,25 @@ namespace Farmhand.Overrides
                 {
                     if (drawLighting)
                     {
-                        base.GraphicsDevice.SetRenderTarget(lightmap);
-                        base.GraphicsDevice.Clear((Color)(Color.White * 0f));
+                        GraphicsDevice.SetRenderTarget(lightmap);
+                        GraphicsDevice.Clear(Color.White * 0f);
                         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, null, null);
                         spriteBatch.Draw(staminaRect, lightmap.Bounds, currentLocation.name.Equals("UndergroundMine") ? mine.getLightingColor(gameTime) : ((!ambientLight.Equals(Color.White) && (!isRaining || !currentLocation.isOutdoors)) ? ambientLight : outdoorLight));
                         for (int j = 0; j < currentLightSources.Count; j++)
                         {
-                            if (StardewValley.Utility.isOnScreen(currentLightSources.ElementAt<LightSource>(j).position, (int)((currentLightSources.ElementAt<LightSource>(j).radius * tileSize) * 4f)))
+                            if (StardewValley.Utility.isOnScreen(currentLightSources.ElementAt(j).position, (int)((currentLightSources.ElementAt(j).radius * tileSize) * 4f)))
                             {
-                                spriteBatch.Draw(currentLightSources.ElementAt<LightSource>(j).lightTexture, (Vector2)(GlobalToLocal(viewport, currentLightSources.ElementAt<LightSource>(j).position) / ((float)(options.lightingQuality / 2))), new Rectangle?(currentLightSources.ElementAt<LightSource>(j).lightTexture.Bounds), currentLightSources.ElementAt<LightSource>(j).color, 0f, new Vector2((float)currentLightSources.ElementAt<LightSource>(j).lightTexture.Bounds.Center.X, (float)currentLightSources.ElementAt<LightSource>(j).lightTexture.Bounds.Center.Y), (float)(currentLightSources.ElementAt<LightSource>(j).radius / ((float)(options.lightingQuality / 2))), SpriteEffects.None, 0.9f);
+                                spriteBatch.Draw(currentLightSources.ElementAt(j).lightTexture, GlobalToLocal(viewport, currentLightSources.ElementAt(j).position) / ((float)(options.lightingQuality / 2)), currentLightSources.ElementAt(j).lightTexture.Bounds, currentLightSources.ElementAt(j).color, 0f, new Vector2((float)currentLightSources.ElementAt(j).lightTexture.Bounds.Center.X, (float)currentLightSources.ElementAt(j).lightTexture.Bounds.Center.Y), (float)(currentLightSources.ElementAt(j).radius / ((float)(options.lightingQuality / 2))), SpriteEffects.None, 0.9f);
                             }
                         }
                         spriteBatch.End();
-                        base.GraphicsDevice.SetRenderTarget((options.zoomLevel == 1f) ? null : screen);
+                        GraphicsDevice.SetRenderTarget((options.zoomLevel == 1f) ? null : screen);
                     }
                     if (bloomDay && (bloom != null))
                     {
                         bloom.BeginDraw();
                     }
-                    base.GraphicsDevice.Clear(bgColor);
+                    GraphicsDevice.Clear(bgColor);
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
                     GraphicsEvents.InvokeOnPreRenderEvent(this);
                     if (background != null)
@@ -179,7 +176,7 @@ namespace Farmhand.Overrides
                         {
                             if (((!npc.swimming && !npc.hideShadow) && (!npc.isInvisible && !npc.IsMonster)) && !currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(npc.getTileLocation()))
                             {
-                                spriteBatch.Draw(shadowTexture, GlobalToLocal(viewport, npc.position + new Vector2(((float)(npc.sprite.spriteWidth * pixelZoom)) / 2f, (float)(npc.GetBoundingBox().Height + (npc.IsMonster ? 0 : (pixelZoom * 3))))), new Rectangle?(shadowTexture.Bounds), Color.White, 0f, new Vector2((float)shadowTexture.Bounds.Center.X, (float)shadowTexture.Bounds.Center.Y), (float)((pixelZoom + (((float)npc.yJumpOffset) / 40f)) * npc.scale), SpriteEffects.None, Math.Max((float)0f, (float)(((float)npc.getStandingY()) / 10000f)) - 1E-06f);
+                                spriteBatch.Draw(shadowTexture, GlobalToLocal(viewport, npc.position + new Vector2(((float)(npc.sprite.spriteWidth * pixelZoom)) / 2f, (float)(npc.GetBoundingBox().Height + (npc.IsMonster ? 0 : (pixelZoom * 3))))), shadowTexture.Bounds, Color.White, 0f, new Vector2((float)shadowTexture.Bounds.Center.X, (float)shadowTexture.Bounds.Center.Y), (float)((pixelZoom + (((float)npc.yJumpOffset) / 40f)) * npc.scale), SpriteEffects.None, Math.Max((float)0f, (float)(((float)npc.getStandingY()) / 10000f)) - 1E-06f);
                             }
                         }
                     }
@@ -189,13 +186,13 @@ namespace Farmhand.Overrides
                         {
                             if ((!npc2.swimming && !npc2.hideShadow) && !currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(npc2.getTileLocation()))
                             {
-                                spriteBatch.Draw(shadowTexture, GlobalToLocal(viewport, npc2.position + new Vector2(((float)(npc2.sprite.spriteWidth * pixelZoom)) / 2f, (float)(npc2.GetBoundingBox().Height + (npc2.IsMonster ? 0 : ((npc2.sprite.spriteHeight <= 0x10) ? -pixelZoom : (pixelZoom * 3)))))), new Rectangle?(shadowTexture.Bounds), Color.White, 0f, new Vector2((float)shadowTexture.Bounds.Center.X, (float)shadowTexture.Bounds.Center.Y), (float)((pixelZoom + (((float)npc2.yJumpOffset) / 40f)) * npc2.scale), SpriteEffects.None, Math.Max((float)0f, (float)(((float)npc2.getStandingY()) / 10000f)) - 1E-06f);
+                                spriteBatch.Draw(shadowTexture, GlobalToLocal(viewport, npc2.position + new Vector2(((float)(npc2.sprite.spriteWidth * pixelZoom)) / 2f, (float)(npc2.GetBoundingBox().Height + (npc2.IsMonster ? 0 : ((npc2.sprite.spriteHeight <= 0x10) ? -pixelZoom : (pixelZoom * 3)))))), shadowTexture.Bounds, Color.White, 0f, new Vector2((float)shadowTexture.Bounds.Center.X, (float)shadowTexture.Bounds.Center.Y), (float)((pixelZoom + (((float)npc2.yJumpOffset) / 40f)) * npc2.scale), SpriteEffects.None, Math.Max((float)0f, (float)(((float)npc2.getStandingY()) / 10000f)) - 1E-06f);
                             }
                         }
                     }
                     if ((displayFarmer && !player.swimming) && (!player.isRidingHorse() && !currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(player.getTileLocation())))
                     {
-                        spriteBatch.Draw(shadowTexture, GlobalToLocal(player.position + new Vector2(32f, 24f)), new Rectangle?(shadowTexture.Bounds), Color.White, 0f, new Vector2((float)shadowTexture.Bounds.Center.X, (float)shadowTexture.Bounds.Center.Y), (float)(4f - (((player.running || player.usingTool) && (player.FarmerSprite.indexInCurrentAnimation > 1)) ? (Math.Abs(FarmerRenderer.featureYOffsetPerFrame[player.FarmerSprite.CurrentFrame]) * 0.5f) : 0f)), SpriteEffects.None, 0f);
+                        spriteBatch.Draw(shadowTexture, GlobalToLocal(player.position + new Vector2(32f, 24f)), shadowTexture.Bounds, Color.White, 0f, new Vector2((float)shadowTexture.Bounds.Center.X, (float)shadowTexture.Bounds.Center.Y), (float)(4f - (((player.running || player.usingTool) && (player.FarmerSprite.indexInCurrentAnimation > 1)) ? (Math.Abs(FarmerRenderer.featureYOffsetPerFrame[player.FarmerSprite.CurrentFrame]) * 0.5f) : 0f)), SpriteEffects.None, 0f);
                     }
                     currentLocation.Map.GetLayer("Buildings").Draw(mapDisplayDevice, viewport, xTile.Dimensions.Location.Origin, false, pixelZoom);
                     mapDisplayDevice.EndScene();
@@ -478,7 +475,7 @@ namespace Farmhand.Overrides
                 }
                 if (debugMode)
                 {
-                    spriteBatch.DrawString(smallFont, string.Concat(new object[] { panMode ? (((getOldMouseX() + viewport.X) / tileSize) + "," + ((getOldMouseY() + viewport.Y) / tileSize)) : string.Concat(new object[] { "player: ", player.getStandingX() / tileSize, ", ", player.getStandingY() / tileSize }), " backIndex:", currentLocation.getTileIndexAt(player.getTileX(), player.getTileY(), "Back"), Environment.NewLine, "debugOutput: ", debugOutput }), new Vector2((float)base.GraphicsDevice.Viewport.TitleSafeArea.X, (float)base.GraphicsDevice.Viewport.TitleSafeArea.Y), Color.Red, 0f, Vector2.Zero, (float)1f, SpriteEffects.None, 0.9999999f);
+                    spriteBatch.DrawString(smallFont, string.Concat(panMode ? (((getOldMouseX() + viewport.X) / tileSize) + "," + ((getOldMouseY() + viewport.Y) / tileSize)) : string.Concat(new object[] { "player: ", player.getStandingX() / tileSize, ", ", player.getStandingY() / tileSize }), " backIndex:", currentLocation.getTileIndexAt(player.getTileX(), player.getTileY(), "Back"), Environment.NewLine, "debugOutput: ", debugOutput), new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.Red, 0f, Vector2.Zero, (float)1f, SpriteEffects.None, 0.9999999f);
                 }
                 if (showKeyHelp)
                 {
@@ -502,8 +499,8 @@ namespace Farmhand.Overrides
                 GraphicsEvents.InvokeDrawInRenderTargetTick(this);
                 if (options.zoomLevel != 1f)
                 {
-                    base.GraphicsDevice.SetRenderTarget(null);
-                    base.GraphicsDevice.Clear(bgColor);
+                    GraphicsDevice.SetRenderTarget(null);
+                    GraphicsDevice.Clear(bgColor);
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone);
                     spriteBatch.Draw(screen, Vector2.Zero, new Rectangle?(screen.Bounds), Color.White, 0f, Vector2.Zero, options.zoomLevel, SpriteEffects.None, 1f);
                     spriteBatch.End();

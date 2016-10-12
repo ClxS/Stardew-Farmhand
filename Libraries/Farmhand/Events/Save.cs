@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using Farmhand.Attributes;
 using Farmhand.Events.Arguments.SaveEvents;
-using Farmhand.Logging;
-using Farmhand.API;
 
 namespace Farmhand.Events
 {

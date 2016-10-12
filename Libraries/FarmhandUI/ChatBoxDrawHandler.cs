@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Farmhand.Attributes;
 using Farmhand.Logging;
 using Farmhand.Logging.Loggers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
-using StardewValley.Menus;
 
 namespace Farmhand.Overrides.UI
 {
@@ -76,7 +71,7 @@ namespace Farmhand.Overrides.UI
             var @this = chatBoxDrawEventArgs.ChatBox;
             var b = chatBoxDrawEventArgs.SpriteBatch;
             var num = 0;
-            for (int index = Enumerable.Count<ChatMessage>((IEnumerable<ChatMessage>)@this.messages) - 1; index >= 0; --index)
+            for (var index = @this.messages.Count() - 1; index >= 0; --index)
             {
                 if (@this.messages[index].message.StartsWith(":: [FHLOG"))
                 {
@@ -86,7 +81,7 @@ namespace Farmhand.Overrides.UI
                     num += @this.messages[index].verticalSize;
 
                     b.DrawString(@this.chatBox._font, text, 
-                        new Vector2(4f, (float)(Game1.viewport.Height - num - 8)), 
+                        new Vector2(4f, Game1.viewport.Height - num - 8), 
                         ConvertChatColour(type) * @this.messages[index].alpha, 0.0f, 
                         Vector2.Zero, 
                         1.0f, SpriteEffects.None, 
@@ -95,7 +90,7 @@ namespace Farmhand.Overrides.UI
                 else
                 {
                     num += @this.messages[index].verticalSize;
-                    b.DrawString(@this.chatBox._font, @this.messages[index].message, new Vector2(4f, (float)(Game1.viewport.Height - num - 8)), @this.chatBox.textColor * @this.messages[index].alpha, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.99f);
+                    b.DrawString(@this.chatBox._font, @this.messages[index].message, new Vector2(4f, Game1.viewport.Height - num - 8), @this.chatBox.textColor * @this.messages[index].alpha, 0.0f, Vector2.Zero, 1f, SpriteEffects.None, 0.99f);
                 }
             }
             if (@this.chatBox.Selected)

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Farmhand.API;
 using Farmhand.API.Generic;
 
 namespace Farmhand.Helpers

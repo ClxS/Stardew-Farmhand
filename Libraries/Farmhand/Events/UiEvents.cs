@@ -1,6 +1,5 @@
 ﻿using System;
 using Farmhand.Attributes;
-using Farmhand.Logging;
 
 namespace Farmhand.Events
 {

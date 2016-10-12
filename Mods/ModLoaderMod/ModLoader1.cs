@@ -1,12 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using ModLoaderMod.Menus;
-using Farmhand.Events.Arguments;
 using Farmhand.Events.Arguments.GameEvents;
 using Farmhand.Registries;
 using StardewValley;
-using Farmhand.Events;
-using Farmhand.Events.Arguments.GlobalRoute;
 
 namespace ModLoaderMod
 {

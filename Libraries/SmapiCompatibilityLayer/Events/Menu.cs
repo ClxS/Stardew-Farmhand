@@ -1,6 +1,5 @@
 ﻿using System;
 using StardewValley;
-using StardewValley.Menus;
 using Farmhand.Events;
 
 namespace StardewModdingAPI.Events

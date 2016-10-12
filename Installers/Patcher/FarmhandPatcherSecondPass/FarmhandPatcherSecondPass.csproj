@@ -40,11 +40,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PatcherSecondPass.cs" />
@@ -54,10 +49,6 @@
     <ProjectReference Include="..\FarmhandPatcherCommon\FarmhandPatcherCommon.csproj">
       <Project>{7f304954-a190-4003-b11e-a9043113396d}</Project>
       <Name>FarmhandPatcherCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Libraries\FarmhandUI\FarmhandUI.csproj">
-      <Project>{c48982a8-fc03-4688-b0fd-31813a7ee688}</Project>
-      <Name>FarmhandUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

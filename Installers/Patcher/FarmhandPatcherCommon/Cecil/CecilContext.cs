@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Mono.Collections.Generic;
 
 namespace Farmhand.Cecil
 {
@@ -127,14 +126,9 @@ namespace Farmhand.Cecil
 
         public MethodReference GetConstructorReference(TypeDefinition typeDefinition, Func<MethodDefinition, bool> selector = null)
         {
-            if (selector == null)
-            {
-                return typeDefinition.Methods.FirstOrDefault(m => m.IsConstructor);
-            }
-            else
-            {
-                return typeDefinition.Methods.Where(m => m.IsConstructor).FirstOrDefault(selector);
-            }
+            return selector == null 
+                ? typeDefinition.Methods.FirstOrDefault(m => m.IsConstructor) 
+                : typeDefinition.Methods.Where(m => m.IsConstructor).FirstOrDefault(selector);
         }
 
         public MethodReference GetConstructorReference(TypeDefinition typeDefinition, string method)

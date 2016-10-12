@@ -1,8 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Farmhand.API.Items
 {
@@ -50,13 +46,13 @@ namespace Farmhand.API.Items
         public override string ToString()
         {
             // combine the Type and Category, if there is a category
-            string TypeAndCategoryString = $"{Type}";
+            string typeAndCategoryString = $"{Type}";
             if (Category != ItemCategory.None)
             {
-                TypeAndCategoryString += $" {(int)Category}";
+                typeAndCategoryString += $" {(int)Category}";
             }
 
-            return $"{Name}/{Price}/{Edibility}/{TypeAndCategoryString}/{Description}/{SetOutdoors}/{SetIndoors}/{Fragility}/{IsLamp}";
+            return $"{Name}/{Price}/{Edibility}/{typeAndCategoryString}/{Description}/{SetOutdoors}/{SetIndoors}/{Fragility}/{IsLamp}";
         }
     }
 }

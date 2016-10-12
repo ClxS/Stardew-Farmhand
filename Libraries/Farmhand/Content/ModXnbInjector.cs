@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Farmhand.API.Utilities;
 using Farmhand.Logging;
 using Farmhand.Registries;
 using Farmhand.Registries.Containers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using StardewValley;
 
 namespace Farmhand.Content
 {

@@ -1,8 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Farmhand.Attributes;
+﻿using Farmhand.Attributes;
 using StardewValley;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 

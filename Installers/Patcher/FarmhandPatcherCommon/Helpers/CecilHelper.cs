@@ -344,19 +344,8 @@ namespace Farmhand.Helpers
             var hasThis = method.HasThis;
             var argIndex = 0;
 
-            VariableDefinition outputVar = null;
-
-            Instruction first = ilProcessor.Body.Instructions.First();
-            Instruction last = ilProcessor.Body.Instructions.Last();
-            Instruction prelast;
-            if (ilProcessor.Body.Instructions.Count > 1)
-            {
-                prelast = ilProcessor.Body.Instructions[ilProcessor.Body.Instructions.Count - 2];
-            }
-            else
-            {
-                prelast = first;
-            }
+            var first = ilProcessor.Body.Instructions.First();
+            var last = ilProcessor.Body.Instructions.Last();
             var objectType = stardewContext.GetTypeReference(typeof(object));
             var voidType = stardewContext.GetTypeReference(typeof(void));
 
@@ -372,7 +361,7 @@ namespace Farmhand.Helpers
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeType));
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldstr, injecteeMethod));
 
-            outputVar = new VariableDefinition("GlobalRouteOutput", objectType);
+            var outputVar = new VariableDefinition("GlobalRouteOutput", objectType);
             ilProcessor.Body.Variables.Add(outputVar);
             newInstructions.Add(ilProcessor.Create(OpCodes.Ldloca, outputVar));
             
@@ -402,9 +391,6 @@ namespace Farmhand.Helpers
 
             if (method.ReturnType != null && method.ReturnType.FullName != voidType.FullName)
             {
-                if (outputVar == null)
-                    throw new Exception("outputVar is null");
-
                 newInstructions.Add(ilProcessor.Create(OpCodes.Ldloc, outputVar));
                 if (method.ReturnType.IsPrimitive || method.ReturnType.IsGenericParameter)
                 {
@@ -415,10 +401,6 @@ namespace Farmhand.Helpers
                     newInstructions.Add(ilProcessor.Create(OpCodes.Castclass, method.ReturnType));
                 }
                 newInstructions.Add(ilProcessor.Create(OpCodes.Br, last));
-            }
-            else
-            {
-                //newInstructions.Add(ilProcessor.Create(OpCodes.Br, prelast));
             }
 
             ilProcessor.Body.SimplifyMacros();

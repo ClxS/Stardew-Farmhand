@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
 using Farmhand.Attributes;
 using Farmhand.Events;
-using Farmhand.Events.Arguments;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
 using StardewValley.Menus;
@@ -67,14 +61,7 @@ namespace Farmhand.Logging.Loggers
         [Hook(HookType.Entry, "StardewValley.Menus.ChatBox", "draw")]
         public static bool draw([ThisBind] object @this, [InputBind(typeof(SpriteBatch), "b")] SpriteBatch b)
         {
-            if (ChatBoxDraw.GetInvocationList().Length > 1)
-            {
-                return EventCommon.SafeCancellableInvoke(ChatBoxDraw, null, new ChatBoxDrawEventArgs((ChatBox)@this, b));
-            }
-            else
-            {
-                return true;
-            }
+            return ChatBoxDraw.GetInvocationList().Length <= 1 || EventCommon.SafeCancellableInvoke(ChatBoxDraw, null, new ChatBoxDrawEventArgs((ChatBox)@this, b));
         }
     }
 }

@@ -13,26 +13,17 @@ namespace Farmhand
 
         public string Test1(Mod @in, int y, int width, int height, bool test)
         {
-            if (IsEnabled)
-            {
-                return "sfes";
-            }
-            else
-            {
-                return null;
-            }
+            return IsEnabled ? "sfes" : null;
         }
 
         public static long TesttttgetNewID()
         {
             if (!GlobalRouteManager.IsEnabled || !GlobalRouteManager.IsBeingPostListenedTo(1557))
                 return MultiplayerUtility.latestID++;
-            else
-            {
-                object output = MultiplayerUtility.latestID++;
-                GlobalRouteManager.GlobalRoutePostInvoke(1557, "StardewValley.MultiplayerUtility", "getNewID", ref output, new object[0]);
-                return (long)output;
-            }
+
+            object output = MultiplayerUtility.latestID++;
+            GlobalRouteManager.GlobalRoutePostInvoke(1557, "StardewValley.MultiplayerUtility", "getNewID", ref output);
+            return (long)output;
         }
 
         public static bool TestFunction(out object output)

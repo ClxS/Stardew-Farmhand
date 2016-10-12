@@ -1,5 +1,4 @@
 ﻿using StardewModdingAPI.Inheritance;
-using StardewValley;
 
 namespace StardewModdingAPI
 {

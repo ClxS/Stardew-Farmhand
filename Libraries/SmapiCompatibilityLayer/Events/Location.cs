@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using Microsoft.Xna.Framework;
 using StardewValley;
-using Object = StardewValley.Object;
 using Farmhand.Events;
 
 namespace StardewModdingAPI.Events

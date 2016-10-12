@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Newtonsoft.Json.Converters;
 using Farmhand.Events;
 using Farmhand.Helpers;
 using Farmhand.Logging;
@@ -89,11 +88,11 @@ namespace Farmhand
             {
                 return Assembly.GetExecutingAssembly();
             }
-            else if (args.Name.StartsWith("StardewModdingAPI"))
+            if (args.Name.StartsWith("StardewModdingAPI"))
             {
                 return Assembly.GetExecutingAssembly();
             }
-            else if (args.Name.StartsWith("Stardew Farmhand.int1")) // Problematic injection - never got Assembly corrected from a intermediate assembly
+            if (args.Name.StartsWith("Stardew Farmhand.int1")) // Problematic injection - never got Assembly corrected from a intermediate assembly
             {
                 return Assembly.GetExecutingAssembly();
             }

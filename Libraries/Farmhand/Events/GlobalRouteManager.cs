@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Farmhand.Events.Arguments;
 using Farmhand.Logging;
 
 namespace Farmhand.Events
@@ -88,20 +86,18 @@ namespace Farmhand.Events
 
             if (!IsEnabled)
                 return false;
-            
-            if (PreListeners[index] != null)
+
+            if (PreListeners[index] == null) return false;
+
+            var evtArgs = new Arguments.GlobalRoute.EventArgsGlobalRouteReturnable(type, method, @params, output);
+            foreach (var evt in PreListeners[index])
             {
-                var evtArgs = new Arguments.GlobalRoute.EventArgsGlobalRouteReturnable(type, method, @params, output);
-                foreach (var evt in PreListeners[index])
-                {
-                    evt.Invoke(evtArgs);
-                }
-
-                output = evtArgs.Output;
-
-                return evtArgs.Cancel;
+                evt.Invoke(evtArgs);
             }
-            return false;
+
+            output = evtArgs.Output;
+
+            return evtArgs.Cancel;
         }
 
         public static void GlobalRoutePostInvoke(int index, string type, string method, params object[] @params)
@@ -191,10 +187,8 @@ namespace Farmhand.Events
                 {
                     throw new Exception("The method ({key}) is not available for listening");
                 }
-                else
-                {
-                    Log.Warning("GRM disabled at install time. Event will not be hooked");
-                }
+
+                Log.Warning("GRM disabled at install time. Event will not be hooked");
             }
             
         }

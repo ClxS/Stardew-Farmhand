@@ -1,10 +1,4 @@
-﻿using Farmhand.Attributes;
-using Microsoft.Xna.Framework;
-using StardewValley;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using StardewValley;
 
 namespace Farmhand.Overrides
 {

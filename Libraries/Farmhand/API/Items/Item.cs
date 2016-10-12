@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Farmhand.API.Utilities;
 using Farmhand.Registries;
-using Microsoft.Xna.Framework;
 using StardewValley;
 using Farmhand.Logging;
-using Farmhand.Attributes;
 
 namespace Farmhand.API.Items
 {

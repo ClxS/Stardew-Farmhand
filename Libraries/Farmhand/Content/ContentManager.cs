@@ -2,14 +2,7 @@
 using Farmhand.Logging;
 using System;
 using System.Collections.Generic;
-using Farmhand.Registries;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using StardewValley;
-using Farmhand.Registries.Containers;
 using System.Globalization;
 
 namespace Farmhand.Content
@@ -18,13 +11,13 @@ namespace Farmhand.Content
     /// An override for the XNA ContentManager which deals with loading custom XNBs when mods have registered custom overrides. Can also be used by mods
     /// to load their own XNB data
     /// </summary>
-    [HookRedirectConstructorFromBase("StardewValley.Game1", ".ctor", new Type[]{ typeof(IServiceProvider), typeof(System.String) })]
-    [HookRedirectConstructorFromBase("StardewValley.Game1", "dummyLoad", new Type[] { typeof(IServiceProvider), typeof(System.String) })]
-    [HookRedirectConstructorFromBase("StardewValley.Game1", "LoadContent", new Type[] { typeof(IServiceProvider), typeof(System.String) })]
-    [HookRedirectConstructorFromBase("StardewValley.LocalizedContentManager", "CreateTemporary", new Type[] { typeof(IServiceProvider), typeof(System.String), typeof(CultureInfo), typeof(string) } )]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", ".ctor", new[]{ typeof(IServiceProvider), typeof(System.String) })]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", "dummyLoad", new[] { typeof(IServiceProvider), typeof(System.String) })]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", "LoadContent", new[] { typeof(IServiceProvider), typeof(System.String) })]
+    [HookRedirectConstructorFromBase("StardewValley.LocalizedContentManager", "CreateTemporary", new[] { typeof(IServiceProvider), typeof(System.String), typeof(CultureInfo), typeof(string) } )]
     public class ContentManager : StardewValley.LocalizedContentManager
     {
-        public static List<IContentInjector> ContentInjectors = new List<IContentInjector>()
+        public static List<IContentInjector> ContentInjectors = new List<IContentInjector>
         {
             new ModXnbInjector(),
             new BlueprintInjector(),
