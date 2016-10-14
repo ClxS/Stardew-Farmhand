@@ -50,16 +50,6 @@ namespace Farmhand.API.Player
             player.addItemToInventory(new T());
         }
 
-        public static void AddBigCraftable<T>(Farmer player = null) where T : Farmhand.API.Items.BigCraftable, new()
-        {
-            if (player == null)
-            {
-                player = Game1.player;
-            }
-
-            player.addItemToInventory(new T());
-        }
-
         public static void AddTool<T>(Farmer player = null) where T : StardewValley.Tool, new()
         {
             if (player == null)

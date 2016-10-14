@@ -619,6 +619,43 @@ namespace Farmhand.Helpers
             }
         }
 
+        public static void RedirectConstructorToMethod(CecilContext stardewContext, Type asmType, string type, string method, string methodType, string methodName, Type[] parameters)
+        {
+            // Get a single string containing the full names of all parameters, comma separated
+            string parametersString = "";
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                parametersString += parameters[i].FullName;
+                if (i != parameters.Length - 1)
+                {
+                    parametersString += ",";
+                }
+            }
+
+            if (asmType == null) return;
+            var oldConstructor = asmType.GetConstructor(parameters);
+
+            if (oldConstructor == null) return;
+            // Build a FullName version of oldConstructor.Name
+            string oldConstructorFullName = "System.Void " + asmType.FullName + "::.ctor" + "(" + parametersString + ")";
+            var oldConstructorReference = stardewContext.GetMethodDefinitionFullName(asmType.FullName ?? asmType.Namespace + "." + asmType.Name, oldConstructorFullName);
+
+            // Build a FullName version of the new method
+            string methodFullName = $"{asmType} {methodType}::{methodName}({parametersString})";
+            var newMethod = stardewContext.GetMethodDefinitionFullName(methodType, methodFullName);
+            if (newMethod == null) return;
+
+            ILProcessor ilProcessor = stardewContext.GetMethodIlProcessor(type, method);
+
+            var instructions = ilProcessor.Body.Instructions.Where(n => n.OpCode == OpCodes.Newobj && n.Operand == oldConstructorReference).ToList();
+            foreach (var instruction in instructions)
+            {
+                ilProcessor.Body.SimplifyMacros();
+                ilProcessor.Replace(instruction, ilProcessor.Call(newMethod));
+                ilProcessor.Body.OptimizeMacros();
+            }
+        }
+
         public static void SetVirtualCallOnMethod(CecilContext cecilContext, string fullName, string name, string type, string method)
         {
             MethodDefinition methodDefinition = cecilContext.GetMethodDefinition(fullName, name);

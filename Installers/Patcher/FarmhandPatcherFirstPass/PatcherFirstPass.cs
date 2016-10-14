@@ -27,6 +27,7 @@ namespace Farmhand
             HookApiVirtualAlterations<HookForceVirtualBaseAttribute>(cecilContext);
             HookMakeBaseVirtualCallAlterations<HookMakeBaseVirtualCallAttribute>(cecilContext);
             HookConstructionRedirectors<HookRedirectConstructorFromBaseAttribute>(cecilContext);
+            HookConstructionToMethodRedirectors(cecilContext);
 
             Console.WriteLine("First Pass Installation Completed");
 
@@ -154,6 +155,69 @@ namespace Farmhand
                 {
                     CecilHelper.RedirectConstructorFromBase(cecilContext, asmType, attribute.Type, attribute.Method, attribute.Parameters);
                 }
+            }
+        }
+
+        protected override void HookConstructionToMethodRedirectors(CecilContext cecilContext)
+        {
+            try
+            {
+                var methods = FarmhandAssemblies.SelectMany(a => a.GetTypes())
+                            .SelectMany(t => t.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
+                            .Where(m => m.GetCustomAttributes(typeof(HookRedirectConstructorToMethodAttribute), false).Any())
+                            .ToArray();
+
+                foreach (var method in methods)
+                {
+                    // Check if this method has any properties that would immediately disqualify it from using this hook
+                    if (method.ReturnType == typeof(void))
+                    {
+                        Logging.Log.Warning($"{method.Name} in {method.DeclaringType.FullName} cannot be used in a hook because it does not return a value!");
+                        continue;
+                    }
+                    if (!method.IsStatic)
+                    {
+                        Logging.Log.Warning($"{method.Name} in {method.DeclaringType.FullName} cannot be used in a hook because it is not static!");
+                        continue;
+                    }
+
+                    // Get the type that the method returns
+                    var typeName = method.ReturnType.FullName;
+                    // Get the name of the method
+                    var methodName = method.Name;
+                    // Get the type name of the method
+                    var methodDeclaringType = method.DeclaringType.FullName;
+                    // Get an array of parameters that the method returns
+                    var methodParameterInfo = method.GetParameters();
+                    Type[] methodParamters = new Type[methodParameterInfo.Length];
+                    for (int i = 0; i < methodParamters.Length; i++)
+                    {
+                        methodParamters[i] = methodParameterInfo[i].ParameterType;
+                    }
+
+                    // Get all the hooks for this method
+                    var hookAttributes = method.GetCustomAttributes(typeof(HookRedirectConstructorToMethodAttribute), false).Cast<HookRedirectConstructorToMethodAttribute>();
+
+                    foreach (var hook in hookAttributes)
+                    {
+                        // Get the type name that contains the method we're hooking in
+                        var hookTypeName = hook.Type;
+                        // Get the name of the method we're hooking in
+                        var hookMethodName = hook.Method;
+                        try
+                        {
+                            CecilHelper.RedirectConstructorToMethod(cecilContext, method.ReturnType, hookTypeName, hookMethodName, methodDeclaringType, methodName, methodParamters);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 

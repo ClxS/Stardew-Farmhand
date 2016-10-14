@@ -173,6 +173,8 @@ namespace Farmhand
 
         protected abstract void HookApiEvents(CecilContext cecilContext);
 
+        protected abstract void HookConstructionToMethodRedirectors(CecilContext cecilContext);
+
         protected void InjectFarmhandCoreClasses(string output, params string[] inputs)
         {
             RepackOptions options = new RepackOptions();
