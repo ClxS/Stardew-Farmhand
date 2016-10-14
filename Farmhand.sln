@@ -112,6 +112,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeTestMod", "Mods\Recip
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBuildingMod", "Mods\TestBuildingMod\TestBuildingMod.csproj", "{7D84422C-8D1D-406C-8462-707B937FAE8F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C12052C1-872A-4B04-97FB-9347A4539C87} = {C12052C1-872A-4B04-97FB-9347A4539C87}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmhandGame", "Libraries\FarmhandGame\FarmhandGame.csproj", "{B2D9D9D6-F121-4797-8BB8-5263EF26FBF8}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -139,6 +142,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestToolMod", "Mods\TestToo
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBigCraftableMod", "Mods\TestBigCraftableMod\TestBigCraftableMod.csproj", "{5A089023-B1A4-4AB5-84AC-57EB65090CDD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C12052C1-872A-4B04-97FB-9347A4539C87} = {C12052C1-872A-4B04-97FB-9347A4539C87}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
