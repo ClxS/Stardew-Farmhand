@@ -28,26 +28,20 @@ namespace Farmhand.Overrides.UI
         public ShopMenu(Dictionary<Item, int[]> itemPriceAndStock, int currency = 0, string who = null) :
             base(itemPriceAndStock, currency, who)
         {
-            Farmhand.Logging.Log.Success("dict Pre Check");
             shopType = GetShopType(itemPriceAndStock, currency, who);
             if (shopType != Farmhand.API.Utilities.Shops.Unknown)
             {
-                Farmhand.Logging.Log.Success("dict Pre Inject");
                 InjectStock(shopType);
-                Farmhand.Logging.Log.Success("dict Post Inject");
             }
         }
 
         public ShopMenu(List<Item> itemsForSale, int currency = 0, string who = null) :
             base(itemsForSale, currency, who)
         {
-            Farmhand.Logging.Log.Success("Pre Check");
             shopType = GetShopType(itemsForSale, currency, who);
             if (shopType != Farmhand.API.Utilities.Shops.Unknown)
             {
-                Farmhand.Logging.Log.Success("Pre Inject");
                 InjectStock(shopType);
-                Farmhand.Logging.Log.Success("Post Check");
             }
         }
 
