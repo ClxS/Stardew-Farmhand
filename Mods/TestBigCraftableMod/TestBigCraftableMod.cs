@@ -21,6 +21,7 @@ namespace TestBigCraftableMod
         private void GameEvents_OnAfterLoadedContent(object sender, System.EventArgs e)
         {
             BigCraftable.RegisterBigCraftable<TestBigCraftable>(TestBigCraftable.StaticInformation);
+            Farmhand.API.Utilities.ShopUtilities.AddToShopStock(Farmhand.API.Utilities.Shops.Pierre, TestBigCraftable.StaticInformation);
         }
 
         private void PlayerEvents_OnFarmerChanged(object sender, System.EventArgs e)
