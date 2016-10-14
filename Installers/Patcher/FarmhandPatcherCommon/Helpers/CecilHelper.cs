@@ -583,12 +583,19 @@ namespace Farmhand.Helpers
 
         public static void RedirectConstructorFromBase(CecilContext stardewContext, Type asmType, string type, string method, Type[] parameters)
         {
-            // Get a single string containing the full names of all parameters, comma separated
             string parametersString = "";
-            for(int i=0; i<parameters.Length; i++)
+            for (int i = 0; i < parameters.Length; i++)
             {
-                parametersString += parameters[i].FullName;
-                if(i != parameters.Length-1)
+                if (parameters[i].FullName.Contains("`"))
+                {
+                    parametersString += ConvertGenericTypeFullNameToGenericTypeParameterFormat(parameters[i].FullName);
+                }
+                else
+                {
+                    parametersString += parameters[i].FullName;
+                }
+
+                if (i != parameters.Length - 1)
                 {
                     parametersString += ",";
                 }
@@ -807,6 +814,48 @@ namespace Farmhand.Helpers
             var type = stardewContext.GetTypeDefinition(typeName);
             type.IsPublic = isPublic;
             type.IsNotPublic = !isPublic;
+        }
+
+        // While most Type.FullName string values give the correct format that is expected for identifying a method by its full name, generic
+        // parameters do not play nice, and their Type.FullName values contain a lot of information that interfere with searching for a method
+        // by it's exact full name. This Method takes the Type.FullName property of a generic type, and converts it to the format needed
+        public static string ConvertGenericTypeFullNameToGenericTypeParameterFormat(string genericTypeFullName)
+        {
+            // Start with an empty string we'll build on
+            string convertedString = "";
+
+            // Everything before the first [[ can be directly lifted into the new string
+            convertedString += genericTypeFullName.Split(new string[] { "[[" }, StringSplitOptions.None)[0];
+            // Open symbol
+            convertedString += "<";
+            // Spit the string after the first [[ by commas
+            string[] commaSeparated = genericTypeFullName
+                                        .Split(new string[] { "[[" }, StringSplitOptions.None)[1]
+                                        .Split(',');
+            // Itterate over the comma separated array. Every 5 commas is the string value we need, the rest is useless to us
+            for (int c = 0; c < commaSeparated.Length; c += 5)
+            {
+                // Itterate over that string we got even further, in order to clean it up character by character
+                for (int characterNum = 0; characterNum < commaSeparated[c].Length; characterNum++)
+                {
+                    // The only garbage symbol we should have to deal with is stray '[', but we can't get rid of them all, since we may need open and close brackets for arrays
+                    // So, if a '[' doesn't have a matching ']' after it, it's garbage and can be ignored, while everything else gets tacked on our converted string
+                    if ((!commaSeparated[c][characterNum].Equals('[')) || (characterNum != commaSeparated[c].Length - 1 && commaSeparated[c][characterNum + 1].Equals(']')))
+                    {
+                        convertedString += commaSeparated[c][characterNum];
+                    }
+                }
+
+                // Comma separation between the generic parameters
+                if (c != commaSeparated.Length - 5)
+                {
+                    convertedString += ",";
+                }
+            }
+            // Close symbol
+            convertedString += ">";
+
+            return convertedString;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Farmhand;
+using Farmhand.API.Utilities;
 using StardewValley;
 using Farmhand.Events;
 using Farmhand.Events.Arguments.GlobalRoute;
@@ -22,10 +23,6 @@ namespace TestCropMod
 
             Farmhand.API.Serializer.RegisterType<Bluemelon>();
             Farmhand.API.Serializer.RegisterType<BluemelonSeeds>();
-
-            // TODO once returnable events are working, this can be replaced with a proper event
-            Farmhand.Events.GlobalRouteManager.Listen(ListenerType.Post, "StardewValley.Locations.SeedShop", "shopStock", SeedShopEvents_PostGetShopStock);
-            Farmhand.Events.GlobalRouteManager.Listen(ListenerType.Post, "StardewValley.Utility", "getHospitalStock", UtilityEvents_PostGetHospitalStock);
         }
 
         private void GameEvents_OnAfterLoadedContent(object sender, System.EventArgs e)
@@ -33,6 +30,11 @@ namespace TestCropMod
             Farmhand.API.Items.Item.RegisterItem<Bluemelon>(Bluemelon.Information);
             Farmhand.API.Items.Item.RegisterItem<BluemelonSeeds>(BluemelonSeeds.Information);
             Farmhand.API.Crops.Crop.RegisterCrop<TestCrop>(TestCrop.Information);
+
+            // Adds a new item to piere's shop, with a delegate to check whether or not they're on sale
+            ShopUtilities.AddToShopStock(Shops.Pierre, BluemelonSeeds.Information, new ShopUtilities.CheckIfAddShopStock(CheckIfBluemelonSeedsAreOnSale), 123);
+            // Adds a new item to joja's shop, without a delegate to check whether or not they're no sale, so they always will be
+            ShopUtilities.AddToShopStock(Shops.Joja, BluemelonSeeds.Information, 123);
         }
 
         private void PlayerEvents_OnFarmerChanged(object sender, System.EventArgs e)
@@ -41,34 +43,9 @@ namespace TestCropMod
             Farmhand.API.Player.Player.AddObject(BluemelonSeeds.Information.Id);
         }
 
-        // This adds bluemelon seeds from this mod to Pierre's stock. They will be at the bottom since no list sorting is done
-        private void SeedShopEvents_PostGetShopStock(EventArgsGlobalRoute e)
+        public static bool CheckIfBluemelonSeedsAreOnSale()
         {
-            Farmhand.Logging.Log.Success("Altering Pierre shop stock");
-
-            var args = e as EventArgsGlobalRouteReturnable;
-
-            List<Item> normalStock = (List<Item>)args.Output;
-
-            normalStock.Add(new StardewValley.Object(Vector2.Zero, BluemelonSeeds.Information.Id, 2147483647));
-
-            args.Output = normalStock;
-        }
-
-        // This adds Life Elixer to the hospital shop stock, as an example of another shop because pierre's shop stock is weird. Most shops are from Utility
-        private void UtilityEvents_PostGetHospitalStock(EventArgsGlobalRoute e)
-        {
-            var args = e as EventArgsGlobalRouteReturnable;
-
-            Dictionary<Item, int[]> normalStock = (Dictionary<Item, int[]>)args.Output;
-
-            normalStock.Add(new StardewValley.Object(773, 1, false, -1, 0), new[]
-            {
-            3000,
-            2147483647
-            });
-
-            args.Output = normalStock;
+            return !StardewValley.Game1.currentSeason.Equals("winter");
         }
     }
 }
