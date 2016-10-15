@@ -1,5 +1,5 @@
 ﻿using Farmhand;
-using Farmhand.API.Utilities;
+using Farmhand.API.Shops;
 using StardewValley;
 using Farmhand.Events;
 using Farmhand.Events.Arguments.GlobalRoute;

@@ -1,4 +1,5 @@
 ﻿using Farmhand.Attributes;
+using Farmhand.API.Shops;
 using StardewValley;
 using System;
 using System.Collections.Generic;
@@ -23,13 +24,13 @@ namespace Farmhand.Overrides.UI
     public class ShopMenu : StardewValley.Menus.ShopMenu
     {
         private Dictionary<Item, int[]> injectedStock = new Dictionary<Item, int[]>();
-        private Farmhand.API.Utilities.Shops shopType = Farmhand.API.Utilities.Shops.Unknown;
+        private Shops shopType = Shops.Unknown;
 
         public ShopMenu(Dictionary<Item, int[]> itemPriceAndStock, int currency = 0, string who = null) :
             base(itemPriceAndStock, currency, who)
         {
             shopType = GetShopType(itemPriceAndStock, currency, who);
-            if (shopType != Farmhand.API.Utilities.Shops.Unknown)
+            if (shopType != Shops.Unknown)
             {
                 InjectStock(shopType);
             }
@@ -39,16 +40,16 @@ namespace Farmhand.Overrides.UI
             base(itemsForSale, currency, who)
         {
             shopType = GetShopType(itemsForSale, currency, who);
-            if (shopType != Farmhand.API.Utilities.Shops.Unknown)
+            if (shopType != Shops.Unknown)
             {
                 InjectStock(shopType);
             }
         }
 
         
-        protected void InjectStock(Farmhand.API.Utilities.Shops shop)
+        protected void InjectStock(Shops shop)
         {
-            Dictionary<Item, int[]> newStock = Farmhand.API.Utilities.ShopUtilities.GetNewStock(shop);
+            Dictionary<Item, int[]> newStock = ShopUtilities.GetNewStock(shop);
             foreach (KeyValuePair<Item, int[]> stock in newStock)
             {
                 forSale.Add(stock.Key);
@@ -65,83 +66,99 @@ namespace Farmhand.Overrides.UI
             }
         }
 
+        /// <summary>
+        /// Opens a registered custom shop
+        /// </summary>
+        /// <param name="shopName">String identifier of shop to open</param>
+        public static void OpenShop(string shopName)
+        {
+            if (ShopUtilities.RegisteredShops.ContainsKey(shopName))
+            {
+                Game1.activeClickableMenu = new ShopMenu(ShopUtilities.GetStock(shopName), ShopUtilities.RegisteredShops[shopName].CurrencyType, null);
+            }
+            else
+            {
+                Logging.Log.Warning($"Shop {shopName} not found! Could not open shop.");
+            }
+        }
+
         // Determine what kind of shop this is
-        protected Farmhand.API.Utilities.Shops GetShopType(Dictionary<Item, int[]> shop, int currency = 0, string who = null)
+        protected Shops GetShopType(Dictionary<Item, int[]> shop, int currency = 0, string who = null)
         {
             // String checking is TERRIBLE, but it's how stardew does it, and it's fairly easy to change if it breaks later on
             if (who != null)
             {
                 if (who.Equals("Marlon"))
                 {
-                    return Farmhand.API.Utilities.Shops.Adventure;
+                    return Shops.Adventure;
                 }
                 else if (who.Equals("Marnie"))
                 {
-                    return Farmhand.API.Utilities.Shops.Animal;
+                    return Shops.Animal;
                 }
                 else if (who.Equals("Clint"))
                 {
-                    return Farmhand.API.Utilities.Shops.Blacksmith;
+                    return Shops.Blacksmith;
                 }
                 else if (who.Equals("Willy"))
                 {
-                    return Farmhand.API.Utilities.Shops.Fish;
+                    return Shops.Fish;
                 }
                 else if (who.Equals("Pierre"))
                 {
-                    return Farmhand.API.Utilities.Shops.Pierre;
+                    return Shops.Pierre;
                 }
                 else if (who.Equals("HatMouse"))
                 {
-                    return Farmhand.API.Utilities.Shops.Hat;
+                    return Shops.Hat;
                 }
                 else if (who.Equals("Traveler"))
                 {
-                    return Farmhand.API.Utilities.Shops.TravelingMerchant;
+                    return Shops.TravelingMerchant;
                 }
                 else if (who.Equals("Dwarf"))
                 {
-                    return Farmhand.API.Utilities.Shops.Dwarf;
+                    return Shops.Dwarf;
                 }
                 else if (who.Equals("Krobus"))
                 {
-                    return Farmhand.API.Utilities.Shops.Sewer;
+                    return Shops.Sewer;
                 }
                 else if (who.Equals("Robin"))
                 {
-                    return Farmhand.API.Utilities.Shops.Carpenter;
+                    return Shops.Carpenter;
                 }
                 else if (who.Equals("Sandy"))
                 {
-                    return Farmhand.API.Utilities.Shops.Sandy;
+                    return Shops.Sandy;
                 }
                 else if (who.Equals("Gus"))
                 {
-                    return Farmhand.API.Utilities.Shops.Saloon;
+                    return Shops.Saloon;
                 }
             }
             // If there wasn't a string attached, because reasons, this backup attempts to compare the shops and determine which one it is
             else
             {
-                if (CompareShopStocks(shop, StardewValley.Utility.getHospitalStock()))
+                if (CompareShopStocks(shop, Utility.getHospitalStock()))
                 {
-                    return Farmhand.API.Utilities.Shops.Hospital;
+                    return Shops.Hospital;
                 }
-                if (CompareShopStocks(shop, StardewValley.Utility.getQiShopStock()))
+                if (CompareShopStocks(shop, Utility.getQiShopStock()))
                 {
-                    return Farmhand.API.Utilities.Shops.Qi;
+                    return Shops.Qi;
                 }
-                if (CompareShopStocks(shop, StardewValley.Utility.getJojaStock()))
+                if (CompareShopStocks(shop, Utility.getJojaStock()))
                 {
-                    return Farmhand.API.Utilities.Shops.Joja;
+                    return Shops.Joja;
                 }
-                if (CompareShopStocks(shop, StardewValley.Utility.getAllWallpapersAndFloorsForFree()))
+                if (CompareShopStocks(shop, Utility.getAllWallpapersAndFloorsForFree()))
                 {
-                    return Farmhand.API.Utilities.Shops.FreeWallpapersAndFloors;
+                    return Shops.FreeWallpapersAndFloors;
                 }
-                if (CompareShopStocks(shop, StardewValley.Utility.getAllFurnituresForFree()))
+                if (CompareShopStocks(shop, Utility.getAllFurnituresForFree()))
                 {
-                    return Farmhand.API.Utilities.Shops.FreeFurnitures;
+                    return Shops.FreeFurnitures;
                 }
                 // There is no internal definition for the ice cream shop, it's made on the fly
                 else if (CompareShopStocks(shop, new Dictionary<Item, int[]>
@@ -156,69 +173,69 @@ namespace Farmhand.Overrides.UI
                                         }
                                     }))
                 {
-                    return Farmhand.API.Utilities.Shops.IceCream;
+                    return Shops.IceCream;
                 }
             }
 
-            return Farmhand.API.Utilities.Shops.Unknown;
+            return Shops.Unknown;
         }
 
-        protected Farmhand.API.Utilities.Shops GetShopType(List<Item> shop, int currency = 0, string who = null)
+        protected Shops GetShopType(List<Item> shop, int currency = 0, string who = null)
         {
             // String checking is TERRIBLE, but it's how stardew does it, and it's fairly easy to change if it breaks later on
             if (who != null)
             {
                 if (who.Equals("Marlon"))
                 {
-                    return Farmhand.API.Utilities.Shops.Adventure;
+                    return Shops.Adventure;
                 }
                 else if (who.Equals("Marnie"))
                 {
-                    return Farmhand.API.Utilities.Shops.Animal;
+                    return Shops.Animal;
                 }
                 else if (who.Equals("Clint"))
                 {
-                    return Farmhand.API.Utilities.Shops.Blacksmith;
+                    return Shops.Blacksmith;
                 }
                 else if (who.Equals("Willy"))
                 {
-                    return Farmhand.API.Utilities.Shops.Fish;
+                    return Shops.Fish;
                 }
                 else if (who.Equals("Pierre"))
                 {
-                    return Farmhand.API.Utilities.Shops.Pierre;
+                    return Shops.Pierre;
                 }
                 else if (who.Equals("HatMouse"))
                 {
-                    return Farmhand.API.Utilities.Shops.Hat;
+                    return Shops.Hat;
                 }
                 else if (who.Equals("Traveler"))
                 {
-                    return Farmhand.API.Utilities.Shops.TravelingMerchant;
+                    return Shops.TravelingMerchant;
                 }
                 else if (who.Equals("Dwarf"))
                 {
-                    return Farmhand.API.Utilities.Shops.Dwarf;
+                    return Shops.Dwarf;
                 }
                 else if (who.Equals("Krobus"))
                 {
-                    return Farmhand.API.Utilities.Shops.Sewer;
+                    return Shops.Sewer;
                 }
                 else if (who.Equals("Robin"))
                 {
-                    return Farmhand.API.Utilities.Shops.Carpenter;
+                    return Shops.Carpenter;
                 }
                 else if (who.Equals("Sandy"))
                 {
-                    return Farmhand.API.Utilities.Shops.Sandy;
+                    return Shops.Sandy;
                 }
                 else if (who.Equals("Gus"))
                 {
-                    return Farmhand.API.Utilities.Shops.Saloon;
+                    return Shops.Saloon;
                 }
             }
 
-            return Farmhand.API.Utilities.Shops.Unknown;
+            return Shops.Unknown;
         }
 
         // Compare two shop stocks to determine if they're equal

@@ -93,6 +93,8 @@
     <Compile Include="API\Pulse\PulseEventArgs.cs" />
     <Compile Include="API\Pulse\Resource.cs" />
     <Compile Include="API\Serializer.cs" />
+    <Compile Include="API\Shops\ShopInformation.cs" />
+    <Compile Include="API\Shops\StockEntry.cs" />
     <Compile Include="API\Tools\Tool.cs" />
     <Compile Include="API\Tools\ToolInformation.cs" />
     <Compile Include="API\Tools\Weapon.cs" />
@@ -103,7 +105,7 @@
     <Compile Include="API\Crafting\RecipeUnlockType.cs" />
     <Compile Include="API\Generic\RequiredSkill.cs" />
     <Compile Include="API\Generic\Skill.cs" />
-    <Compile Include="API\Utilities\ShopUtilities.cs" />
+    <Compile Include="API\Shops\ShopUtilities.cs" />
     <Compile Include="API\Utilities\TextureUtility.cs" />
     <Compile Include="Attributes\HookAlterProtectionAttribute.cs" />
     <Compile Include="Attributes\HookAttribute.cs" />

@@ -1,0 +1,18 @@
+﻿{
+	"UniqueId" : "TestShopMod",
+	"Name" : "Test Shop Mod",
+	"ModDll": "TestShopMod",
+	"Author": "TownEater",
+	"Version" : "0.1",
+	"Description" : "Adds a custom registered shop",
+	"Content" : 
+	{
+		"Textures" : 
+		[
+			{
+				"Id" : "sprite_DimensionalSack",
+				"File" : "DimensionalSack.png"
+			}
+		]
+	}
+}
