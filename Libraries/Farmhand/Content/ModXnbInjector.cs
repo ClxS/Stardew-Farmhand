@@ -16,7 +16,7 @@ namespace Farmhand.Content
         public bool IsLoader => true;
         public bool IsInjector => false;
 
-        private static List<Microsoft.Xna.Framework.Content.ContentManager> _modManagers;
+        private static List<StardewValley.LocalizedContentManager> _modManagers;
         private readonly Dictionary<string, Texture2D> _cachedAlteredTextures = new Dictionary<string, Texture2D>();
 
         public bool HandlesAsset(Type type, string assetName)
@@ -73,14 +73,14 @@ namespace Farmhand.Content
         {
             if (_modManagers != null) return;
 
-            _modManagers = new List<Microsoft.Xna.Framework.Content.ContentManager>();
+            _modManagers = new List<StardewValley.LocalizedContentManager>();
             foreach (var modPath in ModLoader.ModPaths)
             {
-                _modManagers.Add(new Microsoft.Xna.Framework.Content.ContentManager(contentManager.ServiceProvider, modPath));
+                _modManagers.Add(contentManager.CreateContentManager(modPath));
             }
         }
 
-        private Microsoft.Xna.Framework.Content.ContentManager GetContentManagerForMod(ContentManager contentManager, ModXnb mod)
+        private StardewValley.LocalizedContentManager GetContentManagerForMod(ContentManager contentManager, ModXnb mod)
         {
             LoadModManagers(contentManager);
             return _modManagers.FirstOrDefault(n => mod.OwningMod.ModDirectory.Contains(n.RootDirectory));
