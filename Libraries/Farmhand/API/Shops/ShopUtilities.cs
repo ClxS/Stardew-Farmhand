@@ -73,174 +73,189 @@ namespace Farmhand.API.Shops
         /// <summary>
         /// Register a new shop that can be used
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shopName">String identifier of shop that will be used to refer to it</param>
         /// <param name="currency">Type of currency accepted at this shop</param>
-        public static void RegisterShop(string shopName, int currency = 0)
+        public static void RegisterShop(Mod owner, string shopName, int currency = 0)
         {
-            ShopInformation shop = new ShopInformation(shopName, currency);
+            string internalShopName = GetInternalShopName(owner, shopName);
 
-            if (!RegisteredShops.ContainsKey(shopName))
+            ShopInformation shop = new ShopInformation(owner, internalShopName, currency);
+
+            if (!RegisteredShops.ContainsKey(internalShopName))
             {
                 RegisteredShops.Add(shop.Name, shop);
             }
             else
             {
-                Farmhand.Logging.Log.Warning($"Shop {shop.Name} already exists! Using originally registered shop.");
+                Farmhand.Logging.Log.Warning($"Shop {internalShopName} already exists! Using originally registered shop.");
             }
         }
 
         /// <summary>
         /// Add an item to a shop
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shop">Shop to add the item to</param>
         /// <param name="item">ItemInformation of item to add</param>
         /// <param name="price">optional, price of item</param>
         /// <param name="stock">optional, amount of item in stock</param>
-        public static void AddToShopStock(Shops shop, ItemInformation item, int price = 0, int stock = Infinite)
+        public static void AddToShopStock(Mod owner, Shops shop, ItemInformation item, int price = 0, int stock = Infinite)
         {
-            AddToShopStock(shop, new StockEntry(item, price, stock));
+            AddToShopStock(shop, new StockEntry(owner, item, price, stock));
         }
 
         /// <summary>
         /// Add an item to a shop
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shop">Shop to add the item to</param>
         /// <param name="item">ItemInformation of item to add</param>
         /// <param name="checkDelegate">Delegate method which checks if this item should be in stock</param>
         /// <param name="price">optional, price of item</param>
         /// <param name="stock">optional, amount of item in stock</param>
-        public static void AddToShopStock(Shops shop, ItemInformation item, CheckIfAddShopStock checkDelegate, int price = 0, int stock = Infinite)
+        public static void AddToShopStock(Mod owner, Shops shop, ItemInformation item, CheckIfAddShopStock checkDelegate, int price = 0, int stock = Infinite)
         {
-            AddToShopStock(shop, new StockEntry(item, checkDelegate, price, stock));
+            AddToShopStock(shop, new StockEntry(owner, item, checkDelegate, price, stock));
         }
 
         /// <summary>
         /// Add a big craftable to a shop
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shop">Shop to add the item to</param>
         /// <param name="item">BigCraftableInformation of item to add</param>
         /// <param name="price">optional, price of item</param>
         /// <param name="stock">optional, amount of item in stock</param>
-        public static void AddToShopStock(Shops shop, BigCraftableInformation item, int price = 0, int stock = Infinite)
+        public static void AddToShopStock(Mod owner, Shops shop, BigCraftableInformation item, int price = 0, int stock = Infinite)
         {
-            AddToShopStock(shop, new StockEntry(item, price, stock));
+            AddToShopStock(shop, new StockEntry(owner, item, price, stock));
         }
 
         /// <summary>
         /// Add a big craftable to a shop
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shop">Shop to add the item to</param>
         /// <param name="item">BigCraftableInformation of item to add</param>
         /// <param name="checkDelegate">Delegate method which checks if this item should be in stock</param>
         /// <param name="price">optional, price of item</param>
         /// <param name="stock">optional, amount of item in stock</param>
-        public static void AddToShopStock(Shops shop, BigCraftableInformation item, CheckIfAddShopStock checkDelegate, int price = 0, int stock = Infinite)
+        public static void AddToShopStock(Mod owner, Shops shop, BigCraftableInformation item, CheckIfAddShopStock checkDelegate, int price = 0, int stock = Infinite)
         {
-            AddToShopStock(shop, new StockEntry(item, checkDelegate, price, stock));
+            AddToShopStock(shop, new StockEntry(owner, item, checkDelegate, price, stock));
         }
 
         /// <summary>
         /// Add an item to a registered custom shop. This method will NOT add stock to vanilla shops!
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shopName">String identifier of the shop to add stock to</param>
         /// <param name="item">ItemInformation of item to add</param>
         /// <param name="price">optional, price of item</param>
         /// <param name="stock">optional, amount of item in stock</param>
-        public static void AddToShopStock(string shopName, ItemInformation item, int price = 0, int stock = Infinite)
+        public static void AddToShopStock(Mod owner, string shopName, ItemInformation item, int price = 0, int stock = Infinite)
         {
-            AddToShopStock(shopName, new StockEntry(item, price, stock));
+            AddToShopStock(owner, shopName, new StockEntry(owner, item, price, stock));
         }
 
         /// <summary>
         /// Add an item to a registered custom shop. This method will NOT add stock to vanilla shops!
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shopName">String identifier of the shop to add stock to</param>
         /// <param name="item">ItemInformation of item to add</param>
         /// <param name="checkDelegate">Delegate method which checks if this item should be in stock</param>
         /// <param name="price">optional, price of item</param>
         /// <param name="stock">optional, amount of item in stock</param>
-        public static void AddToShopStock(string shopName, ItemInformation item, CheckIfAddShopStock checkDelegate, int price = 0, int stock = Infinite)
+        public static void AddToShopStock(Mod owner, string shopName, ItemInformation item, CheckIfAddShopStock checkDelegate, int price = 0, int stock = Infinite)
         {
-            AddToShopStock(shopName, new StockEntry(item, checkDelegate, price, stock));
+            AddToShopStock(owner, shopName, new StockEntry(owner, item, checkDelegate, price, stock));
         }
 
         /// <summary>
         /// Add a big craftable to a registered custom shop. This method will NOT add stock to vanilla shops!
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shopName">String identifier of the shop to add stock to</param>
         /// <param name="item">BigCraftableInformation of item to add</param>
         /// <param name="price">optional, price of item</param>
         /// <param name="stock">optional, amount of item in stock</param>
-        public static void AddToShopStock(string shopName, BigCraftableInformation item, int price = 0, int stock = Infinite)
+        public static void AddToShopStock(Mod owner, string shopName, BigCraftableInformation item, int price = 0, int stock = Infinite)
         {
-            AddToShopStock(shopName, new StockEntry(item, price, stock));
+            AddToShopStock(owner, shopName, new StockEntry(owner, item, price, stock));
         }
 
         /// <summary>
         /// Add a big craftable to a registered custom shop. This method will NOT add stock to vanilla shops!
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shopName">String identifier of the shop to add stock to</param>
         /// <param name="item">BigCraftableInformation of item to add</param>
         /// <param name="checkDelegate">Delegate method which checks if this item should be in stock</param>
         /// <param name="price">optional, price of item</param>
         /// <param name="stock">optional, amount of item in stock</param>
-        public static void AddToShopStock(string shopName, BigCraftableInformation item, CheckIfAddShopStock checkDelegate, int price = 0, int stock = Infinite)
+        public static void AddToShopStock(Mod owner, string shopName, BigCraftableInformation item, CheckIfAddShopStock checkDelegate, int price = 0, int stock = Infinite)
         {
-            AddToShopStock(shopName, new StockEntry(item, checkDelegate, price, stock));
+            AddToShopStock(owner, shopName, new StockEntry(owner, item, checkDelegate, price, stock));
         }
 
         /// <summary>
         /// Add an item to a shop
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shop">Shop to add the item to</param>
         /// <param name="stockType">The type of Id the item being added is</param>
         /// <param name="Id">Id of the item being added</param>
         /// <param name="price">optional, price of item</param>
         /// <param name="stock">optional, amount of item in stock</param>
-        public static void AddToShopStock(Shops shop, StockType stockType, int Id, int price = 0, int stock = Infinite)
+        public static void AddToShopStock(Mod owner, Shops shop, StockType stockType, int Id, int price = 0, int stock = Infinite)
         {
-            AddToShopStock(shop, new StockEntry(stockType, Id, price, stock));
+            AddToShopStock(shop, new StockEntry(owner, stockType, Id, price, stock));
         }
 
         /// <summary>
         /// Add an item to a shop
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shop">Shop to add the item to</param>
         /// <param name="stockType">The type of Id the item being added is</param>
         /// <param name="Id">Id of the item being added</param>
         /// <param name="checkDelegate">Delegate method which checks if this item should be in stock</param>
         /// <param name="price">optional, price of item</param>
         /// <param name="stock">optional, amount of item in stock</param>
-        public static void AddToShopStock(Shops shop, StockType stockType, int Id, CheckIfAddShopStock checkDelegate, int price = 0, int stock = Infinite)
+        public static void AddToShopStock(Mod owner, Shops shop, StockType stockType, int Id, CheckIfAddShopStock checkDelegate, int price = 0, int stock = Infinite)
         {
-            AddToShopStock(shop, new StockEntry(stockType, Id, checkDelegate, price, stock));
+            AddToShopStock(shop, new StockEntry(owner, stockType, Id, checkDelegate, price, stock));
         }
 
         /// <summary>
         /// Add an item to a registered custom shop. This method will NOT add stock to vanilla shops!
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shopName">String identifier of the shop to add stock to</param>
         /// <param name="stockType">The type of Id the item being added is</param>
         /// <param name="Id">Id of the item being added</param>
         /// <param name="price">optional, price of item</param>
         /// <param name="stock">optional, amount of item in stock</param>
-        public static void AddToShopStock(string shopName, StockType stockType, int Id, int price = 0, int stock = Infinite)
+        public static void AddToShopStock(Mod owner, string shopName, StockType stockType, int Id, int price = 0, int stock = Infinite)
         {
-            AddToShopStock(shopName, new StockEntry(stockType, Id, price, stock));
+            AddToShopStock(owner, shopName, new StockEntry(owner, stockType, Id, price, stock));
         }
 
         /// <summary>
         /// Add an item to a registered custom shop. This method will NOT add stock to vanilla shops!
         /// </summary>
+        /// <param name="owner">Instance of the mod which is submitting this request</param>
         /// <param name="shopName">String identifier of the shop to add stock to</param>
         /// <param name="stockType">The type of Id the item being added is</param>
         /// <param name="Id">Id of the item being added</param>
         /// <param name="checkDelegate">Delegate method which checks if this item should be in stock</param>
         /// <param name="price">optional, price of item</param>
         /// <param name="stock">optional, amount of item in stock</param>
-        public static void AddToShopStock(string shopName, StockType stockType, int Id, CheckIfAddShopStock checkDelegate, int price = 0, int stock = Infinite)
+        public static void AddToShopStock(Mod owner, string shopName, StockType stockType, int Id, CheckIfAddShopStock checkDelegate, int price = 0, int stock = Infinite)
         {
-            AddToShopStock(shopName, new StockEntry(stockType, Id, checkDelegate, price, stock));
+            AddToShopStock(owner, shopName, new StockEntry(owner, stockType, Id, checkDelegate, price, stock));
         }
 
         // Adds stock to vanilla shops
@@ -270,15 +285,17 @@ namespace Farmhand.API.Shops
         }
 
         // Adds stock to custom registered shops
-        private static void AddToShopStock(string shopName, StockEntry newEntry)
+        private static void AddToShopStock(Mod owner, string shopName, StockEntry newEntry)
         {
-            if(RegisteredShops.ContainsKey(shopName))
+            string internalShopName = GetInternalShopName(owner, shopName);
+
+            if (RegisteredShops.ContainsKey(internalShopName))
             {
-                RegisteredShops[shopName].Stock.Add(newEntry);
+                RegisteredShops[internalShopName].Stock.Add(newEntry);
             }
             else
             {
-                Farmhand.Logging.Log.Warning($"Shop {shopName} not found! Could not add stock to this shop.");
+                Farmhand.Logging.Log.Warning($"Shop {internalShopName} not found! Could not add stock to this shop.");
             }
         }
 
@@ -313,7 +330,7 @@ namespace Farmhand.API.Shops
 
             foreach (StockEntry stockItem in stockItems)
             {
-                if (stockItem.DoAdd())
+                if (stockItem.Owner.ModSettings.ModState == ModState.Loaded && stockItem.DoAdd())
                 {
                     if (stockItem.UsesItemId())
                     {
@@ -339,18 +356,20 @@ namespace Farmhand.API.Shops
             return dictionaryToInject;
         }
 
-        public static Dictionary<StardewValley.Item, int[]> GetStock(string shopName)
+        public static Dictionary<StardewValley.Item, int[]> GetStock(Mod owner, string shopName)
         {
-            if (RegisteredShops.ContainsKey(shopName))
+            string internalShopName = GetInternalShopName(owner, shopName);
+
+            if (RegisteredShops.ContainsKey(internalShopName))
             {
-                List<StockEntry> stockItems = RegisteredShops[shopName].Stock;
+                List<StockEntry> stockItems = RegisteredShops[internalShopName].Stock;
                 Dictionary<StardewValley.Item, int[]> finalShopStock = new Dictionary<StardewValley.Item, int[]>(); ;
 
                 if (stockItems == null) { return finalShopStock; }
 
                 foreach (StockEntry stockItem in stockItems)
                 {
-                    if (stockItem.DoAdd())
+                    if (stockItem.Owner.ModSettings.ModState == ModState.Loaded && stockItem.DoAdd())
                     {
                         if (stockItem.UsesItemId())
                         {
@@ -377,9 +396,20 @@ namespace Farmhand.API.Shops
             }
             else
             {
-                Farmhand.Logging.Log.Warning($"Shop {shopName} not registered! Could not get shop stock.");
+                Farmhand.Logging.Log.Warning($"Shop {internalShopName} not registered! Could not get shop stock.");
                 return new Dictionary<StardewValley.Item, int[]>();
             }
+        }
+
+        /// <summary>
+        /// Returns the internally used shop string identifier for a given shop
+        /// </summary>
+        /// <param name="owner">Instance of the mod which owns the shop</param>
+        /// <param name="shopName">String identifier for the shop provided by the mod</param>
+        /// <returns></returns>
+        public static string GetInternalShopName(Mod owner, string shopName)
+        {
+            return $"{owner.ModSettings.UniqueId}:{shopName}";
         }
     }
 }

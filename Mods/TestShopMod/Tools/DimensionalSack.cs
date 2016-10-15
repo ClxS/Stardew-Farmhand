@@ -64,7 +64,7 @@ namespace TestShopMod.Tools
 
         public override void DoFunction(GameLocation location, int x, int y, int power, Farmer who)
         {
-            ShopMenu.OpenShop("DimensionalSack");
+            ShopMenu.OpenShop(TestShopMod.Instance, "DimensionalSack");
         }
     }
 }

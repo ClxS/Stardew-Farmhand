@@ -25,14 +25,14 @@ namespace TestShopMod
             Farmhand.API.Tools.Tool.RegisterTool<StardewValley.Tool>(DimensionalSack.Information);
 
             // Register the new shop
-            ShopUtilities.RegisterShop("DimensionalSack");
+            ShopUtilities.RegisterShop(Instance, "DimensionalSack");
             // Add stock to the new shop
-            ShopUtilities.AddToShopStock("DimensionalSack", StockType.Item, 167, 5);
-            ShopUtilities.AddToShopStock("DimensionalSack", StockType.Item, 168);
-            ShopUtilities.AddToShopStock("DimensionalSack", StockType.Item, 169);
-            ShopUtilities.AddToShopStock("DimensionalSack", StockType.Item, 170);
-            ShopUtilities.AddToShopStock("DimensionalSack", StockType.Item, 171);
-            ShopUtilities.AddToShopStock("DimensionalSack", StockType.Item, 172);
+            ShopUtilities.AddToShopStock(Instance, "DimensionalSack", StockType.Item, 167, 5);
+            ShopUtilities.AddToShopStock(Instance, "DimensionalSack", StockType.Item, 168);
+            ShopUtilities.AddToShopStock(Instance, "DimensionalSack", StockType.Item, 169);
+            ShopUtilities.AddToShopStock(Instance, "DimensionalSack", StockType.Item, 170);
+            ShopUtilities.AddToShopStock(Instance, "DimensionalSack", StockType.Item, 171);
+            ShopUtilities.AddToShopStock(Instance, "DimensionalSack", StockType.Item, 172);
         }
 
         private void PlayerEvents_OnFarmerChanged(object sender, System.EventArgs e)

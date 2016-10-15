@@ -69,16 +69,19 @@ namespace Farmhand.Overrides.UI
         /// <summary>
         /// Opens a registered custom shop
         /// </summary>
+        /// <param name="owner">Instance of mod which created the shop</param>
         /// <param name="shopName">String identifier of shop to open</param>
-        public static void OpenShop(string shopName)
+        public static void OpenShop(Mod owner, string shopName)
         {
-            if (ShopUtilities.RegisteredShops.ContainsKey(shopName))
+            string internalShopName = ShopUtilities.GetInternalShopName(owner, shopName);
+
+            if (ShopUtilities.RegisteredShops.ContainsKey(internalShopName))
             {
-                Game1.activeClickableMenu = new ShopMenu(ShopUtilities.GetStock(shopName), ShopUtilities.RegisteredShops[shopName].CurrencyType, null);
+                Game1.activeClickableMenu = new ShopMenu(ShopUtilities.GetStock(owner, shopName), ShopUtilities.RegisteredShops[internalShopName].CurrencyType, null);
             }
             else
             {
-                Logging.Log.Warning($"Shop {shopName} not found! Could not open shop.");
+                Logging.Log.Warning($"Shop {internalShopName} not found! Could not open shop.");
             }
         }
 

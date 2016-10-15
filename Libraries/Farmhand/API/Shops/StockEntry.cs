@@ -9,6 +9,9 @@ namespace Farmhand.API.Shops
     // A data class containing all the information needed to add an item to a shop stock
     public class StockEntry
     {
+        // The mod that has requested this stock entry
+        public Mod Owner { get; set; }
+
         // The Item Id of this shop stock entry, if it is not -1 it will be used
         public int ItemId { get; set; } = -1;
 
@@ -30,38 +33,44 @@ namespace Farmhand.API.Shops
         // The delegate object used to check it this item should be added
         public ShopUtilities.CheckIfAddShopStock CheckDelegate { get; set; } = new ShopUtilities.CheckIfAddShopStock(DummyAdd);
 
-        public StockEntry(ItemInformation itemInformation, int price = 0, int stock = ShopUtilities.Infinite)
+        public StockEntry(Mod owner, ItemInformation itemInformation, int price = 0, int stock = ShopUtilities.Infinite)
         {
+            Owner = owner;
             ItemInformation = itemInformation;
             Price = price;
             Stock = stock;
         }
 
-        public StockEntry(ItemInformation itemInformation, ShopUtilities.CheckIfAddShopStock checkDelegate, int price = 0, int stock = ShopUtilities.Infinite)
+        public StockEntry(Mod owner, ItemInformation itemInformation, ShopUtilities.CheckIfAddShopStock checkDelegate, int price = 0, int stock = ShopUtilities.Infinite)
         {
+            Owner = owner;
             ItemInformation = itemInformation;
             CheckDelegate = checkDelegate;
             Price = price;
             Stock = stock;
         }
 
-        public StockEntry(BigCraftableInformation bigCraftableInformation, int price = 0, int stock = ShopUtilities.Infinite)
+        public StockEntry(Mod owner, BigCraftableInformation bigCraftableInformation, int price = 0, int stock = ShopUtilities.Infinite)
         {
+            Owner = owner;
             BigCraftableInformation = bigCraftableInformation;
             Price = price;
             Stock = stock;
         }
 
-        public StockEntry(BigCraftableInformation bigCraftableInformation, ShopUtilities.CheckIfAddShopStock checkDelegate, int price = 0, int stock = ShopUtilities.Infinite)
+        public StockEntry(Mod owner, BigCraftableInformation bigCraftableInformation, ShopUtilities.CheckIfAddShopStock checkDelegate, int price = 0, int stock = ShopUtilities.Infinite)
         {
+            Owner = owner;
             BigCraftableInformation = bigCraftableInformation;
             CheckDelegate = checkDelegate;
             Price = price;
             Stock = stock;
         }
 
-        public StockEntry(StockType stockType, int Id, int price = 0, int stock = ShopUtilities.Infinite)
+        public StockEntry(Mod owner, StockType stockType, int Id, int price = 0, int stock = ShopUtilities.Infinite)
         {
+            Owner = owner;
+
             if (stockType == StockType.Item)
             {
                 ItemId = Id;
@@ -79,9 +88,11 @@ namespace Farmhand.API.Shops
             Stock = stock;
         }
 
-        public StockEntry(StockType stockType, int Id, ShopUtilities.CheckIfAddShopStock checkDelegate, int price = 0, int stock = ShopUtilities.Infinite)
+        public StockEntry(Mod owner, StockType stockType, int Id, ShopUtilities.CheckIfAddShopStock checkDelegate, int price = 0, int stock = ShopUtilities.Infinite)
         {
-            if(stockType == StockType.Item)
+            Owner = owner;
+
+            if (stockType == StockType.Item)
             {
                 ItemId = Id;
             }
