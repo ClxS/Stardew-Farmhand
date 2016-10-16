@@ -27,6 +27,7 @@ namespace ModLoaderMod.Menus
         private ClickableTextureComponent scrollBar;
         private Rectangle scrollBarRunner;
         private bool scrolling;
+        private string hoverText;
 
         public ModMenu()
           : base(Game1.viewport.Width / 2 - (1050 + borderWidth * 2) / 2, Game1.viewport.Height / 2 - (600 + borderWidth * 2) / 2, 800 + borderWidth * 2, 600 + borderWidth * 2)
@@ -175,6 +176,8 @@ namespace ModLoaderMod.Menus
             upArrow.tryHover(x, y);
             downArrow.tryHover(x, y);
             scrollBar.tryHover(x, y);
+
+            hoverText = "";
             
             if (scrolling)
                 return;
@@ -186,6 +189,8 @@ namespace ModLoaderMod.Menus
                     _optionSlots[index].scale = Math.Min(_optionSlots[index].scale + 0.03f, 1.1f);
 
                     _modToggles[_currentItemIndex + index].IsHovered = _optionSlots[index].bounds.Contains(x, y) && _modToggles[_currentItemIndex + index].bounds.Contains(x - _optionSlots[index].bounds.X, y - _optionSlots[index].bounds.Y);
+
+                    hoverText = _modOptions[_modToggles[_currentItemIndex + index]].Description;
                 }
                 else
                     _optionSlots[index].scale = Math.Max(1f, _optionSlots[index].scale - 0.03f);
@@ -219,8 +224,22 @@ namespace ModLoaderMod.Menus
                     _modToggles[_currentItemIndex + index].draw(b, _optionSlots[index].bounds.X, _optionSlots[index].bounds.Y + Game1.pixelZoom * 18);
                 }
             }
-            
+
+            var loaded = _modToggles.Count(_ => _.IsChecked);
+            var total = _modToggles.Count;
+            var loadedTextMeasure = Game1.dialogueFont.MeasureString($"Mods Loaded: {loaded}");
+            Utility.drawTextWithShadow(b, $"Mods Loaded: {loaded}", Game1.dialogueFont, new Vector2(xPositionOnScreen + width + 78, height - (78 + loadedTextMeasure.Y)), Color.White, 0.7f);
+            Utility.drawTextWithShadow(b, $"Mods Installed: {total}", Game1.dialogueFont, new Vector2(xPositionOnScreen + width + 78, height - (72 + loadedTextMeasure.Y) + 24), Color.White, 0.7f);
+
             b.Draw(Game1.mouseCursors, new Vector2(Game1.getOldMouseX(), Game1.getOldMouseY()), Game1.getSourceRectForStandardTileSheet(Game1.mouseCursors, 0, 16, 16), Color.White, 0.0f, Vector2.Zero, Game1.pixelZoom + Game1.dialogueButtonScale / 150f, SpriteEffects.None, 1f);
+
+            if (!String.IsNullOrEmpty(hoverText)) {
+                string lines = string.Join(Environment.NewLine, hoverText.Split()
+                                     .Select((word, index) => new { word, index })
+                                     .GroupBy(x => x.index / 4)
+                                     .Select(grp => string.Join(" ", grp.Select(x => x.word))));
+                drawHoverText(b, lines, Game1.dialogueFont);
+            }
         }
 
         public override void receiveRightClick(int x, int y, bool playSound = true)
