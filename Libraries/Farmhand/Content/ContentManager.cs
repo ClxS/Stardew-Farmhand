@@ -43,6 +43,10 @@ namespace Farmhand.Content
         {
             return base.Load<T>(assetName);
         }
+        public StardewValley.LocalizedContentManager CreateContentManager(string rootDirectory)
+        {
+            return new StardewValley.LocalizedContentManager(ServiceProvider, rootDirectory, CurrentCulture, LanguageCodeOverride);
+        }
 
         /// <summary>
         /// Load an asset by via a relative (extensionless) path
