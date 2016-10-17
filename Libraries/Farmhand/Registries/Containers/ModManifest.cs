@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Farmhand.Helpers;
+using xTile;
 
 namespace Farmhand.Registries.Containers
 {
@@ -150,7 +151,12 @@ namespace Farmhand.Registries.Containers
             return TextureRegistry.GetItem(id, this).Texture;
         }
 
-#endregion
+        public Map GetMap(string id)
+        {
+            return MapRegistry.GetItem(id, this).Map;
+        }
+
+        #endregion
 
         public void OnBeforeLoaded()
         {

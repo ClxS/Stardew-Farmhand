@@ -1,16 +1,18 @@
-﻿using System;
+﻿using Farmhand.API.Locations;
+using System;
 using System.Collections.Generic;
+using xTile;
 
 namespace Farmhand.Content
 {
-    class MonsterInjector : IContentInjector
+    public class MapInjector : IContentInjector
     {
         public bool IsLoader => false;
         public bool IsInjector => true;
 
         public bool HandlesAsset(Type type, string asset)
         {
-            return asset == "Data\\Monsters";
+            return (type == typeof(Map));
         }
 
         public T Load<T>(ContentManager contentManager, string assetName)
@@ -21,14 +23,12 @@ namespace Farmhand.Content
 
         public void Inject<T>(T obj, string assetName, ref object output)
         {
-            var monsters = obj as Dictionary<string, string>;
-            if (monsters == null)
+            var map = obj as Map;
+            if (map == null)
                 throw new Exception($"Unexpected type for {assetName}");
 
-            foreach (var monster in Farmhand.API.Monsters.Monster.Monsters)
-            {
-                monsters[monster.Value.Name] = monster.Value.ToString();
-            }
+            map = LocationUtilities.MergeMaps(map, assetName);
+            output = map;
         }
     }
 }
