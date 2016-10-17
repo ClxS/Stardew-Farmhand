@@ -86,6 +86,8 @@
     <Compile Include="API\Items\ItemCategory.cs" />
     <Compile Include="API\Items\ItemInformation.cs" />
     <Compile Include="API\Items\ItemType.cs" />
+    <Compile Include="API\Locations\LocationUtilities.cs" />
+    <Compile Include="API\Locations\MapInformation.cs" />
     <Compile Include="API\Locations\MineShaft.cs" />
     <Compile Include="API\Monsters\Monster.cs" />
     <Compile Include="API\Monsters\MonsterInformation.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Content\BigCraftableInjector.cs" />
     <Compile Include="Content\BlueprintInjector.cs" />
     <Compile Include="Content\CropInjector.cs" />
+    <Compile Include="Content\MapInjector.cs" />
     <Compile Include="Content\MonsterInjector.cs" />
     <Compile Include="Content\MonsterLoader.cs" />
     <Compile Include="Content\ContentManager.cs" />
@@ -214,7 +217,9 @@
     <Compile Include="Registries\Containers\ModDependency.cs" />
     <Compile Include="Registries\Containers\ModManifest.cs" />
     <Compile Include="Registries\Containers\DiskTexture.cs" />
+    <Compile Include="Registries\Containers\ModMap.cs" />
     <Compile Include="Registries\Containers\ModXnb.cs" />
+    <Compile Include="Registries\MapRegistry.cs" />
     <Compile Include="Registries\ModRegistry.cs" />
     <Compile Include="Registries\Registry.cs" />
     <Compile Include="Registries\TextureRegistry.cs" />

@@ -1,0 +1,2862 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Map Id="BusStop">
+  <Description><![CDATA[]]></Description>
+  <TileSheets>
+    <TileSheet Id="outdoors">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[spring_outdoorsTileSheet]]></ImageSource>
+      <Alignment SheetSize="25 x 79" TileSize="16 x 16" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="@TileIndex@150@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@151@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@175@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@200@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@179@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@180@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@150@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@175@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@176@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@176@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@177@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@178@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@180@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@181@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@182@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@200@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@202@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@203@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@204@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@205@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@206@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@206@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@207@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@207@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@225@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@226@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@226@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@227@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@227@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@228@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@229@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@230@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@231@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@231@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@250@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@251@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@252@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@252@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@253@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@254@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@255@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@256@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@276@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@277@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@277@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@278@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@279@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@301@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@302@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@302@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@303@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@304@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@305@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@325@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@326@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@327@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@328@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@329@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@350@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@351@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@351@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@352@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@353@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@354@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@355@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@356@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@375@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@376@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@377@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@378@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@379@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@380@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@380@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@381@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@400@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@401@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@402@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@402@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@403@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@403@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@404@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@405@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@406@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@209@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@234@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@308@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@309@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@333@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@334@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@335@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@336@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@265@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@285@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@310@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@628@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@629@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@653@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@759@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@734@Water" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@812@Type" Type="String"><![CDATA[Stone]]></Property>
+        <Property Key="@TileIndex@813@Type" Type="String"><![CDATA[Stone]]></Property>
+        <Property Key="@TileIndex@654@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@679@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@704@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@630@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@630@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@655@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@680@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@680@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@705@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@606@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@606@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@631@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@656@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@681@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@681@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@706@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@706@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@607@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@607@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@632@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@632@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@657@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@682@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@707@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@558@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@558@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@583@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@583@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@608@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@608@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@633@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@658@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@683@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@534@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@634@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@659@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@634@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@684@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@685@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@685@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@635@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@636@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@610@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@610@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@585@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@585@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@560@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@560@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@587@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@587@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@536@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@561@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@586@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@611@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@612@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@613@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@588@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@563@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@538@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@537@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@562@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@512@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@564@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@564@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@589@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@589@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@614@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@614@Diggable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@565@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@590@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@615@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@566@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@591@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@616@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@617@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@592@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@567@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@567@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@568@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@593@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@569@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@569@Spawnable" Type="String"><![CDATA[t]]></Property>
+        <Property Key="@TileIndex@594@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@619@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@596@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@621@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@620@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@595@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@570@Type" Type="String"><![CDATA[Grass]]></Property>
+        <Property Key="@TileIndex@597@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@622@Type" Type="String"><![CDATA[Dirt]]></Property>
+        <Property Key="@TileIndex@598@Type" Type="String"><![CDATA[Stone]]></Property>
+        <Property Key="@TileIndex@599@Type" Type="String"><![CDATA[Stone]]></Property>
+        <Property Key="@TileIndex@623@Type" Type="String"><![CDATA[Stone]]></Property>
+        <Property Key="@TileIndex@884@Type" Type="String"><![CDATA[Wood]]></Property>
+        <Property Key="@TileIndex@859@Type" Type="String"><![CDATA[Wood]]></Property>
+        <Property Key="@TileIndex@834@Type" Type="String"><![CDATA[Wood]]></Property>
+        <Property Key="@TileIndex@809@Type" Type="String"><![CDATA[Wood]]></Property>
+        <Property Key="@TileIndex@1054@Type" Type="String"><![CDATA[Stone]]></Property>
+        <Property Key="@TileIndex@1056@Type" Type="String"><![CDATA[Stone]]></Property>
+        <Property Key="@TileIndex@1030@Type" Type="String"><![CDATA[Stone]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Paths">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[paths]]></ImageSource>
+      <Alignment SheetSize="4 x 8" TileSize="16 x 16" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="@TileIndex@7@PathType" Type="String"><![CDATA[End]]></Property>
+        <Property Key="@TileIndex@0@PathType" Type="String"><![CDATA[NE]]></Property>
+        <Property Key="@TileIndex@1@PathType" Type="String"><![CDATA[SE]]></Property>
+        <Property Key="@TileIndex@2@PathType" Type="String"><![CDATA[WS]]></Property>
+        <Property Key="@TileIndex@3@PathType" Type="String"><![CDATA[WN]]></Property>
+        <Property Key="@TileIndex@4@PathType" Type="String"><![CDATA[Crossroad]]></Property>
+      </Properties>
+    </TileSheet>
+  </TileSheets>
+  <Layers>
+    <Layer Id="Back" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="35 x 30" TileSize="16 x 16" />
+      <TileArray>
+        <Row>
+          <TileSheet Ref="outdoors" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="1076" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="378" BlendMode="Alpha" />
+          <Static Index="329" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="350" BlendMode="Alpha" />
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="406" BlendMode="Alpha" />
+          <Static Index="353" BlendMode="Alpha" />
+          <Static Index="377" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="406" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="1076" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="403" BlendMode="Alpha" />
+          <Static Index="329" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="407" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="329" BlendMode="Alpha" />
+          <Static Index="407" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="315" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="377" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="403" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="1076" BlendMode="Alpha" />
+          <Static Index="254" BlendMode="Alpha" />
+          <Static Index="350" BlendMode="Alpha" />
+          <Static Index="329" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="305" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="404" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="353" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="403" BlendMode="Alpha" />
+          <Static Index="404" BlendMode="Alpha" />
+          <Static Index="407" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="340" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="403" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="1076" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="403" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="305" BlendMode="Alpha" />
+          <Static Index="304" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Animated Interval="1000">
+            <Frames>
+              <TileSheet Ref="outdoors" />
+              <Static Index="151" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+            </Frames>
+          </Animated>
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="403" BlendMode="Alpha" />
+          <Static Index="404" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="407" BlendMode="Alpha" />
+          <Static Index="514" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="377" BlendMode="Alpha" />
+          <Static Index="1075" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="254" BlendMode="Alpha" />
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="400" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="403" BlendMode="Alpha" />
+          <Static Index="404" BlendMode="Alpha" />
+          <Static Index="329" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="277" BlendMode="Alpha" />
+          <Static Index="277" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="256" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Animated Interval="1000">
+            <Frames>
+              <TileSheet Ref="outdoors" />
+              <Static Index="151" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+            </Frames>
+          </Animated>
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="400" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="254" BlendMode="Alpha" />
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="1027" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1027" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1027" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1031" BlendMode="Alpha" />
+          <Static Index="1027" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+          <Static Index="1028" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1030" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1030" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha">
+            <Properties>
+              <Property Key="TouchAction" Type="String"><![CDATA[Bus]]></Property>
+            </Properties>
+          </Static>
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1030" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1078" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+          <Static Index="1053" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="327" BlendMode="Alpha" />
+          <Static Index="1050" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1051" BlendMode="Alpha" />
+          <Static Index="1052" BlendMode="Alpha" />
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Animated Interval="1000">
+            <Frames>
+              <TileSheet Ref="outdoors" />
+              <Static Index="151" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+            </Frames>
+          </Animated>
+          <Static Index="400" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="325" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="378" BlendMode="Alpha" />
+          <Static Index="302" BlendMode="Alpha" />
+          <Static Index="327" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="200" BlendMode="Alpha" />
+          <Static Index="203" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="325" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="327" BlendMode="Alpha" />
+          <Static Index="200" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="203" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="350" BlendMode="Alpha" />
+          <Static Index="379" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="354" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Animated Interval="1000">
+            <Frames>
+              <TileSheet Ref="outdoors" />
+              <Static Index="151" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+            </Frames>
+          </Animated>
+          <Static Index="200" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="203" BlendMode="Alpha" />
+          <Static Index="200" BlendMode="Alpha" />
+          <Static Index="202" BlendMode="Alpha" />
+          <Static Index="228" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="256" BlendMode="Alpha" />
+          <Static Index="200" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="203" BlendMode="Alpha" />
+          <Animated Interval="1000">
+            <Frames>
+              <TileSheet Ref="outdoors" />
+              <Static Index="151" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+            </Frames>
+          </Animated>
+          <Static Index="350" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="225" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="231" BlendMode="Alpha" />
+          <Static Index="228" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="261" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="304" BlendMode="Alpha" />
+          <Static Index="379" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="406" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="225" BlendMode="Alpha" />
+          <Static Index="589" BlendMode="Alpha" />
+          <Static Index="228" BlendMode="Alpha" />
+          <Static Index="225" BlendMode="Alpha" />
+          <Static Index="614" BlendMode="Alpha" />
+          <Static Index="228" BlendMode="Alpha" />
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="200" BlendMode="Alpha" />
+          <Static Index="202" BlendMode="Alpha" />
+          <Static Index="231" BlendMode="Alpha" />
+          <Static Index="228" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="377" BlendMode="Alpha" />
+          <Static Index="250" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="253" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="286" BlendMode="Alpha" />
+          <Static Index="354" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="356" BlendMode="Alpha" />
+          <Static Index="404" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="406" BlendMode="Alpha" />
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="304" BlendMode="Alpha" />
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="250" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="253" BlendMode="Alpha" />
+          <Static Index="225" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="177" BlendMode="Alpha" />
+          <Static Index="203" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="225" BlendMode="Alpha" />
+          <Static Index="182" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="177" BlendMode="Alpha" />
+          <Static Index="203" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="256" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="311" BlendMode="Alpha" />
+          <Static Index="379" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="304" BlendMode="Alpha" />
+          <Static Index="329" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="305" BlendMode="Alpha" />
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="250" BlendMode="Alpha" />
+          <Static Index="252" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="177" BlendMode="Alpha" />
+          <Static Index="203" BlendMode="Alpha" />
+          <Static Index="250" BlendMode="Alpha" />
+          <Static Index="229" BlendMode="Alpha" />
+          <Static Index="230" BlendMode="Alpha" />
+          <Static Index="204" BlendMode="Alpha" />
+          <Static Index="253" BlendMode="Alpha" />
+          <Static Index="256" BlendMode="Alpha" />
+          <Static Index="256" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="350" BlendMode="Alpha" />
+          <Static Index="404" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="406" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="356" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="356" BlendMode="Alpha" />
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="200" BlendMode="Alpha" />
+          <Static Index="203" BlendMode="Alpha" />
+          <Static Index="250" BlendMode="Alpha" />
+          <Static Index="252" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="228" BlendMode="Alpha" />
+          <Static Index="200" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="203" BlendMode="Alpha" />
+          <Static Index="256" BlendMode="Alpha" />
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="256" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="400" BlendMode="Alpha" />
+          <Static Index="350" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="379" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="381" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="378" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="327" BlendMode="Alpha" />
+          <Static Index="400" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="250" BlendMode="Alpha" />
+          <Static Index="253" BlendMode="Alpha" />
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="225" BlendMode="Alpha" />
+          <Static Index="585" BlendMode="Alpha" />
+          <Static Index="228" BlendMode="Alpha" />
+          <Static Index="225" BlendMode="Alpha" />
+          <Static Index="181" BlendMode="Alpha" />
+          <Static Index="177" BlendMode="Alpha" />
+          <Static Index="203" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="325" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="327" BlendMode="Alpha" />
+          <Animated Interval="1000">
+            <Frames>
+              <TileSheet Ref="outdoors" />
+              <Static Index="151" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+            </Frames>
+          </Animated>
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="261" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="404" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="406" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="304" BlendMode="Alpha" />
+          <Static Index="305" BlendMode="Alpha" />
+          <Static Index="304" BlendMode="Alpha" />
+          <Static Index="378" BlendMode="Alpha" />
+          <Static Index="301" BlendMode="Alpha" />
+          <Static Index="302" BlendMode="Alpha" />
+          <Static Index="303" BlendMode="Alpha" />
+          <Static Index="327" BlendMode="Alpha" />
+          <Static Index="200" BlendMode="Alpha" />
+          <Static Index="202" BlendMode="Alpha" />
+          <Static Index="178" BlendMode="Alpha" />
+          <Static Index="253" BlendMode="Alpha" />
+          <Static Index="250" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="253" BlendMode="Alpha" />
+          <Static Index="400" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="350" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="286" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="329" BlendMode="Alpha" />
+          <Static Index="304" BlendMode="Alpha" />
+          <Static Index="305" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="406" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="305" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="304" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="250" BlendMode="Alpha" />
+          <Static Index="252" BlendMode="Alpha" />
+          <Static Index="177" BlendMode="Alpha" />
+          <Static Index="203" BlendMode="Alpha" />
+          <Static Index="325" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="400" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="377" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="311" BlendMode="Alpha" />
+          <Static Index="329" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="304" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="304" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="377" BlendMode="Alpha" />
+          <Static Index="400" BlendMode="Alpha" />
+          <Static Index="225" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="228" BlendMode="Alpha" />
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="256" BlendMode="Alpha" />
+          <Static Index="256" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="256" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="179" BlendMode="Alpha" />
+          <Static Index="180" BlendMode="Alpha" />
+          <Static Index="205" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="179" BlendMode="Alpha" />
+          <Static Index="205" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="179" BlendMode="Alpha" />
+          <Static Index="180" BlendMode="Alpha" />
+          <Static Index="205" BlendMode="Alpha" />
+          <Static Index="202" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="177" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="179" BlendMode="Alpha" />
+          <Static Index="205" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="179" BlendMode="Alpha" />
+          <Static Index="180" BlendMode="Alpha" />
+          <Static Index="180" BlendMode="Alpha" />
+          <Static Index="205" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="179" BlendMode="Alpha" />
+          <Static Index="205" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="201" BlendMode="Alpha" />
+          <Static Index="179" BlendMode="Alpha" />
+          <Static Index="180" BlendMode="Alpha" />
+          <Static Index="180" BlendMode="Alpha" />
+          <Static Index="205" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="207" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="610" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="231" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="206" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="564" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="231" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="206" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="564" BlendMode="Alpha" />
+          <Static Index="227" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="226" BlendMode="Alpha" />
+          <Static Index="231" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="230" BlendMode="Alpha" />
+          <Static Index="230" BlendMode="Alpha" />
+          <Static Index="204" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="229" BlendMode="Alpha" />
+          <Static Index="230" BlendMode="Alpha" />
+          <Static Index="230" BlendMode="Alpha" />
+          <Static Index="204" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="229" BlendMode="Alpha" />
+          <Static Index="230" BlendMode="Alpha" />
+          <Static Index="230" BlendMode="Alpha" />
+          <Static Index="204" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="229" BlendMode="Alpha" />
+          <Static Index="230" BlendMode="Alpha" />
+          <Static Index="204" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="229" BlendMode="Alpha" />
+          <Static Index="230" BlendMode="Alpha" />
+          <Static Index="230" BlendMode="Alpha" />
+          <Static Index="204" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="229" BlendMode="Alpha" />
+          <Static Index="230" BlendMode="Alpha" />
+          <Static Index="204" BlendMode="Alpha" />
+          <Static Index="251" BlendMode="Alpha" />
+          <Static Index="229" BlendMode="Alpha" />
+          <Static Index="230" BlendMode="Alpha" />
+          <Static Index="230" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="400" BlendMode="Alpha" />
+          <Animated Interval="1000">
+            <Frames>
+              <TileSheet Ref="outdoors" />
+              <Static Index="151" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+              <Static Index="152" BlendMode="Alpha" />
+            </Frames>
+          </Animated>
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="401" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="400" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="175" BlendMode="Alpha" />
+          <Static Index="400" BlendMode="Alpha" />
+          <Static Index="150" BlendMode="Alpha" />
+          <Static Index="400" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="256" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Buildings" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="35 x 30" TileSize="16 x 16" />
+      <TileArray>
+        <Row>
+          <TileSheet Ref="outdoors" />
+          <Static Index="133" BlendMode="Alpha" />
+          <Static Index="143" BlendMode="Alpha" />
+          <Static Index="144" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="126" BlendMode="Alpha" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="126" BlendMode="Alpha" />
+          <Static Index="358" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="539" BlendMode="Alpha" />
+          <Static Index="515" BlendMode="Alpha" />
+          <Static Index="514" BlendMode="Alpha" />
+          <Static Index="490" BlendMode="Alpha" />
+          <Static Index="465" BlendMode="Alpha" />
+          <Static Index="290" BlendMode="Alpha" />
+          <Static Index="291" BlendMode="Alpha" />
+          <Static Index="350" BlendMode="Alpha" />
+          <Static Index="404" BlendMode="Alpha" />
+          <Static Index="405" BlendMode="Alpha" />
+          <Static Index="63" BlendMode="Alpha" />
+          <Static Index="64" BlendMode="Alpha" />
+          <Static Index="65" BlendMode="Alpha" />
+          <Static Index="257" BlendMode="Alpha" />
+          <Static Index="157" BlendMode="Alpha" />
+          <Static Index="158" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="129" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="158" BlendMode="Alpha" />
+          <Static Index="168" BlendMode="Alpha" />
+          <Static Index="169" BlendMode="Alpha" />
+          <Static Index="101" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Null Count="8" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="540" BlendMode="Alpha" />
+          <Static Index="539" BlendMode="Alpha" />
+          <Static Index="515" BlendMode="Alpha" />
+          <Static Index="514" BlendMode="Alpha" />
+          <Static Index="315" BlendMode="Alpha" />
+          <Static Index="441" BlendMode="Alpha" />
+          <Static Index="375" BlendMode="Alpha" />
+          <Static Index="307" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="257" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="307" BlendMode="Alpha" />
+          <Static Index="342" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="169" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="126" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="143" BlendMode="Alpha" />
+          <Static Index="144" BlendMode="Alpha" />
+          <Null Count="11" />
+          <Static Index="540" BlendMode="Alpha" />
+          <Static Index="539" BlendMode="Alpha" />
+          <Static Index="340" BlendMode="Alpha" />
+          <Static Index="466" BlendMode="Alpha" />
+          <Static Index="446" BlendMode="Alpha" />
+          <Static Index="468" BlendMode="Alpha" />
+          <Static Index="467" BlendMode="Alpha" />
+          <Static Index="468" BlendMode="Alpha" />
+          <Static Index="467" BlendMode="Alpha" />
+          <Static Index="468" BlendMode="Alpha" />
+          <Static Index="467" BlendMode="Alpha" />
+          <Static Index="468" BlendMode="Alpha" />
+          <Static Index="467" BlendMode="Alpha" />
+          <Static Index="468" BlendMode="Alpha" />
+          <Static Index="367" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="496" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="958" BlendMode="Alpha">
+            <Properties>
+              <Property Key="Action" Type="String"><![CDATA[fxhg]]></Property>
+            </Properties>
+          </Static>
+          <Static Index="1080" BlendMode="Alpha">
+            <Properties>
+              <Property Key="Action" Type="String"><![CDATA[dfhgdfgh]]></Property>
+            </Properties>
+          </Static>
+          <Static Index="1081" BlendMode="Alpha">
+            <Properties>
+              <Property Key="Action" Type="String"><![CDATA[dfghdfg]]></Property>
+            </Properties>
+          </Static>
+          <Static Index="168" BlendMode="Alpha" />
+          <Static Index="169" BlendMode="Alpha" />
+          <Null Count="13" />
+          <Static Index="540" BlendMode="Alpha" />
+          <Static Index="491" BlendMode="Alpha" />
+          <Static Index="492" BlendMode="Alpha" />
+          <Static Index="493" BlendMode="Alpha" />
+          <Static Index="492" BlendMode="Alpha" />
+          <Static Index="493" BlendMode="Alpha" />
+          <Static Index="492" BlendMode="Alpha" />
+          <Static Index="493" BlendMode="Alpha" />
+          <Static Index="492" BlendMode="Alpha" />
+          <Static Index="493" BlendMode="Alpha" />
+          <Static Index="492" BlendMode="Alpha" />
+          <Static Index="493" BlendMode="Alpha" />
+          <Static Index="392" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="521" BlendMode="Alpha" />
+          <Static Index="522" BlendMode="Alpha" />
+          <Null Count="13" />
+          <Static Index="157" BlendMode="Alpha" />
+          <Static Index="158" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="516" BlendMode="Alpha" />
+          <Static Index="517" BlendMode="Alpha" />
+          <Static Index="518" BlendMode="Alpha" />
+          <Static Index="517" BlendMode="Alpha" />
+          <Static Index="518" BlendMode="Alpha" />
+          <Static Index="517" BlendMode="Alpha" />
+          <Static Index="518" BlendMode="Alpha" />
+          <Static Index="517" BlendMode="Alpha" />
+          <Static Index="518" BlendMode="Alpha" />
+          <Static Index="517" BlendMode="Alpha" />
+          <Static Index="518" BlendMode="Alpha" />
+          <Static Index="417" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="546" BlendMode="Alpha" />
+          <Static Index="547" BlendMode="Alpha" />
+          <Static Index="548" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="232" BlendMode="Alpha" />
+          <Null Count="14" />
+          <Static Index="541" BlendMode="Alpha" />
+          <Static Index="542" BlendMode="Alpha" />
+          <Static Index="543" BlendMode="Alpha" />
+          <Static Index="542" BlendMode="Alpha" />
+          <Static Index="543" BlendMode="Alpha" />
+          <Static Index="542" BlendMode="Alpha" />
+          <Static Index="543" BlendMode="Alpha" />
+          <Static Index="542" BlendMode="Alpha" />
+          <Static Index="543" BlendMode="Alpha" />
+          <Static Index="542" BlendMode="Alpha" />
+          <Static Index="543" BlendMode="Alpha" />
+          <Static Index="442" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="34" />
+          <Static Index="1028" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="11" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Null Count="15" />
+          <Static Index="1054" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="11" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1082" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1082" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Static Index="1056" BlendMode="Alpha" />
+          <Null Count="15" />
+          <Static Index="1056" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="11" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Static Index="1054" BlendMode="Alpha" />
+          <Null Count="15" />
+          <Static Index="1054" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="327" BlendMode="Alpha" />
+          <Static Index="394" BlendMode="Alpha" />
+          <Null Count="29" />
+          <Static Index="13" BlendMode="Alpha" />
+          <Static Index="14" BlendMode="Alpha" />
+          <Static Index="15" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="419" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="1057" BlendMode="Alpha">
+            <Properties>
+              <Property Key="Action" Type="String"><![CDATA[BusTicket]]></Property>
+            </Properties>
+          </Static>
+          <Null Count="22" />
+          <Static Index="143" BlendMode="Alpha" />
+          <Static Index="144" BlendMode="Alpha" />
+          <Static Index="38" BlendMode="Alpha" />
+          <Static Index="39" BlendMode="Alpha" />
+          <Static Index="40" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="394" BlendMode="Alpha" />
+          <Null Count="27" />
+          <Static Index="168" BlendMode="Alpha" />
+          <Static Index="169" BlendMode="Alpha" />
+          <Static Index="63" BlendMode="Alpha" />
+          <Static Index="64" BlendMode="Alpha" />
+          <Static Index="65" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="381" BlendMode="Alpha" />
+          <Static Index="232" BlendMode="Alpha" />
+          <Static Index="419" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="232" BlendMode="Alpha" />
+          <Null Count="10" />
+          <Static Index="232" BlendMode="Alpha" />
+          <Null Count="13" />
+          <Static Index="386" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Null Count="1" />
+        </Row>
+        <Row>
+          <Static Index="129" BlendMode="Alpha" />
+          <Static Index="257" BlendMode="Alpha" />
+          <Static Index="394" BlendMode="Alpha" />
+          <Static Index="386" BlendMode="Alpha" />
+          <Null Count="26" />
+          <Static Index="386" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Null Count="1" />
+        </Row>
+        <Row>
+          <Static Index="307" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="419" BlendMode="Alpha" />
+          <Static Index="386" BlendMode="Alpha" />
+          <Null Count="18" />
+          <Static Index="232" BlendMode="Alpha" />
+          <Null Count="7" />
+          <Static Index="386" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="377" BlendMode="Alpha" />
+          <Static Index="444" BlendMode="Alpha" />
+          <Static Index="386" BlendMode="Alpha" />
+          <Null Count="26" />
+          <Static Index="386" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="14" BlendMode="Alpha" />
+          <Static Index="15" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="446" BlendMode="Alpha" />
+          <Static Index="468" BlendMode="Alpha" />
+          <Static Index="469" BlendMode="Alpha" />
+          <Static Index="386" BlendMode="Alpha" />
+          <Static Index="232" BlendMode="Alpha" />
+          <Null Count="25" />
+          <Static Index="386" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="39" BlendMode="Alpha" />
+          <Static Index="40" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="492" BlendMode="Alpha" />
+          <Static Index="447" BlendMode="Alpha" />
+          <Static Index="494" BlendMode="Alpha" />
+          <Static Index="386" BlendMode="Alpha" />
+          <Null Count="26" />
+          <Static Index="386" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="64" BlendMode="Alpha" />
+          <Static Index="65" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="448" BlendMode="Alpha" />
+          <Static Index="518" BlendMode="Alpha" />
+          <Static Index="519" BlendMode="Alpha" />
+          <Static Index="386" BlendMode="Alpha" />
+          <Static Index="143" BlendMode="Alpha" />
+          <Static Index="144" BlendMode="Alpha" />
+          <Null Count="24" />
+          <Static Index="411" BlendMode="Alpha" />
+          <Static Index="307" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="542" BlendMode="Alpha" />
+          <Static Index="543" BlendMode="Alpha" />
+          <Static Index="544" BlendMode="Alpha" />
+          <Static Index="411" BlendMode="Alpha" />
+          <Static Index="168" BlendMode="Alpha" />
+          <Static Index="169" BlendMode="Alpha" />
+          <Null Count="24" />
+          <Static Index="436" BlendMode="Alpha" />
+          <Static Index="257" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="128" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="436" BlendMode="Alpha" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="434" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="434" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="11" />
+          <Static Index="435" BlendMode="Alpha">
+            <Properties>
+              <Property Key="Action" Type="String"><![CDATA[Message ` Bus Stop^> Pelican Town]]></Property>
+            </Properties>
+          </Static>
+          <Null Count="14" />
+          <Static Index="1520" BlendMode="Alpha" />
+          <Static Index="1521" BlendMode="Alpha" />
+          <Null Count="7" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="26" />
+          <Static Index="232" BlendMode="Alpha" />
+          <Null Count="8" />
+        </Row>
+        <Row>
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="434" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="383" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="385" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+          <Static Index="384" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="353" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="276" BlendMode="Alpha" />
+          <Static Index="277" BlendMode="Alpha" />
+          <Static Index="278" BlendMode="Alpha" />
+          <Static Index="376" BlendMode="Alpha" />
+          <Static Index="276" BlendMode="Alpha" />
+          <Static Index="277" BlendMode="Alpha" />
+          <Static Index="278" BlendMode="Alpha" />
+          <Static Index="403" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="13" BlendMode="Alpha" />
+          <Static Index="14" BlendMode="Alpha" />
+          <Static Index="15" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="257" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Static Index="355" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="307" BlendMode="Alpha" />
+          <Static Index="13" BlendMode="Alpha" />
+          <Static Index="14" BlendMode="Alpha" />
+          <Static Index="15" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="257" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="325" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="326" BlendMode="Alpha" />
+          <Static Index="128" BlendMode="Alpha" />
+          <Static Index="301" BlendMode="Alpha" />
+          <Static Index="302" BlendMode="Alpha" />
+          <Static Index="303" BlendMode="Alpha" />
+          <Static Index="327" BlendMode="Alpha" />
+          <Static Index="350" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="38" BlendMode="Alpha" />
+          <Static Index="39" BlendMode="Alpha" />
+          <Static Index="40" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="307" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="38" BlendMode="Alpha" />
+          <Static Index="39" BlendMode="Alpha" />
+          <Static Index="40" BlendMode="Alpha" />
+          <Null Count="3" />
+        </Row>
+        <Row>
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="350" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="304" BlendMode="Alpha" />
+          <Static Index="305" BlendMode="Alpha" />
+          <Static Index="304" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="351" BlendMode="Alpha" />
+          <Static Index="352" BlendMode="Alpha" />
+          <Static Index="350" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="257" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="63" BlendMode="Alpha" />
+          <Static Index="64" BlendMode="Alpha" />
+          <Static Index="65" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Static Index="380" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="63" BlendMode="Alpha" />
+          <Static Index="64" BlendMode="Alpha" />
+          <Static Index="65" BlendMode="Alpha" />
+          <Null Count="3" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Front" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="35 x 30" TileSize="16 x 16" />
+      <TileArray>
+        <Row>
+          <TileSheet Ref="outdoors" />
+          <Static Index="118" BlendMode="Alpha" />
+          <Static Index="119" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="76" BlendMode="Alpha" />
+          <Static Index="77" BlendMode="Alpha" />
+          <Static Index="91" BlendMode="Alpha" />
+          <Static Index="92" BlendMode="Alpha" />
+          <Static Index="93" BlendMode="Alpha" />
+          <Static Index="94" BlendMode="Alpha" />
+          <Static Index="95" BlendMode="Alpha" />
+          <Static Index="96" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Null Count="17" />
+        </Row>
+        <Row>
+          <Static Index="143" BlendMode="Alpha" />
+          <Static Index="144" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="118" BlendMode="Alpha" />
+          <Static Index="119" BlendMode="Alpha" />
+          <Null Count="26" />
+        </Row>
+        <Row>
+          <Static Index="168" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="933" BlendMode="Alpha" />
+          <Null Count="30" />
+        </Row>
+        <Row>
+          <Null Count="15" />
+          <Static Index="132" BlendMode="Alpha" />
+          <Static Index="133" BlendMode="Alpha" />
+          <Null Count="18" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Static Index="413" BlendMode="Alpha" />
+          <Static Index="413" BlendMode="Alpha" />
+          <Static Index="438" BlendMode="Alpha" />
+          <Null Count="27" />
+          <Static Index="93" BlendMode="Alpha" />
+          <Static Index="94" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="96" BlendMode="Alpha" />
+          <Null Count="1" />
+        </Row>
+        <Row>
+          <Static Index="29" BlendMode="Alpha" />
+          <Static Index="143" BlendMode="Alpha" />
+          <Static Index="144" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="1032" BlendMode="Alpha" />
+          <Null Count="22" />
+          <Static Index="118" BlendMode="Alpha" />
+          <Static Index="119" BlendMode="Alpha" />
+          <Null Count="3" />
+        </Row>
+        <Row>
+          <Static Index="54" BlendMode="Alpha" />
+          <Static Index="168" BlendMode="Alpha" />
+          <Static Index="169" BlendMode="Alpha" />
+          <Null Count="28" />
+          <Static Index="144" BlendMode="Alpha" />
+          <Null Count="3" />
+        </Row>
+        <Row>
+          <Static Index="79" BlendMode="Alpha" />
+          <Static Index="80" BlendMode="Alpha" />
+          <Null Count="28" />
+          <Static Index="361" BlendMode="Alpha" />
+          <Static Index="169" BlendMode="Alpha" />
+          <Null Count="3" />
+        </Row>
+        <Row>
+          <Static Index="104" BlendMode="Alpha" />
+          <Static Index="105" BlendMode="Alpha" />
+          <Null Count="28" />
+          <Static Index="78" BlendMode="Alpha" />
+          <Static Index="79" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="101" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="2" />
+          <Static Index="16" BlendMode="Alpha" />
+          <Static Index="17" BlendMode="Alpha" />
+          <Static Index="18" BlendMode="Alpha" />
+          <Static Index="19" BlendMode="Alpha" />
+          <Static Index="20" BlendMode="Alpha" />
+          <Static Index="21" BlendMode="Alpha" />
+          <Null Count="23" />
+          <Static Index="104" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="126" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="2" />
+          <Static Index="41" BlendMode="Alpha" />
+          <Static Index="42" BlendMode="Alpha" />
+          <Static Index="43" BlendMode="Alpha" />
+          <Static Index="44" BlendMode="Alpha" />
+          <Static Index="45" BlendMode="Alpha" />
+          <Static Index="46" BlendMode="Alpha" />
+          <Null Count="23" />
+          <Static Index="129" BlendMode="Alpha" />
+          <Null Count="3" />
+        </Row>
+        <Row>
+          <Null Count="2" />
+          <Static Index="66" BlendMode="Alpha" />
+          <Static Index="67" BlendMode="Alpha" />
+          <Static Index="68" BlendMode="Alpha" />
+          <Static Index="69" BlendMode="Alpha" />
+          <Static Index="70" BlendMode="Alpha" />
+          <Static Index="71" BlendMode="Alpha" />
+          <Null Count="23" />
+          <Static Index="13" BlendMode="Alpha" />
+          <Null Count="3" />
+        </Row>
+        <Row>
+          <Null Count="2" />
+          <Static Index="91" BlendMode="Alpha" />
+          <Static Index="92" BlendMode="Alpha" />
+          <Static Index="93" BlendMode="Alpha" />
+          <Static Index="94" BlendMode="Alpha" />
+          <Static Index="95" BlendMode="Alpha" />
+          <Static Index="96" BlendMode="Alpha" />
+          <Null Count="23" />
+          <Static Index="38" BlendMode="Alpha" />
+          <Null Count="3" />
+        </Row>
+        <Row>
+          <Null Count="4" />
+          <Static Index="118" BlendMode="Alpha" />
+          <Static Index="119" BlendMode="Alpha" />
+          <Null Count="25" />
+          <Static Index="63" BlendMode="Alpha" />
+          <Null Count="3" />
+        </Row>
+        <Row>
+          <Null Count="6" />
+          <Static Index="134" BlendMode="Alpha" />
+          <Null Count="28" />
+        </Row>
+        <Row>
+          <Static Index="358" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="358" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="409" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="358" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="358" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="358" BlendMode="Alpha" />
+          <Static Index="409" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="11" />
+          <Static Index="410" BlendMode="Alpha" />
+          <Null Count="14" />
+          <Static Index="1495" BlendMode="Alpha" />
+          <Static Index="1496" BlendMode="Alpha" />
+          <Null Count="7" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="358" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="358" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="358" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="409" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="358" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="358" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="358" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="360" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+          <Static Index="359" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <Static Index="55" BlendMode="Alpha" />
+          <Null Count="14" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Null Count="16" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <Static Index="80" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="101" BlendMode="Alpha" />
+          <Null Count="7" />
+          <Static Index="28" BlendMode="Alpha" />
+          <Static Index="29" BlendMode="Alpha" />
+          <Static Index="30" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="75" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="6" />
+        </Row>
+        <Row>
+          <Static Index="104" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="257" BlendMode="Alpha" />
+          <Static Index="307" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="232" BlendMode="Alpha" />
+          <Static Index="126" BlendMode="Alpha" />
+          <Static Index="257" BlendMode="Alpha" />
+          <Static Index="307" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="53" BlendMode="Alpha" />
+          <Static Index="54" BlendMode="Alpha" />
+          <Static Index="55" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="25" BlendMode="Alpha" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="101" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Static Index="27" BlendMode="Alpha" />
+          <Null Count="6" />
+        </Row>
+        <Row>
+          <Static Index="129" BlendMode="Alpha" />
+          <Null Count="15" />
+          <Static Index="78" BlendMode="Alpha" />
+          <Static Index="79" BlendMode="Alpha" />
+          <Static Index="80" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="50" BlendMode="Alpha" />
+          <Static Index="51" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="126" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="50" BlendMode="Alpha" />
+          <Static Index="51" BlendMode="Alpha" />
+          <Static Index="52" BlendMode="Alpha" />
+          <Null Count="6" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Paths" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="35 x 30" TileSize="16 x 16" />
+      <TileArray>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="5" />
+          <TileSheet Ref="Paths" />
+          <Static Index="24" BlendMode="Alpha" />
+          <Null Count="29" />
+        </Row>
+        <Row>
+          <Null Count="10" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Null Count="8" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Null Count="15" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="7" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="15" />
+        </Row>
+        <Row>
+          <Null Count="12" />
+          <Static Index="10" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Static Index="24" BlendMode="Alpha" />
+          <Null Count="14" />
+        </Row>
+        <Row>
+          <Null Count="19" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="15" />
+        </Row>
+        <Row>
+          <Null Count="19" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="15" />
+        </Row>
+        <Row>
+          <Null Count="19" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="15" />
+        </Row>
+        <Row>
+          <Null Count="19" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="15" />
+        </Row>
+        <Row>
+          <Null Count="19" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="15" />
+        </Row>
+        <Row>
+          <Null Count="11" />
+          <Static Index="7" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="15" />
+        </Row>
+        <Row>
+          <Null Count="3" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Null Count="7" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Null Count="8" />
+          <Static Index="25" BlendMode="Alpha" />
+          <Null Count="6" />
+        </Row>
+        <Row>
+          <Null Count="4" />
+          <Static Index="24" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="7" BlendMode="Alpha" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="19" />
+        </Row>
+        <Row>
+          <Null Count="11" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="10" BlendMode="Alpha" />
+          <Null Count="12" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="14" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Null Count="5" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="20" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="12" />
+          <Static Index="25" BlendMode="Alpha" />
+          <Null Count="7" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="9" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="24" BlendMode="Alpha" />
+          <Null Count="12" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="20" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="10" />
+          <Static Index="9" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Null Count="5" />
+        </Row>
+        <Row>
+          <Null Count="7" />
+          <Static Index="25" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Static Index="25" BlendMode="Alpha" />
+          <Null Count="12" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="20" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Null Count="20" />
+        </Row>
+        <Row>
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Null Count="8" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="AlwaysFront" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="35 x 30" TileSize="16 x 16" />
+      <TileArray>
+        <Row>
+          <TileSheet Ref="outdoors" />
+          <Static Index="118" BlendMode="Alpha" />
+          <Static Index="119" BlendMode="Alpha" />
+          <Static Index="75" BlendMode="Alpha" />
+          <Static Index="76" BlendMode="Alpha" />
+          <Static Index="77" BlendMode="Alpha" />
+          <Static Index="91" BlendMode="Alpha" />
+          <Static Index="92" BlendMode="Alpha" />
+          <Static Index="93" BlendMode="Alpha" />
+          <Static Index="94" BlendMode="Alpha" />
+          <Static Index="95" BlendMode="Alpha" />
+          <Static Index="96" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="56" BlendMode="Alpha" />
+          <Static Index="57" BlendMode="Alpha" />
+          <Static Index="58" BlendMode="Alpha" />
+          <Static Index="59" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="16" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="129" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="129" BlendMode="Alpha" />
+          <Null Count="8" />
+        </Row>
+        <Row>
+          <Null Count="7" />
+          <Static Index="118" BlendMode="Alpha" />
+          <Static Index="119" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="81" BlendMode="Alpha" />
+          <Static Index="82" BlendMode="Alpha" />
+          <Static Index="83" BlendMode="Alpha" />
+          <Static Index="84" BlendMode="Alpha" />
+          <Null Count="17" />
+        </Row>
+        <Row>
+          <Null Count="15" />
+          <Static Index="107" BlendMode="Alpha" />
+          <Static Index="108" BlendMode="Alpha" />
+          <Null Count="18" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Static Index="17" BlendMode="Alpha" />
+          <Static Index="18" BlendMode="Alpha" />
+          <Static Index="19" BlendMode="Alpha" />
+          <Static Index="20" BlendMode="Alpha" />
+          <Static Index="21" BlendMode="Alpha" />
+          <Null Count="30" />
+        </Row>
+        <Row>
+          <Static Index="42" BlendMode="Alpha" />
+          <Static Index="43" BlendMode="Alpha" />
+          <Static Index="44" BlendMode="Alpha" />
+          <Static Index="45" BlendMode="Alpha" />
+          <Static Index="46" BlendMode="Alpha" />
+          <Null Count="23" />
+          <Static Index="16" BlendMode="Alpha" />
+          <Static Index="17" BlendMode="Alpha" />
+          <Static Index="18" BlendMode="Alpha" />
+          <Static Index="19" BlendMode="Alpha" />
+          <Static Index="20" BlendMode="Alpha" />
+          <Static Index="21" BlendMode="Alpha" />
+          <Null Count="1" />
+        </Row>
+        <Row>
+          <Static Index="67" BlendMode="Alpha" />
+          <Static Index="68" BlendMode="Alpha" />
+          <Static Index="69" BlendMode="Alpha" />
+          <Static Index="70" BlendMode="Alpha" />
+          <Static Index="71" BlendMode="Alpha" />
+          <Null Count="23" />
+          <Static Index="41" BlendMode="Alpha" />
+          <Static Index="42" BlendMode="Alpha" />
+          <Static Index="43" BlendMode="Alpha" />
+          <Static Index="44" BlendMode="Alpha" />
+          <Static Index="45" BlendMode="Alpha" />
+          <Static Index="46" BlendMode="Alpha" />
+          <Null Count="1" />
+        </Row>
+        <Row>
+          <Static Index="92" BlendMode="Alpha" />
+          <Static Index="93" BlendMode="Alpha" />
+          <Static Index="94" BlendMode="Alpha" />
+          <Static Index="95" BlendMode="Alpha" />
+          <Static Index="96" BlendMode="Alpha" />
+          <Null Count="23" />
+          <Static Index="66" BlendMode="Alpha" />
+          <Static Index="67" BlendMode="Alpha" />
+          <Static Index="68" BlendMode="Alpha" />
+          <Static Index="69" BlendMode="Alpha" />
+          <Static Index="70" BlendMode="Alpha" />
+          <Static Index="71" BlendMode="Alpha" />
+          <Null Count="1" />
+        </Row>
+        <Row>
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="118" BlendMode="Alpha" />
+          <Static Index="119" BlendMode="Alpha" />
+          <Null Count="25" />
+          <Static Index="91" BlendMode="Alpha" />
+          <Static Index="92" BlendMode="Alpha" />
+          <Static Index="93" BlendMode="Alpha" />
+          <Static Index="94" BlendMode="Alpha" />
+          <Static Index="95" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="29" BlendMode="Alpha" />
+          <Static Index="30" BlendMode="Alpha" />
+          <Null Count="28" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="25" BlendMode="Alpha" />
+          <Static Index="26" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="54" BlendMode="Alpha" />
+          <Static Index="55" BlendMode="Alpha" />
+          <Null Count="28" />
+          <Static Index="28" BlendMode="Alpha" />
+          <Static Index="29" BlendMode="Alpha" />
+          <Static Index="30" BlendMode="Alpha" />
+          <Static Index="50" BlendMode="Alpha" />
+          <Static Index="51" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="30" />
+          <Static Index="53" BlendMode="Alpha" />
+          <Static Index="54" BlendMode="Alpha" />
+          <Static Index="55" BlendMode="Alpha" />
+          <Static Index="75" BlendMode="Alpha" />
+          <Static Index="76" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="3" />
+          <Static Index="361" BlendMode="Alpha" />
+          <Null Count="26" />
+          <Static Index="78" BlendMode="Alpha" />
+          <Static Index="79" BlendMode="Alpha" />
+          <Static Index="80" BlendMode="Alpha" />
+          <Null Count="2" />
+        </Row>
+        <Row>
+          <Null Count="2" />
+          <Static Index="16" BlendMode="Alpha" />
+          <Static Index="17" BlendMode="Alpha" />
+          <Static Index="18" BlendMode="Alpha" />
+          <Static Index="19" BlendMode="Alpha" />
+          <Static Index="20" BlendMode="Alpha" />
+          <Null Count="23" />
+          <Static Index="103" BlendMode="Alpha" />
+          <Static Index="104" BlendMode="Alpha" />
+          <Null Count="3" />
+        </Row>
+        <Row>
+          <Null Count="2" />
+          <Static Index="41" BlendMode="Alpha" />
+          <Static Index="42" BlendMode="Alpha" />
+          <Static Index="43" BlendMode="Alpha" />
+          <Static Index="44" BlendMode="Alpha" />
+          <Static Index="45" BlendMode="Alpha" />
+          <Static Index="46" BlendMode="Alpha" />
+          <Null Count="27" />
+        </Row>
+        <Row>
+          <Null Count="2" />
+          <Static Index="66" BlendMode="Alpha" />
+          <Static Index="67" BlendMode="Alpha" />
+          <Static Index="68" BlendMode="Alpha" />
+          <Static Index="69" BlendMode="Alpha" />
+          <Static Index="70" BlendMode="Alpha" />
+          <Static Index="71" BlendMode="Alpha" />
+          <Null Count="27" />
+        </Row>
+        <Row>
+          <Null Count="2" />
+          <Static Index="91" BlendMode="Alpha" />
+          <Static Index="92" BlendMode="Alpha" />
+          <Static Index="93" BlendMode="Alpha" />
+          <Static Index="94" BlendMode="Alpha" />
+          <Static Index="95" BlendMode="Alpha" />
+          <Static Index="96" BlendMode="Alpha" />
+          <Null Count="27" />
+        </Row>
+        <Row>
+          <Null Count="4" />
+          <Static Index="118" BlendMode="Alpha" />
+          <Static Index="119" BlendMode="Alpha" />
+          <Null Count="29" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="35" />
+        </Row>
+        <Row>
+          <Null Count="7" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="25" />
+        </Row>
+        <Row>
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="25" BlendMode="Alpha" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Static Index="27" BlendMode="Alpha" />
+          <Null Count="13" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="9" />
+        </Row>
+        <Row>
+          <Static Index="29" BlendMode="Alpha" />
+          <Static Index="30" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="50" BlendMode="Alpha" />
+          <Static Index="51" BlendMode="Alpha" />
+          <Static Index="52" BlendMode="Alpha" />
+          <Null Count="13" />
+          <Static Index="25" BlendMode="Alpha" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Static Index="27" BlendMode="Alpha" />
+          <Null Count="9" />
+        </Row>
+        <Row>
+          <Static Index="54" BlendMode="Alpha" />
+          <Static Index="16" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="75" BlendMode="Alpha" />
+          <Static Index="76" BlendMode="Alpha" />
+          <Static Index="77" BlendMode="Alpha" />
+          <Static Index="16" BlendMode="Alpha" />
+          <Static Index="17" BlendMode="Alpha" />
+          <Static Index="18" BlendMode="Alpha" />
+          <Static Index="19" BlendMode="Alpha" />
+          <Static Index="20" BlendMode="Alpha" />
+          <Static Index="21" BlendMode="Alpha" />
+          <Null Count="7" />
+          <Static Index="50" BlendMode="Alpha" />
+          <Static Index="51" BlendMode="Alpha" />
+          <Static Index="52" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="16" BlendMode="Alpha" />
+          <Static Index="17" BlendMode="Alpha" />
+          <Static Index="18" BlendMode="Alpha" />
+          <Static Index="19" BlendMode="Alpha" />
+          <Static Index="20" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="79" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="41" BlendMode="Alpha" />
+          <Static Index="42" BlendMode="Alpha" />
+          <Static Index="43" BlendMode="Alpha" />
+          <Static Index="44" BlendMode="Alpha" />
+          <Static Index="45" BlendMode="Alpha" />
+          <Static Index="46" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="76" BlendMode="Alpha" />
+          <Static Index="77" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="41" BlendMode="Alpha" />
+          <Static Index="42" BlendMode="Alpha" />
+          <Static Index="43" BlendMode="Alpha" />
+          <Static Index="44" BlendMode="Alpha" />
+          <Static Index="45" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <Static Index="25" BlendMode="Alpha" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Static Index="27" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="66" BlendMode="Alpha" />
+          <Static Index="67" BlendMode="Alpha" />
+          <Static Index="68" BlendMode="Alpha" />
+          <Static Index="69" BlendMode="Alpha" />
+          <Static Index="70" BlendMode="Alpha" />
+          <Static Index="71" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="25" BlendMode="Alpha" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Static Index="27" BlendMode="Alpha" />
+          <Null Count="2" />
+          <Static Index="25" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="66" BlendMode="Alpha" />
+          <Static Index="67" BlendMode="Alpha" />
+          <Static Index="68" BlendMode="Alpha" />
+          <Static Index="69" BlendMode="Alpha" />
+          <Static Index="70" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <Static Index="50" BlendMode="Alpha" />
+          <Static Index="51" BlendMode="Alpha" />
+          <Static Index="52" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="91" BlendMode="Alpha" />
+          <Static Index="92" BlendMode="Alpha" />
+          <Static Index="93" BlendMode="Alpha" />
+          <Static Index="94" BlendMode="Alpha" />
+          <Static Index="95" BlendMode="Alpha" />
+          <Static Index="96" BlendMode="Alpha" />
+          <Null Count="5" />
+          <Static Index="50" BlendMode="Alpha" />
+          <Static Index="51" BlendMode="Alpha" />
+          <Static Index="52" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="91" BlendMode="Alpha" />
+          <Static Index="92" BlendMode="Alpha" />
+          <Static Index="93" BlendMode="Alpha" />
+          <Static Index="94" BlendMode="Alpha" />
+          <Static Index="95" BlendMode="Alpha" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+  </Layers>
+  <Properties>
+    <Property Key="Warp" Type="String"><![CDATA[35 22 Town 0 54 35 23 Town 0 54 35 24 Town 0 54 35 25 Town 0 54 -1 22 Farm 79 17 -1 23 Farm 79 17 -1 24 Farm 79 17 -1 25 Farm 79 17 -1 6 Backwoods 49 30 -1 7 Backwoods 49 30 -1 8 Backwoods 49 30 -1 9 Backwoods 49 30]]></Property>
+    <Property Key="Outdoors" Type="String"><![CDATA[T]]></Property>
+    <Property Key="Debris" Type="String"><![CDATA[2 .01 4]]></Property>
+    <Property Key="Arch" Type="String"><![CDATA[114 .01 101 .003 105 .005]]></Property>
+    <Property Key="Spring_Objects" Type="String"><![CDATA[18 .9 20 .4 22 .7]]></Property>
+    <Property Key="Summer_Objects" Type="String"><![CDATA[396 .4 398 .4 402 .7]]></Property>
+    <Property Key="Fall_Objects" Type="String"><![CDATA[406 .6 408 .4 410 .6]]></Property>
+    <Property Key="Winter_Objects" Type="String"><![CDATA[414 .1 418 .3]]></Property>
+  </Properties>
+</Map>

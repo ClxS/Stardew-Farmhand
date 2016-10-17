@@ -7,11 +7,13 @@ namespace Farmhand.Registries.Containers
     public class ModContent
     {
         public bool HasContent => (Textures != null && Textures.Any()) ||
-                                  (Xnb != null && Xnb.Any());
+                                  (Xnb != null && Xnb.Any()) ||
+                                  (Maps != null && Maps.Any());
 
 
         public List<DiskTexture> Textures { get; set; }
         public List<ModXnb> Xnb { get; set; }
+        public List<ModMap> Maps { get; set; }
 
         public void LoadContent(ModManifest mod)
         {
@@ -29,6 +31,22 @@ namespace Farmhand.Registries.Containers
 
                     Logging.Log.Verbose($"Registering new texture: {texture.Id}");
                     TextureRegistry.RegisterItem(texture.Id, texture, mod);
+                }
+            }
+
+            if (Maps != null)
+            {
+                foreach (var map in Maps)
+                {
+                    map.AbsoluteFilePath = $"{mod.ModDirectory}\\{Constants.ModContentDirectory}\\{map.File}";
+
+                    if (!map.Exists())
+                    {
+                        throw new Exception($"Missing map: {map.AbsoluteFilePath}");
+                    }
+
+                    Logging.Log.Verbose($"Registering new map: {map.Id}");
+                    MapRegistry.RegisterItem(map.Id, map, mod);
                 }
             }
 
