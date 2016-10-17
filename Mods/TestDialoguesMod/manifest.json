@@ -1,0 +1,8 @@
+﻿{
+	"UniqueId" : "TestDialoguesMod",
+	"Name" : "Test Dialogues Mod",
+	"Author": "TownEater",
+	"ModDll": "TestDialoguesMod",
+	"Version" : "0.1",
+	"Description" : "An example dialogues mod."
+}

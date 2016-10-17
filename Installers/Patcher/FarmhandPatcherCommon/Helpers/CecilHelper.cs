@@ -186,7 +186,14 @@ namespace Farmhand.Helpers
 
                 if (inputParam != null)
                 {
-                    instruction = ilProcessor.Create(OpCodes.Ldarg, inputParam);
+                    if (((bool)attribute.ConstructorArguments[2].Value))
+                    {
+                        instruction = ilProcessor.Create(OpCodes.Ldarga, inputParam);
+                    }
+                    else
+                    {
+                        instruction = ilProcessor.Create(OpCodes.Ldarg, inputParam);
+                    }
                 }
             }
             else if (typeof(TLocal).FullName == attribute.AttributeType.FullName)
