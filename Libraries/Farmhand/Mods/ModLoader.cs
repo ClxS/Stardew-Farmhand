@@ -80,6 +80,10 @@ namespace Farmhand
 
             Game1.version += $"Stardew Farmhand v{Constants.Version}: {numModsLoaded} mods loaded";
 
+            var modTitleMenu = new DiskTexture {
+                AbsoluteFilePath = $"{Environment.CurrentDirectory}\\..\\Libraries\\FarmhandUI\\Assets\\TitleButtons.png"
+            };
+            TextureRegistry.RegisterItem("modTitleMenu", modTitleMenu);
         }
 
         private static Assembly CurrentDomainOnAssemblyResolve(object sender, ResolveEventArgs args)
