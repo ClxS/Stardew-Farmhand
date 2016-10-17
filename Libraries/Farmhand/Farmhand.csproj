@@ -78,6 +78,11 @@
     <Compile Include="API\Crafting\CraftingRecipeCategory.cs" />
     <Compile Include="API\Crops\Crop.cs" />
     <Compile Include="API\Crops\CropInformation.cs" />
+    <Compile Include="API\Dialogues\Dialogue.cs" />
+    <Compile Include="API\Dialogues\DialogueAnswerInformation.cs" />
+    <Compile Include="API\Dialogues\DialogueAnswerRemovalInformation.cs" />
+    <Compile Include="API\Dialogues\DialogueQuestionInformation.cs" />
+    <Compile Include="API\Dialogues\DialogueResultInformation.cs" />
     <Compile Include="API\Game.cs" />
     <Compile Include="API\Generic\ItemChancePair.cs" />
     <Compile Include="API\Items\BigCraftable.cs" />
