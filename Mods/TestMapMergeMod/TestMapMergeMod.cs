@@ -18,9 +18,11 @@ namespace TestMapMergeMod
         {
             MapInformation busStopEdit1 = new MapInformation(Instance, Instance.ModSettings.GetMap("busStop_edit1"));
             MapInformation busStopEdit2 = new MapInformation(Instance, Instance.ModSettings.GetMap("busStop_edit2"));
+            MapInformation busStopEdit3 = new MapInformation(Instance, Instance.ModSettings.GetMap("busStop_edit3"));
 
             LocationUtilities.RegisterMap(Instance, "Maps\\BusStop", busStopEdit1);
             LocationUtilities.RegisterMap(Instance, "Maps\\BusStop", busStopEdit2);
+            LocationUtilities.RegisterMap(Instance, "Maps\\BusStop", busStopEdit3);
         }
     }
 }

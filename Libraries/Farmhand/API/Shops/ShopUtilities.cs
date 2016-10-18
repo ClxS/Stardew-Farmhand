@@ -409,7 +409,7 @@ namespace Farmhand.API.Shops
         /// <returns></returns>
         public static string GetInternalShopName(Mod owner, string shopName)
         {
-            return $"{owner.ModSettings.UniqueId}:{shopName}";
+            return $"{owner.ModSettings.Name}/{shopName}";
         }
     }
 }
