@@ -25,5 +25,10 @@ namespace Farmhand.API.Shops
             Name = name;
             CurrencyType = currency;
         }
+
+        public string UniqueModId()
+        {
+            return ShopUtilities.GetInternalShopName(Owner, Name);
+        }
     }
 }
