@@ -307,10 +307,29 @@ namespace Farmhand.API.Locations
         // Merge properties of a baseComponent and several injecting components into a single component
         private static void MergeProperties(Component toInject, List<IPropertyCollection> injectingComponents, Component baseComponent)
         {
+            // Warps need to be merged carefully if this component is a map, these dictionarys will help that happen
+            // The key is the warp tile location, the value is the warp target
+            Dictionary<string, string> baseWarps = new Dictionary<string, string>();
+            Dictionary<string, string> injectedWarps = new Dictionary<string, string>();
+
             // Inject component properties from the base
             foreach (var property in baseComponent.Properties)
             {
-                toInject.Properties[property.Key] = property.Value;
+                // If this is the map warp property, 
+                if (toInject is Map && property.Key.Equals("Warp"))
+                {
+                    string warpString = property.Value;
+                    string[] rawWarpSplit = warpString.Split(' ');
+
+                    for(int i=0; i<rawWarpSplit.Length; i+=5)
+                    {
+                        baseWarps.Add($"{rawWarpSplit[i]} {rawWarpSplit[i + 1]}", $"{rawWarpSplit[i + 2]} {rawWarpSplit[i + 3]} {rawWarpSplit[i + 4]}");
+                    }
+                }
+                else
+                {
+                    toInject.Properties[property.Key] = property.Value;
+                }
             }
 
             // Inject component properties from all mods
@@ -320,8 +339,51 @@ namespace Farmhand.API.Locations
                 // Check for properties that the injecting component has, but the injected component doesn't(or has a different value of)
                 foreach (var injectedProperty in injectingComponent)
                 {
+                    // This is a special merge case, the list of warps needs to be merged very careful
+                    if(toInject is Map && injectedProperty.Key.Equals("Warp"))
+                    {
+                        string warpString = injectedProperty.Value;
+                        string[] rawWarpSplit = warpString.Split(' ');
+
+                        for (int i = 0; i < rawWarpSplit.Length; i += 5)
+                        {
+                            string newWarpKey = $"{rawWarpSplit[i]} {rawWarpSplit[i + 1]}";
+                            string newWarpValue = $"{rawWarpSplit[i + 2]} {rawWarpSplit[i + 3]} {rawWarpSplit[i + 4]}";
+                            
+                            // Check the base list to see if a warp by this key is already registered
+                            if(baseWarps.ContainsKey(newWarpKey))
+                            {
+                                // If the base warp value is not equal to the one we just found, inject it
+                                if(!baseWarps[newWarpKey].Equals(newWarpValue))
+                                {
+                                    // Check if any other maps have already injected this warp tile
+                                    if (!injectedWarps.ContainsKey(newWarpKey))
+                                    {
+                                        injectedWarps.Add(newWarpKey, newWarpValue);
+                                    }
+                                    else
+                                    {
+                                        Farmhand.Logging.Log.Warning($"Map merging conflict on warp {newWarpKey}, using {injectedWarps[newWarpKey]}");
+                                    }
+                                }
+                            }
+                            // If this warp tile isn't in the base list, inject it
+                            else
+                            {
+                                // Check if any other maps have already injected this warp tile
+                                if (!injectedWarps.ContainsKey(newWarpKey))
+                                {
+                                    injectedWarps.Add(newWarpKey, newWarpValue);
+                                }
+                                else
+                                {
+                                    Farmhand.Logging.Log.Warning($"Map merging conflict on warp {newWarpKey}, using {injectedWarps[newWarpKey]}");
+                                }
+                            }
+                        }
+                    }
                     // Properties the injected component already has, and the injecting component may want to edit
-                    if (toInject.Properties[injectedProperty.Key] != null)
+                    else if (toInject.Properties[injectedProperty.Key] != null)
                     {
                         if (!CompareProperties(toInject.Properties[injectedProperty.Key], injectingComponent[injectedProperty.Key]))
                         {
@@ -367,6 +429,39 @@ namespace Farmhand.API.Locations
                         }
                     }
                 }
+            }
+
+            // Now that the injecting is done, if this is a map, we need to finalize those warp injections
+            if(toInject is Map && (baseWarps.Count != 0 || injectedWarps.Count != 0))
+            {
+                // This dictionary will hold our final warps
+                Dictionary<string, string> finalWarps = new Dictionary<string, string>();
+
+                // First insert the injected warps
+                foreach(KeyValuePair<string, string> injectedWarp in injectedWarps)
+                {
+                    finalWarps.Add(injectedWarp.Key, injectedWarp.Value);
+                }
+
+                // Now insert the base warps
+                foreach(KeyValuePair<string, string> baseWarp in baseWarps)
+                {
+                    if(!finalWarps.ContainsKey(baseWarp.Key))
+                    {
+                        finalWarps.Add(baseWarp.Key, baseWarp.Value);
+                    }
+                }
+
+                // Create one final string from this
+                string finalWarpString = "";
+                foreach(KeyValuePair<string, string> finalWarp in finalWarps)
+                {
+                    finalWarpString += $"{finalWarp.Key} {finalWarp.Value} ";
+                }
+                finalWarpString = finalWarpString.Trim();
+
+                // Inject the warp property
+                toInject.Properties.Add("Warp", new PropertyValue(finalWarpString));
             }
         }
 
