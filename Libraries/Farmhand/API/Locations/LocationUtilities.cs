@@ -130,18 +130,23 @@ namespace Farmhand.API.Locations
         // Merge the layers from a baseMap and several injectedMaps into a mergedMap
         private static void MergeLayers(ref Map mergedMap, Map baseMap, MapInformation[] injectedMaps, string assetName)
         {
+            // Find the largest layer size among all injecting maps, and use that value
+            xTile.Dimensions.Size largestLayerSize = GetLargestLayerSize(baseMap, injectedMaps);
+
+            // Luckily, when an index beyond the size of an xTile map layer is checked, it just returns null... which is already the indication that there's no tile there. Convenient!
+
             for (int l = 0; l < baseMap.Layers.Count; l++)
             {
                 Layer baseLayer = baseMap.Layers[l];
-                Layer mergedLayer = new Layer(baseLayer.Id, mergedMap, baseLayer.LayerSize, baseLayer.TileSize);
+                Layer mergedLayer = new Layer(baseLayer.Id, mergedMap, largestLayerSize, baseLayer.TileSize);
 
                 mergedLayer.Description = baseLayer.Description;
                 mergedLayer.Visible = baseLayer.Visible;
 
                 // Merge the tiles in this layer
-                for (int i = 0; i < baseLayer.LayerHeight; i++)
+                for (int i = 0; i < mergedLayer.LayerHeight; i++)
                 {
-                    for (int j = 0; j < baseLayer.LayerWidth; j++)
+                    for (int j = 0; j < mergedLayer.LayerWidth; j++)
                     {
                         // check to make sure the base tile isn't null
                         if (baseLayer.Tiles[j, i] != null)
@@ -171,29 +176,36 @@ namespace Farmhand.API.Locations
                                     }
                                 }
 
-                                // Create either a new static or animated tile
-                                if (tileToUse is StaticTile)
+                                if (tileToUse != null)
                                 {
-                                    StaticTile staticTileToUse = tileToUse as StaticTile;
-
-                                    mergedLayer.Tiles[j, i] = new StaticTile(mergedLayer, mergedTileSheet, staticTileToUse.BlendMode, staticTileToUse.TileIndex);
-                                }
-                                else if (tileToUse is AnimatedTile)
-                                {
-                                    AnimatedTile animatedTileToUse = tileToUse as AnimatedTile;
-
-                                    // Get the frames as static tiles
-                                    StaticTile[] mergedFrames = new StaticTile[animatedTileToUse.TileFrames.Length];
-                                    for (int f = 0; f < mergedFrames.Length; f++)
+                                    // Create either a new static or animated tile
+                                    if (tileToUse is StaticTile)
                                     {
-                                        mergedFrames[f] = new StaticTile(mergedLayer, mergedTileSheet, animatedTileToUse.TileFrames[f].BlendMode, animatedTileToUse.TileFrames[f].TileIndex);
-                                    }
+                                        StaticTile staticTileToUse = tileToUse as StaticTile;
 
-                                    mergedLayer.Tiles[j, i] = new AnimatedTile(mergedLayer, mergedFrames, animatedTileToUse.FrameInterval);
+                                        mergedLayer.Tiles[j, i] = new StaticTile(mergedLayer, mergedTileSheet, staticTileToUse.BlendMode, staticTileToUse.TileIndex);
+                                    }
+                                    else if (tileToUse is AnimatedTile)
+                                    {
+                                        AnimatedTile animatedTileToUse = tileToUse as AnimatedTile;
+
+                                        // Get the frames as static tiles
+                                        StaticTile[] mergedFrames = new StaticTile[animatedTileToUse.TileFrames.Length];
+                                        for (int f = 0; f < mergedFrames.Length; f++)
+                                        {
+                                            mergedFrames[f] = new StaticTile(mergedLayer, mergedTileSheet, animatedTileToUse.TileFrames[f].BlendMode, animatedTileToUse.TileFrames[f].TileIndex);
+                                        }
+
+                                        mergedLayer.Tiles[j, i] = new AnimatedTile(mergedLayer, mergedFrames, animatedTileToUse.FrameInterval);
+                                    }
+                                    else
+                                    {
+                                        throw new Exception($"Base tile type in layer {baseLayer.Id} at {j},{i} unknown!");
+                                    }
                                 }
                                 else
                                 {
-                                    throw new Exception($"Base tile type in layer {baseLayer.Id} at {j},{i} unknown!");
+                                    mergedLayer.Tiles[j, i] = tileToUse;
                                 }
                             }
                         }
@@ -258,6 +270,10 @@ namespace Farmhand.API.Locations
                                 {
                                     throw new Exception($"Base tile type in layer {baseLayer.Id} at {j},{i} unknown!");
                                 }
+                            }
+                            else
+                            {
+                                mergedLayer.Tiles[j, i] = null;
                             }
                         }
                     }
@@ -354,6 +370,44 @@ namespace Farmhand.API.Locations
             }
         }
 
+        public static xTile.Dimensions.Size GetLargestLayerSize(Map baseMap, MapInformation[] injectedMaps)
+        {
+            xTile.Dimensions.Size largestLayerSize = new xTile.Dimensions.Size();
+            
+            // First, check all base layers, for a base size value
+            foreach (Layer baseLayer in baseMap.Layers)
+            {
+                if (baseLayer.LayerWidth > largestLayerSize.Width)
+                {
+                    largestLayerSize.Width = baseLayer.LayerWidth;
+                }
+
+                if (baseLayer.LayerHeight > largestLayerSize.Height)
+                {
+                    largestLayerSize.Height = baseLayer.LayerHeight;
+                }
+            }
+
+            // Next, check all injecting layers for larger values
+            foreach (MapInformation map in injectedMaps)
+            {
+                foreach (Layer injectingLayer in map.Map.Layers)
+                {
+                    if (injectingLayer.LayerWidth > largestLayerSize.Width)
+                    {
+                        largestLayerSize.Width = injectingLayer.LayerWidth;
+                    }
+
+                    if (injectingLayer.LayerHeight > largestLayerSize.Height)
+                    {
+                        largestLayerSize.Height = injectingLayer.LayerHeight;
+                    }
+                }
+            }
+
+            return largestLayerSize;
+        }
+
         public static Layer GetMatchingLayerInList(Layer toMatch, ReadOnlyCollection<Layer> list, MapInformation map)
         {
             Layer matchingLayer = null;
@@ -393,6 +447,12 @@ namespace Farmhand.API.Locations
 
         public static bool CompareTiles(Tile a, Tile b)
         {
+            // If either is null, check if it's just one or the other, if they're not both null, they're not equal
+            if((a==null || b==null) && ((a!=null && b==null) || (b!=null && a==null))) { return false; }
+
+            // If they're both null, they're equal
+            if (a == null && b == null) { return true; }
+
             if (!CompareLayers(a.Layer, b.Layer)) { return false; }
 
             if (a.BlendMode != b.BlendMode) { return false; }

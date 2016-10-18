@@ -4,7 +4,7 @@
 	"Author": "TownEater",
 	"ModDll": "TestMapMergeMod",
 	"Version" : "0.1",
-	"Description" : "An example mod which merges 2 map files into the same map.",
+	"Description" : "An example mod which merges 3 map files into the same map.",
 	"Content" : 
 	{
 		"Maps" : 
@@ -16,6 +16,10 @@
             {
 				"Id" : "busStop_edit2",
 				"File" : "BusStop_Edit2.tide"
+			},
+            {
+				"Id" : "busStop_edit3",
+				"File" : "BusStop_Edit3.tide"
 			}
 		]
 	}
