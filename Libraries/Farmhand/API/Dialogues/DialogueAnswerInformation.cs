@@ -39,6 +39,23 @@ namespace Farmhand.API.Dialogues
             DoInclude = doInclude;
         }
 
+        public DialogueAnswerInformation(Mod owner, Answers key, string text, DialogueResultInformation result)
+        {
+            Owner = owner;
+            Key = Dialogue.AnswersKey(key);
+            Text = text;
+            Result = result;
+        }
+
+        public DialogueAnswerInformation(Mod owner, Answers key, string text, DialogueResultInformation result, Dialogue.IncludeAnswer doInclude)
+        {
+            Owner = owner;
+            Key = Dialogue.AnswersKey(key);
+            Text = text;
+            Result = result;
+            DoInclude = doInclude;
+        }
+
         public string ModUniqueKey()
         {
             return $"{Owner.ModSettings.Name}/{Key}";

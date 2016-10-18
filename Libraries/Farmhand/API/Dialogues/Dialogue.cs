@@ -172,7 +172,7 @@ namespace Farmhand.API.Dialogues
                 answerInjectors.Add(question, answerList);
 
                 // Make sure the result of our answer is injected
-                RegisterNewResult(answer.ModUniqueKey(), answer.Result);
+                RegisterNewResult(question, answer.ModUniqueKey(), answer.Result);
             }
         }
 
@@ -208,29 +208,31 @@ namespace Farmhand.API.Dialogues
         /// <summary>
         /// Register a new result which can be used by answers, a result is what happens when an answer is selected
         /// </summary>
+        /// <param name="question">The question that was asked to cause this result</param>
         /// <param name="answer">The answer that is selected to cause this result</param>
         /// <param name="result">Information about the result</param>
-        public static void RegisterNewResult(Answers answer, DialogueResultInformation result)
+        public static void RegisterNewResult(Questions question, Answers answer, DialogueResultInformation result)
         {
-            RegisterNewResult(AnswersKey(answer), result);
+            RegisterNewResult(QuestionsKey(question), AnswersKey(answer), result);
         }
 
         /// <summary>
         /// Register a new result which can be used by answers, a result is what happens when an answer is selected
         /// </summary>
+        /// <param name="question">The question that was asked to cause this result</param>
         /// <param name="answer">The answer that is selected to cause this result</param>
         /// <param name="result">Information about the result</param>
-        public static void RegisterNewResult(string answer, DialogueResultInformation result)
+        public static void RegisterNewResult(string question, string answer, DialogueResultInformation result)
         {
-            if (resultInjectors.ContainsKey(answer))
+            if (resultInjectors.ContainsKey(GetQuestionAndAnswerString(question, answer)))
             {
-                resultInjectors[answer].Add(result);
+                resultInjectors[GetQuestionAndAnswerString(question, answer)].Add(result);
             }
             else
             {
                 List<DialogueResultInformation> resultList = new List<DialogueResultInformation>();
                 resultList.Add(result);
-                resultInjectors.Add(answer, resultList);
+                resultInjectors.Add(GetQuestionAndAnswerString(question, answer), resultList);
             }
         }
 
@@ -301,11 +303,13 @@ namespace Farmhand.API.Dialogues
         [HookReturnable(HookType.Entry, "StardewValley.Locations.JojaMart", "System.Boolean StardewValley.Locations.JojaMart::answerDialogue(StardewValley.Response)")]
         internal static bool answerResultOverride2(
             [UseOutputBind] ref bool useOutput,
+            [ThisBind] GameLocation @this,
             [InputBind(typeof(Response), "answer")] Response answer)
         {
+            string questionKey = GetLastQuestionKey(@this);
             string answerKey = answer.responseKey;
 
-            bool doDefault = DoInjectedResults(null, answerKey);
+            bool doDefault = DoInjectedResults(questionKey, answerKey);
 
             useOutput = !doDefault;
             return !doDefault;
@@ -366,34 +370,16 @@ namespace Farmhand.API.Dialogues
             bool doDefault = true;
 
             // Check injected results
-            if (resultInjectors.ContainsKey(answerKey))
+            if (questionKey != null)
             {
-                foreach (var result in resultInjectors[answerKey])
+                if (resultInjectors.ContainsKey(GetQuestionAndAnswerString(questionKey, answerKey)))
                 {
-                    if (result.Owner.ModSettings.ModState == ModState.Loaded)
+                    foreach (var result in resultInjectors[GetQuestionAndAnswerString(questionKey, answerKey)])
                     {
-                        bool resultDoDefault = true;
-                        result.Result(ref resultDoDefault);
-
-                        if (resultDoDefault == false)
-                        {
-                            doDefault = false;
-                        }
-                    }
-                }
-            }
-            
-            // Check injected questions for possible answers with results
-            foreach(var injectedQuestion in injectedQuestions)
-            {
-                foreach (var answerInformation in injectedQuestion.Value.Choices)
-                {
-                    if (answerInformation.ModUniqueKey().Equals(answerKey))
-                    {
-                        if (answerInformation.Owner.ModSettings.ModState == ModState.Loaded)
+                        if (result.Owner.ModSettings.ModState == ModState.Loaded)
                         {
                             bool resultDoDefault = true;
-                            answerInformation.Result.Result(ref resultDoDefault);
+                            result.Result(ref resultDoDefault);
 
                             if (resultDoDefault == false)
                             {
@@ -402,11 +388,46 @@ namespace Farmhand.API.Dialogues
                         }
                     }
                 }
+
+                // Check injected questions for possible answers with results
+                foreach (var injectedQuestion in injectedQuestions)
+                {
+                    // Check each of its answers
+                    foreach (var answerInformation in injectedQuestion.Value.Choices)
+                    {
+                        // Check that this was the answer given
+                        if (answerInformation.ModUniqueKey().Equals(answerKey))
+                        {
+                            if (answerInformation.Owner.ModSettings.ModState == ModState.Loaded)
+                            {
+                                bool resultDoDefault = true;
+                                answerInformation.Result.Result(ref resultDoDefault);
+
+                                if (resultDoDefault == false)
+                                {
+                                    doDefault = false;
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             return doDefault;
         }
-        
+
+        // Either returns the key for the last question asked in a game location, or null
+        private static string GetLastQuestionKey(GameLocation location)
+        {
+            return (location.lastQuestionKey != null) ? location.lastQuestionKey.Split(' ')[0] : null;
+        }
+
+        // Get the question and answer string for a question key and answer key
+        private static string GetQuestionAndAnswerString(string questionKey, string answerKey)
+        {
+            return $"{questionKey}_{answerKey}";
+        }
+
         // Get key from Questions
         public static string QuestionsKey(Questions question)
         {
