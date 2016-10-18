@@ -1,12 +1,11 @@
-﻿using Farmhand.Attributes;
-using Farmhand.API.Shops;
-using StardewValley;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Farmhand.API.Shops;
+using Farmhand.Attributes;
+using StardewValley;
 
-namespace Farmhand.Overrides.UI
+namespace Farmhand.UI
 {
     [HookRedirectConstructorFromBase("StardewValley.Event", "answerDialogue", new Type[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
     [HookRedirectConstructorFromBase("StardewValley.Event", "checkAction", new Type[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]

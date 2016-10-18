@@ -26,6 +26,7 @@ namespace Farmhand.Registries.Containers
                 }
                 return _texture;
             }
+            internal set { _texture = value; }
         }
 
         public bool Exists()

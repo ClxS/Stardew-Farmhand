@@ -9,7 +9,7 @@ using Farmhand;
 using Farmhand.Registries;
 using Farmhand.Registries.Containers;
 using Farmhand.Logging;
-using Farmhand.Overrides.UI.Components;
+using Farmhand.UI.Components;
 using StardewValley.BellsAndWhistles;
 
 namespace ModLoaderMod.Menus

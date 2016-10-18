@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
 using StardewValley.Menus;
 
-namespace Farmhand.Overrides.UI
+namespace Farmhand.UI
 {
     /// <summary>
     /// Override of Stardew's TitleMenu, providing methods to add custom titlemenu buttons
@@ -117,7 +117,7 @@ namespace Farmhand.Overrides.UI
             
             var num = height < 800 ? 2 : 3;
             eRect = new Rectangle(width / 2 - 200 * num + 251 * num, -300 * num - (int)(viewportY / 3.0) * num + 26 * num, 42 * num, 68 * num);
-            folderButton = new ClickableTextureComponent("Folder", new Rectangle(57, height - 75 - 24, 72, 75), "", "Mods Folder", TextureRegistry.GetItem("modTitleMenu").Texture, new Rectangle(52, 458, 24, 25), 3f, false);
+            folderButton = new ClickableTextureComponent("Folder", new Rectangle(57, height - 75 - 24, 72, 75), "", "Mods Folder", TextureRegistry.GetItem("FarmhandUI.modTitleMenu").Texture, new Rectangle(52, 458, 24, 25), 3f, false);
             backButton = new ClickableTextureComponent("Back", new Rectangle(width - 198 - 48, height - 81 - 24, 198, 81),"", "Back", titleButtonsTexture, new Rectangle(296, 252, 66, 27), 3f, false);
             aboutButton = new ClickableTextureComponent("About", new Rectangle(width - 66 - 48, height - 75 - 24, 66, 75), "", "About", titleButtonsTexture, new Rectangle(8, 458, 22, 25), 3f, false);
             skipButton = new ClickableComponent(new Rectangle(width / 2 - 261, height / 2 - 102, 249, 201), "Skip", "");

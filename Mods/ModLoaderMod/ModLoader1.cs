@@ -21,7 +21,7 @@ namespace ModLoaderMod
             var test = ModRegistry.GetRegisteredItems();
             var texture = ModSettings.GetTexture("icon_menuModsButton");
             
-            Farmhand.Overrides.UI.TitleMenu.RegisterNewTitleButton(new Farmhand.Overrides.UI.TitleMenu.CustomTitleOption
+            Farmhand.UI.TitleMenu.RegisterNewTitleButton(new Farmhand.UI.TitleMenu.CustomTitleOption
             {
                 Key = "Mods",
                 Texture = texture,
@@ -30,7 +30,7 @@ namespace ModLoaderMod
             });
         }
 
-        public void OnModMenuItemClicked(Farmhand.Overrides.UI.TitleMenu menu, string choice)
+        public void OnModMenuItemClicked(Farmhand.UI.TitleMenu menu, string choice)
         {
             if (choice != "Mods") return;
 

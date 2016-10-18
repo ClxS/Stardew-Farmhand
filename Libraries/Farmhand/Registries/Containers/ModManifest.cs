@@ -34,7 +34,7 @@ namespace Farmhand.Registries.Containers
         public string Description { get; set; }
         public List<ModDependency> Dependencies { get; set; }
 
-        public ModContent Content { get; set; }
+        public ManifestContent Content { get; set; }
 
         private string _configurationFile;
         public string ConfigurationFile
@@ -143,7 +143,61 @@ namespace Farmhand.Registries.Containers
 
         internal void LoadContent()
         {
-            Content?.LoadContent(this);
+            if (Content == null)
+                return;
+
+            Logging.Log.Verbose("Loading Content");
+            if (Content.Textures != null)
+            {
+                foreach (var texture in Content.Textures)
+                {
+                    texture.AbsoluteFilePath = $"{ModDirectory}\\{Constants.ModContentDirectory}\\{texture.File}";
+
+                    if (!texture.Exists())
+                    {
+                        throw new Exception($"Missing Texture: {texture.AbsoluteFilePath}");
+                    }
+
+                    Logging.Log.Verbose($"Registering new texture: {texture.Id}");
+                    TextureRegistry.RegisterItem(texture.Id, texture, this);
+                }
+            }
+
+            if (Content.Maps != null)
+            {
+                foreach (var map in Content.Maps)
+                {
+                    map.AbsoluteFilePath = $"{ModDirectory}\\{Constants.ModContentDirectory}\\{map.File}";
+
+                    if (!map.Exists())
+                    {
+                        throw new Exception($"Missing map: {map.AbsoluteFilePath}");
+                    }
+
+                    Logging.Log.Verbose($"Registering new map: {map.Id}");
+                    MapRegistry.RegisterItem(map.Id, map, this);
+                }
+            }
+
+            if (Content.Xnb == null) return;
+
+            foreach (var file in Content.Xnb)
+            {
+                if (file.IsXnb)
+                {
+                    file.AbsoluteFilePath = $"{ModDirectory}\\{Constants.ModContentDirectory}\\{file.File}";
+                }
+                file.OwningMod = this;
+                if (!file.Exists(this))
+                {
+                    if (file.IsXnb)
+                        throw new Exception($"Replacement File: {file.AbsoluteFilePath}");
+                    if (file.IsTexture)
+                        throw new Exception($"Replacement Texture: {file.Texture}");
+                }
+                Logging.Log.Verbose("Registering new texture XNB override");
+                XnbRegistry.RegisterItem(file.Original, file, this);
+            }
         }
         
         public Texture2D GetTexture(string id)

@@ -63,6 +63,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="xTile">
       <HintPath>..\..\WorkingDirectory\xTile.dll</HintPath>
@@ -190,6 +191,7 @@
     <Compile Include="Events\UtilityEvents.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\CompatibilityLayer.cs" />
+    <Compile Include="Helpers\ApplicationResourcesUtility.cs" />
     <Compile Include="Helpers\MainRedirect.cs" />
     <Compile Include="Helpers\UniqueId.cs" />
     <Compile Include="Helpers\UniqueIdConverter.cs" />
@@ -217,8 +219,9 @@
     <Compile Include="Overrides\ShopMenu.cs" />
     <Compile Include="Overrides\StardewObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registries\Containers\ApplicationResourceManifest.cs" />
     <Compile Include="Registries\Containers\DependencyState.cs" />
-    <Compile Include="Registries\Containers\ModContent.cs" />
+    <Compile Include="Registries\Containers\ManifestContent.cs" />
     <Compile Include="Registries\Containers\ModDependency.cs" />
     <Compile Include="Registries\Containers\ModManifest.cs" />
     <Compile Include="Registries\Containers\DiskTexture.cs" />
