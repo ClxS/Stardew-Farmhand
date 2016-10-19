@@ -26,7 +26,8 @@ namespace Farmhand.Content
             new CropInjector(),
             new WeaponInjector(),
             new BigCraftableInjector(),
-            new DelegatedContentInjector()
+            new DelegatedContentInjector(),
+            new MapInjector()
         };
 
         public ContentManager(IServiceProvider serviceProvider, string rootDirectory, System.Globalization.CultureInfo currentCulture, string languageCodeOverride)
@@ -89,7 +90,13 @@ namespace Farmhand.Content
 
             foreach (var injector in injectors)
             {
-                injector.Inject(output, assetName);
+                object refOutput = null;
+                injector.Inject(output, assetName, ref refOutput);
+
+                if(refOutput != null)
+                {
+                    output = (T)refOutput;
+                }
             }
             
             return output;

@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Farmhand.Attributes;
+using Farmhand.Registries;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StardewValley;
 using StardewValley.Menus;
 
-namespace Farmhand.Overrides.UI
+namespace Farmhand.UI
 {
     /// <summary>
     /// Override of Stardew's TitleMenu, providing methods to add custom titlemenu buttons
@@ -71,6 +74,8 @@ namespace Farmhand.Overrides.UI
         }
 
         public static List<CustomTitleOption> CustomOptions = new List<CustomTitleOption>();
+        private ClickableTextureComponent folderButton;
+        private string hoverText { get; set; }
 
         public static void RegisterNewTitleButton(CustomTitleOption button)
         {
@@ -105,14 +110,14 @@ namespace Farmhand.Overrides.UI
             var index = 0;
             buttons.Add(new ClickableTextureComponent("New", new Rectangle(width / 2 + GetItemOffsetX(index++, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "", "New", titleButtonsTexture, new Rectangle(0, 187, 74, 58), 3f, false));
             buttons.Add(new ClickableTextureComponent("Load", new Rectangle(width / 2 + GetItemOffsetX(index++, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "", "Load", titleButtonsTexture, new Rectangle(74, 187, 74, 58), 3f, false));
-            foreach (var customOption in CustomOptions)
-            {
+            foreach (var customOption in CustomOptions) {
                 buttons.Add(new ClickableTextureComponent("Mods", new Rectangle(width / 2 + GetItemOffsetX(index++, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "", "Mods", customOption.Texture, customOption.TextureSourceRect, 3f, false));
             }
             buttons.Add(new ClickableTextureComponent("Exit", new Rectangle(width / 2 + GetItemOffsetX(index, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "", "Exit", titleButtonsTexture, new Rectangle(222, 187, 74, 58), 3f, false));
-
+            
             var num = height < 800 ? 2 : 3;
             eRect = new Rectangle(width / 2 - 200 * num + 251 * num, -300 * num - (int)(viewportY / 3.0) * num + 26 * num, 42 * num, 68 * num);
+            folderButton = new ClickableTextureComponent("Folder", new Rectangle(57, height - 75 - 24, 72, 75), "", "Mods Folder", TextureRegistry.GetItem("FarmhandUI.modTitleMenu").Texture, new Rectangle(52, 458, 24, 25), 3f, false);
             backButton = new ClickableTextureComponent("Back", new Rectangle(width - 198 - 48, height - 81 - 24, 198, 81),"", "Back", titleButtonsTexture, new Rectangle(296, 252, 66, 27), 3f, false);
             aboutButton = new ClickableTextureComponent("About", new Rectangle(width - 66 - 48, height - 75 - 24, 66, 75), "", "About", titleButtonsTexture, new Rectangle(8, 458, 22, 25), 3f, false);
             skipButton = new ClickableComponent(new Rectangle(width / 2 - 261, height / 2 - 102, 249, 201), "Skip", "");
@@ -122,12 +127,57 @@ namespace Farmhand.Overrides.UI
         public override void performButtonAction(string which)
         {
             base.performButtonAction(which);
-
+            
             var customPressed = CustomOptions.Where(n => n.Key == which);
             foreach (var customAction in customPressed)
             {
                 customAction.OnClick?.Invoke(this, which);
             }
+        }
+
+        public override void receiveLeftClick(int x, int y, bool playSound = true)
+        {
+            base.receiveLeftClick(x, y, playSound);
+
+            if (folderButton.containsPoint(x, y)) {
+                Game1.playSound("select");
+                Process.Start($"{Environment.CurrentDirectory}\\Mods");
+            }
+        }
+
+        public override void performHoverAction(int x, int y)
+        {
+            hoverText = "";
+            base.performHoverAction(x, y);
+
+            folderButton.tryHover(x, y, 0.25f);
+            if (folderButton.containsPoint(x, y)) {
+                if (folderButton.sourceRect.X == 52)
+                    Game1.playSound("Cowboy_Footstep");
+                
+                folderButton.sourceRect.X = 76;
+
+                hoverText = folderButton.hoverText;
+            }
+            else
+                folderButton.sourceRect.X = 52;
+        }
+
+        [HookMakeBaseVirtualCall("StardewValley.Menus.TitleMenu", "draw")]
+        public override void draw(SpriteBatch b)
+        {
+            base.draw(b);
+
+            if (subMenu == null && !isTransitioningButtons && titleInPosition && !transitioningCharacterCreationMenu)
+                folderButton.draw(b);
+
+            if (!String.IsNullOrEmpty(hoverText))
+                drawHoverText(b, hoverText, Game1.dialogueFont);
+
+            if (QuitTimer > 0)
+                b.Draw(Game1.staminaRect, new Rectangle(0, 0, width, height), Color.Black * (1f - QuitTimer / 500f));
+
+            drawMouse(b);
         }
 
         public void SetSubmenu(IClickableMenu menu)

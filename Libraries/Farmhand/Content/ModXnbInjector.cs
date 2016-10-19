@@ -115,7 +115,7 @@ namespace Farmhand.Content
             return obj;
         }
 
-        public void Inject<T>(T obj, string assetName)
+        public void Inject<T>(T obj, string assetName, ref object output)
         {
             throw new NotImplementedException();
         }

@@ -10,6 +10,6 @@ namespace Farmhand.Content
         bool HandlesAsset(Type type, string asset);
 
         T Load<T>(ContentManager contentManager, string assetName);
-        void Inject<T>(T obj, string assetName);
+        void Inject<T>(T obj, string assetName, ref object output);
     }
 }

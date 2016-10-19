@@ -2,7 +2,7 @@
 using Farmhand.Attributes;
 using StardewValley.Menus;
 
-namespace Farmhand.Overrides.UI
+namespace Farmhand.UI
 {
     /// <summary>
     /// Override for Stardew's Game Menu, providing methods to add custom pages/tabs

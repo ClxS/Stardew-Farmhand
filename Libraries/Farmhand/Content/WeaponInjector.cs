@@ -19,7 +19,7 @@ namespace Farmhand.Content
             return default(T);
         }
 
-        public void Inject<T>(T obj, string assetName)
+        public void Inject<T>(T obj, string assetName, ref object output)
         {
             var weapons = obj as Dictionary<int, string>;
             if (weapons == null)
