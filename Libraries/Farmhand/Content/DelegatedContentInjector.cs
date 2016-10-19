@@ -14,7 +14,7 @@ namespace Farmhand.Content
 
         public delegate T LoadBase<T>(string assetName);
         public delegate T FileLoadMethod<T>(LoadBase<T> loadBase, string assetName);
-        public delegate void FileInjectMethod<T>(T file, string assetName);
+        public delegate void FileInjectMethod<T>(T file, string assetName, ref object output);
 
         private static List<KeyValuePair<string, Type>> _HandledAssets;
         private static Dictionary<KeyValuePair<string, Type>, Delegate> _LoaderRegistry=new Dictionary<KeyValuePair<string, Type>, Delegate>();
@@ -54,13 +54,13 @@ namespace Farmhand.Content
                 return manager.LoadDirect<T>(assetName);
             return output;
         }
-        public void Inject<T>(T item, string assetName)
+        public void Inject<T>(T item, string assetName,ref object output)
         {
             KeyValuePair<string, Type> key = new KeyValuePair<string, Type>(assetName, typeof(T));
             if (!_InjectorRegistry.ContainsKey(key))
                 return;
             foreach(Delegate handler in _InjectorRegistry[key])
-                ((FileInjectMethod<T>)handler)(item,assetName);
+                ((FileInjectMethod<T>)handler)(item,assetName,ref output);
         }
     }
 }
