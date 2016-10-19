@@ -25,7 +25,8 @@ namespace Farmhand.Content
             new MonsterInjector(),
             new CropInjector(),
             new WeaponInjector(),
-            new BigCraftableInjector()
+            new BigCraftableInjector(),
+            new DelegatedContentInjector()
         };
 
         public ContentManager(IServiceProvider serviceProvider, string rootDirectory, System.Globalization.CultureInfo currentCulture, string languageCodeOverride)

@@ -127,6 +127,7 @@
     <Compile Include="Content\BigCraftableInjector.cs" />
     <Compile Include="Content\BlueprintInjector.cs" />
     <Compile Include="Content\CropInjector.cs" />
+    <Compile Include="Content\DelegatedContentInjector.cs" />
     <Compile Include="Content\MonsterInjector.cs" />
     <Compile Include="Content\MonsterLoader.cs" />
     <Compile Include="Content\ContentManager.cs" />
