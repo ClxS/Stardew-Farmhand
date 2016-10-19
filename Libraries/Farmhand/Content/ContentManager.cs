@@ -26,6 +26,7 @@ namespace Farmhand.Content
             new CropInjector(),
             new WeaponInjector(),
             new BigCraftableInjector(),
+            new DelegatedContentInjector(),
             new MapInjector()
         };
 
