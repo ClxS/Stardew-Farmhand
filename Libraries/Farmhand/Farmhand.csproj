@@ -97,6 +97,12 @@
     <Compile Include="API\Locations\MineShaft.cs" />
     <Compile Include="API\Monsters\Monster.cs" />
     <Compile Include="API\Monsters\MonsterInformation.cs" />
+    <Compile Include="API\NPCs\NPC.cs" />
+    <Compile Include="API\NPCs\NPCDialoguesInformation.cs" />
+    <Compile Include="API\NPCs\NPCInformation.cs" />
+    <Compile Include="API\NPCs\NPCGiftTastesInformation.cs" />
+    <Compile Include="API\NPCs\NPCSchedulesInformation.cs" />
+    <Compile Include="API\NPCs\NPCUtility.cs" />
     <Compile Include="API\Pulse\Pulse.cs" />
     <Compile Include="API\Pulse\PulseEventArgs.cs" />
     <Compile Include="API\Pulse\Resource.cs" />
@@ -144,6 +150,8 @@
     <Compile Include="Content\ContentManager.cs" />
     <Compile Include="Content\IContentInjector.cs" />
     <Compile Include="Content\ModXnbInjector.cs" />
+    <Compile Include="Content\NPCInjector.cs" />
+    <Compile Include="Content\NPCLoader.cs" />
     <Compile Include="Content\WeaponInjector.cs" />
     <Compile Include="Events\ApiEvents.cs" />
     <Compile Include="Events\Arguments\ApiEvents\EventArgsOnModLoadEvent.cs" />
