@@ -16,7 +16,7 @@ namespace Farmhand.Content
         public delegate T FileLoadMethod<T>(LoadBase<T> loadBase, string assetName);
         public delegate void FileInjectMethod<T>(T file, string assetName, ref object output);
 
-        private static List<KeyValuePair<string, Type>> _HandledAssets;
+        private static List<KeyValuePair<string, Type>> _HandledAssets=new List<KeyValuePair<string, Type>>();
         private static Dictionary<KeyValuePair<string, Type>, Delegate> _LoaderRegistry=new Dictionary<KeyValuePair<string, Type>, Delegate>();
         private static Dictionary<KeyValuePair<string, Type>, List<Delegate>> _InjectorRegistry = new Dictionary<KeyValuePair<string, Type>, List<Delegate>>();
 
