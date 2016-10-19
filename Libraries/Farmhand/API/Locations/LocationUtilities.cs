@@ -12,7 +12,11 @@ namespace Farmhand.API.Locations
 {
     public class LocationUtilities
     {
+        // Maps registered to be merged with a default map
         public static Dictionary<string, List<MapInformation>> RegisteredMaps { get; } = new Dictionary<string, List<MapInformation>>();
+
+        // A stored list of merged maps, so the merging doesn't need to be done again
+        public static Dictionary<string, Map> MergedMaps { get; } = new Dictionary<string, Map>();
 
         public static void RegisterMap(Mod owner, string assetName, MapInformation mapInformation)
         {
@@ -29,9 +33,30 @@ namespace Farmhand.API.Locations
             // If there's no maps to inject, we can just skip all this
             if (!RegisteredMaps.ContainsKey(assetName) || RegisteredMaps[assetName].Count == 0) { return baseMap; }
 
+            // If we've already merged this map, just return that
+            if(MergedMaps.ContainsKey(assetName)) { return MergedMaps[assetName]; }
+
             // An array of the maps that need to be injected into the base map
             MapInformation[] injectedMaps = RegisteredMaps[assetName].ToArray();
 
+            // Merge the maps
+            Map mergedMap = MergeMaps(baseMap, injectedMaps);
+
+            // Store the merged map
+            if (!MergedMaps.ContainsKey(assetName))
+            {
+                MergedMaps.Add(assetName, mergedMap);
+            }
+            else
+            {
+                MergedMaps[assetName] = mergedMap;
+            }
+
+            return mergedMap;
+        }
+
+        public static Map MergeMaps(Map baseMap, MapInformation[] injectedMaps)
+        {
             // Check if any maps have the FullOverride tag
             foreach(var map in injectedMaps)
             {
@@ -39,7 +64,7 @@ namespace Farmhand.API.Locations
                 {
                     if(injectedMaps.Length > 1)
                     {
-                        Farmhand.Logging.Log.Warning($"Map merging conflict on {assetName}, map {map.Map.Id} in mod {map.Owner.ModSettings.Name} requested full override, but {injectedMaps.Length-1} other map(s) had changes! Using full override.");
+                        Farmhand.Logging.Log.Warning($"Map merging conflict on map {map.Map.Id} in mod {map.Owner.ModSettings.Name} requested full override, but {injectedMaps.Length-1} other map(s) had changes! Using full override.");
                     }
 
                     return map.Map;
@@ -56,7 +81,7 @@ namespace Farmhand.API.Locations
                 MergeTileSheets(ref mergedMap, baseMap, injectedMaps);
 
                 // Merge the layers
-                MergeLayers(ref mergedMap, baseMap, injectedMaps, assetName);
+                MergeLayers(ref mergedMap, baseMap, injectedMaps);
 
                 // Merge map properties from the base
                 MergeMapProperties(ref mergedMap, baseMap, injectedMaps);
@@ -128,7 +153,7 @@ namespace Farmhand.API.Locations
         }
 
         // Merge the layers from a baseMap and several injectedMaps into a mergedMap
-        private static void MergeLayers(ref Map mergedMap, Map baseMap, MapInformation[] injectedMaps, string assetName)
+        private static void MergeLayers(ref Map mergedMap, Map baseMap, MapInformation[] injectedMaps)
         {
             // Find the largest layer size among all injecting maps, and use that value
             xTile.Dimensions.Size largestLayerSize = GetLargestLayerSize(baseMap, injectedMaps);
@@ -163,16 +188,29 @@ namespace Farmhand.API.Locations
                                 // Find the matching layer in this injected map that matches the merged layer we're working on
                                 Layer injectedLayer = GetMatchingLayerInList(mergedLayer, injectedMapInfo.Map.Layers, injectedMapInfo);
 
-                                if (!CompareTiles(injectedLayer.Tiles[j, i], baseLayer.Tiles[j, i]))
+                                // Check the map offset to get our injected map, if our local position is negative, we haven't reached it yet
+                                int injectedIndexX = j - injectedMapInfo.OffsetX;
+                                int injectedIndexY = i - injectedMapInfo.OffsetY;
+                                if(injectedIndexX < 0 || injectedIndexY < 0)
+                                {
+                                    // Skip this injecting map for this index
+                                    continue;
+                                }
+
+                                if (!CompareTiles(injectedLayer.Tiles[injectedIndexX, injectedIndexY], baseLayer.Tiles[j, i]))
                                 {
                                     if (modDidOverride == null)
                                     {
-                                        modDidOverride = injectedMapInfo.Owner.ModSettings.Name;
-                                        tileToUse = injectedLayer.Tiles[j, i];
+                                        // Only keep track of what map made the change if it wasn't a soft merging map
+                                        if (injectedMapInfo.Override != MapOverride.SoftMerge)
+                                        {
+                                            modDidOverride = injectedMapInfo.Owner.ModSettings.Name;
+                                        }
+                                        tileToUse = injectedLayer.Tiles[injectedIndexX, injectedIndexY];
                                     }
                                     else
                                     {
-                                        Farmhand.Logging.Log.Warning($"Map merging conflict on {assetName}, {modDidOverride} and {injectedMapInfo.Owner.ModSettings.Name} both attempted to alter {j},{i} on layer {baseLayer.Id}, using first.");
+                                        Farmhand.Logging.Log.Warning($"Map merging conflict on map {baseMap.Id}, {modDidOverride} and {injectedMapInfo.Owner.ModSettings.Name} both attempted to alter {j},{i} on layer {baseLayer.Id}, using first.");
                                     }
                                 }
 
@@ -228,7 +266,11 @@ namespace Farmhand.API.Locations
                                 {
                                     if (modDidOverride == null)
                                     {
-                                        modDidOverride = injectedMapInfo.Owner.ModSettings.Name;
+                                        // Only keep track of what map made the change if it wasn't a soft merging map
+                                        if (injectedMapInfo.Override != MapOverride.SoftMerge)
+                                        {
+                                            modDidOverride = injectedMapInfo.Owner.ModSettings.Name;
+                                        }
                                         tileToUse = injectedLayer.Tiles[j, i];
 
                                         // Get the tilesheet from the injected tile
@@ -239,7 +281,7 @@ namespace Farmhand.API.Locations
                                     }
                                     else
                                     {
-                                        Farmhand.Logging.Log.Warning($"Map merging conflict on {assetName}, {modDidOverride} and {injectedMapInfo.Owner.ModSettings.Name} both attempted to alter {j},{i} on layer {baseLayer.Id}, using first.");
+                                        Farmhand.Logging.Log.Warning($"Map merging conflict on map {baseMap.Id}, {modDidOverride} and {injectedMapInfo.Owner.ModSettings.Name} both attempted to alter {j},{i} on layer {baseLayer.Id}, using first.");
                                     }
                                 }
                             }
@@ -488,14 +530,14 @@ namespace Farmhand.API.Locations
             {
                 foreach (Layer injectingLayer in map.Map.Layers)
                 {
-                    if (injectingLayer.LayerWidth > largestLayerSize.Width)
+                    if (injectingLayer.LayerWidth + map.OffsetX > largestLayerSize.Width)
                     {
-                        largestLayerSize.Width = injectingLayer.LayerWidth;
+                        largestLayerSize.Width = injectingLayer.LayerWidth + map.OffsetX;
                     }
 
-                    if (injectingLayer.LayerHeight > largestLayerSize.Height)
+                    if (injectingLayer.LayerHeight + map.OffsetY > largestLayerSize.Height)
                     {
-                        largestLayerSize.Height = injectingLayer.LayerHeight;
+                        largestLayerSize.Height = injectingLayer.LayerHeight + map.OffsetY;
                     }
                 }
             }
