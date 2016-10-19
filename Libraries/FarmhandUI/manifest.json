@@ -1,0 +1,10 @@
+﻿{
+  "Content": {
+    "Textures": [
+      {
+        "Id": "FarmhandUI.modTitleMenu",
+        "File": "Farmhand.UI.Assets.TitleButtons.png"
+      }
+    ]
+  }
+}

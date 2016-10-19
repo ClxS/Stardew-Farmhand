@@ -1,5 +1,5 @@
 ﻿using Farmhand;
-using Farmhand.API.Utilities;
+using Farmhand.API.Shops;
 using StardewValley;
 using Farmhand.Events;
 using Farmhand.Events.Arguments.GlobalRoute;
@@ -32,9 +32,9 @@ namespace TestCropMod
             Farmhand.API.Crops.Crop.RegisterCrop<TestCrop>(TestCrop.Information);
 
             // Adds a new item to piere's shop, with a delegate to check whether or not they're on sale
-            ShopUtilities.AddToShopStock(Shops.Pierre, BluemelonSeeds.Information, new ShopUtilities.CheckIfAddShopStock(CheckIfBluemelonSeedsAreOnSale), 123);
+            ShopUtilities.AddToShopStock(Instance, Shops.Pierre, BluemelonSeeds.Information, new ShopUtilities.CheckIfAddShopStock(CheckIfBluemelonSeedsAreOnSale), 123);
             // Adds a new item to joja's shop, without a delegate to check whether or not they're no sale, so they always will be
-            ShopUtilities.AddToShopStock(Shops.Joja, BluemelonSeeds.Information, 123);
+            ShopUtilities.AddToShopStock(Instance, Shops.Joja, BluemelonSeeds.Information, 123);
         }
 
         private void PlayerEvents_OnFarmerChanged(object sender, System.EventArgs e)

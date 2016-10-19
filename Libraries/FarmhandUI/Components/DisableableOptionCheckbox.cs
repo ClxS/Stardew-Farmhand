@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
 using StardewValley.Menus;
 
-namespace Farmhand.Overrides.UI.Components
+namespace Farmhand.UI.Components
 {    
     /// <summary>
     /// Custom UI control providing a checkbox which can be disabled.

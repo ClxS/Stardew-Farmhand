@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
 
-namespace Farmhand.Overrides.UI
+namespace Farmhand.UI
 {
     public static class ChatBoxDrawHandler
     {

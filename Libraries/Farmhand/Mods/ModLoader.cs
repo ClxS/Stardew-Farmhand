@@ -79,7 +79,6 @@ namespace Farmhand
             Log.Info($"{numModsLoaded} Mods Loaded!");
 
             Game1.version += $"Stardew Farmhand v{Constants.Version}: {numModsLoaded} mods loaded";
-
         }
 
         private static Assembly CurrentDomainOnAssemblyResolve(object sender, ResolveEventArgs args)

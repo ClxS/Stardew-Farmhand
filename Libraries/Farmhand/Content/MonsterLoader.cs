@@ -73,7 +73,7 @@ namespace Farmhand.Content
             return (T)Convert.ChangeType(Sprite, typeof(T));
         }
 
-        public void Inject<T>(T obj, string assetName)
+        public void Inject<T>(T obj, string assetName, ref object output)
         {
             Logging.Log.Error("You shouldn't be here!");
         }
