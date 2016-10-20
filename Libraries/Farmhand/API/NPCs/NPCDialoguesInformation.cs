@@ -28,7 +28,7 @@ namespace Farmhand.API.NPCs
             DialogueId = dialogueId;
             Message = message;
         }
-
+        
         public override string ToString() => Message;
     }
 }

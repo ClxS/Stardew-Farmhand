@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Farmhand.API.NPCs;
 
 namespace Farmhand.Content
@@ -26,7 +27,7 @@ namespace Farmhand.Content
             if (giftTastes == null)
                 throw new Exception($"Unexpected type for {assetName}");
 
-            foreach (var npc in Farmhand.API.NPCs.NPC.NPCs)
+            foreach (var npc in NPC.NPCs)
             {
                 giftTastes[npc.Value.Name] = npc.Value.GiftTastes.ToString();
             }
@@ -54,11 +55,9 @@ namespace Farmhand.Content
             var dispositions = obj as Dictionary<string, string>;
             if (dispositions == null)
                 throw new Exception($"Unexpected type for {assetName}");
-
-            foreach (var npc in Farmhand.API.NPCs.NPC.NPCs)
-            {
+            
+            foreach (var npc in NPC.NPCs)
                 dispositions[npc.Value.Name] = npc.Value.DispositionString;
-            }
         }
     }
 
@@ -84,7 +83,7 @@ namespace Farmhand.Content
             if (rainyDialogue == null)
                 throw new Exception($"Unexpected type for {assetName}");
 
-            foreach (var npc in Farmhand.API.NPCs.NPC.NPCs)
+            foreach (var npc in NPC.NPCs)
             {
                 rainyDialogue[npc.Value.Name] = npc.Value.Dialogues.GetRainyDialogue;
             }

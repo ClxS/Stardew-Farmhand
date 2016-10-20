@@ -24,10 +24,12 @@ namespace Farmhand.API.NPCs
 
         public List<ScheduleDirections> Directions { get; set; }
 
-        public string BuildDirections()
+        public SchedulePathInformation(string scheduleId)
         {
-            return string.Join("/", Directions.Select(_ => _.ToString()));
+            ScheduleId = scheduleId;
         }
+
+        public string BuildDirections() => string.Join("/", Directions.Select(_ => _.ToString()));
     }
 
     public class ScheduleDirections
@@ -47,6 +49,30 @@ namespace Farmhand.API.NPCs
 
         public string endBehavior { get; set; } = null;
         public string endMessage { get; set; } = null;
+
+        public ScheduleDirections(bool NOT, ScheduleCondition Condition)
+        {
+            this.NOT = NOT;
+            this.Condition = Condition;
+        }
+        public ScheduleDirections(bool GOTO, string NewScheduleId)
+        {
+            this.GOTO = GOTO;
+            this.NewScheduleId = NewScheduleId;
+        }
+        public ScheduleDirections(int timeOfDay, string mapName, int posX, int posY, int facing, string end = null, bool behavior = false)
+        {
+            TimeOfDay = timeOfDay;
+            MapName = mapName;
+            endX = posX;
+            endY = posY;
+
+            if (end == null) return;
+            if (behavior)
+                endBehavior = end;
+            else
+                endMessage = end;
+        }
 
         public override string ToString()
         {

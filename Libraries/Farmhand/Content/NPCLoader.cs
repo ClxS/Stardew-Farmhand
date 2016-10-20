@@ -17,13 +17,24 @@ namespace Farmhand.Content
                 .Select(file => file?.Replace("Content\\", "").Replace(".xnb", ""))
                 .ToList();
 
+        public List<string> FarmerExceptions
+            => Directory.GetFiles($"{Game1.content.RootDirectory}\\Characters\\Farmer")
+                .Select(file => file?.Replace("Content\\", "").Replace(".xnb", ""))
+                .ToList();
+
+        public List<string> MonsterExceptions
+            => Directory.GetFiles($"{Game1.content.RootDirectory}\\Characters\\Monsters")
+                .Select(file => file?.Replace("Content\\", "").Replace(".xnb", ""))
+                .ToList();
+
         public bool HandlesAsset(Type type, string asset)
         {
-            return !NPCExceptions.Any(_ => _.Equals(asset)) && asset.StartsWith("Characters\\");
+            return !(NPCExceptions.Any(_ => _.Equals(asset)) || FarmerExceptions.Any(_ => _.Equals(asset)) || MonsterExceptions.Any(_ => _.Equals(asset))) && asset.StartsWith("Characters\\");
         }
 
         public T Load<T>(ContentManager contentManager, string assetName)
         {
+            Console.WriteLine(assetName);
             var baseName = assetName.Replace("Characters\\", "");
             var sprite = Farmhand.API.NPCs.NPC.NPCs[baseName].Texture;
 
@@ -71,18 +82,18 @@ namespace Farmhand.Content
         public bool IsInjector => true;
 
         public List<string> DialoguesExceptions
-            => Directory.GetFiles($"{Game1.content.RootDirectory}\\Characters\\Dialogues")
+            => Directory.GetFiles($"{Game1.content.RootDirectory}\\Characters\\Dialogue")
                 .Select(file => file?.Replace("Content\\", "").Replace(".xnb", ""))
                 .ToList();
 
         public bool HandlesAsset(Type type, string asset)
         {
-            return !DialoguesExceptions.Any(_ => _.Equals(asset)) && asset.StartsWith("Characters\\Dialogues\\");
+            return !DialoguesExceptions.Any(_ => _.Equals(asset)) && asset.StartsWith("Characters\\Dialogue\\");
         }
 
         public T Load<T>(ContentManager contentManager, string assetName)
         {
-            var baseName = assetName.Replace("Characters\\Dialogues\\", "");
+            var baseName = assetName.Replace("Characters\\Dialogue\\", "");
             var dialogues = Farmhand.API.NPCs.NPC.NPCs[baseName].Dialogues.BuildBaseDialogues();
 
             return (T) Convert.ChangeType(dialogues, typeof(T));
