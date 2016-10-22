@@ -233,13 +233,8 @@ namespace ModLoaderMod.Menus
 
             b.Draw(Game1.mouseCursors, new Vector2(Game1.getOldMouseX(), Game1.getOldMouseY()), Game1.getSourceRectForStandardTileSheet(Game1.mouseCursors, 0, 16, 16), Color.White, 0.0f, Vector2.Zero, Game1.pixelZoom + Game1.dialogueButtonScale / 150f, SpriteEffects.None, 1f);
 
-            if (!String.IsNullOrEmpty(hoverText)) {
-                string lines = string.Join(Environment.NewLine, hoverText.Split()
-                                     .Select((word, index) => new { word, index })
-                                     .GroupBy(x => x.index / 4)
-                                     .Select(grp => string.Join(" ", grp.Select(x => x.word))));
-                drawHoverText(b, lines, Game1.dialogueFont);
-            }
+            if (!String.IsNullOrEmpty(hoverText))
+                drawHoverText(b, Game1.parseText(hoverText, Game1.dialogueFont, 360), Game1.dialogueFont);
         }
 
         public override void receiveRightClick(int x, int y, bool playSound = true)
