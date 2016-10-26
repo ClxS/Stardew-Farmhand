@@ -1,0 +1,8 @@
+﻿{
+  "UniqueId": "EnableDebugMod",
+  "Name": "Enable Debug Mode",
+  "Author": "Kithio",
+  "ModDll": "EnableDebugMod",
+  "Version": "0.1",
+  "Description": "Enables the Debug Menu"
+}
