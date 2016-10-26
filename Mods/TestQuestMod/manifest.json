@@ -1,7 +1,7 @@
 ﻿{
 	"UniqueId" : "TestQuestMod",
 	"Name" : "Test Quests Mod",
-	"Author": "TownEater",
+	"Author": "Kithio",
 	"ModDll": "TestQuestMod",
 	"Version" : "0.1",
 	"Description" : "An example quests mod."

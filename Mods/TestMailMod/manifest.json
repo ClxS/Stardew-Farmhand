@@ -1,7 +1,7 @@
 ﻿{
 	"UniqueId" : "TestMailMod",
 	"Name" : "Test Mail Mod",
-	"Author": "TownEater",
+	"Author": "Kithio",
 	"ModDll": "TestMailMod",
 	"Version" : "0.1",
 	"Description" : "An example mail mod."
