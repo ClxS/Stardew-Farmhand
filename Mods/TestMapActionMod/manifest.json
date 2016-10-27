@@ -1,0 +1,16 @@
+﻿{
+  "UniqueId": "TestMapActionMod",
+  "Name": "Test Map Action Mod",
+  "Author": "Kithio",
+  "ModDll": "TestMapActionMod",
+  "Version": "0.1",
+  "Description": "Tests Overriding and Adding Action in Map",
+  "Content": {
+    "Maps": [
+      {
+        "Id": "farmCave_Edit",
+        "File": "FarmCave.tide"
+      }
+    ]
+  }
+}
