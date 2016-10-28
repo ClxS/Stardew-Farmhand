@@ -55,6 +55,7 @@
     <Reference Include="Stardew Farmhand.int1, Version=1.0.5940.30711, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Bin\Stardew Farmhand.int1.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
