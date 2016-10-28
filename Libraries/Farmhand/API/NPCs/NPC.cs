@@ -20,16 +20,5 @@ namespace Farmhand.API.NPCs
             }
             NPCs[npcInformation.Name] = npcInformation;
         }
-        
-        [Hook(HookType.Exit, "StardewValley.Game1", "loadForNewGame")]
-        internal static void InvokeAfterGameLoaded()
-        {
-            foreach (var npc in NPCs)
-            {
-                var Information = npc.Value;
-                Game1.getLocationFromName(npc.Value.DefaultMap).addCharacter(new StardewValley.NPC(new AnimatedSprite(Information.Texture), new Vector2(Information.DefaultX * Game1.tileSize, Information.DefaultY * Game1.tileSize), Information.DefaultMap, (int)Information.DefaultFacingDirection, Information.DisplayName ?? Information.Name, Information.IsDatable, null, Information.Portrait));
-                StardewValley.NPC.populateRoutesFromLocationToLocationList();
-            }
-        }
     }
 }

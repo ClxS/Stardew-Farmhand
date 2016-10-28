@@ -18,6 +18,7 @@ namespace Farmhand.Events
         public static event EventHandler OnAfterUnloadedContent = delegate { };
         public static event EventHandler<EventArgsOnBeforeGameUpdate> OnBeforeUpdateTick = delegate { };
         public static event EventHandler OnAfterUpdateTick = delegate { };
+        public static event EventHandler OnAfterGameLoaded = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
         internal static void InvokeBeforeGameInitialise([ThisBind] object @this)
@@ -67,6 +68,13 @@ namespace Farmhand.Events
         internal static void InvokeAfterUpdate([ThisBind] object @this)
         {
             EventCommon.SafeInvoke(OnAfterUpdateTick, @this);
+        }
+
+
+        [Hook(HookType.Exit, "StardewValley.Game1", "loadForNewGame")]
+        internal static void InvokeAfterGameLoaded()
+        {
+            EventCommon.SafeInvoke(OnAfterGameLoaded, null);
         }
     }
 }
