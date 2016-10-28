@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Farmhand.API.NPCs;
+﻿using Farmhand.API.NPCs;
 using Microsoft.Xna.Framework;
 using StardewValley;
 

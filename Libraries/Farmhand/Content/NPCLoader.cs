@@ -16,25 +16,16 @@ namespace Farmhand.Content
             => Directory.GetFiles($"{Game1.content.RootDirectory}\\Characters")
                 .Select(file => file?.Replace("Content\\", "").Replace(".xnb", ""))
                 .ToList();
-
-        public List<string> FarmerExceptions
-            => Directory.GetFiles($"{Game1.content.RootDirectory}\\Characters\\Farmer")
-                .Select(file => file?.Replace("Content\\", "").Replace(".xnb", ""))
-                .ToList();
-
-        public List<string> MonsterExceptions
-            => Directory.GetFiles($"{Game1.content.RootDirectory}\\Characters\\Monsters")
-                .Select(file => file?.Replace("Content\\", "").Replace(".xnb", ""))
-                .ToList();
-
+        
         public bool HandlesAsset(Type type, string asset)
         {
-            return !(NPCExceptions.Any(_ => _.Equals(asset)) || FarmerExceptions.Any(_ => _.Equals(asset)) || MonsterExceptions.Any(_ => _.Equals(asset))) && asset.StartsWith("Characters\\");
+            if (asset.StartsWith("Characters\\"))
+                Logging.Log.Info($"Texture: {asset} => {asset.ContainsAny("\\Farmer", "\\Monsters", "\\Dialogue", "\\schedules")}");
+            return !NPCExceptions.Any(_ => _.Equals(asset)) && (asset.StartsWith("Characters\\") && !asset.ContainsAny("\\Farmer", "\\Monsters", "\\Dialogue", "\\schedules"));
         }
 
         public T Load<T>(ContentManager contentManager, string assetName)
         {
-            Console.WriteLine(assetName);
             var baseName = assetName.Replace("Characters\\", "");
             var sprite = Farmhand.API.NPCs.NPC.NPCs[baseName].Texture;
 
@@ -59,6 +50,8 @@ namespace Farmhand.Content
 
         public bool HandlesAsset(Type type, string asset)
         {
+            if (asset.StartsWith("Characters\\"))
+                Logging.Log.Info($"Schedules: {asset} => {asset.ContainsAny("\\Farmer", "\\Monsters", "\\Dialogue")}");
             return !SchedulesExceptions.Any(_ => _.Equals(asset)) && asset.StartsWith("Characters\\schedules\\");
         }
 
@@ -88,6 +81,8 @@ namespace Farmhand.Content
 
         public bool HandlesAsset(Type type, string asset)
         {
+            if (asset.StartsWith("Characters\\"))
+                Logging.Log.Info($"Dialogue: {asset} => {asset.ContainsAny("\\Farmer", "\\Monsters", "\\schedules")}");
             return !DialoguesExceptions.Any(_ => _.Equals(asset)) && asset.StartsWith("Characters\\Dialogue\\");
         }
 

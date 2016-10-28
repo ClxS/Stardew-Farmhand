@@ -86,6 +86,11 @@
     <Compile Include="API\Dialogues\DialogueResultInformation.cs" />
     <Compile Include="API\Game.cs" />
     <Compile Include="API\Generic\ItemChancePair.cs" />
+    <Compile Include="API\Locations\MapActionInformation.cs" />
+    <Compile Include="API\Player\QuestInformation.cs" />
+    <Compile Include="API\Player\Quest.cs" />
+    <Compile Include="API\Player\MailInformation.cs" />
+    <Compile Include="API\Player\Mail.cs" />
     <Compile Include="API\Items\BigCraftable.cs" />
     <Compile Include="API\Items\BigCraftableInformation.cs" />
     <Compile Include="API\Items\Item.cs" />
@@ -144,6 +149,8 @@
     <Compile Include="Content\BlueprintInjector.cs" />
     <Compile Include="Content\CropInjector.cs" />
     <Compile Include="Content\DelegatedContentInjector.cs" />
+    <Compile Include="Content\QuestInjector.cs" />
+    <Compile Include="Content\MailInjector.cs" />
     <Compile Include="Content\MapInjector.cs" />
     <Compile Include="Content\MonsterInjector.cs" />
     <Compile Include="Content\MonsterLoader.cs" />
@@ -202,6 +209,8 @@
     <Compile Include="Helpers\CompatibilityLayer.cs" />
     <Compile Include="Helpers\ApplicationResourcesUtility.cs" />
     <Compile Include="Helpers\MainRedirect.cs" />
+    <Compile Include="Helpers\MersenneTwister.cs" />
+    <Compile Include="Helpers\Randomizer.cs" />
     <Compile Include="Helpers\UniqueId.cs" />
     <Compile Include="Helpers\UniqueIdConverter.cs" />
     <Compile Include="Helpers\VersionConverter.cs" />
@@ -222,6 +231,7 @@
     <Compile Include="Mods\ModConfiguration.cs" />
     <Compile Include="Mods\ModLoader.cs" />
     <Compile Include="Mods\ModState.cs" />
+    <Compile Include="Overrides\Characters\NPC.cs" />
     <Compile Include="Overrides\Characters\Monster.cs" />
     <Compile Include="Overrides\Game1.cs" />
     <Compile Include="Overrides\SerializableDictionary.cs" />
@@ -247,6 +257,7 @@
     <Folder Include="API\Machines\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Locations\Location.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -26,5 +26,10 @@ namespace Farmhand.Helpers
 
             return attributes.Length > 0 ? attributes[0].Description : value.ToString();
         }
+
+        public static bool ContainsAny(this string source, params string[] values)
+        {
+            return values.Any(source.Contains);
+        }
     }
 }

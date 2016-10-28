@@ -28,6 +28,8 @@ namespace Farmhand.Content
             new BigCraftableInjector(),
             new DelegatedContentInjector(),
             new MapInjector(),
+            new MailInjector(),
+            new QuestInjector(),
             new NPCLoader(),
             new NPCDialogueLoader(),
             new NPCSchedulesLoader(),
