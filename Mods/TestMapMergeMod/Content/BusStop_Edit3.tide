@@ -2448,7 +2448,11 @@
         </Row>
         <Row>
           <Null Count="17" />
-          <Static Index="862" BlendMode="Alpha" />
+          <Static Index="23" BlendMode="Alpha">
+            <Properties>
+              <Property Key="Action" Type="String"><![CDATA[BusStopNewObject]]></Property>
+            </Properties>
+          </Static>
           <Null Count="17" />
         </Row>
         <Row>

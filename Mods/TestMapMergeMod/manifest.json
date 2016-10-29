@@ -7,20 +7,20 @@
 	"Description" : "An example mod which merges 3 map files into the same map.",
 	"Content" : 
 	{
-		"Maps" : 
-		[
-			{
-				"Id" : "busStop_edit1",
-				"File" : "BusStop_Edit1.tide"
-			},
-            {
-				"Id" : "busStop_edit2",
-				"File" : "BusStop_Edit2.tide"
-			},
-            {
-				"Id" : "busStop_edit3",
-				"File" : "BusStop_Edit3.tide"
-			}
-		]
+    "Maps": 
+    [
+      {
+        "Id": "busStop_edit1",
+        "File": "BusStop_Edit1.tide"
+      },
+      {
+        "Id": "busStop_edit2",
+        "File": "BusStop_Edit2.tide"
+      },
+      {
+        "Id": "busStop_edit3",
+        "File": "BusStop_Edit3.tide"
+      }
+    ]
 	}
 }

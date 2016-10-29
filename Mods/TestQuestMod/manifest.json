@@ -1,0 +1,8 @@
+﻿{
+	"UniqueId" : "TestQuestMod",
+	"Name" : "Test Quests Mod",
+	"Author": "Kithio",
+	"ModDll": "TestQuestMod",
+	"Version" : "0.1",
+	"Description" : "An example quests mod."
+}

@@ -222,6 +222,7 @@ namespace Farmhand.API.Locations
                                         StaticTile staticTileToUse = tileToUse as StaticTile;
 
                                         mergedLayer.Tiles[j, i] = new StaticTile(mergedLayer, mergedTileSheet, staticTileToUse.BlendMode, staticTileToUse.TileIndex);
+                                        InjectComponentProperties(mergedLayer.Tiles[j, i], staticTileToUse);
                                     }
                                     else if (tileToUse is AnimatedTile)
                                     {
@@ -232,9 +233,11 @@ namespace Farmhand.API.Locations
                                         for (int f = 0; f < mergedFrames.Length; f++)
                                         {
                                             mergedFrames[f] = new StaticTile(mergedLayer, mergedTileSheet, animatedTileToUse.TileFrames[f].BlendMode, animatedTileToUse.TileFrames[f].TileIndex);
+                                            InjectComponentProperties(mergedFrames[f], animatedTileToUse.TileFrames[f]);
                                         }
 
                                         mergedLayer.Tiles[j, i] = new AnimatedTile(mergedLayer, mergedFrames, animatedTileToUse.FrameInterval);
+                                        InjectComponentProperties(mergedLayer.Tiles[j, i], animatedTileToUse);
                                     }
                                     else
                                     {
@@ -294,6 +297,7 @@ namespace Farmhand.API.Locations
                                     StaticTile staticTileToUse = tileToUse as StaticTile;
 
                                     mergedLayer.Tiles[j, i] = new StaticTile(mergedLayer, mergedTileSheet, staticTileToUse.BlendMode, staticTileToUse.TileIndex);
+                                    InjectComponentProperties(mergedLayer.Tiles[j, i], staticTileToUse);
                                 }
                                 else if (tileToUse is AnimatedTile)
                                 {
@@ -304,9 +308,11 @@ namespace Farmhand.API.Locations
                                     for (int f = 0; f < mergedFrames.Length; f++)
                                     {
                                         mergedFrames[f] = new StaticTile(mergedLayer, mergedTileSheet, animatedTileToUse.TileFrames[f].BlendMode, animatedTileToUse.TileFrames[f].TileIndex);
+                                        InjectComponentProperties(mergedFrames[f], animatedTileToUse.TileFrames[f]);
                                     }
 
                                     mergedLayer.Tiles[j, i] = new AnimatedTile(mergedLayer, mergedFrames, animatedTileToUse.FrameInterval);
+                                    InjectComponentProperties(mergedLayer.Tiles[j, i], animatedTileToUse);
                                 }
                                 else
                                 {
@@ -382,7 +388,7 @@ namespace Farmhand.API.Locations
                 foreach (var injectedProperty in injectingComponent)
                 {
                     // This is a special merge case, the list of warps needs to be merged very careful
-                    if(toInject is Map && injectedProperty.Key.Equals("Warp"))
+                    if (toInject is Map && injectedProperty.Key.Equals("Warp"))
                     {
                         string warpString = injectedProperty.Value;
                         string[] rawWarpSplit = warpString.Split(' ');
@@ -506,6 +512,15 @@ namespace Farmhand.API.Locations
                 toInject.Properties.Add("Warp", new PropertyValue(finalWarpString));
             }
         }
+
+        /// <summary>
+        /// Merges the properties from the injectingComponent into the targetComponent
+        /// </summary>
+        /// <param name="targetComponent">Your target component</param>
+        /// <param name="injectingComponent">Your source component</param>
+        public static void InjectComponentProperties(Component targetComponent, Component injectingComponent) 
+            => injectingComponent.Properties.ToList().ForEach(prop => targetComponent.Properties[prop.Key] = prop.Value);
+        // Converts the Source Component's Properties into a List and loops through them to replace the targets Properties with the Source
 
         public static xTile.Dimensions.Size GetLargestLayerSize(Map baseMap, MapInformation[] injectedMaps)
         {
@@ -685,7 +700,7 @@ namespace Farmhand.API.Locations
             {
                 if(b[property.Key] != null)
                 {
-                    CompareProperties(a[property.Key], b[property.Key]);
+                    if (!CompareProperties(a[property.Key], b[property.Key])) { return false; }
                 }
             }
 
