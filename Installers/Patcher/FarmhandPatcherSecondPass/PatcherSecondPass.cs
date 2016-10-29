@@ -56,8 +56,8 @@ namespace Farmhand
         protected override void AlterTypeProtections(CecilContext context, Type type)
         {
             var attributeValue = type.GetCustomAttributes(typeof(HookAlterProtectionAttribute), false).First() as HookAlterProtectionAttribute;
-            if (type.BaseType != null)
-                CecilHelper.AlterProtectionOnType(context, attributeValue != null && attributeValue.Protection == LowestProtection.Public, attributeValue.ClassName);
+            if (type.BaseType != null && attributeValue != null)
+                CecilHelper.AlterProtectionOnType(context, attributeValue.Protection == LowestProtection.Public, attributeValue.ClassName);
         }
 
         protected override void HookApiEvents(CecilContext cecilContext)

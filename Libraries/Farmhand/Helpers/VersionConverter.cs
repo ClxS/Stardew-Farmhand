@@ -37,8 +37,11 @@ namespace Farmhand.Helpers
                 case JsonToken.StartObject:
                     break;
                 case JsonToken.EndObject:
-                    var tmp = jObject.ToObject<SmapiVersion>();
-                    retValue = new Version(tmp.MajorVersion, tmp.MinorVersion, tmp.PatchVersion);
+                    if (jObject != null)
+                    {
+                        var tmp = jObject.ToObject<SmapiVersion>();
+                        retValue = new Version(tmp.MajorVersion, tmp.MinorVersion, tmp.PatchVersion);
+                    }
                     break;
                 case JsonToken.String:
                     retValue = new Version((string)reader.Value);
