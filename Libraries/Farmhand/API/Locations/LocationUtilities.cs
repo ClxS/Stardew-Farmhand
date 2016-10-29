@@ -78,13 +78,13 @@ namespace Farmhand.API.Locations
                 Map mergedMap = new Map(baseMap.Id);
 
                 // Merge the tilsheets
-                MergeTileSheets(ref mergedMap, baseMap, injectedMaps);
+                MergeTileSheets(mergedMap, baseMap, injectedMaps);
 
                 // Merge the layers
-                MergeLayers(ref mergedMap, baseMap, injectedMaps);
+                MergeLayers(mergedMap, baseMap, injectedMaps);
 
                 // Merge map properties from the base
-                MergeMapProperties(ref mergedMap, baseMap, injectedMaps);
+                MergeMapProperties(mergedMap, baseMap, injectedMaps);
                 
                 // Return the finished, merged map
                 return mergedMap;
@@ -97,7 +97,7 @@ namespace Farmhand.API.Locations
         }
 
         // Merge the tilesheets from a baseMap and an array of injectedMaps into a mergedMap
-        private static void MergeTileSheets(ref Map mergedMap, Map baseMap, MapInformation[] injectedMaps)
+        private static void MergeTileSheets(Map mergedMap, Map baseMap, MapInformation[] injectedMaps)
         {
             foreach (TileSheet baseSheet in baseMap.TileSheets)
             {
@@ -153,7 +153,7 @@ namespace Farmhand.API.Locations
         }
 
         // Merge the layers from a baseMap and several injectedMaps into a mergedMap
-        private static void MergeLayers(ref Map mergedMap, Map baseMap, MapInformation[] injectedMaps)
+        private static void MergeLayers(Map mergedMap, Map baseMap, MapInformation[] injectedMaps)
         {
             // Find the largest layer size among all injecting maps, and use that value
             xTile.Dimensions.Size largestLayerSize = GetLargestLayerSize(baseMap, injectedMaps);
@@ -336,7 +336,7 @@ namespace Farmhand.API.Locations
         }
 
         // Merge the map properties from a baseMap and an array of injectedMaps into a mergedMap
-        private static void MergeMapProperties(ref Map mergedMap, Map baseMap, MapInformation[] injectedMaps)
+        private static void MergeMapProperties(Map mergedMap, Map baseMap, MapInformation[] injectedMaps)
         {
             List<IPropertyCollection> propertyInjectingMaps = new List<IPropertyCollection>();
             foreach (var map in injectedMaps)
