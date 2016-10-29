@@ -169,9 +169,9 @@ namespace StardewModdingAPI.Events
         public EventArgsInventoryChanged(List<Item> inventory, List<ItemStackChange> changedItems)
         {
             Inventory = inventory;
-            Added = changedItems.Where(n => n.ChangeType == ChangeType.Added).ToList();
-            Removed = changedItems.Where(n => n.ChangeType == ChangeType.Removed).ToList();
-            QuantityChanged = changedItems.Where(n => n.ChangeType == ChangeType.StackChange).ToList();
+            Added = changedItems?.Where(n => n.ChangeType == ChangeType.Added).ToList() ?? new List<ItemStackChange>();
+            Removed = changedItems?.Where(n => n.ChangeType == ChangeType.Removed).ToList() ?? new List<ItemStackChange>();
+            QuantityChanged = changedItems?.Where(n => n.ChangeType == ChangeType.StackChange).ToList() ?? new List<ItemStackChange>();
         }
 
         public List<Item> Inventory { get; private set; }
