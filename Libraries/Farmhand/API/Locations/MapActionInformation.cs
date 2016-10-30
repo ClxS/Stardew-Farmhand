@@ -11,9 +11,9 @@ namespace Farmhand.API.Locations
         
         public string Action { get; set; }
 
-        public Func<bool> Callback { get; set; }
+        public Func<string, bool> Callback { get; set; }
         
-        public MapActionInformation(Mod owner, string action, Func<bool> callback)
+        public MapActionInformation(Mod owner, string action, Func<string, bool> callback)
         {
             Owner = owner;
             Action = action;
