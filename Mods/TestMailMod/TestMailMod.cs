@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Farmhand;
+using Farmhand.API.Generic;
 using Farmhand.API.Player;
 using Farmhand.Events;
 using Farmhand.Events.Arguments.ControlEvents;
@@ -17,7 +20,6 @@ namespace TestMailMod
         public override void Entry()
         {
             GameEvents.OnAfterLoadedContent += GameEvents_AfterContentLoaded;
-            PlayerEvents.OnItemAddedToInventory += PlayerEvents_ItemAddedToInventory;
             ControlEvents.OnKeyPressed += ControlEvents_KeyPressed;
         }
 
@@ -25,39 +27,99 @@ namespace TestMailMod
 
         private void ControlEvents_KeyPressed(object sender, EventArgsKeyPressed e)
         {   
-            if (e.KeyPressed == Keys.F8)
+            if (e.KeyPressed == Keys.F3)
             {
                 if (!SentMail)
                 {
                     SentMail = true;
                     Game1.timeOfDay = 900;
-                }
-                if (!Game1.player.hasOrWillReceiveMail("testMod_StartTestQuest"))
-                {
-                    Game1.player.addItemToInventory(new Object(337, 2));
-                    Game1.player.addItemToInventory(new Object(789, 1));
-                    Game1.player.mailForTomorrow.Add("testMod_StartTestQuest");
+                    
+                    var mail = Mail.MailBox.Select(_ =>
+                    {
+                        if (Game1.player.hasOrWillReceiveMail(_.Key))
+                            return null;
+
+                        return _.Key;
+                    }).ToArray();
+                    Game1.player.mailForTomorrow.AddRange(mail);
+                    Game1.drawObjectDialogue($"Mail Sent: {string.Join(", ", mail)}");
                 }
             }
         }
-
-        private void PlayerEvents_ItemAddedToInventory(object sender, EventArgsOnItemAddedToInventory e)
-        {
-            Log.Info(e.Item.Name);
-            Console.WriteLine(Game1.player.hasOrWillReceiveMail("testMod_StartTestQuest"));
-            if (e.Item.Name == "Dwarf Scroll III" && !Game1.player.hasOrWillReceiveMail("testMod_StartTestQuest"))
-            {
-                Log.Info("Mail has been sent!");
-                Game1.player.mailForTomorrow.Add("testMod_StartTestQuest");
-            }
-        }
-
+        
         private void GameEvents_AfterContentLoaded(object sender, EventArgs e)
         {
             Mail.RegisterMail(new MailInformation
             {
                 Id = "testMod_StartTestQuest",
-                Message = "I want you to go to the Beach! NO QUESTIONS ASKED!^  ???%item quest 200 %%"
+                Message = "I want you to go to the Beach! NO QUESTIONS ASKED!^  ???",
+                Attachment = new MailInformation.QuestAttachment
+                {
+                    QuestId = 200
+                }
+            });
+
+            Mail.RegisterMail(new MailInformation
+            {
+                Id = "testMod_MultiObjectAttachment",
+                Message = "Here's that one of those items we promised you^  ???",
+                Attachment = new MailInformation.MultiObjectAttachment
+                {
+                    Items = new List<ItemQuantityPair>()
+                    {
+                        new ItemQuantityPair { ItemId = 337, Count = 2 },
+                        new ItemQuantityPair { ItemId = 651, Count = 9 },
+                        new ItemQuantityPair { ItemId = 796, Count = 1 }
+                    }
+                }
+            });
+
+            Mail.RegisterMail(new MailInformation
+            {
+                Id = "testMod_ObjectAttachment",
+                Message = "Here's that item we promised you^  ???",
+                Attachment = new MailInformation.ObjectAttachment
+                {
+                    ItemId = 795,
+                    Amount = 10 // 1 is the default is no Amonut has been set
+                }
+            });
+
+            Mail.RegisterMail(new MailInformation
+            {
+                Id = "testMod_BigObjectAttachment",
+                Message = "Here's that large item we promised you^  ???",
+                Attachment = new MailInformation.BigObjectAttachment
+                {
+                    ItemId = 72
+                }
+            });
+
+            Mail.RegisterMail(new MailInformation
+            {
+                Id = "testMod_MoneyAttachment",
+                Message = "Here's that money we promised you^  ???",
+                Attachment = new MailInformation.MoneyAttachment
+                {
+                    MinMoney = 14000000
+                }
+            });
+
+            Mail.RegisterMail(new MailInformation
+            {
+                Id = "testMod_CookingAttachment",
+                Message = "Here's some cooking recipe we found for you^  ???",
+                Attachment = new MailInformation.CookingAttachment()
+            });
+
+            Mail.RegisterMail(new MailInformation
+            {
+                Id = "testMod_CraftingAttachment",
+                Message = "We thought this might come in handy for you. It's the recipe for a Tall Torch!^  ???",
+                Attachment = new MailInformation.CraftingAttachment
+                {
+                    RecipeName = "Tub o' Flowers"
+                }
             });
         }
     }

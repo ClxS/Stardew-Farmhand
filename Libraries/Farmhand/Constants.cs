@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Farmhand.Helpers;
 
 namespace Farmhand
 {
@@ -18,5 +19,7 @@ namespace Farmhand
         public static Assembly Assembly => Assembly.GetExecutingAssembly();
 
         public static bool OverrideGameDraw => true;
+
+        public static Randomizer Randomizer = new Randomizer();
     }
 }
