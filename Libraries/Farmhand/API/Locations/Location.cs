@@ -52,11 +52,11 @@ namespace Farmhand.API.Locations
                 mapActionInformation = list?.FirstOrDefault(item => item.Action == action);
                 if (mapActionInformation != null)
                 {
-                    useOutput = mapActionInformation.Callback.Invoke();
+                    useOutput = mapActionInformation.Callback.Invoke(action);
                 }
             }
             else if ((mapActionInformation = GlobalActions.FirstOrDefault(item => item.Action == action)) != null)
-                useOutput = mapActionInformation.Callback.Invoke();
+                useOutput = mapActionInformation.Callback.Invoke(action);
 
             if (ModRegistry.GetRegisteredItems().FirstOrDefault(_ => Equals(_.UniqueId, mapActionInformation?.Owner.ModSettings.UniqueId)) == null)
                 useOutput = false;
