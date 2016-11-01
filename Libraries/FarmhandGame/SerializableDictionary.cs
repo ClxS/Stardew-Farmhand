@@ -77,9 +77,9 @@ namespace Farmhand.Overrides.Game
             var serializableDictionary = @this as SerializableDictionary<TKey, TValue>;
 
             if (serializableDictionary == null) return false;
-
-            XmlSerializer serializer = new XmlSerializer(typeof(TKey), API.Serializer.InjectedTypes.ToArray());
-            XmlSerializer serializer2 = new XmlSerializer(typeof(TValue), API.Serializer.InjectedTypes.ToArray());
+            
+            var serializer = GetSerializerForType(typeof(TKey));
+            var serializer2 = GetSerializerForType(typeof(TValue));
             Dictionary<TKey, TValue>.KeyCollection.Enumerator enumerator = serializableDictionary.Keys.GetEnumerator();
             try
             {
