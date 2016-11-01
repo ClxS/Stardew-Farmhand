@@ -18,13 +18,11 @@ namespace TestMapActionMod
         public override void Entry()
         {
             Instance = this;
-            Location.RegisterAction("Farm", new MapActionInformation(Instance, "WarpGreenhouse", OverrideGreenhouseWarp));
+            Location.RegisterAction("Farm", new MapActionInformation(Instance, "WarpGreenhouse", ActionHandler));
 
-            Location.RegisterAction(new MapActionInformation(Instance, "FarmCaveVines", ActionFarmCaveVines));
-            Location.RegisterAction(new MapActionInformation(Instance, "FarmCaveWall", ActionFarmCaveWall));
-            Location.RegisterAction("BusStop", new MapActionInformation(Instance, "BusStopNewObject", ActionFarmCaveLantern));
-
-            Location.RegisterAction("FarmHouse", new MapActionInformation(Instance, "asdf", ActionASDF));
+            Location.RegisterAction(new MapActionInformation(Instance, "FarmCaveVines", ActionHandler));
+            Location.RegisterAction(new MapActionInformation(Instance, "FarmCaveWall", ActionHandler));
+            Location.RegisterAction("BusStop", new MapActionInformation(Instance, "BusStopNewObject", ActionHandler));
 
             GameEvents.OnAfterLoadedContent += GameEvents_AfterContentLoaded;
         }
@@ -36,41 +34,31 @@ namespace TestMapActionMod
             LocationUtilities.RegisterMap(Instance, "Maps\\FarmCave", caveEdit);
         }
 
-        private bool OverrideGreenhouseWarp()
+        private bool ActionHandler(string action)
         {
-            Console.WriteLine("Override has been called!");
-            if (!Game1.player.hasGreenhouse)
+            switch (action)
             {
-                Game1.drawObjectDialogue("YOU SHALL NOT PASS!");
-                return true;
+                case "WarpGreenhouse":
+                    if (!Game1.player.hasGreenhouse)
+                    {
+                        Game1.drawObjectDialogue("YOU SHALL NOT PASS!");
+                        return true;
+                    }
+
+                    Game1.warpFarmer("Greenhouse", 10, 11, false);
+                    return true;
+                case "FarmCaveVines":
+                    Game1.drawObjectDialogue("Just some nasty old vines.");
+                    return true;
+                case "FarmCaveWall":
+                    Game1.drawObjectDialogue("What are you doing staring at a wall for? Completely pointless...");
+                    return true;
+                case "BusStopNewObject":
+                    Game1.drawObjectDialogue("WHY DOES THIS STAND HERE!?");
+                    return true;
+                default:
+                    return false;
             }
-
-            Game1.warpFarmer("Greenhouse", 10, 11, false);
-            return true;
-        }
-
-        private bool ActionFarmCaveVines()
-        {
-            Game1.drawObjectDialogue("Just some nasty old vines.");
-            return true;
-        }
-
-        private bool ActionFarmCaveWall()
-        {
-            Game1.drawObjectDialogue("What are you doing staring at a wall for? Completely pointless...");
-            return true;
-        }
-
-        private bool ActionFarmCaveLantern()
-        {
-            Game1.drawObjectDialogue("WHY DOES THIS STAND HERE!?");
-            return true;
-        }
-
-        private bool ActionASDF()
-        {
-            Game1.drawObjectDialogue("IT'S MY FUCKING FIREPLACE! HOLY BALLS!");
-            return true;
         }
     }
 }
