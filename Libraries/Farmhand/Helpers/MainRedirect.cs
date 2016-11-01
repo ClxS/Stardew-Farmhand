@@ -121,7 +121,12 @@ namespace Farmhand.Helpers
         [Hook(HookType.Entry, "StardewValley.Program", "Main")]
         internal static bool MainRedirectFunction()
         {
+            Program.ReadConfig();
+
             ModLoader.TryLoadModCompatiblityLayers();
+
+            if (Program.Config.DebugMode)
+                ReleaseBuild = false;
 
             GameTesterMode = true;
             AppDomain.CurrentDomain.UnhandledException += HandleException;
