@@ -47,6 +47,7 @@ namespace StardewModdingAPI
 #pragma warning restore CS0618
 
             Farmhand.Events.LocationEvents.OnLocationsChanged += Events.LocationEvents.InvokeLocationsChanged;
+            Farmhand.Events.LocationEvents.OnLocationsChanged += Events.PlayerEvents.InvokeLoadedGame;
             Farmhand.Events.LocationEvents.OnLocationObjectsChanged += Events.LocationEvents.InvokeOnNewLocationObject;
             Farmhand.Events.LocationEvents.OnCurrentLocationChanged += Events.LocationEvents.InvokeCurrentLocationChanged;
 
