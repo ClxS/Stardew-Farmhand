@@ -1,4 +1,5 @@
 ﻿using Farmhand.Attributes;
+using Farmhand.Events.Arguments.LocationEvents;
 using StardewValley;
 using System;
 using System.Collections.Specialized;
@@ -16,7 +17,7 @@ namespace Farmhand.Events
         public static event EventHandler<NotifyCollectionChangedEventArgs> OnLocationTerrainFeaturesChanged = delegate { };
         public static event EventHandler<CancelEventArgs> OnBeforeLocationLoadObjects = delegate { };
         public static event EventHandler OnAfterLocationLoadObjects = delegate { };
-        public static event EventHandler OnCurrentLocationChanged = delegate { };
+        public static event EventHandler<EventArgsOnCurrentLocationChanged> OnCurrentLocationChanged = delegate { };
         
         [Hook(HookType.Exit, "StardewValley.Game1", "loadForNewGame")]
         internal static void InvokeLocationsChanged()
@@ -39,7 +40,7 @@ namespace Farmhand.Events
         [PendingHook]
         internal static void InvokeCurrentLocationChanged(GameLocation priorLocation, GameLocation newLocation)
         {
-            EventCommon.SafeInvoke(OnCurrentLocationChanged, null);
+            EventCommon.SafeInvoke(OnCurrentLocationChanged, null, new EventArgsOnCurrentLocationChanged(priorLocation, newLocation));
         }
         
         [Hook(HookType.Entry, "StardewValley.GameLocation", "objectCollectionChanged")]
