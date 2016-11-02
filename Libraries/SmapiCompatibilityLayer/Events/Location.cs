@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using StardewValley;
 using Farmhand.Events;
+using Farmhand.Events.Arguments.LocationEvents;
 
 namespace StardewModdingAPI.Events
 {
@@ -16,9 +17,9 @@ namespace StardewModdingAPI.Events
             EventCommon.SafeInvoke(LocationsChanged, sender, new EventArgsGameLocationsChanged(Game1.locations));
         }
 
-        internal static void InvokeCurrentLocationChanged(object sender, EventArgs eventArgs)
+        internal static void InvokeCurrentLocationChanged(object sender, EventArgsOnCurrentLocationChanged eventArgs)
         {
-            EventCommon.SafeInvoke(CurrentLocationChanged, sender, new EventArgsCurrentLocationChanged(null, Game1.currentLocation));
+            EventCommon.SafeInvoke(CurrentLocationChanged, sender, new EventArgsCurrentLocationChanged(eventArgs.PriorLocation, eventArgs.NewLocation));
         }
 
         internal static void InvokeOnNewLocationObject(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
