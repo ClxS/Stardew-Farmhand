@@ -1,6 +1,7 @@
 ﻿using System;
 using StardewValley;
 using Farmhand.Events;
+using Farmhand.Events.Arguments.MenuEvents;
 
 namespace StardewModdingAPI.Events
 {
@@ -8,9 +9,9 @@ namespace StardewModdingAPI.Events
     {
         public static event EventHandler<EventArgsClickableMenuChanged> MenuChanged = delegate { };
 
-        internal static void InvokeMenuChanged(object sender, EventArgs eventArgs)
+        internal static void InvokeMenuChanged(object sender, EventArgsOnMenuChanged eventArgs)
         {
-            EventCommon.SafeInvoke(MenuChanged, null, new EventArgsClickableMenuChanged(null, Game1.activeClickableMenu));
+            EventCommon.SafeInvoke(MenuChanged, null, new EventArgsClickableMenuChanged(eventArgs.PriorMenu, eventArgs.NewMenu));
         }
     }
 }
