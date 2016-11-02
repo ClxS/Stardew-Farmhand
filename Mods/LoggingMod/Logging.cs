@@ -29,6 +29,7 @@ namespace LoggingMod
             Farmhand.Events.GraphicsEvents.OnBeforeDraw += GraphicsEvents_OnBeforeDraw;
             Farmhand.Events.GraphicsEvents.OnAfterDraw += GraphicsEvents_OnAfterDraw;
             Farmhand.Events.LocationEvents.OnLocationsChanged += LocationEvents_OnLocationsChanged;
+            Farmhand.Events.LocationEvents.OnBeforeWarp += LocationEvents_OnBeforeWarp;
             Farmhand.Events.LocationEvents.OnCurrentLocationChanged += LocationEvents_OnCurrentLocationChanged;
             Farmhand.Events.LocationEvents.OnLocationObjectsChanged += LocationEvents_OnLocationObjectsChanged;
             Farmhand.Events.PlayerEvents.OnBeforePlayerTakesDamage += PlayerEvents_OnBeforePlayerTakesDamage;
@@ -104,6 +105,11 @@ namespace LoggingMod
         private void LocationEvents_OnLocationObjectsChanged(object sender, EventArgs e)
         {
             //Log.Verbose("LocationEvents_OnLocationObjectsChanged");
+        }
+
+        private void LocationEvents_OnBeforeWarp(object sender, EventArgs e)
+        {
+            //Log.Verbose("LocationEvents_OnBeforeWarp");
         }
 
         private void LocationEvents_OnCurrentLocationChanged(object sender, EventArgs e)
