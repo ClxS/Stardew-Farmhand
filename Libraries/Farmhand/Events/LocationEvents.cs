@@ -17,6 +17,7 @@ namespace Farmhand.Events
         public static event EventHandler<NotifyCollectionChangedEventArgs> OnLocationTerrainFeaturesChanged = delegate { };
         public static event EventHandler<CancelEventArgs> OnBeforeLocationLoadObjects = delegate { };
         public static event EventHandler OnAfterLocationLoadObjects = delegate { };
+        public static event EventHandler<EventArgsOnBeforeWarp> OnBeforeWarp = delegate { };
         public static event EventHandler<EventArgsOnCurrentLocationChanged> OnCurrentLocationChanged = delegate { };
         
         [Hook(HookType.Exit, "StardewValley.Game1", "loadForNewGame")]
@@ -35,6 +36,15 @@ namespace Farmhand.Events
         internal static void InvokeOnAfterLocationLoadObjects([ThisBind] object @this)
         {
             EventCommon.SafeInvoke(OnAfterLocationLoadObjects, @this);
+        }
+
+        [Hook(HookType.Entry, "StardewValley.Game1", "System.Void StardewValley.Game1::warpFarmer(StardewValley.GameLocation,System.Int32,System.Int32,System.Int32,System.Boolean)")]
+        internal static bool InvokeOnBeforeWarp([InputBind(typeof(GameLocation), "locationAfterWarp")] GameLocation locationAfterWarp,
+            [InputBind(typeof(int), "tileX")] int tileX,
+            [InputBind(typeof(int), "tileY")] int tileY,
+            [InputBind(typeof(int), "facingDirectionAfterWarp")] int facingDirectionAfterWarp)
+        {
+            return EventCommon.SafeCancellableInvoke(OnBeforeWarp, null, new EventArgsOnBeforeWarp(locationAfterWarp, tileX, tileY, facingDirectionAfterWarp));
         }
 
         [PendingHook]

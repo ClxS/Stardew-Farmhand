@@ -1,0 +1,8 @@
+﻿{
+	"UniqueId" : "TestWarpMod",
+	"Name" : "Test Warp Mod",
+	"Author": "spacechase0",
+	"ModDll": "TestWarpMod",
+	"Version" : "0.1",
+	"Description" : "An example warp mod."
+}
