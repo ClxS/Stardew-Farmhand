@@ -66,6 +66,7 @@ namespace Farmhand.Events
         [Hook(HookType.Exit, "StardewValley.Game1", "Update")]
         internal static void InvokeAfterUpdate([ThisBind] object @this)
         {
+            TimeEvents.didShouldTimePassCheckThisFrame = false;
             EventCommon.SafeInvoke(OnAfterUpdateTick, @this);
         }
     }

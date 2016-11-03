@@ -1,5 +1,6 @@
 ﻿using Farmhand.Attributes;
 using Farmhand.Logging;
+using Farmhand.Events.Arguments.TimeEvents;
 using System;
 
 namespace Farmhand.Events
@@ -19,6 +20,8 @@ namespace Farmhand.Events
 
         public static event EventHandler OnBeforeYearChanged = delegate { };
         public static event EventHandler OnAfterYearChanged = delegate { };
+
+        public static event EventHandler<EventArgsShouldTimePassCheck> ShouldTimePassCheck = delegate { };
 #pragma warning restore 67
 
         [Hook(HookType.Entry, "StardewValley.Game1", "performTenMinuteClockUpdate")]
@@ -61,11 +64,30 @@ namespace Farmhand.Events
         {
             EventCommon.SafeInvoke(OnAfterSeasonChanged, null);
         }
-        
+
         //[PendingHook]
         //internal static void InvokeBeforeYearChanged() 
         //{
         //    throw new NotImplementedException();
         //}
+
+        internal static bool didShouldTimePassCheckThisFrame = false;
+        internal static bool prevTimePassResult = false;
+        [HookReturnable(HookType.Exit, "StardewValley.Game1", "shouldTimePass")]
+        internal static bool ShouldTimePass(
+            [UseOutputBind] ref bool useOutput,
+            [MethodOutputBind] bool shouldPass )
+        {
+            if ( !didShouldTimePassCheckThisFrame )
+            {
+                var ev = new EventArgsShouldTimePassCheck(shouldPass);
+                EventCommon.SafeInvoke(ShouldTimePassCheck, null, ev);
+                prevTimePassResult = ev.TimeShouldPass;
+                didShouldTimePassCheckThisFrame = true;
+            }
+
+            useOutput = true;
+            return prevTimePassResult;
+        }
     }
 }
