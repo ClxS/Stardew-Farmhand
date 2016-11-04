@@ -79,6 +79,7 @@ namespace StardewModdingAPI
                 instance = (StardewModdingAPI.Mod)modAssembly.CreateInstance(type.ToString());
                 if (instance != null)
                 {
+                    instance.Manifest = new Manifest().InitializeConfig(System.IO.Path.Combine(manifest.ModDirectory, "manifest.json"));
                     instance.PathOnDisk = manifest.ModDirectory;
                     instance.Entry();
                 }
