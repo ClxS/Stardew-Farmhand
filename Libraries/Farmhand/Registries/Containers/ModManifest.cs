@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using Farmhand.Helpers;
 using xTile;
+using Mono.Cecil;
 
 namespace Farmhand.Registries.Containers
 {
@@ -105,28 +106,49 @@ namespace Farmhand.Registries.Containers
                 // it doesn't see the Farmhand game. Everything will still be 
                 // in the state for when the assembly would first be loaded.
                 // This will fix the references so the mods will actually work.
-                Mono.Cecil.AssemblyDefinition asm = Mono.Cecil.AssemblyDefinition.ReadAssembly(modDllPath);
-                bool vanillaRef = false;
+                //
+                // For loading mods from other platforms:
+                // There are also problems with XNA <=> Mono. Simply replacing
+                // the assembly name isn't really possible in this case, since
+                // all three XNA assemblies map to one Mono framework.
+                // (Trust me, I tried. Suddenly it looks for the definition of
+                // Vector2 inside the Farmhand assembly, or somewhere else
+                // bizarre.)
+                var asm = Mono.Cecil.AssemblyDefinition.ReadAssembly(modDllPath);
+                bool shouldFix = false;
+                var toRemove = new List<AssemblyNameReference>();
                 foreach (var asmRef in asm.MainModule.AssemblyReferences)
                 {
-                    if (asmRef.Name.Contains("Stardew Valley"))
+                    // We only want to go to the effort of fixing everything if 
+                    // there is a reference that even needs fixing.
+                    // Also, the bad references will need to be removed.
+                    if (!ReferenceFixData.matchesPlatform(asmRef))
                     {
-                        asmRef.Name = asmRef.Name.Replace("Stardew Valley", "Stardew Farmhand");
-                        vanillaRef = true;
+                        shouldFix = true;
+                        toRemove.Add(asmRef);
                     }
-                    // TODO: I heard something about the vanilla assembly being 
-                    // StardewValley on Mac/Linux? Is it "StardewFarmhand" or 
-                    // "Stardew Farmhand" on those platforms?
+                }
+                foreach (var @ref in toRemove)
+                {
+                    // However, we can't just simply remove the old references.
+                    // The indices mess up and really weird stuff happens (see
+                    // two comment blocks ago). Placing a dummy re-reference of
+                    // ourself SEEMS to fix that.
+                    int index = asm.MainModule.AssemblyReferences.IndexOf(@ref);
+                    asm.MainModule.AssemblyReferences.Remove(@ref);
+                    asm.MainModule.AssemblyReferences.Insert(index, ReferenceFixData.xnaRef);
+                }
+                if ( shouldFix )
+                {
+                    ReferenceFixDefinition.fix(asm);
                 }
 
-                byte[] bytes = System.IO.File.ReadAllBytes(modDllPath);
-                if ( vanillaRef ) // No need to rewrite the assembly if we didn't change anything
+                byte[] bytes = null;
+                using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
                 {
-                    using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
-                    {
-                        asm.Write(stream);
-                        bytes = stream.GetBuffer();
-                    }
+                    asm.Write(stream);
+                    bytes = stream.GetBuffer();
+                    //System.IO.File.WriteAllBytes(modDllPath + "-edited.dll", bytes);
                 }
 
                 ModAssembly = Assembly.Load(bytes);
@@ -162,6 +184,9 @@ namespace Farmhand.Registries.Containers
             }
             catch (Exception ex)
             {
+                if(ex is ReflectionTypeLoadException)
+                foreach (Exception e in (ex as ReflectionTypeLoadException).LoaderExceptions)
+                     Log.Exception("loaderexceptions entry: " + $"{e.Message} ${e.Source} ${e.TargetSite} ${e.StackTrace} ${e.Data}", e);
                 Log.Exception("Error loading mod DLL", ex);
                 //throw new Exception(string.Format($"Failed to load mod '{modDllPath}'\n\t-{ex.Message}\n\t\t-{ex.StackTrace}"), ex);
             }

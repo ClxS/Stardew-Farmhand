@@ -211,6 +211,11 @@ namespace Farmhand
                     ApiEvents.InvokeModLoadError(mod);
                 }
             }
+
+            // See ReferenceFixers.cs
+            // Since mod loading is done we don't need this anymore.
+            // There are a lot of types, so might as well save the memory.
+            ReferenceFixData.xnaTypes.Clear();
         }
 
         private static void ResolveDependencies()
