@@ -109,9 +109,14 @@ namespace Farmhand
 
             if (meth is GenericInstanceMethod)
             {
-                methSpecField.SetValue(meth, fixMethod(def, (meth as GenericInstanceMethod).ElementMethod));
-                for (int i = 0; i < (meth as GenericInstanceMethod).GenericParameters.Count; ++i)
-                    meth.GenericParameters[i] = fixGeneric(def, meth, meth.GenericParameters[i]);
+                var gim = (meth as GenericInstanceMethod);
+                methSpecField.SetValue(meth, fixMethod(def, gim.ElementMethod));
+                for (int i = 0; i < gim.GenericParameters.Count; ++i)
+                    gim.GenericParameters[i] = fixGeneric(def, meth, gim.GenericParameters[i]);
+                for (int i = 0; i < gim.GenericArguments.Count; ++i)
+                {
+                    gim.GenericArguments[i] = fixType(def, gim.GenericArguments[i]);
+                }
             }
             else if (meth.HasGenericParameters)
             {
@@ -122,7 +127,8 @@ namespace Farmhand
             meth.ReturnType = fixType(def, meth.ReturnType);
             if (meth is MethodSpecification)
             {
-                (methSpecField.GetValue(meth) as MethodReference).DeclaringType = fixType(def, meth.DeclaringType);
+                MethodReference elem = (methSpecField.GetValue(meth) as MethodReference);
+                methSpecField.SetValue(meth, fixMethod(def, elem));
             }
             else
                 meth.DeclaringType = fixType(def, meth.DeclaringType);

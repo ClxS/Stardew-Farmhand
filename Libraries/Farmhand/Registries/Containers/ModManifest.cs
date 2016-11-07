@@ -136,7 +136,7 @@ namespace Farmhand.Registries.Containers
                     // ourself SEEMS to fix that.
                     int index = asm.MainModule.AssemblyReferences.IndexOf(@ref);
                     asm.MainModule.AssemblyReferences.Remove(@ref);
-                    asm.MainModule.AssemblyReferences.Insert(index, ReferenceFixData.xnaRef);
+                    asm.MainModule.AssemblyReferences.Insert(index, ReferenceFixData.thisRef);
                 }
                 if ( shouldFix )
                 {
