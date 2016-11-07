@@ -62,7 +62,7 @@ namespace StardewModdingAPI
 
         public static void AsyncColour(object message, ConsoleColor colour)
         {
-            //Task.Run(() => { PrintLog(new LogInfo(message?.ToString(), colour)); });
+            System.Threading.Tasks.Task.Factory.StartNew(() => { PrintLog(new LogInfo(message?.ToString(), colour)); });
         }
 
         public static void Async(object message)
