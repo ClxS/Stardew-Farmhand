@@ -114,7 +114,8 @@ namespace Farmhand.Registries.Containers
                 // (Trust me, I tried. Suddenly it looks for the definition of
                 // Vector2 inside the Farmhand assembly, or somewhere else
                 // bizarre.)
-                var asm = Mono.Cecil.AssemblyDefinition.ReadAssembly(modDllPath);
+                byte[] bytes = System.IO.File.ReadAllBytes(modDllPath);
+                var asm = Mono.Cecil.AssemblyDefinition.ReadAssembly(new System.IO.MemoryStream(bytes, false));
                 bool shouldFix = false;
                 var toRemove = new List<AssemblyNameReference>();
                 foreach (var asmRef in asm.MainModule.AssemblyReferences)
@@ -141,14 +142,12 @@ namespace Farmhand.Registries.Containers
                 if ( shouldFix )
                 {
                     ReferenceFixDefinition.fix(asm);
-                }
-
-                byte[] bytes = null;
-                using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
-                {
-                    asm.Write(stream);
-                    bytes = stream.GetBuffer();
-                    //System.IO.File.WriteAllBytes(modDllPath + "-edited.dll", bytes);
+                    using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
+                    {
+                        asm.Write(stream);
+                        bytes = stream.GetBuffer();
+                        //System.IO.File.WriteAllBytes(modDllPath + "-edited.dll", bytes);
+                    }
                 }
 
                 ModAssembly = Assembly.Load(bytes);
