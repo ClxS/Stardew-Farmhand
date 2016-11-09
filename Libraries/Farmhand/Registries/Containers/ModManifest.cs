@@ -8,6 +8,8 @@ using System.Reflection;
 using Farmhand.Helpers;
 using xTile;
 using Mono.Cecil;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace Farmhand.Registries.Containers
 {
@@ -20,6 +22,8 @@ namespace Farmhand.Registries.Containers
 
         public static event EventHandler BeforeLoaded;
         public static event EventHandler AfterLoaded;
+
+        private static SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider();
 
         [JsonConverter(typeof(UniqueIdConverter))]
         public UniqueId<string> UniqueId { get; set; }
@@ -141,13 +145,30 @@ namespace Farmhand.Registries.Containers
                 }
                 if ( shouldFix )
                 {
-                    ReferenceFixDefinition.fix(asm);
-                    using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
+                    if (Program.Config.CachePorts)
                     {
-                        asm.Write(stream);
-                        bytes = stream.GetBuffer();
-                        //System.IO.File.WriteAllBytes(modDllPath + "-edited.dll", bytes);
+                        // We want to cache any 'fixed' assemblies so that we don't have to
+                        // go through and fix everything again. However if the mod is updated
+                        // or something, it will need to be fixed again.
+                        string check = Convert.ToBase64String(sha1.ComputeHash(bytes));
+                        check = check.Replace("=", "").Replace('+', '-').Replace('/', '_'); // Fix for valid file name. = is just padding
+                        string checkPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                                                        "StardewValley", "cache", ModDll + "-" + check + ".dll");
+                        if (File.Exists(checkPath))
+                        {
+                            try
+                            {
+                                bytes = File.ReadAllBytes(checkPath);
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Exception($"Exception reading cached DLL {checkPath}", ex);
+                                bytes = fixDll(asm, checkPath);
+                            }
+                        }
+                        else bytes = fixDll(asm, checkPath);
                     }
+                    else bytes = fixDll(asm, null);
                 }
 
                 ModAssembly = Assembly.Load(bytes);
@@ -191,6 +212,35 @@ namespace Farmhand.Registries.Containers
             }
 
             return Instance != null;
+        }
+
+        internal byte[] fixDll( Mono.Cecil.AssemblyDefinition asm, string cachePath )
+        {
+            ReferenceFixDefinition.fix(asm);
+
+            byte[] bytes = null;
+            using (MemoryStream stream = new MemoryStream())
+            {
+                asm.Write(stream);
+                bytes = stream.GetBuffer();
+            }
+
+            if (cachePath != null)
+            {
+                try
+                {
+                    string dir = Path.GetDirectoryName(cachePath);
+                    if (!Directory.Exists(dir))
+                        Directory.CreateDirectory(dir);
+                    File.WriteAllBytes(cachePath, bytes);
+                }
+                catch (Exception ex)
+                {
+                    Log.Exception($"Exception caching fixed DLL {cachePath}", ex);
+                }
+            }
+
+            return bytes;
         }
 
         internal void LoadContent()
