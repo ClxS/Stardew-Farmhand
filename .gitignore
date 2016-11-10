@@ -250,6 +250,9 @@ FakesAssemblies/
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
 
+# Visual Studio IntelliSense cache
+*.VC.db
+
 # Paket dependency manager
 .paket/paket.exe
 
