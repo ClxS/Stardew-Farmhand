@@ -212,10 +212,10 @@ namespace Farmhand
                 }
             }
 
-            // See ReferenceFixers.cs
+            // See ReferenceFix.Data.BuildXnaTypeCache()
             // Since mod loading is done we don't need this anymore.
             // There are a lot of types, so might as well save the memory.
-            ReferenceFixData.xnaTypes.Clear();
+            ReferenceFix.Data.xnaTypes.Clear();
         }
 
         private static void ResolveDependencies()

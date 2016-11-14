@@ -174,7 +174,7 @@ namespace Farmhand.Registries.Containers
                 // We only want to go to the effort of fixing everything if 
                 // there is a reference that even needs fixing.
                 // Also, the bad references will need to be removed.
-                if (!ReferenceFixData.matchesPlatform(asmRef))
+                if (!ReferenceFix.Data.MatchesPlatform(asmRef))
                 {
                     shouldFix = true;
                     toRemove.Add(asmRef);
@@ -188,7 +188,7 @@ namespace Farmhand.Registries.Containers
                 // ourself SEEMS to fix that.
                 int index = asm.MainModule.AssemblyReferences.IndexOf(@ref);
                 asm.MainModule.AssemblyReferences.Remove(@ref);
-                asm.MainModule.AssemblyReferences.Insert(index, ReferenceFixData.thisRef);
+                asm.MainModule.AssemblyReferences.Insert(index, ReferenceFix.Data.thisRef);
             }
 
             if (shouldFix)
@@ -224,7 +224,7 @@ namespace Farmhand.Registries.Containers
 
         private byte[] fixDll( Mono.Cecil.AssemblyDefinition asm, string cachePath )
         {
-            ReferenceFixDefinition.fix(asm);
+            ReferenceFix.Definition.Fix(asm);
 
             byte[] bytes = null;
             using (MemoryStream stream = new MemoryStream())
