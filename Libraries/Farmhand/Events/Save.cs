@@ -16,7 +16,7 @@ namespace Farmhand.Events
         public static event EventHandler<EventArgsOnBeforeSave> OnBeforeSave = delegate { };
 
         /// <summary>
-        /// Triggered after progress towards saving is made
+        /// Triggered after progress towards saving is made. 100 is complete
         /// </summary>
         public static event EventHandler<EventArgsOnAfterSaveProgress> OnAfterSaveProgress = delegate { };
 
@@ -26,7 +26,7 @@ namespace Farmhand.Events
         public static event EventHandler<EventArgsOnBeforeLoad> OnBeforeLoad = delegate { };
 
         /// <summary>
-        /// Triggered after progress towards loading is made
+        /// Triggered after progress towards loading is made. 100 is complete
         /// </summary>
         public static event EventHandler<EventArgsOnAfterLoadProgress> OnAfterLoadProgress = delegate { };
 
