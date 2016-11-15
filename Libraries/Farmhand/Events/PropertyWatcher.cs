@@ -37,9 +37,10 @@ namespace Farmhand.Events
         public GameLocation PreviousGameLocation { get; private set; }
         public Farmer PreviousFarmer { get; private set; }
 
-        internal static void LoadFired(object sender, Events.Arguments.SaveEvents.EventArgsOnAfterLoad e)
+        internal static void LoadFired(object sender, Events.Arguments.SaveEvents.EventArgsOnAfterLoadProgress e)
         {
-            HasLoadFired = true;
+            if (e.Progress >= 100)
+                HasLoadFired = true;
         }
 
         private bool WasButtonJustPressed(Buttons button, ButtonState buttonState, PlayerIndex stateIndex)

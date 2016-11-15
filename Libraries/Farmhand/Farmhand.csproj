@@ -196,8 +196,9 @@
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnFarmerChanged.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnItemAddedToInventory.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnLevelUp.cs" />
-    <Compile Include="Events\Arguments\SaveEvents\EventArgsOnAfterLoad.cs" />
+    <Compile Include="Events\Arguments\SaveEvents\EventArgsOnBeforeSave.cs" />
     <Compile Include="Events\Arguments\SaveEvents\EventArgsOnBeforeLoad.cs" />
+    <Compile Include="Events\Arguments\SaveEvents\EventArgsOnAfterProgress.cs" />
     <Compile Include="Events\Arguments\TimeEvents\EventArgsShouldTimePassCheck.cs" />
     <Compile Include="Events\Arguments\UtilityEvents\EventArgsOnGetDwarfShopStock.cs" />
     <Compile Include="Events\ControlEvents.cs" />
