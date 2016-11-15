@@ -37,9 +37,9 @@ namespace LoggingMod
             Farmhand.Events.LocationEvents.OnBeforeLocationLoadObjects += LocationEvents_OnBeforeLocationLoadObjects;
             Farmhand.Events.LocationEvents.OnAfterLocationLoadObjects += LocationEvents_OnAfterLocationLoadObjects;
             Farmhand.Events.SaveEvents.OnBeforeSave += SaveEvents_OnBeforeSave;
-            Farmhand.Events.SaveEvents.OnAfterSave += SaveEvents_OnAfterSave;
+            Farmhand.Events.SaveEvents.OnAfterSaveProgress += SaveEvents_OnAfterSave;
             Farmhand.Events.SaveEvents.OnBeforeLoad += SaveEvents_OnBeforeLoad;
-            Farmhand.Events.SaveEvents.OnAfterLoad += SaveEvents_OnAfterLoad;
+            Farmhand.Events.SaveEvents.OnAfterLoadProgress += SaveEvents_OnAfterLoad;
             Farmhand.Events.SerializerEvents.UnknownNode += SerializerEvents_UnknownNode;
             Farmhand.Events.SerializerEvents.UnknownElement += SerializerEvents_UnknownElement;
             Farmhand.Events.SerializerEvents.UnknownAttribute += SerializerEvents_UnknownAttribute;
@@ -62,9 +62,10 @@ namespace LoggingMod
         {
         }
 
-        private void SaveEvents_OnAfterLoad(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnAfterLoad e)
+        private void SaveEvents_OnAfterLoad(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnAfterLoadProgress e)
         {
-            Log.Success($"SaveEvents_OnAfterLoad {e.Filename}");
+            if (e.Progress >= 100)
+                Log.Success($"SaveEvents_OnAfterLoad {e.Filename}");
         }
 
         private void SaveEvents_OnBeforeLoad(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnBeforeLoad e)
@@ -72,9 +73,10 @@ namespace LoggingMod
             Log.Success($"SaveEvents_OnBeforeLoad {e.Filename}");
         }
 
-        private void SaveEvents_OnAfterSave(object sender, EventArgs e)
+        private void SaveEvents_OnAfterSave(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnAfterSaveProgress e)
         {
-            Log.Success("SaveEvents_OnAfterSave");
+            if (e.Progress >= 100)
+                Log.Success("SaveEvents_OnAfterSave");
         }
 
         private void SaveEvents_OnBeforeSave(object sender, EventArgs e)

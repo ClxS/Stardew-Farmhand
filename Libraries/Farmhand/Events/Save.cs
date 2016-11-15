@@ -1,6 +1,7 @@
 ﻿using System;
 using Farmhand.Attributes;
 using Farmhand.Events.Arguments.SaveEvents;
+using System.Collections.Generic;
 
 namespace Farmhand.Events
 {
@@ -12,12 +13,12 @@ namespace Farmhand.Events
         /// <summary>
         /// Triggered prior to saving
         /// </summary>
-        public static event EventHandler OnBeforeSave = delegate { };
+        public static event EventHandler<EventArgsOnBeforeSave> OnBeforeSave = delegate { };
 
         /// <summary>
-        /// Triggered after saving
+        /// Triggered after progress towards saving is made
         /// </summary>
-        public static event EventHandler OnAfterSave = delegate { };
+        public static event EventHandler<EventArgsOnAfterSaveProgress> OnAfterSaveProgress = delegate { };
 
         /// <summary>
         /// Triggered prior to loading
@@ -25,20 +26,20 @@ namespace Farmhand.Events
         public static event EventHandler<EventArgsOnBeforeLoad> OnBeforeLoad = delegate { };
 
         /// <summary>
-        /// Triggered afer loading
+        /// Triggered after progress towards loading is made
         /// </summary>
-        public static event EventHandler<EventArgsOnAfterLoad> OnAfterLoad = delegate { };
+        public static event EventHandler<EventArgsOnAfterLoadProgress> OnAfterLoadProgress = delegate { };
 
         [Hook(HookType.Entry, "StardewValley.SaveGame", "Save")]
-        internal static void InvokeOnBeforeSave()
+        internal static bool InvokeOnBeforeSave()
         {
-            EventCommon.SafeInvoke(OnBeforeSave, null);
+            return EventCommon.SafeCancellableInvoke(OnBeforeSave, null, new EventArgsOnBeforeSave());
         }
 
-        [Hook(HookType.Exit, "StardewValley.SaveGame", "Save")]
-        internal static void InvokeOnAfterSave()
+        [Hook(HookType.Exit, "StardewValley.SaveGame/<getSaveEnumerator>d__46", "MoveNext")]
+        internal static void InvokeOnAfterSaveProgress([ThisBind] IEnumerator<int> @this)
         {
-            EventCommon.SafeInvoke(OnAfterSave, null);
+            EventCommon.SafeInvoke(OnAfterSaveProgress, null, new EventArgsOnAfterSaveProgress(@this.Current));
         }
 
         [Hook(HookType.Entry, "StardewValley.SaveGame", "Load")]
@@ -47,10 +48,15 @@ namespace Farmhand.Events
             return EventCommon.SafeCancellableInvoke(OnBeforeLoad, null, new EventArgsOnBeforeLoad(filename));
         }
 
-        [Hook(HookType.Exit, "StardewValley.SaveGame", "Load")]
-        internal static void InvokeOnAfterLoad([InputBind(typeof(string), "filename")] string filename)
+        [Hook(HookType.Exit, "StardewValley.SaveGame/<getLoadEnumerator>d__51", "MoveNext")]
+        internal static void InvokeOnAfterLoadProgress([ThisBind] IEnumerator<int> @this)
         {
-            EventCommon.SafeInvoke(OnAfterLoad, null, new EventArgsOnAfterLoad(filename));
+            try
+            {
+                string filename = (string)@this.GetType().GetField("file").GetValue(@this);
+                EventCommon.SafeInvoke(OnAfterLoadProgress, null, new EventArgsOnAfterLoadProgress(filename, @this.Current));
+            }
+            catch(Exception e) { Logging.Log.Exception("EXCEPTION b:", e); }
         }
     }
 }
