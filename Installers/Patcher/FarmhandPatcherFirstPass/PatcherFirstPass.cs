@@ -50,95 +50,83 @@ namespace Farmhand
 
         protected override void HookApiEvents(CecilContext cecilContext)
         {
-            try
+            var methods = FarmhandAssemblies.SelectMany(a => a.GetTypes())
+                        .SelectMany(t => t.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
+                        .Where(m => m.GetCustomAttributes(typeof(HookAttribute), false).Any())
+                        .ToArray();
+
+            foreach (var method in methods)
             {
-                var methods = FarmhandAssemblies.SelectMany(a => a.GetTypes())
-                            .SelectMany(t => t.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
-                            .Where(m => m.GetCustomAttributes(typeof(HookAttribute), false).Any())
-                            .ToArray();
+                if (method.DeclaringType == null) continue;
 
-                foreach (var method in methods)
+                var typeName = method.DeclaringType.FullName;
+                var methodName = method.Name;
+                var hookAttributes = method.GetCustomAttributes(typeof(HookAttribute), false).Cast<HookAttribute>();
+
+                foreach (var hook in hookAttributes)
                 {
-                    if (method.DeclaringType == null) continue;
-
-                    var typeName = method.DeclaringType.FullName;
-                    var methodName = method.Name;
-                    var hookAttributes = method.GetCustomAttributes(typeof(HookAttribute), false).Cast<HookAttribute>();
-
-                    foreach (var hook in hookAttributes)
+                    string hookTypeName = hook.Type;
+                    string hookMethodName = hook.Method;
+                    try
                     {
-                        string hookTypeName = hook.Type;
-                        string hookMethodName = hook.Method;
-                        try
+                        switch (hook.HookType)
                         {
-                            switch (hook.HookType)
-                            {
-                                case HookType.Entry: CecilHelper.InjectEntryMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>
-                                        (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
-                                case HookType.Exit: CecilHelper.InjectExitMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>
-                                        (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
+                            case HookType.Entry: CecilHelper.InjectEntryMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>
+                                    (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
+                            case HookType.Exit: CecilHelper.InjectExitMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>
+                                    (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
+                        throw ex;
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
             }
         }
 
         private void HookOutputableApiEvents(CecilContext cecilContext)
         {
-            try
+            var methods = FarmhandAssemblies.SelectMany(a => a.GetTypes())
+                        .SelectMany(t => t.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
+                        .Where(m => m.GetCustomAttributes(typeof(HookReturnableAttribute), false).Any())
+                        .ToArray();
+
+            foreach (var method in methods)
             {
-                var methods = FarmhandAssemblies.SelectMany(a => a.GetTypes())
-                            .SelectMany(t => t.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
-                            .Where(m => m.GetCustomAttributes(typeof(HookReturnableAttribute), false).Any())
-                            .ToArray();
+                if (method.DeclaringType == null) continue;
 
-                foreach (var method in methods)
+                var typeName = method.DeclaringType.FullName;
+                var methodName = method.Name;
+                var hookAttributes = method.GetCustomAttributes(typeof(HookReturnableAttribute), false).Cast<HookReturnableAttribute>();
+
+                foreach (var hook in hookAttributes)
                 {
-                    if (method.DeclaringType == null) continue;
-
-                    var typeName = method.DeclaringType.FullName;
-                    var methodName = method.Name;
-                    var hookAttributes = method.GetCustomAttributes(typeof(HookReturnableAttribute), false).Cast<HookReturnableAttribute>();
-
-                    foreach (var hook in hookAttributes)
+                    var hookTypeName = hook.Type;
+                    var hookMethodName = hook.Method;
+                    try
                     {
-                        var hookTypeName = hook.Type;
-                        var hookMethodName = hook.Method;
-                        try
+                        switch (hook.HookType)
                         {
-                            switch (hook.HookType)
-                            {
-                                case HookType.Entry:
-                                    CecilHelper.InjectReturnableEntryMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute,
-                                        UseOutputBindAttribute, MethodOutputBindAttribute>
-                                        (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
-                                case HookType.Exit:
-                                    CecilHelper.InjectReturnableExitMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute,
-                                        UseOutputBindAttribute, MethodOutputBindAttribute>
-                        (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
-                                default:
-                                    throw new Exception("Unknown HookType");
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
+                            case HookType.Entry:
+                                CecilHelper.InjectReturnableEntryMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute,
+                                    UseOutputBindAttribute, MethodOutputBindAttribute>
+                                    (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
+                            case HookType.Exit:
+                                CecilHelper.InjectReturnableExitMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute,
+                                    UseOutputBindAttribute, MethodOutputBindAttribute>
+                    (cecilContext, hookTypeName, hookMethodName, typeName, methodName); break;
+                            default:
+                                throw new Exception("Unknown HookType");
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
+                        throw ex;
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
             }
         }
 
@@ -160,64 +148,58 @@ namespace Farmhand
 
         protected override void HookConstructionToMethodRedirectors(CecilContext cecilContext)
         {
-            try
+            var methods = FarmhandAssemblies.SelectMany(a => a.GetTypes())
+                        .SelectMany(t => t.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
+                        .Where(m => m.GetCustomAttributes(typeof(HookRedirectConstructorToMethodAttribute), false).Any())
+                        .ToArray();
+
+            foreach (var method in methods)
             {
-                var methods = FarmhandAssemblies.SelectMany(a => a.GetTypes())
-                            .SelectMany(t => t.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
-                            .Where(m => m.GetCustomAttributes(typeof(HookRedirectConstructorToMethodAttribute), false).Any())
-                            .ToArray();
-
-                foreach (var method in methods)
+                // Check if this method has any properties that would immediately disqualify it from using this hook
+                if (method.ReturnType == typeof(void))
                 {
-                    // Check if this method has any properties that would immediately disqualify it from using this hook
-                    if (method.ReturnType == typeof(void))
-                    {
-                        Logging.Log.Warning($"{method.Name} in {method.DeclaringType.FullName} cannot be used in a hook because it does not return a value!");
-                        continue;
-                    }
-                    if (!method.IsStatic)
-                    {
-                        Logging.Log.Warning($"{method.Name} in {method.DeclaringType.FullName} cannot be used in a hook because it is not static!");
-                        continue;
-                    }
+                    Logging.Log.Warning($"{method.Name} in {method.DeclaringType.FullName} cannot be used in a hook because it does not return a value!");
+                    continue;
+                }
+                if (!method.IsStatic)
+                {
+                    Logging.Log.Warning($"{method.Name} in {method.DeclaringType.FullName} cannot be used in a hook because it is not static!");
+                    continue;
+                }
 
-                    // Get the type that the method returns
-                    var typeName = method.ReturnType.FullName;
-                    // Get the name of the method
-                    var methodName = method.Name;
-                    // Get the type name of the method
-                    var methodDeclaringType = method.DeclaringType.FullName;
-                    // Get an array of parameters that the method returns
-                    var methodParameterInfo = method.GetParameters();
-                    Type[] methodParamters = new Type[methodParameterInfo.Length];
-                    for (int i = 0; i < methodParamters.Length; i++)
+                // Get the type that the method returns
+                var typeName = method.ReturnType.FullName;
+                // Get the name of the method
+                var methodName = method.Name;
+                // Get the type name of the method
+                var methodDeclaringType = method.DeclaringType.FullName;
+                // Get an array of parameters that the method returns
+                var methodParameterInfo = method.GetParameters();
+                Type[] methodParamters = new Type[methodParameterInfo.Length];
+                for (int i = 0; i < methodParamters.Length; i++)
+                {
+                    methodParamters[i] = methodParameterInfo[i].ParameterType;
+                }
+
+                // Get all the hooks for this method
+                var hookAttributes = method.GetCustomAttributes(typeof(HookRedirectConstructorToMethodAttribute), false).Cast<HookRedirectConstructorToMethodAttribute>();
+
+                foreach (var hook in hookAttributes)
+                {
+                    // Get the type name that contains the method we're hooking in
+                    var hookTypeName = hook.Type;
+                    // Get the name of the method we're hooking in
+                    var hookMethodName = hook.Method;
+                    try
                     {
-                        methodParamters[i] = methodParameterInfo[i].ParameterType;
+                        CecilHelper.RedirectConstructorToMethod(cecilContext, method.ReturnType, hookTypeName, hookMethodName, methodDeclaringType, methodName, methodParamters);
                     }
-
-                    // Get all the hooks for this method
-                    var hookAttributes = method.GetCustomAttributes(typeof(HookRedirectConstructorToMethodAttribute), false).Cast<HookRedirectConstructorToMethodAttribute>();
-
-                    foreach (var hook in hookAttributes)
+                    catch (Exception ex)
                     {
-                        // Get the type name that contains the method we're hooking in
-                        var hookTypeName = hook.Type;
-                        // Get the name of the method we're hooking in
-                        var hookMethodName = hook.Method;
-                        try
-                        {
-                            CecilHelper.RedirectConstructorToMethod(cecilContext, method.ReturnType, hookTypeName, hookMethodName, methodDeclaringType, methodName, methodParamters);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
-                        }
+                        Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
+                        throw ex;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
             }
         }
 
