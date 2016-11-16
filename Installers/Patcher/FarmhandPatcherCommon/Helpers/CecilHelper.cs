@@ -84,6 +84,8 @@ namespace Farmhand.Helpers
 
             if (cancelable)
             {
+                if (ilProcessor.Body.Method.MethodReturnType.ReturnType.FullName != stardewContext.GetTypeReference(typeof(void)).FullName)
+                    throw new InvalidOperationException("Cancelable hooks are only supported for methods returning void");
                 var branch = ilProcessor.Create(OpCodes.Brtrue, ilProcessor.Body.Instructions.Last());
                 ilProcessor.InsertAfter(callEnterInstruction, branch);
             }
