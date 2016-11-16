@@ -13,7 +13,7 @@ namespace Farmhand.Events
         /// <summary>
         /// Triggered prior to saving
         /// </summary>
-        public static event EventHandler<EventArgsOnBeforeSave> OnBeforeSave = delegate { };
+        public static event EventHandler OnBeforeSave = delegate { };
 
         /// <summary>
         /// Triggered after progress towards saving is made. 100 is complete
@@ -31,9 +31,9 @@ namespace Farmhand.Events
         public static event EventHandler<EventArgsOnAfterLoadProgress> OnAfterLoadProgress = delegate { };
 
         [Hook(HookType.Entry, "StardewValley.SaveGame", "Save")]
-        internal static bool InvokeOnBeforeSave()
+        internal static void InvokeOnBeforeSave()
         {
-            return EventCommon.SafeCancellableInvoke(OnBeforeSave, null, new EventArgsOnBeforeSave());
+            EventCommon.SafeInvoke(OnBeforeSave, null);
         }
 
         [Hook(HookType.Exit, "StardewValley.SaveGame/<getSaveEnumerator>d__46", "MoveNext")]
