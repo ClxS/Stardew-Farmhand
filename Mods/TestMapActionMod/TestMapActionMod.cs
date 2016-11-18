@@ -3,10 +3,7 @@ using System.Linq;
 using Farmhand;
 using Farmhand.API.Locations;
 using Farmhand.Events;
-using Microsoft.Xna.Framework.Input;
 using StardewValley;
-using xTile.Dimensions;
-using xTile.ObjectModel;
 using Location = Farmhand.API.Locations.Location;
 
 namespace TestMapActionMod
@@ -23,6 +20,8 @@ namespace TestMapActionMod
             Location.RegisterAction(new MapActionInformation(Instance, "FarmCaveVines", ActionHandler));
             Location.RegisterAction(new MapActionInformation(Instance, "FarmCaveWall", ActionHandler));
             Location.RegisterAction("BusStop", new MapActionInformation(Instance, "BusStopNewObject", ActionHandler));
+
+            Location.RegisterTouchAction(new MapTouchActionInformation(Instance, "Warp", TouchActionHandler));
 
             GameEvents.OnAfterLoadedContent += GameEvents_AfterContentLoaded;
         }
@@ -59,6 +58,26 @@ namespace TestMapActionMod
                 default:
                     return false;
             }
+        }
+
+        private bool TouchActionHandler(string action, string[] parameters)
+        {
+            switch (action) {
+                case "Warp":
+                    var x = Convert.ToInt32(parameters[0]);
+                    var y = Convert.ToInt32(parameters[1]);
+                    var mapName = parameters[2];
+                    if (!AnyNull(x, y, mapName))
+                        Game1.warpFarmer(mapName, x, y, false);
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        private bool AnyNull(params object[] values)
+        {
+            return values.Any(value => value == null);
         }
     }
 }

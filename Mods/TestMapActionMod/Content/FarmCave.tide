@@ -112,7 +112,11 @@
           <Static Index="138" BlendMode="Alpha" />
           <Static Index="138" BlendMode="Alpha" />
           <Static Index="138" BlendMode="Alpha" />
-          <Static Index="140" BlendMode="Alpha" />
+          <Static Index="140" BlendMode="Alpha">
+            <Properties>
+              <Property Key="TouchAction" Type="String"><![CDATA[MagicWarp Farm 64 18]]></Property>
+            </Properties>
+          </Static>
           <Static Index="138" BlendMode="Alpha" />
           <Static Index="154" BlendMode="Alpha" />
           <Static Index="138" BlendMode="Alpha" />
@@ -150,7 +154,11 @@
         <Row>
           <Static Index="138" BlendMode="Alpha" />
           <Static Index="138" BlendMode="Alpha" />
-          <Static Index="138" BlendMode="Alpha" />
+          <Static Index="138" BlendMode="Alpha">
+            <Properties>
+              <Property Key="TouchAction" Type="String"><![CDATA[Warp 8 6 WizardHouse]]></Property>
+            </Properties>
+          </Static>
           <Static Index="169" BlendMode="Alpha" />
           <Static Index="138" BlendMode="Alpha" />
           <Static Index="138" BlendMode="Alpha" />
@@ -327,13 +335,7 @@
         <Row>
           <Null Count="1" />
           <Static Index="148" BlendMode="Alpha" />
-          <Null Count="4" />
-          <Static Index="237" BlendMode="Alpha">
-            <Properties>
-              <Property Key="Action" Type="String"><![CDATA[FarmCaveVines]]></Property>
-            </Properties>
-          </Static>
-          <Null Count="4" />
+          <Null Count="9" />
           <Static Index="191" BlendMode="Alpha" />
         </Row>
         <Row>

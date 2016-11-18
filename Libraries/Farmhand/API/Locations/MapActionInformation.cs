@@ -20,4 +20,20 @@ namespace Farmhand.API.Locations
             Callback = callback;
         }
     }
+
+    public class MapTouchActionInformation
+    {
+        public Mod Owner { get; set; }
+
+        public string Action { get; set; }
+
+        public Func<string, string[], bool> Callback { get; set; }
+
+        public MapTouchActionInformation(Mod owner, string action, Func<string, string[], bool> callback)
+        {
+            Owner = owner;
+            Action = action;
+            Callback = callback;
+        }
+    }
 }
