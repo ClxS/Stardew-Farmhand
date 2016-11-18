@@ -226,7 +226,6 @@ namespace Farmhand.ReferenceFix
             return def.Import(field);
         }
 
-        private static FieldInfo _genDeclOwner = typeof(GenericParameter).GetField("owner", BindingFlags.NonPublic | BindingFlags.Instance);
         internal static GenericParameter Fix(ModuleDefinition def, IGenericParameterProvider parent, GenericParameter param)
         {
             for (var i = 0; i < param.Constraints.Count; ++i)
