@@ -7,6 +7,9 @@ using System.Linq;
 using System.Reflection;
 using Farmhand.Helpers;
 using xTile;
+using Mono.Cecil;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace Farmhand.Registries.Containers
 {
@@ -19,6 +22,8 @@ namespace Farmhand.Registries.Containers
 
         public static event EventHandler BeforeLoaded;
         public static event EventHandler AfterLoaded;
+
+        private static SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider();
 
         [JsonConverter(typeof(UniqueIdConverter))]
         public UniqueId<string> UniqueId { get; set; }
@@ -92,44 +97,9 @@ namespace Farmhand.Registries.Containers
                 throw new Exception("Error! Mod has already been loaded!");
             }
 
-            var modDllPath = $"{ModDirectory}\\{ModDll}";
-
-            if (!modDllPath.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
-            {
-                modDllPath += ".dll";
-            }
-
             try
             {
-                // When a SMAPI mod is still referencing the vanilla assembly,
-                // it doesn't see the Farmhand game. Everything will still be 
-                // in the state for when the assembly would first be loaded.
-                // This will fix the references so the mods will actually work.
-                Mono.Cecil.AssemblyDefinition asm = Mono.Cecil.AssemblyDefinition.ReadAssembly(modDllPath);
-                bool vanillaRef = false;
-                foreach (var asmRef in asm.MainModule.AssemblyReferences)
-                {
-                    if (asmRef.Name.Contains("Stardew Valley"))
-                    {
-                        asmRef.Name = asmRef.Name.Replace("Stardew Valley", "Stardew Farmhand");
-                        vanillaRef = true;
-                    }
-                    // TODO: I heard something about the vanilla assembly being 
-                    // StardewValley on Mac/Linux? Is it "StardewFarmhand" or 
-                    // "Stardew Farmhand" on those platforms?
-                }
-
-                byte[] bytes = System.IO.File.ReadAllBytes(modDllPath);
-                if ( vanillaRef ) // No need to rewrite the assembly if we didn't change anything
-                {
-                    using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
-                    {
-                        asm.Write(stream);
-                        bytes = stream.GetBuffer();
-                    }
-                }
-
-                ModAssembly = Assembly.Load(bytes);
+                ModAssembly = Assembly.Load(getDllBytes());
                 if (ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Farmhand.Mod)) > 0)
                 {
                     var type = ModAssembly.GetTypes().First(x => x.BaseType == typeof(Farmhand.Mod));
@@ -162,11 +132,123 @@ namespace Farmhand.Registries.Containers
             }
             catch (Exception ex)
             {
+                if(ex is ReflectionTypeLoadException)
+                foreach (Exception e in (ex as ReflectionTypeLoadException).LoaderExceptions)
+                     Log.Exception("loaderexceptions entry: " + $"{e.Message} ${e.Source} ${e.TargetSite} ${e.StackTrace} ${e.Data}", e);
                 Log.Exception("Error loading mod DLL", ex);
                 //throw new Exception(string.Format($"Failed to load mod '{modDllPath}'\n\t-{ex.Message}\n\t\t-{ex.StackTrace}"), ex);
             }
 
             return Instance != null;
+        }
+
+        internal byte[] getDllBytes()
+        {
+            var modDllPath = $"{ModDirectory}\\{ModDll}";
+
+            if (!modDllPath.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
+            {
+                modDllPath += ".dll";
+            }
+
+            // When a SMAPI mod is still referencing the vanilla assembly,
+            // it doesn't see the Farmhand game. Everything will still be 
+            // in the state for when the assembly would first be loaded.
+            // This will fix the references so the mods will actually work.
+            //
+            // For loading mods from other platforms:
+            // There are also problems with XNA <=> Mono. Simply replacing
+            // the assembly name isn't really possible in this case, since
+            // all three XNA assemblies map to one Mono framework.
+            // (Trust me, I tried. Suddenly it looks for the definition of
+            // Vector2 inside the Farmhand assembly, or somewhere else
+            // bizarre.)
+            byte[] bytes = System.IO.File.ReadAllBytes(modDllPath);
+
+            var asm = Mono.Cecil.AssemblyDefinition.ReadAssembly(new System.IO.MemoryStream(bytes, false));
+
+            bool shouldFix = false;
+            var toRemove = new List<AssemblyNameReference>();
+            foreach (var asmRef in asm.MainModule.AssemblyReferences)
+            {
+                // We only want to go to the effort of fixing everything if 
+                // there is a reference that even needs fixing.
+                // Also, the bad references will need to be removed.
+                if (!ReferenceFix.Data.MatchesPlatform(asmRef))
+                {
+                    shouldFix = true;
+                    toRemove.Add(asmRef);
+                }
+            }
+            foreach (var @ref in toRemove)
+            {
+                // However, we can't just simply remove the old references.
+                // The indices mess up and really weird stuff happens (see
+                // two comment blocks ago). Placing a dummy re-reference of
+                // ourself SEEMS to fix that.
+                int index = asm.MainModule.AssemblyReferences.IndexOf(@ref);
+                asm.MainModule.AssemblyReferences.Remove(@ref);
+                asm.MainModule.AssemblyReferences.Insert(index, ReferenceFix.Data.thisRef);
+            }
+
+            if (shouldFix)
+            {
+                if (Program.Config.CachePorts)
+                {
+                    // We want to cache any 'fixed' assemblies so that we don't have to
+                    // go through and fix everything again. However if the mod is updated
+                    // or something, it will need to be fixed again.
+                    string check = Convert.ToBase64String(sha1.ComputeHash(bytes));
+                    check = check.Replace("=", "").Replace('+', '-').Replace('/', '_'); // Fix for valid file name. = is just padding
+                    string checkPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                                                    "StardewValley", "cache", ModDll + "-" + check + ".dll");
+                    if (File.Exists(checkPath))
+                    {
+                        try
+                        {
+                            bytes = File.ReadAllBytes(checkPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Exception($"Exception reading cached DLL {checkPath}", ex);
+                            bytes = fixDll(asm, checkPath);
+                        }
+                    }
+                    else bytes = fixDll(asm, checkPath);
+                }
+                else bytes = fixDll(asm, null);
+            }
+
+            return bytes;
+        }
+
+        private byte[] fixDll( Mono.Cecil.AssemblyDefinition asm, string cachePath )
+        {
+            ReferenceFix.Definition.Fix(asm);
+
+            byte[] bytes = null;
+            using (MemoryStream stream = new MemoryStream())
+            {
+                asm.Write(stream);
+                bytes = stream.GetBuffer();
+            }
+
+            if (cachePath != null)
+            {
+                try
+                {
+                    string dir = Path.GetDirectoryName(cachePath);
+                    if (!Directory.Exists(dir))
+                        Directory.CreateDirectory(dir);
+                    File.WriteAllBytes(cachePath, bytes);
+                }
+                catch (Exception ex)
+                {
+                    Log.Exception($"Exception caching fixed DLL {cachePath}", ex);
+                }
+            }
+
+            return bytes;
         }
 
         internal void LoadContent()
