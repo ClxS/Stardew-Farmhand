@@ -6,34 +6,32 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-// Since WINDOWS is hardcoded to true right now, this is necessary to prevent
-// "unreachable code detected" from keeping the thing from compiling.
-#pragma warning disable 0162
-
 using static Farmhand.ReferenceFix.Data;
 
 namespace Farmhand.ReferenceFix
 {
     internal static class Data
     {
-        internal const bool WINDOWS = true;
-
         // If referencing vanilla Stardew, it wasn't built for Farmhand.
         // If on Windows and referencing Mono, it won't be compatible.
         // If not on Windows and referencing Microsoft XNA, it won't be compatible.
         // If none of these are true, everything is fine.
         internal static bool MatchesPlatform(AssemblyNameReference asmRef)
         {
-            return !(IsStardew(asmRef.Name) ||
-                     WINDOWS && IsMono(asmRef.Name) ||
-                     !WINDOWS && IsXna(asmRef.Name));
+#if WINDOWS
+            return !(IsStardew(asmRef.Name) || IsMono(asmRef.Name));
+#else
+            return !(IsStardew(asmRef.Name) || IsXna(asmRef.Name));
+#endif
         }
 
         internal static bool MatchesPlatform(TypeReference asmRef)
         {
-            return (IsStardew(asmRef.Namespace) ||
-                    WINDOWS && IsMono(asmRef.Namespace) ||
-                    !WINDOWS && IsXna(asmRef.Namespace));
+#if WINDOWS
+            return !(IsStardew(asmRef.Namespace) || IsMono(asmRef.Namespace));
+#else
+            return !(IsStardew(asmRef.Namespace) || IsXna(asmRef.Namespace));
+#endif
         }
 
         internal static bool IsStardew(string @ref)
@@ -53,22 +51,20 @@ namespace Farmhand.ReferenceFix
             return @ref.StartsWith("MonoGame.Framework");
         }
 
-        internal static AssemblyNameReference thisRef = AssemblyNameReference.Parse(Assembly.GetExecutingAssembly().FullName);
-        internal static AssemblyNameReference monoRef = FindMyRef("MonoGame.Framework");
-        internal static AssemblyNameReference xnaRef = FindMyRef("Microsoft.Xna.Framework");
-        internal static AssemblyNameReference xnaGameRef = FindMyRef("Microsoft.Xna.Framework.Game");
-        internal static AssemblyNameReference xnaGraphicsRef = FindMyRef("Microsoft.Xna.Framework.Graphics");
+        internal static AssemblyNameReference ThisRef = AssemblyNameReference.Parse(Assembly.GetExecutingAssembly().FullName);
+        internal static AssemblyNameReference MonoRef = FindMyRef("MonoGame.Framework");
+        internal static AssemblyNameReference XnaRef = FindMyRef("Microsoft.Xna.Framework");
+        internal static AssemblyNameReference XnaGameRef = FindMyRef("Microsoft.Xna.Framework.Game");
+        internal static AssemblyNameReference XnaGraphicsRef = FindMyRef("Microsoft.Xna.Framework.Graphics");
 
         // Find the references that we use. Technically could have hard-coded these to
         // what Farmhand uses right now, but this is a bit more future-proof.
         internal static AssemblyNameReference FindMyRef(string name)
         {
-            foreach (var @ref in Assembly.GetExecutingAssembly().GetReferencedAssemblies())
+            var assembly = Assembly.GetExecutingAssembly().GetReferencedAssemblies().FirstOrDefault(r => r.Name == name);
+            if (assembly != null)
             {
-                if (@ref.Name == name)
-                {
-                    return AssemblyNameReference.Parse(@ref.FullName);
-                }
+                return AssemblyNameReference.Parse(assembly.FullName);
             }
             
             return null;
@@ -77,49 +73,49 @@ namespace Farmhand.ReferenceFix
         // This will return which assembly an XNA type is in. (See BuildXnaTypeCache())
         internal static IMetadataScope FindXnaRef(TypeReference type)
         {
-            string key = type.Namespace + "." + type.Name;
-            if (!xnaTypes.ContainsKey(key))
-                return xnaRef;
-
-            return xnaTypes[key];
+            var key = type.Namespace + "." + type.Name;
+            return !XnaTypes.ContainsKey(key) ? XnaRef : XnaTypes[key];
         }
 
         // Since Mono <-> (Xna,Graphics,Game), we can't just replace every Mono reference
         // with XNA directly. So this will be the cache of which types go to which assembly.
-        internal static Dictionary<string, AssemblyNameReference> xnaTypes = BuildXnaTypeCache();
+        internal static Dictionary<string, AssemblyNameReference> XnaTypes = BuildXnaTypeCache();
         private static Dictionary<string, AssemblyNameReference> BuildXnaTypeCache()
         {
             // All XNA is replaced with the single Mono assembly on Linux/Mac anyways, so this won't be used.
-            if (!WINDOWS)
+#if !WINDOWS
                 return new Dictionary<string, AssemblyNameReference>();
-
+#else
             var core = ModuleDefinition.ReadModule(typeof(Microsoft.Xna.Framework.Vector2).Module.FullyQualifiedName);
             var game = ModuleDefinition.ReadModule(typeof(Microsoft.Xna.Framework.Game).Module.FullyQualifiedName);
             var graphics = ModuleDefinition.ReadModule(typeof(Microsoft.Xna.Framework.Graphics.SpriteBatch).Module.FullyQualifiedName);
 
             var ret = new Dictionary<string, AssemblyNameReference>();
-            foreach (TypeDefinition type in core.GetTypes())
+            foreach (var type in core.GetTypes())
             {
                 // If they aren't public then nobody should be referencing them, so
                 // we don't need to fix any of those references.
                 // I can't remember why the '<' check was needed. I think compiler
                 // generated stuff caused duplicate key problems?
-                if (!type.IsPublic || type.Namespace.IndexOf("<") != -1) continue;
-                ret.Add(type.Namespace + "." + type.Name, xnaRef);
+                if (!type.IsPublic || type.Namespace.IndexOf("<", StringComparison.Ordinal) != -1)
+                    continue;
+
+                ret.Add(type.Namespace + "." + type.Name, XnaRef);
             }
-            foreach (TypeDefinition type in game.GetTypes())
+            foreach (var type in game.GetTypes())
             {
-                if (!type.IsPublic || type.Namespace.IndexOf("<") != -1) continue;
-                ret.Add(type.Namespace + "." + type.Name, xnaGameRef);
+                if (!type.IsPublic || type.Namespace.IndexOf("<", StringComparison.Ordinal) != -1) continue;
+                ret.Add(type.Namespace + "." + type.Name, XnaGameRef);
             }
-            foreach (TypeDefinition type in graphics.GetTypes())
+            foreach (var type in graphics.GetTypes())
             {
-                if (!type.IsPublic || type.Namespace.IndexOf("<") != -1) continue;
-                ret.Add(type.Namespace + "." + type.Name, xnaGraphicsRef);
+                if (!type.IsPublic || type.Namespace.IndexOf("<", StringComparison.Ordinal) != -1) continue;
+                ret.Add(type.Namespace + "." + type.Name, XnaGraphicsRef);
             }
 
             return ret;
         }
+#endif
     }
 
     // Fix references to other things. The ones we fix are the external references,
@@ -127,80 +123,96 @@ namespace Farmhand.ReferenceFix
     // Stupid generics.
     internal class Reference
     {
-        private static FieldInfo typeRefField = typeof(TypeSpecification).GetField("scope", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static FieldInfo typeSpecField = typeof(TypeSpecification).GetField("element_type", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo TypeSpecField = typeof(TypeSpecification).GetField("element_type", BindingFlags.NonPublic | BindingFlags.Instance);
         internal static TypeReference Fix(ModuleDefinition def, TypeReference type)
         {
-            string from = type.Scope.Name;
+            var from = type.Scope.Name;
 
             TypeReference ret = type;
             if (ret.GetType() == typeof(TypeReference))
             {
                 if (IsStardew(from))
-                    ret = new TypeReference(type.Namespace, type.Name, null, thisRef);
-                else if (!WINDOWS && IsXna(from))
-                    ret = new TypeReference(type.Namespace, type.Name, null, monoRef);
-                else if (WINDOWS && IsMono(from))
-                    ret = new TypeReference(type.Namespace, type.Name, null, FindXnaRef(type));
+                {
+                    ret = new TypeReference(type.Namespace, type.Name, null, ThisRef);
+                }
+                else
+                {
+#if WINDOWS
+                    if (IsMono(from))
+                        ret = new TypeReference(type.Namespace, type.Name, null, FindXnaRef(type));
+#else
+                    if (IsXna(from))
+                        ret = new TypeReference(type.Namespace, type.Name, null, MonoRef);
+#endif
+                }
                 ret.IsValueType = type.IsValueType;
             }
-            else if (ret.GetType() == typeof(GenericParameter))
-                return Fix(def, ret.DeclaringType, ret as GenericParameter);
-            else if (ret is TypeSpecification)
-                typeSpecField.SetValue(type, Fix(def, (type as TypeSpecification).ElementType));
-            else if (!(ret is TypeDefinition)) // Meaning it is defined in this assembly. I think?
-                Logging.Log.Warning("DON'T KNOW HOW TO DEAL WITH " + ret.GetType() + " " + ret);
-
-            if (type is GenericInstanceType)
+            else if (ret is GenericParameter)
             {
-                for (int i = 0; i < (type as GenericInstanceType).ElementType.GenericParameters.Count; ++i)
+                return Fix(def, ret.DeclaringType, (GenericParameter) ret);
+            }
+            else if (ret is TypeSpecification)
+            {
+                TypeSpecField.SetValue(type, Fix(def, ((TypeSpecification) type).ElementType));
+            }
+            else if (!(ret is TypeDefinition)) // Meaning it is defined in this assembly. I think?
+            {
+                Logging.Log.Warning("Unable to fix unhandled type " + ret.GetType() + " " + ret);
+            }
+
+            var genericInstanceType = type as GenericInstanceType;
+            if (genericInstanceType != null)
+            {
+                for (var i = 0; i < genericInstanceType.ElementType.GenericParameters.Count; ++i)
                 {
-                    var t = (type as GenericInstanceType).ElementType.GenericParameters[i];
-                    (type as GenericInstanceType).ElementType.GenericParameters[i] = Fix(def, type, t);
+                    genericInstanceType.ElementType.GenericParameters[i] = Fix(def, genericInstanceType, 
+                        genericInstanceType.ElementType.GenericParameters[i]);
                 }
-                for (int i = 0; i < (type as GenericInstanceType).GenericArguments.Count; ++i)
+                for (var i = 0; i < genericInstanceType.GenericArguments.Count; ++i)
                 {
-                    var t = (type as GenericInstanceType).GenericArguments[i];
-                    (type as GenericInstanceType).GenericArguments[i] = Fix(def, t);
+                    genericInstanceType.GenericArguments[i] = Fix(def, genericInstanceType.GenericArguments[i]);
                 }
             }
             else if (type.HasGenericParameters)
             {
-                for (int i = 0; i < type.GenericParameters.Count; ++i)
+                for (var i = 0; i < type.GenericParameters.Count; ++i)
                     type.GenericParameters[i] = Fix(def, type, type.GenericParameters[i]);
             }
 
             return def.Import(ret);
         }
 
-        private static FieldInfo methSpecField = typeof(MethodSpecification).GetField("method", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo MethSpecField = typeof(MethodSpecification).GetField("method", BindingFlags.NonPublic | BindingFlags.Instance);
         internal static MethodReference Fix(ModuleDefinition def, MethodReference meth)
         {
             foreach (var param in meth.Parameters)
                 param.ParameterType = Fix(def, param.ParameterType);
 
-            if (meth is GenericInstanceMethod)
+            var instanceMethod = meth as GenericInstanceMethod;
+            if (instanceMethod != null)
             {
-                var gim = (meth as GenericInstanceMethod);
-                methSpecField.SetValue(meth, Fix(def, gim.ElementMethod));
-                for (int i = 0; i < gim.GenericParameters.Count; ++i)
-                    gim.GenericParameters[i] = Fix(def, meth, gim.GenericParameters[i]);
-                for (int i = 0; i < gim.GenericArguments.Count; ++i)
+                MethSpecField.SetValue(instanceMethod, Fix(def, instanceMethod.ElementMethod));
+                for (var i = 0; i < instanceMethod.GenericParameters.Count; ++i)
                 {
-                    gim.GenericArguments[i] = Fix(def, gim.GenericArguments[i]);
+                    instanceMethod.GenericParameters[i] = Fix(def, instanceMethod, instanceMethod.GenericParameters[i]);
+                }
+
+                for (var i = 0; i < instanceMethod.GenericArguments.Count; ++i)
+                {
+                    instanceMethod.GenericArguments[i] = Fix(def, instanceMethod.GenericArguments[i]);
                 }
             }
             else if (meth.HasGenericParameters)
             {
-                for (int i = 0; i < meth.GenericParameters.Count; ++i)
+                for (var i = 0; i < meth.GenericParameters.Count; ++i)
                     meth.GenericParameters[i] = Fix(def, meth, meth.GenericParameters[i]);
             }
 
             meth.ReturnType = Fix(def, meth.ReturnType);
             if (meth is MethodSpecification)
             {
-                MethodReference elem = (methSpecField.GetValue(meth) as MethodReference);
-                methSpecField.SetValue(meth, Fix(def, elem));
+                var elem = (MethSpecField.GetValue(meth) as MethodReference);
+                MethSpecField.SetValue(meth, Fix(def, elem));
             }
             else
                 meth.DeclaringType = Fix(def, meth.DeclaringType);
@@ -214,12 +226,12 @@ namespace Farmhand.ReferenceFix
             return def.Import(field);
         }
 
-        private static FieldInfo genDeclOwner = typeof(GenericParameter).GetField("owner", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static FieldInfo _genDeclOwner = typeof(GenericParameter).GetField("owner", BindingFlags.NonPublic | BindingFlags.Instance);
         internal static GenericParameter Fix(ModuleDefinition def, IGenericParameterProvider parent, GenericParameter param)
         {
-            for (int i = 0; i < param.Constraints.Count; ++i)
+            for (var i = 0; i < param.Constraints.Count; ++i)
                 param.Constraints[i] = Fix(def, param.Constraints[i]);
-            for (int i = 0; i < param.GenericParameters.Count; ++i)
+            for (var i = 0; i < param.GenericParameters.Count; ++i)
                 param.GenericParameters[i] = Fix(def, param, param.GenericParameters[i]);
             return param;
         }
@@ -231,13 +243,13 @@ namespace Farmhand.ReferenceFix
     {
         internal static void Fix(AssemblyDefinition def)
         {
-            foreach (ModuleDefinition mod in def.Modules)
+            foreach (var mod in def.Modules)
             {
                 foreach (var obj in mod.GetTypes())
                     Fix(obj);
 
-                TypeReference[] refs = (TypeReference[])mod.GetTypeReferences();
-                for (int i = 0; i < refs.Count(); ++i)
+                var refs = (TypeReference[])mod.GetTypeReferences();
+                for (var i = 0; i < refs.Count(); ++i)
                 {
                     if (!MatchesPlatform(refs[i]))
                         refs[i] = Reference.Fix(mod,refs[i]);
@@ -248,82 +260,111 @@ namespace Farmhand.ReferenceFix
         private static void Fix(TypeDefinition type)
         {
             if (type.BaseType != null)
+            {
                 type.BaseType = Reference.Fix(type.Module, type.BaseType);
-            for (int i = 0; i < type.Interfaces.Count; ++i)
+            }
+
+            for (var i = 0; i < type.Interfaces.Count; ++i)
+            {
                 type.Interfaces[i] = Reference.Fix(type.Module, type.Interfaces[i]);
+            }
+
             foreach (var obj in type.Events)
             {
                 if (obj.AddMethod != null)
+                {
                     Fix(obj.AddMethod);
+                }
                 if (obj.InvokeMethod != null)
+                {
                     Fix(obj.InvokeMethod);
+                }
                 if (obj.RemoveMethod != null)
+                {
                     Fix(obj.RemoveMethod);
+                }
                 foreach (var evMeth in obj.OtherMethods)
+                {
                     Fix(evMeth);
+                }
                 obj.EventType = Reference.Fix(type.Module, obj.EventType);
             }
-            for (int i = 0; i < type.GenericParameters.Count; ++i)
+            for (var i = 0; i < type.GenericParameters.Count; ++i)
+            {
                 type.GenericParameters[i] = Reference.Fix(type.Module, type, type.GenericParameters[i]);
+            }
             foreach (var obj in type.NestedTypes)
+            {
                 Fix(obj);
+            }
             foreach (var obj in type.Methods)
+            {
                 Fix(obj);
+            }
             foreach (var obj in type.Fields)
+            {
                 Fix(obj);
+            }
         }
 
         private static void Fix(MethodDefinition meth)
         {
             foreach (var obj in meth.Parameters)
-                if(!MatchesPlatform(obj.ParameterType))
+            {
+                if (!MatchesPlatform(obj.ParameterType))
+                {
                     obj.ParameterType = Reference.Fix(meth.Module, obj.ParameterType);
+                }
+            }
+
             if (!MatchesPlatform(meth.MethodReturnType.ReturnType))
                 meth.MethodReturnType.ReturnType = Reference.Fix(meth.Module, meth.MethodReturnType.ReturnType);
+
             for (int i = 0; i < meth.Overrides.Count; ++i)
-                meth.Overrides[i] = Reference.Fix(meth.Module, meth.Overrides[i]);
-            
-            if (meth.HasBody && meth.Body != null)
             {
-                if (meth.Body.ThisParameter != null && !MatchesPlatform(meth.Body.ThisParameter.ParameterType))
-                    meth.Body.ThisParameter.ParameterType = Reference.Fix(meth.Module, meth.Body.ThisParameter.ParameterType);
+                meth.Overrides[i] = Reference.Fix(meth.Module, meth.Overrides[i]);
+            }
 
-                if (meth.Body.HasVariables)
-                {
-                    foreach (var v in meth.Body.Variables)
-                        v.VariableType = Reference.Fix(meth.Module, v.VariableType);
-                }
+            if (!meth.HasBody || meth.Body == null) return;
 
-                foreach (Instruction insn in meth.Body.Instructions)
+            if (meth.Body.ThisParameter != null && !MatchesPlatform(meth.Body.ThisParameter.ParameterType))
+                meth.Body.ThisParameter.ParameterType = Reference.Fix(meth.Module, meth.Body.ThisParameter.ParameterType);
+
+            if (meth.Body.HasVariables)
+            {
+                foreach (var v in meth.Body.Variables)
+                    v.VariableType = Reference.Fix(meth.Module, v.VariableType);
+            }
+
+            foreach (var insn in meth.Body.Instructions)
+            {
+                var oper = insn.Operand;
+                var asType = oper as TypeReference;
+                var asMeth = oper as MethodReference;
+                var asField = oper as FieldReference;
+                var asVar = oper as VariableDefinition;
+                var asParam = oper as ParameterDefinition;
+                var asCall = oper as CallSite;
+                if (asType != null)
+                    insn.Operand = Reference.Fix(meth.Module, asType);
+                else if (asMeth != null)
+                    insn.Operand = Reference.Fix(meth.Module, asMeth);
+                else if (asField != null)
+                    insn.Operand = Reference.Fix(meth.Module, asField);
+                else if (asVar != null)
+                    asVar.VariableType = Reference.Fix(meth.Module, asVar.VariableType);
+                else if (asParam != null)
+                    asParam.ParameterType = Reference.Fix(meth.Module, asParam.ParameterType);
+                else if (asCall != null)
                 {
-                    object oper = insn.Operand;
-                    var asType = oper as TypeReference;
-                    var asMeth = oper as MethodReference;
-                    var asField = oper as FieldReference;
-                    var asVar = oper as VariableDefinition;
-                    var asParam = oper as ParameterDefinition;
-                    var asCall = oper as CallSite;
-                    if (asType != null)
-                        insn.Operand = Reference.Fix(meth.Module, asType);
-                    else if (asMeth != null)
-                        insn.Operand = Reference.Fix(meth.Module, asMeth);
-                    else if (asField != null)
-                        insn.Operand = Reference.Fix(meth.Module, asField);
-                    else if (asVar != null)
-                        asVar.VariableType = Reference.Fix(meth.Module, asVar.VariableType);
-                    else if (asParam != null)
-                        asParam.ParameterType = Reference.Fix(meth.Module, asParam.ParameterType);
-                    else if (asCall != null)
-                    {
-                        foreach (var param in asCall.Parameters)
-                            param.ParameterType = Reference.Fix(meth.Module, param.ParameterType);
-                        asCall.ReturnType = Reference.Fix(meth.Module, asCall.ReturnType);
-                    }
+                    foreach (var param in asCall.Parameters)
+                        param.ParameterType = Reference.Fix(meth.Module, param.ParameterType);
+                    asCall.ReturnType = Reference.Fix(meth.Module, asCall.ReturnType);
                 }
             }
         }
 
-        private static void Fix(FieldDefinition field)
+        private static void Fix(FieldReference field)
         {
             if (!MatchesPlatform(field.FieldType))
                 field.FieldType = Reference.Fix(field.Module, field.FieldType);

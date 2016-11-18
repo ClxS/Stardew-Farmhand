@@ -186,9 +186,9 @@ namespace Farmhand.Registries.Containers
                 // The indices mess up and really weird stuff happens (see
                 // two comment blocks ago). Placing a dummy re-reference of
                 // ourself SEEMS to fix that.
-                int index = asm.MainModule.AssemblyReferences.IndexOf(@ref);
+                var index = asm.MainModule.AssemblyReferences.IndexOf(@ref);
                 asm.MainModule.AssemblyReferences.Remove(@ref);
-                asm.MainModule.AssemblyReferences.Insert(index, ReferenceFix.Data.thisRef);
+                asm.MainModule.AssemblyReferences.Insert(index, ReferenceFix.Data.ThisRef);
             }
 
             if (shouldFix)
