@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using Farmhand.Attributes;
 using StardewValley;
+using System.Collections.Generic;
 
 namespace Farmhand.Helpers
 {
@@ -119,8 +120,10 @@ namespace Farmhand.Helpers
         }
         
         [Hook(HookType.Entry, "StardewValley.Program", "Main")]
-        internal static bool MainRedirectFunction()
+        internal static bool MainRedirectFunction([InputBind(typeof(string[]), "args")] string[] args)
         {
+            ArgumentsHelper.ParseArguments(args);
+
             Program.ReadConfig();
 
             ModLoader.TryLoadModCompatiblityLayers();

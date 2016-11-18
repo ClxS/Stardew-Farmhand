@@ -101,7 +101,35 @@ namespace Farmhand.Registries.Containers
 
             try
             {
-                ModAssembly = Assembly.LoadFrom(modDllPath);
+                // When a SMAPI mod is still referencing the vanilla assembly,
+                // it doesn't see the Farmhand game. Everything will still be 
+                // in the state for when the assembly would first be loaded.
+                // This will fix the references so the mods will actually work.
+                Mono.Cecil.AssemblyDefinition asm = Mono.Cecil.AssemblyDefinition.ReadAssembly(modDllPath);
+                bool vanillaRef = false;
+                foreach (var asmRef in asm.MainModule.AssemblyReferences)
+                {
+                    if (asmRef.Name.Contains("Stardew Valley"))
+                    {
+                        asmRef.Name = asmRef.Name.Replace("Stardew Valley", "Stardew Farmhand");
+                        vanillaRef = true;
+                    }
+                    // TODO: I heard something about the vanilla assembly being 
+                    // StardewValley on Mac/Linux? Is it "StardewFarmhand" or 
+                    // "Stardew Farmhand" on those platforms?
+                }
+
+                byte[] bytes = System.IO.File.ReadAllBytes(modDllPath);
+                if ( vanillaRef ) // No need to rewrite the assembly if we didn't change anything
+                {
+                    using (System.IO.MemoryStream stream = new System.IO.MemoryStream())
+                    {
+                        asm.Write(stream);
+                        bytes = stream.GetBuffer();
+                    }
+                }
+
+                ModAssembly = Assembly.Load(bytes);
                 if (ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Farmhand.Mod)) > 0)
                 {
                     var type = ModAssembly.GetTypes().First(x => x.BaseType == typeof(Farmhand.Mod));

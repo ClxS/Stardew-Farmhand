@@ -55,7 +55,7 @@ namespace Farmhand.Cecil
             return ilProcessor;
         }
 
-        public TypeDefinition GetTypeDefinition(string type)
+        public TypeDefinition GetTypeDefinition(string type, Mono.Collections.Generic.Collection<TypeDefinition> toCheck = null)
         {
             if (AssemblyDefinition == null)
                 throw new Exception("ERROR Assembly not properly read. Cannot parse");
@@ -63,7 +63,25 @@ namespace Farmhand.Cecil
             if (string.IsNullOrWhiteSpace(type))
                 throw new Exception("Both type and method must be set");
             AssemblyDefinition.MainModule.Import(typeof(void));
-            TypeDefinition typeDef = AssemblyDefinition.MainModule.Types.FirstOrDefault(n => n.FullName == type);
+
+            if (toCheck == null)
+                toCheck = AssemblyDefinition.MainModule.Types;
+            TypeDefinition typeDef = default(TypeDefinition);
+            foreach (TypeDefinition def in toCheck)
+            {
+                if (def.FullName == type)
+                {
+                    typeDef = def;
+                    break;
+                }
+                else if (type.StartsWith(def.FullName) && def.HasNestedTypes)
+                {
+                    typeDef = GetTypeDefinition(type, def.NestedTypes);
+                    if (typeDef != null)
+                        break;
+                }
+            }
+
             return typeDef;
         }
         

@@ -108,6 +108,16 @@ namespace StardewModdingAPI.Events
         public IClickableMenu PriorMenu { get; private set; }
     }
 
+    public class EventArgsClickableMenuClosed : EventArgs
+    {
+        public EventArgsClickableMenuClosed(IClickableMenu priorMenu)
+        {
+            PriorMenu = priorMenu;
+        }
+        
+        public IClickableMenu PriorMenu { get; private set; }
+    }
+
     public class EventArgsGameLocationsChanged : EventArgs
     {
         public EventArgsGameLocationsChanged(List<GameLocation> newLocations)

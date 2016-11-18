@@ -47,6 +47,7 @@ namespace StardewModdingAPI
 #pragma warning restore CS0618
 
             Farmhand.Events.LocationEvents.OnLocationsChanged += Events.LocationEvents.InvokeLocationsChanged;
+            Farmhand.Events.LocationEvents.OnLocationsChanged += Events.PlayerEvents.InvokeLoadedGame;
             Farmhand.Events.LocationEvents.OnLocationObjectsChanged += Events.LocationEvents.InvokeOnNewLocationObject;
             Farmhand.Events.LocationEvents.OnCurrentLocationChanged += Events.LocationEvents.InvokeCurrentLocationChanged;
 
@@ -78,6 +79,7 @@ namespace StardewModdingAPI
                 instance = (StardewModdingAPI.Mod)modAssembly.CreateInstance(type.ToString());
                 if (instance != null)
                 {
+                    instance.Manifest = new Manifest().InitializeConfig(System.IO.Path.Combine(manifest.ModDirectory, "manifest.json"));
                     instance.PathOnDisk = manifest.ModDirectory;
                     instance.Entry();
                 }

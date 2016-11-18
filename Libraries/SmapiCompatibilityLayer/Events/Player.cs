@@ -27,9 +27,9 @@ namespace StardewModdingAPI.Events
             EventCommon.SafeInvoke(LeveledUp, sender, new EventArgsLevelUp(eventArgsOnLevelUp.Which, eventArgsOnLevelUp.NewLevel));
         }
 
-        internal static void InvokeLoadedGame(EventArgsLoadedGameChanged loaded)
+        internal static void InvokeLoadedGame(object sender, EventArgs eventArgs)
         {
-            EventCommon.SafeInvoke(LoadedGame, null, loaded);
+            EventCommon.SafeInvoke(LoadedGame, null, new EventArgsLoadedGameChanged(true));
         }
     }
 }

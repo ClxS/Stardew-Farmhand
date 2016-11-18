@@ -54,6 +54,22 @@
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Graphics\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Graphics.dll</HintPath>
       <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.Graphics.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net40\Mono.Cecil.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -173,12 +189,16 @@
     <Compile Include="Events\Arguments\GlobalRoute\EventArgsGlobalRouteCancellable.cs" />
     <Compile Include="Events\Arguments\GlobalRoute\EventArgsGlobalRouteReturnable.cs" />
     <Compile Include="Events\Arguments\GraphicsEvents\EventArgsClientSizeChanged.cs" />
+    <Compile Include="Events\Arguments\LocationEvents\EventArgsOnCurrentLocationChanged.cs" />
     <Compile Include="Events\Arguments\LocationEvents\EventArgsGetMonsterForThisLevel.cs" />
+    <Compile Include="Events\Arguments\LocationEvents\EventArgsOnBeforeWarp.cs" />
+    <Compile Include="Events\Arguments\MenuEvents\EventArgsOnMenuChanged.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnFarmerChanged.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnItemAddedToInventory.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnLevelUp.cs" />
-    <Compile Include="Events\Arguments\SaveEvents\EventArgsOnAfterLoad.cs" />
     <Compile Include="Events\Arguments\SaveEvents\EventArgsOnBeforeLoad.cs" />
+    <Compile Include="Events\Arguments\SaveEvents\EventArgsOnAfterProgress.cs" />
+    <Compile Include="Events\Arguments\TimeEvents\EventArgsShouldTimePassCheck.cs" />
     <Compile Include="Events\Arguments\UtilityEvents\EventArgsOnGetDwarfShopStock.cs" />
     <Compile Include="Events\ControlEvents.cs" />
     <Compile Include="Events\EventCommon.cs" />
@@ -187,6 +207,7 @@
     <Compile Include="Events\GameEvents.cs" />
     <Compile Include="Events\GlobalRouteManager.cs" />
     <Compile Include="Events\GraphicsEvents.cs" />
+    <Compile Include="Events\EventEvents.cs" />
     <Compile Include="Events\LocationEvents.cs" />
     <Compile Include="Events\MenuEvents.cs" />
     <Compile Include="Events\MineShaftEvents.cs" />
@@ -198,6 +219,7 @@
     <Compile Include="Events\UiEvents.cs" />
     <Compile Include="Events\UtilityEvents.cs" />
     <Compile Include="FarmhandConfig.cs" />
+    <Compile Include="Helpers\ArgumentsHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\CompatibilityLayer.cs" />
