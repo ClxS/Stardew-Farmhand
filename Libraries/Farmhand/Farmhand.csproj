@@ -222,7 +222,7 @@
     <Compile Include="Events\UtilityEvents.cs" />
     <Compile Include="FarmhandConfig.cs" />
     <Compile Include="Helpers\ArgumentsHelper.cs" />
-    <Compile Include="Mods\ReferenceFix.cs" />
+    <Compile Include="Helpers\ReferenceFix.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\CompatibilityLayer.cs" />

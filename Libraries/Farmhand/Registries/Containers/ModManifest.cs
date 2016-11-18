@@ -23,7 +23,7 @@ namespace Farmhand.Registries.Containers
         public static event EventHandler BeforeLoaded;
         public static event EventHandler AfterLoaded;
 
-        private static SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider();
+        private static readonly SHA1CryptoServiceProvider Sha1 = new SHA1CryptoServiceProvider();
 
         [JsonConverter(typeof(UniqueIdConverter))]
         public UniqueId<string> UniqueId { get; set; }
@@ -34,7 +34,7 @@ namespace Farmhand.Registries.Containers
             
         public string Author { get; set; }
 
-        public System.Version Version { get; set; }
+        public Version Version { get; set; }
 
         public string Description { get; set; }
         public List<ModDependency> Dependencies { get; set; }
@@ -99,10 +99,10 @@ namespace Farmhand.Registries.Containers
 
             try
             {
-                ModAssembly = Assembly.Load(getDllBytes());
-                if (ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Farmhand.Mod)) > 0)
+                ModAssembly = Assembly.Load(GetDllBytes());
+                if (ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Mod)) > 0)
                 {
-                    var type = ModAssembly.GetTypes().First(x => x.BaseType == typeof(Farmhand.Mod));
+                    var type = ModAssembly.GetTypes().First(x => x.BaseType == typeof(Mod));
                     Mod instance = (Mod)ModAssembly.CreateInstance(type.ToString());
                     if (instance != null)
                     {
@@ -132,9 +132,15 @@ namespace Farmhand.Registries.Containers
             }
             catch (Exception ex)
             {
-                if(ex is ReflectionTypeLoadException)
-                foreach (Exception e in (ex as ReflectionTypeLoadException).LoaderExceptions)
-                     Log.Exception("loaderexceptions entry: " + $"{e.Message} ${e.Source} ${e.TargetSite} ${e.StackTrace} ${e.Data}", e);
+                var exception = ex as ReflectionTypeLoadException;
+                if (exception != null)
+                {
+                    foreach (var e in exception.LoaderExceptions)
+                    {
+                        Log.Exception("loaderexceptions entry: " +
+                            $"{e.Message} ${e.Source} ${e.TargetSite} ${e.StackTrace} ${e.Data}", e);
+                    }
+                }
                 Log.Exception("Error loading mod DLL", ex);
                 //throw new Exception(string.Format($"Failed to load mod '{modDllPath}'\n\t-{ex.Message}\n\t\t-{ex.StackTrace}"), ex);
             }
@@ -142,7 +148,7 @@ namespace Farmhand.Registries.Containers
             return Instance != null;
         }
 
-        internal byte[] getDllBytes()
+        internal byte[] GetDllBytes()
         {
             var modDllPath = $"{ModDirectory}\\{ModDll}";
 
@@ -163,22 +169,21 @@ namespace Farmhand.Registries.Containers
             // (Trust me, I tried. Suddenly it looks for the definition of
             // Vector2 inside the Farmhand assembly, or somewhere else
             // bizarre.)
-            byte[] bytes = System.IO.File.ReadAllBytes(modDllPath);
+            var bytes = File.ReadAllBytes(modDllPath);
 
-            var asm = Mono.Cecil.AssemblyDefinition.ReadAssembly(new System.IO.MemoryStream(bytes, false));
+            var asm = AssemblyDefinition.ReadAssembly(new MemoryStream(bytes, false));
 
-            bool shouldFix = false;
+            var shouldFix = false;
             var toRemove = new List<AssemblyNameReference>();
             foreach (var asmRef in asm.MainModule.AssemblyReferences)
             {
                 // We only want to go to the effort of fixing everything if 
                 // there is a reference that even needs fixing.
                 // Also, the bad references will need to be removed.
-                if (!ReferenceFix.Data.MatchesPlatform(asmRef))
-                {
-                    shouldFix = true;
-                    toRemove.Add(asmRef);
-                }
+                if (ReferenceHelper.MatchesPlatform(asmRef)) continue;
+
+                shouldFix = true;
+                toRemove.Add(asmRef);
             }
             foreach (var @ref in toRemove)
             {
@@ -188,7 +193,7 @@ namespace Farmhand.Registries.Containers
                 // ourself SEEMS to fix that.
                 var index = asm.MainModule.AssemblyReferences.IndexOf(@ref);
                 asm.MainModule.AssemblyReferences.Remove(@ref);
-                asm.MainModule.AssemblyReferences.Insert(index, ReferenceFix.Data.ThisRef);
+                asm.MainModule.AssemblyReferences.Insert(index, ReferenceHelper.ThisRef);
             }
 
             if (shouldFix)
@@ -198,7 +203,7 @@ namespace Farmhand.Registries.Containers
                     // We want to cache any 'fixed' assemblies so that we don't have to
                     // go through and fix everything again. However if the mod is updated
                     // or something, it will need to be fixed again.
-                    string check = Convert.ToBase64String(sha1.ComputeHash(bytes));
+                    string check = Convert.ToBase64String(Sha1.ComputeHash(bytes));
                     check = check.Replace("=", "").Replace('+', '-').Replace('/', '_'); // Fix for valid file name. = is just padding
                     string checkPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                                                     "StardewValley", "cache", ModDll + "-" + check + ".dll");
@@ -211,23 +216,23 @@ namespace Farmhand.Registries.Containers
                         catch (Exception ex)
                         {
                             Log.Exception($"Exception reading cached DLL {checkPath}", ex);
-                            bytes = fixDll(asm, checkPath);
+                            bytes = FixDll(asm, checkPath);
                         }
                     }
-                    else bytes = fixDll(asm, checkPath);
+                    else bytes = FixDll(asm, checkPath);
                 }
-                else bytes = fixDll(asm, null);
+                else bytes = FixDll(asm, null);
             }
 
             return bytes;
         }
 
-        private byte[] fixDll( Mono.Cecil.AssemblyDefinition asm, string cachePath )
+        private static byte[] FixDll( AssemblyDefinition asm, string cachePath )
         {
-            ReferenceFix.Definition.Fix(asm);
+            DefinitionResolver.Fix(asm);
 
-            byte[] bytes = null;
-            using (MemoryStream stream = new MemoryStream())
+            byte[] bytes;
+            using (var stream = new MemoryStream())
             {
                 asm.Write(stream);
                 bytes = stream.GetBuffer();
@@ -237,10 +242,17 @@ namespace Farmhand.Registries.Containers
             {
                 try
                 {
-                    string dir = Path.GetDirectoryName(cachePath);
-                    if (!Directory.Exists(dir))
-                        Directory.CreateDirectory(dir);
-                    File.WriteAllBytes(cachePath, bytes);
+                    var dir = Path.GetDirectoryName(cachePath);
+                    if (dir != null)
+                    {
+                        if (!Directory.Exists(dir))
+                            Directory.CreateDirectory(dir);
+                        File.WriteAllBytes(cachePath, bytes);
+                    }
+                    else
+                    {
+                        throw new Exception("Path.GetDirectoryName(cachePath) returned null");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -256,7 +268,7 @@ namespace Farmhand.Registries.Containers
             if (Content == null)
                 return;
 
-            Logging.Log.Verbose("Loading Content");
+            Log.Verbose("Loading Content");
             if (Content.Textures != null)
             {
                 foreach (var texture in Content.Textures)
@@ -268,7 +280,7 @@ namespace Farmhand.Registries.Containers
                         throw new Exception($"Missing Texture: {texture.AbsoluteFilePath}");
                     }
 
-                    Logging.Log.Verbose($"Registering new texture: {texture.Id}");
+                    Log.Verbose($"Registering new texture: {texture.Id}");
                     TextureRegistry.RegisterItem(texture.Id, texture, this);
                 }
             }
@@ -284,7 +296,7 @@ namespace Farmhand.Registries.Containers
                         throw new Exception($"Missing map: {map.AbsoluteFilePath}");
                     }
 
-                    Logging.Log.Verbose($"Registering new map: {map.Id}");
+                    Log.Verbose($"Registering new map: {map.Id}");
                     MapRegistry.RegisterItem(map.Id, map, this);
                 }
             }
@@ -305,7 +317,7 @@ namespace Farmhand.Registries.Containers
                     if (file.IsTexture)
                         throw new Exception($"Replacement Texture: {file.Texture}");
                 }
-                Logging.Log.Verbose("Registering new texture XNB override");
+                Log.Verbose("Registering new texture XNB override");
                 XnbRegistry.RegisterItem(file.Original, file, this);
             }
         }

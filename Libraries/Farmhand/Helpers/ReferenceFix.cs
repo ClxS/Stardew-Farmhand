@@ -1,16 +1,15 @@
-﻿using Mono.Cecil;
-using Mono.Cecil.Cil;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
 
-using static Farmhand.ReferenceFix.Data;
+using static Farmhand.Helpers.ReferenceHelper;
 
-namespace Farmhand.ReferenceFix
+namespace Farmhand.Helpers
 {
-    internal static class Data
+    internal static class ReferenceHelper
     {
         // If referencing vanilla Stardew, it wasn't built for Farmhand.
         // If on Windows and referencing Mono, it won't be compatible.
@@ -121,14 +120,14 @@ namespace Farmhand.ReferenceFix
     // Fix references to other things. The ones we fix are the external references,
     // but everything still needs to be checked, even if the top-level is fine.
     // Stupid generics.
-    internal class Reference
+    internal class ReferenceResolver
     {
         private static readonly FieldInfo TypeSpecField = typeof(TypeSpecification).GetField("element_type", BindingFlags.NonPublic | BindingFlags.Instance);
         internal static TypeReference Fix(ModuleDefinition def, TypeReference type)
         {
             var from = type.Scope.Name;
 
-            TypeReference ret = type;
+            var ret = type;
             if (ret.GetType() == typeof(TypeReference))
             {
                 if (IsStardew(from))
@@ -238,7 +237,7 @@ namespace Farmhand.ReferenceFix
 
     // Fix the actual definitions of things, mainly to go down and find all
     // of the references that need fixing.
-    internal class Definition
+    internal class DefinitionResolver
     {
         internal static void Fix(AssemblyDefinition def)
         {
@@ -248,10 +247,10 @@ namespace Farmhand.ReferenceFix
                     Fix(obj);
 
                 var refs = (TypeReference[])mod.GetTypeReferences();
-                for (var i = 0; i < refs.Count(); ++i)
+                for (var i = 0; i < refs.Length; ++i)
                 {
                     if (!MatchesPlatform(refs[i]))
-                        refs[i] = Reference.Fix(mod,refs[i]);
+                        refs[i] = ReferenceResolver.Fix(mod,refs[i]);
                 }
             }
         }
@@ -260,12 +259,12 @@ namespace Farmhand.ReferenceFix
         {
             if (type.BaseType != null)
             {
-                type.BaseType = Reference.Fix(type.Module, type.BaseType);
+                type.BaseType = ReferenceResolver.Fix(type.Module, type.BaseType);
             }
 
             for (var i = 0; i < type.Interfaces.Count; ++i)
             {
-                type.Interfaces[i] = Reference.Fix(type.Module, type.Interfaces[i]);
+                type.Interfaces[i] = ReferenceResolver.Fix(type.Module, type.Interfaces[i]);
             }
 
             foreach (var obj in type.Events)
@@ -286,11 +285,11 @@ namespace Farmhand.ReferenceFix
                 {
                     Fix(evMeth);
                 }
-                obj.EventType = Reference.Fix(type.Module, obj.EventType);
+                obj.EventType = ReferenceResolver.Fix(type.Module, obj.EventType);
             }
             for (var i = 0; i < type.GenericParameters.Count; ++i)
             {
-                type.GenericParameters[i] = Reference.Fix(type.Module, type, type.GenericParameters[i]);
+                type.GenericParameters[i] = ReferenceResolver.Fix(type.Module, type, type.GenericParameters[i]);
             }
             foreach (var obj in type.NestedTypes)
             {
@@ -312,27 +311,27 @@ namespace Farmhand.ReferenceFix
             {
                 if (!MatchesPlatform(obj.ParameterType))
                 {
-                    obj.ParameterType = Reference.Fix(meth.Module, obj.ParameterType);
+                    obj.ParameterType = ReferenceResolver.Fix(meth.Module, obj.ParameterType);
                 }
             }
 
             if (!MatchesPlatform(meth.MethodReturnType.ReturnType))
-                meth.MethodReturnType.ReturnType = Reference.Fix(meth.Module, meth.MethodReturnType.ReturnType);
+                meth.MethodReturnType.ReturnType = ReferenceResolver.Fix(meth.Module, meth.MethodReturnType.ReturnType);
 
             for (int i = 0; i < meth.Overrides.Count; ++i)
             {
-                meth.Overrides[i] = Reference.Fix(meth.Module, meth.Overrides[i]);
+                meth.Overrides[i] = ReferenceResolver.Fix(meth.Module, meth.Overrides[i]);
             }
 
             if (!meth.HasBody || meth.Body == null) return;
 
             if (meth.Body.ThisParameter != null && !MatchesPlatform(meth.Body.ThisParameter.ParameterType))
-                meth.Body.ThisParameter.ParameterType = Reference.Fix(meth.Module, meth.Body.ThisParameter.ParameterType);
+                meth.Body.ThisParameter.ParameterType = ReferenceResolver.Fix(meth.Module, meth.Body.ThisParameter.ParameterType);
 
             if (meth.Body.HasVariables)
             {
                 foreach (var v in meth.Body.Variables)
-                    v.VariableType = Reference.Fix(meth.Module, v.VariableType);
+                    v.VariableType = ReferenceResolver.Fix(meth.Module, v.VariableType);
             }
 
             foreach (var insn in meth.Body.Instructions)
@@ -345,20 +344,20 @@ namespace Farmhand.ReferenceFix
                 var asParam = oper as ParameterDefinition;
                 var asCall = oper as CallSite;
                 if (asType != null)
-                    insn.Operand = Reference.Fix(meth.Module, asType);
+                    insn.Operand = ReferenceResolver.Fix(meth.Module, asType);
                 else if (asMeth != null)
-                    insn.Operand = Reference.Fix(meth.Module, asMeth);
+                    insn.Operand = ReferenceResolver.Fix(meth.Module, asMeth);
                 else if (asField != null)
-                    insn.Operand = Reference.Fix(meth.Module, asField);
+                    insn.Operand = ReferenceResolver.Fix(meth.Module, asField);
                 else if (asVar != null)
-                    asVar.VariableType = Reference.Fix(meth.Module, asVar.VariableType);
+                    asVar.VariableType = ReferenceResolver.Fix(meth.Module, asVar.VariableType);
                 else if (asParam != null)
-                    asParam.ParameterType = Reference.Fix(meth.Module, asParam.ParameterType);
+                    asParam.ParameterType = ReferenceResolver.Fix(meth.Module, asParam.ParameterType);
                 else if (asCall != null)
                 {
                     foreach (var param in asCall.Parameters)
-                        param.ParameterType = Reference.Fix(meth.Module, param.ParameterType);
-                    asCall.ReturnType = Reference.Fix(meth.Module, asCall.ReturnType);
+                        param.ParameterType = ReferenceResolver.Fix(meth.Module, param.ParameterType);
+                    asCall.ReturnType = ReferenceResolver.Fix(meth.Module, asCall.ReturnType);
                 }
             }
         }
@@ -366,7 +365,7 @@ namespace Farmhand.ReferenceFix
         private static void Fix(FieldReference field)
         {
             if (!MatchesPlatform(field.FieldType))
-                field.FieldType = Reference.Fix(field.Module, field.FieldType);
+                field.FieldType = ReferenceResolver.Fix(field.Module, field.FieldType);
         }
     }
 }

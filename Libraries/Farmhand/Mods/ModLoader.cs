@@ -100,17 +100,17 @@ namespace Farmhand
 
         internal static void TryLoadModCompatiblityLayers()
         {
-            Logging.Log.Verbose("Loading Compatibility Layers");
+            Log.Verbose("Loading Compatibility Layers");
             string[] layers = {"StardewModdingAPI.dll"};
 
             foreach (var layer in layers)
             {
                 try
                 {
-                    Logging.Log.Verbose($"Trying to load {layer}");
+                    Log.Verbose($"Trying to load {layer}");
                     if (!File.Exists(layer))
                     {
-                        Logging.Log.Verbose($"{layer} not present");
+                        Log.Verbose($"{layer} not present");
                         continue;
                     }
 
@@ -125,7 +125,7 @@ namespace Farmhand
 
                     if (inst.GameOverrideType != null)
                     {
-                        Logging.Log.Verbose($"Override {inst.GameOverrideType}");
+                        Log.Verbose($"Override {inst.GameOverrideType}");
                         API.Game.RegisterGameOverride(inst.GameOverrideType);
                     }
 
@@ -215,7 +215,7 @@ namespace Farmhand
             // See ReferenceFix.Data.BuildXnaTypeCache()
             // Since mod loading is done we don't need this anymore.
             // There are a lot of types, so might as well save the memory.
-            ReferenceFix.Data.XnaTypes.Clear();
+            ReferenceHelper.XnaTypes.Clear();
         }
 
         private static void ResolveDependencies()
@@ -288,7 +288,7 @@ namespace Farmhand
                         using (var r = new StreamReader(file))
                         {
                             var json = r.ReadToEnd();
-                            var modInfo = JsonConvert.DeserializeObject<ModManifest>(json, new Farmhand.Helpers.VersionConverter());
+                            var modInfo = JsonConvert.DeserializeObject<ModManifest>(json, new VersionConverter());
                             
                             modInfo.ModDirectory = perModPath;
                             ModRegistry.RegisterItem(modInfo.UniqueId ?? new UniqueId<string>(Guid.NewGuid().ToString()), modInfo);
