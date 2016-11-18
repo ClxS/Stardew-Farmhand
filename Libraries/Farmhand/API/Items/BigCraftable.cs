@@ -35,7 +35,7 @@ namespace Farmhand.API.Items
             RegisteredIdType[bigCraftable.Id] = typeof(T);
             TextureUtility.AddSpriteToSpritesheet(ref Game1.bigCraftableSpriteSheet, bigCraftable.Texture, bigCraftable.Id, 16, 32);
             // Reload big craftable information with the newly injected information
-            StardewValley.Game1.bigCraftablesInformation = StardewValley.Game1.content.Load<Dictionary<int, string>>("Data\\BigCraftablesInformation");
+            StardewValley.Game1.bigCraftablesInformation = Farmhand.API.Content.ContentManager.Load<Dictionary<int, string>>("Data\\BigCraftablesInformation");
         }
 
         [HookRedirectConstructorToMethod("StardewValley.Buildings.Barn", "performActionOnConstruction")]

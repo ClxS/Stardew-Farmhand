@@ -91,6 +91,7 @@
     <Compile Include="API\Buildings\IBlueprint.cs" />
     <Compile Include="API\Buildings\BlueprintType.cs" />
     <Compile Include="API\Buildings\BuildingBlueprint.cs" />
+    <Compile Include="API\Content.cs" />
     <Compile Include="API\Crafting\CraftingRecipe.cs" />
     <Compile Include="API\Crafting\CraftingRecipeCategory.cs" />
     <Compile Include="API\Crops\Crop.cs" />
