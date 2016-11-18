@@ -78,7 +78,7 @@ namespace StardewModdingAPI
             }
 
             RegisteredCommands.Add(c);
-            Log.Async("Registered command: " + command);
+            Farmhand.Logging.Log.Verbose("Registered command: " + command);
 
             return c;
         }
