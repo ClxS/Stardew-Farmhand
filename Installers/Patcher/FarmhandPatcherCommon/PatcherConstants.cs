@@ -22,6 +22,7 @@ namespace Farmhand
         public static string PassTwoFarmhandExe => FarmhandExe;
 
         public static string JsonLibrary => "Newtonsoft.Json.dll";
+        public static string MonoCecilLibrary => "Mono.Cecil.dll";
         public static string CurrentAssemblyPath => Assembly.GetExecutingAssembly().Location;
         public static string CurrentAssemblyDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
     }
