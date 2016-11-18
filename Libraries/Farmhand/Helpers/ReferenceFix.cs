@@ -113,8 +113,8 @@ namespace Farmhand.Helpers
             }
 
             return ret;
-        }
 #endif
+        }
     }
 
     // Fix references to other things. The ones we fix are the external references,
@@ -370,4 +370,3 @@ namespace Farmhand.Helpers
     }
 }
 
-}
