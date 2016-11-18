@@ -274,11 +274,6 @@ namespace StardewModdingAPI.Inheritance
         public static MethodInfo CheckForEscapeKeys = typeof(Game1).GetMethod("checkForEscapeKeys", BindingFlags.NonPublic | BindingFlags.Instance);
         
         /// <summary>
-        /// Whether or not the game's zoom level is 1.0f
-        /// </summary>
-        public bool ZoomLevelIsOne => options.zoomLevel.Equals(1.0f);
-        
-        /// <summary>
         /// Queue's a message to be drawn in Debug mode (F3)
         /// </summary>
         /// <returns></returns>
