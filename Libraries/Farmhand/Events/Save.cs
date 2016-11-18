@@ -36,11 +36,11 @@ namespace Farmhand.Events
             EventCommon.SafeInvoke(OnBeforeSave, null);
         }
 
-        [Hook(HookType.Exit, "StardewValley.SaveGame/<getSaveEnumerator>d__46", "MoveNext")]
+        /*[Hook(HookType.Exit, "StardewValley.SaveGame/<getSaveEnumerator>d__46", "MoveNext")]
         internal static void InvokeOnAfterSaveProgress([ThisBind] IEnumerator<int> @this)
         {
             EventCommon.SafeInvoke(OnAfterSaveProgress, null, new EventArgsOnAfterSaveProgress(@this.Current));
-        }
+        }*/
 
         [Hook(HookType.Entry, "StardewValley.SaveGame", "Load")]
         internal static bool InvokeOnBeforeLoad([InputBind(typeof(string), "filename")] string filename)
