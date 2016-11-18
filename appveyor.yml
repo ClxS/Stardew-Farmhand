@@ -37,6 +37,7 @@ build_script:
       "/m",
       "/l:C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll",
       "/p:Configuration=$env:CONFIGURATION",
+      "/define:WINDOWS"
       "/v:m")
     
     # If build is not a scheduled one, than simply build project with MSBuild.
