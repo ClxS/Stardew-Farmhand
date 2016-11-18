@@ -778,7 +778,11 @@
           <Static Index="352" BlendMode="Alpha" />
           <Static Index="225" BlendMode="Alpha" />
           <Static Index="226" BlendMode="Alpha" />
-          <Static Index="231" BlendMode="Alpha" />
+          <Static Index="231" BlendMode="Alpha">
+            <Properties>
+              <Property Key="TouchAction" Type="String"><![CDATA[Warp 64 18 Farm]]></Property>
+            </Properties>
+          </Static>
           <Static Index="228" BlendMode="Alpha" />
           <Static Index="175" BlendMode="Alpha" />
           <Static Index="261" BlendMode="Alpha" />
@@ -1787,7 +1791,11 @@
         </Row>
         <Row>
           <Null Count="3" />
-          <Static Index="921" BlendMode="Alpha" />
+          <Static Index="921" BlendMode="Alpha">
+            <Properties>
+              <Property Key="Action" Type="String"><![CDATA[Tutorial]]></Property>
+            </Properties>
+          </Static>
           <Null Count="7" />
           <Static Index="435" BlendMode="Alpha">
             <Properties>
