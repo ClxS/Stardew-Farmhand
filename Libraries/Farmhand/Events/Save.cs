@@ -48,15 +48,15 @@ namespace Farmhand.Events
             return EventCommon.SafeCancellableInvoke(OnBeforeLoad, null, new EventArgsOnBeforeLoad(filename));
         }
 
-        [Hook(HookType.Exit, "StardewValley.SaveGame/<getLoadEnumerator>d__51", "MoveNext")]
-        internal static void InvokeOnAfterLoadProgress([ThisBind] IEnumerator<int> @this)
-        {
-            try
-            {
-                string filename = (string)@this.GetType().GetField("file").GetValue(@this);
-                EventCommon.SafeInvoke(OnAfterLoadProgress, null, new EventArgsOnAfterLoadProgress(filename, @this.Current));
-            }
-            catch(Exception e) { Logging.Log.Exception("EXCEPTION b:", e); }
-        }
+        //[Hook(HookType.Exit, "StardewValley.SaveGame/<getLoadEnumerator>d__51", "MoveNext")]
+        //internal static void InvokeOnAfterLoadProgress([ThisBind] IEnumerator<int> @this)
+        //{
+        //    try
+        //    {
+        //        string filename = (string)@this.GetType().GetField("file").GetValue(@this);
+        //        EventCommon.SafeInvoke(OnAfterLoadProgress, null, new EventArgsOnAfterLoadProgress(filename, @this.Current));
+        //    }
+        //    catch(Exception e) { Logging.Log.Exception("EXCEPTION b:", e); }
+        //}
     }
 }
