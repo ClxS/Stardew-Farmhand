@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mods", "Mods", "{D8EB8FAC-BCAC-499D-BD13-81672F19F0E9}"
-	ProjectSection(SolutionItems) = preProject
-		Mods\TestMapMergeMod\TestMapMergeMod.csproj = Mods\TestMapMergeMod\TestMapMergeMod.csproj
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installers", "Installers", "{8090819E-F6FF-4299-AA01-8088ABCA8D05}"
 EndProject
