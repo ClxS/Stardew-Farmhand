@@ -1,4 +1,5 @@
 using Farmhand;
+using Farmhand.API.Debug;
 using Farmhand.Events;
 using Farmhand.Events.Arguments.ControlEvents;
 using Microsoft.Xna.Framework;
@@ -9,11 +10,24 @@ namespace EnableDebugMod
 {
     public class EnableDebugMod : Mod
     {
-        public static string lastDebugInput;
+        public static EnableDebugMod Instance;
 
         public override void Entry()
         {
-            ControlEvents.OnKeyPressed += ControlEvents_OnKeyPressed;
+            Instance = this;
+            //ControlEvents.OnKeyPressed += ControlEvents_OnKeyPressed;
+            Farmhand.API.Debug.Debug.RegisterDebugCommand("testcommand", new DebugInformation(Instance, HandleCommands));
+        }
+
+        private bool HandleCommands(string command, params string[] parameters)
+        {
+            switch (command) {
+                case "testcommand":
+                    Game1.player.money += 1500000;
+                    Game1.showGlobalMessage("TestCommand has been executed!");
+                    return true;
+            }
+            return false;
         }
 
         private void ControlEvents_OnKeyPressed(object sender, EventArgsKeyPressed e)
