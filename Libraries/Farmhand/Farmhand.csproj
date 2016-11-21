@@ -97,6 +97,8 @@
     <Compile Include="API\Crafting\CraftingRecipeCategory.cs" />
     <Compile Include="API\Crops\Crop.cs" />
     <Compile Include="API\Crops\CropInformation.cs" />
+    <Compile Include="API\Debug\Debug.cs" />
+    <Compile Include="API\Debug\DebugInformation.cs" />
     <Compile Include="API\Dialogues\Dialogue.cs" />
     <Compile Include="API\Dialogues\DialogueAnswerInformation.cs" />
     <Compile Include="API\Dialogues\DialogueAnswerRemovalInformation.cs" />
