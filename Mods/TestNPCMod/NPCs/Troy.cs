@@ -116,10 +116,10 @@ namespace TestNPCMod.NPCs
 
         #endregion
 
-        public Troy(NpcInformation information, Vector2 position) 
-            : base(information, position) {}
+        public Troy(Vector2 position) 
+            : base(Troy.Information, position) {}
 
-        public Troy(NpcInformation information) 
-            : base(information, new Vector2(information.DefaultX * Game1.tileSize, information.DefaultY * Game1.tileSize)) {}
+        public Troy() 
+            : base(Troy.Information, new Vector2(Troy.Information.DefaultX * Game1.tileSize, Troy.Information.DefaultY * Game1.tileSize)) {}
     }
 }

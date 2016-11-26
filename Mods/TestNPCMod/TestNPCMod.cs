@@ -33,6 +33,8 @@ namespace TestNPCMod
                     Game1.currentLocation.getCharacters().ForEach(chr => Console.WriteLine(chr.getName()));
                 }
             };
+
+            Farmhand.API.Serializer.RegisterType<Troy>();
         }
         
         private void GameEvents_OnAfterLoadedContent(object sender, EventArgs e)

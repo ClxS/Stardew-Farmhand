@@ -15,7 +15,7 @@ namespace Farmhand.API.NPCs
 
         private static bool AfterGameLoadedFired = false;
 
-        public static void RegisterNpc<T>(NpcInformation npcInformation) where T : NPC
+        public static void RegisterNpc<T>(NpcInformation npcInformation) where T : NPC, new()
         {
             if (Npcs.ContainsKey(npcInformation.Name) && Npcs[npcInformation.Name].Item1 != npcInformation)
             {
@@ -45,7 +45,7 @@ namespace Farmhand.API.NPCs
                 var location = API.Locations.Location.AllLocations.FirstOrDefault(l => l.name == npc.Item1.DefaultMap);
                 if (location != null)
                 {
-                    var obj = (NPC)Activator.CreateInstance(npc.Item2, npc.Item1);
+                    var obj = (NPC)Activator.CreateInstance(npc.Item2);
                     location.AddCharacter(obj);
 
                     

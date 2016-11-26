@@ -1,9 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Xml.Serialization;
+using Microsoft.Xna.Framework;
 using StardewValley;
 using Farmhand.API.NPCs;
 
 namespace Farmhand.Overrides.Character
 {
+    [XmlType("NPCOverride")]
     public class NPC : StardewValley.NPC
     {
         protected NpcInformation Information;
