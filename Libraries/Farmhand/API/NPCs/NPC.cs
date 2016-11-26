@@ -4,6 +4,7 @@ using System.Linq;
 using Farmhand.API.Locations;
 using Farmhand.Attributes;
 using Farmhand.Events;
+using Farmhand.Events.Arguments.GameEvents;
 using StardewValley;
 
 namespace Farmhand.API.NPCs
@@ -35,9 +36,31 @@ namespace Farmhand.API.NPCs
         internal static void AttachListeners()
         {
             GameEvents.OnAfterGameLoaded += GameEvents_OnAfterGameLoaded;
+            SaveEvents.OnAfterLoad += SaveEvents_OnAfterLoad;
         }
-        
-        private static void GameEvents_OnAfterGameLoaded(object sender, System.EventArgs e)
+
+        private static void SaveEvents_OnAfterLoad(object sender, Events.Arguments.SaveEvents.EventArgsOnAfterLoad e)
+        {
+            foreach (var npc in Npcs.Values)
+            {
+                var expectedLocation = API.Locations.Location.AllLocations.FirstOrDefault(l => l.name == npc.Item1.DefaultMap);
+                var presentLocations =
+                    API.Locations.Location.AllLocations.Where(n => n.characters.Any(c => c.GetType() == npc.Item2));
+
+                foreach (var location in presentLocations)
+                {
+                    location.characters.RemoveAll(c => c.GetType() == npc.Item2);
+                }
+
+                if (expectedLocation != null)
+                {
+                    var obj = (NPC)Activator.CreateInstance(npc.Item2);
+                    expectedLocation.AddCharacter(obj);
+                }
+            }
+        }
+
+        private static void GameEvents_OnAfterGameLoaded(object sender, EventArgsOnAfterGameLoaded e)
         {
             AfterGameLoadedFired = true;
             foreach (var npc in Npcs.Values)
@@ -47,8 +70,6 @@ namespace Farmhand.API.NPCs
                 {
                     var obj = (NPC)Activator.CreateInstance(npc.Item2);
                     location.AddCharacter(obj);
-
-                    
                 }
             }
         }

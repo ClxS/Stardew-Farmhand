@@ -12,37 +12,28 @@ namespace Farmhand.Events
     public class PropertyWatcher
     {
         private static bool HasLoadFired { get; set; } = false;
-
-        internal KeyboardState KStateNow { get; private set; }
-        internal KeyboardState KStatePrior { get; private set; }
-        
-        internal MouseState MStateNow { get; private set; }
-        internal MouseState MStatePrior { get; private set; }
-
-        internal Keys[] CurrentlyPressedKeys { get; private set; }
-        internal Keys[] PreviouslyPressedKeys { get; private set; } = new Keys[0];
-
-        internal Keys[] FramePressedKeys
+        private KeyboardState KStateNow { get; set; }
+        private KeyboardState KStatePrior { get; set; }
+        private MouseState MStateNow { get; set; }
+        private MouseState MStatePrior { get; set; }
+        private Keys[] CurrentlyPressedKeys { get; set; }
+        private Keys[] PreviouslyPressedKeys { get; set; } = new Keys[0];
+        private Keys[] FramePressedKeys
         {
             get { return CurrentlyPressedKeys.Where(x => !PreviouslyPressedKeys.Contains(x)).ToArray(); }
         }
-        internal Keys[] FrameReleasedKeys
+        private Keys[] FrameReleasedKeys
         {
             get { return PreviouslyPressedKeys.Where(x => !CurrentlyPressedKeys.Contains(x)).ToArray(); }
         }
+        private Buttons[][] PreviouslyPressedButtons { get; set; } = new Buttons[4][];
+        private IClickableMenu PreviousActiveMenu { get; set; }
+        private GameLocation PreviousGameLocation { get; set; }
+        private Farmer PreviousFarmer { get; set; }
 
-        internal Buttons[][] PreviouslyPressedButtons { get; set; } = new Buttons[4][];
-
-        private IClickableMenu PreviousActiveMenu { get; set; } = null;
-        public GameLocation PreviousGameLocation { get; private set; }
-        public Farmer PreviousFarmer { get; private set; }
-
-        internal static void LoadFired(object sender, Events.Arguments.SaveEvents.EventArgsOnAfterLoadProgress e)
-        {
-            if (e.Progress >= 100)
-                HasLoadFired = true;
-        }
-
+        private int LastSaveProgress { get; set; }
+        private int LastLoadProgress { get; set; }
+        
         private bool WasButtonJustPressed(Buttons button, ButtonState buttonState, PlayerIndex stateIndex)
         {
             return buttonState == ButtonState.Pressed && !PreviouslyPressedButtons[(int)stateIndex].Contains(button);
@@ -149,10 +140,55 @@ namespace Farmhand.Events
             {
                 CheckControlChanges();
                 CheckPropertyChanges();
+                CheckSaveEvent();
             }
             catch (Exception)
             {
                 // ignored
+            }
+        }
+
+        private void CheckSaveEvent()
+        {
+            if (LastLoadProgress < 100)
+            {
+                if (Game1.currentLoader != null)
+                {
+                    var currentLoadProgress = Game1.currentLoader.Current;
+                    if (currentLoadProgress != LastLoadProgress)
+                    {
+                        LastLoadProgress = currentLoadProgress;
+                        SaveEvents.InvokeOnAfterSaveProgress(LastLoadProgress);
+                    }
+
+                    if (LastLoadProgress >= 100)
+                    {
+                        SaveEvents.InvokeOnAfterLoad();
+                        HasLoadFired = true;
+                    }
+                }
+            }
+
+            var saveEnumerator = SaveGame.getSaveEnumerator();
+            if (saveEnumerator != null)
+            {
+                var saveProgress = saveEnumerator.Current;
+                if (saveProgress > 0)
+                {
+                    if (LastSaveProgress < 100)
+                    {
+                        if (saveProgress != LastSaveProgress)
+                        {
+                            LastSaveProgress = saveProgress;
+                            SaveEvents.InvokeOnAfterSaveProgress(LastLoadProgress);
+                        }
+
+                        if (LastSaveProgress >= 100)
+                        {
+                            SaveEvents.InvokeOnAfterSave();
+                        }
+                    }
+                }
             }
         }
 

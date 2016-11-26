@@ -63,12 +63,6 @@ namespace Farmhand
                 ResolveDependencies();
                 Log.Verbose("Importing Mod DLLs, Settings, and Content");
                 LoadFinalMods();
-
-                if (UsingSmapiMods)
-                {
-                    Log.Verbose("Using SMAPI - Attaching SMAPI events");
-                    ModEventManager.AttachSmapiEvents();
-                }
             }
             catch (Exception ex)
             {

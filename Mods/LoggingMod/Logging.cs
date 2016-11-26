@@ -37,9 +37,9 @@ namespace LoggingMod
             Farmhand.Events.LocationEvents.OnBeforeLocationLoadObjects += LocationEvents_OnBeforeLocationLoadObjects;
             Farmhand.Events.LocationEvents.OnAfterLocationLoadObjects += LocationEvents_OnAfterLocationLoadObjects;
             Farmhand.Events.SaveEvents.OnBeforeSave += SaveEvents_OnBeforeSave;
-            Farmhand.Events.SaveEvents.OnAfterSaveProgress += SaveEvents_OnAfterSave;
+            Farmhand.Events.SaveEvents.OnAfterSave += SaveEvents_OnAfterSave;
             Farmhand.Events.SaveEvents.OnBeforeLoad += SaveEvents_OnBeforeLoad;
-            Farmhand.Events.SaveEvents.OnAfterLoadProgress += SaveEvents_OnAfterLoad;
+            Farmhand.Events.SaveEvents.OnAfterLoad += SaveEvents_OnAfterLoad;
             Farmhand.Events.SerializerEvents.UnknownNode += SerializerEvents_UnknownNode;
             Farmhand.Events.SerializerEvents.UnknownElement += SerializerEvents_UnknownElement;
             Farmhand.Events.SerializerEvents.UnknownAttribute += SerializerEvents_UnknownAttribute;
@@ -62,10 +62,9 @@ namespace LoggingMod
         {
         }
 
-        private void SaveEvents_OnAfterLoad(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnAfterLoadProgress e)
+        private void SaveEvents_OnAfterLoad(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnAfterLoad e)
         {
-            if (e.Progress >= 100)
-                Log.Success($"SaveEvents_OnAfterLoad {e.Filename}");
+            Log.Success($"SaveEvents_OnAfterLoad");
         }
 
         private void SaveEvents_OnBeforeLoad(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnBeforeLoad e)
@@ -73,10 +72,9 @@ namespace LoggingMod
             Log.Success($"SaveEvents_OnBeforeLoad {e.Filename}");
         }
 
-        private void SaveEvents_OnAfterSave(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnAfterSaveProgress e)
+        private void SaveEvents_OnAfterSave(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnAfterSave e)
         {
-            if (e.Progress >= 100)
-                Log.Success("SaveEvents_OnAfterSave");
+            Log.Success("SaveEvents_OnAfterSave");
         }
 
         private void SaveEvents_OnBeforeSave(object sender, EventArgs e)
@@ -86,12 +84,12 @@ namespace LoggingMod
 
         private void LocationEvents_OnAfterLocationLoadObjects(object sender, EventArgs e)
         {
-            //Log.Info("LocationEvents_OnAfterLocationLoadObjects");
+            Log.Info("LocationEvents_OnAfterLocationLoadObjects");
         }
 
         private void LocationEvents_OnBeforeLocationLoadObjects(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //Log.Info("LocationEvents_OnBeforeLocationLoadObjects");
+            Log.Info("LocationEvents_OnBeforeLocationLoadObjects");
         }
 
         private void UiEvents_OnAfterIClickableMenuInitialized(object sender, EventArgs e)
@@ -101,27 +99,27 @@ namespace LoggingMod
 
         private void PlayerEvents_OnBeforePlayerTakesDamage(object sender, EventArgsOnBeforePlayerTakesDamage e)
         {
-            //Log.Info("PlayerEvents_OnBeforePlayerTakesDamage");
+            Log.Info("PlayerEvents_OnBeforePlayerTakesDamage");
         }
 
         private void LocationEvents_OnLocationObjectsChanged(object sender, EventArgs e)
         {
-            //Log.Verbose("LocationEvents_OnLocationObjectsChanged");
+            Log.Verbose("LocationEvents_OnLocationObjectsChanged");
         }
 
         private void LocationEvents_OnBeforeWarp(object sender, EventArgs e)
         {
-            //Log.Verbose("LocationEvents_OnBeforeWarp");
+            Log.Verbose("LocationEvents_OnBeforeWarp");
         }
 
         private void LocationEvents_OnCurrentLocationChanged(object sender, EventArgs e)
         {
-            //Log.Verbose("LocationEvents_OnCurrentLocationChanged");
+            Log.Verbose("LocationEvents_OnCurrentLocationChanged");
         }
 
         private void LocationEvents_OnLocationsChanged(object sender, EventArgs e)
         {
-            //Log.Verbose("LocationEvents_OnLocationsChanged");
+            Log.Verbose("LocationEvents_OnLocationsChanged");
         }
 
         private void GraphicsEvents_OnAfterDraw(object sender, EventArgs e)
@@ -141,7 +139,7 @@ namespace LoggingMod
 
         private void GameEvents_OnAfterUpdateTick(object sender, EventArgs e)
         {
-           // Log.Verbose("GameEvents_OnAfterUpdateTick");
+            //Log.Verbose("GameEvents_OnAfterUpdateTick");
         }
 
         private void GameEvents_OnBeforeUpdateTick(object sender, EventArgs e)
@@ -151,22 +149,22 @@ namespace LoggingMod
 
         private void GameEvents_OnAfterLoadedContent(object sender, EventArgs e)
         {
-            //Log.Verbose("GameEvents_OnAfterLoadedContent");
+            Log.Verbose("GameEvents_OnAfterLoadedContent");
         }
 
         private void GameEvents_OnBeforeLoadContent(object sender, EventArgs e)
         {
-            //Log.Verbose("GameEvents_OnBeforeLoadContent");
+            Log.Verbose("GameEvents_OnBeforeLoadContent");
         }
 
         private void OnGameInitialising(object sender, EventArgs e)
         {
-            //Log.Verbose("OnGameInitialising");
+            Log.Verbose("OnGameInitialising");
         }
 
         private void OnGameInitialised(object sender, EventArgs e)
         {
-            //Log.Verbose("OnGameInitialised");
+            Log.Verbose("OnGameInitialised");
         }
     }
 }

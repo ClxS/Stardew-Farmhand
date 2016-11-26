@@ -16,47 +16,64 @@ namespace Farmhand.Events
         public static event EventHandler OnBeforeSave = delegate { };
 
         /// <summary>
-        /// Triggered after progress towards saving is made. 100 is complete
-        /// </summary>
-        public static event EventHandler<EventArgsOnAfterSaveProgress> OnAfterSaveProgress = delegate { };
-
-        /// <summary>
         /// Triggered prior to loading
         /// </summary>
         public static event EventHandler<EventArgsOnBeforeLoad> OnBeforeLoad = delegate { };
 
         /// <summary>
+        /// Triggered after progress towards saving is made. 100 is complete
+        /// </summary>
+        public static event EventHandler<EventArgsOnProgress> OnAfterSaveProgress = delegate { };
+
+        /// <summary>
         /// Triggered after progress towards loading is made. 100 is complete
         /// </summary>
-        public static event EventHandler<EventArgsOnAfterLoadProgress> OnAfterLoadProgress = delegate { };
+        public static event EventHandler<EventArgsOnProgress> OnAfterLoadProgress = delegate { };
+
+        /// <summary>
+        /// Triggered after loading is complete
+        /// </summary>
+        public static event EventHandler<EventArgsOnAfterLoad> OnAfterLoad = delegate { };
+
+        /// <summary>
+        /// Triggered after loading is complete
+        /// </summary>
+        public static event EventHandler<EventArgsOnAfterSave> OnAfterSave = delegate { };
 
         [Hook(HookType.Entry, "StardewValley.SaveGame", "Save")]
         internal static void InvokeOnBeforeSave()
         {
             EventCommon.SafeInvoke(OnBeforeSave, null);
         }
-
-        /*[Hook(HookType.Exit, "StardewValley.SaveGame/<getSaveEnumerator>d__46", "MoveNext")]
-        internal static void InvokeOnAfterSaveProgress([ThisBind] IEnumerator<int> @this)
-        {
-            EventCommon.SafeInvoke(OnAfterSaveProgress, null, new EventArgsOnAfterSaveProgress(@this.Current));
-        }*/
-
+        
         [Hook(HookType.Entry, "StardewValley.SaveGame", "Load")]
         internal static bool InvokeOnBeforeLoad([InputBind(typeof(string), "filename")] string filename)
         {
             return EventCommon.SafeCancellableInvoke(OnBeforeLoad, null, new EventArgsOnBeforeLoad(filename));
         }
 
-        //[Hook(HookType.Exit, "StardewValley.SaveGame/<getLoadEnumerator>d__51", "MoveNext")]
-        //internal static void InvokeOnAfterLoadProgress([ThisBind] IEnumerator<int> @this)
-        //{
-        //    try
-        //    {
-        //        string filename = (string)@this.GetType().GetField("file").GetValue(@this);
-        //        EventCommon.SafeInvoke(OnAfterLoadProgress, null, new EventArgsOnAfterLoadProgress(filename, @this.Current));
-        //    }
-        //    catch(Exception e) { Logging.Log.Exception("EXCEPTION b:", e); }
-        //}
+        // Triggered by PropertyWatcher
+        internal static void InvokeOnAfterSaveProgress(int current)
+        {
+            EventCommon.SafeInvoke(OnAfterSaveProgress, null, new EventArgsOnProgress(current));
+        }
+
+        // Triggered by PropertyWatcher
+        internal static void InvokeOnAfterLoadProgress(int current)
+        {
+            EventCommon.SafeInvoke(OnAfterLoadProgress, null, new EventArgsOnProgress(current));
+        }
+
+        // Triggered by PropertyWatcher
+        internal static void InvokeOnAfterSave()
+        {
+            EventCommon.SafeInvoke(OnAfterSave, null, new EventArgsOnAfterSave());
+        }
+
+        // Triggered by PropertyWatcher
+        internal static void InvokeOnAfterLoad()
+        {
+            EventCommon.SafeInvoke(OnAfterLoad, null, new EventArgsOnAfterLoad());
+        }
     }
 }
