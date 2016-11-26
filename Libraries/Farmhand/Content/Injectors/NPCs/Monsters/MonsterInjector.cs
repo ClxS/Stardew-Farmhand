@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Farmhand.Content
+namespace Farmhand.Content.Injectors.NPCs.Monsters
 {
     class MonsterInjector : IContentInjector
     {
@@ -25,7 +25,7 @@ namespace Farmhand.Content
             if (monsters == null)
                 throw new Exception($"Unexpected type for {assetName}");
 
-            foreach (var monster in Farmhand.API.Monsters.Monster.Monsters)
+            foreach (var monster in API.Monsters.Monster.Monsters)
             {
                 monsters[monster.Value.Name] = monster.Value.ToString();
             }

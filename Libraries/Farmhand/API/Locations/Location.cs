@@ -12,9 +12,11 @@ namespace Farmhand.API.Locations
 	/// <summary>
     /// Provides functions relating to all GameLocations
     /// </summary>
-    public class Location
+    public static class Location
     {
-		private static readonly List<MapActionInformation> GlobalActions = new List<MapActionInformation>();
+        public static List<GameLocation> AllLocations => StardewValley.Game1.locations;
+        
+        private static readonly List<MapActionInformation> GlobalActions = new List<MapActionInformation>();
 		private static readonly Dictionary<string, List<MapActionInformation>> MapActions = new Dictionary<string, List<MapActionInformation>>();
 
         private static readonly List<MapTouchActionInformation> GlobalTouchActions = new List<MapTouchActionInformation>();
@@ -55,7 +57,7 @@ namespace Farmhand.API.Locations
         }
 
         [HookReturnable(HookType.Entry, "StardewValley.GameLocation", "performAction")]
-        internal static bool performAction([UseOutputBind] ref bool useOutput,
+        internal static bool PerformAction([UseOutputBind] ref bool useOutput,
 										   [ThisBind] object @this,
                                            [InputBind(typeof(string), "action")] string action,
                                            [InputBind(typeof(Farmer), "who")] Farmer who,
@@ -86,7 +88,7 @@ namespace Farmhand.API.Locations
         }
 
         [Hook(HookType.Entry, "StardewValley.GameLocation", "performTouchAction")]
-        internal static bool performTouchAction([ThisBind] object @this,
+        internal static bool PerformTouchAction([ThisBind] object @this,
                                                 [InputBind(typeof(string), "fullActionString")] string fullActionString,
                                                 [InputBind(typeof(Vector2), "playerStandingPosition")] Vector2 playerStandingPosition)
         {

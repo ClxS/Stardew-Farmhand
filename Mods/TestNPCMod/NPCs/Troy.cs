@@ -27,7 +27,7 @@ namespace TestNPCMod.NPCs
             BirthdaySeason = NPCUtility.BirthdaySeason.Winter,
             BirthdayDate = 13,
 
-            DefaultX = 2,
+            DefaultX = 6,
             DefaultY = 6,
             DefaultMap = "BusStop",
             DefaultFacingDirection = NpcInformation.NpcDirection.West,

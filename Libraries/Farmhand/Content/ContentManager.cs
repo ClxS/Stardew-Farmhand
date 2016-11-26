@@ -4,6 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
+using Farmhand.Content.Injectors;
+using Farmhand.Content.Injectors.Blueprints;
+using Farmhand.Content.Injectors.Items;
+using Farmhand.Content.Injectors.Mail;
+using Farmhand.Content.Injectors.Maps;
+using Farmhand.Content.Injectors.NPCs;
+using Farmhand.Content.Injectors.NPCs.Monsters;
+using Farmhand.Content.Injectors.Other;
 
 namespace Farmhand.Content
 {
@@ -33,7 +41,15 @@ namespace Farmhand.Content
             new DelegatedContentInjector(),
             new MapInjector(),
             new MailInjector(),
-            new QuestInjector()
+            new QuestInjector(),
+            /* Begin NPC Injectors */
+            new DialogueLoader(),
+            new GiftTastesInjector(),
+            new NpcDispositionsInjector(),
+            new NpcLoader(),
+            new RainyDialogueInjector(),
+            new ScheduleLoader()
+            /* End NPC Injectors */
         };
 
         public ContentManager(IServiceProvider serviceProvider, string rootDirectory,

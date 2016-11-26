@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Farmhand.Content
+namespace Farmhand.Content.Injectors.NPCs.Monsters
 {
     class MonsterLoader : IContentInjector
     {
@@ -68,9 +68,9 @@ namespace Farmhand.Content
         {
             string baseName = assetName.Replace("Characters\\Monsters\\", "");
 
-            object Sprite = Farmhand.API.Monsters.Monster.Monsters[baseName].Texture;
+            object sprite = Farmhand.API.Monsters.Monster.Monsters[baseName].Texture;
 
-            return (T)Convert.ChangeType(Sprite, typeof(T));
+            return (T)Convert.ChangeType(sprite, typeof(T));
         }
 
         public void Inject<T>(T obj, string assetName, ref object output)

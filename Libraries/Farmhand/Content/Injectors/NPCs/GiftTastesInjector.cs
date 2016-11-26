@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Farmhand.Content
+namespace Farmhand.Content.Injectors.NPCs
 {
-    class WeaponInjector : IContentInjector
+    internal class GiftTastesInjector : IContentInjector
     {
         public bool IsLoader => false;
         public bool IsInjector => true;
 
         public bool HandlesAsset(Type type, string asset)
         {
-            return asset == "Data\\weapons";
+            return asset == "Data\\NPCGiftTastes";
         }
 
         public T Load<T>(ContentManager contentManager, string assetName)
@@ -21,13 +21,13 @@ namespace Farmhand.Content
 
         public void Inject<T>(T obj, string assetName, ref object output)
         {
-            var weapons = obj as Dictionary<int, string>;
-            if (weapons == null)
+            var giftTastes = obj as Dictionary<string, string>;
+            if (giftTastes == null)
                 throw new Exception($"Unexpected type for {assetName}");
 
-            foreach (var weapon in Farmhand.API.Tools.Weapon.Weapons)
+            foreach (var npc in API.NPCs.Npc.Npcs)
             {
-                weapons[weapon.Id] = weapon.ToString();
+                giftTastes[npc.Value.Item1.Name] = npc.Value.Item1.GiftTastes.ToString();
             }
         }
     }

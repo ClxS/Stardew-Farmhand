@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Farmhand.Attributes;
 using StardewValley;
 
 namespace Farmhand.API
@@ -9,6 +11,7 @@ namespace Farmhand.API
 
         public static void RegisterGameOverride(Type t) 
         {
+            
             if (OverrideType != null)
             {
                 throw new Exception("ERROR, Attempting to override Game1 multiple times!");
