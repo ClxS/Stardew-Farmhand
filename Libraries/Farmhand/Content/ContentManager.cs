@@ -20,13 +20,13 @@ namespace Farmhand.Content
     /// to load their own XNB data
     /// </summary>
     [HookRedirectConstructorFromBase("StardewValley.Game1", ".ctor",
-         new[] {typeof(IServiceProvider), typeof(System.String)})]
+         new[] {typeof(IServiceProvider), typeof(string)})]
     [HookRedirectConstructorFromBase("StardewValley.Game1", "dummyLoad",
-         new[] {typeof(IServiceProvider), typeof(System.String)})]
+         new[] {typeof(IServiceProvider), typeof(string)})]
     [HookRedirectConstructorFromBase("StardewValley.Game1", "LoadContent",
-         new[] {typeof(IServiceProvider), typeof(System.String)})]
+         new[] {typeof(IServiceProvider), typeof(string)})]
     [HookRedirectConstructorFromBase("StardewValley.LocalizedContentManager", "CreateTemporary",
-         new[] {typeof(IServiceProvider), typeof(System.String), typeof(CultureInfo), typeof(string)})]
+         new[] {typeof(IServiceProvider), typeof(string), typeof(CultureInfo), typeof(string)})]
     public class ContentManager : StardewValley.LocalizedContentManager
     {
         public static List<IContentInjector> ContentInjectors = new List<IContentInjector>
@@ -52,8 +52,26 @@ namespace Farmhand.Content
             /* End NPC Injectors */
         };
 
+        // Stardew has quite a lot of missing xnbs that throw exceptions. We dont want to spam the log with these
+        public static List<string> ExpectedFailures = new List<string>()
+        {
+            @"Characters\Dialogue\Bouncer",
+            @"Characters\Dialogue\Gunther",
+            @"Characters\Dialogue\Marlon",
+            @"Characters\Dialogue\Henchman",
+            @"Characters\schedules\Wizard",
+            @"Characters\schedules\Dwarf",
+            @"Characters\schedules\Mister Qi",
+            @"Characters\schedules\Sandy",
+            @"Characters\schedules\Bouncer",
+            @"Characters\schedules\Gunther",
+            @"Characters\schedules\Marlon",
+            @"Characters\schedules\Henchman",
+            @"Data\Festivals\spring1",
+        };
+
         public ContentManager(IServiceProvider serviceProvider, string rootDirectory,
-            System.Globalization.CultureInfo currentCulture, string languageCodeOverride)
+            CultureInfo currentCulture, string languageCodeOverride)
             : base(serviceProvider, rootDirectory, currentCulture, languageCodeOverride)
         {
         }
@@ -128,7 +146,10 @@ namespace Farmhand.Content
             }
             catch (Exception ex)
             {
-                Farmhand.Logging.Log.Exception("Failed to load asset: " + assetName, ex);
+                if (!ExpectedFailures.Contains(assetName))
+                {
+                    Log.Exception("Failed to load asset: " + assetName, ex);
+                }
                 throw;
             }
 
