@@ -20,7 +20,7 @@ namespace Farmhand.API.Debug
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "parseDebugInput")]
-        internal static bool parseDebugInput([InputBind(typeof(string), "debugInput")] string debugInput)
+        internal static bool ParseDebugInput([InputBind(typeof(string), "debugInput")] string debugInput)
         {
             var useOutput = false;
             debugInput = debugInput?.Trim();

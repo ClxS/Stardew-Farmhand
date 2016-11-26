@@ -107,6 +107,16 @@
     <Compile Include="API\Game.cs" />
     <Compile Include="API\Generic\ItemChancePair.cs" />
     <Compile Include="API\Locations\MapActionInformation.cs" />
+    <Compile Include="API\NPCs\Dialogues\DialogueEntry.cs" />
+    <Compile Include="API\NPCs\Dialogues\DialogueInformation.cs" />
+    <Compile Include="API\NPCs\GiftTastes\GiftTastesInformation.cs" />
+    <Compile Include="API\NPCs\NPC.cs" />
+    <Compile Include="API\NPCs\NPCInformation.cs" />
+    <Compile Include="API\NPCs\NpcUtility.cs" />
+    <Compile Include="API\NPCs\Schedules\ScheduleCondition.cs" />
+    <Compile Include="API\NPCs\Schedules\ScheduleDirections.cs" />
+    <Compile Include="API\NPCs\Schedules\SchedulePathInformation.cs" />
+    <Compile Include="API\NPCs\Schedules\ScheduleInformation.cs" />
     <Compile Include="API\Player\QuestInformation.cs" />
     <Compile Include="API\Player\Quest.cs" />
     <Compile Include="API\Player\MailInformation.cs" />

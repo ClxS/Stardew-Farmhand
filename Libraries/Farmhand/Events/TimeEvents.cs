@@ -2,6 +2,7 @@
 using Farmhand.Logging;
 using Farmhand.Events.Arguments.TimeEvents;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Farmhand.Events
 {
@@ -71,23 +72,24 @@ namespace Farmhand.Events
         //    throw new NotImplementedException();
         //}
 
-        internal static bool didShouldTimePassCheckThisFrame = false;
-        internal static bool prevTimePassResult = false;
+        internal static bool DidShouldTimePassCheckThisFrame;
+        internal static bool PrevTimePassResult;
         [HookReturnable(HookType.Exit, "StardewValley.Game1", "shouldTimePass")]
+        [SuppressMessage("ReSharper", "RedundantAssignment")]
         internal static bool ShouldTimePass(
             [UseOutputBind] ref bool useOutput,
             [MethodOutputBind] bool shouldPass )
         {
-            if ( !didShouldTimePassCheckThisFrame )
+            if ( !DidShouldTimePassCheckThisFrame )
             {
                 var ev = new EventArgsShouldTimePassCheck(shouldPass);
                 EventCommon.SafeInvoke(ShouldTimePassCheck, null, ev);
-                prevTimePassResult = ev.TimeShouldPass;
-                didShouldTimePassCheckThisFrame = true;
+                PrevTimePassResult = ev.TimeShouldPass;
+                DidShouldTimePassCheckThisFrame = true;
             }
 
             useOutput = true;
-            return prevTimePassResult;
+            return PrevTimePassResult;
         }
     }
 }
