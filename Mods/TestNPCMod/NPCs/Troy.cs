@@ -25,7 +25,7 @@ namespace TestNPCMod.NPCs
             Gender = NpcInformation.NpcGender.Male,
             HomeRegion = NpcInformation.NpcHomeRegion.Town,
 
-            BirthdaySeason = NPCUtility.BirthdaySeason.Winter,
+            BirthdaySeason = NpcUtility.BirthdaySeason.Winter,
             BirthdayDate = 13,
 
             DefaultX = 64,
@@ -80,12 +80,12 @@ namespace TestNPCMod.NPCs
                         {
                             Directions = new List<ScheduleDirections>
                             {
-                                new ScheduleDirections(1000, NPCUtility.Maps.Wizard_House, 11, 13,
-                                    NPCUtility.Direction.East),
-                                new ScheduleDirections(1200, NPCUtility.Maps.Mountain, 57, 20, NPCUtility.Direction.West,
+                                new ScheduleDirections(1000, NpcUtility.Maps.WizardHouse, 11, 13,
+                                    NpcUtility.Direction.East),
+                                new ScheduleDirections(1200, NpcUtility.Maps.Mountain, 57, 20, NpcUtility.Direction.West,
                                     "Nothing beats the fresh mountain breeze... Don't you think?"),
-                                new ScheduleDirections(1900, NPCUtility.Maps.Wizard_House, 2, 6,
-                                    NPCUtility.Direction.West,
+                                new ScheduleDirections(1900, NpcUtility.Maps.WizardHouse, 2, 6,
+                                    NpcUtility.Direction.West,
                                     "I'm not sure what it is, but something doesn't feel right.")
                             }
                         },
@@ -100,15 +100,15 @@ namespace TestNPCMod.NPCs
                         {
                             Directions = new List<ScheduleDirections>
                             {
-                                new ScheduleDirections(1000, NPCUtility.Maps.Wizard_House, 2, 16,
-                                    NPCUtility.Direction.West),
-                                new ScheduleDirections(1400, NPCUtility.Maps.Wizard_House, 3, 19,
-                                    NPCUtility.Direction.South),
-                                new ScheduleDirections(1700, NPCUtility.Maps.Wizard_House, 11, 13,
-                                    NPCUtility.Direction.North,
+                                new ScheduleDirections(1000, NpcUtility.Maps.WizardHouse, 2, 16,
+                                    NpcUtility.Direction.West),
+                                new ScheduleDirections(1400, NpcUtility.Maps.WizardHouse, 3, 19,
+                                    NpcUtility.Direction.South),
+                                new ScheduleDirections(1700, NpcUtility.Maps.WizardHouse, 11, 13,
+                                    NpcUtility.Direction.North,
                                     "The rain always annoyed me in the past, But now I find it kind of soothing.#$e#Why is that I wonder..."),
-                                new ScheduleDirections(2100, NPCUtility.Maps.Wizard_House, 2, 6,
-                                    NPCUtility.Direction.West)
+                                new ScheduleDirections(2100, NpcUtility.Maps.WizardHouse, 2, 6,
+                                    NpcUtility.Direction.West)
                             }
                         }
                     }
