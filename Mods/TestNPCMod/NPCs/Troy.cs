@@ -14,7 +14,8 @@ namespace TestNPCMod.NPCs
         private static NpcInformation _information;
         public new static NpcInformation Information => _information ?? (_information = new NpcInformation
         {
-            Name = "Troy",
+            Name = "TroyNPCTest",
+            DisplayName = "Troy",
             Texture = TestNpcMod.Instance.ModSettings.GetTexture("sprite_TestNPC"),
             Portrait = TestNpcMod.Instance.ModSettings.GetTexture("sprite_TestNPC_Portrait"),
             Age = NpcInformation.NpcAge.Teen,
