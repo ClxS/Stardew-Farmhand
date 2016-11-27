@@ -1,3 +1,4 @@
+using System;
 using Farmhand;
 using Farmhand.API.Debug;
 using Farmhand.Events;
@@ -17,6 +18,7 @@ namespace EnableDebugMod
             Instance = this;
             ControlEvents.OnKeyPressed += ControlEvents_OnKeyPressed;
             Farmhand.API.Debug.Debug.RegisterDebugCommand("testcommand", new DebugInformation(Instance, HandleCommands));
+            Farmhand.API.Debug.Debug.RegisterDebugCommand("uh", new DebugInformation(Instance, HandleCommands));
         }
 
         private bool HandleCommands(string command, params string[] parameters)
@@ -25,6 +27,11 @@ namespace EnableDebugMod
                 case "testcommand":
                     Game1.player.money += 1500000;
                     Game1.showGlobalMessage("TestCommand has been executed!");
+                    return true;
+                case "uh":
+                    Game1.player.HouseUpgradeLevel = Math.Min(3, Game1.player.HouseUpgradeLevel + 1);
+                    Game1.removeFrontLayerForFarmBuildings();
+                    Game1.addNewFarmBuildingMaps();
                     return true;
             }
             return false;

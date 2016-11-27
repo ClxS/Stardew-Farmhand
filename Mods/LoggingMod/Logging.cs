@@ -3,6 +3,7 @@ using Farmhand.Logging;
 using System;
 using System.Xml.Serialization;
 using Farmhand;
+using StardewValley;
 
 namespace LoggingMod
 {
@@ -140,6 +141,7 @@ namespace LoggingMod
         private void GameEvents_OnAfterUpdateTick(object sender, EventArgs e)
         {
             //Log.Verbose("GameEvents_OnAfterUpdateTick");
+            //Log.Verbose($"X: {Game1.player.position.X / Game1.tileSize}, Y:  {Game1.player.position.Y / Game1.tileSize}");
         }
 
         private void GameEvents_OnBeforeUpdateTick(object sender, EventArgs e)
