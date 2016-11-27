@@ -30,7 +30,7 @@ namespace TestNPCMod.NPCs
 
             DefaultX = 64,
             DefaultY = 17,
-            DefaultMap = "Farm",
+            DefaultMap = NpcUtility.Maps.Farm,
             DefaultFacingDirection = NpcInformation.NpcDirection.West,
 
             IsDatable = false,
