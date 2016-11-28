@@ -30,7 +30,7 @@ configuration:
 - Release
 build_script:
 - ps: |
-    $encrypted = Get-Content c:\scripts\encrypted_password.txt | ConvertTo-SecureString
+    $encrypted = ":\scripts\encrypted_password.txt" | ConvertTo-SecureString
     $encrypted
     
     nuget restore
