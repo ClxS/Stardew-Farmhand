@@ -30,6 +30,9 @@ configuration:
 - Release
 build_script:
 - ps: |
+    $encrypted = Get-Content c:\scripts\encrypted_password.txt | ConvertTo-SecureString
+    $encrypted
+    
     nuget restore
 
     $buildCmd = "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
