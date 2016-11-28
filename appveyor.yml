@@ -30,11 +30,14 @@ configuration:
 - Release
 build_script:
 - ps: |
-    $encrypted = ConvertTo-SecureString "P@ssW0rD!" -AsPlainText -Force
+    $encrypted = ConvertTo-SecureString -String "01000000d08c9ddf0115d1118c7a00c04fc297eb01000000613eb078dd367943963525d93aa18490000000000200000000001066000000010000200000001fa44446aee12b89b8066372047e44ccb4ec88b5e5e5ce633d48d6a178e08de0000000000e800000000200002000000055442e6358b0eff456d568e77ffab5cd23d9e8b24eb8833ef86059fae27aa2f32000000051ec7d86b9cf87114343fa9ecf7b1f75a199b584abc1e3d0697bb3402492301f400000000182940df4ac34b1a4eda7ce142398b84b5ffbda62dee7c459d4ed464ff1d36e1096e0ba35a475cbe7bc396fc4445498addd17435884f22d399d02f2342614bf"
     $encrypted
-    $secureStringText = $secureStringPwd | ConvertFrom-SecureString 
-    $secureStringText
     
+    $Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($encrypted)
+    $result = [System.Runtime.InteropServices.Marshal]::PtrToStringUni($Ptr)
+    [System.Runtime.InteropServices.Marshal]::ZeroFreeCoTaskMemUnicode($Ptr)
+    $result 
+
     nuget restore
 
     $buildCmd = "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
