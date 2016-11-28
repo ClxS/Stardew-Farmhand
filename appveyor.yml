@@ -23,10 +23,9 @@ services:
 - iis
 install:
 - ps: |
-    $encrypted = ConvertTo-SecureString -String "01000000d08c9ddf0115d1118c7a00c04fc297eb01000000435f28ebf6f6f5428e8c13599a0d5f99000000000200000000001066000000010000200000008d0b6a13f11802f48be41434a3f26e83bc8b36f9fd3cd5deac050e996cfc5891000000000e8000000002000020000000a7f1f694d96b12e395489f4f3c639c65781130e9a36083f50d6833f64f30f92b9000000044344d2cc52ef32f76c7120c82feda81f2423fd8a7af0aca588fa788cd97609d8aa03aed5256be8f7dffda68cde77f7a804963164f2a4bd573adaa23bf5508a0b656ee7017a8e5ba1edb7383690225a4fae19ea758fd025150d2682b880db90107b01f23c88acf5499be6fedd86b3532e219ff517d90759cf8e3f24fb9d13cefb979f3e43a8d0df98c28f62907a3245e40000000048748151851f0cd4cdb8ee7ccb811ce6f27c7c1e5a6a023f0ab22e38e62e07c6e0e13a64c2ef13aa8057b957e9b4a787899138572666988b78b9bba67a10dd7"
-    $Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($encrypted)
-    $result = [System.Runtime.InteropServices.Marshal]::PtrToStringUni($Ptr)
-    [System.Runtime.InteropServices.Marshal]::ZeroFreeCoTaskMemUnicode($Ptr)
+    $f =  "https://" + ${env:GITLABUSR} + ":" + ${env:GITLABPASS} + "@gitlab.com/ClxS/Tool.git"
+    $encrypted = ConvertTo-SecureString $f -AsPlainText -Force
+    ConvertFrom-SecureString $encrypted
     
     git clone $result C:\projects\stardew-farmhand\WorkingDirectory\tmp
 - cmd: |
