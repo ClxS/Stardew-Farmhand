@@ -1,3 +1,5 @@
+[![Stardew-Farmhand on discord](https://img.shields.io/badge/discord-stardew--farmhand-blue.svg?style=flat-square)](https://discord.gg/0t3fh2xhHVdOFmtI)
+
 ## Current Build Status
 
 | Branch        | Windows CI    | Static Analysis  |

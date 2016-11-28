@@ -39,5 +39,5 @@ namespace Farmhand.API.Debug
 
             return useOutput;
         }
-    }
+    } 
 }
