@@ -30,7 +30,7 @@ configuration:
 - Release
 build_script:
 - ps: |
-    $encrypted = ":\scripts\encrypted_password.txt" | ConvertTo-SecureString
+    $encrypted = ConvertTo-SecureString "P@ssW0rD!" -AsPlainText -Force
     $encrypted
     
     nuget restore
