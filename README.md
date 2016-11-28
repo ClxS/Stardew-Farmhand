@@ -2,7 +2,7 @@
 
 | Branch        | Windows CI    | Static Analysis  |
 | ------------- | ------------  | --- |
-| Master      | [![Build status](https://ci.appveyor.com/api/projects/status/isjopx9h6gv9vv2x?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand) | g|
+| Master      | [![Build status](https://ci.appveyor.com/api/projects/status/isjopx9h6gv9vv2x?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand) | |
 | Development      | [![Build status](https://ci.appveyor.com/api/projects/status/3r8rljtuw2nhm25q?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand-vobxn) |  [![Static Analysis](https://scan.coverity.com/projects/10466/badge.svg?flat=1)](https://scan.coverity.com/projects/10466) |
 
 # Project Details
