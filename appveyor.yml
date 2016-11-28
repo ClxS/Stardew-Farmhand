@@ -32,6 +32,8 @@ build_script:
 - ps: |
     $encrypted = ConvertTo-SecureString "P@ssW0rD!" -AsPlainText -Force
     $encrypted
+    $secureStringText = $secureStringPwd | ConvertFrom-SecureString 
+    $secureStringText
     
     nuget restore
 
