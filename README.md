@@ -17,6 +17,10 @@ Farmhand: MIT
 
 xml2json: Not Specified (http://www.bjelic.net/2012/08/01/coding/convert-xml-to-json-using-xslt/)
 
+##Branching Policy
+
+The master branch is marked as protected and it's what all release builds will be compiled against. 
+Make your pull requests against the development or feature branches, pull requests directly into master probably will not be accepted.
 
 ##My First Build
 
