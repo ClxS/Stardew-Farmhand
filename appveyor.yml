@@ -27,7 +27,8 @@ install:
     $Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($encrypted)
     $result = [System.Runtime.InteropServices.Marshal]::PtrToStringUni($Ptr)
     [System.Runtime.InteropServices.Marshal]::ZeroFreeCoTaskMemUnicode($Ptr)
-    git clone "$result" "C:\projects\stardew-farmhand\WorkingDirectory\tmp"
+    $args = 'clone "$result" "C:\projects\stardew-farmhand\WorkingDirectory\tmp"'
+    Start-Process -FilePath git.exe -ArgumentList $args -Wait -NoNewWindow
 - cmd: |
     move C:\projects\stardew-farmhand\WorkingDirectory\tmp\*.* C:\projects\stardew-farmhand\WorkingDirectory
 # Build configuration. --------------------------------------------------------
