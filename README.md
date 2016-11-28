@@ -4,7 +4,8 @@
 
 | Branch        | Windows CI    | Static Analysis  |
 | ------------- | ------------  | --- |
-| Master      | [![Build status](https://ci.appveyor.com/api/projects/status/isjopx9h6gv9vv2x?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand) |  [![Static Analysis](https://scan.coverity.com/projects/10466/badge.svg?flat=1)](https://scan.coverity.com/projects/10466) |
+| Master      | [![Build status](https://ci.appveyor.com/api/projects/status/isjopx9h6gv9vv2x?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand) | |
+| Development      | [![Build status](https://ci.appveyor.com/api/projects/status/3r8rljtuw2nhm25q?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand-vobxn) |  [![Static Analysis](https://scan.coverity.com/projects/10466/badge.svg?flat=1)](https://scan.coverity.com/projects/10466) |
 
 # Project Details
 
@@ -18,6 +19,10 @@ Farmhand: MIT
 
 xml2json: Not Specified (http://www.bjelic.net/2012/08/01/coding/convert-xml-to-json-using-xslt/)
 
+##Branching Policy
+
+The master branch is marked as protected and it's what all release builds will be compiled against. 
+Make your pull requests against the development or feature branches, pull requests directly into master probably will not be accepted.
 
 ##My First Build
 
