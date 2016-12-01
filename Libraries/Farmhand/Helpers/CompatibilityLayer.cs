@@ -10,7 +10,8 @@ namespace Farmhand.Helpers
     {
         public Assembly OwnAssembly { get; set; }
         public virtual Type GameOverrideType { get; set; }
-        
+        public string RootDirectory { get; set; }
+
         public abstract void AttachEvents(Game1 inst);
         public abstract bool ContainsOurModType(Type[] assemblyTypes);
         public abstract object LoadMod(Assembly modAssembly, Type[] assemblyTypes, ModManifest manifest);

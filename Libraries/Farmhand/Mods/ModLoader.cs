@@ -4,6 +4,7 @@ using Farmhand.Registries;
 using Farmhand.Registries.Containers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -36,7 +37,7 @@ namespace Farmhand
         /// the ModLoader when encountering a SMAPI mod
         /// </summary>
         public static bool UsingSmapiMods = false;
-        
+
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void LoadMods()
         {
@@ -63,12 +64,6 @@ namespace Farmhand
                 ResolveDependencies();
                 Log.Verbose("Importing Mod DLLs, Settings, and Content");
                 LoadFinalMods();
-
-                if (UsingSmapiMods)
-                {
-                    Log.Verbose("Using SMAPI - Attaching SMAPI events");
-                    ModEventManager.AttachSmapiEvents();
-                }
             }
             catch (Exception ex)
             {
@@ -101,22 +96,27 @@ namespace Farmhand
         internal static void TryLoadModCompatiblityLayers()
         {
             Log.Verbose("Loading Compatibility Layers");
-            string[] layers = {"StardewModdingAPI.dll"};
+            var appRoot = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            foreach (var layer in layers)
+            if (appRoot == null)
+                throw new NullReferenceException("appRoot was null");
+
+            var extensions = Directory.GetFiles(Path.Combine(appRoot, Constants.ExtensionsDirectory));
+
+            foreach (var extension in extensions)
             {
                 try
                 {
-                    Log.Verbose($"Trying to load {layer}");
-                    if (!File.Exists(layer))
+                    Log.Verbose($"Trying to load {extension}");
+                    if (!File.Exists(extension))
                     {
-                        Log.Verbose($"{layer} not present");
+                        Log.Error($"{extension} not present");
                         continue;
                     }
 
-                    var assm = Assembly.LoadFrom(layer);
-                    if (assm.GetTypes().Count(x => x.BaseType == typeof (CompatibilityLayer)) <= 0) continue;
-                    
+                    var assm = Assembly.LoadFrom(extension);
+                    if (assm.GetTypes().Count(x => x.BaseType == typeof(CompatibilityLayer)) <= 0) continue;
+
                     var type = assm.GetTypes().First(x => x.BaseType == typeof(CompatibilityLayer));
                     var inst = (CompatibilityLayer)assm.CreateInstance(type.ToString());
                     if (inst == null) continue;
@@ -131,6 +131,7 @@ namespace Farmhand
 
                     CompatibilityLayers.Add(inst);
                     inst.AttachEvents(Game1.game1);
+                    inst.RootDirectory = appRoot;
                 }
                 catch (ReflectionTypeLoadException ex)
                 {
@@ -143,7 +144,7 @@ namespace Farmhand
         private static void ApiEvents_OnModError(object sender, Events.Arguments.EventArgsOnModError e)
         {
             var mod = ModRegistry.GetRegisteredItems().FirstOrDefault(n => n.ModAssembly == e.Assembly);
-            if(mod != null)
+            if (mod != null)
             {
                 Log.Exception($"Exception thrown by mod: {mod.Name} - {mod.Author}", e.Exception);
                 DeactivateMod(mod, ModState.Errored, e.Exception);
@@ -174,7 +175,7 @@ namespace Farmhand
                         mod.ModState = ModState.InvalidManifest;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Log.Error($"Error validating mod {mod.Name} by {mod.Author}\n\t-{ex.Message}");
                 }
@@ -184,7 +185,7 @@ namespace Farmhand
         private static void LoadFinalMods()
         {
             var registeredMods = ModRegistry.GetRegisteredItems();
-            foreach(var mod in registeredMods.Where(n => n.ModState == ModState.Unloaded))
+            foreach (var mod in registeredMods.Where(n => n.ModState == ModState.Unloaded))
             {
                 Log.Verbose($"Loading mod: {mod.Name} by {mod.Author}");
                 try
@@ -225,7 +226,7 @@ namespace Farmhand
             //Loop to verify every dependent mod is available. 
             bool stateChange = false;
             var modInfos = registeredMods as ModManifest[] ?? registeredMods.ToArray();
-            do 
+            do
             {
                 foreach (var mod in modInfos)
                 {
@@ -289,12 +290,14 @@ namespace Farmhand
                         {
                             var json = r.ReadToEnd();
                             var modInfo = JsonConvert.DeserializeObject<ModManifest>(json, new VersionConverter());
-                            
+
                             modInfo.ModDirectory = perModPath;
                             ModRegistry.RegisterItem(modInfo.UniqueId ?? new UniqueId<string>(Guid.NewGuid().ToString()), modInfo);
                         }
                     }
                 }
+
+
             }
         }
 
@@ -324,8 +327,8 @@ namespace Farmhand
                 mod.LastException = error;
                 Log.Success($"Successfully unloaded mod {mod.Name} by {mod.Author}");
             }
-            catch (Exception )
-            { 
+            catch (Exception)
+            {
                 // Ignored
             }
         }
