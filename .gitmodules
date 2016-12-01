@@ -1,0 +1,3 @@
+[submodule "External/SMAPI"]
+	path = External/SMAPI
+	url = https://github.com/Pathoschild/SMAPI
