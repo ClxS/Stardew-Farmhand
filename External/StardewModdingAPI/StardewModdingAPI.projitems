@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>9246e5ea-df78-4976-8244-49c3123b898a</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>StardewModdingAPI</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Advanced\ConfigFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Advanced\IConfigFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Command.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Config.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Entities\SPlayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\ControlEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsClickableMenuChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsClickableMenuClosed.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsControllerButtonPressed.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsControllerButtonReleased.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsControllerTriggerPressed.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsControllerTriggerReleased.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsCurrentLocationChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsFarmerChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsGameLocationsChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsIntChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsInventoryChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsKeyboardStateChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsKeyPressed.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsLevelUp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsLoadedGameChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsLocationObjectsChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsMineLevelChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsMouseStateChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsNewDay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\EventArgsStringChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\GameEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\GraphicsEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\LocationEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\MenuEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\MineEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\PlayerEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\TimeEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\DeprecationLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\DeprecationManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\GitRelease.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\InternalExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\LogFileManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\ModRegistry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\Monitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\UpdateHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\UserSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\IModHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\IMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Inheritance\ChangeType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Inheritance\ItemStackChange.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Inheritance\SGame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Inheritance\SObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Log.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\LogInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\LogLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\LogWriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Manifest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Mod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\ModHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Program.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Version.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\icon.ico" />
+    <Content Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\StardewModdingAPI-settings.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\steam_appid.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\unix-launcher.sh" />
+  </ItemGroup>
+</Project>

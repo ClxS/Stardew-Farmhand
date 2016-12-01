@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StardewModdingAPI</RootNamespace>
     <AssemblyName>StardewModdingAPI</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -26,6 +26,7 @@
     </DocumentationFile>
     <NoWarn>1591</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
@@ -65,42 +67,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command.cs" />
-    <Compile Include="Compatibility.cs" />
-    <Compile Include="Config.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="Entities\SCharacter.cs" />
-    <Compile Include="Entities\SFarm.cs" />
-    <Compile Include="Entities\SFarmAnimal.cs" />
-    <Compile Include="Entities\SNpc.cs" />
-    <Compile Include="Entities\SPlayer.cs" />
-    <Compile Include="Events\Controls.cs" />
-    <Compile Include="Events\EventArgs.cs" />
-    <Compile Include="Events\Game.cs" />
-    <Compile Include="Events\Graphics.cs" />
-    <Compile Include="Events\Location.cs" />
-    <Compile Include="Events\Menu.cs" />
-    <Compile Include="Events\Mine.cs" />
-    <Compile Include="Events\Player.cs" />
-    <Compile Include="Events\Time.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Inheritance\ItemStackChange.cs" />
-    <Compile Include="Inheritance\Menus\SBobberBar.cs" />
-    <Compile Include="Inheritance\Menus\SGameMenu.cs" />
-    <Compile Include="Inheritance\Menus\SInventoryPage.cs" />
-    <Compile Include="Inheritance\Minigames\SMinigameBase.cs" />
-    <Compile Include="Inheritance\SBareObject.cs" />
-    <Compile Include="Inheritance\SGame.cs" />
-    <Compile Include="Inheritance\SObject.cs" />
-    <Compile Include="JsonResolver.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="Manifest.cs" />
-    <Compile Include="Mod.cs" />
-    <Compile Include="ModItem.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Version.cs" />
   </ItemGroup>
+  <Import Project="..\..\External\StardewModdingAPI\StardewModdingAPI.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

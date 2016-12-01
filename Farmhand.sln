@@ -177,7 +177,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMapActionMod", "Mods\Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWarpMod", "Mods\TestWarpMod\TestWarpMod.csproj", "{E32F465C-8999-44E1-BA6A-A7C12E3FB5FD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{0E42F8CF-A36D-432B-B258-9086E00CE891}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "StardewModdingAPI", "External\StardewModdingAPI\StardewModdingAPI.shproj", "{9246E5EA-DF78-4976-8244-49C3123B898A}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		External\StardewModdingAPI\StardewModdingAPI.projitems*{9246e5ea-df78-4976-8244-49c3123b898a}*SharedItemsImports = 13
+		External\StardewModdingAPI\StardewModdingAPI.projitems*{a2930ad9-b3b4-40a6-8ecd-47a251c8ecfc}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -342,5 +350,6 @@ Global
 		{BC2B4DE3-549A-4CDC-8208-D887509AC21D} = {D8EB8FAC-BCAC-499D-BD13-81672F19F0E9}
 		{835A05C0-ED4C-4D3A-88E4-D8BC3686ED2F} = {D8EB8FAC-BCAC-499D-BD13-81672F19F0E9}
 		{E32F465C-8999-44E1-BA6A-A7C12E3FB5FD} = {D8EB8FAC-BCAC-499D-BD13-81672F19F0E9}
+		{9246E5EA-DF78-4976-8244-49C3123B898A} = {0E42F8CF-A36D-432B-B258-9086E00CE891}
 	EndGlobalSection
 EndGlobal
