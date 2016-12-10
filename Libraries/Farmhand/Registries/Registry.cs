@@ -43,7 +43,6 @@ namespace Farmhand.Registries
         {
             if (GetItem(key) == null)
             {
-                Logging.Log.Verbose($"{typeof(T).Name} Registered- Key: {key}, Item: {item}");
                 RegisteredItems[key] = item;
             }
         }

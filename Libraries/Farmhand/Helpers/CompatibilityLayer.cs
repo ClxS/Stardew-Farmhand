@@ -8,14 +8,42 @@ namespace Farmhand.Helpers
 {
     public abstract class CompatibilityLayer
     {
+        /// <summary>
+        /// The current assembly for this extension
+        /// </summary>
         public Assembly OwnAssembly { get; set; }
-        public virtual Type GameOverrideType { get; set; }
+
+        /// <summary>
+        /// The root directory, where the Stardew Farmhand executable is located
+        /// </summary>
         public string RootDirectory { get; set; }
 
-        public abstract void AttachEvents(Game1 inst);
-        public abstract bool ContainsOurModType(Type[] assemblyTypes);
-        public abstract void LoadMods();
+        /// <summary>
+        /// A property which specifies for a particular mod folder to be ignored. This
+        /// could be used for extensions which have their own manifest.json formats 
+        /// to stop the default mod loader trying (and failing) to read those files, 
+        /// and allows the extension to just handle it instead
+        /// </summary>
+        public virtual string ModSubdirectory { get; set; }
 
+        /// <summary>
+        /// Perform initial setup steps for this extension. Called after input argument and configuration handling,
+        /// but before any mod-loading functionality.
+        /// </summary>
+        public abstract void Initialise();
+        
+        /// <summary>
+        /// Instructs the extension to load any mods it is responsible for handling.
+        /// </summary>
+        /// <param name="modsDirectory">The primary mod directory. This is the directory which
+        /// should contain a "ModSubdirectory" folder, containing mods handled by this extension</param>
+        public abstract void LoadMods(string modsDirectory);
+
+        /// <summary>
+        /// Returns an IEnumerable containing event wrapper types. This is used to detect events which should
+        /// be handled in mod exception situations in EventManager.DetachDelegates
+        /// </summary>
+        /// <returns></returns>
         public abstract IEnumerable<Type> GetEventClasses();
     }
 }

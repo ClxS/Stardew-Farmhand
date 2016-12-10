@@ -66,9 +66,10 @@ namespace Farmhand
                 Log.Verbose("Importing Mod DLLs, Settings, and Content");
                 LoadFinalMods();
 
+                var smapiModsPath = ModPaths.First();
                 foreach (var ext in CompatibilityLayers)
                 {
-                    ext.LoadMods();
+                    ext.LoadMods(smapiModsPath);
                 }
             }
             catch (Exception ex)
@@ -128,16 +129,11 @@ namespace Farmhand
                     if (inst == null) continue;
 
                     inst.OwnAssembly = assm;
-
-                    if (inst.GameOverrideType != null)
-                    {
-                        Log.Verbose($"Override {inst.GameOverrideType}");
-                        API.Game.RegisterGameOverride(inst.GameOverrideType);
-                    }
+                    
 
                     CompatibilityLayers.Add(inst);
-                    inst.AttachEvents(Game1.game1);
                     inst.RootDirectory = appRoot;
+                    inst.Initialise();
                 }
                 catch (ReflectionTypeLoadException ex)
                 {
