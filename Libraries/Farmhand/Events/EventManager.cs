@@ -16,8 +16,7 @@ namespace Farmhand.Events
         {
             var FarmhandTypes = Assembly.GetExecutingAssembly()
                     .GetTypes()
-                    .Where(t => string.Equals(t.Namespace, "Farmhand.Events", StringComparison.Ordinal)
-                                || string.Equals(t.Namespace, "StardewModdingAPI.Events", StringComparison.Ordinal))
+                    .Where(t => string.Equals(t.Namespace, "Farmhand.Events", StringComparison.Ordinal))
                     .ToList();
 
             foreach (var layer in ModLoader.CompatibilityLayers)

@@ -112,18 +112,6 @@ namespace Farmhand.Registries.Containers
                     Instance = instance;
                     Log.Verbose ($"Loaded mod dll: {Name}");
                 }
-                else
-                {
-                    var types = ModAssembly.GetTypes();
-                    foreach (var layer in ModLoader.CompatibilityLayers)
-                    {
-                        if (!layer.ContainsOurModType(types)) continue;
-
-                        Instance = layer.LoadMod(ModAssembly, types, this);
-                        Log.Verbose($"Loaded mod dll: {Name}");
-                        break;
-                    }
-                }
                
                 if(Instance == null)
                 {

@@ -14,7 +14,7 @@ namespace Farmhand.Helpers
 
         public abstract void AttachEvents(Game1 inst);
         public abstract bool ContainsOurModType(Type[] assemblyTypes);
-        public abstract object LoadMod(Assembly modAssembly, Type[] assemblyTypes, ModManifest manifest);
+        public abstract void LoadMods();
 
         public abstract IEnumerable<Type> GetEventClasses();
     }

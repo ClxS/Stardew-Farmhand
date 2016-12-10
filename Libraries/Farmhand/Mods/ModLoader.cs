@@ -56,6 +56,7 @@ namespace Farmhand
             Log.Info("Loading Mods...");
             try
             {
+                Log.Verbose("Loading Farmhand Mods");
                 Log.Verbose("Loading Mod Manifests");
                 LoadModManifests();
                 Log.Verbose("Validating Mod Manifests");
@@ -64,6 +65,11 @@ namespace Farmhand
                 ResolveDependencies();
                 Log.Verbose("Importing Mod DLLs, Settings, and Content");
                 LoadFinalMods();
+
+                foreach (var ext in CompatibilityLayers)
+                {
+                    ext.LoadMods();
+                }
             }
             catch (Exception ex)
             {
