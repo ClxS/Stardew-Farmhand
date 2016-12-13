@@ -1,0 +1,22 @@
+﻿{
+	"UniqueId" : "TestNPCMod",
+	"Name" : "Test NPC Mod",
+	"Author": "Kithio",
+	"ModDll": "TestNPCMod",
+	"Version" : "0.1",
+	"Description" : "An example npc mod.",
+	"Content" : 
+	{
+		"Textures" : 
+		[
+      {
+        "Id": "sprite_TestNPC",
+        "File": "TestNPC.png"
+      },
+      {
+        "Id": "sprite_TestNPC_Portrait",
+        "FIle":  "TestNPC_Portrait.png"
+      }
+		]
+	}
+}

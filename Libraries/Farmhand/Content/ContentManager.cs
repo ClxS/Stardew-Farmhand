@@ -33,7 +33,13 @@ namespace Farmhand.Content
             new DelegatedContentInjector(),
             new MapInjector(),
             new MailInjector(),
-            new QuestInjector()
+            new QuestInjector(),
+            new NPCLoader(),
+            new NPCDialogueLoader(),
+            new NPCSchedulesLoader(),
+            new NPCGiftTastesInjector(),
+            new NPCDispositionsInjector(),
+            new NPCRainyDialogueInjector()
         };
 
         public ContentManager(IServiceProvider serviceProvider, string rootDirectory,

@@ -44,15 +44,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.dll</HintPath>
       <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Graphics\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Game.dll</HintPath>
       <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.Game.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Graphics\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Graphics.dll</HintPath>
       <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net40\Mono.Cecil.dll</HintPath>
@@ -122,6 +125,12 @@
     <Compile Include="API\Locations\MineShaft.cs" />
     <Compile Include="API\Monsters\Monster.cs" />
     <Compile Include="API\Monsters\MonsterInformation.cs" />
+    <Compile Include="API\NPCs\NPC.cs" />
+    <Compile Include="API\NPCs\NPCDialoguesInformation.cs" />
+    <Compile Include="API\NPCs\NPCInformation.cs" />
+    <Compile Include="API\NPCs\NPCGiftTastesInformation.cs" />
+    <Compile Include="API\NPCs\NPCSchedulesInformation.cs" />
+    <Compile Include="API\NPCs\NPCUtility.cs" />
     <Compile Include="API\Pulse\Pulse.cs" />
     <Compile Include="API\Pulse\PulseEventArgs.cs" />
     <Compile Include="API\Pulse\Resource.cs" />
@@ -171,6 +180,8 @@
     <Compile Include="Content\ContentManager.cs" />
     <Compile Include="Content\IContentInjector.cs" />
     <Compile Include="Content\ModXnbInjector.cs" />
+    <Compile Include="Content\NPCInjector.cs" />
+    <Compile Include="Content\NPCLoader.cs" />
     <Compile Include="Content\WeaponInjector.cs" />
     <Compile Include="Events\ApiEvents.cs" />
     <Compile Include="Events\Arguments\ApiEvents\EventArgsOnModLoadEvent.cs" />
@@ -252,6 +263,7 @@
     <Compile Include="Mods\ModConfiguration.cs" />
     <Compile Include="Mods\ModLoader.cs" />
     <Compile Include="Mods\ModState.cs" />
+    <Compile Include="Overrides\Characters\NPC.cs" />
     <Compile Include="Overrides\Characters\Monster.cs" />
     <Compile Include="Overrides\Game1.cs" />
     <Compile Include="Overrides\SerializableDictionary.cs" />
