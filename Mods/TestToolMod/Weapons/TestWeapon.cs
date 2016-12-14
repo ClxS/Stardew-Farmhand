@@ -22,9 +22,17 @@ namespace TestToolMod.Weapons
             CritMultiplier = 3
         });
 
-        public TestWeapon() : base(Information.Id)
+        // A default constructor that calls the base default constructor is required for proper ID fixing.
+        // Using the default constructor to create an object intended to be used is not recommended
+        protected TestWeapon() : base()
         {
             
+        }
+
+        public TestWeapon(WeaponInformation information)
+            : base(information.Id)
+        {
+
         }
     }
 }

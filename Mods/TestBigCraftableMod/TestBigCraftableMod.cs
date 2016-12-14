@@ -1,5 +1,6 @@
 ﻿using Farmhand;
 using Farmhand.API.Items;
+using Microsoft.Xna.Framework;
 using TestBigCraftableMod.BigCraftables;
 
 namespace TestBigCraftableMod
@@ -26,7 +27,7 @@ namespace TestBigCraftableMod
 
         private void PlayerEvents_OnFarmerChanged(object sender, System.EventArgs e)
         {
-            Farmhand.API.Player.Player.AddObject<TestBigCraftable>();
+            Farmhand.API.Player.Player.AddObject(new TestBigCraftable(TestBigCraftable.StaticInformation, Vector2.Zero));
         }
     }
 }

@@ -22,16 +22,18 @@ namespace TestBigCraftableMod.BigCraftables
             IsLamp = false
         });
 
-        public TestBigCraftable() :
-            base(StaticInformation)
+        // A default constructor that calls the base default constructor is required for proper ID fixing.
+        // Using the default constructor to create an object intended to be used is not recommended
+        protected TestBigCraftable() :
+            base()
         {
 
         }
 
-        public TestBigCraftable(BigCraftableInformation information, Vector2 vector, int Id, bool isRecipe = false) :
-            base(information, vector, Id, isRecipe)
+        public TestBigCraftable(BigCraftableInformation information, Vector2 vector, bool isRecipe = false) :
+            base(information, vector, isRecipe)
         {
-            Information = information;
+            
         }
 
         public override bool clicked(Farmer who)

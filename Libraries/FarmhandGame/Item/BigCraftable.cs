@@ -15,16 +15,17 @@ namespace Farmhand.Overrides.Game.Item
         // Big Craftable Information
         public BigCraftableInformation Information { get; set; }
 
-        public BigCraftable(BigCraftableInformation information) :
-            base(Vector2.Zero, information.Id, false)
+        // Default constructor for serialization
+        protected BigCraftable() :
+            base()
         {
-            Information = information;
+
         }
 
-        public BigCraftable(BigCraftableInformation information, Vector2 vector, int Id, bool isRecipe = false) :
-            base(vector, Id, isRecipe)
+        public BigCraftable(BigCraftableInformation information, Vector2 vector, bool isRecipe = false) :
+            base(vector, information.Id, isRecipe)
         {
-            Information = information;
+            this.Information = information;
         }
     }
 }

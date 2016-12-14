@@ -5,6 +5,7 @@ using Farmhand.API.Utilities;
 using Farmhand.Registries;
 using StardewValley;
 using Farmhand.Logging;
+using Farmhand.Attributes;
 
 namespace Farmhand.API.Items
 {
@@ -13,6 +14,8 @@ namespace Farmhand.API.Items
     /// </summary>
     public static class Item
     {
+        private static List<StardewValley.Object> deserializedObjects = new List<StardewValley.Object>();
+
         public static List<ItemInformation> Items { get; } = new List<ItemInformation>();
         public static Dictionary<Type, ItemInformation> RegisteredTypeInformation { get; } = new Dictionary<Type, ItemInformation>();
 
@@ -34,30 +37,34 @@ namespace Farmhand.API.Items
             Game1.objectInformation[item.Id] = item.ToString();
         }
 
+        // Uses the registered deserialized objects list to fix all the IDs
         internal static void FixupItemIds(object sender, System.EventArgs e)
         {
-            if (Game1.player != null)
+            foreach(StardewValley.Object deserializedObject in deserializedObjects)
             {
-                if (Game1.player.items == null)
-                    Log.Error("Game1.player.items is null");
+                var type = deserializedObject.GetType();
+                int expectedId = -1;
 
-                if (RegisteredTypeInformation == null)
-                    Log.Error("RegisteredTypeInformation is null");
-
-                foreach (var item in Game1.player.items.Where(n => n != null && RegisteredTypeInformation.ContainsKey(n.GetType())))
+                if (RegisteredTypeInformation.ContainsKey(type))
                 {
-                    var obj = item as StardewValley.Object;
-                    if (obj != null)
+                    expectedId = RegisteredTypeInformation[type].Id;
+
+                    if (deserializedObject.parentSheetIndex != expectedId)
                     {
-                        var type = item.GetType();
-                        var info = RegisteredTypeInformation[type];
-                        if (obj.parentSheetIndex != info.Id)
-                        {
-                            Log.Error($"Correcting item mismatch - {info.Name} - {obj.parentSheetIndex} != {info.Id}");
-                            obj.parentSheetIndex = info.Id;
-                        }
+                        Log.Warning($"Correcting id mismatch - {type.Name} - {deserializedObject.parentSheetIndex} != {expectedId}");
+                        deserializedObject.parentSheetIndex = expectedId;
                     }
                 }
+            }
+        }
+
+        // Is called from the default constructor of StardewValley.Object, and alerts this item registry to fix its ID after loading is finished
+        [Hook(HookType.Exit, "StardewValley.Object", "System.Void StardewValley.Object::.ctor()")]
+        public static void RegisterDeserializingObject([ThisBind] object @this)
+        {
+            if (@this is StardewValley.Object)
+            {
+                deserializedObjects.Add(@this as StardewValley.Object);
             }
         }
     }

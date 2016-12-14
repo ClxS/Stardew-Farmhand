@@ -51,7 +51,6 @@ namespace Farmhand.Events
         
         internal static void InvokeFarmerChanged(Farmer priorFarmer, Farmer newFarmer)
         {
-            Farmhand.API.Items.Item.FixupItemIds(null, null);
             EventCommon.SafeInvoke(OnFarmerChanged, newFarmer, new EventArgsOnFarmerChanged(priorFarmer, newFarmer));
         }
 

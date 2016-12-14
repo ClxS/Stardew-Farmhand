@@ -23,10 +23,10 @@ namespace TestToolMod
         private void GameEvents_OnAfterLoadedContent(object sender, System.EventArgs e)
         {
             // Register the tool so it can be added to the sprite sheet
-            Farmhand.API.Tools.Tool.RegisterTool<StardewValley.Tool>(TestTool.Information);
+            Farmhand.API.Tools.Tool.RegisterTool<TestTool>(TestTool.Information);
 
             // Register the weapon
-            Farmhand.API.Tools.Weapon.RegisterWeapon<StardewValley.Tools.MeleeWeapon>(TestWeapon.Information);
+            Farmhand.API.Tools.Weapon.RegisterWeapon<TestWeapon>(TestWeapon.Information);
         }
 
         private void PlayerEvents_OnFarmerChanged(object sender, System.EventArgs e)
@@ -61,7 +61,7 @@ namespace TestToolMod
             // Give the player the tool
             if (!hasWeapon)
             {
-                Farmhand.API.Player.Player.AddTool<TestWeapon>();
+                Farmhand.API.Player.Player.AddTool(new TestWeapon(TestWeapon.Information));
             }
         }
     }

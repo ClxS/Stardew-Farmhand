@@ -42,30 +42,6 @@ namespace Farmhand.Overrides.Game.Item
         {
         }
 
-        // Fixes the Id associated with this object to be what is described in the various item registries
-        // Idealy, this would be called immediately after deserialization, but xml serialization doesn't provide any functionality for that
-        public void FixId()
-        {
-            var type = this.GetType();
-            int expectedId = -1;
-
-            if(Farmhand.API.Items.Item.RegisteredTypeInformation.ContainsKey(type))
-            {
-                expectedId = Farmhand.API.Items.Item.RegisteredTypeInformation[type].Id;
-            }
-
-            if (Farmhand.API.Items.BigCraftable.RegisteredTypeInformation.ContainsKey(type))
-            {
-                expectedId = Farmhand.API.Items.BigCraftable.RegisteredTypeInformation[type].Id;
-            }
-
-            if (expectedId != -1 && parentSheetIndex != expectedId)
-            {
-                Log.Error($"Correcting id mismatch - {type.Name} - {parentSheetIndex} != {expectedId}");
-                parentSheetIndex = expectedId;
-            }
-        }
-
         // Overriden methods
 
         /// <summary>
@@ -465,7 +441,6 @@ namespace Farmhand.Overrides.Game.Item
         /// </summary>
         public override void reloadSprite()
         {
-            FixId();
             base.reloadSprite();
         }
 
