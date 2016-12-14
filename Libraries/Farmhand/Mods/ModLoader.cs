@@ -97,6 +97,14 @@ namespace Farmhand
             {
                 return Assembly.GetExecutingAssembly();
             }
+            if (args.Name.StartsWith("Newtonsoft.Json"))
+            {
+                return Assembly.GetExecutingAssembly();
+            }
+            if (args.Name.StartsWith("Mono.Cecil"))
+            {
+                return Assembly.GetExecutingAssembly();
+            }
             return null;
         }
 
@@ -108,7 +116,7 @@ namespace Farmhand
             if (appRoot == null)
                 throw new NullReferenceException("appRoot was null");
 
-            var extensions = Directory.GetFiles(Path.Combine(appRoot, Constants.ExtensionsDirectory));
+            var extensions = Directory.GetFiles(Path.Combine(appRoot, Constants.ExtensionsDirectory), "*.dll");
 
             foreach (var extension in extensions)
             {
