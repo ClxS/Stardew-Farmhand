@@ -9,6 +9,12 @@
     <Import_RootNamespace>StardewModdingAPI</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI.AssemblyRewriters\IMethodRewriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI.AssemblyRewriters\Platform.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI.AssemblyRewriters\PlatformAssemblyMap.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI.AssemblyRewriters\Rewriters\BaseMethodRewriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI.AssemblyRewriters\Rewriters\SpriteBatchRewriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI.AssemblyRewriters\Wrappers\CompatibleSpriteBatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Advanced\ConfigFile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Advanced\IConfigFile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Command.cs" />
@@ -45,11 +51,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\PlayerEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\TimeEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\AssemblyRewriting\AssemblyTypeRewriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\AssemblyRewriting\CachePaths.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\DeprecationLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\DeprecationManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\GitRelease.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\InternalExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\LogFileManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\ModAssemblyLoader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\ModRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\Monitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\UpdateHelper.cs" />
