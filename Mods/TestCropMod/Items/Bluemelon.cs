@@ -18,8 +18,16 @@ namespace TestCropMod.Items
             Edibility = 15
         });
 
-        public Bluemelon()
-            : base(Vector2.Zero, Information.Id, Information.Name, true, true, false, false)
+        // A default constructor that calls the base default constructor is required for proper ID fixing.
+        // Using the default constructor to create an object intended to be used is not recommended
+        protected Bluemelon()
+            : base()
+        {
+
+        }
+
+        public Bluemelon(ItemInformation information)
+            : base(Vector2.Zero, information.Id, information.Name, true, true, false, false)
         {
             
         }

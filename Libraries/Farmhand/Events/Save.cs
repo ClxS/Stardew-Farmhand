@@ -2,6 +2,9 @@
 using Farmhand.Attributes;
 using Farmhand.Events.Arguments.SaveEvents;
 using System.Collections.Generic;
+using Farmhand.API.Items;
+using Farmhand.API.Crops;
+using Farmhand.API.Tools;
 
 namespace Farmhand.Events
 {
@@ -73,6 +76,12 @@ namespace Farmhand.Events
         // Triggered by PropertyWatcher
         internal static void InvokeOnAfterLoad()
         {
+            // Fix IDs after load, in all our ID based registries
+            Item.FixupItemIds(null, null);
+            BigCraftable.FixupBigCraftableIds(null, null);
+            Crop.FixupCropIds(null, null);
+            Weapon.FixupWeaponIds(null, null);
+
             EventCommon.SafeInvoke(OnAfterLoad, null, new EventArgsOnAfterLoad());
         }
     }

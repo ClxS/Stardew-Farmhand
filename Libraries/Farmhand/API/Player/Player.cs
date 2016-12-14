@@ -50,6 +50,16 @@ namespace Farmhand.API.Player
             player.addItemToInventory(new T());
         }
 
+        public static void AddObject(StardewValley.Object @object, Farmer player = null)
+        {
+            if (player == null)
+            {
+                player = Game1.player;
+            }
+
+            player.addItemToInventory(@object);
+        }
+
         public static void AddTool<T>(Farmer player = null) where T : StardewValley.Tool, new()
         {
             if (player == null)
@@ -58,6 +68,16 @@ namespace Farmhand.API.Player
             }
 
             player.addItemToInventory(new T());
+        }
+
+        public static void AddTool(StardewValley.Tool tool, Farmer player = null)
+        {
+            if (player == null)
+            {
+                player = Game1.player;
+            }
+
+            player.addItemToInventory(tool);
         }
     }
 }

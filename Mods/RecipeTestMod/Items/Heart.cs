@@ -17,8 +17,16 @@ namespace RecipeTestMod.Items
             Type = ItemType.Basic
         });
 
-        public Heart()
-            : base(Vector2.Zero, Information.Id, Information.Name, true, true, false, false)
+        // A default constructor that calls the base default constructor is required for proper ID fixing.
+        // Using the default constructor to create an object intended to be used is not recommended
+        protected Heart()
+            : base()
+        {
+            Farmhand.Logging.Log.Success("Deserializing Heart Class");
+        }
+
+        public Heart(ItemInformation information)
+            : base(Vector2.Zero, information.Id, information.Name, true, true, false, false)
         {
             Farmhand.Logging.Log.Success("Using Heart Class");
         }
