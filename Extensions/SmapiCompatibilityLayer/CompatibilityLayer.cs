@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading;
 using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
+using StardewModdingAPI.Events;
 using StardewModdingAPI.Framework;
 using StardewValley;
 using Monitor = StardewModdingAPI.Framework.Monitor;
@@ -34,20 +35,20 @@ namespace SmapiCompatibilityLayer
             }
         }
 
-        private static bool _developerMode;
+        private static bool? _developerMode;
         private static bool DeveloperMode
         {
             get
             {
                 if (_developerMode != null)
                 {
-                    return _developerMode;
+                    return _developerMode.Value;
                 }
 
                 var projectType = typeof(StardewModdingAPI.Program);
                 var fieldInfo = projectType.GetField("LogFileManager", BindingFlags.Static | BindingFlags.NonPublic);
-                _developerMode = (bool)fieldInfo?.GetValue(null);
-                return _developerMode;
+                _developerMode = (bool)fieldInfo.GetValue(null);
+                return _developerMode.Value;
             }
         }
 
@@ -65,8 +66,7 @@ namespace SmapiCompatibilityLayer
             // add info header
             Log.Monitor.Log($"Farmhand-SMAPI {Constants.Version} with Stardew Valley {Game1.version} on {Environment.OSVersion}", LogLevel.Info);
 
-
-            
+            EventForwarder.ForwardEvents();
         }
 
         public override void LoadMods(string modsDirectory)
