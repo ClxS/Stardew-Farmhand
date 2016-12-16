@@ -193,6 +193,7 @@
     <Compile Include="Events\Arguments\GlobalRoute\EventArgsGlobalRouteCancellable.cs" />
     <Compile Include="Events\Arguments\GlobalRoute\EventArgsGlobalRouteReturnable.cs" />
     <Compile Include="Events\Arguments\GraphicsEvents\EventArgsClientSizeChanged.cs" />
+    <Compile Include="Events\Arguments\LocationEvents\EventArgsLocationsChanged.cs" />
     <Compile Include="Events\Arguments\LocationEvents\EventArgsOnCurrentLocationChanged.cs" />
     <Compile Include="Events\Arguments\LocationEvents\EventArgsGetMonsterForThisLevel.cs" />
     <Compile Include="Events\Arguments\LocationEvents\EventArgsOnBeforeWarp.cs" />

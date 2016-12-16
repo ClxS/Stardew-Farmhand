@@ -12,7 +12,7 @@ namespace Farmhand.Events
     /// </summary>
     public static class LocationEvents
     {
-        public static event EventHandler OnLocationsChanged = delegate { };
+        public static event EventHandler<EventArgsLocationsChanged> OnLocationsChanged = delegate { };
         public static event EventHandler<NotifyCollectionChangedEventArgs> OnLocationObjectsChanged = delegate { };
         public static event EventHandler<NotifyCollectionChangedEventArgs> OnLocationTerrainFeaturesChanged = delegate { };
         public static event EventHandler<CancelEventArgs> OnBeforeLocationLoadObjects = delegate { };
@@ -23,7 +23,7 @@ namespace Farmhand.Events
         [Hook(HookType.Exit, "StardewValley.Game1", "loadForNewGame")]
         internal static void InvokeLocationsChanged()
         {
-            EventCommon.SafeInvoke(OnLocationsChanged, null);
+            EventCommon.SafeInvoke(OnLocationsChanged, null, new EventArgsLocationsChanged(Game1.locations));
         }
 
         [Hook(HookType.Entry, "StardewValley.GameLocation", "loadObjects")]

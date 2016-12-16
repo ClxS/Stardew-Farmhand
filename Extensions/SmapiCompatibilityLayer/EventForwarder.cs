@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Farmhand.Events.Arguments.LocationEvents;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
@@ -34,6 +35,11 @@ namespace SmapiCompatibilityLayer
 
         public static void ForwardEvents()
         {
+            // TODO:
+            // MineEvents
+            // PlayerEvents
+            // TimeEvents
+            // GameEvents
             Farmhand.Events.ControlEvents.OnKeyboardChanged += ControlEvents_OnKeyboardChanged;
             Farmhand.Events.ControlEvents.OnKeyPressed += ControlEvents_OnKeyPressed;
             Farmhand.Events.ControlEvents.OnKeyReleased += ControlEvents_OnKeyReleased;
@@ -42,6 +48,31 @@ namespace SmapiCompatibilityLayer
             Farmhand.Events.ControlEvents.OnControllerButtonReleased += ControlEvents_OnControllerButtonReleased;
             Farmhand.Events.ControlEvents.OnControllerTriggerPressed += ControlEvents_OnControllerTriggerPressed;
             Farmhand.Events.ControlEvents.OnControllerButtonReleased += ControlEvents_OnControllerButtonReleased1;
+            Farmhand.Events.MenuEvents.OnMenuChanged += MenuEvents_OnMenuChanged;
+            Farmhand.Events.LocationEvents.OnCurrentLocationChanged += LocationEvents_OnCurrentLocationChanged;
+            Farmhand.Events.LocationEvents.OnLocationsChanged += LocationEvents_OnLocationsChanged;
+        }
+
+        private static void LocationEvents_OnLocationsChanged(object sender, EventArgsLocationsChanged e)
+        {
+            LocationEvents.InvokeLocationsChanged(Monitor, e.NewLocations);
+        }
+
+        private static void LocationEvents_OnCurrentLocationChanged(object sender, Farmhand.Events.Arguments.LocationEvents.EventArgsOnCurrentLocationChanged e)
+        {
+            LocationEvents.InvokeCurrentLocationChanged(Monitor, e.PriorLocation, e.NewLocation);
+        }
+
+        private static void MenuEvents_OnMenuChanged(object sender, Farmhand.Events.Arguments.MenuEvents.EventArgsOnMenuChanged e)
+        {
+            if (e.NewMenu == null)
+            {
+                MenuEvents.InvokeMenuClosed(Monitor, e.PriorMenu);
+            }
+            else
+            {
+                MenuEvents.InvokeMenuChanged(Monitor, e.PriorMenu, e.NewMenu);
+            }
         }
 
         private static void ControlEvents_OnControllerButtonReleased1(object sender, Farmhand.Events.Arguments.ControlEvents.EventArgsControllerButtonReleased e)
