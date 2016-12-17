@@ -34,21 +34,6 @@ namespace SmapiCompatibilityLayer
             }
         }
 
-        /// <summary>Raised after the in-game clock changes.</summary>
-        public static event EventHandler<EventArgsIntChanged> TimeOfDayChanged;
-
-        /// <summary>Raised after the day-of-month value changes, including when loading a save (unlike <see cref="OnNewDay"/>).</summary>
-        public static event EventHandler<EventArgsIntChanged> DayOfMonthChanged;
-
-        /// <summary>Raised after the year value changes.</summary>
-        public static event EventHandler<EventArgsIntChanged> YearOfGameChanged;
-
-        /// <summary>Raised after the season value changes.</summary>
-        public static event EventHandler<EventArgsStringChanged> SeasonOfYearChanged;
-
-        /// <summary>Raised when the player is transitioning to a new day and the game is performing its day update logic. This event is triggered twice: once after the game starts transitioning, and again after it finishes.</summary>
-        public static event EventHandler<EventArgsNewDay> OnNewDay;
-
         public static void ForwardEvents()
         {
             // TODO:
