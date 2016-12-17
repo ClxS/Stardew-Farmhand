@@ -147,7 +147,10 @@ namespace Farmhand.Events
             [LocalBind(typeof(int), 0)] int newLevel
         )
         {
-            EventCommon.SafeInvoke(OnLevelUp, @this, new EventArgsOnLevelUp(which, newLevel, originalLevel));
+            if (originalLevel != newLevel)
+            {
+                EventCommon.SafeInvoke(OnLevelUp, @this, new EventArgsOnLevelUp(which, newLevel, originalLevel));
+            }
         }
 
     }
