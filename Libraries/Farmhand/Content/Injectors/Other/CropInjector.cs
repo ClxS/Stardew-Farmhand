@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Farmhand.Content
+namespace Farmhand.Content.Injectors.Other
 {
-    public class QuestInjector : IContentInjector
+    class CropInjector : IContentInjector
     {
         public bool IsLoader => false;
         public bool IsInjector => true;
 
         public bool HandlesAsset(Type type, string asset)
         {
-            return asset == "Data\\Quests";
+            return asset == "Data\\Crops";
         }
-        
+
         public T Load<T>(ContentManager contentManager, string assetName)
         {
             Logging.Log.Error("You shouldn't be here!");
@@ -23,13 +21,13 @@ namespace Farmhand.Content
 
         public void Inject<T>(T obj, string assetName, ref object output)
         {
-            var quests = obj as Dictionary<int, string>;
-            if (quests == null)
+            var crops = obj as Dictionary<int, string>;
+            if (crops == null)
                 throw new Exception($"Unexpected type for {assetName}");
 
-            foreach (var quest in Farmhand.API.Player.Quest.Quests)
+            foreach (var crop in API.Crops.Crop.Crops)
             {
-                quests[quest.Value.Id] = quest.Value.ToString();
+                crops[crop.Value.Seed] = crop.Value.ToString();
             }
         }
     }

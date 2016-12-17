@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Farmhand.Attributes;
 using StardewValley;
 
 namespace Farmhand.API

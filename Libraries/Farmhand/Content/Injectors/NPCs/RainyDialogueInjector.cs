@@ -1,18 +1,16 @@
-﻿using Farmhand.API.Locations;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using xTile;
 
-namespace Farmhand.Content
+namespace Farmhand.Content.Injectors.NPCs
 {
-    public class MapInjector : IContentInjector
+    internal class RainyDialogueInjector : IContentInjector
     {
         public bool IsLoader => false;
         public bool IsInjector => true;
 
         public bool HandlesAsset(Type type, string asset)
         {
-            return (type == typeof(Map));
+            return asset == "Characters\\Dialogue\\rainy";
         }
 
         public T Load<T>(ContentManager contentManager, string assetName)
@@ -23,12 +21,14 @@ namespace Farmhand.Content
 
         public void Inject<T>(T obj, string assetName, ref object output)
         {
-            var map = obj as Map;
-            if (map == null)
+            var rainyDialogue = obj as Dictionary<string, string>;
+            if (rainyDialogue == null)
                 throw new Exception($"Unexpected type for {assetName}");
 
-            map = LocationUtilities.MergeMaps(map, assetName);
-            output = map;
+            foreach (var npc in API.NPCs.Npc.Npcs)
+            {
+                rainyDialogue[npc.Value.Item1.Name] = npc.Value.Item1.Dialogues.GetRainyDialogue;
+            }
         }
     }
 }

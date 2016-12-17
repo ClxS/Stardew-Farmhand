@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Farmhand.Content
+namespace Farmhand.Content.Injectors.Blueprints
 {
-    class BigCraftableInjector : IContentInjector
+    class BlueprintInjector : IContentInjector
     {
         public bool IsLoader => false;
         public bool IsInjector => true;
 
         public bool HandlesAsset(Type type, string asset)
         {
-            return asset == "Data\\BigCraftablesInformation";
+            return asset == "Data\\Blueprints";
         }
 
         public T Load<T>(ContentManager contentManager, string assetName)
@@ -21,13 +21,13 @@ namespace Farmhand.Content
 
         public void Inject<T>(T obj, string assetName, ref object output)
         {
-            var bigCraftables = obj as Dictionary<int, string>;
-            if (bigCraftables == null)
+            var blueprints = obj as Dictionary<string, string>;
+            if(blueprints == null)
                 throw new Exception($"Unexpected type for {assetName}");
 
-            foreach (var bigCraftable in Farmhand.API.Items.BigCraftable.BigCraftables)
+            foreach (var blueprint in API.Buildings.Blueprint.Blueprints)
             {
-                bigCraftables[bigCraftable.Id] = bigCraftable.ToString();
+                blueprints[blueprint.Name] = blueprint.BlueprintString;
             }
         }
     }

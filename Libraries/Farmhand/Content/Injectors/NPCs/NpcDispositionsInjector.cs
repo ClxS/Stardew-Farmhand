@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Farmhand.Content
+namespace Farmhand.Content.Injectors.NPCs
 {
-    class CropInjector : IContentInjector
+    internal class NpcDispositionsInjector : IContentInjector
     {
         public bool IsLoader => false;
         public bool IsInjector => true;
 
         public bool HandlesAsset(Type type, string asset)
         {
-            return asset == "Data\\Crops";
+            return asset == "Data\\NPCDispositions";
         }
 
         public T Load<T>(ContentManager contentManager, string assetName)
@@ -21,13 +21,13 @@ namespace Farmhand.Content
 
         public void Inject<T>(T obj, string assetName, ref object output)
         {
-            var crops = obj as Dictionary<int, string>;
-            if (crops == null)
+            var dispositions = obj as Dictionary<string, string>;
+            if (dispositions == null)
                 throw new Exception($"Unexpected type for {assetName}");
 
-            foreach (var crop in Farmhand.API.Crops.Crop.Crops)
+            foreach (var npc in API.NPCs.Npc.Npcs)
             {
-                crops[crop.Value.Seed] = crop.Value.ToString();
+                dispositions[npc.Value.Item1.Name] = npc.Value.Item1.DispositionString;
             }
         }
     }

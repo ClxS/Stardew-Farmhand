@@ -35,9 +35,9 @@ namespace RecipeTestMod
         private void PlayerEvents_OnFarmerChanged(object sender, EventArgsOnFarmerChanged e)
         {
             Farmhand.API.Player.Player.AddRecipe(VoidStar.Recipe.PrivateName);
-            Farmhand.API.Player.Player.AddObject<Heart>();
-            Farmhand.API.Player.Player.AddObject<PuppyTail>();
-            Farmhand.API.Player.Player.AddObject<RabbitsPaw>();
+            Farmhand.API.Player.Player.AddObject(new Heart(Heart.Information));
+            Farmhand.API.Player.Player.AddObject(new PuppyTail(PuppyTail.Information));
+            Farmhand.API.Player.Player.AddObject(new RabbitsPaw(RabbitsPaw.Information));
         }
 
     }

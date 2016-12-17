@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Farmhand.Content
+namespace Farmhand.Content.Injectors.Mail
 {
     public class MailInjector : IContentInjector
     {
@@ -27,7 +25,7 @@ namespace Farmhand.Content
             if (mailBox == null)
                 throw new Exception($"Unexpected type for {assetName}");
 
-            foreach (var mail in Farmhand.API.Player.Mail.MailBox)
+            foreach (var mail in API.Player.Mail.MailBox)
             {
                 mailBox[mail.Value.Id] = mail.Value.ToString();
             }

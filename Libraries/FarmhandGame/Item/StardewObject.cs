@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using xTile.Dimensions;
+using System.Runtime.Serialization;
+using Farmhand.Logging;
+using Farmhand.Attributes;
 
 namespace Farmhand.Overrides.Game.Item
 {

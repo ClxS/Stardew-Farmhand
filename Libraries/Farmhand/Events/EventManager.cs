@@ -42,8 +42,7 @@ namespace Farmhand.Events
             SaveGame.locationSerializer.UnknownAttribute += FarmerSerializer_UnknownAttribute;
             SaveGame.locationSerializer.UnknownNode += FarmerSerializer_UnknownNode;
             SaveGame.locationSerializer.UnreferencedObject += FarmerSerializer_UnreferencedObject;
-
-            Farmhand.Events.SaveEvents.OnAfterLoadProgress += Farmhand.Events.PropertyWatcher.LoadFired;
+            
             //Farmhand.Events.PlayerEvents.OnFarmerChanged += Farmhand.API.Items.Item.FixupItemIds;
         }
 
@@ -127,10 +126,6 @@ namespace Farmhand.Events
 
             _detachedDelegates.Remove(assembly);
         }
-
-        public void AttachSmapiEvents()
-        {
-            
-        }
+        
     }
 }

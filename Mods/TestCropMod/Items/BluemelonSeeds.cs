@@ -17,8 +17,16 @@ namespace TestCropMod.Items
             Type = ItemType.Basic
         });
 
-        public BluemelonSeeds()
-            : base(Vector2.Zero, Information.Id, Information.Name, true, true, false, false)
+        // A default constructor that calls the base default constructor is required for proper ID fixing.
+        // Using the default constructor to create an object intended to be used is not recommended
+        protected BluemelonSeeds()
+            : base()
+        {
+
+        }
+
+        public BluemelonSeeds(ItemInformation information)
+            : base(Vector2.Zero, information.Id, information.Name, true, true, false, false)
         {
 
         }

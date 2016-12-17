@@ -1,5 +1,6 @@
 ﻿using Farmhand.API.Utilities;
 using Farmhand.Attributes;
+using Farmhand.Logging;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using System;
@@ -12,6 +13,8 @@ namespace Farmhand.API.Items
     /// </summary>
     public class BigCraftable
     {
+        private static List<StardewValley.Object> deserializedObjects = new List<StardewValley.Object>();
+
         // A static list containing all registered big craftable information
         public static List<BigCraftableInformation> BigCraftables { get; } = new List<BigCraftableInformation>();
         public static Dictionary<Type, BigCraftableInformation> RegisteredTypeInformation { get; } = new Dictionary<Type, BigCraftableInformation>();
@@ -36,6 +39,37 @@ namespace Farmhand.API.Items
             TextureUtility.AddSpriteToSpritesheet(ref Game1.bigCraftableSpriteSheet, bigCraftable.Texture, bigCraftable.Id, 16, 32);
             // Reload big craftable information with the newly injected information
             StardewValley.Game1.bigCraftablesInformation = Farmhand.API.Content.ContentManager.Load<Dictionary<int, string>>("Data\\BigCraftablesInformation");
+        }
+
+        // Uses the registered deserialized objects list to fix all the IDs
+        internal static void FixupBigCraftableIds(object sender, System.EventArgs e)
+        {
+            foreach (StardewValley.Object deserializedObject in deserializedObjects)
+            {
+                var type = deserializedObject.GetType();
+                int expectedId = -1;
+
+                if (RegisteredTypeInformation.ContainsKey(type))
+                {
+                    expectedId = RegisteredTypeInformation[type].Id;
+
+                    if (deserializedObject.parentSheetIndex != expectedId)
+                    {
+                        Log.Warning($"Correcting id mismatch - {type.Name} - {deserializedObject.parentSheetIndex} != {expectedId}");
+                        deserializedObject.parentSheetIndex = expectedId;
+                    }
+                }
+            }
+        }
+
+        // Is called from the default constructor of StardewValley.Object, and alerts this registry to fix its ID after loading is finished
+        [Hook(HookType.Exit, "StardewValley.Object", "System.Void StardewValley.Object::.ctor()")]
+        public static void RegisterDeserializingObject([ThisBind] object @this)
+        {
+            if (@this is StardewValley.Object)
+            {
+                deserializedObjects.Add(@this as StardewValley.Object);
+            }
         }
 
         [HookRedirectConstructorToMethod("StardewValley.Buildings.Barn", "performActionOnConstruction")]
@@ -81,7 +115,7 @@ namespace Farmhand.API.Items
                     try
                     {
                         Type bigCraftableType = RegisteredIdType[Id];
-                        return (StardewValley.Object)Activator.CreateInstance(bigCraftableType, bigCraftable, vector, Id, isRecipe);
+                        return (StardewValley.Object)Activator.CreateInstance(bigCraftableType, bigCraftable, vector, isRecipe);
                     }
                     catch(Exception e)
                     {
