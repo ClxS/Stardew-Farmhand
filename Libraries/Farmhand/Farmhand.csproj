@@ -191,6 +191,7 @@
     <Compile Include="Content\Injectors\Items\WeaponInjector.cs" />
     <Compile Include="Events\ApiEvents.cs" />
     <Compile Include="Events\Arguments\ApiEvents\EventArgsOnModLoadEvent.cs" />
+    <Compile Include="Events\Arguments\Common\EventArgsIntChanged.cs" />
     <Compile Include="Events\Arguments\ControlEvents\EventArgsControllerButtonPressed.cs" />
     <Compile Include="Events\Arguments\ControlEvents\EventArgsControllerButtonReleased.cs" />
     <Compile Include="Events\Arguments\ControlEvents\EventArgsControllerTriggerPressed.cs" />
