@@ -47,28 +47,7 @@ namespace Farmhand.Registries.Containers
             get { return $"{ModDirectory}\\{_configurationFile}"; }
             set { _configurationFile = value; }
         }
-
-        #region SMAPI Compatibility
-
-        public bool IsSmapiMod { get; set; }
-
-        public string Authour
-        {
-            set { Author = value; }
-        }
-
-        public string EntryDll
-        {
-            set
-            {
-                var index = value.LastIndexOf(".dll", StringComparison.Ordinal);
-                ModDll = index != -1 ? value.Remove(index) : value;
-            }
-        }
-        public bool PerSaveConfigs { get; set; }
-
-        #endregion
-
+        
         #region Manifest Instance Data
 
         [JsonIgnore]

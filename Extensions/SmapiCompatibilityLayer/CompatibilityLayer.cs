@@ -46,7 +46,7 @@ namespace SmapiCompatibilityLayer
                 }
 
                 var projectType = typeof(StardewModdingAPI.Program);
-                var fieldInfo = projectType.GetField("LogFileManager", BindingFlags.Static | BindingFlags.NonPublic);
+                var fieldInfo = projectType.GetField("DeveloperMode", BindingFlags.Static | BindingFlags.NonPublic);
                 _developerMode = (bool)fieldInfo.GetValue(null);
                 return _developerMode.Value;
             }
@@ -71,8 +71,13 @@ namespace SmapiCompatibilityLayer
 
         public override void LoadMods(string modsDirectory)
         {
+            var smapiModsDirectory = Path.Combine(modsDirectory, ModSubdirectory);
+            if (!Directory.Exists(smapiModsDirectory))
+            {
+                Directory.CreateDirectory(smapiModsDirectory);
+            }
+
             var projectType = typeof(StardewModdingAPI.Program);
-            var smapiModsDirectory = Path.Combine(modsDirectory, "SMAPI");
             FieldInfo modPathField = projectType.GetField("ModPath", BindingFlags.Static | BindingFlags.NonPublic);
             modPathField?.SetValue(null, smapiModsDirectory);
 
