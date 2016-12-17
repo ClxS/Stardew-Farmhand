@@ -5,10 +5,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Farmhand.Events.Arguments.LocationEvents;
+using Farmhand.Events.Arguments.PlayerEvents;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Inheritance;
+using StardewValley;
 
 namespace SmapiCompatibilityLayer
 {
@@ -32,12 +34,25 @@ namespace SmapiCompatibilityLayer
             }
         }
 
+        /// <summary>Raised after the in-game clock changes.</summary>
+        public static event EventHandler<EventArgsIntChanged> TimeOfDayChanged;
+
+        /// <summary>Raised after the day-of-month value changes, including when loading a save (unlike <see cref="OnNewDay"/>).</summary>
+        public static event EventHandler<EventArgsIntChanged> DayOfMonthChanged;
+
+        /// <summary>Raised after the year value changes.</summary>
+        public static event EventHandler<EventArgsIntChanged> YearOfGameChanged;
+
+        /// <summary>Raised after the season value changes.</summary>
+        public static event EventHandler<EventArgsStringChanged> SeasonOfYearChanged;
+
+        /// <summary>Raised when the player is transitioning to a new day and the game is performing its day update logic. This event is triggered twice: once after the game starts transitioning, and again after it finishes.</summary>
+        public static event EventHandler<EventArgsNewDay> OnNewDay;
 
         public static void ForwardEvents()
         {
             // TODO:
             // MineEvents
-            // PlayerEvents
             // TimeEvents
             // GameEvents
             Farmhand.Events.ControlEvents.OnKeyboardChanged += ControlEvents_OnKeyboardChanged;
@@ -51,6 +66,56 @@ namespace SmapiCompatibilityLayer
             Farmhand.Events.MenuEvents.OnMenuChanged += MenuEvents_OnMenuChanged;
             Farmhand.Events.LocationEvents.OnCurrentLocationChanged += LocationEvents_OnCurrentLocationChanged;
             Farmhand.Events.LocationEvents.OnLocationsChanged += LocationEvents_OnLocationsChanged;
+            Farmhand.Events.SaveEvents.OnAfterLoad += SaveEvents_OnAfterLoad;
+            Farmhand.Events.PlayerEvents.OnFarmerChanged += PlayerEvents_OnFarmerChanged;
+            // TODO: PlayerEvents.InventoryChanged
+            Farmhand.Events.PlayerEvents.OnLevelUp += PlayerEvents_OnLevelUp;
+            Farmhand.Events.TimeEvents.OnAfterTimeChanged += TimeEvents_OnAfterTimeChanged;
+        }
+
+        private static void TimeEvents_OnAfterTimeChanged(object sender, Farmhand.Events.Arguments.Common.EventArgsIntChanged e)
+        {
+            TimeEvents.InvokeTimeOfDayChanged(Monitor, e.PriorValue, e.NewValue);
+        }
+
+        private static void PlayerEvents_OnLevelUp(object sender, Farmhand.Events.Arguments.PlayerEvents.EventArgsOnLevelUp e)
+        {
+            EventArgsLevelUp.LevelType type;
+            switch (e.Which)
+            {
+                case EventArgsOnLevelUp.LevelType.Farming:
+                    type = EventArgsLevelUp.LevelType.Farming;
+                    break;
+                case EventArgsOnLevelUp.LevelType.Fishing:
+                    type = EventArgsLevelUp.LevelType.Fishing;
+                    break;
+                case EventArgsOnLevelUp.LevelType.Foraging:
+                    type = EventArgsLevelUp.LevelType.Foraging;
+                    break;
+                case EventArgsOnLevelUp.LevelType.Mining:
+                    type = EventArgsLevelUp.LevelType.Mining;
+                    break;
+                case EventArgsOnLevelUp.LevelType.Combat:
+                    type = EventArgsLevelUp.LevelType.Combat;
+                    break;
+                case EventArgsOnLevelUp.LevelType.Luck:
+                    type = EventArgsLevelUp.LevelType.Luck;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            PlayerEvents.InvokeLeveledUp(Monitor, type, e.NewLevel);
+        }
+
+        private static void PlayerEvents_OnFarmerChanged(object sender, Farmhand.Events.Arguments.PlayerEvents.EventArgsOnFarmerChanged e)
+        {
+            PlayerEvents.InvokeFarmerChanged(Monitor, e.PreviousFarmer, e.NewFarmer);
+        }
+
+        private static void SaveEvents_OnAfterLoad(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnAfterLoad e)
+        {
+            PlayerEvents.InvokeLoadedGame(Monitor, new EventArgsLoadedGameChanged(Game1.hasLoadedGame));
         }
 
         private static void LocationEvents_OnLocationsChanged(object sender, EventArgsLocationsChanged e)
