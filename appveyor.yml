@@ -23,11 +23,10 @@ services:
 - iis
 install:
 - cmd: git clone https://%GitlabUsr%:%GitlabPass%@gitlab.com/ClxS/Tool.git Staging
-- cmd: dir C:\projects\stardew-farmhand\Staging /b /a:d
-- cmd: dir C:\projects\stardew-farmhand\Staging\tmp /b /a:d
+- cmd: dir C:\projects\stardew-farmhand\Staging /b
 # Build configuration. --------------------------------------------------------
 configuration:
-- Release
+- Debug
 build_script:
 - ps: |
     nuget restore
