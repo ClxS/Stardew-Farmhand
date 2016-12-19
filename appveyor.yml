@@ -23,7 +23,7 @@ services:
 - iis
 install:
 - cmd: where git
-- cmd: git clone ht tps://%GitlabUsr%:%GitlabPass%@gitlab.com/ClxS/Tool.git Staging
+- cmd: git clone https://%GitlabUsr%:%GitlabPass%@gitlab.com/ClxS/Tool.git Staging
 # Build configuration. --------------------------------------------------------
 configuration:
 - Release
