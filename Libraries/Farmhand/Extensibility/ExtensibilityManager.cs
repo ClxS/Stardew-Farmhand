@@ -51,7 +51,7 @@ namespace Farmhand.Extensibility
                         Log.Error($"Path.GetDirectoryName(extension) returned null!");
                         return;
                     }
-                    
+
                     var extensionDll = Path.Combine(extensionRoot, manifest.ExtensionDll) + ".dll";
                     var assm = Assembly.LoadFrom(extensionDll);
                     if (assm.GetTypes().Count(x => x.BaseType == typeof(FarmhandExtension)) <= 0) continue;

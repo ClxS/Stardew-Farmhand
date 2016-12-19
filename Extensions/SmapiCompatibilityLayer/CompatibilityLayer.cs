@@ -92,7 +92,7 @@ namespace SmapiCompatibilityLayer
 
             EventForwarder.ForwardEvents();
         }
-
+        
         public override void LoadMods(string modsDirectory)
         {
             var smapiModsDirectory = Path.Combine(modsDirectory, ModSubdirectory);

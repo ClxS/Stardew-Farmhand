@@ -112,8 +112,6 @@ namespace Farmhand
             return null;
         }
 
-        
-
         private static void ApiEvents_OnModError(object sender, Events.Arguments.EventArgsOnModError e)
         {
             var mod = ModRegistry.GetRegisteredItems().FirstOrDefault(n => n.ModAssembly == e.Assembly);
