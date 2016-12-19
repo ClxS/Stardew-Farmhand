@@ -23,15 +23,16 @@ services:
 - iis
 install:
 - cmd: git clone https://%GitlabUsr%:%GitlabPass%@gitlab.com/ClxS/Tool.git Staging
-- cmd: dir C:\projects\stardew-farmhand\Staging /b
 # Build configuration. --------------------------------------------------------
 configuration:
 - Debug
 build_script:
--cmd: nuget restore
--cmd: cd /D C:\projects\stardew-farmhand\
--cmd: git submodule update --init --recursive
 - ps: |
+	nuget restore
+
+	$args = 'submodule update --init --recursive'
+    Start-Process -FilePath "C:\Program Files\Git\cmd\git.exe" -ArgumentList $args -Wait -NoNewWindow
+
     $buildCmd = "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
     $buildArgs = @(
       "/m",
