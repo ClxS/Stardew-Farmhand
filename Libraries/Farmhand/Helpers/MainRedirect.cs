@@ -6,6 +6,7 @@ using System.Text;
 using Farmhand.Attributes;
 using StardewValley;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Farmhand.Helpers
 {
@@ -137,6 +138,7 @@ namespace Farmhand.Helpers
             {
                 try
                 {
+                    ModLoader.SetGameInstance(game1);
                     GamePtr = game1;
                     game1.Run();
                 }
@@ -147,6 +149,12 @@ namespace Farmhand.Helpers
                 
             }
             return false;
+        }
+
+        [Hook(HookType.Exit, "StardewValley.Game1", ".ctor")]
+        internal static void CorrectGraphicsProfile()
+        {
+            Game1.graphics.GraphicsProfile = GraphicsProfile.HiDef;
         }
 
         private static void HandleException(object sender, UnhandledExceptionEventArgs args)

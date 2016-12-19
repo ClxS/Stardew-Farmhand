@@ -375,5 +375,13 @@ namespace Farmhand
                 ModEventManager.ReattachDelegates(mod.ModAssembly);
             }
         }
+
+        public static void SetGameInstance(Game1 game1)
+        {
+            foreach (var compatibilityLayer in CompatibilityLayers)
+            {
+                compatibilityLayer.GameInstance = game1;
+            }
+        }
     }
 }

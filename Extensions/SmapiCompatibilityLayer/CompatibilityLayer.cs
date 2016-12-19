@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Framework;
+using StardewModdingAPI.Inheritance;
 using StardewValley;
 using Monitor = StardewModdingAPI.Framework.Monitor;
 
@@ -17,6 +18,7 @@ namespace SmapiCompatibilityLayer
     class CompatibilityLayer : Farmhand.Extensibility.CompatibilityLayer
     {
         public override string ModSubdirectory => "SMAPI";
+        public override Type GameOverrideClass => typeof(SmapiGameOverride);
 
         private static LogFileManager _logFile;
         private static LogFileManager LogFile
@@ -52,10 +54,32 @@ namespace SmapiCompatibilityLayer
             }
         }
 
+        private static IMonitor _monitor;
+        public static IMonitor Monitor
+        {
+            get
+            {
+                if (_monitor != null)
+                {
+                    return _monitor;
+                }
+
+                var projectType = typeof(StardewModdingAPI.Program);
+                var fieldInfo = projectType.GetField("Monitor", BindingFlags.Static | BindingFlags.NonPublic);
+                _monitor = (IMonitor)fieldInfo.GetValue(null);
+                return _monitor;
+            }
+        }
+
+        public override Game1 GameInstance
+        {
+            get { return Program.gamePtr; }
+            set { Program.gamePtr = (SGame)value; }
+        }
+        
+
         public override void Initialise()
         {
-            Farmhand.Events.GameEvents.OnBeforeLoadContent += GameEvents_OnBeforeLoadContent;
-
             // set thread culture for consistent log formatting
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-GB");
 
@@ -84,12 +108,7 @@ namespace SmapiCompatibilityLayer
             MethodInfo loadModsMethod = projectType.GetMethod("LoadMods", BindingFlags.Static | BindingFlags.NonPublic);
             loadModsMethod.Invoke(null, new object[] {});
         }
-
-        private void GameEvents_OnBeforeLoadContent(object sender, EventArgs e)
-        {
-            Game1.graphics.GraphicsProfile = GraphicsProfile.HiDef;
-        }
-
+        
         public override IEnumerable<Type> GetEventClasses()
         {
             return Assembly.GetExecutingAssembly()

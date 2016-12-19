@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using StardewValley;
 
 namespace Farmhand.Extensibility
 {
@@ -23,6 +24,17 @@ namespace Farmhand.Extensibility
         /// and allows the extension to just handle it instead
         /// </summary>
         public virtual string ModSubdirectory { get; set; }
+
+        /// <summary>
+        /// Returns a type used to override the default Game1 class. Only one Farmhand extension can specify
+        /// one of these.
+        /// </summary>
+        public abstract Type GameOverrideClass { get; }
+
+        /// <summary>
+        /// Is used by Farmhand to notify the game when the Game1 instance has changed
+        /// </summary>
+        public abstract Game1 GameInstance { get; set; }
 
         /// <summary>
         /// Perform initial setup steps for this extension. Called after input argument and configuration handling,
