@@ -28,12 +28,11 @@ install:
 configuration:
 - Debug
 build_script:
-- ps: |
-    nuget restore
-
+-cmd: |
+	nuget restore
     cd /D C:\projects\stardew-farmhand\
     git submodule update --init --recursive
-
+- ps: |
     $buildCmd = "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
     $buildArgs = @(
       "/m",
