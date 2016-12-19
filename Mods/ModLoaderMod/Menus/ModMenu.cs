@@ -19,7 +19,7 @@ namespace ModLoaderMod.Menus
         private readonly List<ClickableComponent> _labels = new List<ClickableComponent>();
         private readonly List<DisableableOptionCheckbox> _modToggles = new List<DisableableOptionCheckbox>();
         private readonly List<ClickableComponent> _optionSlots = new List<ClickableComponent>();
-        private readonly Dictionary<DisableableOptionCheckbox, ModManifest> _modOptions = new Dictionary<DisableableOptionCheckbox, ModManifest>();
+        private readonly Dictionary<DisableableOptionCheckbox, IModManifest> _modOptions = new Dictionary<DisableableOptionCheckbox, IModManifest>();
         private int _currentItemIndex;
         
         private ClickableTextureComponent upArrow;
@@ -61,15 +61,15 @@ namespace ModLoaderMod.Menus
 
             foreach (var mod in mods)
             {
-                if (mod.UniqueId == ModLoader1.Instance.ModSettings.UniqueId) continue;
+                if (Equals(mod.UniqueId, ModLoader1.Instance.ModSettings.UniqueId)) continue;
 
                 var checkbox = new DisableableOptionCheckbox("", 11) {
                     IsChecked = mod.ModState == ModState.Loaded
                 };
 
-                if(mod.ModState != ModState.Loaded && mod.ModState != ModState.Deactivated)
+                if(mod.IsFarmhandMod && mod.ModState != ModState.Loaded && mod.ModState != ModState.Deactivated)
                 {
-                    ResolveLoadingIssue(checkbox, mod);
+                    ResolveLoadingIssue(checkbox, (ModManifest)mod);
                 }
                 _modToggles.Add(checkbox);
                 _modOptions[checkbox] = mod;
@@ -157,16 +157,20 @@ namespace ModLoaderMod.Menus
         {
             if (disableableOptionCheckbox.IsDisabled) return;
 
-            Game1.playSound("coin");
-            if (disableableOptionCheckbox.IsChecked)
+            var mod = _modOptions[disableableOptionCheckbox];
+            if (mod.IsFarmhandMod)
             {
-                Log.Info($"Loaded Mod: {_modOptions[disableableOptionCheckbox].Name}");
-                Farmhand.ModLoader.ReactivateMod(_modOptions[disableableOptionCheckbox]);
-            }
-            else
-            {
-                Log.Info($"Unloaded Mod: {_modOptions[disableableOptionCheckbox].Name}");
-                Farmhand.ModLoader.DeactivateMod(_modOptions[disableableOptionCheckbox]);
+                Game1.playSound("coin");
+                if (disableableOptionCheckbox.IsChecked)
+                {
+                    Log.Info($"Loaded Mod: {_modOptions[disableableOptionCheckbox].Name}");
+                    Farmhand.ModLoader.ReactivateMod((ModManifest)mod);
+                }
+                else
+                {
+                    Log.Info($"Unloaded Mod: {_modOptions[disableableOptionCheckbox].Name}");
+                    Farmhand.ModLoader.DeactivateMod((ModManifest)mod);
+                }
             }
         }
 

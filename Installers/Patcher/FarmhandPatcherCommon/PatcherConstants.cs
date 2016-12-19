@@ -23,6 +23,7 @@ namespace Farmhand
 
         public static string JsonLibrary => "Newtonsoft.Json.dll";
         public static string MonoCecilLibrary => "Mono.Cecil.dll";
+        public static string MonoCecilRocksLibrary => "Mono.Cecil.Rocks.dll";
         public static string CurrentAssemblyPath => Assembly.GetExecutingAssembly().Location;
         public static string CurrentAssemblyDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
     }

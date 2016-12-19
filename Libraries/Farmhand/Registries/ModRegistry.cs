@@ -9,15 +9,15 @@ namespace Farmhand.Registries
     /// </summary>
     public static class ModRegistry
     {
-        private static Registry<UniqueId<string>, ModManifest> _modRegistryInstance;
-        private static Registry<UniqueId<string>, ModManifest> RegistryInstance => _modRegistryInstance ?? (_modRegistryInstance = new Registry<UniqueId<string>, ModManifest>());
+        private static Registry<UniqueId<string>, IModManifest> _modRegistryInstance;
+        private static Registry<UniqueId<string>, IModManifest> RegistryInstance => _modRegistryInstance ?? (_modRegistryInstance = new Registry<UniqueId<string>, IModManifest>());
 
         /// <summary>
         /// Returns a selected mod manifest
         /// </summary>
         /// <param name="key">The Unique ID of the mod</param>
         /// <returns></returns>
-        public static ModManifest GetItem(UniqueId<string> key)
+        public static IModManifest GetItem(UniqueId<string> key)
         {
             return RegistryInstance.GetItem(key);
         }
@@ -26,7 +26,7 @@ namespace Farmhand.Registries
         /// Returns all registered mods
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<ModManifest> GetRegisteredItems()
+        public static IEnumerable<IModManifest> GetRegisteredItems()
         {
             return RegistryInstance.GetRegisteredItems();
         }
@@ -36,7 +36,7 @@ namespace Farmhand.Registries
         /// </summary>
         /// <param name="itemId">The UniqueID of the mod</param>
         /// <param name="item">The mod manifest</param>
-        public static void RegisterItem(UniqueId<string> itemId, ModManifest item)
+        public static void RegisterItem(UniqueId<string> itemId, IModManifest item)
         {
             RegistryInstance.RegisterItem(itemId, item);
         }

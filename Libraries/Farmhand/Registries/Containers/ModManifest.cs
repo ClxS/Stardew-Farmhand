@@ -13,7 +13,7 @@ using System.IO;
 
 namespace Farmhand.Registries.Containers
 {
-    public class ModManifest
+    public class ModManifest : IModManifest
     {
         public ModManifest()
         {
@@ -28,15 +28,18 @@ namespace Farmhand.Registries.Containers
         [JsonConverter(typeof(UniqueIdConverter))]
         public UniqueId<string> UniqueId { get; set; }
 
+        public bool IsFarmhandMod => true;
+
         public string ModDll { get; set; }
 
-        public string Name { get; set; }    
-            
+        public string Name { get; set; }
+
         public string Author { get; set; }
 
         public Version Version { get; set; }
 
         public string Description { get; set; }
+
         public List<ModDependency> Dependencies { get; set; }
 
         public ManifestContent Content { get; set; }
@@ -47,28 +50,7 @@ namespace Farmhand.Registries.Containers
             get { return $"{ModDirectory}\\{_configurationFile}"; }
             set { _configurationFile = value; }
         }
-
-        #region SMAPI Compatibility
-
-        public bool IsSmapiMod { get; set; }
-
-        public string Authour
-        {
-            set { Author = value; }
-        }
-
-        public string EntryDll
-        {
-            set
-            {
-                var index = value.LastIndexOf(".dll", StringComparison.Ordinal);
-                ModDll = index != -1 ? value.Remove(index) : value;
-            }
-        }
-        public bool PerSaveConfigs { get; set; }
-
-        #endregion
-
+        
         #region Manifest Instance Data
 
         [JsonIgnore]
@@ -111,18 +93,6 @@ namespace Farmhand.Registries.Containers
                     }
                     Instance = instance;
                     Log.Verbose ($"Loaded mod dll: {Name}");
-                }
-                else
-                {
-                    var types = ModAssembly.GetTypes();
-                    foreach (var layer in ModLoader.CompatibilityLayers)
-                    {
-                        if (!layer.ContainsOurModType(types)) continue;
-
-                        Instance = layer.LoadMod(ModAssembly, types, this);
-                        Log.Verbose($"Loaded mod dll: {Name}");
-                        break;
-                    }
                 }
                
                 if(Instance == null)

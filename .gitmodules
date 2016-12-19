@@ -1,0 +1,4 @@
+[submodule "External/StardewModdingAPI/Source"]
+	path = External/StardewModdingAPI/Source
+	url = https://github.com/Pathoschild/SMAPI
+	ignore = all
