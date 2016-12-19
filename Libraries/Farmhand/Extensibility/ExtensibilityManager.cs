@@ -13,7 +13,7 @@ namespace Farmhand.Extensibility
     {
         internal static List<FarmhandExtension> Extensions { get; set; } = new List<FarmhandExtension>();
 
-        internal static void TryLoadModCompatiblityLayers()
+        internal static void TryLoadExtensions()
         {
             Log.Verbose("Loading Compatibility Layers");
             var appRoot = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -66,9 +66,9 @@ namespace Farmhand.Extensibility
 
         public static void SetGameInstance(Game1 game1)
         {
-            foreach (var compatibilityLayer in Extensions)
+            foreach (var extensions in Extensions)
             {
-                compatibilityLayer.GameInstance = game1;
+                extensions.GameInstance = game1;
             }
         }
     }
