@@ -28,10 +28,9 @@ install:
 configuration:
 - Debug
 build_script:
--cmd: |
-	nuget restore
-    cd /D C:\projects\stardew-farmhand\
-    git submodule update --init --recursive
+-cmd: nuget restore
+-cmd: cd /D C:\projects\stardew-farmhand\
+-cmd: git submodule update --init --recursive
 - ps: |
     $buildCmd = "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
     $buildArgs = @(
