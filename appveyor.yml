@@ -1,32 +1,27 @@
 version: "{build}-ci"
 
-# Environment configuration. --------------------------------------------------
+branches:
+  except:
+    - gh-pages
 environment:
-  # Properties, passed to MSBuild project.
   VersionMajor: 0
   VersionMinor: 1
   VersionPatch: 0
+image: Visual Studio 2015
+clone_folder: c:\projects\stardew-farmhand
+shallow_clone: false
+clone_depth: 5
+configuration:
+- Release
 init:
-# Properties, passed to MSBuild project.
 - ps: |
     $env:BuildDir = "$env:APPVEYOR_BUILD_FOLDER\.OUTPUT"
     $env:VersionBuild = "$env:APPVEYOR_BUILD_NUMBER"
     $env:VersionStage = "$env:APPVEYOR_REPO_BRANCH"
-    $env:VersionTag = "$env:APPVEYOR_REPO_COMMIT"
-  
-matrix:
-  # Fail whole build on first error.
-  fast_finish: true
-
-services:
-# Enable IIS, which is needed for web client testing.
-- iis
+    $env:VersionTag = "$env:APPVEYOR_REPO_COMMIT" 
 install:
-- cmd: git submodule update --init --recursive
-- cmd: cd C:\projects\stardew-farmhand & git clone https://%GitlabUsr%:%GitlabPass%@gitlab.com/ClxS/Tool.git Staging
-# Build configuration. --------------------------------------------------------
-configuration:
-- Release
+- git submodule update --init --recursive
+- cd c:\projects\stardew-farmhand & git clone https://%GitlabUsr%:%GitlabPass%@gitlab.com/ClxS/Tool.git Staging
 build_script:
 - ps: |
     nuget restore
@@ -61,6 +56,3 @@ build_script:
     PublishCoverity.0.10.0/PublishCoverity compress -o "$env:APPVEYOR_BUILD_FOLDER\$env:APPVEYOR_PROJECT_NAME.zip" -i "$env:APPVEYOR_BUILD_FOLDER\cov-int"
     PublishCoverity.0.10.0/PublishCoverity publish -z "$env:APPVEYOR_BUILD_FOLDER\$env:APPVEYOR_PROJECT_NAME.zip" -r ClxS/Stardew-Farmhand -t $env:CoverityProjectToken -e $env:CoverityNotificationEmail -d "Scheduled CI server build." --codeVersion "$formField"
     
-# Other configuration. --------------------------------------------------------
-# Use GitHub API for fast repository fetching.
-shallow_clone: true
