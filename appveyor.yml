@@ -23,15 +23,14 @@ services:
 - iis
 install:
 - cmd: where git
-- cmd: git clone https://%GitlabUsr%:%GitlabPass%@gitlab.com/ClxS/Tool.git Staging
+- cmd: git clone ht tps://%GitlabUsr%:%GitlabPass%@gitlab.com/ClxS/Tool.git Staging
 # Build configuration. --------------------------------------------------------
 configuration:
 - Release
 build_script:
+- cmd: git submodule update --init --recursive
 - ps: |
     nuget restore
-    $args = 'submodule update --init --recursive'
-    Start-Process -FilePath "C:\Program Files\Git\cmd\git.exe" -ArgumentList $args -Wait -NoNewWindow
 
     $buildCmd = "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
     $buildArgs = @(
