@@ -32,7 +32,7 @@ namespace Farmhand
             Console.WriteLine("Second Pass Installation Completed");
             
             path = path ?? PatcherConstants.FarmhandExe;
-            var directory = Path.GetDirectoryName(path);
+            var directory = Path.GetDirectoryName(path); 
 
             if (directory == null)
             {
