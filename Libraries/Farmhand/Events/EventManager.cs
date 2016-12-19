@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Farmhand.Attributes;
+using Farmhand.Extensibility;
 using StardewValley;
 
 namespace Farmhand.Events
@@ -19,7 +20,7 @@ namespace Farmhand.Events
                     .Where(t => string.Equals(t.Namespace, "Farmhand.Events", StringComparison.Ordinal))
                     .ToList();
 
-            foreach (var layer in ModLoader.CompatibilityLayers)
+            foreach (var layer in ExtensibilityManager.Extensions)
             {
                 FarmhandTypes.AddRange(layer.GetEventClasses());
             }

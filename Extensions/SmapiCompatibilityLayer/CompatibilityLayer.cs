@@ -15,7 +15,7 @@ using Monitor = StardewModdingAPI.Framework.Monitor;
 
 namespace SmapiCompatibilityLayer
 {
-    class CompatibilityLayer : Farmhand.Extensibility.CompatibilityLayer
+    class CompatibilityLayer : Farmhand.Extensibility.FarmhandExtension
     {
         public override string ModSubdirectory => "SMAPI";
         public override Type GameOverrideClass => typeof(SmapiGameOverride);

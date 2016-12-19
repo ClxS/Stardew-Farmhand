@@ -6,6 +6,7 @@ using System.Text;
 using Farmhand.Attributes;
 using StardewValley;
 using System.Collections.Generic;
+using Farmhand.Extensibility;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Farmhand.Helpers
@@ -127,7 +128,7 @@ namespace Farmhand.Helpers
 
             Program.ReadConfig();
 
-            ModLoader.TryLoadModCompatiblityLayers();
+            ExtensibilityManager.TryLoadModCompatiblityLayers();
 
             if (Program.Config.DebugMode)
                 ReleaseBuild = false;
@@ -138,7 +139,7 @@ namespace Farmhand.Helpers
             {
                 try
                 {
-                    ModLoader.SetGameInstance(game1);
+                    ExtensibilityManager.SetGameInstance(game1);
                     GamePtr = game1;
                     game1.Run();
                 }

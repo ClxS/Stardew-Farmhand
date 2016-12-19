@@ -5,7 +5,7 @@ using StardewValley;
 
 namespace Farmhand.Extensibility
 {
-    public abstract class CompatibilityLayer
+    public abstract class FarmhandExtension
     {
         /// <summary>
         /// The current assembly for this extension

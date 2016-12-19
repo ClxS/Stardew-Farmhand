@@ -27,9 +27,7 @@ namespace Farmhand
         {
             Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
         };
-
-        internal static List<CompatibilityLayer> CompatibilityLayers { get; set; } = new List<CompatibilityLayer>();
-
+        
         internal static EventManager ModEventManager = new EventManager();
 
         /// <summary>
@@ -66,11 +64,8 @@ namespace Farmhand
                 Log.Verbose("Importing Mod DLLs, Settings, and Content");
                 LoadFinalMods();
 
-                var smapiModsPath = ModPaths.First();
-                foreach (var ext in CompatibilityLayers)
-                {
-                    ext.LoadMods(smapiModsPath);
-                }
+                var modsPath = ModPaths.First();
+                ExtensibilityManager.LoadMods(modsPath);
             }
             catch (Exception ex)
             {
@@ -108,48 +103,7 @@ namespace Farmhand
             return null;
         }
 
-        internal static void TryLoadModCompatiblityLayers()
-        {
-            Log.Verbose("Loading Compatibility Layers");
-            var appRoot = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-            if (appRoot == null)
-                throw new NullReferenceException("appRoot was null");
-
-            var extensions = Directory.GetFiles(Path.Combine(appRoot, Constants.ExtensionsDirectory), "*.dll");
-
-            foreach (var extension in extensions)
-            {
-                try
-                {
-                    Log.Verbose($"Trying to load {extension}");
-                    if (!File.Exists(extension))
-                    {
-                        Log.Error($"{extension} not present");
-                        continue;
-                    }
-
-                    var assm = Assembly.LoadFrom(extension);
-                    if (assm.GetTypes().Count(x => x.BaseType == typeof(CompatibilityLayer)) <= 0) continue;
-
-                    var type = assm.GetTypes().First(x => x.BaseType == typeof(CompatibilityLayer));
-                    var inst = (CompatibilityLayer)assm.CreateInstance(type.ToString());
-                    if (inst == null) continue;
-
-                    inst.OwnAssembly = assm;
-                    
-
-                    CompatibilityLayers.Add(inst);
-                    inst.RootDirectory = appRoot;
-                    inst.Initialise();
-                }
-                catch (ReflectionTypeLoadException ex)
-                {
-                    var test = ex.LoaderExceptions;
-                    Log.Exception("Failed to load compatibility layer" + test[0].Message, ex);
-                }
-            }
-        }
+        
 
         private static void ApiEvents_OnModError(object sender, Events.Arguments.EventArgsOnModError e)
         {
@@ -373,14 +327,6 @@ namespace Farmhand
             if (mod.ModAssembly != null)
             {
                 ModEventManager.ReattachDelegates(mod.ModAssembly);
-            }
-        }
-
-        public static void SetGameInstance(Game1 game1)
-        {
-            foreach (var compatibilityLayer in CompatibilityLayers)
-            {
-                compatibilityLayer.GameInstance = game1;
             }
         }
     }
