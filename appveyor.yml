@@ -22,15 +22,17 @@ services:
 # Enable IIS, which is needed for web client testing.
 - iis
 install:
+- cmd: where git
 - cmd: git clone https://%GitlabUsr%:%GitlabPass%@gitlab.com/ClxS/Tool.git Staging
+- cmd: dir C:\projects\stardew-farmhand\Staging /b /a:d
+- cmd: dir C:\projects\stardew-farmhand\Staging\tmp /b /a:d
 # Build configuration. --------------------------------------------------------
 configuration:
-- Debug
+- Release
 build_script:
 - ps: |
-	nuget restore
-
-	$args = 'submodule update --init --recursive'
+    nuget restore
+    $args = 'submodule update --init --recursive'
     Start-Process -FilePath "C:\Program Files\Git\cmd\git.exe" -ArgumentList $args -Wait -NoNewWindow
 
     $buildCmd = "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
