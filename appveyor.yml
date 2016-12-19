@@ -28,6 +28,8 @@ install:
 configuration:
 - Release
 build_script:
+- cmd: dir C:\projects\stardew-farmhand
+- cmd: dir C:\projects\stardew-farmhand\.git
 - cmd: git submodule update --init --recursive
 - ps: |
     nuget restore
