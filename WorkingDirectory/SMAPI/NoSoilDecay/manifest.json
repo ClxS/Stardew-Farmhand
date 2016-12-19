@@ -1,0 +1,14 @@
+{
+  "Name": "NoSoilDecay",
+  "Authour": "ThatNorthernMonkey",
+  "Version": {
+    "MajorVersion": 0,
+    "MinorVersion": 0,
+    "PatchVersion": 0,
+    "Build": ""
+  },
+  "Description": "",
+  "UniqueID": "289dee03-5f38-4d8e-8ffc-e440198e8610",
+  "PerSaveConfigs": false,
+  "EntryDll": "NoSoilDecay.dll"
+}

@@ -25,7 +25,7 @@ namespace Farmhand
         /// </summary>
         public static List<string> ModPaths = new List<string>
         {
-            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
+            Constants.DefaultModPath
         };
         
         internal static EventManager ModEventManager = new EventManager();
@@ -100,6 +100,15 @@ namespace Farmhand
             {
                 return Assembly.GetExecutingAssembly();
             }
+
+            foreach (var extension in ExtensibilityManager.Extensions)
+            {
+                if (extension?.Manifest?.AssemblyRedirect != null && extension.Manifest.AssemblyRedirect.Contains(args.Name))
+                {
+                    return extension.OwnAssembly;
+                }
+            }
+
             return null;
         }
 

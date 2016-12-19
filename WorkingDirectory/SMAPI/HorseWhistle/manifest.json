@@ -1,0 +1,13 @@
+{
+  "Name": "HorseWhistle",
+  "Author": "Nabuma (updated by Pathoschild)",
+  "Version": {
+    "MajorVersion": 1,
+    "MinorVersion": 0,
+    "PatchVersion": 0,
+    "Build": "unofficial-update-1"
+  },
+  "Description": "Call your horse to your location when you press 'V'",
+  "UniqueID": "HorseWhistle_SMAPI",
+  "EntryDll": "HorseWhistle.dll"
+}

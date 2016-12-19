@@ -243,6 +243,7 @@
     <Compile Include="Events\UiEvents.cs" />
     <Compile Include="Events\UtilityEvents.cs" />
     <Compile Include="Extensibility\ExtensibilityManager.cs" />
+    <Compile Include="Extensibility\ExtensionManifest.cs" />
     <Compile Include="FarmhandConfig.cs" />
     <Compile Include="Helpers\ArgumentsHelper.cs" />
     <Compile Include="Helpers\ReferenceFix.cs" />

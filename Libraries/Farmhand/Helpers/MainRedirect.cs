@@ -128,7 +128,7 @@ namespace Farmhand.Helpers
 
             Program.ReadConfig();
 
-            ExtensibilityManager.TryLoadModCompatiblityLayers();
+            ExtensibilityManager.TryLoadExtensions();
 
             if (Program.Config.DebugMode)
                 ReleaseBuild = false;

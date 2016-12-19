@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Farmhand.Logging;
+using Newtonsoft.Json;
 using StardewValley;
 
 namespace Farmhand.Extensibility
@@ -21,20 +22,38 @@ namespace Farmhand.Extensibility
             if (appRoot == null)
                 throw new NullReferenceException("appRoot was null");
 
-            var extensions = Directory.GetFiles(Path.Combine(appRoot, Constants.ExtensionsDirectory), "*.dll");
+            var extensions = Directory.GetFiles(Path.Combine(appRoot, Constants.ExtensionsDirectory), "manifest.json", SearchOption.AllDirectories);
 
             foreach (var extension in extensions)
             {
                 try
                 {
-                    Log.Verbose($"Trying to load {extension}");
-                    if (!File.Exists(extension))
+                    Log.Verbose($"Loading Extension Manifest");
+                    ExtensionManifest manifest;
+                    using (var r = new StreamReader(extension))
                     {
-                        Log.Error($"{extension} not present");
-                        continue;
+                        var json = r.ReadToEnd();
+                        manifest = JsonConvert.DeserializeObject<ExtensionManifest>(json);
                     }
 
-                    var assm = Assembly.LoadFrom(extension);
+                    if (manifest.LoadOnlyIfModsPresent)
+                    {
+                        if (!AreModsPresent(manifest.ModsFolder))
+                        {
+                            Log.Verbose($"No mods detected for {manifest.Name} - skipping");
+                            continue;
+                        }
+                    }
+
+                    var extensionRoot = Path.GetDirectoryName(extension);
+                    if (extensionRoot == null)
+                    {
+                        Log.Error($"Path.GetDirectoryName(extension) returned null!");
+                        return;
+                    }
+                    
+                    var extensionDll = Path.Combine(extensionRoot, manifest.ExtensionDll) + ".dll";
+                    var assm = Assembly.LoadFrom(extensionDll);
                     if (assm.GetTypes().Count(x => x.BaseType == typeof(FarmhandExtension)) <= 0) continue;
 
                     var type = assm.GetTypes().First(x => x.BaseType == typeof(FarmhandExtension));
@@ -42,7 +61,7 @@ namespace Farmhand.Extensibility
                     if (inst == null) continue;
 
                     inst.OwnAssembly = assm;
-
+                    inst.Manifest = manifest;
 
                     Extensions.Add(inst);
                     inst.RootDirectory = appRoot;
@@ -51,9 +70,15 @@ namespace Farmhand.Extensibility
                 catch (ReflectionTypeLoadException ex)
                 {
                     var test = ex.LoaderExceptions;
-                    Log.Exception("Failed to load compatibility layer" + test[0].Message, ex);
+                    Log.Exception("Failed to load extension: " + test[0].Message, ex);
                 }
             }
+        }
+
+        private static bool AreModsPresent(string manifestModsFolder)
+        {
+            var mods = Directory.GetFiles(Path.Combine(Constants.DefaultModPath, manifestModsFolder), "*.json", SearchOption.AllDirectories);
+            return mods.Any();
         }
 
         public static void LoadMods(string modsPath)

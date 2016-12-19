@@ -18,6 +18,11 @@ namespace Farmhand.Extensibility
         public string RootDirectory { get; set; }
 
         /// <summary>
+        /// Contains information about this extension
+        /// </summary>
+        public ExtensionManifest Manifest { get; set; }
+
+        /// <summary>
         /// A property which specifies for a particular mod folder to be ignored. This
         /// could be used for extensions which have their own manifest.json formats 
         /// to stop the default mod loader trying (and failing) to read those files, 

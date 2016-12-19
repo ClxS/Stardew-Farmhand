@@ -1,0 +1,17 @@
+{
+  "Keyboard": {
+    "ToggleLookup": "F1",
+    "ScrollUp": "Up",
+    "ScrollDown": "Down",
+    "ToggleDebug": ""
+  },
+  "Controller": {
+    "ToggleLookup": "",
+    "ScrollUp": "",
+    "ScrollDown": "",
+    "ToggleDebug": ""
+  },
+  "ScrollAmount": 160,
+  "HideOnKeyUp": false,
+  "CheckForUpdates": true
+}

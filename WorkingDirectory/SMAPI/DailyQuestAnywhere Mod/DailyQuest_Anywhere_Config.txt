@@ -1,0 +1,20 @@
+Config: DailyQuest_Anywhere Info. Feel free to mess with these settings.
+====================================================================================
+Key binding for opening the billboard for quests anywhere. Press this key to do so
+H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

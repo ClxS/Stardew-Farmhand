@@ -1,0 +1,10 @@
+{
+  "RefuelingEnabled": true,
+  "AlternateDesertMinecart": false,
+  "AlternateFarmMinecart": false,
+  "FarmDestinationEnabled": true,
+  "DesertDestinationEnabled": true,
+  "WoodsDestinationEnabled": true,
+  "BeachDestinationEnabled": true,
+  "WizardDestinationEnabled": true
+}

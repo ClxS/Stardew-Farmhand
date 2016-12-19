@@ -17,7 +17,7 @@ namespace SmapiCompatibilityLayer
 {
     class CompatibilityLayer : Farmhand.Extensibility.FarmhandExtension
     {
-        public override string ModSubdirectory => "SMAPI";
+        public override string ModSubdirectory => this.Manifest.ModsFolder;
         public override Type GameOverrideClass => typeof(SmapiGameOverride);
 
         private static LogFileManager _logFile;
