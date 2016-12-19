@@ -90,7 +90,7 @@ namespace SmapiCompatibilityLayer
             // add info header
             Log.Monitor.Log($"Farmhand-SMAPI {Constants.Version} with Stardew Valley {Game1.version} on {Environment.OSVersion}", LogLevel.Info);
         }
-        
+
         public override void LoadMods(string modsDirectory)
         {
             var smapiModsDirectory = Path.Combine(modsDirectory, ModSubdirectory);
@@ -106,7 +106,7 @@ namespace SmapiCompatibilityLayer
             MethodInfo loadModsMethod = projectType.GetMethod("LoadMods", BindingFlags.Static | BindingFlags.NonPublic);
             loadModsMethod.Invoke(null, new object[] {});
         }
-        
+
         public override IEnumerable<Type> GetEventClasses()
         {
             return Assembly.GetExecutingAssembly()

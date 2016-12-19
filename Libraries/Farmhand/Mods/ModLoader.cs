@@ -114,7 +114,7 @@ namespace Farmhand
 
         private static void ApiEvents_OnModError(object sender, Events.Arguments.EventArgsOnModError e)
         {
-            var mod = ModRegistry.GetRegisteredItems().FirstOrDefault(n => n.ModAssembly == e.Assembly);
+            var mod = (ModManifest)ModRegistry.GetRegisteredItems().FirstOrDefault(n => n.IsFarmhandMod && ((ModManifest)n).ModAssembly == e.Assembly);
             if (mod != null)
             {
                 Log.Exception($"Exception thrown by mod: {mod.Name} - {mod.Author}", e.Exception);
@@ -131,7 +131,7 @@ namespace Farmhand
         private static void ValidateModManifests()
         {
             var registeredMods = ModRegistry.GetRegisteredItems();
-            foreach (var mod in registeredMods.Where(n => n.ModState == ModState.Unloaded))
+            foreach (var mod in registeredMods.Where(n => n.IsFarmhandMod && n.ModState == ModState.Unloaded).Cast<ModManifest>())
             {
                 try
                 {
@@ -156,7 +156,7 @@ namespace Farmhand
         private static void LoadFinalMods()
         {
             var registeredMods = ModRegistry.GetRegisteredItems();
-            foreach (var mod in registeredMods.Where(n => n.ModState == ModState.Unloaded))
+            foreach (var mod in registeredMods.Where(n => n.IsFarmhandMod && n.ModState == ModState.Unloaded).Cast<ModManifest>())
             {
                 Log.Verbose($"Loading mod: {mod.Name} by {mod.Author}");
                 try
@@ -192,7 +192,7 @@ namespace Farmhand
 
         private static void ResolveDependencies()
         {
-            var registeredMods = ModRegistry.GetRegisteredItems();
+            var registeredMods = ModRegistry.GetRegisteredItems().Where(n => n.IsFarmhandMod).Cast<ModManifest>();
 
             //Loop to verify every dependent mod is available. 
             bool stateChange = false;

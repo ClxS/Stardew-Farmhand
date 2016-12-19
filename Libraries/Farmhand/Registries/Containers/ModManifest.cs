@@ -13,7 +13,7 @@ using System.IO;
 
 namespace Farmhand.Registries.Containers
 {
-    public class ModManifest
+    public class ModManifest : IModManifest
     {
         public ModManifest()
         {
@@ -28,15 +28,18 @@ namespace Farmhand.Registries.Containers
         [JsonConverter(typeof(UniqueIdConverter))]
         public UniqueId<string> UniqueId { get; set; }
 
+        public bool IsFarmhandMod => true;
+
         public string ModDll { get; set; }
 
-        public string Name { get; set; }    
-            
+        public string Name { get; set; }
+
         public string Author { get; set; }
 
         public Version Version { get; set; }
 
         public string Description { get; set; }
+
         public List<ModDependency> Dependencies { get; set; }
 
         public ManifestContent Content { get; set; }

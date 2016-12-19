@@ -284,6 +284,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registries\Containers\ApplicationResourceManifest.cs" />
     <Compile Include="Registries\Containers\DependencyState.cs" />
+    <Compile Include="Registries\Containers\IModManifest.cs" />
     <Compile Include="Registries\Containers\ManifestContent.cs" />
     <Compile Include="Registries\Containers\ModDependency.cs" />
     <Compile Include="Registries\Containers\ModManifest.cs" />
