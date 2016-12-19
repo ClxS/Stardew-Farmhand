@@ -30,13 +30,14 @@ install:
     [System.Runtime.InteropServices.Marshal]::ZeroFreeCoTaskMemUnicode($Ptr)
     $args = 'clone "' + $result + '" "C:\projects\stardew-farmhand\WorkingDirectory\tmp"'
     Start-Process -FilePath "C:\Program Files\Git\cmd\git.exe" -ArgumentList $args -Wait -NoNewWindow
-    Copy-Item C:\projects\stardew-farmhand\WorkingDirectory\tmp\* C:\projects\stardew-farmhand\WorkingDirectory
+    Copy-Item C:\projects\stardew-farmhand\WorkingDirectory\tmp\* C:\projects\stardew-farmhand\Staging
 # Build configuration. --------------------------------------------------------
 configuration:
 - Release
 build_script:
 - ps: |
     nuget restore
+    git submodule update --init --recursive
 
     $buildCmd = "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
     $buildArgs = @(
