@@ -247,7 +247,7 @@
     <Compile Include="Helpers\ReferenceFix.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
-    <Compile Include="Helpers\CompatibilityLayer.cs" />
+    <Compile Include="Extensibility\CompatibilityLayer.cs" />
     <Compile Include="Helpers\ApplicationResourcesUtility.cs" />
     <Compile Include="Helpers\MainRedirect.cs" />
     <Compile Include="Helpers\MersenneTwister.cs" />

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Farmhand.Registries.Containers;
-using StardewValley;
 
-namespace Farmhand.Helpers
+namespace Farmhand.Extensibility
 {
     public abstract class CompatibilityLayer
     {
