@@ -44,7 +44,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)Bin\FarmhandInstaller-Console.exe" -pass2 -disablegrm</PostBuildEvent>
+    <PostBuildEvent>"$(SolutionDir)Bin\FarmhandInstaller-Console.exe" -pass2 -disablegrm
+robocopy "$(SolutionDir)\Staging\Content" "$(SolutionDir)\WorkingDirectory\Content" *.* /NFL /NDL /NJH /NJS /nc /ns /np /E &amp; Ver &gt; nil</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

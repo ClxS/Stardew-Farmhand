@@ -74,16 +74,18 @@
       <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Stardew Valley">
-      <HintPath>..\..\WorkingDirectory\Stardew Valley.exe</HintPath>
+    <Reference Include="Stardew Valley, Version=1.0.6124.28359, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Staging\Stardew Valley.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
-    <Reference Include="xTile">
-      <HintPath>..\..\WorkingDirectory\xTile.dll</HintPath>
+    <Reference Include="xTile, Version=2.0.4.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Staging\xTile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
