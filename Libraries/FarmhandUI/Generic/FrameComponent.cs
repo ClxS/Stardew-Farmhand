@@ -15,7 +15,7 @@ namespace Farmhand.UI.Generic
         public override void Draw(SpriteBatch b, Point o)
         {
             if(Visible)
-                IClickableMenu.drawTextureBox(b, Texture, Crop, Area.X + o.X, Area.Y + o.Y, Area.Width, Area.Height, Color.White, Game1.pixelZoom, false);
+                IClickableMenu.drawTextureBox(b, this.Texture, Crop, Area.X + o.X, Area.Y + o.Y, Area.Width, Area.Height, Color.White, Game1.pixelZoom, false);
         }
     }
 }

@@ -120,10 +120,10 @@
         private IComponentContainer parent;
 
         /// <summary>
-        /// Gets or sets the bounding area of this component
+        /// The bounding area of this component
         /// </summary>
-        public Rectangle Area { get; set; }
-
+        private Rectangle area;
+        
         /// <summary>
         /// Gets the parent of this component
         /// </summary>
@@ -154,14 +154,29 @@
         public int Layer { get; set; } = 0;
 
         /// <summary>
+        /// Gets or sets the area of this component.
+        /// </summary>
+        protected Rectangle Area
+        {
+            get
+            {
+                return this.area;
+            }
+            set
+            {
+                this.area = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the backing texture of this component
         /// </summary>
-        private Texture2D Texture { get; }
+        protected Texture2D Texture { get; }
 
         /// <summary>
         /// Gets the cropped area of this component
         /// </summary>
-        private Rectangle Crop { get; }
+        protected Rectangle Crop { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseMenuComponent"/> class.
@@ -241,7 +256,7 @@
         /// </returns>
         public virtual Point GetPosition()
         {
-            return new Point(this.Area.X, this.Area.Y);
+            return new Point(this.area.X, this.area.Y);
         }
 
         /// <summary>
@@ -252,7 +267,44 @@
         /// </returns>
         public virtual Rectangle GetRegion()
         {
-            return this.Area;
+            return this.area;
+        }
+
+        /// <summary>
+        /// Inflates the components bounding area by a specified amount
+        /// </summary>
+        /// <param name="horizontalAmount">
+        /// The horizontal inflation
+        /// </param>
+        /// <param name="verticalAmount">
+        /// The vertical inflation
+        /// </param>
+        /// <returns>
+        /// The inflated region as a <see cref="Rectangle"/>.
+        /// </returns>
+        public virtual Rectangle InflateRegion(int horizontalAmount, int verticalAmount)
+        {
+            this.area.Inflate(horizontalAmount, verticalAmount);
+            return this.area;
+        }
+
+        /// <summary>
+        /// Moves the bounding region by a specified amount
+        /// </summary>
+        /// <param name="x">
+        /// The x translation
+        /// </param>
+        /// <param name="y">
+        /// The y translation
+        /// </param>
+        /// <returns>
+        /// The moved region as a <see cref="Rectangle"/>.
+        /// </returns>
+        public virtual Rectangle MoveRegion(int x, int y)
+        {
+            this.area.X += x;
+            this.area.Y += y;
+            return this.area;
         }
 
         /// <summary>
@@ -280,7 +332,7 @@
             {
                 b.Draw(
                     this.Texture,
-                    new Rectangle(this.Area.X + o.X, this.Area.Y + o.Y, this.Area.Width, this.Area.Height),
+                    new Rectangle(this.area.X + o.X, this.area.Y + o.Y, this.area.Width, this.area.Height),
                     this.Crop,
                     Color.White,
                     0,
@@ -298,7 +350,7 @@
         /// </param>
         protected void SetScaledArea(Rectangle area)
         {
-            this.Area = new Rectangle(area.X * Game1.pixelZoom, area.Y * Game1.pixelZoom, area.Width * Game1.pixelZoom, area.Height * Game1.pixelZoom);
+            this.area = new Rectangle(area.X * Game1.pixelZoom, area.Y * Game1.pixelZoom, area.Width * Game1.pixelZoom, area.Height * Game1.pixelZoom);
         }
 
         /// <summary>
