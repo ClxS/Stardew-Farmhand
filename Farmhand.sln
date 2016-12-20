@@ -201,6 +201,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmapiCompatibilityLayer", "Extensions\SmapiCompatibilityLayer\SmapiCompatibilityLayer.csproj", "{C5D41223-E5EF-410D-81B1-4F439AF4AF1C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuTestMod", "Mods\MenuTestMod\MenuTestMod.csproj", "{8B85ED53-12E1-4759-BC77-7E5F0E673A1F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C12052C1-872A-4B04-97FB-9347A4539C87} = {C12052C1-872A-4B04-97FB-9347A4539C87}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
