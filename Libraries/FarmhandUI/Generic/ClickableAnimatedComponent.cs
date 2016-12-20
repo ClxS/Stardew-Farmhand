@@ -23,10 +23,7 @@ namespace Farmhand.UI.Generic
             Game1.playSound("Cowboy_Footstep");
             if (!ScaleOnHover)
                 return;
-            Area.X -= 2;
-            Area.Y -= 2;
-            Area.Width += 4;
-            Area.Height += 4;
+            Area.Inflate(2, 2);
         }
         public override void HoverOut(Point p, Point o)
         {
