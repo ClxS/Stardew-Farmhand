@@ -16,6 +16,20 @@
     public class ScrollableCollectionComponent : GenericCollectionComponent
     {
         /// <summary>
+        ///     Initializes a new instance of the <see cref="ScrollableCollectionComponent" /> class.
+        /// </summary>
+        /// <param name="area">
+        ///     The area.
+        /// </param>
+        /// <param name="components">
+        ///     The components.
+        /// </param>
+        public ScrollableCollectionComponent(Rectangle area, List<IMenuComponent> components = null)
+            : base(area, components)
+        {
+        }
+
+        /// <summary>
         ///     Gets or sets the texture position of the down button
         /// </summary>
         protected static Rectangle DownButton { get; set; } = new Rectangle(421, 472, 11, 12);
@@ -59,20 +73,6 @@
         ///     Gets or sets a value indicating whether the up is active.
         /// </summary>
         protected bool UpActive { get; set; }
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="ScrollableCollectionComponent" /> class.
-        /// </summary>
-        /// <param name="area">
-        ///     The area.
-        /// </param>
-        /// <param name="components">
-        ///     The components.
-        /// </param>
-        public ScrollableCollectionComponent(Rectangle area, List<IMenuComponent> components = null)
-            : base(area, components)
-        {
-        }
 
         /// <summary>
         ///     The draw loop for this component

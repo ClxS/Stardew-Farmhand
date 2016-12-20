@@ -11,94 +11,23 @@
     using StardewValley;
 
     /// <summary>
-    /// A tab list component.
+    ///     A tab list component.
     /// </summary>
     public class TablistComponent : BaseInteractiveMenuComponent, IComponentContainer
     {
         /// <summary>
-        /// Contains tab information
+        ///     Initializes a new instance of the <see cref="TablistComponent" /> class.
         /// </summary>
-        protected class TabInfo
+        /// <param name="area">
+        ///     The area.
+        /// </param>
+        public TablistComponent(Rectangle area)
         {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="TabInfo"/> class.
-            /// </summary>
-            /// <param name="component">
-            /// The component this tab identifies
-            /// </param>
-            /// <param name="icon">
-            /// The icon index for this tab
-            /// </param>
-            public TabInfo(IInteractiveMenuComponent component, int icon)
-            {
-                this.Component = component;
-                this.Icon = icon;
-            }
-
-            /// <summary>
-            /// Gets or sets a value which indicates which component this tab identifies
-            /// </summary>
-            public IInteractiveMenuComponent Component { get; set; }
-
-            /// <summary>
-            /// Gets or sets a value which indicates the icon index for this tab
-            /// </summary>
-            public int Icon { get; set; }
+            this.SetScaledArea(area);
         }
 
         /// <summary>
-        /// Gets or sets the texture location for the tab background
-        /// </summary>
-        protected static Rectangle Tab { get; set; } = new Rectangle(16, 368, 16, 16);
-
-        /// <summary>
-        /// Gets or sets the menu this tab list is attached to
-        /// </summary>
-        protected FrameworkMenu AttachedMenu { get; set; }
-
-        /// <summary>
-        /// Gets or sets the currently selected tab index
-        /// </summary>
-        protected int Current { get; set; } = -1;
-
-        /// <summary>
-        /// Gets or sets the currently selected tab component
-        /// </summary>
-        protected IInteractiveMenuComponent CurrentTab { get; set; }
-
-        /// <summary>
-        /// Gets or sets the currently focused element
-        /// </summary>
-        protected IInteractiveMenuComponent FocusElement { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the mouse button is being held over this control.
-        /// </summary>
-        protected bool Hold { get; set; } = false;
-
-        /// <summary>
-        /// Gets or sets the currently hovered element.
-        /// </summary>
-        protected IInteractiveMenuComponent HoverElement { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tabs in the tab list.
-        /// </summary>
-        protected List<TabInfo> Tabs { get; set; } = new List<TabInfo>();
-        
-        /// <summary>
-        /// Gets the event region.
-        /// </summary>
-        public Rectangle EventRegion
-            =>
-                new Rectangle(
-                    this.Area.X + Zoom5,
-                    this.Area.Y + Zoom22,
-                    this.Area.Width - Zoom10,
-                    this.Area.Height - Zoom28);
-
-        /// <summary>
-        /// Gets or sets the currently selected tab index.
+        ///     Gets or sets the currently selected tab index.
         /// </summary>
         public int Index
         {
@@ -118,7 +47,60 @@
         }
 
         /// <summary>
-        /// Gets the zoom event region.
+        ///     Gets or sets the texture location for the tab background
+        /// </summary>
+        protected static Rectangle Tab { get; set; } = new Rectangle(16, 368, 16, 16);
+
+        /// <summary>
+        ///     Gets or sets the menu this tab list is attached to
+        /// </summary>
+        protected FrameworkMenu AttachedMenu { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the currently selected tab index
+        /// </summary>
+        protected int Current { get; set; } = -1;
+
+        /// <summary>
+        ///     Gets or sets the currently selected tab component
+        /// </summary>
+        protected IInteractiveMenuComponent CurrentTab { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the currently focused element
+        /// </summary>
+        protected IInteractiveMenuComponent FocusElement { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the mouse button is being held over this control.
+        /// </summary>
+        protected bool Hold { get; set; } = false;
+
+        /// <summary>
+        ///     Gets or sets the currently hovered element.
+        /// </summary>
+        protected IInteractiveMenuComponent HoverElement { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the tabs in the tab list.
+        /// </summary>
+        protected List<TabInfo> Tabs { get; set; } = new List<TabInfo>();
+
+        #region IComponentContainer Members
+
+        /// <summary>
+        ///     Gets the event region.
+        /// </summary>
+        public Rectangle EventRegion
+            =>
+                new Rectangle(
+                    this.Area.X + Zoom5,
+                    this.Area.Y + Zoom22,
+                    this.Area.Width - Zoom10,
+                    this.Area.Height - Zoom28);
+
+        /// <summary>
+        ///     Gets the zoom event region.
         /// </summary>
         public Rectangle ZoomEventRegion
             =>
@@ -129,27 +111,73 @@
                     (this.Area.Height - Zoom28) / Game1.pixelZoom);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TablistComponent"/> class.
+        ///     Gets the attached menu.
         /// </summary>
-        /// <param name="area">
-        /// The area.
-        /// </param>
-        public TablistComponent(Rectangle area)
+        /// <returns>
+        ///     The attached menu. <see cref="FrameworkMenu" />.
+        /// </returns>
+        public FrameworkMenu GetAttachedMenu()
         {
-            this.SetScaledArea(area);
+            return this.Parent.GetAttachedMenu();
         }
 
         /// <summary>
-        /// Adds a tab to the tab list
+        ///     Gives focus to the specified component
+        /// </summary>
+        /// <param name="component">
+        ///     The component to give focus to
+        /// </param>
+        public void GiveFocus(IInteractiveMenuComponent component)
+        {
+            if (!this.Tabs.Exists(x => x.Component == component) || component == this.FocusElement)
+            {
+                return;
+            }
+
+            this.Parent.GiveFocus(this);
+            this.ResetFocus();
+            this.FocusElement = component;
+            if (this.FocusElement is IKeyboardComponent)
+            {
+                Game1.keyboardDispatcher.Subscriber = new KeyboardSubscriberProxy((IKeyboardComponent)this.FocusElement);
+            }
+
+            component.FocusGained();
+        }
+
+        /// <summary>
+        ///     Resets the components focus
+        /// </summary>
+        public void ResetFocus()
+        {
+            if (this.FocusElement == null)
+            {
+                return;
+            }
+
+            this.FocusElement.FocusLost();
+            if (this.FocusElement is IKeyboardComponent)
+            {
+                Game1.keyboardDispatcher.Subscriber.Selected = false;
+                Game1.keyboardDispatcher.Subscriber = null;
+            }
+
+            this.FocusElement = null;
+        }
+
+        #endregion
+
+        /// <summary>
+        ///     Adds a tab to the tab list
         /// </summary>
         /// <param name="icon">
-        /// The icon index for this tab
+        ///     The icon index for this tab
         /// </param>
         /// <param name="collection">
-        /// The component collection for this tab
+        ///     The component collection for this tab
         /// </param>
         /// <typeparam name="T">
-        /// The type of the collection to add
+        ///     The type of the collection to add
         /// </typeparam>
         public void AddTab<T>(int icon, T collection) where T : IComponentCollection, IInteractiveMenuComponent
         {
@@ -219,41 +247,6 @@
         public override void FocusLost()
         {
             this.ResetFocus();
-        }
-
-        /// <summary>
-        ///     Gets the attached menu.
-        /// </summary>
-        /// <returns>
-        ///     The attached menu. <see cref="FrameworkMenu" />.
-        /// </returns>
-        public FrameworkMenu GetAttachedMenu()
-        {
-            return this.Parent.GetAttachedMenu();
-        }
-
-        /// <summary>
-        ///     Gives focus to the specified component
-        /// </summary>
-        /// <param name="component">
-        ///     The component to give focus to
-        /// </param>
-        public void GiveFocus(IInteractiveMenuComponent component)
-        {
-            if (!this.Tabs.Exists(x => x.Component == component) || component == this.FocusElement)
-            {
-                return;
-            }
-
-            this.Parent.GiveFocus(this);
-            this.ResetFocus();
-            this.FocusElement = component;
-            if (this.FocusElement is IKeyboardComponent)
-            {
-                Game1.keyboardDispatcher.Subscriber = new KeyboardSubscriberProxy((IKeyboardComponent)this.FocusElement);
-            }
-
-            component.FocusGained();
         }
 
         /// <summary>
@@ -328,26 +321,6 @@
         }
 
         /// <summary>
-        ///     Resets the components focus
-        /// </summary>
-        public void ResetFocus()
-        {
-            if (this.FocusElement == null)
-            {
-                return;
-            }
-
-            this.FocusElement.FocusLost();
-            if (this.FocusElement is IKeyboardComponent)
-            {
-                Game1.keyboardDispatcher.Subscriber.Selected = false;
-                Game1.keyboardDispatcher.Subscriber = null;
-            }
-
-            this.FocusElement = null;
-        }
-
-        /// <summary>
         ///     Called when the right mouse button is clicked over this component
         /// </summary>
         /// <param name="p">
@@ -388,5 +361,40 @@
         {
             this.CurrentTab?.Update(t);
         }
+
+        #region Nested type: TabInfo
+
+        /// <summary>
+        ///     Contains tab information
+        /// </summary>
+        protected class TabInfo
+        {
+            /// <summary>
+            ///     Initializes a new instance of the <see cref="TabInfo" /> class.
+            /// </summary>
+            /// <param name="component">
+            ///     The component this tab identifies
+            /// </param>
+            /// <param name="icon">
+            ///     The icon index for this tab
+            /// </param>
+            public TabInfo(IInteractiveMenuComponent component, int icon)
+            {
+                this.Component = component;
+                this.Icon = icon;
+            }
+
+            /// <summary>
+            ///     Gets or sets a value which indicates which component this tab identifies
+            /// </summary>
+            public IInteractiveMenuComponent Component { get; set; }
+
+            /// <summary>
+            ///     Gets or sets a value which indicates the icon index for this tab
+            /// </summary>
+            public int Icon { get; set; }
+        }
+
+        #endregion
     }
 }

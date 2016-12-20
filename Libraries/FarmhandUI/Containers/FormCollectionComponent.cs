@@ -17,82 +17,6 @@
     public class FormCollectionComponent : BaseFormComponent, IComponentCollection
     {
         /// <summary>
-        ///     Gets or sets if this component is disabled
-        /// </summary>
-        public override bool Disabled
-        {
-            get
-            {
-                return base.Disabled;
-            }
-
-            set
-            {
-                base.Disabled = value;
-                foreach (var c in this.InteractiveComponents)
-                {
-                    var component = c as BaseFormComponent;
-                    if (component != null)
-                    {
-                        component.Disabled = value;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Gets the event region.
-        /// </summary>
-        public Rectangle EventRegion => this.Area;
-
-        /// <summary>
-        ///     Gets or sets the interactive components.
-        /// </summary>
-        public List<IInteractiveMenuComponent> InteractiveComponents { get; set; } =
-            new List<IInteractiveMenuComponent>();
-
-        /// <summary>
-        ///     Gets or sets the static components.
-        /// </summary>
-        public List<IMenuComponent> StaticComponents { get; set; } = new List<IMenuComponent>();
-
-        /// <summary>
-        ///     Gets the zoom event region.
-        /// </summary>
-        public Rectangle ZoomEventRegion
-            =>
-                new Rectangle(
-                    this.Area.X / Game1.pixelZoom,
-                    this.Area.Y / Game1.pixelZoom,
-                    this.Area.Width / Game1.pixelZoom,
-                    this.Area.Height / Game1.pixelZoom);
-
-        /// <summary>
-        ///     Gets or sets an ordered collection specifying the component draw order
-        /// </summary>
-        protected List<IMenuComponent> DrawOrder { get; set; }
-
-        /// <summary>
-        ///     Gets or sets an ordered collection specifying the component event order
-        /// </summary>
-        protected List<IInteractiveMenuComponent> EventOrder { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the focus element.
-        /// </summary>
-        protected IInteractiveMenuComponent FocusElement { get; set; }
-
-        /// <summary>
-        ///     Gets or sets a value indicating whether the mouse is being held on this component.
-        /// </summary>
-        protected bool Hold { get; set; }
-
-        /// <summary>
-        ///     Gets or sets the hover element.
-        /// </summary>
-        protected IInteractiveMenuComponent HoverElement { get; set; }
-
-        /// <summary>
         ///     Initializes a new instance of the <see cref="FormCollectionComponent" /> class.
         /// </summary>
         /// <param name="area">
@@ -120,6 +44,84 @@
         protected FormCollectionComponent()
         {
         }
+
+        /// <summary>
+        ///     Gets or sets if this component is disabled
+        /// </summary>
+        public override bool Disabled
+        {
+            get
+            {
+                return base.Disabled;
+            }
+
+            set
+            {
+                base.Disabled = value;
+                foreach (var c in this.InteractiveComponents)
+                {
+                    var component = c as BaseFormComponent;
+                    if (component != null)
+                    {
+                        component.Disabled = value;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Gets or sets an ordered collection specifying the component draw order
+        /// </summary>
+        protected List<IMenuComponent> DrawOrder { get; set; }
+
+        /// <summary>
+        ///     Gets or sets an ordered collection specifying the component event order
+        /// </summary>
+        protected List<IInteractiveMenuComponent> EventOrder { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the focus element.
+        /// </summary>
+        protected IInteractiveMenuComponent FocusElement { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the mouse is being held on this component.
+        /// </summary>
+        protected bool Hold { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the hover element.
+        /// </summary>
+        protected IInteractiveMenuComponent HoverElement { get; set; }
+
+        #region IComponentCollection Members
+
+        /// <summary>
+        ///     Gets the event region.
+        /// </summary>
+        public Rectangle EventRegion => this.Area;
+
+        /// <summary>
+        ///     Gets or sets the interactive components.
+        /// </summary>
+        public List<IInteractiveMenuComponent> InteractiveComponents { get; set; } =
+            new List<IInteractiveMenuComponent>();
+
+        /// <summary>
+        ///     Gets or sets the static components.
+        /// </summary>
+        public List<IMenuComponent> StaticComponents { get; set; } = new List<IMenuComponent>();
+
+        /// <summary>
+        ///     Gets the zoom event region.
+        /// </summary>
+        public Rectangle ZoomEventRegion
+            =>
+                new Rectangle(
+                    this.Area.X / Game1.pixelZoom,
+                    this.Area.Y / Game1.pixelZoom,
+                    this.Area.Width / Game1.pixelZoom,
+                    this.Area.Height / Game1.pixelZoom);
 
         /// <summary>
         ///     Whether this components accepts this type of component
@@ -178,37 +180,6 @@
         }
 
         /// <summary>
-        ///     The draw loop for this component
-        /// </summary>
-        /// <param name="b">
-        ///     The sprite batch to use
-        /// </param>
-        /// <param name="o">
-        ///     The origin for this component
-        /// </param>
-        public override void Draw(SpriteBatch b, Point o)
-        {
-            if (!this.Visible)
-            {
-                return;
-            }
-
-            var o2 = new Point(this.Area.X + o.X, this.Area.Y + o.Y);
-            foreach (var el in this.DrawOrder)
-            {
-                el.Draw(b, o2);
-            }
-        }
-
-        /// <summary>
-        ///     Called when focus is lost
-        /// </summary>
-        public override void FocusLost()
-        {
-            this.ResetFocus();
-        }
-
-        /// <summary>
         ///     Gets the attached menu.
         /// </summary>
         /// <returns>
@@ -242,6 +213,126 @@
             }
 
             component.FocusGained();
+        }
+
+        /// <summary>
+        ///     Removes a component from this collection
+        /// </summary>
+        /// <param name="component">
+        ///     The component to remove
+        /// </param>
+        public void RemoveComponent(IMenuComponent component)
+        {
+            var removed = false;
+            this.RemoveComponents(
+                a =>
+                    {
+                        if (a != component || removed)
+                        {
+                            return false;
+                        }
+
+                        removed = true;
+                        a.Detach(this);
+                        return true;
+                    });
+        }
+
+        /// <summary>
+        ///     Remove components of type T
+        /// </summary>
+        /// <typeparam name="T">
+        ///     The type of components to remove
+        /// </typeparam>
+        public void RemoveComponents<T>() where T : IMenuComponent
+        {
+            this.RemoveComponents(a => a.GetType() == typeof(T));
+        }
+
+        /// <summary>
+        ///     Remove components matching a filter
+        /// </summary>
+        /// <param name="filter">
+        ///     The filter to use to remove
+        /// </param>
+        public void RemoveComponents(Predicate<IMenuComponent> filter)
+        {
+            this.InteractiveComponents.RemoveAll(
+                a =>
+                    {
+                        if (filter(a))
+                        {
+                            a.Detach(this);
+                            return true;
+                        }
+
+                        return false;
+                    });
+            this.StaticComponents.RemoveAll(
+                a =>
+                    {
+                        if (filter(a))
+                        {
+                            a.Detach(this);
+                            return true;
+                        }
+
+                        return false;
+                    });
+            this.UpdateDrawOrder();
+        }
+
+        /// <summary>
+        ///     Resets the components focus
+        /// </summary>
+        public void ResetFocus()
+        {
+            if (this.FocusElement == null)
+            {
+                return;
+            }
+
+            this.FocusElement.FocusLost();
+            if (this.FocusElement is IKeyboardComponent)
+            {
+                Game1.keyboardDispatcher.Subscriber.Selected = false;
+                Game1.keyboardDispatcher.Subscriber = null;
+            }
+
+            this.FocusElement = null;
+        }
+
+        #endregion
+
+        /// <summary>
+        ///     The draw loop for this component
+        /// </summary>
+        /// <param name="b">
+        ///     The sprite batch to use
+        /// </param>
+        /// <param name="o">
+        ///     The origin for this component
+        /// </param>
+        public override void Draw(SpriteBatch b, Point o)
+        {
+            if (!this.Visible)
+            {
+                return;
+            }
+
+            var o2 = new Point(this.Area.X + o.X, this.Area.Y + o.Y);
+            foreach (var el in this.DrawOrder)
+            {
+                el.Draw(b, o2);
+            }
+        }
+
+        /// <summary>
+        ///     Called when focus is lost
+        /// </summary>
+        public override void FocusLost()
+        {
+            this.ResetFocus();
         }
 
         /// <summary>
@@ -369,93 +460,6 @@
 
             this.HoverElement.HoverOut(p, o2);
             this.HoverElement = null;
-        }
-
-        /// <summary>
-        ///     Removes a component from this collection
-        /// </summary>
-        /// <param name="component">
-        ///     The component to remove
-        /// </param>
-        public void RemoveComponent(IMenuComponent component)
-        {
-            var removed = false;
-            this.RemoveComponents(
-                a =>
-                    {
-                        if (a != component || removed)
-                        {
-                            return false;
-                        }
-
-                        removed = true;
-                        a.Detach(this);
-                        return true;
-                    });
-        }
-
-        /// <summary>
-        ///     Remove components of type T
-        /// </summary>
-        /// <typeparam name="T">
-        ///     The type of components to remove
-        /// </typeparam>
-        public void RemoveComponents<T>() where T : IMenuComponent
-        {
-            this.RemoveComponents(a => a.GetType() == typeof(T));
-        }
-
-        /// <summary>
-        ///     Remove components matching a filter
-        /// </summary>
-        /// <param name="filter">
-        ///     The filter to use to remove
-        /// </param>
-        public void RemoveComponents(Predicate<IMenuComponent> filter)
-        {
-            this.InteractiveComponents.RemoveAll(
-                a =>
-                    {
-                        if (filter(a))
-                        {
-                            a.Detach(this);
-                            return true;
-                        }
-
-                        return false;
-                    });
-            this.StaticComponents.RemoveAll(
-                a =>
-                    {
-                        if (filter(a))
-                        {
-                            a.Detach(this);
-                            return true;
-                        }
-
-                        return false;
-                    });
-            this.UpdateDrawOrder();
-        }
-
-        /// <summary>
-        ///     Resets the components focus
-        /// </summary>
-        public void ResetFocus()
-        {
-            if (this.FocusElement == null)
-            {
-                return;
-            }
-
-            this.FocusElement.FocusLost();
-            if (this.FocusElement is IKeyboardComponent)
-            {
-                Game1.keyboardDispatcher.Subscriber.Selected = false;
-                Game1.keyboardDispatcher.Subscriber = null;
-            }
-
-            this.FocusElement = null;
         }
 
         /// <summary>

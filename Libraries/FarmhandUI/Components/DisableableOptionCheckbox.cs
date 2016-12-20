@@ -7,79 +7,79 @@
     using StardewValley.Menus;
 
     /// <summary>
-    /// Custom UI control providing a checkbox which can be disabled.
+    ///     Custom UI control providing a checkbox which can be disabled.
     /// </summary>
     public class DisableableOptionCheckbox : OptionsElement
     {
         /// <summary>
-        /// Pixel width of the check box
+        ///     Pixel width of the check box
         /// </summary>
         private const int PixelsWide = 9;
 
         /// <summary>
-        /// The unchecked texture source
+        ///     The unchecked texture source
         /// </summary>
         private static readonly Rectangle SourceRectUnchecked = new Rectangle(227, 425, 9, 9);
 
         /// <summary>
-        /// The checked texture source
+        ///     The checked texture source
         /// </summary>
         private static readonly Rectangle SourceRectChecked = new Rectangle(236, 425, 9, 9);
 
         /// <summary>
-        /// The disabled texture source
+        ///     The disabled texture source
         /// </summary>
         private static readonly Rectangle SourceRectDisabled = new Rectangle(338, 494, 10, 10);
-        
-        /// <summary>
-        /// Gets or sets the reason the check box is disabled
-        /// </summary>
-        public string DisableReason { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the check box is hovered.
-        /// </summary>
-        public bool IsHovered { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the check box is checked.
-        /// </summary>
-        public bool IsChecked { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the check box is disabled.
-        /// </summary>
-        public bool IsDisabled { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DisableableOptionCheckbox"/> class.
+        ///     Initializes a new instance of the <see cref="DisableableOptionCheckbox" /> class.
         /// </summary>
         /// <param name="label">
-        /// The label for this check box
+        ///     The label for this check box
         /// </param>
         /// <param name="whichOption">
-        /// The index of the option this check box relates to
+        ///     The index of the option this check box relates to
         /// </param>
         /// <param name="x">
-        /// The x position of the check box
+        ///     The x position of the check box
         /// </param>
         /// <param name="y">
-        /// The y position of the check box
+        ///     The y position of the check box
         /// </param>
         public DisableableOptionCheckbox(string label, int whichOption, int x = -1, int y = -1)
-          : base(label, x, y, 9 * Game1.pixelZoom, 9 * Game1.pixelZoom, whichOption)
+            : base(label, x, y, 9 * Game1.pixelZoom, 9 * Game1.pixelZoom, whichOption)
         {
             this.IsHovered = false;
         }
 
         /// <summary>
-        /// Called when checkbox receives a left click
+        ///     Gets or sets the reason the check box is disabled
+        /// </summary>
+        public string DisableReason { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the check box is hovered.
+        /// </summary>
+        public bool IsHovered { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the check box is checked.
+        /// </summary>
+        public bool IsChecked { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the check box is disabled.
+        /// </summary>
+        public bool IsDisabled { get; set; }
+
+        /// <summary>
+        ///     Called when checkbox receives a left click
         /// </summary>
         /// <param name="x">
-        /// The x position of the click
+        ///     The x position of the click
         /// </param>
         /// <param name="y">
-        /// The y position of the click
+        ///     The y position of the click
         /// </param>
         public override void receiveLeftClick(int x, int y)
         {
@@ -94,16 +94,16 @@
         }
 
         /// <summary>
-        /// The draw method of the check box
+        ///     The draw method of the check box
         /// </summary>
         /// <param name="b">
-        /// The sprite batch to use
+        ///     The sprite batch to use
         /// </param>
         /// <param name="slotX">
-        /// The x slot
+        ///     The x slot
         /// </param>
         /// <param name="slotY">
-        /// The y slot
+        ///     The y slot
         /// </param>
         public override void draw(SpriteBatch b, int slotX, int slotY)
         {
@@ -124,7 +124,7 @@
                     b,
                     this.DisableReason,
                     Game1.dialogueFont,
-                    new Vector2(slotX + this.bounds.X + this.bounds.Width + (Game1.pixelZoom * 2), slotY + this.bounds.Y),
+                    new Vector2(slotX + this.bounds.X + this.bounds.Width + Game1.pixelZoom * 2, slotY + this.bounds.Y),
                     Color.Red,
                     1f,
                     0.1f);
