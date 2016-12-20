@@ -55,6 +55,7 @@ namespace Farmhand.UI
             {
                 Value++;
                 Game1.playSound("drumkit6");
+                SelectedValue = Value.ToString();
                 return;
             }
             Rectangle MinusAreaOffset = new Rectangle(MinusArea.X + o.X, MinusArea.Y + o.Y, MinusArea.Height, MinusArea.Width);
@@ -62,6 +63,7 @@ namespace Farmhand.UI
             {
                 Game1.playSound("drumkit6");
                 Value--;
+                SelectedValue = Value.ToString();
                 return;
             }
         }
@@ -75,7 +77,6 @@ namespace Farmhand.UI
             if (BoxArea.Contains(p))
             {
                 Selected = true;
-                SelectedValue = Value.ToString();
                 return;
             }
             if (Selected)
