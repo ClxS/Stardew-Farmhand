@@ -150,7 +150,7 @@ namespace Farmhand
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
-                        throw ex;
+                        throw;
                     }
                 }
             }

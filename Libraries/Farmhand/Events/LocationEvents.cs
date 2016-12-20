@@ -4,6 +4,7 @@ using StardewValley;
 using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using xTile.Dimensions;
 
 namespace Farmhand.Events
 {
@@ -15,6 +16,7 @@ namespace Farmhand.Events
         public static event EventHandler<EventArgsLocationsChanged> OnLocationsChanged = delegate { };
         public static event EventHandler<NotifyCollectionChangedEventArgs> OnLocationObjectsChanged = delegate { };
         public static event EventHandler<NotifyCollectionChangedEventArgs> OnLocationTerrainFeaturesChanged = delegate { };
+        public static event EventHandler<EventArgsOnBeforeCheckAction> OnBeforeCheckAction = delegate { };
         public static event EventHandler<CancelEventArgs> OnBeforeLocationLoadObjects = delegate { };
         public static event EventHandler OnAfterLocationLoadObjects = delegate { };
         public static event EventHandler<EventArgsOnBeforeWarp> OnBeforeWarp = delegate { };
@@ -30,6 +32,20 @@ namespace Farmhand.Events
         internal static bool InvokeOnBeforeLocationLoadObjects([ThisBind] object @this)
         {
             return EventCommon.SafeCancellableInvoke(OnBeforeLocationLoadObjects, @this, new CancelEventArgs());
+        }
+
+        [HookReturnable(HookType.Entry, "StardewValley.GameLocation", "checkAction")]
+        internal static bool InvokeOnBeforeCheckAction(
+            [UseOutputBind] ref bool useOutput,
+            [ThisBind] object @this,
+            [InputBind(typeof(Location), "tileLocation")] Location location,
+            [InputBind(typeof(Rectangle), "viewport")] Rectangle viewport,
+            [InputBind(typeof(Farmer), "who")] Farmer who)
+        {
+            var eventArgs = new EventArgsOnBeforeCheckAction(
+                (GameLocation) @this, location, viewport, who);
+            EventCommon.SafeInvoke(OnBeforeCheckAction, @this, eventArgs);
+            return eventArgs.Handled;
         }
 
         [Hook(HookType.Exit, "StardewValley.GameLocation", "loadObjects")]
