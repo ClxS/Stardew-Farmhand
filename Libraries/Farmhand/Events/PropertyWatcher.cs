@@ -33,7 +33,8 @@ namespace Farmhand.Events
 
         private int LastSaveProgress { get; set; }
         private int LastLoadProgress { get; set; }
-        
+        private int HalfSecondPoll { get; set; }
+
         private bool WasButtonJustPressed(Buttons button, ButtonState buttonState, PlayerIndex stateIndex)
         {
             return buttonState == ButtonState.Pressed && !PreviouslyPressedButtons[(int)stateIndex].Contains(button);
@@ -134,17 +135,28 @@ namespace Farmhand.Events
             return buttons.ToArray();
         }
         
-        internal void CheckForChanges()
+        internal void CheckForChanges(GameTime gameTime)
         {
             try
             {
                 CheckControlChanges();
                 CheckPropertyChanges();
                 CheckSaveEvent();
+                CheckTimeEvents(gameTime);
             }
             catch (Exception)
             {
                 // ignored
+            }
+        }
+
+        private void CheckTimeEvents(GameTime gameTime)
+        {
+            HalfSecondPoll += gameTime.ElapsedGameTime.Milliseconds;
+            if (HalfSecondPoll > 500)
+            {
+                HalfSecondPoll = HalfSecondPoll % 500;
+                GameEvents.InvokeOnHalfSecondTick();
             }
         }
 

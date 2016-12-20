@@ -1,0 +1,17 @@
+﻿{
+	"UniqueId" : "MenuTestMod",
+	"Name" : "MenuTestMod",
+	"Author": "Entoarox",
+	"ModDll": "MenuTestMod",
+	"Version" : "0.1",
+	"Description" : "An example Menu mod.",
+	"Content" : 
+	{
+    "Textures": [
+      {
+        "Id": "icon_menuModsButton",
+        "File": "customUI.png"
+      }
+    ]
+	}
+}
