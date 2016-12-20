@@ -10,7 +10,7 @@
         /// <summary>
         /// Gets or sets a value indicating whether selected.
         /// </summary>
-        public bool Selected {get; set; }
+        public bool Selected { get; set; }
 
         /// <summary>
         /// Called when a character is entered

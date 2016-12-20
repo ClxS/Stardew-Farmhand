@@ -162,6 +162,7 @@
             {
                 return this.area;
             }
+
             set
             {
                 this.area = value;
@@ -233,7 +234,7 @@
         /// Detaches this component from it's parent
         /// </summary>
         /// <param name="collection">
-        /// Unused
+        /// Unused parameter
         /// </param>
         /// <exception cref="Exception">
         /// Thrown if this component does not have a parent
@@ -345,12 +346,12 @@
         /// <summary>
         /// Set the scaled area.
         /// </summary>
-        /// <param name="area">
+        /// <param name="scaledArea">
         /// The scaled area
         /// </param>
-        protected void SetScaledArea(Rectangle area)
+        protected void SetScaledArea(Rectangle scaledArea)
         {
-            this.area = new Rectangle(area.X * Game1.pixelZoom, area.Y * Game1.pixelZoom, area.Width * Game1.pixelZoom, area.Height * Game1.pixelZoom);
+            this.area = new Rectangle(scaledArea.X * Game1.pixelZoom, scaledArea.Y * Game1.pixelZoom, scaledArea.Width * Game1.pixelZoom, scaledArea.Height * Game1.pixelZoom);
         }
 
         /// <summary>
