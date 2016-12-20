@@ -44,6 +44,7 @@ namespace Farmhand.UI
             MaxValue = maxValue;
             Value = MinValue;
             OldValue = Value;
+            SelectedValue = Value.ToString();
             if(handler!=null)
                 Handler += handler;
         }
