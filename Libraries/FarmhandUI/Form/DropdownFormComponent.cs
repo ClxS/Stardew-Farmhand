@@ -135,12 +135,15 @@
                 return;
             }
 
+#pragma warning disable 0169
+            // ReSharper disable once UnusedVariable
             var dropdownSelect = new DropdownSelect(
                 new Point(o.X + this.Area.X, o.Y + this.Area.Y + this.Area.Height),
                 this.Area.Width,
                 new Rectangle(o.X + this.Area.X, o.Y + this.Area.Y, this.Area.Width, this.Area.Height),
                 this,
                 this.Parent);
+#pragma warning restore 0169
         }
 
         /// <summary>
@@ -239,6 +242,7 @@
                 collection.GetAttachedMenu().GiveFocus(this);
                 if (!collection.GetAttachedMenu().EventRegion.Contains(this.Area.X, this.Area.Y + this.Area.Height))
                 {
+                    // ReSharper disable once VirtualMemberCallInConstructor
                     this.MoveRegion(0, -(this.Area.Height + Zoom9));
                 }
 
@@ -311,6 +315,7 @@
             /// </returns>
             protected int GetCursorIndex(Point p, Point o)
             {
+                // ReSharper disable once PossibleLossOfFraction
                 var index = (int)Math.Floor((p.Y - this.Area.Y) / Game1.pixelZoom / 7D) + this.ScrollOffset;
                 if (index < 0)
                 {
@@ -453,7 +458,7 @@
             /// </param>
             public override void Draw(SpriteBatch b, Point o)
             {
-                o = new Point(0, 0);
+                var origin = new Point(0, 0);
                 var col = Color.Black * 0.25f;
 
                 // Background
@@ -461,8 +466,8 @@
                     b,
                     Game1.mouseCursors,
                     Background,
-                    o.X + this.Area.X,
-                    o.Y + this.Area.Y - Game1.pixelZoom,
+                    origin.X + this.Area.X,
+                    origin.Y + this.Area.Y - Game1.pixelZoom,
                     this.Area.Width - Zoom2,
                     this.Area.Height,
                     Color.White,
@@ -476,8 +481,8 @@
                         b.Draw(
                             Game1.staminaRect,
                             new Rectangle(
-                                o.X + this.Area.X + Game1.pixelZoom,
-                                o.Y + this.Area.Y + Zoom7 * c,
+                                origin.X + this.Area.X + Game1.pixelZoom,
+                                origin.Y + this.Area.Y + Zoom7 * c,
                                 this.Area.Width - Zoom4,
                                 Zoom7),
                             new Rectangle(0, 0, 1, 1),
@@ -490,8 +495,8 @@
                         b.Draw(
                             Game1.staminaRect,
                             new Rectangle(
-                                o.X + this.Area.X + Game1.pixelZoom,
-                                o.Y + this.Area.Y + Zoom7 * c,
+                                origin.X + this.Area.X + Game1.pixelZoom,
+                                origin.Y + this.Area.Y + Zoom7 * c,
                                 this.Area.Width - Zoom4,
                                 Zoom05),
                             new Rectangle(0, 0, 1, 1),
@@ -501,8 +506,8 @@
                         b.Draw(
                             Game1.staminaRect,
                             new Rectangle(
-                                o.X + this.Area.X + Game1.pixelZoom,
-                                o.Y + this.Area.Y + Zoom7 * c + Zoom6 + Zoom05,
+                                origin.X + this.Area.X + Game1.pixelZoom,
+                                origin.Y + this.Area.Y + Zoom7 * c + Zoom6 + Zoom05,
                                 this.Area.Width - Zoom4,
                                 Zoom05),
                             new Rectangle(0, 0, 1, 1),
@@ -512,8 +517,8 @@
                         b.Draw(
                             Game1.staminaRect,
                             new Rectangle(
-                                o.X + this.Area.X + Game1.pixelZoom,
-                                o.Y + this.Area.Y + Zoom7 * c + Zoom05,
+                                origin.X + this.Area.X + Game1.pixelZoom,
+                                origin.Y + this.Area.Y + Zoom7 * c + Zoom05,
                                 Zoom05,
                                 Zoom6),
                             new Rectangle(0, 0, 1, 1),
@@ -523,8 +528,8 @@
                         b.Draw(
                             Game1.staminaRect,
                             new Rectangle(
-                                o.X + this.Area.X + this.Area.Width - Zoom3 - Zoom05,
-                                o.Y + this.Area.Y + Zoom7 * c + Zoom05,
+                                origin.X + this.Area.X + this.Area.Width - Zoom3 - Zoom05,
+                                origin.Y + this.Area.Y + Zoom7 * c + Zoom05,
                                 Zoom05,
                                 Zoom6),
                             new Rectangle(0, 0, 1, 1),
@@ -537,8 +542,8 @@
                         b.Draw(
                             Game1.staminaRect,
                             new Rectangle(
-                                o.X + this.Area.X + Game1.pixelZoom + Zoom05,
-                                o.Y + this.Area.Y + Zoom05 + Zoom7 * c,
+                                origin.X + this.Area.X + Game1.pixelZoom + Zoom05,
+                                origin.Y + this.Area.Y + Zoom05 + Zoom7 * c,
                                 this.Area.Width - Zoom5,
                                 Zoom6),
                             new Rectangle(0, 0, 1, 1),
@@ -550,7 +555,9 @@
                         b,
                         this.Owner.Values[this.ScrollOffset + c],
                         Game1.smallFont,
-                        new Vector2(o.X + this.Area.X + Zoom2, o.Y + this.Area.Y + Zoom7 * c + Game1.pixelZoom),
+                        new Vector2(
+                            origin.X + this.Area.X + Zoom2,
+                            origin.Y + this.Area.Y + Zoom7 * c + Game1.pixelZoom),
                         Game1.textColor * (this.Disabled ? 0.33f : 1f));
                 }
 
@@ -559,7 +566,11 @@
                 {
                     b.Draw(
                         Game1.mouseCursors,
-                        new Rectangle(o.X + this.Area.X + this.Area.Width - Zoom2, o.Y + this.Area.Y, Zoom7, Zoom7),
+                        new Rectangle(
+                            origin.X + this.Area.X + this.Area.Width - Zoom2,
+                            origin.Y + this.Area.Y,
+                            Zoom7,
+                            Zoom7),
                         UpScroll,
                         Color.White);
                 }
@@ -570,8 +581,8 @@
                     b.Draw(
                         Game1.mouseCursors,
                         new Rectangle(
-                            o.X + this.Area.X + this.Area.Width - Zoom2,
-                            o.Y + this.Area.Y + this.Area.Height - Zoom9,
+                            origin.X + this.Area.X + this.Area.Width - Zoom2,
+                            origin.Y + this.Area.Y + this.Area.Height - Zoom9,
                             Zoom7,
                             Zoom7),
                         DownScroll,

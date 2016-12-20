@@ -76,6 +76,7 @@
     <Compile Include="Form\CheckboxFormComponent.cs" />
     <Compile Include="Form\DropdownFormComponent.cs" />
     <Compile Include="Form\PlusMinusFormComponent.cs" />
+    <Compile Include="Form\SliderFomrComponentInt.cs" />
     <Compile Include="Form\SliderFormComponent.cs" />
     <Compile Include="Form\TextboxFormComponent.cs" />
     <Compile Include="FrameworkMenu.cs" />
