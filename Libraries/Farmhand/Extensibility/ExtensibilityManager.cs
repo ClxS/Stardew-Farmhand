@@ -77,8 +77,15 @@ namespace Farmhand.Extensibility
 
         private static bool AreModsPresent(string manifestModsFolder)
         {
-            var mods = Directory.GetFiles(Path.Combine(Constants.DefaultModPath, manifestModsFolder), "*.json", SearchOption.AllDirectories);
-            return mods.Any();
+            var modFolder = Path.Combine(Constants.DefaultModPath, manifestModsFolder);
+            if (Directory.Exists(modFolder))
+            {
+                var mods = Directory.GetFiles(modFolder, "*.json",
+                    SearchOption.AllDirectories);
+                return mods.Any();
+            }
+
+            return false;
         }
 
         public static void LoadMods(string modsPath)
