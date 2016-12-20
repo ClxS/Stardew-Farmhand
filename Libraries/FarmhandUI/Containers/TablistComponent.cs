@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-
+using Farmhand.UI.Base;
+using Farmhand.UI.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using StardewValley;
 
-namespace Farmhand.UI
+namespace Farmhand.UI.Containers
 {
     public class TablistComponent : BaseInteractiveMenuComponent, IComponentContainer
     {
@@ -29,7 +29,12 @@ namespace Farmhand.UI
 
         protected List<TabInfo> Tabs=new List<TabInfo>();
         protected int Current=-1;
-        protected IInteractiveMenuComponent CurrentTab=null;
+        protected IInteractiveMenuComponent CurrentTab;
+
+        // IComponentCollection proxy
+        public Rectangle EventRegion => new Rectangle(Area.X + Zoom5, Area.Y + Zoom22, Area.Width - Zoom10, Area.Height - Zoom28);
+
+        public Rectangle ZoomEventRegion => new Rectangle((Area.X + Zoom5) / Game1.pixelZoom, (Area.Y + Zoom22) / Game1.pixelZoom, (Area.Width - Zoom14) / Game1.pixelZoom, (Area.Height - Zoom28) / Game1.pixelZoom);
 
         public int Index
         {
@@ -68,17 +73,17 @@ namespace Farmhand.UI
         }
         public override void LeftUp(Point p, Point o)
         {
-            CurrentTab?.LeftUp(p, new Point(o.X + Area.X + zoom5, o.Y + Area.Y + zoom22));
+            CurrentTab?.LeftUp(p, new Point(o.X + Area.X + Zoom5, o.Y + Area.Y + Zoom22));
         }
         public override void LeftHeld(Point p, Point o)
         {
-            CurrentTab?.LeftHeld(p, new Point(o.X + Area.X + zoom5, o.Y + Area.Y + zoom22));
+            CurrentTab?.LeftHeld(p, new Point(o.X + Area.X + Zoom5, o.Y + Area.Y + Zoom22));
         }
         public override void LeftClick(Point p, Point o)
         {
-            if (p.Y - o.Y - Area.Y < zoom16)
+            if (p.Y - o.Y - Area.Y < Zoom16)
             {
-                int pos = (p.X - o.X - Area.X - zoom4) / zoom16;
+                int pos = (p.X - o.X - Area.X - Zoom4) / Zoom16;
                 if (pos < 0 || pos >= Tabs.Count || Current == pos)
                     return;
                 Current = pos;
@@ -86,19 +91,19 @@ namespace Farmhand.UI
                 Game1.playSound("smallSelect");
             }
             else
-                CurrentTab?.LeftClick(p, new Point(o.X + Area.X + zoom5, o.Y + Area.Y + zoom22));
+                CurrentTab?.LeftClick(p, new Point(o.X + Area.X + Zoom5, o.Y + Area.Y + Zoom22));
         }
         public override void RightClick(Point p, Point o)
         {
-            CurrentTab?.RightClick(p, new Point(o.X + Area.X + zoom5, o.Y + Area.Y + zoom22));
+            CurrentTab?.RightClick(p, new Point(o.X + Area.X + Zoom5, o.Y + Area.Y + Zoom22));
         }
         public override void HoverOver(Point p, Point o)
         {
-            CurrentTab?.HoverOver(p, new Point(o.X + Area.X + zoom5, o.Y + Area.Y + zoom22));
+            CurrentTab?.HoverOver(p, new Point(o.X + Area.X + Zoom5, o.Y + Area.Y + Zoom22));
         }
         public override void Scroll(int d, Point p, Point o)
         {
-            CurrentTab?.Scroll(d, p, new Point(o.X + Area.X + zoom5, o.Y + Area.Y + zoom22));
+            CurrentTab?.Scroll(d, p, new Point(o.X + Area.X + Zoom5, o.Y + Area.Y + Zoom22));
         }
         public override void Update(GameTime t)
         {
@@ -109,31 +114,17 @@ namespace Farmhand.UI
             if (!Visible)
                 return;
             // Draw chrome
-            FrameworkMenu.DrawMenuRect(b, o.X + Area.X - zoom2, o.Y + Area.Y + zoom15, Area.Width, Area.Height - zoom15);
+            FrameworkMenu.DrawMenuRect(b, o.X + Area.X - Zoom2, o.Y + Area.Y + Zoom15, Area.Width, Area.Height - Zoom15);
             // Draw tabs
             for(var c=0;c<Tabs.Count;c++)
             {
-                b.Draw(Game1.mouseCursors, new Rectangle(o.X + Area.X + zoom4 + c * zoom16, o.Y + Area.Y + (c == Current ? zoom2 : 0), zoom16, zoom16), Tab, Color.White);
-                b.Draw(Game1.objectSpriteSheet, new Rectangle(o.X + Area.X + zoom8 + c * zoom16, o.Y + Area.Y + zoom5 + (c == Current ? zoom2 : 0), zoom8, zoom8), Game1.getSourceRectForStandardTileSheet(Game1.objectSpriteSheet, Tabs[c].Icon, 16, 16), Color.White);
+                b.Draw(Game1.mouseCursors, new Rectangle(o.X + Area.X + Zoom4 + c * Zoom16, o.Y + Area.Y + (c == Current ? Zoom2 : 0), Zoom16, Zoom16), Tab, Color.White);
+                b.Draw(Game1.objectSpriteSheet, new Rectangle(o.X + Area.X + Zoom8 + c * Zoom16, o.Y + Area.Y + Zoom5 + (c == Current ? Zoom2 : 0), Zoom8, Zoom8), Game1.getSourceRectForStandardTileSheet(Game1.objectSpriteSheet, Tabs[c].Icon, 16, 16), Color.White);
             }
             // Draw body
-            CurrentTab?.Draw(b, new Point(o.X + Area.X + zoom5, o.Y + Area.Y + zoom22));
+            CurrentTab?.Draw(b, new Point(o.X + Area.X + Zoom5, o.Y + Area.Y + Zoom22));
         }
-        // IComponentCollection proxy
-        public Rectangle EventRegion
-        {
-            get
-            {
-                return new Rectangle(Area.X+zoom5, Area.Y + zoom22, Area.Width-zoom10, Area.Height - zoom28);
-            }
-        }
-        public Rectangle ZoomEventRegion
-        {
-            get
-            {
-                return new Rectangle((Area.X + zoom5)/Game1.pixelZoom, (Area.Y + zoom22)/Game1.pixelZoom, (Area.Width - zoom14)/Game1.pixelZoom, (Area.Height - zoom28)/Game1.pixelZoom);
-            }
-        }
+        
         public FrameworkMenu GetAttachedMenu()
         {
             return Parent.GetAttachedMenu();

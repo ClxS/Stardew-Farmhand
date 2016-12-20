@@ -1,6 +1,6 @@
-﻿namespace Farmhand.UI
+﻿namespace Farmhand.UI.Base
 {
-    abstract public class BaseFormComponent : BaseInteractiveMenuComponent
+    public abstract class BaseFormComponent : BaseInteractiveMenuComponent
     {
         public virtual bool Disabled { get; set;} = false;
     }

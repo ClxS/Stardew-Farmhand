@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-
+﻿using Farmhand.UI.Generic;
+using Microsoft.Xna.Framework;
 using StardewValley;
 
-namespace Farmhand.UI
+namespace Farmhand.UI.Wrapper
 {
     class ObjectComponent : TextureComponent
     {

@@ -1,11 +1,10 @@
 ﻿using System;
-
+using Farmhand.UI.Base;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using StardewValley;
 
-namespace Farmhand.UI
+namespace Farmhand.UI.Generic
 {
     public class ClickableTextComponent : BaseInteractiveMenuComponent
     {
@@ -15,7 +14,7 @@ namespace Farmhand.UI
         protected SpriteFont Font;
         protected bool Shadow;
         protected bool HoverEffect;
-        protected bool Hovered = false;
+        protected bool Hovered;
         public event ClickHandler Handler;
         public ClickableTextComponent(Point position, string text, ClickHandler handler = null, bool hoverEffect = true, bool shadow = true, float scale = 1, Color? color = null, SpriteFont font = null)
         {

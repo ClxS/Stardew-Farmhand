@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Farmhand.API.Shops;
 using Farmhand.Attributes;
@@ -7,28 +6,27 @@ using StardewValley;
 
 namespace Farmhand.UI
 {
-    [HookRedirectConstructorFromBase("StardewValley.Event", "answerDialogue", new Type[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
-    [HookRedirectConstructorFromBase("StardewValley.Event", "checkAction", new Type[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "adventureShop", new Type[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "openShopMenu", new Type[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "performAction", new Type[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
-    [HookRedirectConstructorFromBase("StardewValley.Locations.Forest", "checkAction", new Type[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
-    [HookRedirectConstructorFromBase("StardewValley.NPC", "checkAction", new Type[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
-    [HookRedirectConstructorFromBase("StardewValley.Objects.Furniture", "checkForAction", new Type[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "answerDialogueAction", new Type[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "answerDialogueAction", new Type[] { typeof(List<Item>), typeof(int), typeof(string) })]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "carpenters", new Type[] { typeof(List<Item>), typeof(int), typeof(string) })]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "openShopMenu", new Type[] { typeof(List<Item>), typeof(int), typeof(string) })]
-    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "saloon", new Type[] { typeof(List<Item>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.Event", "answerDialogue", new[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.Event", "checkAction", new[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "adventureShop", new[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "openShopMenu", new[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "performAction", new[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.Locations.Forest", "checkAction", new[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.NPC", "checkAction", new[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.Objects.Furniture", "checkForAction", new[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "answerDialogueAction", new[] { typeof(Dictionary<Item, int[]>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "answerDialogueAction", new[] { typeof(List<Item>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "carpenters", new[] { typeof(List<Item>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "openShopMenu", new[] { typeof(List<Item>), typeof(int), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.GameLocation", "saloon", new[] { typeof(List<Item>), typeof(int), typeof(string) })]
     public class ShopMenu : StardewValley.Menus.ShopMenu
     {
-        private Dictionary<Item, int[]> injectedStock = new Dictionary<Item, int[]>();
-        private Shops shopType = Shops.Unknown;
+        private Dictionary<Item, int[]> _injectedStock = new Dictionary<Item, int[]>();
 
         public ShopMenu(Dictionary<Item, int[]> itemPriceAndStock, int currency = 0, string who = null) :
             base(itemPriceAndStock, currency, who)
         {
-            shopType = GetShopType(itemPriceAndStock, currency, who);
+            var shopType = GetShopType(itemPriceAndStock, currency, who);
             if (shopType != Shops.Unknown)
             {
                 InjectStock(shopType);
@@ -38,7 +36,7 @@ namespace Farmhand.UI
         public ShopMenu(List<Item> itemsForSale, int currency = 0, string who = null) :
             base(itemsForSale, currency, who)
         {
-            shopType = GetShopType(itemsForSale, currency, who);
+            var shopType = GetShopType(itemsForSale, currency, who);
             if (shopType != Shops.Unknown)
             {
                 InjectStock(shopType);
@@ -54,12 +52,12 @@ namespace Farmhand.UI
                 forSale.Add(stock.Key);
                 itemPriceAndStock.Add(stock.Key, stock.Value);
             }
-            injectedStock = newStock;
+            _injectedStock = newStock;
         }
 
         protected void InjectStockSoft()
         {
-            foreach (KeyValuePair<Item, int[]> stock in injectedStock)
+            foreach (KeyValuePair<Item, int[]> stock in _injectedStock)
             {
                 itemPriceAndStock.Add(stock.Key, stock.Value);
             }
@@ -76,7 +74,7 @@ namespace Farmhand.UI
 
             if (ShopUtilities.RegisteredShops.ContainsKey(internalShopName))
             {
-                Game1.activeClickableMenu = new ShopMenu(ShopUtilities.GetStock(owner, shopName), ShopUtilities.RegisteredShops[internalShopName].CurrencyType, null);
+                Game1.activeClickableMenu = new ShopMenu(ShopUtilities.GetStock(owner, shopName), ShopUtilities.RegisteredShops[internalShopName].CurrencyType);
             }
             else
             {
@@ -85,7 +83,7 @@ namespace Farmhand.UI
         }
 
         // Determine what kind of shop this is
-        protected Shops GetShopType(Dictionary<Item, int[]> shop, int currency = 0, string who = null)
+        protected Shops GetShopType(Dictionary<Item, int[]> shop, int shopCurrency = 0, string who = null)
         {
             // String checking is TERRIBLE, but it's how stardew does it, and it's fairly easy to change if it breaks later on
             if (who != null)
@@ -166,8 +164,8 @@ namespace Farmhand.UI
                 else if (CompareShopStocks(shop, new Dictionary<Item, int[]>
                                     {
                                         {
-                                            new StardewValley.Object(233, 1, false, -1, 0),
-                                            new int[]
+                                            new StardewValley.Object(233, 1),
+                                            new[]
                                             {
                                                 250,
                                                 2147483647
@@ -182,7 +180,7 @@ namespace Farmhand.UI
             return Shops.Unknown;
         }
 
-        protected Shops GetShopType(List<Item> shop, int currency = 0, string who = null)
+        protected Shops GetShopType(List<Item> shop, int shopCurrency = 0, string who = null)
         {
             // String checking is TERRIBLE, but it's how stardew does it, and it's fairly easy to change if it breaks later on
             if (who != null)

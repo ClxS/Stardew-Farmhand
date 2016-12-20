@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Farmhand.UI.Base;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using StardewValley;
 
-namespace Farmhand.UI
+namespace Farmhand.UI.Generic
 {
     public class ClickableTextureComponent : BaseInteractiveMenuComponent
     {

@@ -1,26 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Farmhand.UI.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using StardewValley;
 
-namespace Farmhand.UI
+namespace Farmhand.UI.Containers
 {
     public class ScrollableCollectionComponent : GenericCollectionComponent
     {
         protected static Rectangle UpButton = new Rectangle(421, 459, 11, 12);
         protected static Rectangle DownButton = new Rectangle(421, 472, 11, 12);
 
-        protected int ScrollOffset=0;
+        protected int ScrollOffset;
         protected int InnerHeight;
         protected int BarOffset;
 
-        protected bool UpActive=false;
-        protected bool DownActive=false;
+        protected bool UpActive;
+        protected bool DownActive;
 
-        protected int Counter = 0;
+        protected int Counter;
         protected int Limiter = 20;
         public ScrollableCollectionComponent(Rectangle area, List<IMenuComponent> components = null):base(area,components)
         {
@@ -29,21 +28,18 @@ namespace Farmhand.UI
         protected override void UpdateDrawOrder()
         {
             base.UpdateDrawOrder();
-            int height = Area.Height;
-            foreach(IMenuComponent c in DrawOrder)
+            var height = Area.Height;
+            foreach(var c in DrawOrder)
             {
                 if (!c.Visible)
                     return;
-                Rectangle r = c.GetRegion();
-                int b = r.Y + r.Height;
+                var r = c.GetRegion();
+                var b = r.Y + r.Height;
                 if (b > height)
                     height = b;
             }
-            if (height > Area.Height)
-                BarOffset = zoom12;
-            else
-                BarOffset = 0;
-            InnerHeight = (int)Math.Ceiling((height - Area.Height) / (double)zoom10);
+            BarOffset = height > Area.Height ? Zoom12 : 0;
+            InnerHeight = (int)Math.Ceiling((height - Area.Height) / (double)Zoom10);
         }
         public override void Scroll(int d, Point p, Point o)
         {
@@ -60,8 +56,8 @@ namespace Farmhand.UI
         }
         public override void HoverOver(Point p, Point o)
         {
-            Rectangle up = new Rectangle(Area.X + o.X + Area.Width - (UpActive ? zoom12 : zoom11 + zoom05), Area.Y + o.Y + (UpActive ? 0 : zoom05), UpActive ? zoom12 : zoom11, UpActive ? zoom13 : zoom12);
-            Rectangle down = new Rectangle(Area.X + o.X + Area.Width - (DownActive ? zoom12 : zoom11 + zoom05), Area.Y + o.Y + Area.Height - zoom12 - (DownActive ? zoom05 : 0), DownActive ? zoom12 : zoom11, DownActive ? zoom13 : zoom12);
+            Rectangle up = new Rectangle(Area.X + o.X + Area.Width - (UpActive ? Zoom12 : Zoom11 + Zoom05), Area.Y + o.Y + (UpActive ? 0 : Zoom05), UpActive ? Zoom12 : Zoom11, UpActive ? Zoom13 : Zoom12);
+            Rectangle down = new Rectangle(Area.X + o.X + Area.Width - (DownActive ? Zoom12 : Zoom11 + Zoom05), Area.Y + o.Y + Area.Height - Zoom12 - (DownActive ? Zoom05 : 0), DownActive ? Zoom12 : Zoom11, DownActive ? Zoom13 : Zoom12);
             UpActive = ScrollOffset > 0 && up.Contains(p);
             DownActive = ScrollOffset < InnerHeight && down.Contains(p);
             base.HoverOver(p, o);
@@ -112,7 +108,7 @@ namespace Farmhand.UI
             Rectangle reg = EventRegion;
             b.GraphicsDevice.ScissorRectangle = new Rectangle(reg.X+o.X,reg.Y+o.Y,reg.Width,reg.Height);
             b.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, new RasterizerState() { ScissorTestEnable = true });
-            Point o2=new Point(o.X+reg.X, o.Y+reg.Y-(ScrollOffset * zoom10));
+            Point o2=new Point(o.X+reg.X, o.Y+reg.Y-(ScrollOffset * Zoom10));
             foreach(IMenuComponent el in DrawOrder)
                 el.Draw(b,o2);
             b.End();
@@ -122,9 +118,9 @@ namespace Farmhand.UI
             if (BarOffset == 0)
                 return;
             // Up
-            b.Draw(Game1.mouseCursors, new Rectangle(Area.X + o.X + Area.Width - (UpActive ? zoom12 : zoom11 + zoom05), Area.Y + o.Y + (UpActive ? 0 : zoom05), UpActive ? zoom12 : zoom11, UpActive ? zoom13 : zoom12), UpButton, Color.White * (ScrollOffset > 0 ? 1 : 0.5f));
+            b.Draw(Game1.mouseCursors, new Rectangle(Area.X + o.X + Area.Width - (UpActive ? Zoom12 : Zoom11 + Zoom05), Area.Y + o.Y + (UpActive ? 0 : Zoom05), UpActive ? Zoom12 : Zoom11, UpActive ? Zoom13 : Zoom12), UpButton, Color.White * (ScrollOffset > 0 ? 1 : 0.5f));
             // down
-            b.Draw(Game1.mouseCursors, new Rectangle(Area.X + o.X + Area.Width - (DownActive ? zoom12 : zoom11 + zoom05), Area.Y + o.Y + Area.Height - zoom12 - (DownActive ? zoom05 : 0), DownActive ? zoom12 : zoom11, DownActive ? zoom13 : zoom12), DownButton, Color.White * (ScrollOffset < InnerHeight ? 1 : 0.5f));
+            b.Draw(Game1.mouseCursors, new Rectangle(Area.X + o.X + Area.Width - (DownActive ? Zoom12 : Zoom11 + Zoom05), Area.Y + o.Y + Area.Height - Zoom12 - (DownActive ? Zoom05 : 0), DownActive ? Zoom12 : Zoom11, DownActive ? Zoom13 : Zoom12), DownButton, Color.White * (ScrollOffset < InnerHeight ? 1 : 0.5f));
         }
     }
 }

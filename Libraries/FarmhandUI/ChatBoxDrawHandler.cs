@@ -71,7 +71,7 @@ namespace Farmhand.UI
             var @this = chatBoxDrawEventArgs.ChatBox;
             var b = chatBoxDrawEventArgs.SpriteBatch;
             var num = 0;
-            for (var index = @this.messages.Count() - 1; index >= 0; --index)
+            for (var index = @this.messages.Count - 1; index >= 0; --index)
             {
                 if (@this.messages[index].message.StartsWith(":: [FHLOG"))
                 {

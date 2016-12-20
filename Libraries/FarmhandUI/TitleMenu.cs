@@ -74,8 +74,8 @@ namespace Farmhand.UI
         }
 
         public static List<CustomTitleOption> CustomOptions = new List<CustomTitleOption>();
-        private StardewValley.Menus.ClickableTextureComponent folderButton;
-        private string hoverText { get; set; }
+        private ClickableTextureComponent _folderButton;
+        private string HoverText { get; set; }
 
         public static void RegisterNewTitleButton(CustomTitleOption button)
         {
@@ -108,18 +108,18 @@ namespace Farmhand.UI
             buttons.Clear();
 
             var index = 0;
-            buttons.Add(new StardewValley.Menus.ClickableTextureComponent("New", new Rectangle(width / 2 + GetItemOffsetX(index++, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "", "New", titleButtonsTexture, new Rectangle(0, 187, 74, 58), 3f, false));
-            buttons.Add(new StardewValley.Menus.ClickableTextureComponent("Load", new Rectangle(width / 2 + GetItemOffsetX(index++, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "", "Load", titleButtonsTexture, new Rectangle(74, 187, 74, 58), 3f, false));
+            buttons.Add(new ClickableTextureComponent("New", new Rectangle(width / 2 + GetItemOffsetX(index++, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "", "New", titleButtonsTexture, new Rectangle(0, 187, 74, 58), 3f));
+            buttons.Add(new ClickableTextureComponent("Load", new Rectangle(width / 2 + GetItemOffsetX(index++, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "", "Load", titleButtonsTexture, new Rectangle(74, 187, 74, 58), 3f));
             foreach (var customOption in CustomOptions) {
-                buttons.Add(new StardewValley.Menus.ClickableTextureComponent(customOption.Key, new Rectangle(width / 2 + GetItemOffsetX(index++, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "", customOption.Key, customOption.Texture, customOption.TextureSourceRect, 3f, false));
+                buttons.Add(new ClickableTextureComponent(customOption.Key, new Rectangle(width / 2 + GetItemOffsetX(index++, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "", customOption.Key, customOption.Texture, customOption.TextureSourceRect, 3f));
             }
-            buttons.Add(new StardewValley.Menus.ClickableTextureComponent("Exit", new Rectangle(width / 2 + GetItemOffsetX(index, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "", "Exit", titleButtonsTexture, new Rectangle(222, 187, 74, 58), 3f, false));
+            buttons.Add(new ClickableTextureComponent("Exit", new Rectangle(width / 2 + GetItemOffsetX(index, 3 + CustomOptions.Count), height - 174 - 24, 222, 174), "", "Exit", titleButtonsTexture, new Rectangle(222, 187, 74, 58), 3f));
             
             var num = height < 800 ? 2 : 3;
             eRect = new Rectangle(width / 2 - 200 * num + 251 * num, -300 * num - (int)(viewportY / 3.0) * num + 26 * num, 42 * num, 68 * num);
-            folderButton = new StardewValley.Menus.ClickableTextureComponent("Folder", new Rectangle(57, height - 75 - 24, 72, 75), "", "Mods Folder", TextureRegistry.GetItem("FarmhandUI.modTitleMenu").Texture, new Rectangle(52, 458, 24, 25), 3f, false);
-            backButton = new StardewValley.Menus.ClickableTextureComponent("Back", new Rectangle(width - 198 - 48, height - 81 - 24, 198, 81),"", "Back", titleButtonsTexture, new Rectangle(296, 252, 66, 27), 3f, false);
-            aboutButton = new StardewValley.Menus.ClickableTextureComponent("About", new Rectangle(width - 66 - 48, height - 75 - 24, 66, 75), "", "About", titleButtonsTexture, new Rectangle(8, 458, 22, 25), 3f, false);
+            _folderButton = new ClickableTextureComponent("Folder", new Rectangle(57, height - 75 - 24, 72, 75), "", "Mods Folder", TextureRegistry.GetItem("FarmhandUI.modTitleMenu").Texture, new Rectangle(52, 458, 24, 25), 3f);
+            backButton = new ClickableTextureComponent("Back", new Rectangle(width - 198 - 48, height - 81 - 24, 198, 81),"", "Back", titleButtonsTexture, new Rectangle(296, 252, 66, 27), 3f);
+            aboutButton = new ClickableTextureComponent("About", new Rectangle(width - 66 - 48, height - 75 - 24, 66, 75), "", "About", titleButtonsTexture, new Rectangle(8, 458, 22, 25), 3f);
             skipButton = new ClickableComponent(new Rectangle(width / 2 - 261, height / 2 - 102, 249, 201), "Skip", "");
         }
 
@@ -139,7 +139,7 @@ namespace Farmhand.UI
         {
             base.receiveLeftClick(x, y, playSound);
 
-            if (folderButton.containsPoint(x, y)) {
+            if (_folderButton.containsPoint(x, y)) {
                 Game1.playSound("select");
                 Process.Start($"{Environment.CurrentDirectory}\\Mods");
             }
@@ -147,20 +147,20 @@ namespace Farmhand.UI
 
         public override void performHoverAction(int x, int y)
         {
-            hoverText = "";
+            HoverText = "";
             base.performHoverAction(x, y);
 
-            folderButton.tryHover(x, y, 0.25f);
-            if (folderButton.containsPoint(x, y)) {
-                if (folderButton.sourceRect.X == 52)
+            _folderButton.tryHover(x, y, 0.25f);
+            if (_folderButton.containsPoint(x, y)) {
+                if (_folderButton.sourceRect.X == 52)
                     Game1.playSound("Cowboy_Footstep");
                 
-                folderButton.sourceRect.X = 76;
+                _folderButton.sourceRect.X = 76;
 
-                hoverText = folderButton.hoverText;
+                HoverText = _folderButton.hoverText;
             }
             else
-                folderButton.sourceRect.X = 52;
+                _folderButton.sourceRect.X = 52;
         }
 
         [HookMakeBaseVirtualCall("StardewValley.Menus.TitleMenu", "draw")]
@@ -169,10 +169,10 @@ namespace Farmhand.UI
             base.draw(b);
 
             if (subMenu == null && !isTransitioningButtons && titleInPosition && !transitioningCharacterCreationMenu)
-                folderButton.draw(b);
+                _folderButton.draw(b);
 
-            if (!String.IsNullOrEmpty(hoverText))
-                drawHoverText(b, hoverText, Game1.dialogueFont);
+            if (!String.IsNullOrEmpty(HoverText))
+                drawHoverText(b, HoverText, Game1.dialogueFont);
 
             if (QuitTimer > 0)
                 b.Draw(Game1.staminaRect, new Rectangle(0, 0, width, height), Color.Black * (1f - QuitTimer / 500f));

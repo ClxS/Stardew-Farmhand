@@ -1,4 +1,6 @@
-﻿namespace Farmhand.UI
+﻿using Farmhand.UI.Interfaces;
+
+namespace Farmhand.UI
 {
     public class KeyboardSubscriberProxy : StardewValley.IKeyboardSubscriber
     {

@@ -1,23 +1,26 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Farmhand.UI.Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Farmhand.UI
+namespace Farmhand.UI.Base
 {
-    abstract public class BaseInteractiveMenuComponent : BaseMenuComponent, IInteractiveMenuComponent
+    public abstract class BaseInteractiveMenuComponent : BaseMenuComponent, IInteractiveMenuComponent
     {
-        public delegate void ValueChanged<T>(IInteractiveMenuComponent component, IComponentContainer collection, FrameworkMenu menu, T value);
+        public delegate void ValueChanged<in T>(IInteractiveMenuComponent component, IComponentContainer collection, FrameworkMenu menu, T value);
         public delegate void ClickHandler(IInteractiveMenuComponent component, IComponentContainer collection, FrameworkMenu menu);
+
         protected BaseInteractiveMenuComponent()
         {
 
         }
-        public BaseInteractiveMenuComponent(Rectangle area, Texture2D texture, Rectangle? crop = null) : base(area, texture, crop)
+
+        protected BaseInteractiveMenuComponent(Rectangle area, Texture2D texture, Rectangle? crop = null) : base(area, texture, crop)
         {
 
         }
         public virtual bool InBounds(Point p, Point o)
         {
-            return Visible ? new Rectangle(Area.X + o.X, Area.Y + o.Y, Area.Width, Area.Height).Contains(p) : false;
+            return Visible && new Rectangle(Area.X + o.X, Area.Y + o.Y, Area.Width, Area.Height).Contains(p);
         }
         public virtual void RightClick(Point p, Point o)
         {

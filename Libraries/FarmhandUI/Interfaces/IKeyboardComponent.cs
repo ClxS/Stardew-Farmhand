@@ -1,4 +1,4 @@
-﻿namespace Farmhand.UI
+﻿namespace Farmhand.UI.Interfaces
 {
     public interface IKeyboardComponent
     {

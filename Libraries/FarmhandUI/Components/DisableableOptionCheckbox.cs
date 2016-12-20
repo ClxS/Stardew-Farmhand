@@ -20,7 +20,7 @@ namespace Farmhand.UI.Components
         public bool IsDisabled;
 
         public DisableableOptionCheckbox(string label, int whichOption, int x = -1, int y = -1)
-          : base(label, x, y, 9 * StardewValley.Game1.pixelZoom, 9 * StardewValley.Game1.pixelZoom, whichOption)
+          : base(label, x, y, 9 * Game1.pixelZoom, 9 * Game1.pixelZoom, whichOption)
         {
             IsHovered = false;
         }
@@ -29,20 +29,20 @@ namespace Farmhand.UI.Components
         {
             if (greyedOut)
                 return;
-            StardewValley.Game1.playSound("drumkit6");
+            Game1.playSound("drumkit6");
             base.receiveLeftClick(x, y);
             IsChecked = !IsChecked;
         }
 
         public override void draw(SpriteBatch b, int slotX, int slotY)
         {
-            b.Draw(StardewValley.Game1.mouseCursors, new Vector2(slotX + bounds.X, slotY + bounds.Y), 
-                IsDisabled ? SourceRectDisabled : (IsChecked ? SourceRectChecked : SourceRectUnchecked), Color.White * (greyedOut ? 0.33f : 1f), 0.0f, Vector2.Zero, StardewValley.Game1.pixelZoom, SpriteEffects.None, 0.4f);
+            b.Draw(Game1.mouseCursors, new Vector2(slotX + bounds.X, slotY + bounds.Y), 
+                IsDisabled ? SourceRectDisabled : (IsChecked ? SourceRectChecked : SourceRectUnchecked), Color.White * (greyedOut ? 0.33f : 1f), 0.0f, Vector2.Zero, Game1.pixelZoom, SpriteEffects.None, 0.4f);
 
 
             if(IsDisabled && IsHovered)
             {
-                Utility.drawBoldText(b, DisableReason, StardewValley.Game1.dialogueFont, new Vector2(slotX + bounds.X + bounds.Width + StardewValley.Game1.pixelZoom * 2, slotY + bounds.Y), Color.Red, 1f, 0.1f);
+                Utility.drawBoldText(b, DisableReason, Game1.dialogueFont, new Vector2(slotX + bounds.X + bounds.Width + Game1.pixelZoom * 2, slotY + bounds.Y), Color.Red, 1f, 0.1f);
             }
             else
             {

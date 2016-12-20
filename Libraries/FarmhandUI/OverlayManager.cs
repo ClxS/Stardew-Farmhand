@@ -55,13 +55,8 @@ namespace Farmhand.UI
         /// <summary>
         /// Count of how many <see cref="IClickableMenu"/>'s are currently in the list
         /// </summary>
-        public static int Count
-        {
-            get
-            {
-                return Overlays.Count;
-            }
-        }
+        public static int Count => Overlays.Count;
+
         /// <summary>
         /// Tries to remove the given <see cref="IClickableMenu"/> from the list and returns a <see cref="bool"/> with the result of this attempt
         /// </summary>
@@ -75,7 +70,7 @@ namespace Farmhand.UI
             return a;
         }
         // Internal functional code, not related to API level code.
-        private static List<IClickableMenu> Overlays = new List<IClickableMenu>();
+        private static readonly List<IClickableMenu> Overlays = new List<IClickableMenu>();
         private static void Init()
         {
             GameEvents.OnAfterUpdateTick += GameEvents_UpdateTick;
@@ -107,10 +102,10 @@ namespace Farmhand.UI
         {
             if (e.NewState.LeftButton == ButtonState.Pressed && e.PriorState.LeftButton == ButtonState.Released)
                 foreach (IClickableMenu overlay in Overlays)
-                    overlay.receiveLeftClick(Game1.getMouseX(), Game1.getMouseY(), true);
+                    overlay.receiveLeftClick(Game1.getMouseX(), Game1.getMouseY());
             if (e.NewState.RightButton == ButtonState.Pressed && e.PriorState.RightButton == ButtonState.Released)
                 foreach (IClickableMenu overlay in Overlays)
-                    overlay.receiveRightClick(Game1.getMouseX(), Game1.getMouseY(), true);
+                    overlay.receiveRightClick(Game1.getMouseX(), Game1.getMouseY());
             if (e.NewState.ScrollWheelValue != e.PriorState.ScrollWheelValue)
                 foreach (IClickableMenu overlay in Overlays)
                     overlay.receiveScrollWheelAction(e.NewState.ScrollWheelValue - e.PriorState.ScrollWheelValue);

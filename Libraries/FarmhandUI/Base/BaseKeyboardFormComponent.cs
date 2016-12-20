@@ -1,6 +1,8 @@
-﻿namespace Farmhand.UI
+﻿using Farmhand.UI.Interfaces;
+
+namespace Farmhand.UI.Base
 {
-    abstract public class BaseKeyboardFormComponent : BaseFormComponent, IKeyboardComponent
+    public abstract class BaseKeyboardFormComponent : BaseFormComponent, IKeyboardComponent
     {
         public bool Selected {get; set; }
         public virtual void TextReceived(char chr)

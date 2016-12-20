@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Farmhand.UI
+namespace Farmhand.UI.Interfaces
 {
     public interface IMenuComponent
     {

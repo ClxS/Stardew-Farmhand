@@ -1,30 +1,20 @@
 ﻿using System;
-
+using Farmhand.UI.Base;
+using Farmhand.UI.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using StardewValley;
 
-namespace Farmhand.UI
+namespace Farmhand.UI.Form
 {
     public class TextboxFormComponent : BaseKeyboardFormComponent
     {
         protected static Texture2D Box;
-        public string Value
-        {
-            get
-            {
-                return _Value;
-            }
-            set
-            {
-                _Value = value;
-            }
-        }
+        public string Value { get; set; }
+
         public event ValueChanged<string> Handler;
         public Func<TextboxFormComponent, FrameworkMenu, string, string> TabPressed;
         public Func<TextboxFormComponent, FrameworkMenu, string, string> EnterPressed;
-        protected string _Value;
         protected Predicate<string> Validator = (e) => true;
         protected string OldValue;
         public TextboxFormComponent(Point position, ValueChanged<string> handler = null) : this(position, 75, null, handler)
@@ -71,15 +61,15 @@ namespace Farmhand.UI
                 return;
             bool flag = DateTime.Now.Millisecond % 1000 >= 500;
             string text = Value;
-            b.Draw(Box, new Rectangle(Area.X + o.X, Area.Y + o.Y, zoom4, Area.Height), new Rectangle(Game1.pixelZoom, 0, zoom4, Area.Height), Color.White * (Disabled ? 0.33f : 1));
-            b.Draw(Box, new Rectangle(Area.X+o.X + zoom4, Area.Y+o.Y, Area.Width - zoom8, Area.Height), new Rectangle(zoom4, 0, 4, Area.Height), Color.White * (Disabled ? 0.33f : 1));
-            b.Draw(Box, new Rectangle(Area.X+o.X + Area.Width - zoom4, Area.Y+o.Y, zoom4, Area.Height), new Rectangle(Box.Bounds.Width - zoom4, 0, zoom4, Area.Height), Color.White * (Disabled ? 0.33f : 1));
+            b.Draw(Box, new Rectangle(Area.X + o.X, Area.Y + o.Y, Zoom4, Area.Height), new Rectangle(Game1.pixelZoom, 0, Zoom4, Area.Height), Color.White * (Disabled ? 0.33f : 1));
+            b.Draw(Box, new Rectangle(Area.X+o.X + Zoom4, Area.Y+o.Y, Area.Width - Zoom8, Area.Height), new Rectangle(Zoom4, 0, 4, Area.Height), Color.White * (Disabled ? 0.33f : 1));
+            b.Draw(Box, new Rectangle(Area.X+o.X + Area.Width - Zoom4, Area.Y+o.Y, Zoom4, Area.Height), new Rectangle(Box.Bounds.Width - Zoom4, 0, Zoom4, Area.Height), Color.White * (Disabled ? 0.33f : 1));
             Vector2 v;
             for (v = Game1.smallFont.MeasureString(text); v.X > Area.Width - Game1.pixelZoom*5; v = Game1.smallFont.MeasureString(text))
                 text = text.Substring(1);
             if (flag && Selected)
-                b.Draw(Game1.staminaRect, new Rectangle(Area.X+o.X + zoom3 + zoom05 + (int)v.X, Area.Y+o.Y + 8, zoom05, CaretSize), Game1.textColor);
-            Utility.drawTextWithShadow(b, text, Game1.smallFont, new Vector2(Area.X+o.X + zoom4, Area.Y+o.Y+zoom3), Game1.textColor * (Disabled ? 0.33f : 1));
+                b.Draw(Game1.staminaRect, new Rectangle(Area.X+o.X + Zoom3 + Zoom05 + (int)v.X, Area.Y+o.Y + 8, Zoom05, CaretSize), Game1.textColor);
+            Utility.drawTextWithShadow(b, text, Game1.smallFont, new Vector2(Area.X+o.X + Zoom4, Area.Y+o.Y+Zoom3), Game1.textColor * (Disabled ? 0.33f : 1));
         }
         public override void TextReceived(char chr)
         {
@@ -118,18 +108,18 @@ namespace Farmhand.UI
                     }
                     if (!(Parent is IComponentCollection))
                         return;
-                    bool Next = false;
+                    var next = false;
                     IInteractiveMenuComponent first=null;
-                    foreach(IInteractiveMenuComponent imc in (Parent as IComponentCollection).InteractiveComponents)
+                    foreach(IInteractiveMenuComponent imc in ((IComponentCollection) Parent).InteractiveComponents)
                     {
                         if (first == null && imc is TextboxFormComponent)
                             first = imc;
                         if (imc == this)
                         {
-                            Next = true;
+                            next = true;
                             continue;
                         }
-                        if (Next && imc is TextboxFormComponent)
+                        if (next && imc is TextboxFormComponent)
                         {
                             Parent.GiveFocus(imc);
                             return;

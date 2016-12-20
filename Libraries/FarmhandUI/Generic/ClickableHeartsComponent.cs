@@ -1,32 +1,31 @@
 ﻿using System;
-
+using Farmhand.UI.Base;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using StardewValley;
 
-namespace Farmhand.UI
+namespace Farmhand.UI.Generic
 {
     public class ClickableHeartsComponent : BaseInteractiveMenuComponent
     {
-        protected readonly static Rectangle HeartFull = new Rectangle(211, 428, 7, 6);
-        protected readonly static Rectangle HeartEmpty = new Rectangle(218, 428, 7, 6);
+        protected static readonly Rectangle HeartFull = new Rectangle(211, 428, 7, 6);
+        protected static readonly Rectangle HeartEmpty = new Rectangle(218, 428, 7, 6);
         public int Value
         {
             get
             {
-                return _Value;
+                return _value;
             }
             set
             {
-                _Value = Math.Min(Math.Max(0, value), MaxValue);
+                _value = Math.Min(Math.Max(0, value), MaxValue);
             }
         }
         public event ValueChanged<int> Handler;
-        protected int _Value;
+        private int _value;
         protected int OldValue;
         protected int MaxValue;
-        protected bool Hovered = false;
+        protected bool Hovered;
         public ClickableHeartsComponent(Point position, int value, int maxValue, ValueChanged<int> handler=null)
         {
             if (maxValue % 2 != 0)
@@ -59,14 +58,14 @@ namespace Farmhand.UI
             if (!Visible)
                 return;
             for (int c = 0; c < MaxValue / 2; c++)
-                b.Draw(Game1.mouseCursors, new Vector2(o.X + Area.X + Game1.pixelZoom + c * zoom8, o.Y + Area.Y), new Rectangle(HeartEmpty.X, HeartEmpty.Y, 7, 6), Color.White, 0, Vector2.Zero, Game1.pixelZoom, SpriteEffects.None, 1f);
+                b.Draw(Game1.mouseCursors, new Vector2(o.X + Area.X + Game1.pixelZoom + c * Zoom8, o.Y + Area.Y), new Rectangle(HeartEmpty.X, HeartEmpty.Y, 7, 6), Color.White, 0, Vector2.Zero, Game1.pixelZoom, SpriteEffects.None, 1f);
             for (int c = 0; c < Value; c++)
-                b.Draw(Game1.mouseCursors, new Vector2(o.X + Area.X + Game1.pixelZoom + c * zoom4, o.Y + Area.Y), new Rectangle(HeartFull.X + (c % 2 == 0 ? 0 : 4), HeartFull.Y, (c % 2 == 0 ? 4 : 3), 6), Color.White * (Hovered?0.5f:1), 0, Vector2.Zero, Game1.pixelZoom, SpriteEffects.None, 1f);
+                b.Draw(Game1.mouseCursors, new Vector2(o.X + Area.X + Game1.pixelZoom + c * Zoom4, o.Y + Area.Y), new Rectangle(HeartFull.X + (c % 2 == 0 ? 0 : 4), HeartFull.Y, (c % 2 == 0 ? 4 : 3), 6), Color.White * (Hovered?0.5f:1), 0, Vector2.Zero, Game1.pixelZoom, SpriteEffects.None, 1f);
             if (!Hovered)
                 return;
             int value = Math.Min(MaxValue, (int)Math.Round((Game1.getMouseX() - (Area.X + o.X)) / 4D / Game1.pixelZoom));
             for (int c = 0; c < value; c++)
-                b.Draw(Game1.mouseCursors, new Vector2(o.X + Area.X + Game1.pixelZoom + c * zoom4, o.Y + Area.Y), new Rectangle(HeartFull.X + (c % 2 == 0 ? 0 : 4), HeartFull.Y, (c % 2 == 0 ? 4 : 3), 6), Color.White, 0, Vector2.Zero, Game1.pixelZoom, SpriteEffects.None, 1f);
+                b.Draw(Game1.mouseCursors, new Vector2(o.X + Area.X + Game1.pixelZoom + c * Zoom4, o.Y + Area.Y), new Rectangle(HeartFull.X + (c % 2 == 0 ? 0 : 4), HeartFull.Y, (c % 2 == 0 ? 4 : 3), 6), Color.White, 0, Vector2.Zero, Game1.pixelZoom, SpriteEffects.None, 1f);
         }
     }
 }

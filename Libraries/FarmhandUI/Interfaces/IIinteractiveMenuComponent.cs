@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Farmhand.UI
+namespace Farmhand.UI.Interfaces
 {
     public interface IInteractiveMenuComponent : IMenuComponent
     {

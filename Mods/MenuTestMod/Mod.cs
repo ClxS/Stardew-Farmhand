@@ -5,6 +5,10 @@ using Farmhand.Events;
 using Farmhand.Events.Arguments.GameEvents;
 using Farmhand.Registries;
 using Farmhand.UI;
+using Farmhand.UI.Containers;
+using Farmhand.UI.Form;
+using Farmhand.UI.Generic;
+using Farmhand.UI.Interfaces;
 using Microsoft.Xna.Framework;
 using StardewValley;
 

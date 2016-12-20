@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Farmhand.UI.Base;
+using Farmhand.UI.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using StardewValley;
 
-namespace Farmhand.UI
+namespace Farmhand.UI.Containers
 {
     public class GenericCollectionComponent : BaseInteractiveMenuComponent, IComponentCollection
     {
         protected List<IMenuComponent> DrawOrder;
         protected List<IInteractiveMenuComponent> EventOrder;
-
-        protected List<IMenuComponent> _StaticComponents = new List<IMenuComponent>();
-        protected List<IInteractiveMenuComponent> _InteractiveComponents = new List<IInteractiveMenuComponent>();
-
+        
         protected IInteractiveMenuComponent HoverElement;
         protected IInteractiveMenuComponent FocusElement;
-        protected bool Hold = false;
+        protected bool Hold;
+        
+        public List<IMenuComponent> StaticComponents { get; set; } = new List<IMenuComponent>();
+        public List<IInteractiveMenuComponent> InteractiveComponents { get; set; } = new List<IInteractiveMenuComponent>();
 
-        public List<IMenuComponent> StaticComponents { get { return new List<IMenuComponent>(_StaticComponents); } }
-        public List<IInteractiveMenuComponent> InteractiveComponents { get { return new List<IInteractiveMenuComponent>(_InteractiveComponents); } }
+        public Rectangle EventRegion => Area;
+
+        public Rectangle ZoomEventRegion => new Rectangle(Area.X / Game1.pixelZoom, Area.Y / Game1.pixelZoom, Area.Width / Game1.pixelZoom, Area.Height / Game1.pixelZoom);
 
         protected GenericCollectionComponent()
         {
@@ -37,7 +38,7 @@ namespace Farmhand.UI
         // IComponentCollection
         protected virtual void UpdateDrawOrder()
         {
-            KeyValuePair<List<IInteractiveMenuComponent>, List<IMenuComponent>> sorted = FrameworkMenu.GetOrderedLists(_StaticComponents, _InteractiveComponents);
+            KeyValuePair<List<IInteractiveMenuComponent>, List<IMenuComponent>> sorted = FrameworkMenu.GetOrderedLists(StaticComponents, InteractiveComponents);
             DrawOrder = sorted.Value;
             EventOrder = sorted.Key;
         }
@@ -59,28 +60,30 @@ namespace Farmhand.UI
         }
         public void GiveFocus(IInteractiveMenuComponent component)
         {
-            if (!_InteractiveComponents.Contains(component) || component == FocusElement)
+            if (!InteractiveComponents.Contains(component) || component == FocusElement)
                 return;
             Parent.GiveFocus(this);
             ResetFocus();
             FocusElement = component;
-            if (FocusElement is IKeyboardComponent)
-                Game1.keyboardDispatcher.Subscriber = new KeyboardSubscriberProxy((IKeyboardComponent)FocusElement);
+            var element = FocusElement as IKeyboardComponent;
+            if (element != null)
+                Game1.keyboardDispatcher.Subscriber = new KeyboardSubscriberProxy(element);
             component.FocusGained();
         }
         public void AddComponent(IMenuComponent component)
         {
-            if (component is IInteractiveMenuComponent)
-                _InteractiveComponents.Add(component as IInteractiveMenuComponent);
+            var interactiveMenuComponent = component as IInteractiveMenuComponent;
+            if (interactiveMenuComponent != null)
+                InteractiveComponents.Add(interactiveMenuComponent);
             else
-                _StaticComponents.Add(component);
+                StaticComponents.Add(component);
             component.Attach(this);
             UpdateDrawOrder();
         }
         public void RemoveComponent(IMenuComponent component)
         {
-            bool Removed = false;
-            RemoveComponents(a => { bool b = a == component && !Removed; if (b) { Removed = true; a.Detach(this); } return b; });
+            bool removed = false;
+            RemoveComponents(a => { bool b = a == component && !removed; if (b) { removed = true; a.Detach(this); } return b; });
         }
         public void RemoveComponents<T>() where T : IMenuComponent
         {
@@ -88,30 +91,29 @@ namespace Farmhand.UI
         }
         public void RemoveComponents(Predicate<IMenuComponent> filter)
         {
-            _InteractiveComponents.RemoveAll(a => { bool b = filter(a);if (b)a.Detach(this); return b; });
-            _StaticComponents.RemoveAll(a => { bool b = filter(a); if (b) a.Detach(this); return b; });
+            InteractiveComponents.RemoveAll(a => { bool b = filter(a);if (b)a.Detach(this); return b; });
+            StaticComponents.RemoveAll(a => { bool b = filter(a); if (b) a.Detach(this); return b; });
             UpdateDrawOrder();
         }
         public void ClearComponents()
         {
-            _InteractiveComponents.TrueForAll(a => { a.Detach(this); return true; });
-            _StaticComponents.TrueForAll(a => { a.Detach(this); return true; });
-            _InteractiveComponents.Clear();
-            _StaticComponents.Clear();
+            foreach (var component in InteractiveComponents)
+            {
+                component.Detach(this);
+            }
+            foreach (var component in StaticComponents)
+            {
+                component.Detach(this);
+            }
+            InteractiveComponents.Clear();
+            StaticComponents.Clear();
             UpdateDrawOrder();
         }
         public bool AcceptsComponent(IMenuComponent component)
         {
             return true;
         }
-        public Rectangle EventRegion
-        {
-            get { return Area; }
-        }
-        public Rectangle ZoomEventRegion
-        {
-            get { return new Rectangle(Area.X/Game1.pixelZoom,Area.Y/Game1.pixelZoom,Area.Width/Game1.pixelZoom,Area.Height/Game1.pixelZoom); }
-        }
+        
         // IInteractiveMenuComponent
         public override void FocusLost()
         {
