@@ -1,61 +1,435 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using Farmhand.UI.Interfaces;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-
-using StardewValley;
-using StardewValley.Menus;
-
+﻿// ReSharper disable StyleCop.SA1300
 namespace Farmhand.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Farmhand.UI.Interfaces;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+    using Microsoft.Xna.Framework.Input;
+
+    using StardewValley;
+    using StardewValley.Menus;
+
+    /// <summary>
+    ///     The framework menu.
+    /// </summary>
     public class FrameworkMenu : IClickableMenu, IComponentCollection
     {
-        protected List<IMenuComponent> DrawOrder=new List<IMenuComponent>();
-        protected List<IInteractiveMenuComponent> EventOrder=new List<IInteractiveMenuComponent>();
-        
-        protected IInteractiveMenuComponent HoverInElement;
-        protected IInteractiveMenuComponent FocusElement;
-        protected IInteractiveMenuComponent FloatingComponent;
-
-        protected bool Hold;
-
-        protected bool DrawChrome;
-        protected bool Centered;
-
-        public Rectangle Area;
-
-        public List<IMenuComponent> StaticComponents { get; set; } = new List<IMenuComponent>();
-        public List<IInteractiveMenuComponent> InteractiveComponents { get; set; } = new List<IInteractiveMenuComponent>();
-
-
-
+        /// <summary>
+        ///     Texture location of the top-left menu background sprite.
+        /// </summary>
         protected static readonly Rectangle Tl = new Rectangle(0, 0, 64, 64);
+
+        /// <summary>
+        ///     Texture location of the top-center menu background sprite.
+        /// </summary>
         protected static readonly Rectangle Tc = new Rectangle(128, 0, 64, 64);
+
+        /// <summary>
+        ///     Texture location of the top-right menu background sprite.
+        /// </summary>
         protected static readonly Rectangle Tr = new Rectangle(192, 0, 64, 64);
+
+        /// <summary>
+        ///     Texture location of the middle-left menu background sprite.
+        /// </summary>
         protected static readonly Rectangle Ml = new Rectangle(0, 128, 64, 64);
+
+        /// <summary>
+        ///     Texture location of the middle-right menu background sprite.
+        /// </summary>
         protected static readonly Rectangle Mr = new Rectangle(192, 128, 64, 64);
+
+        /// <summary>
+        ///     Texture location of the bottom-right menu background sprite.
+        /// </summary>
         protected static readonly Rectangle Br = new Rectangle(192, 192, 64, 64);
+
+        /// <summary>
+        ///     Texture location of the bottom-left menu background sprite.
+        /// </summary>
         protected static readonly Rectangle Bl = new Rectangle(0, 192, 64, 64);
+
+        /// <summary>
+        ///     Texture location of the bottom-center menu background sprite.
+        /// </summary>
         protected static readonly Rectangle Bc = new Rectangle(128, 192, 64, 64);
+
+        /// <summary>
+        ///     Texture location of the menu background sprite.
+        /// </summary>
         protected static readonly Rectangle Bg = new Rectangle(64, 128, 64, 64);
+
+        /// <summary>
+        ///     Zoom level 2 (pixelZoom * 2).
+        /// </summary>
         protected static readonly int Zoom2 = Game1.pixelZoom * 2;
+
+        /// <summary>
+        ///     Zoom level 2 (pixelZoom * 2).
+        /// </summary>
         protected static readonly int Zoom3 = Game1.pixelZoom * 3;
+
+        /// <summary>
+        ///     Zoom level 4 (pixelZoom * 4).
+        /// </summary>
         protected static readonly int Zoom4 = Game1.pixelZoom * 4;
+
+        /// <summary>
+        ///     Zoom level 6 (pixelZoom * 6).
+        /// </summary>
         protected static readonly int Zoom6 = Game1.pixelZoom * 6;
+
+        /// <summary>
+        ///     Zoom level 10 (pixelZoom * 10).
+        /// </summary>
         protected static readonly int Zoom10 = Game1.pixelZoom * 10;
+
+        /// <summary>
+        ///     Zoom level 20 (pixelZoom * 20).
+        /// </summary>
         protected static readonly int Zoom20 = Game1.pixelZoom * 20;
 
-        public virtual Rectangle EventRegion => new Rectangle(Area.X + Zoom10, Area.Y + Zoom10, Area.Width - Zoom20, Area.Height - Zoom20);
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="FrameworkMenu" /> class.
+        /// </summary>
+        /// <param name="area">
+        ///     The bounding area of this component.
+        /// </param>
+        /// <param name="showCloseButton">
+        ///     Whether the show close button should be displayed.
+        /// </param>
+        /// <param name="drawChrome">
+        ///     Whether draw chrome is enabled.
+        /// </param>
+        public FrameworkMenu(Rectangle area, bool showCloseButton = true, bool drawChrome = true)
+        {
+            this.DrawChrome = drawChrome;
+            this.Area = new Rectangle(
+                area.X * Game1.pixelZoom,
+                area.Y * Game1.pixelZoom,
+                area.Width * Game1.pixelZoom,
+                area.Height * Game1.pixelZoom);
+            this.initialize(this.Area.X, this.Area.Y, this.Area.Width, this.Area.Height, showCloseButton);
+        }
 
-        public virtual Rectangle ZoomEventRegion => new Rectangle((Area.X + Zoom10) / Game1.pixelZoom, (Area.Y + Zoom10) / Game1.pixelZoom, (Area.Width - Zoom20) / Game1.pixelZoom, (Area.Height - Zoom20) / Game1.pixelZoom);
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="FrameworkMenu" /> class.
+        /// </summary>
+        /// <param name="size">
+        ///     The size of the menu.
+        /// </param>
+        /// <param name="showCloseButton">
+        ///     Whether the show close button should be displayed.
+        /// </param>
+        /// <param name="drawChrome">
+        ///     Whether draw chrome is enabled.
+        /// </param>
+        public FrameworkMenu(Point size, bool showCloseButton = true, bool drawChrome = true)
+        {
+            this.DrawChrome = drawChrome;
+            this.Centered = true;
+            var pos = Utility.getTopLeftPositionForCenteringOnScreen(size.X * Game1.pixelZoom, size.Y * Game1.pixelZoom);
+            this.Area = new Rectangle((int)pos.X, (int)pos.Y, size.X * Game1.pixelZoom, size.Y * Game1.pixelZoom);
+            this.initialize(this.Area.X, this.Area.Y, this.Area.Width, this.Area.Height, showCloseButton);
+        }
 
+        /// <summary>
+        ///     Gets or sets the bounding area of this component.
+        /// </summary>
+        public Rectangle Area { get; set; }
 
+        /// <summary>
+        ///     Gets or sets a value indicating whether centered.
+        /// </summary>
+        protected bool Centered { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether to draw chrome.
+        /// </summary>
+        protected bool DrawChrome { get; set; }
+
+        /// <summary>
+        ///     Gets or sets an ordered collection that determines the draw order.
+        /// </summary>
+        protected List<IMenuComponent> DrawOrder { get; set; } = new List<IMenuComponent>();
+
+        /// <summary>
+        ///     Gets or sets an ordered collection that determines the event order.
+        /// </summary>
+        protected List<IInteractiveMenuComponent> EventOrder { get; set; } = new List<IInteractiveMenuComponent>();
+
+        /// <summary>
+        ///     Gets or sets the floating component.
+        /// </summary>
+        protected IInteractiveMenuComponent FloatingComponent { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the focus element.
+        /// </summary>
+        protected IInteractiveMenuComponent FocusElement { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether mouse is held on this component.
+        /// </summary>
+        protected bool Hold { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the hover in element.
+        /// </summary>
+        protected IInteractiveMenuComponent HoverInElement { get; set; }
+
+        #region IComponentCollection Members
+
+        /// <summary>
+        ///     Gets or sets the static components.
+        /// </summary>
+        public List<IMenuComponent> StaticComponents { get; set; } = new List<IMenuComponent>();
+
+        /// <summary>
+        ///     Gets or sets the interactive components.
+        /// </summary>
+        public List<IInteractiveMenuComponent> InteractiveComponents { get; set; } =
+            new List<IInteractiveMenuComponent>();
+
+        /// <summary>
+        ///     Gets the area in which events (such as mouse click/hover events) are captured.
+        /// </summary>
+        public virtual Rectangle EventRegion
+            =>
+                new Rectangle(
+                    this.Area.X + Zoom10,
+                    this.Area.Y + Zoom10,
+                    this.Area.Width - Zoom20,
+                    this.Area.Height - Zoom20);
+
+        /// <summary>
+        ///     Gets the zoomed event region.
+        /// </summary>
+        public virtual Rectangle ZoomEventRegion
+            =>
+                new Rectangle(
+                    (this.Area.X + Zoom10) / Game1.pixelZoom,
+                    (this.Area.Y + Zoom10) / Game1.pixelZoom,
+                    (this.Area.Width - Zoom20) / Game1.pixelZoom,
+                    (this.Area.Height - Zoom20) / Game1.pixelZoom);
+
+        /// <summary>
+        ///     Gets the menu attached to this container.
+        /// </summary>
+        /// <returns>
+        ///     The attached menu <see cref="FrameworkMenu" />.
+        /// </returns>
+        public virtual FrameworkMenu GetAttachedMenu()
+        {
+            return this;
+        }
+
+        /// <summary>
+        ///     Resets the current focus for this container.
+        /// </summary>
+        public virtual void ResetFocus()
+        {
+            if (this.FocusElement == null)
+            {
+                return;
+            }
+
+            this.FocusElement.FocusLost();
+            if (this.FocusElement is IKeyboardComponent)
+            {
+                Game1.keyboardDispatcher.Subscriber.Selected = false;
+                Game1.keyboardDispatcher.Subscriber = null;
+            }
+
+            this.FocusElement = null;
+            if (this.FloatingComponent != null)
+            {
+                this.FloatingComponent.Detach(this);
+                this.FloatingComponent = null;
+            }
+        }
+
+        /// <summary>
+        ///     Gives focus to a specified component.
+        /// </summary>
+        /// <param name="component">
+        ///     The component to give focus.
+        /// </param>
+        public virtual void GiveFocus(IInteractiveMenuComponent component)
+        {
+            if (component == this.FocusElement)
+            {
+                return;
+            }
+
+            this.ResetFocus();
+            this.FocusElement = component;
+            var focusElement = this.FocusElement as IKeyboardComponent;
+            if (focusElement != null)
+            {
+                Game1.keyboardDispatcher.Subscriber = new KeyboardSubscriberProxy(focusElement);
+            }
+
+            if (!this.InteractiveComponents.Contains(component))
+            {
+                this.FloatingComponent = component;
+                component.Attach(this);
+            }
+
+            component.FocusGained();
+        }
+
+        /// <summary>
+        ///     Adds a component to this collection
+        /// </summary>
+        /// <param name="component">
+        ///     The component to add.
+        /// </param>
+        public virtual void AddComponent(IMenuComponent component)
+        {
+            var interactiveMenuComponent = component as IInteractiveMenuComponent;
+            if (interactiveMenuComponent != null)
+            {
+                this.InteractiveComponents.Add(interactiveMenuComponent);
+            }
+            else
+            {
+                this.StaticComponents.Add(component);
+            }
+
+            component.Attach(this);
+            this.UpdateDrawOrder();
+        }
+
+        /// <summary>
+        ///     Removes a component from this collection
+        /// </summary>
+        /// <param name="component">
+        ///     The component to remove.
+        /// </param>
+        public virtual void RemoveComponent(IMenuComponent component)
+        {
+            var removed = false;
+            this.RemoveComponents(
+                a =>
+                    {
+                        var b = a == component && !removed;
+                        if (b)
+                        {
+                            removed = true;
+                            a.Detach(this);
+                        }
+
+                        return b;
+                    });
+        }
+
+        /// <summary>
+        ///     Removes all components of a specific type from this collection.
+        /// </summary>
+        /// <typeparam name="T">
+        ///     The type of components to remove.
+        /// </typeparam>
+        public virtual void RemoveComponents<T>() where T : IMenuComponent
+        {
+            this.RemoveComponents(a => a.GetType() == typeof(T));
+        }
+
+        /// <summary>
+        ///     Removes all components matching a filter from this collection.
+        /// </summary>
+        /// <param name="filter">
+        ///     The filter to use.
+        /// </param>
+        public virtual void RemoveComponents(Predicate<IMenuComponent> filter)
+        {
+            this.InteractiveComponents.RemoveAll(
+                a =>
+                    {
+                        var b = filter(a);
+                        if (b)
+                        {
+                            a.Detach(this);
+                        }
+
+                        return b;
+                    });
+            this.StaticComponents.RemoveAll(
+                a =>
+                    {
+                        var b = filter(a);
+                        if (b)
+                        {
+                            a.Detach(this);
+                        }
+
+                        return b;
+                    });
+            this.UpdateDrawOrder();
+        }
+
+        /// <summary>
+        ///     Removes all components from this collection
+        /// </summary>
+        public virtual void ClearComponents()
+        {
+            foreach (var component in this.InteractiveComponents)
+            {
+                component.Detach(this);
+            }
+
+            foreach (var component in this.StaticComponents)
+            {
+                component.Detach(this);
+            }
+
+            this.InteractiveComponents.Clear();
+            this.StaticComponents.Clear();
+            this.UpdateDrawOrder();
+        }
+
+        /// <summary>
+        ///     Gets whether this collection can accept the provided component.
+        /// </summary>
+        /// <param name="component">
+        ///     The component to check.
+        /// </param>
+        /// <returns>
+        ///     Whether this collection accepts the component.
+        /// </returns>
+        public virtual bool AcceptsComponent(IMenuComponent component)
+        {
+            return true;
+        }
+
+        #endregion
+
+        /// <summary>
+        ///     Draws the menu background
+        /// </summary>
+        /// <param name="b">
+        ///     The sprite batch to use.
+        /// </param>
+        /// <param name="x">
+        ///     The x position of the frame.
+        /// </param>
+        /// <param name="y">
+        ///     The y position of the frame.
+        /// </param>
+        /// <param name="width">
+        ///     The width of the frame.
+        /// </param>
+        /// <param name="height">
+        ///     The height of the frame.
+        /// </param>
         public static void DrawMenuRect(SpriteBatch b, int x, int y, int width, int height)
         {
-            Rectangle o = new Rectangle(x + Zoom2, y + Zoom2, width - Zoom4, height - Zoom4);
+            var o = new Rectangle(x + Zoom2, y + Zoom2, width - Zoom4, height - Zoom4);
             b.Draw(Game1.menuTexture, new Rectangle(o.X, o.Y, o.Width, o.Height), Bg, Color.White);
             o = new Rectangle(x - Zoom3, y - Zoom3, width + Zoom6, height + Zoom6);
             b.Draw(Game1.menuTexture, new Rectangle(o.X, o.Y, 64, 64), Tl, Color.White);
@@ -67,250 +441,314 @@ namespace Farmhand.UI
             b.Draw(Game1.menuTexture, new Rectangle(o.X, o.Y + 64, 64, o.Height - 128), Ml, Color.White);
             b.Draw(Game1.menuTexture, new Rectangle(o.X + o.Width - 64, o.Y + 64, 64, o.Height - 128), Mr, Color.White);
         }
-        public static KeyValuePair<List<IInteractiveMenuComponent>,List<IMenuComponent>> GetOrderedLists(List<IMenuComponent> statics, List<IInteractiveMenuComponent> interactives)
+
+        /// <summary>
+        ///     Gets the list of components ordered by draw order
+        /// </summary>
+        /// <param name="statics">
+        ///     Static components.
+        /// </param>
+        /// <param name="interactives">
+        ///     Interactive components.
+        /// </param>
+        /// <returns>
+        ///     An KeyValuePair of ordered lists of the components.
+        /// </returns>
+        public static KeyValuePair<List<IInteractiveMenuComponent>, List<IMenuComponent>> GetOrderedLists(
+            List<IMenuComponent> statics,
+            List<IInteractiveMenuComponent> interactives)
         {
-            List<IMenuComponent> drawOrder = new List<IMenuComponent>(statics);
+            var drawOrder = new List<IMenuComponent>(statics);
             drawOrder.AddRange(interactives);
-            drawOrder = drawOrder.OrderByDescending(x => x.Layer).ThenByDescending(x => x.GetPosition().Y).ThenByDescending(x => x.GetPosition().X).ToList();
-            List<IInteractiveMenuComponent>  eventOrder = interactives.OrderBy(x => x.Layer).ThenBy(x => x.GetPosition().Y).ThenBy(x => x.GetPosition().X).ToList();
+            drawOrder =
+                drawOrder.OrderByDescending(x => x.Layer)
+                    .ThenByDescending(x => x.GetPosition().Y)
+                    .ThenByDescending(x => x.GetPosition().X)
+                    .ToList();
+            var eventOrder =
+                interactives.OrderBy(x => x.Layer)
+                    .ThenBy(x => x.GetPosition().Y)
+                    .ThenBy(x => x.GetPosition().X)
+                    .ToList();
             return new KeyValuePair<List<IInteractiveMenuComponent>, List<IMenuComponent>>(eventOrder, drawOrder);
         }
-        public FrameworkMenu(Rectangle area, bool showCloseButton = true, bool drawChrome = true)
-        {
-            DrawChrome = drawChrome;
-            Area = new Rectangle(area.X * Game1.pixelZoom, area.Y * Game1.pixelZoom, area.Width * Game1.pixelZoom, area.Height * Game1.pixelZoom);
-            initialize(Area.X, Area.Y, Area.Width, Area.Height, showCloseButton);
-        }
-        public FrameworkMenu(Point size, bool showCloseButton = true, bool drawChrome = true)
-        {
-            DrawChrome = drawChrome;
-            Centered = true;
-            Vector2 pos = Utility.getTopLeftPositionForCenteringOnScreen(size.X * Game1.pixelZoom, size.Y * Game1.pixelZoom);
-            Area = new Rectangle((int)pos.X, (int)pos.Y, size.X * Game1.pixelZoom, size.Y * Game1.pixelZoom);
-            initialize(Area.X, Area.Y, Area.Width, Area.Height, showCloseButton);
-        }
+
+        /// <summary>
+        ///     Updates the draw and event order collections.
+        /// </summary>
         protected virtual void UpdateDrawOrder()
         {
-            KeyValuePair<List<IInteractiveMenuComponent>, List<IMenuComponent>> sorted = GetOrderedLists(StaticComponents, InteractiveComponents);
-            DrawOrder = sorted.Value;
-            EventOrder = sorted.Key;
+            var sorted = GetOrderedLists(this.StaticComponents, this.InteractiveComponents);
+            this.DrawOrder = sorted.Value;
+            this.EventOrder = sorted.Key;
         }
-        public virtual FrameworkMenu GetAttachedMenu()
-        {
-            return this;
-        }
-        public virtual void ResetFocus()
-        {
-            if (FocusElement == null)
-                return;
-            FocusElement.FocusLost();
-            if(FocusElement is IKeyboardComponent)
-            {
-                Game1.keyboardDispatcher.Subscriber.Selected = false;
-                Game1.keyboardDispatcher.Subscriber = null;
-            }
-            FocusElement = null;
-            if (FloatingComponent != null)
-            {
-                FloatingComponent.Detach(this);
-                FloatingComponent = null;
-            }
-        }
-        public virtual void GiveFocus(IInteractiveMenuComponent component)
-        {
-            if (component == FocusElement)
-                return;
-            ResetFocus();
-            FocusElement = component;
-            var focusElement = FocusElement as IKeyboardComponent;
-            if(focusElement != null)
-                Game1.keyboardDispatcher.Subscriber = new KeyboardSubscriberProxy(focusElement);
-            if (!InteractiveComponents.Contains(component))
-            {
-                FloatingComponent = component;
-                component.Attach(this);
-            }
-            component.FocusGained();
-        }
-        public virtual void AddComponent(IMenuComponent component)
-        {
-            var interactiveMenuComponent = component as IInteractiveMenuComponent;
-            if (interactiveMenuComponent != null)
-                InteractiveComponents.Add(interactiveMenuComponent);
-            else
-                StaticComponents.Add(component);
-            component.Attach(this);
-            UpdateDrawOrder();
-        }
-        public virtual void RemoveComponent(IMenuComponent component)
-        {
-            bool removed = false;
-            RemoveComponents(a => { bool b = a == component && !removed; if (b) { removed = true; a.Detach(this); } return b; });
-        }
-        public virtual void RemoveComponents<T>() where T : IMenuComponent
-        {
-            RemoveComponents(a => a.GetType() == typeof(T));
-        }
-        public virtual void RemoveComponents(Predicate<IMenuComponent> filter)
-        {
-            InteractiveComponents.RemoveAll(a => { bool b = filter(a); if (b) a.Detach(this); return b; });
-            StaticComponents.RemoveAll(a => { bool b = filter(a); if (b) a.Detach(this); return b; });
-            UpdateDrawOrder();
-        }
-        public virtual void ClearComponents()
-        {
-            foreach (var component in InteractiveComponents)
-            {
-                component.Detach(this);
-            }
-            foreach (var component in StaticComponents)
-            {
-                component.Detach(this);
-            }
-            InteractiveComponents.Clear();
-            StaticComponents.Clear();
-            UpdateDrawOrder();
-        }
-        public virtual bool AcceptsComponent(IMenuComponent component)
-        {
-            return true;
-        }
-        
+
+        /// <summary>
+        ///     Called when game window size changed. (Game override)
+        /// </summary>
+        /// <param name="oldBounds">
+        ///     The old bounds.
+        /// </param>
+        /// <param name="newBounds">
+        ///     The new bounds.
+        /// </param>
         public override void gameWindowSizeChanged(Rectangle oldBounds, Rectangle newBounds)
         {
-            if (!Centered)
+            if (!this.Centered)
+            {
                 return;
-            Vector2 pos = Utility.getTopLeftPositionForCenteringOnScreen(Area.Width, Area.Height);
-            Area = new Rectangle((int)pos.X, (int)pos.Y, Area.Width, Area.Height);
+            }
+
+            var pos = Utility.getTopLeftPositionForCenteringOnScreen(this.Area.Width, this.Area.Height);
+            this.Area = new Rectangle((int)pos.X, (int)pos.Y, this.Area.Width, this.Area.Height);
         }
+
+        /// <summary>
+        ///     Called when left click is released. (Game override)
+        /// </summary>
+        /// <param name="x">
+        ///     The x position.
+        /// </param>
+        /// <param name="y">
+        ///     The y position.
+        /// </param>
         public override void releaseLeftClick(int x, int y)
         {
-            if (HoverInElement == null)
+            if (this.HoverInElement == null)
+            {
                 return;
-            Point p = new Point(x, y);
-            Point o = new Point(Area.X + Zoom10, Area.Y + Zoom10);
-            HoverInElement.LeftUp(p, o);
-            Hold = false;
-            if (HoverInElement.InBounds(p, o))
+            }
+
+            var p = new Point(x, y);
+            var o = new Point(this.Area.X + Zoom10, this.Area.Y + Zoom10);
+            this.HoverInElement.LeftUp(p, o);
+            this.Hold = false;
+            if (this.HoverInElement.InBounds(p, o))
+            {
                 return;
-            HoverInElement.HoverOut(p, o);
-            HoverInElement = null;
+            }
+
+            this.HoverInElement.HoverOut(p, o);
+            this.HoverInElement = null;
         }
+
+        /// <summary>
+        ///     Called when left click is held. (Game override)
+        /// </summary>
+        /// <param name="x">
+        ///     The x position.
+        /// </param>
+        /// <param name="y">
+        ///     The y position.
+        /// </param>
         public override void leftClickHeld(int x, int y)
         {
-            if (HoverInElement == null)
+            if (this.HoverInElement == null)
+            {
                 return;
-            Hold = true;
-            HoverInElement.LeftHeld(new Point(x, y), new Point(Area.X + Zoom10, Area.Y + Zoom10));
+            }
+
+            this.Hold = true;
+            this.HoverInElement.LeftHeld(new Point(x, y), new Point(this.Area.X + Zoom10, this.Area.Y + Zoom10));
         }
+
+        /// <summary>
+        ///     Called when left click is received. (Game override)
+        /// </summary>
+        /// <param name="x">
+        ///     The x position.
+        /// </param>
+        /// <param name="y">
+        ///     The y position.
+        /// </param>
+        /// <param name="playSound">
+        ///     Whether the default right click sound should be played
+        /// </param>
         public override void receiveLeftClick(int x, int y, bool playSound = true)
         {
             base.receiveLeftClick(x, y, playSound);
-            Point p = new Point(x, y);
-            Point o = new Point(Area.X + Zoom10, Area.Y + Zoom10);
-            if(FloatingComponent != null && FloatingComponent.InBounds(p,o))
+            var p = new Point(x, y);
+            var o = new Point(this.Area.X + Zoom10, this.Area.Y + Zoom10);
+            if (this.FloatingComponent != null && this.FloatingComponent.InBounds(p, o))
             {
-                FloatingComponent.LeftClick(p, o);
+                this.FloatingComponent.LeftClick(p, o);
                 return;
             }
-            foreach (IInteractiveMenuComponent el in EventOrder)
+
+            foreach (var el in this.EventOrder)
             {
                 if (el.InBounds(p, o))
                 {
-                    GiveFocus(el);
+                    this.GiveFocus(el);
                     el.LeftClick(p, o);
                     return;
                 }
             }
-            ResetFocus();
+
+            this.ResetFocus();
         }
+
+        /// <summary>
+        ///     Exits this menu
+        /// </summary>
         public void ExitMenu()
         {
-            exitThisMenu();
+            this.exitThisMenu();
         }
+
+        /// <summary>
+        ///     Called when right click is received. (Game override)
+        /// </summary>
+        /// <param name="x">
+        ///     The x position.
+        /// </param>
+        /// <param name="y">
+        ///     The y position.
+        /// </param>
+        /// <param name="playSound">
+        ///     Whether the default right click sound should be played
+        /// </param>
         public override void receiveRightClick(int x, int y, bool playSound = true)
         {
-            Point p = new Point(x, y);
-            Point o = new Point(Area.X + Zoom10, Area.Y + Zoom10);
-            if (FloatingComponent != null && FloatingComponent.InBounds(p, o))
+            var p = new Point(x, y);
+            var o = new Point(this.Area.X + Zoom10, this.Area.Y + Zoom10);
+            if (this.FloatingComponent != null && this.FloatingComponent.InBounds(p, o))
             {
-                FloatingComponent.RightClick(p, o);
+                this.FloatingComponent.RightClick(p, o);
                 return;
             }
-            foreach (IInteractiveMenuComponent el in EventOrder)
+
+            foreach (var el in this.EventOrder)
             {
                 if (el.InBounds(p, o))
                 {
-                    GiveFocus(el);
-                    FocusElement = el;
+                    this.GiveFocus(el);
+                    this.FocusElement = el;
                     el.RightClick(p, o);
                     return;
                 }
             }
-            ResetFocus();
+
+            this.ResetFocus();
         }
+
+        /// <summary>
+        ///     Called when hovered. (Game override)
+        /// </summary>
+        /// <param name="x">
+        ///     The x position.
+        /// </param>
+        /// <param name="y">
+        ///     The y position.
+        /// </param>
         public override void performHoverAction(int x, int y)
         {
             base.performHoverAction(x, y);
-            if (!Area.Contains(x, y) || Hold)
-                return;
-            Point p = new Point(x, y);
-            Point o = new Point(Area.X + Zoom10, Area.Y + Zoom10);
-            if (HoverInElement != null && !HoverInElement.InBounds(p, o))
+            if (!this.Area.Contains(x, y) || this.Hold)
             {
-                HoverInElement.HoverOut(p, o);
-                HoverInElement = null;
-            }
-            if (FloatingComponent!=null && FloatingComponent.InBounds(p, o))
-            {
-                FloatingComponent.HoverOver(p, o);
                 return;
             }
-            foreach (IInteractiveMenuComponent el in EventOrder)
+
+            var p = new Point(x, y);
+            var o = new Point(this.Area.X + Zoom10, this.Area.Y + Zoom10);
+            if (this.HoverInElement != null && !this.HoverInElement.InBounds(p, o))
+            {
+                this.HoverInElement.HoverOut(p, o);
+                this.HoverInElement = null;
+            }
+
+            if (this.FloatingComponent != null && this.FloatingComponent.InBounds(p, o))
+            {
+                this.FloatingComponent.HoverOver(p, o);
+                return;
+            }
+
+            foreach (var el in this.EventOrder)
             {
                 if (el.InBounds(p, o))
                 {
-                    if (HoverInElement == null)
+                    if (this.HoverInElement == null)
                     {
-                        HoverInElement = el;
+                        this.HoverInElement = el;
                         el.HoverIn(p, o);
                     }
+
                     el.HoverOver(p, o);
                     break;
                 }
             }
         }
+
+        /// <summary>
+        ///     Called when a scroll event is received. (Game override)
+        /// </summary>
+        /// <param name="direction">
+        ///     The direction of the scroll
+        /// </param>
         public override void receiveScrollWheelAction(int direction)
         {
             base.receiveScrollWheelAction(direction);
-            Point p = Game1.getMousePosition();
-            Point o = new Point(Area.X + Zoom10, Area.Y + Zoom10);
-            FloatingComponent?.Scroll(direction, p, o);
-            foreach (IInteractiveMenuComponent el in EventOrder)
+            var p = Game1.getMousePosition();
+            var o = new Point(this.Area.X + Zoom10, this.Area.Y + Zoom10);
+            this.FloatingComponent?.Scroll(direction, p, o);
+            foreach (var el in this.EventOrder)
+            {
                 el.Scroll(direction, p, o);
+            }
         }
+
+        /// <summary>
+        ///     Called when a key press event is received. (Game override)
+        /// </summary>
+        /// <param name="key">
+        ///     The pressed key
+        /// </param>
         public override void receiveKeyPress(Keys key)
         {
             if (Game1.keyboardDispatcher.Subscriber == null)
+            {
                 base.receiveKeyPress(key);
+            }
         }
+
+        /// <summary>
+        ///     Called on game update. (Game override)
+        /// </summary>
+        /// <param name="time">
+        ///     The elapsed time since the previous frame
+        /// </param>
         public override void update(GameTime time)
         {
             base.update(time);
-            FloatingComponent?.Update(time);
-            foreach (IMenuComponent el in DrawOrder)
+            this.FloatingComponent?.Update(time);
+            foreach (var el in this.DrawOrder)
+            {
                 el.Update(time);
+            }
         }
+
+        /// <summary>
+        ///     Called on draw. (Game override)
+        /// </summary>
+        /// <param name="b">
+        ///     The sprite batch to use for this draw.
+        /// </param>
         public override void draw(SpriteBatch b)
         {
-            if (DrawChrome)
-                DrawMenuRect(b, Area.X, Area.Y, Area.Width, Area.Height);
-            Point o = new Point(Area.X + Zoom10, Area.Y + Zoom10);
-            foreach (IMenuComponent el in DrawOrder)
+            if (this.DrawChrome)
+            {
+                DrawMenuRect(b, this.Area.X, this.Area.Y, this.Area.Width, this.Area.Height);
+            }
+
+            var o = new Point(this.Area.X + Zoom10, this.Area.Y + Zoom10);
+            foreach (var el in this.DrawOrder)
+            {
                 el.Draw(b, o);
-            FloatingComponent?.Draw(b, o);
+            }
+
+            this.FloatingComponent?.Draw(b, o);
             base.draw(b);
-            drawMouse(b);
+            this.drawMouse(b);
         }
     }
 }
