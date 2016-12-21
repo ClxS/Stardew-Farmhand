@@ -1,4 +1,4 @@
-﻿namespace Farmhand.UI.Form
+namespace Farmhand.UI.Form
 {
     using System.Linq;
 

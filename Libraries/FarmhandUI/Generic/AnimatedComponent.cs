@@ -8,29 +8,29 @@
     using StardewValley;
 
     /// <summary>
-    /// Animated component.
+    ///     Animated component.
     /// </summary>
     public class AnimatedComponent : BaseMenuComponent
     {
         /// <summary>
-        /// Gets or sets the sprite to display.
-        /// </summary>
-        protected TemporaryAnimatedSprite Sprite { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AnimatedComponent"/> class.
+        ///     Initializes a new instance of the <see cref="AnimatedComponent" /> class.
         /// </summary>
         /// <param name="position">
-        /// The position of this component
+        ///     The position of this component
         /// </param>
         /// <param name="sprite">
-        /// The animated sprite.
+        ///     The animated sprite.
         /// </param>
         public AnimatedComponent(Point position, TemporaryAnimatedSprite sprite)
         {
             this.SetScaledArea(new Rectangle(position.X, position.Y, sprite.sourceRect.Width, sprite.sourceRect.Height));
             this.Sprite = sprite;
         }
+
+        /// <summary>
+        ///     Gets or sets the sprite to display.
+        /// </summary>
+        protected TemporaryAnimatedSprite Sprite { get; set; }
 
         /// <summary>
         ///     The update handler for this component

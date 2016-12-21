@@ -10,54 +10,39 @@
     using StardewValley;
 
     /// <summary>
-    /// A clickable hearts component.
+    ///     A clickable hearts component.
     /// </summary>
     public class ClickableHeartsComponent : BaseInteractiveMenuComponent
     {
         /// <summary>
-        /// Texture location for full heart sprite
+        ///     Texture location for full heart sprite
         /// </summary>
         protected static readonly Rectangle HeartFull = new Rectangle(211, 428, 7, 6);
 
         /// <summary>
-        /// Texture location for empty heart sprite
+        ///     Texture location for empty heart sprite
         /// </summary>
         protected static readonly Rectangle HeartEmpty = new Rectangle(218, 428, 7, 6);
 
         /// <summary>
-        /// The number of selected hearts
+        ///     The number of selected hearts
         /// </summary>
         private int value;
 
         /// <summary>
-        /// Gets or sets a value indicating whether hovered.
-        /// </summary>
-        protected bool Hovered { get; set; }
-
-        /// <summary>
-        /// Gets or sets the max value.
-        /// </summary>
-        protected int MaxValue { get; set; }
-
-        /// <summary>
-        /// Gets or sets the old value.
-        /// </summary>
-        protected int OldValue { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ClickableHeartsComponent"/> class.
+        ///     Initializes a new instance of the <see cref="ClickableHeartsComponent" /> class.
         /// </summary>
         /// <param name="position">
-        /// The position of this component
+        ///     The position of this component
         /// </param>
         /// <param name="value">
-        /// The default number of hearts selected
+        ///     The default number of hearts selected
         /// </param>
         /// <param name="maxValue">
-        /// The max value.
+        ///     The max value.
         /// </param>
         /// <param name="handler">
-        /// The value changed handler.
+        ///     The value changed handler.
         /// </param>
         public ClickableHeartsComponent(Point position, int value, int maxValue, ValueChanged<int> handler = null)
         {
@@ -77,7 +62,22 @@
         }
 
         /// <summary>
-        /// Gets or sets the number of selected hearts.
+        ///     Gets or sets a value indicating whether hovered.
+        /// </summary>
+        protected bool Hovered { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the max value.
+        /// </summary>
+        protected int MaxValue { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the old value.
+        /// </summary>
+        protected int OldValue { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the number of selected hearts.
         /// </summary>
         public int Value
         {
@@ -93,7 +93,7 @@
         }
 
         /// <summary>
-        /// The value changed handler.
+        ///     The value changed handler.
         /// </summary>
         public event ValueChanged<int> Handler;
 

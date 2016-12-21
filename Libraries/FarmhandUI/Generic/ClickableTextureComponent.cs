@@ -8,32 +8,27 @@
     using StardewValley;
 
     /// <summary>
-    /// A clickable texture component.
+    ///     A clickable texture component.
     /// </summary>
     public class ClickableTextureComponent : BaseInteractiveMenuComponent
     {
         /// <summary>
-        /// Gets or sets a value indicating whether to scale on hover.
-        /// </summary>
-        protected bool ScaleOnHover { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ClickableTextureComponent"/> class.
+        ///     Initializes a new instance of the <see cref="ClickableTextureComponent" /> class.
         /// </summary>
         /// <param name="area">
-        /// The bounding area of this component.
+        ///     The bounding area of this component.
         /// </param>
         /// <param name="texture">
-        /// The texture to use.
+        ///     The texture to use.
         /// </param>
         /// <param name="handler">
-        /// The click event handler.
+        ///     The click event handler.
         /// </param>
         /// <param name="crop">
-        /// The cropped area.
+        ///     The cropped area.
         /// </param>
         /// <param name="scaleOnHover">
-        /// Whether scale on hover is enabled.
+        ///     Whether scale on hover is enabled.
         /// </param>
         public ClickableTextureComponent(
             Rectangle area,
@@ -52,7 +47,12 @@
         }
 
         /// <summary>
-        /// The click event handler.
+        ///     Gets or sets a value indicating whether to scale on hover.
+        /// </summary>
+        protected bool ScaleOnHover { get; set; }
+
+        /// <summary>
+        ///     The click event handler.
         /// </summary>
         public event ClickHandler Handler;
 

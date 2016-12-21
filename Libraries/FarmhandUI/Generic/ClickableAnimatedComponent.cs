@@ -8,34 +8,24 @@
     using StardewValley;
 
     /// <summary>
-    /// A clickable animated component
+    ///     A clickable animated component
     /// </summary>
     public class ClickableAnimatedComponent : BaseInteractiveMenuComponent
     {
         /// <summary>
-        /// Gets or sets a value indicating whether to scale on hover.
-        /// </summary>
-        protected bool ScaleOnHover { get; set; }
-
-        /// <summary>
-        /// Gets or sets the sprite to display.
-        /// </summary>
-        protected TemporaryAnimatedSprite Sprite { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ClickableAnimatedComponent"/> class.
+        ///     Initializes a new instance of the <see cref="ClickableAnimatedComponent" /> class.
         /// </summary>
         /// <param name="area">
-        /// The bounding area of this component
+        ///     The bounding area of this component
         /// </param>
         /// <param name="sprite">
-        /// The sprite to display
+        ///     The sprite to display
         /// </param>
         /// <param name="handler">
-        /// The click event handler.
+        ///     The click event handler.
         /// </param>
         /// <param name="scaleOnHover">
-        /// Whether scale on hover is enabled.
+        ///     Whether scale on hover is enabled.
         /// </param>
         public ClickableAnimatedComponent(
             Rectangle area,
@@ -54,7 +44,17 @@
         }
 
         /// <summary>
-        /// The click event handler.
+        ///     Gets or sets a value indicating whether to scale on hover.
+        /// </summary>
+        protected bool ScaleOnHover { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the sprite to display.
+        /// </summary>
+        protected TemporaryAnimatedSprite Sprite { get; set; }
+
+        /// <summary>
+        ///     The click event handler.
         /// </summary>
         public event ClickHandler Handler;
 

@@ -10,41 +10,36 @@
     using StardewValley;
 
     /// <summary>
-    /// A hearts component.
+    ///     A hearts component.
     /// </summary>
     public class HeartsComponent : BaseMenuComponent
     {
         /// <summary>
-        /// Texture location of full heart sprite.
+        ///     Texture location of full heart sprite.
         /// </summary>
         protected static readonly Rectangle HeartFull = new Rectangle(211, 428, 7, 6);
 
         /// <summary>
-        /// Texture location of empty heart sprite.
+        ///     Texture location of empty heart sprite.
         /// </summary>
         protected static readonly Rectangle HeartEmpty = new Rectangle(218, 428, 7, 6);
 
         /// <summary>
-        /// The value.
+        ///     The value.
         /// </summary>
         private int value;
 
         /// <summary>
-        /// Gets or sets the max value.
-        /// </summary>
-        protected int MaxValue { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HeartsComponent"/> class.
+        ///     Initializes a new instance of the <see cref="HeartsComponent" /> class.
         /// </summary>
         /// <param name="position">
-        /// The position of the component.
+        ///     The position of the component.
         /// </param>
         /// <param name="value">
-        /// The default selected value.
+        ///     The default selected value.
         /// </param>
         /// <param name="maxValue">
-        /// The maximum value.
+        ///     The maximum value.
         /// </param>
         public HeartsComponent(Point position, int value, int maxValue)
         {
@@ -59,7 +54,12 @@
         }
 
         /// <summary>
-        /// Gets or sets the value.
+        ///     Gets or sets the max value.
+        /// </summary>
+        protected int MaxValue { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the value.
         /// </summary>
         public int Value
         {

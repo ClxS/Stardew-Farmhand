@@ -10,55 +10,30 @@
     using StardewValley;
 
     /// <summary>
-    /// A text component.
+    ///     A text component.
     /// </summary>
     public class TextComponent : BaseMenuComponent
     {
         /// <summary>
-        /// Gets or sets the text color.
-        /// </summary>
-        protected Color Color { get; set; }
-
-        /// <summary>
-        /// Gets or sets the text font.
-        /// </summary>
-        protected SpriteFont Font { get; set; }
-
-        /// <summary>
-        /// Gets or sets the text scale.
-        /// </summary>
-        protected float Scale { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to use text shadow.
-        /// </summary>
-        protected bool Shadow { get; set; }
-
-        /// <summary>
-        /// Gets or sets the text.
-        /// </summary>
-        protected string Text { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TextComponent"/> class.
+        ///     Initializes a new instance of the <see cref="TextComponent" /> class.
         /// </summary>
         /// <param name="position">
-        /// The position of the component.
+        ///     The position of the component.
         /// </param>
         /// <param name="text">
-        /// The text.
+        ///     The text.
         /// </param>
         /// <param name="shadow">
-        /// Whether text shadow is enabled.
+        ///     Whether text shadow is enabled.
         /// </param>
         /// <param name="scale">
-        /// The text scale.
+        ///     The text scale.
         /// </param>
         /// <param name="color">
-        /// The text color.
+        ///     The text color.
         /// </param>
         /// <param name="font">
-        /// The text font.
+        ///     The text font.
         /// </param>
         public TextComponent(
             Point position,
@@ -85,6 +60,31 @@
             this.SetScaledArea(
                 new Rectangle(position.X, position.Y, (int)Math.Ceiling(size.X), (int)Math.Ceiling(size.Y)));
         }
+
+        /// <summary>
+        ///     Gets or sets the text color.
+        /// </summary>
+        protected Color Color { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the text font.
+        /// </summary>
+        protected SpriteFont Font { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the text scale.
+        /// </summary>
+        protected float Scale { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether to use text shadow.
+        /// </summary>
+        protected bool Shadow { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the text.
+        /// </summary>
+        protected string Text { get; set; }
 
         /// <summary>
         ///     The draw handler for this component

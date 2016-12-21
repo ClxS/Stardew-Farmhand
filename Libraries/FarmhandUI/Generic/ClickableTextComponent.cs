@@ -10,71 +10,36 @@
     using StardewValley;
 
     /// <summary>
-    /// The clickable text component.
+    ///     The clickable text component.
     /// </summary>
     public class ClickableTextComponent : BaseInteractiveMenuComponent
     {
         /// <summary>
-        /// Gets or sets the text color.
-        /// </summary>
-        protected Color Color { get; set; }
-
-        /// <summary>
-        /// Gets or sets the text font.
-        /// </summary>
-        protected SpriteFont Font { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether text is hovered.
-        /// </summary>
-        protected bool Hovered { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether hover effect is enabled.
-        /// </summary>
-        protected bool HoverEffect { get; set; }
-
-        /// <summary>
-        /// Gets or sets the text scale.
-        /// </summary>
-        protected float Scale { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether shadow is enabled.
-        /// </summary>
-        protected bool Shadow { get; set; }
-
-        /// <summary>
-        /// Gets or sets the text to display.
-        /// </summary>
-        protected string Text { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ClickableTextComponent"/> class.
+        ///     Initializes a new instance of the <see cref="ClickableTextComponent" /> class.
         /// </summary>
         /// <param name="position">
-        /// The position of the component.
+        ///     The position of the component.
         /// </param>
         /// <param name="text">
-        /// The text to display.
+        ///     The text to display.
         /// </param>
         /// <param name="handler">
-        /// The click event handler.
+        ///     The click event handler.
         /// </param>
         /// <param name="hoverEffect">
-        /// Whether hover effects should be used.
+        ///     Whether hover effects should be used.
         /// </param>
         /// <param name="shadow">
-        /// Whether text shadow should be used.
+        ///     Whether text shadow should be used.
         /// </param>
         /// <param name="scale">
-        /// The scale of the text.
+        ///     The scale of the text.
         /// </param>
         /// <param name="color">
-        /// The color of the text.
+        ///     The color of the text.
         /// </param>
         /// <param name="font">
-        /// The font of the text.
+        ///     The font of the text.
         /// </param>
         public ClickableTextComponent(
             Point position,
@@ -113,7 +78,42 @@
         }
 
         /// <summary>
-        /// The click event handler.
+        ///     Gets or sets the text color.
+        /// </summary>
+        protected Color Color { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the text font.
+        /// </summary>
+        protected SpriteFont Font { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether text is hovered.
+        /// </summary>
+        protected bool Hovered { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether hover effect is enabled.
+        /// </summary>
+        protected bool HoverEffect { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the text scale.
+        /// </summary>
+        protected float Scale { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether shadow is enabled.
+        /// </summary>
+        protected bool Shadow { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the text to display.
+        /// </summary>
+        protected string Text { get; set; }
+
+        /// <summary>
+        ///     The click event handler.
         /// </summary>
         public event ClickHandler Handler;
 

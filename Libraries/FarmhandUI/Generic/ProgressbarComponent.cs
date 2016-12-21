@@ -11,46 +11,36 @@
     using StardewValley.Menus;
 
     /// <summary>
-    /// A progress bar component.
+    ///     A progress bar component.
     /// </summary>
     public class ProgressbarComponent : BaseMenuComponent
     {
         /// <summary>
-        /// Texture location of background sprite
+        ///     Texture location of background sprite
         /// </summary>
         protected static readonly Rectangle Background = new Rectangle(403, 383, 6, 6);
 
         /// <summary>
-        /// Texture location of filler sprite
+        ///     Texture location of filler sprite
         /// </summary>
         protected static readonly Rectangle Filler = new Rectangle(306, 320, 16, 16);
 
         /// <summary>
-        /// The value.
+        ///     The value.
         /// </summary>
         private int value;
 
         /// <summary>
-        /// Gets or sets the max value.
-        /// </summary>
-        protected int MaxValue { get; set; }
-
-        /// <summary>
-        /// Gets or sets the offset value.
-        /// </summary>
-        protected int OffsetValue { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProgressbarComponent"/> class.
+        ///     Initializes a new instance of the <see cref="ProgressbarComponent" /> class.
         /// </summary>
         /// <param name="position">
-        /// The position of the component.
+        ///     The position of the component.
         /// </param>
         /// <param name="value">
-        /// The value.
+        ///     The value.
         /// </param>
         /// <param name="maxValue">
-        /// The max value.
+        ///     The max value.
         /// </param>
         public ProgressbarComponent(Point position, int value, int maxValue)
         {
@@ -61,7 +51,17 @@
         }
 
         /// <summary>
-        /// Gets or sets the value.
+        ///     Gets or sets the max value.
+        /// </summary>
+        protected int MaxValue { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the offset value.
+        /// </summary>
+        protected int OffsetValue { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the value.
         /// </summary>
         public int Value
         {
@@ -77,10 +77,10 @@
         }
 
         /// <summary>
-        /// Gets the difference between the value and the offset value
+        ///     Gets the difference between the value and the offset value
         /// </summary>
         /// <returns>
-        /// The <see cref="int"/>.
+        ///     The <see cref="int" />.
         /// </returns>
         protected int GetDiff()
         {

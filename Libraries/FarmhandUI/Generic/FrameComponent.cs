@@ -9,21 +9,21 @@
     using StardewValley.Menus;
 
     /// <summary>
-    /// An empty frame component.
+    ///     An empty frame component.
     /// </summary>
     public class FrameComponent : BaseMenuComponent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FrameComponent"/> class.
+        ///     Initializes a new instance of the <see cref="FrameComponent" /> class.
         /// </summary>
         /// <param name="area">
-        /// The bounding area of this component.
+        ///     The bounding area of this component.
         /// </param>
         /// <param name="texture">
-        /// The frame texture.
+        ///     The frame texture.
         /// </param>
         /// <param name="crop">
-        /// The cropped area of this component.
+        ///     The cropped area of this component.
         /// </param>
         public FrameComponent(Rectangle area, Texture2D texture, Rectangle? crop = null)
             : base(area, texture, crop)

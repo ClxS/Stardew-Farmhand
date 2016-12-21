@@ -8,38 +8,33 @@
     using StardewValley;
 
     /// <summary>
-    /// A label component.
+    ///     A label component.
     /// </summary>
     public class LabelComponent : BaseMenuComponent
     {
         /// <summary>
-        /// Texture location of left side of label.
+        ///     Texture location of left side of label.
         /// </summary>
         protected static readonly Rectangle Left = new Rectangle(256, 267, 6, 16);
 
         /// <summary>
-        /// Texture location of right side of label.
+        ///     Texture location of right side of label.
         /// </summary>
         protected static readonly Rectangle Right = new Rectangle(263, 267, 6, 16);
 
         /// <summary>
-        /// Texture location of center of label.
+        ///     Texture location of center of label.
         /// </summary>
         protected static readonly Rectangle Center = new Rectangle(262, 267, 1, 16);
 
         /// <summary>
-        /// Gets or sets the label text.
-        /// </summary>
-        protected string Label { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LabelComponent"/> class.
+        ///     Initializes a new instance of the <see cref="LabelComponent" /> class.
         /// </summary>
         /// <param name="position">
-        /// The position of this component.
+        ///     The position of this component.
         /// </param>
         /// <param name="label">
-        /// The label text.
+        ///     The label text.
         /// </param>
         public LabelComponent(Point position, string label)
         {
@@ -47,6 +42,11 @@
                 new Rectangle(position.X, position.Y, this.GetStringWidth(label, Game1.smallFont) + 12, 16));
             this.Label = label;
         }
+
+        /// <summary>
+        ///     Gets or sets the label text.
+        /// </summary>
+        protected string Label { get; set; }
 
         /// <summary>
         ///     The draw handler for this component
