@@ -23,10 +23,7 @@
         ///     Texture location for empty heart sprite
         /// </summary>
         protected static readonly Rectangle HeartEmpty = new Rectangle(218, 428, 7, 6);
-
-        /// <summary>
-        ///     The number of selected hearts
-        /// </summary>
+        
         private int value;
 
         /// <summary>

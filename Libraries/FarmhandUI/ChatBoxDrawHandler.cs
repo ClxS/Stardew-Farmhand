@@ -23,15 +23,6 @@
             GameLogger.ChatBoxDraw += ChatBoxDraw;
         }
 
-        /// <summary>
-        ///     Determines the LogEntryType based on the start characters in the message
-        /// </summary>
-        /// <param name="message">
-        ///     The message to check.
-        /// </param>
-        /// <returns>
-        ///     The log entry type. <see cref="LogEntryType" />.
-        /// </returns>
         private static LogEntryType GetLogEntryType(string message)
         {
             if (message.StartsWith(":: [FHLOG-Err"))
@@ -66,16 +57,7 @@
 
             return LogEntryType.Verbose;
         }
-
-        /// <summary>
-        ///     Gets the appropriate color for a given LogEntryType
-        /// </summary>
-        /// <param name="type">
-        ///     The type to check.
-        /// </param>
-        /// <returns>
-        ///     The Color for this entry type. <see cref="Color" />.
-        /// </returns>
+        
         private static Color ConvertChatColour(LogEntryType type)
         {
             switch (type)
@@ -97,15 +79,6 @@
             }
         }
 
-        /// <summary>
-        ///     Handles drawing the chat box
-        /// </summary>
-        /// <param name="sender">
-        ///     The event sender.
-        /// </param>
-        /// <param name="chatBoxDrawEventArgs">
-        ///     Chat box draw event args.
-        /// </param>
         private static void ChatBoxDraw(object sender, ChatBoxDrawEventArgs chatBoxDrawEventArgs)
         {
             var @this = chatBoxDrawEventArgs.ChatBox;

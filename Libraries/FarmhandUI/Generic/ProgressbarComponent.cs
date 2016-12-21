@@ -25,9 +25,6 @@
         /// </summary>
         protected static readonly Rectangle Filler = new Rectangle(306, 320, 16, 16);
 
-        /// <summary>
-        ///     The value.
-        /// </summary>
         private int value;
 
         /// <summary>

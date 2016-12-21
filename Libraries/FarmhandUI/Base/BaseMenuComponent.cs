@@ -113,15 +113,9 @@
         ///     Zoom level 28 (pixelZoom * 28).
         /// </summary>
         protected static readonly int Zoom28 = 28 * Game1.pixelZoom;
-
-        /// <summary>
-        ///     The bounding area of this component
-        /// </summary>
+        
         private Rectangle area;
-
-        /// <summary>
-        ///     The parent container of this component
-        /// </summary>
+        
         private IComponentContainer parent;
 
         /// <summary>

@@ -37,10 +37,7 @@
         ///     Texture location for dropdown down scroll button
         /// </summary>
         protected static readonly Rectangle DownScroll = new Rectangle(421, 472, 11, 12);
-
-        /// <summary>
-        ///     The value of the dropdown
-        /// </summary>
+        
         private string value;
 
         /// <summary>
