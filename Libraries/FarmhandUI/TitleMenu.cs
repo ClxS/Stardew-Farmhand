@@ -325,6 +325,15 @@
         }
 
         /// <summary>
+        /// Skips initial logo screens
+        /// </summary>
+        public void SkipToTitleButtons()
+        {
+            this.skipToTitleButtons();
+            this.ChuckleFishTimer = 0;
+        }
+
+        /// <summary>
         ///     Game method override.
         /// </summary>
         /// <param name="x">

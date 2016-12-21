@@ -1,0 +1,8 @@
+﻿{
+	"UniqueId" : "ClxSTitleSkipMod",
+	"Name" : "Title Skip Mod",
+	"Author": "ClxS",
+	"ModDll": "TitleSkipMod",
+	"Version" : "0.1",
+	"Description" : "A mod for my own sanity."
+}
