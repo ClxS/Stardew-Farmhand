@@ -10,12 +10,12 @@
     using StardewValley;
 
     /// <summary>
-    /// A draw handler responsible for the chat box
+    ///     A draw handler responsible for the chat box
     /// </summary>
     public static class ChatBoxDrawHandler
     {
         /// <summary>
-        /// Hooks up the GameLogger.ChatBoxDraw to our ChatBoxDraw method. Invoked via a hook into EventManager.ManualHookup.
+        ///     Hooks up the GameLogger.ChatBoxDraw to our ChatBoxDraw method. Invoked via a hook into EventManager.ManualHookup.
         /// </summary>
         [Hook(HookType.Entry, "Farmhand.Events.EventManager", "ManualHookup")]
         public static void HookUpDrawEvent()
@@ -24,13 +24,13 @@
         }
 
         /// <summary>
-        /// Determines the LogEntryType based on the start characters in the message
+        ///     Determines the LogEntryType based on the start characters in the message
         /// </summary>
         /// <param name="message">
-        /// The message to check.
+        ///     The message to check.
         /// </param>
         /// <returns>
-        /// The log entry type. <see cref="LogEntryType"/>.
+        ///     The log entry type. <see cref="LogEntryType" />.
         /// </returns>
         private static LogEntryType GetLogEntryType(string message)
         {
@@ -68,13 +68,13 @@
         }
 
         /// <summary>
-        /// Gets the appropriate color for a given LogEntryType
+        ///     Gets the appropriate color for a given LogEntryType
         /// </summary>
         /// <param name="type">
-        /// The type to check.
+        ///     The type to check.
         /// </param>
         /// <returns>
-        /// The Color for this entry type. <see cref="Color"/>.
+        ///     The Color for this entry type. <see cref="Color" />.
         /// </returns>
         private static Color ConvertChatColour(LogEntryType type)
         {
@@ -98,13 +98,13 @@
         }
 
         /// <summary>
-        /// Handles drawing the chat box
+        ///     Handles drawing the chat box
         /// </summary>
         /// <param name="sender">
-        /// The event sender.
+        ///     The event sender.
         /// </param>
         /// <param name="chatBoxDrawEventArgs">
-        /// Chat box draw event args.
+        ///     Chat box draw event args.
         /// </param>
         private static void ChatBoxDraw(object sender, ChatBoxDrawEventArgs chatBoxDrawEventArgs)
         {
