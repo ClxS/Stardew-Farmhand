@@ -62,12 +62,51 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\BaseFormComponent.cs" />
+    <Compile Include="Base\BaseInteractiveMenuComponent.cs" />
+    <Compile Include="Base\BaseKeyboardFormComponent.cs" />
+    <Compile Include="Base\BaseMenuComponent.cs" />
     <Compile Include="ChatBoxDrawHandler.cs" />
+    <Compile Include="Containers\ClickableCollectionComponent.cs" />
+    <Compile Include="Containers\FormCollectionComponent.cs" />
+    <Compile Include="Containers\GenericCollectionComponent.cs" />
+    <Compile Include="Containers\ScrollableCollectionComponent.cs" />
+    <Compile Include="Containers\TablistComponent.cs" />
+    <Compile Include="Form\ButtonFormComponent.cs" />
+    <Compile Include="Form\CheckboxFormComponent.cs" />
+    <Compile Include="Form\DropdownFormComponent.cs" />
+    <Compile Include="Form\PlusMinusFormComponent.cs" />
+    <Compile Include="Form\SliderFormComponentInt.cs" />
+    <Compile Include="Form\SliderFormComponent.cs" />
+    <Compile Include="Form\TextboxFormComponent.cs" />
+    <Compile Include="FrameworkMenu.cs" />
     <Compile Include="GameMenu.cs" />
+    <Compile Include="Generic\AnimatedComponent.cs" />
+    <Compile Include="Generic\ClickableAnimatedComponent.cs" />
+    <Compile Include="Generic\ClickableHeartsComponent.cs" />
+    <Compile Include="Generic\ClickableTextComponent.cs" />
+    <Compile Include="Generic\ClickableTextureComponent.cs" />
+    <Compile Include="Generic\FrameComponent.cs" />
+    <Compile Include="Generic\HeartsComponent.cs" />
+    <Compile Include="Generic\LabelComponent.cs" />
+    <Compile Include="Generic\ProgressbarComponent.cs" />
+    <Compile Include="Generic\TextComponent.cs" />
+    <Compile Include="Generic\TextureComponent.cs" />
+    <Compile Include="Interfaces\IComponentCollection.cs" />
+    <Compile Include="Interfaces\IComponentContainer.cs" />
+    <Compile Include="Interfaces\IIinteractiveMenuComponent.cs" />
+    <Compile Include="Interfaces\IKeyboardComponent.cs" />
+    <Compile Include="Interfaces\IMenuComponent.cs" />
+    <Compile Include="KeyboardSubscriberProxy.cs" />
+    <Compile Include="OverlayManager.cs" />
     <Compile Include="ShopMenu.cs" />
     <Compile Include="TitleMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\DisableableOptionCheckbox.cs" />
+    <Compile Include="Wrapper\ClickableCancelComponent.cs" />
+    <Compile Include="Wrapper\ClickableConfirmComponent.cs" />
+    <Compile Include="Wrapper\ClickableObjectComponent.cs" />
+    <Compile Include="Wrapper\ObjectComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\TitleButtons.png" />

@@ -1,15 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Farmhand.Attributes;
-using Farmhand.Extensibility;
-using StardewValley;
-
-namespace Farmhand.API
+﻿namespace Farmhand.API
 {
-    internal static class Game
+    using System;
+    using System.Linq;
+
+    using Farmhand.Extensibility;
+
+    using StardewValley;
+    using StardewValley.Menus;
+
+    /// <summary>
+    /// Game-related API Functionality
+    /// </summary>
+    public static class Game
     {
-        public static Game1 CreateGameInstance()
+        /// <summary>
+        /// Gets or sets the current active clickable menu.
+        /// </summary>
+        public static IClickableMenu ActiveClickableMenu
+        {
+            get
+            {
+                return Game1.activeClickableMenu;
+            }
+            set
+            {
+                Game1.activeClickableMenu = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether has loaded game.
+        /// </summary>
+        public static bool HasLoadedGame
+        {
+            get
+            {
+                return Game1.hasLoadedGame;
+            }
+        }
+
+        /// <summary>
+        /// Gets the current event.
+        /// </summary>
+        public static Event CurrentEvent
+        {
+            get
+            {
+                return Game1.CurrentEvent;
+            }
+        }
+
+        internal static Game1 CreateGameInstance()
         {
             var overridingExtension = ExtensibilityManager.Extensions.FirstOrDefault(e => e.GameOverrideClass != null);
             if (overridingExtension != null)
@@ -19,7 +60,5 @@ namespace Farmhand.API
 
             return new Game1();
         }
-
-
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Farmhand.Attributes;
 using Farmhand.Extensibility;
+using Microsoft.Xna.Framework;
 using StardewValley;
 
 namespace Farmhand.Events
@@ -68,9 +69,9 @@ namespace Farmhand.Events
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Update")]
-        public static void ManualEventChecks()
+        public static void ManualEventChecks([InputBind(typeof(GameTime), "gameTime")] GameTime gameTime)
         {
-            Watcher.CheckForChanges();
+            Watcher.CheckForChanges(gameTime);
         }
 
         public void DetachDelegates(Assembly assembly)
