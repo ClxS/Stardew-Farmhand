@@ -301,12 +301,30 @@ namespace Farmhand.Registries.Containers
                 XnbRegistry.RegisterItem(file.Original, file, this);
             }
         }
-        
+
+        /// <summary>
+        /// Gets a texture registered by this mod via it's manifest file
+        /// </summary>
+        /// <param name="id">
+        /// The id of the texture.
+        /// </param>
+        /// <returns>
+        /// The registered <see cref="Texture2D"/>.
+        /// </returns>
         public Texture2D GetTexture(string id)
         {
             return TextureRegistry.GetItem(id, this).Texture;
         }
 
+        /// <summary>
+        /// Gets a map registered by this mod via it's manifest file
+        /// </summary>
+        /// <param name="id">
+        /// The id of the map.
+        /// </param>
+        /// <returns>
+        /// The registered <see cref="Map"/>.
+        /// </returns>
         public Map GetMap(string id)
         {
             return MapRegistry.GetItem(id, this).Map;
@@ -314,12 +332,12 @@ namespace Farmhand.Registries.Containers
 
         #endregion
 
-        public void OnBeforeLoaded()
+        internal void OnBeforeLoaded()
         {
             BeforeLoaded?.Invoke(this, EventArgs.Empty);
         }
 
-        public void OnAfterLoaded()
+        internal void OnAfterLoaded()
         {
             AfterLoaded?.Invoke(this, EventArgs.Empty);
         }
