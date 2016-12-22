@@ -14,6 +14,8 @@ using StardewValley;
 
 namespace MenuTestMod
 {
+    using Microsoft.Xna.Framework.Input;
+
     public class FrameworkMenuTestMod : Mod
     {
         internal static ProgressbarComponent prog=new ProgressbarComponent(new Point(0, 20), 0, 40);
@@ -27,24 +29,19 @@ namespace MenuTestMod
         public override void Entry()
         {
             GameEvents.OnAfterUpdateTick += GameEvents_UpdateTick;
-            GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;
-            //GameEvents.OnAfterLoadedContent += GameEvents_OnAfterLoadedContent;
-            //Command.RegisterCommand("fmt_main", "Show the main Framework Menu Test interface").CommandFired += MainInterface;
-            //Command.RegisterCommand("fmt_example", "Show the mod menu example Framework Menu Test interface").CommandFired += ExampleInterface;
+            Farmhand.Events.ControlEvents.OnKeyReleased += ControlEvents_OnKeyReleased;
         }
 
-        public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
+        private void ControlEvents_OnKeyReleased(object sender, Farmhand.Events.Arguments.ControlEvents.EventArgsKeyPressed e)
         {
-            var test = ModRegistry.GetRegisteredItems();
-            var texture = ModSettings.GetTexture("icon_menuModsButton");
-
-            Farmhand.UI.TitleMenu.RegisterNewTitleButton(new Farmhand.UI.TitleMenu.CustomTitleOption
+            if (e.KeyPressed == Keys.F5)
             {
-                Key = "MenuTest",
-                Texture = texture,
-                TextureSourceRect = new Rectangle(222, 237, 74, 58),
-                OnClick = OnModMenuItemClicked
-            });
+                MainInterface(null, null);
+            }
+            else if (e.KeyPressed == Keys.F6)
+            {
+                ExampleInterface(null, null);
+            }
         }
 
         public void OnModMenuItemClicked(Farmhand.UI.TitleMenu menu, string choice)
