@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Farmhand.Events;
+using Farmhand.Extensibility;
 using Farmhand.Helpers;
 using Farmhand.Logging;
 using StardewValley;
@@ -24,11 +25,9 @@ namespace Farmhand
         /// </summary>
         public static List<string> ModPaths = new List<string>
         {
-            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods"
+            Constants.DefaultModPath
         };
-
-        internal static List<CompatibilityLayer> CompatibilityLayers { get; set; } = new List<CompatibilityLayer>();
-
+        
         internal static EventManager ModEventManager = new EventManager();
 
         /// <summary>
@@ -36,7 +35,7 @@ namespace Farmhand
         /// the ModLoader when encountering a SMAPI mod
         /// </summary>
         public static bool UsingSmapiMods = false;
-        
+
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void LoadMods()
         {
@@ -55,6 +54,7 @@ namespace Farmhand
             Log.Info("Loading Mods...");
             try
             {
+                Log.Verbose("Loading Farmhand Mods");
                 Log.Verbose("Loading Mod Manifests");
                 LoadModManifests();
                 Log.Verbose("Validating Mod Manifests");
@@ -63,6 +63,9 @@ namespace Farmhand
                 ResolveDependencies();
                 Log.Verbose("Importing Mod DLLs, Settings, and Content");
                 LoadFinalMods();
+
+                var modsPath = ModPaths.First();
+                ExtensibilityManager.LoadMods(modsPath);
             }
             catch (Exception ex)
             {
@@ -89,55 +92,30 @@ namespace Farmhand
             {
                 return Assembly.GetExecutingAssembly();
             }
-            return null;
-        }
-
-        internal static void TryLoadModCompatiblityLayers()
-        {
-            Log.Verbose("Loading Compatibility Layers");
-            string[] layers = {"StardewModdingAPI.dll"};
-
-            foreach (var layer in layers)
+            if (args.Name.StartsWith("Newtonsoft.Json"))
             {
-                try
+                return Assembly.GetExecutingAssembly();
+            }
+            if (args.Name.StartsWith("Mono.Cecil"))
+            {
+                return Assembly.GetExecutingAssembly();
+            }
+
+            foreach (var extension in ExtensibilityManager.Extensions)
+            {
+                if (extension?.Manifest?.AssemblyRedirect != null && extension.Manifest.AssemblyRedirect.Contains(args.Name))
                 {
-                    Log.Verbose($"Trying to load {layer}");
-                    if (!File.Exists(layer))
-                    {
-                        Log.Verbose($"{layer} not present");
-                        continue;
-                    }
-
-                    var assm = Assembly.LoadFrom(layer);
-                    if (assm.GetTypes().Count(x => x.BaseType == typeof (CompatibilityLayer)) <= 0) continue;
-                    
-                    var type = assm.GetTypes().First(x => x.BaseType == typeof(CompatibilityLayer));
-                    var inst = (CompatibilityLayer)assm.CreateInstance(type.ToString());
-                    if (inst == null) continue;
-
-                    inst.OwnAssembly = assm;
-
-                    if (inst.GameOverrideType != null)
-                    {
-                        Log.Verbose($"Override {inst.GameOverrideType}");
-                        API.Game.RegisterGameOverride(inst.GameOverrideType);
-                    }
-
-                    CompatibilityLayers.Add(inst);
-                    inst.AttachEvents(Game1.game1);
-                }
-                catch (ReflectionTypeLoadException ex)
-                {
-                    var test = ex.LoaderExceptions;
-                    Log.Exception("Failed to load compatibility layer" + test[0].Message, ex);
+                    return extension.OwnAssembly;
                 }
             }
+
+            return null;
         }
 
         private static void ApiEvents_OnModError(object sender, Events.Arguments.EventArgsOnModError e)
         {
-            var mod = ModRegistry.GetRegisteredItems().FirstOrDefault(n => n.ModAssembly == e.Assembly);
-            if(mod != null)
+            var mod = (ModManifest)ModRegistry.GetRegisteredItems().FirstOrDefault(n => n.IsFarmhandMod && ((ModManifest)n).ModAssembly == e.Assembly);
+            if (mod != null)
             {
                 Log.Exception($"Exception thrown by mod: {mod.Name} - {mod.Author}", e.Exception);
                 DeactivateMod(mod, ModState.Errored, e.Exception);
@@ -153,7 +131,7 @@ namespace Farmhand
         private static void ValidateModManifests()
         {
             var registeredMods = ModRegistry.GetRegisteredItems();
-            foreach (var mod in registeredMods.Where(n => n.ModState == ModState.Unloaded))
+            foreach (var mod in registeredMods.Where(n => n.IsFarmhandMod && n.ModState == ModState.Unloaded).Cast<ModManifest>())
             {
                 try
                 {
@@ -168,7 +146,7 @@ namespace Farmhand
                         mod.ModState = ModState.InvalidManifest;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Log.Error($"Error validating mod {mod.Name} by {mod.Author}\n\t-{ex.Message}");
                 }
@@ -178,7 +156,7 @@ namespace Farmhand
         private static void LoadFinalMods()
         {
             var registeredMods = ModRegistry.GetRegisteredItems();
-            foreach(var mod in registeredMods.Where(n => n.ModState == ModState.Unloaded))
+            foreach (var mod in registeredMods.Where(n => n.IsFarmhandMod && n.ModState == ModState.Unloaded).Cast<ModManifest>())
             {
                 Log.Verbose($"Loading mod: {mod.Name} by {mod.Author}");
                 try
@@ -214,12 +192,12 @@ namespace Farmhand
 
         private static void ResolveDependencies()
         {
-            var registeredMods = ModRegistry.GetRegisteredItems();
+            var registeredMods = ModRegistry.GetRegisteredItems().Where(n => n.IsFarmhandMod).Cast<ModManifest>();
 
             //Loop to verify every dependent mod is available. 
             bool stateChange = false;
             var modInfos = registeredMods as ModManifest[] ?? registeredMods.ToArray();
-            do 
+            do
             {
                 foreach (var mod in modInfos)
                 {
@@ -283,12 +261,14 @@ namespace Farmhand
                         {
                             var json = r.ReadToEnd();
                             var modInfo = JsonConvert.DeserializeObject<ModManifest>(json, new VersionConverter());
-                            
+
                             modInfo.ModDirectory = perModPath;
                             ModRegistry.RegisterItem(modInfo.UniqueId ?? new UniqueId<string>(Guid.NewGuid().ToString()), modInfo);
                         }
                     }
                 }
+
+
             }
         }
 
@@ -318,8 +298,8 @@ namespace Farmhand
                 mod.LastException = error;
                 Log.Success($"Successfully unloaded mod {mod.Name} by {mod.Author}");
             }
-            catch (Exception )
-            { 
+            catch (Exception)
+            {
                 // Ignored
             }
         }

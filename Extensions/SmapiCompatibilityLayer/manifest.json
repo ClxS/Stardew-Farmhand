@@ -1,0 +1,12 @@
+﻿{
+  "UniqueId": "SmapiCompatibilityExtension",
+  "Name": "Stardew Modding API Extension",
+  "Author": "ClxS",
+  "ExtensionDll": "StardewModdingAPI",
+  "Description": "An extension which provides SMAPI support for Stardew Farmhand",
+  "LoadOnlyIfModsPresent": true,
+  "ModsFolder": "SMAPI",
+  "AssemblyDirect": [
+    "StardewModdingAPI"
+  ] 
+}

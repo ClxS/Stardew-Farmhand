@@ -135,6 +135,15 @@ namespace Farmhand.UI
             }
         }
 
+        /// <summary>
+        /// Skips initial logo screens
+        /// </summary>
+        public void SkipToTitleButtons()
+        {
+            this.skipToTitleButtons();
+            this.ChuckleFishTimer = 0;
+        }
+
         public override void receiveLeftClick(int x, int y, bool playSound = true)
         {
             base.receiveLeftClick(x, y, playSound);

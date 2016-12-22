@@ -3,6 +3,8 @@ using Farmhand.Logging;
 using Farmhand.Events.Arguments.TimeEvents;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Farmhand.Events.Arguments.Common;
+using StardewValley;
 
 namespace Farmhand.Events
 {
@@ -12,8 +14,8 @@ namespace Farmhand.Events
     public static class TimeEvents
     {
 #pragma warning disable 67
-        public static event EventHandler OnBeforeTimeChanged = delegate { };
-        public static event EventHandler OnAfterTimeChanged = delegate { };
+        public static event EventHandler<EventArgsIntChanged> OnBeforeTimeChanged = delegate { };
+        public static event EventHandler<EventArgsIntChanged> OnAfterTimeChanged = delegate { };
         public static event EventHandler OnBeforeDayChanged = delegate { };
         public static event EventHandler OnAfterDayChanged = delegate { };
         public static event EventHandler OnBeforeSeasonChanged = delegate { };
@@ -28,20 +30,18 @@ namespace Farmhand.Events
         [Hook(HookType.Entry, "StardewValley.Game1", "performTenMinuteClockUpdate")]
         internal static void InvokeBeforeTimeChanged()
         {
-            try
-            {
-                EventCommon.SafeInvoke(OnBeforeTimeChanged, null);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex.Message);
-            }
+            var newTime = Game1.timeOfDay + 10;
+            if (newTime % 100 >= 60)
+                newTime = newTime - (newTime % 100) + 100;
+            
+            EventCommon.SafeInvoke(OnBeforeTimeChanged, null, new EventArgsIntChanged(Game1.timeOfDay, newTime));
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "performTenMinuteClockUpdate")]
         internal static void InvokeAfterTimeChanged()
         {
-            EventCommon.SafeInvoke(OnAfterTimeChanged, null);
+            var oldTime = Game1.timeOfDay - 10;
+            EventCommon.SafeInvoke(OnAfterTimeChanged, null, new EventArgsIntChanged(oldTime, Game1.timeOfDay));
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "newDayAfterFade")]

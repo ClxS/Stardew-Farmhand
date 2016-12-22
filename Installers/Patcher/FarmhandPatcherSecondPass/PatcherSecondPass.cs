@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Farmhand.Cecil;
 using System.Reflection;
@@ -29,8 +30,17 @@ namespace Farmhand
             HookGlobalRouting(cecilContext);
            
             Console.WriteLine("Second Pass Installation Completed");
-
+            
             path = path ?? PatcherConstants.FarmhandExe;
+            var directory = Path.GetDirectoryName(path); 
+
+            if (directory == null)
+            {
+                throw new Exception("Path.GetDirectoryName(path) returned null");
+            }
+
+            Directory.CreateDirectory(directory);
+
             cecilContext.WriteAssembly(path, true);
         }
         
@@ -140,7 +150,7 @@ namespace Farmhand
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Failed to Inject {typeName}.{methodName} into {hookTypeName}.{hookMethodName}\n\t{ex.Message}");
-                        throw ex;
+                        throw;
                     }
                 }
             }

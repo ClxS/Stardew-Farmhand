@@ -41,13 +41,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
-      <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.dll</HintPath>
+      <HintPath>..\..\Staging\Microsoft.Xna.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
-      <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.Game.dll</HintPath>
+      <HintPath>..\..\Staging\Microsoft.Xna.Framework.Game.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
-      <HintPath>..\..\WorkingDirectory\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+      <HintPath>..\..\Staging\Microsoft.Xna.Framework.Graphics.dll</HintPath>
     </Reference>
     <Reference Include="Stardew Farmhand.int1, Version=1.0.5940.30711, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="xTile, Version=2.0.4.0, Culture=neutral, PublicKeyToken=null">
       <Private>False</Private>
-      <HintPath>..\..\WorkingDirectory\xTile.dll</HintPath>
+      <HintPath>..\..\Staging\xTile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using Farmhand.Helpers;
 
@@ -13,6 +14,10 @@ namespace Farmhand
         /// The directory name under which mods store their mod specific content
         /// </summary>
         public static string ModContentDirectory => "Content";
+
+        public static string ExtensionsDirectory => "Extensions";
+
+        public static string DefaultModPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Mods";
 
         public static Version Version { get; } = new Version(0, 1, 0, 1);
 
