@@ -250,6 +250,7 @@
     <Compile Include="FarmhandConfig.cs" />
     <Compile Include="Helpers\ArgumentsHelper.cs" />
     <Compile Include="Helpers\ReferenceFix.cs" />
+    <Compile Include="Mods\ModSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Extensibility\FarmhandExtension.cs" />
@@ -272,9 +273,7 @@
     <Compile Include="Menus\ChatBox.cs" />
     <Compile Include="Menus\GameMenu.cs" />
     <Compile Include="Menus\TitleMenu.cs" />
-    <Compile Include="Mods\ConfigExtensions.cs" />
     <Compile Include="Mods\Mod.cs" />
-    <Compile Include="Mods\ModConfiguration.cs" />
     <Compile Include="Mods\ModLoader.cs" />
     <Compile Include="Mods\ModState.cs" />
     <Compile Include="Overrides\Characters\Monster.cs" />

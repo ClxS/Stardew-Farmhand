@@ -1,0 +1,8 @@
+﻿{
+  "UniqueId": "Clxs'sTestPerSaveSettings",
+  "Name": "Test Per Save Settings",
+  "ModDll": "TestPerSaveSettingsMod",
+  "Author": "ClxS",
+  "Version": "0.1",
+  "Description": "Tests global settings."
+}

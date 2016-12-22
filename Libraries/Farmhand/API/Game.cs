@@ -50,6 +50,16 @@
             }
         }
 
+        /// <summary>
+        /// Gets the current player.
+        /// </summary>
+        public static Farmer Player => Game1.player;
+
+        /// <summary>
+        /// Gets a save's unique identifier
+        /// </summary>
+        public static ulong GameUniqueId => Game1.uniqueIDForThisGame;
+
         internal static Game1 CreateGameInstance()
         {
             var overridingExtension = ExtensibilityManager.Extensions.FirstOrDefault(e => e.GameOverrideClass != null);

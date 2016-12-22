@@ -336,5 +336,24 @@ namespace Farmhand
                 ModEventManager.ReattachDelegates(mod.ModAssembly);
             }
         }
+
+        /// <summary>
+        /// Forces the game to reload mod configurations which use save specific settings.
+        /// </summary>
+        public static void ReloadConfigurations()
+        {
+            var mods = ModRegistry.GetRegisteredItems().Where(n => n.IsFarmhandMod).Cast<ModManifest>();
+            foreach (var mod in mods)
+            {
+                var config = mod.Instance?.ConfigurationSettings;
+                if (config != null)
+                {
+                    if (config.UseSaveSpecificConfiguration)
+                    {
+                        config.Load();
+                    }
+                }
+            }
+        }
     }
 }
