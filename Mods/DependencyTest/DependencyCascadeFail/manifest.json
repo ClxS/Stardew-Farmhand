@@ -1,0 +1,13 @@
+﻿{
+  "UniqueId": "DependencyCascadeFail",
+  "Name": "DependencyCascadeFail",
+  "Author": "ClxS",
+  "ModDll": "DependencyCascadeFail",
+  "Version": "0.1",
+  "Description": "",
+  "Dependencies": [
+    {
+      "UniqueId": "DependencyFailLoad"
+    }
+  ]
+}

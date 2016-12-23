@@ -10,8 +10,8 @@ namespace Farmhand.Events
     /// </summary>
     public static class GameEvents
     {
-        public static EventHandler<EventArgsOnGameInitialise> OnBeforeGameInitialised = delegate { };
-        public static EventHandler<EventArgsOnGameInitialised> OnAfterGameInitialised = delegate { };
+        public static event EventHandler<EventArgsOnGameInitialise> OnBeforeGameInitialised = delegate { };
+        public static event EventHandler<EventArgsOnGameInitialised> OnAfterGameInitialised = delegate { };
         public static event EventHandler OnBeforeLoadContent = delegate { };
         public static event EventHandler OnAfterLoadedContent = delegate { };
         public static event EventHandler OnBeforeUnloadContent = delegate { };

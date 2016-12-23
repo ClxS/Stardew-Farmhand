@@ -1,0 +1,50 @@
+﻿{
+  "UniqueId": "DependencyValidator",
+  "Name": "DependencyValidator",
+  "Author": "ClxS",
+  "ModDll": "DependencyValidator",
+  "Version": "0.1",
+  "Description": "",
+  "Dependencies": [
+    {
+      "UniqueId": "DependencyBaseEntryFail",
+      "IsRequired": false
+    },
+    {
+      "UniqueId": "DependencyBaseSuccess",
+      "IsRequired": false
+    },
+    {
+      "UniqueId": "DependencyFailLoad",
+      "IsRequired": false
+    },
+    {
+      "UniqueId": "DependencyOldVersion",
+      "IsRequired": false
+    },
+    {
+      "UniqueId": "DependencySuccess",
+      "IsRequired": false
+    },
+    {
+      "UniqueId": "DependencySuccessMaxVersion",
+      "IsRequired": false
+    },
+    {
+      "UniqueId": "DependencySuccessMinVersion",
+      "IsRequired": false
+    },
+    {
+      "UniqueId": "DependencySuccessNotRequired",
+      "IsRequired": false
+    },
+    {
+      "UniqueId": "DependencyTooRecentVersion",
+      "IsRequired": false
+    },
+    {
+      "UniqueId": "DependencyCascadeFail",
+      "IsRequired": false
+    }
+  ]
+}

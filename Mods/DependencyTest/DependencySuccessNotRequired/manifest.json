@@ -1,0 +1,14 @@
+﻿{
+  "UniqueId": "DependencySuccessNotRequired",
+  "Name": "DependencySuccessNotRequired",
+  "Author": "ClxS",
+  "ModDll": "DependencySuccessNotRequired",
+  "Version": "0.1",
+  "Description": "",
+  "Dependencies": [
+    {
+      "UniqueId": "DependencyBaseEntryFail",
+      "IsRequired": false
+    }
+  ]
+}

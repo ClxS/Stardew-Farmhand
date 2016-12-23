@@ -1,0 +1,13 @@
+﻿{
+  "UniqueId": "DependencyMissing",
+  "Name": "DependencyMissing",
+  "Author": "ClxS",
+  "ModDll": "DependencyMissing",
+  "Version": "0.1",
+  "Description": "",
+  "Dependencies": [
+    {
+      "UniqueId": "TestMissingDependency"
+    }
+  ]
+}

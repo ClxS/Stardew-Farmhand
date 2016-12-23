@@ -1,0 +1,14 @@
+﻿{
+  "UniqueId": "DependencySuccessMinVersion",
+  "Name": "DependencySuccessMinVersion",
+  "Author": "ClxS",
+  "ModDll": "DependencySuccessMinVersion",
+  "Version": "0.1",
+  "Description": "",
+  "Dependencies": [
+    {
+      "UniqueId": "DependencyBaseSuccess",
+      "MinimumVersion": "1.1"
+    }
+  ]
+}

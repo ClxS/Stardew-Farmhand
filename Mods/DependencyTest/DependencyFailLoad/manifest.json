@@ -1,0 +1,13 @@
+﻿{
+  "UniqueId": "DependencyFailLoad",
+  "Name": "DependencyFailLoad",
+  "Author": "ClxS",
+  "ModDll": "DependencyFailLoad",
+  "Version": "0.1",
+  "Description": "",
+  "Dependencies": [
+    {
+      "UniqueId": "DependencyBaseEntryFail"
+    }
+  ]
+}

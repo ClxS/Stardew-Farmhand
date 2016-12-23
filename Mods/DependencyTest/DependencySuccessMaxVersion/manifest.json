@@ -1,0 +1,14 @@
+﻿{
+  "UniqueId": "DependencySuccessMaxVersion",
+  "Name": "DependencySuccessMaxVersion",
+  "Author": "ClxS",
+  "ModDll": "DependencySuccessMaxVersion",
+  "Version": "0.1",
+  "Description": "",
+  "Dependencies": [
+    {
+      "UniqueId": "DependencyBaseSuccess",
+      "MaximumVersion": "1.5"
+    }
+  ]
+}

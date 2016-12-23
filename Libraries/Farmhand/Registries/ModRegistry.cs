@@ -4,6 +4,8 @@ using Farmhand.Helpers;
 
 namespace Farmhand.Registries
 {
+    using System.Linq;
+
     /// <summary>
     /// Holds a reference to every loaded mod manifest
     /// </summary>
@@ -20,6 +22,16 @@ namespace Farmhand.Registries
         public static IModManifest GetItem(UniqueId<string> key)
         {
             return RegistryInstance.GetItem(key);
+        }
+
+        /// <summary>
+        /// Returns a selected mod manifest
+        /// </summary>
+        /// <param name="key">The ID of the mod</param>
+        /// <returns></returns>
+        public static IModManifest GetItem(string key)
+        {
+            return RegistryInstance.GetRegisteredItems().FirstOrDefault(m => m.UniqueId.Equals(key));
         }
 
         /// <summary>

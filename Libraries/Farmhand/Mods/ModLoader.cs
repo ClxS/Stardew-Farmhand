@@ -155,39 +155,132 @@ namespace Farmhand
 
         private static void LoadFinalMods()
         {
-            var registeredMods = ModRegistry.GetRegisteredItems();
-            foreach (var mod in registeredMods.Where(n => n.IsFarmhandMod && n.ModState == ModState.Unloaded).Cast<ModManifest>())
+            Func<ModManifest[], List<ModManifest>, List<ModManifest>, List<ModManifest>, ModManifest[]> getModsForThisPass = (mods, modsLoaded, modsErrored, modsProcessed) =>
+                {
+                    Func<ModDependency, bool> isDependencyLoaded = (dependency) =>
+                        {
+                            if (dependency.IsRequired)
+                            {
+                                return modsLoaded.Any(ld => ld.UniqueId.Equals(dependency.UniqueId));
+                            }
+                            else
+                            {
+                                var dependentMod = mods.FirstOrDefault(n => n.UniqueId.Equals(dependency.UniqueId));
+                                return dependentMod?.ModState != ModState.Unloaded;
+                            }
+                        };
+                    
+                    return
+                        mods.Where(
+                                n =>
+                                    n.ModState == ModState.Unloaded &&
+                                    (n.Dependencies == null || 
+                                    n.Dependencies.All(d => isDependencyLoaded(d))))
+                            .ToArray();
+                };
+
+            var modsToLoad = ModRegistry.GetRegisteredItems().Where(n => n.IsFarmhandMod).Cast<ModManifest>().ToArray();
+            var loadedMods = new List<ModManifest>();
+            var erroredMods = new List<ModManifest>();
+            var processedMods = new List<ModManifest>();
+
+            var modsThisPass = getModsForThisPass(modsToLoad, loadedMods, erroredMods, processedMods);
+
+            while (modsThisPass.Any())
             {
-                Log.Verbose($"Loading mod: {mod.Name} by {mod.Author}");
-                try
+                foreach (var mod in modsThisPass)
                 {
-                    ApiEvents.InvokeModPreLoad(mod);
-                    mod.OnBeforeLoaded();
-                    if (mod.HasContent)
+                    processedMods.Add(mod);
+                    if (mod.ModState == ModState.DependencyLoadError)
                     {
-                        mod.LoadContent();
+                        erroredMods.Add(mod);
+                        continue;
                     }
-                    if (mod.HasDll)
+
+                    Log.Verbose($"Loading mod: {mod.Name} by {mod.Author}");
+                    try
                     {
-                        mod.LoadModDll();
+                        ApiEvents.InvokeModPreLoad(mod);
+                        mod.OnBeforeLoaded();
+                        if (mod.HasContent)
+                        {
+                            mod.LoadContent();
+                        }
+
+                        if (mod.HasDll)
+                        {
+                            if (!mod.LoadModDll())
+                            {
+                                mod.ModState = ModState.Errored;
+                                ApiEvents.InvokeModLoadError(mod);
+                                erroredMods.Add(mod);
+                                BubbleDependencyLoadError(mod);
+                                continue;
+                            }
+                        }
+
+                        mod.ModState = ModState.Loaded;
+                        mod.OnAfterLoaded();
+                        Log.Success($"Loaded Mod: {mod.Name} v{mod.Version} by {mod.Author}");
+                        ApiEvents.InvokeModPostLoad(mod);
+                        loadedMods.Add(mod);
                     }
-                    mod.ModState = ModState.Loaded;
-                    mod.OnAfterLoaded();
-                    Log.Success($"Loaded Mod: {mod.Name} v{mod.Version} by {mod.Author}");
-                    ApiEvents.InvokeModPostLoad(mod);
+                    catch (Exception ex)
+                    {
+                        mod.ModState = ModState.Errored;
+                        Log.Exception($"Error loading mod {mod.Name} by {mod.Author}", ex);
+                        ApiEvents.InvokeModLoadError(mod);
+                        erroredMods.Add(mod);
+                        BubbleDependencyLoadError(mod);
+                        break;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    mod.ModState = ModState.Errored;
-                    Log.Exception($"Error loading mod {mod.Name} by {mod.Author}", ex);
-                    ApiEvents.InvokeModLoadError(mod);
-                }
+
+                modsThisPass = getModsForThisPass(modsToLoad, loadedMods, erroredMods, processedMods);
             }
 
             // See ReferenceFix.Data.BuildXnaTypeCache()
             // Since mod loading is done we don't need this anymore.
             // There are a lot of types, so might as well save the memory.
             ReferenceHelper.XnaTypes.Clear();
+        }
+
+        private static void BubbleDependencyLoadError(ModManifest erroredMod)
+        {
+            Log.Error($"Marking {erroredMod.Name} dependency hierarchy as failed");
+
+            Stack<IModManifest> problemMods = new Stack<IModManifest>();
+
+            // We use this one to avoid circular resolution issues
+            List<IModManifest> resolvedMods = new List<IModManifest>();
+
+            problemMods.Push(erroredMod);
+
+            do
+            {
+                var mod = problemMods.Pop();
+                resolvedMods.Add(mod);
+                var dependants =
+                    ModRegistry.GetRegisteredItems()
+                        .Where(n => n.IsFarmhandMod)
+                        .Cast<ModManifest>()
+                        .Where(n => n.Dependencies != null && n.Dependencies.Any(
+                                    d => d.IsRequired && mod.UniqueId.Equals(d.UniqueId)));
+
+                foreach (var dependant in dependants)
+                {
+                    dependant.ModState = ModState.DependencyLoadError;
+                    if (!resolvedMods.Contains(dependant))
+                    {
+                        Log.Verbose($"\tDisabling {dependant.Name} due to {mod.Name} failure." +
+                            (mod == erroredMod ? string.Empty : $" (Cascaded failure loading {erroredMod.Name}"));
+                        problemMods.Push(dependant);
+                    }
+                }
+            }
+            while (problemMods.Count > 0);
+
+            Log.Verbose($"{erroredMod.Name} all marked failed");
         }
 
         private static void ResolveDependencies()
@@ -199,11 +292,12 @@ namespace Farmhand
             var modInfos = registeredMods as ModManifest[] ?? registeredMods.ToArray();
             do
             {
+                stateChange = false;
                 foreach (var mod in modInfos)
                 {
                     if (mod.ModState == ModState.MissingDependency || mod.Dependencies == null) continue;
 
-                    foreach (var dependency in mod.Dependencies)
+                    foreach (var dependency in mod.Dependencies.Where(n => n.IsRequired))
                     {
                         var dependencyMatch = modInfos.FirstOrDefault(n => n.UniqueId.Equals(dependency.UniqueId));
                         dependency.DependencyState = DependencyState.Ok;
