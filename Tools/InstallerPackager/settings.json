@@ -1,0 +1,14 @@
+﻿{
+  "DeveloperFullExclusions": [
+    ".*\\\\obj\\\\.*",
+    ".*\\.git.*",
+    ".*appveyor.*",
+    ".*PopulateSubmodules.bat.*",
+    ".*README\\.md.*",
+    ".*\\.vs.*",
+    ".*WorkingDirectory.*",
+    ".*\\\\Staging\\\\.*",
+    ".*\\\\packages\\\\.*",
+    ".*\\\\Documentation\\\\.*"
+  ] 
+}

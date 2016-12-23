@@ -1,0 +1,36 @@
+﻿<local:BaseFrame x:Class="FarmhandInstaller.UI.Frames.Install"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FarmhandInstaller.UI.Frames"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <DockPanel Margin="0,25,0,0">
+        <Label DockPanel.Dock="Top" x:Name="label" Content="Installing. . ." HorizontalAlignment="Center" FontSize="15">
+        </Label>
+        <ProgressBar Value="50" DockPanel.Dock="Top" Margin="0,30,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="500"/>
+        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="10"/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
+            <Button x:Name="button" Click="ButtonTestSuccess_OnClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="223">
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Top">Test Success</TextBlock>
+                    <TextBlock FontWeight="Normal">Everything went fine</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Click="ButtonTestFail_OnClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="223" Margin="0,10,0,0">
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Top">Test Failed</TextBlock>
+                    <TextBlock FontWeight="Normal">Oh no! The installer threw an error</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </DockPanel>
+</local:BaseFrame>

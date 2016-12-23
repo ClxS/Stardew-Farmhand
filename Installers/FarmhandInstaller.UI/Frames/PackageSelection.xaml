@@ -1,0 +1,36 @@
+﻿<local:BaseFrame x:Class="FarmhandInstaller.UI.Frames.PackageSelection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FarmhandInstaller.UI.Frames"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <DockPanel Margin="0,25,0,0">
+        <Label DockPanel.Dock="Top" x:Name="label" Content="Here you can select what you want to install:" HorizontalAlignment="Center" FontSize="15">
+        </Label>
+        <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="10"/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
+            <Button x:Name="button" Click="ButtonPlayerPackage_OnClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="223">
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Top">I'm a player</TextBlock>
+                    <TextBlock FontWeight="Normal">Just give me what I need to play with mods</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Click="ButtonDeveloperPackage_OnClick" HorizontalAlignment="Left" VerticalAlignment="Top" Width="223" Margin="0,10,0,0">
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Top">I'm a developer</TextBlock>
+                    <TextBlock FontWeight="Normal">Give me the stuff I need to create mods</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <Button  DockPanel.Dock="Bottom" Click="ButtonBack_OnClick" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="0.5,0.5" Margin="10,0,0,10"/>
+    </DockPanel>
+</local:BaseFrame>

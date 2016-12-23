@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="FarmhandInstaller.UI.Controls.FindFolder"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FarmhandInstaller.UI.Controls"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+        <TextBox x:Name="textBoxFileName" TextChanged="TextBoxFileName_OnTextChanged" VerticalAlignment="Top" HorizontalAlignment="Left" Width="300"/>
+        <Button Click="ButtonBase_OnClick" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Browse" Margin="0,0,10,0"/>
+        <fa:ImageAwesome x:Name="iconFail" Visibility="Collapsed" Icon="TimesCircle" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Margin="5,0,0,0" Foreground="Red" />
+        <fa:ImageAwesome x:Name="iconPass" Visibility="Hidden" Icon="CheckCircle" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Foreground="#FF09E413" />
+        </StackPanel>
+        <TextBlock x:Name="textBlockValidation" DockPanel.Dock="Bottom" Text="" Foreground="#FFCF1A1A"></TextBlock>
+    </DockPanel>
+</UserControl>
