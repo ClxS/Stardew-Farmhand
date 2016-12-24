@@ -5,14 +5,17 @@
 // Style sheet for the table of contents
 */
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 * {
 	margin: 0px 0px 0px 0px;
 	padding: 0px 0px 0px 0px;
 }
 
 body {
-	font-family: Courier, Arial, sans-serif;
-	font-size: 9pt;
+	font-family: 'Open Sans', Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 10pt;
+	font-weight: 300;
 	background-color: #ffffff;
 	color: White;
 	overflow: hidden;
@@ -20,6 +23,8 @@ body {
 
 iframe {
 	border: none;
+	height:100%;
+	width:100%;
 }
 
 input {
@@ -36,16 +41,22 @@ img {
     content: "Stardew Farmhand | Documentation";
 	position: absolute;
 	top: 0;
-	left:0;
+	left: 0;
 	width: 100%;
-	height: 30px;
-	padding-left: 20px;
-	padding-top: 5px;
+	height: 50px;
+	padding-left: 79px;
+	padding-top: 16px;
 	background-color: #1A1E1E;
-	color: #DEDEDE;
-	font-family: Arial;
-	font-weight: bold;
+	color: #ffffff;
+	font-family: Courier;
 	font-size: 20px;
+	background-image: url('./icons/FarmhandIcon.png');
+	background-repeat: no-repeat;
+	background-size: 35px;
+	background-position: 23px 15px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 img.TreeNodeImg {
@@ -68,9 +79,9 @@ a.SelectedNode, a.UnselectedNode {
 
 a.SelectedNode {
 	padding: 0px 2px 0px 2px;
+	text-decoration: underline;
 	font-weight: bold;
 	display: inline-block;
-	background-color: #EDEDED;
 }
 
 a.UnselectedNode:hover, a.SelectedNode:hover {
@@ -91,6 +102,7 @@ a.UnselectedNode:hover, a.SelectedNode:hover {
 	color: Black;
 	width: 300px;
 	overflow: auto;
+	height: 100% !important;
 }
 
 .TreeNode, .TreeItem {
@@ -101,7 +113,11 @@ a.UnselectedNode:hover, a.SelectedNode:hover {
 #IndexForm {
 	display: flex;
 	flex-direction: row;
-	padding-top: 35px;
+	padding-top: 55px;
+	height:100%;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
 .TOCDiv {

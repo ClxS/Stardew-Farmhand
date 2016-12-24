@@ -133,7 +133,7 @@ function FixupNodeNames()
     {
         nodes[i].innerHTML = nodes[i].innerHTML.replace(" Namespaces", "")
         nodes[i].innerHTML = nodes[i].innerHTML.replace(" Class", "")
-        if(nodes[i].innerHTML.includes(" Properties") || nodes[i].innerHTML.includes(" Constructor") || nodes[i].innerHTML.includes(" Methods") || nodes[i].innerHTML.includes(" Fields")) 
+        if(nodes[i].innerHTML.indexOf(" Properties") > 0 || nodes[i].innerHTML.indexOf(" Constructor") > 0|| nodes[i].innerHTML.indexOf(" Methods") > 0 || nodes[i].innerHTML.indexOf(" Fields") > 0) 
         {
             var parent = nodes[i].parentNode;
             nodes[i].parentNode.style.display = 'none';
@@ -602,8 +602,6 @@ function SelectNode(node)
 function UpdatePageHash()
 {
     var hash = lastNode.getAttribute("href");
-    console.log(hash);
-
     history.replaceState(undefined, undefined, "#" + hash)
 }
 
