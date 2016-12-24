@@ -68,13 +68,13 @@ build_script:
     echo %APPVEYOR_REPO_TAG%
     echo %APPVEYOR_REPO_BRANCH%
 
-    if not "%APPVEYOR_REPO_TAG%" == "true" EXIT /b 0
-    if not "%APPVEYOR_REPO_BRANCH%" == "master" EXIT /b 0
+    if "%APPVEYOR_REPO_TAG%" == "true" (echo Pass) ELSE (EXIT /b 0)
+    if "%APPVEYOR_REPO_BRANCH%" == "master" (echo Pass) ELSE (EXIT /b 0)
 
     git clone https://github.com/ClxS/Stardew-Farmhand.git C:\projects\stardew-docs
     cd C:\projects\stardew-docs
     git checkout gh-pages
-    rmdir /s /q "C:\projects\stardew-docs\api-reference\"
+    if EXIST "C:\projects\stardew-docs\api-reference\" rmdir /s /q "C:\projects\stardew-docs\api-reference\"
     robocopy "C:\projects\stardew-farmhand\Documentation\Farmhand\Help" "C:\projects\stardew-docs\api-reference" *.* /NFL /NDL /NJH /NJS /nc /ns /np /E & Ver > nil
     git config --global core.safecrlf false
     git add -A && git commit -m "Updated documentation to %APPVEYOR_REPO_COMMIT%"
