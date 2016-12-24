@@ -62,25 +62,21 @@ build_script:
           "/p:DefineConstants=WINDOWS"
           "/v:m")
         & $buildCmd $buildArgs
+
+        git clone https://github.com/ClxS/Stardew-Farmhand.git C:\projects\stardew-docs
+        Set-Location -Path C:\projects\stardew-docs
+        git checkout gh-pages
+        
+        Remove-Item "C:\projects\stardew-docs\api-reference\" -Recurse -ErrorAction Ignore
+        robocopy "C:\projects\stardew-farmhand\Documentation\Farmhand\Help" "C:\projects\stardew-docs\api-reference" *.* /NFL /NDL /NJH /NJS /nc /ns /np /E & Ver > nil
+
+        git config --global core.safecrlf false
+        git add -A && git commit -m "Updated documentation to %APPVEYOR_REPO_COMMIT%"
+        git push https://ClxS:%PushToken%@github.com/ClxS/Stardew-Farmhand.git -f
+
+        Set-Location -Path C:\projects\stardew-farmhand
       }
     }
-- cmd: |
-    echo %APPVEYOR_REPO_TAG%
-    echo %APPVEYOR_REPO_BRANCH%
-
-    if "%APPVEYOR_REPO_TAG%" == "true" (echo Pass) ELSE (EXIT /b 0)
-    if "%APPVEYOR_REPO_BRANCH%" == "master" (echo Pass) ELSE (EXIT /b 0)
-
-    git clone https://github.com/ClxS/Stardew-Farmhand.git C:\projects\stardew-docs
-    cd C:\projects\stardew-docs
-    git checkout gh-pages
-    if EXIST "C:\projects\stardew-docs\api-reference\" rmdir /s /q "C:\projects\stardew-docs\api-reference\"
-    robocopy "C:\projects\stardew-farmhand\Documentation\Farmhand\Help" "C:\projects\stardew-docs\api-reference" *.* /NFL /NDL /NJH /NJS /nc /ns /np /E & Ver > nil
-    git config --global core.safecrlf false
-    git add -A && git commit -m "Updated documentation to %APPVEYOR_REPO_COMMIT%"
-    git push https://ClxS:%PushToken%@github.com/ClxS/Stardew-Farmhand.git -f
-    cd C:\projects\stardew-farmhand
-
 - ps: |
     if ($env:APPVEYOR_SCHEDULED_BUILD -ne "True") {
       return
