@@ -1,6 +1,7 @@
 body {
+	font-family: 'Open Sans', Lucida Sans Unicode, Arial, sans-serif;
 	font-family: Segoe UI, Verdana, Arial;
-	font-size: 0.85em; /*10pt*/
+	font-size: 10pt;
 	color: #000;
 	margin: 0px;
 	padding: 0px 0px 0px 5px;
