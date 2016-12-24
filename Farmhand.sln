@@ -277,6 +277,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyMissing", "Mods\D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyCascadeFail", "Mods\DependencyTest\DependencyCascadeFail\DependencyCascadeFail.csproj", "{52182B9A-F8E4-4922-B991-68FBFDB036EF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{A81F8DF5-6398-4D3D-9E7A-BE5C7C90CD6B}"
+EndProject
+Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Farmhand", "Documentation\Farmhand\Farmhand.shfbproj", "{59F0456F-20B9-4C5B-AF84-EF55A6D2906B}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		External\StardewModdingAPI\StardewModdingAPI.projitems*{9246e5ea-df78-4976-8244-49c3123b898a}*SharedItemsImports = 13
@@ -475,6 +479,9 @@ Global
 		{52182B9A-F8E4-4922-B991-68FBFDB036EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52182B9A-F8E4-4922-B991-68FBFDB036EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52182B9A-F8E4-4922-B991-68FBFDB036EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59F0456F-20B9-4C5B-AF84-EF55A6D2906B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59F0456F-20B9-4C5B-AF84-EF55A6D2906B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59F0456F-20B9-4C5B-AF84-EF55A6D2906B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -530,5 +537,6 @@ Global
 		{BBD411B8-EA6B-495C-93EE-B85801CA70B9} = {090B22A4-B940-4C4D-BE70-E68AA838832E}
 		{DF1709EE-B8D3-402C-9A0E-B992EFCBBCF0} = {090B22A4-B940-4C4D-BE70-E68AA838832E}
 		{52182B9A-F8E4-4922-B991-68FBFDB036EF} = {090B22A4-B940-4C4D-BE70-E68AA838832E}
+		{59F0456F-20B9-4C5B-AF84-EF55A6D2906B} = {A81F8DF5-6398-4D3D-9E7A-BE5C7C90CD6B}
 	EndGlobalSection
 EndGlobal
