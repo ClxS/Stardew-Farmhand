@@ -68,10 +68,11 @@ build_script:
         git checkout gh-pages
         
         Remove-Item "C:\projects\stardew-docs\api-reference\" -Recurse -ErrorAction Ignore
-        robocopy "C:\projects\stardew-farmhand\Documentation\Farmhand\Help" "C:\projects\stardew-docs\api-reference" *.* /NFL /NDL /NJH /NJS /nc /ns /np /E & Ver > nil
+        robocopy "C:\projects\stardew-farmhand\Documentation\Farmhand\Help" "C:\projects\stardew-docs\api-reference" *.* /NFL /NDL /NJH /NJS /nc /ns /np /E
 
         git config --global core.safecrlf false
-        git add -A && git commit -m "Updated documentation to %APPVEYOR_REPO_COMMIT%"
+        git add -A 
+        git commit -m "Updated documentation to %APPVEYOR_REPO_COMMIT%"
         git push https://ClxS:%PushToken%@github.com/ClxS/Stardew-Farmhand.git -f
 
         Set-Location -Path C:\projects\stardew-farmhand
