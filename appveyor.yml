@@ -7,6 +7,9 @@ environment:
   VersionMajor: 0
   VersionMinor: 1
   VersionPatch: 0
+  SandCastleZipFile: C:\projects\stardew-tools\SHFBInstaller.zip
+  SandCastleUri: https://github.com/EWSoftware/SHFB/releases/download/v2015.10.10.0/SHFBInstaller_v2015.10.10.0.zip
+  SHFBROOT: C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\
 image: Visual Studio 2015
 clone_folder: c:\projects\stardew-farmhand
 shallow_clone: false
@@ -20,7 +23,11 @@ init:
     $env:VersionStage = "$env:APPVEYOR_REPO_BRANCH"
     $env:VersionTag = "$env:APPVEYOR_REPO_COMMIT" 
 install:
-- git submodule update --init --recursive
+- cmd: git submodule update --init --recursive
+- cmd: mkdir "C:\projects\stardew-tools\"
+- ps: Start-FileDownload $env:SandCastleUri -FileName $env:SandCastleZipFile
+- cmd: 7z x C:\projects\stardew-tools\SHFBInstaller.zip -oC:\projects\stardew-tools -y
+- ps: msiexec /i C:\projects\stardew-tools\InstallResources\SandcastleHelpFileBuilder.msi /quiet /norestart /log install.log
 - ps: |
     $encrypted = ConvertTo-SecureString -String "01000000d08c9ddf0115d1118c7a00c04fc297eb01000000435f28ebf6f6f5428e8c13599a0d5f9900000000020000000000106600000001000020000000321b8fef33fcb4718eeb709b44ba819a97bde5e142bc7708167dc5f21703bcf8000000000e8000000002000020000000166aaae81415687e29025f14b235a2174b7ae04d3790972b09da046a1ba9577f70000000e86ea5a4cad52dacd320ac9e707a3ef4374d57320415c9fabd953833878f6b1235983b8612ba5abaea37fd9160bef3f0142c58bc4169e7fad36b44d119d1b490cf3f3e83bdb5f420c766af893972ad58ebc5fc9531438ca94e4fd20f22a9fb628157f5a07ca7958efdddb94ec3eaf28c4000000039c6f54dec85d75d6e10942ad3d2e2c5bf31884ca01624f50fa78be1632b2609a891444fcb24a104987e190402b5a057f4a2e442d2137cd65fe740958f858b41"
     $Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($encrypted)
@@ -39,10 +46,43 @@ build_script:
       "/p:Configuration=$env:CONFIGURATION",
       "/p:DefineConstants=WINDOWS"
       "/v:m")
-    
+
     # If build is not a scheduled one, than simply build project with MSBuild.
     if ($env:APPVEYOR_SCHEDULED_BUILD -ne "True") {
       & $buildCmd $buildArgs
+      
+      # If we're on the release branch and a tag was just pushed
+      if ($env:APPVEYOR_REPO_TAG -eq "True" -And $env:APPVEYOR_REPO_BRANCH -eq "master") {
+        # Build documentation
+        $buildArgs = @(
+          "/m",
+          "/t:Documentation\Farmhand"
+          "/l:C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll",
+          "/p:Configuration=$env:CONFIGURATION",
+          "/p:DefineConstants=WINDOWS"
+          "/v:m")
+        & $buildCmd $buildArgs
+      }
+    }
+- cmd: |
+    echo %APPVEYOR_REPO_TAG%
+    echo %APPVEYOR_REPO_BRANCH%
+
+    if not "%APPVEYOR_REPO_TAG%" == "true" EXIT /b 0
+    if not "%APPVEYOR_REPO_BRANCH%" == "master" EXIT /b 0
+
+    git clone https://github.com/ClxS/Stardew-Farmhand.git C:\projects\stardew-docs
+    cd C:\projects\stardew-docs
+    git checkout gh-pages
+    rmdir /s /q "C:\projects\stardew-docs\api-reference\"
+    robocopy "C:\projects\stardew-farmhand\Documentation\Farmhand\Help" "C:\projects\stardew-docs\api-reference" *.* /NFL /NDL /NJH /NJS /nc /ns /np /E & Ver > nil
+    git config --global core.safecrlf false
+    git add -A && git commit -m "Updated documentation to %APPVEYOR_REPO_COMMIT%"
+    git push https://ClxS:%PushToken%@github.com/ClxS/Stardew-Farmhand.git -f
+    cd C:\projects\stardew-farmhand
+
+- ps: |
+    if ($env:APPVEYOR_SCHEDULED_BUILD -ne "True") {
       return
     }
 
