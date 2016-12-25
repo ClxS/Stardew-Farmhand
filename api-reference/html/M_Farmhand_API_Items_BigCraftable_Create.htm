@@ -1,0 +1,154 @@
+﻿<html><head><meta http-equiv="X-UA-Compatible" content="IE=edge" /><link rel="shortcut icon" href="../icons/favicon.ico" /><style type="text/css">.OH_CodeSnippetContainerTabLeftActive, .OH_CodeSnippetContainerTabLeft,.OH_CodeSnippetContainerTabLeftDisabled { }.OH_CodeSnippetContainerTabRightActive, .OH_CodeSnippetContainerTabRight,.OH_CodeSnippetContainerTabRightDisabled { }.OH_footer { }</style><link rel="stylesheet" type="text/css" href="../styles/branding.css" /><link rel="stylesheet" type="text/css" href="../styles/branding-en-US.css" /><script type="text/javascript" src="../scripts/branding.js"> </script><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>BigCraftable.Create Method </title><meta name="Language" content="en-us" /><meta name="System.Keywords" content="Create method" /><meta name="System.Keywords" content="BigCraftable.Create method" /><meta name="Microsoft.Help.F1" content="Farmhand.API.Items.BigCraftable.Create" /><meta name="Microsoft.Help.Id" content="M:Farmhand.API.Items.BigCraftable.Create(Microsoft.Xna.Framework.Vector2,System.Int32,System.Boolean)" /><meta name="Description" content="summaryM:Farmhand.API.Items.BigCraftable.Create(Microsoft.Xna.Framework.Vector2,System.Int32,System.Boolean)" /><meta name="Microsoft.Help.ContentType" content="Reference" /><meta name="BrandingAware" content="true" /><meta name="container" content="Farmhand.API.Items" /><meta name="file" content="M_Farmhand_API_Items_BigCraftable_Create" /><meta name="guid" content="M_Farmhand_API_Items_BigCraftable_Create" /></head><body onload="OnLoad('cs')"><input type="hidden" id="userDataCache" class="userDataStyle" /><div class="OH_outerDiv"><div class="OH_outerContent"><table class="TitleTable"><tr><td class="OH_tdTitleColumn">BigCraftable<span id="LST3D74D197_0"></span><script type="text/javascript">AddLanguageSpecificTextSet("LST3D74D197_0?cpp=::|nu=.");</script>Create Method </td><td class="OH_tdRunningTitleColumn">Stardew Farmhand</td></tr></table><div id="mainSection"><div id="mainBody"><span class="introStyle"></span><div class="summary"><p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;summary&gt; documentation for "M:Farmhand.API.Items.BigCraftable.Create(Microsoft.Xna.Framework.Vector2,System.Int32,System.Boolean)"]</p></div><p> </p><strong>Namespace:</strong> <a href="N_Farmhand_API_Items.htm">Farmhand.API.Items</a><br /><strong>Assemblies:</strong>  Farmhand (in Farmhand.dll) Version: 1.0.0.0 (1.0.0.0)<br />  Farmhand (in Farmhand.dll) Version: 1.0.0.0 (1.0.0.0)<br /><div class="OH_CollapsibleAreaRegion"><div class="OH_regiontitle">Syntax</div><div class="OH_CollapsibleArea_HrDiv"><hr class="OH_CollapsibleArea_Hr" /></div></div><div class="OH_clear"> </div><div class="OH_CodeSnippetContainer"><div class="OH_CodeSnippetContainerTabs"><div class="OH_CodeSnippetContainerTabLeft" id="ID0EDCA_tabimgleft"> </div><div id="ID0EDCA_tab1" class="OH_CodeSnippetContainerTabFirst"><a href="#" onclick="javascript:ChangeTab('ID0EDCA','cs','1','4');return false;">C#</a></div><div id="ID0EDCA_tab2" class="OH_CodeSnippetContainerTab"><a href="#" onclick="javascript:ChangeTab('ID0EDCA','vb','2','4');return false;">VB</a></div><div id="ID0EDCA_tab3" class="OH_CodeSnippetContainerTab"><a href="#" onclick="javascript:ChangeTab('ID0EDCA','cpp','3','4');return false;">C++</a></div><div id="ID0EDCA_tab4" class="OH_CodeSnippetContainerTab"><a href="#" onclick="javascript:ChangeTab('ID0EDCA','fs','4','4');return false;">F#</a></div><div class="OH_CodeSnippetContainerTabRight" id="ID0EDCA_tabimgright"> </div></div><div class="OH_CodeSnippetContainerCodeCollection"><div class="OH_CodeSnippetToolBar"><div class="OH_CodeSnippetToolBarText"><a id="ID0EDCA_copyCode" href="#" onclick="javascript:CopyToClipboard('ID0EDCA');return false;" title="Copy">Copy</a></div></div><div id="ID0EDCA_code_Div1" class="OH_CodeSnippetContainerCode" style="display: block"><pre xml:space="preserve">[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Barn", "performActionOnConstruction")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Barn", "performActionOnUpgrade")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Building", "dayUpdate")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Coop", "performActionOnConstruction")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Coop", "performActionOnUpgrade")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Coop", "upgrade")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.CraftingRecipe", "createItem")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Debris", "updateChunks")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Event", "checkAction")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Event", "checkForNextCommand")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Events.SoundInTheNightEvent", "makeChangesToLocation")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Farm", "checkAction")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Farmer", "tryToCraftItem")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Game1", "loadForNewGame")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Game1", "parseDebugInput")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.GameLocation", "answerDialogueAction")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.GameLocation", "doStarpoint")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.GameLocation", "performAction")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.LevelBuilder", "tryToAddObject")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Locations.FarmCave", "setUpMushroomHouse")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Locations.LibraryMuseum", "getRewardsForPlayer")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Locations.Sewer", "populateShopStock")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Object", "getOne")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Object", "minutesElapsed")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Objects.ObjectFactory", "getItemFromDescription")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.SlimeHutch", "DayUpdate")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "generateNewFarm")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getAnimalShopStock")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getCarpenterStock")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getDwarfShopStock")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getItemFromStandardTextDescription")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getQiShopStock")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getTravelingMerchantStock")]
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="identifier">Object</span> <span class="identifier">Create</span>(
+	<span class="identifier">Vector2</span> <span class="parameter">vector</span>,
+	<span class="identifier">int</span> <span class="parameter">Id</span>,
+	<span class="identifier">bool</span> <span class="parameter">isRecipe</span> = <span class="keyword">false</span>
+)</pre></div><div id="ID0EDCA_code_Div2" class="OH_CodeSnippetContainerCode" style="display: none"><pre xml:space="preserve">&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Barn", "performActionOnConstruction")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Barn", "performActionOnUpgrade")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Building", "dayUpdate")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Coop", "performActionOnConstruction")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Coop", "performActionOnUpgrade")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Coop", "upgrade")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.CraftingRecipe", "createItem")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Debris", "updateChunks")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Event", "checkAction")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Event", "checkForNextCommand")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Events.SoundInTheNightEvent", "makeChangesToLocation")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Farm", "checkAction")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Farmer", "tryToCraftItem")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Game1", "loadForNewGame")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Game1", "parseDebugInput")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.GameLocation", "answerDialogueAction")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.GameLocation", "doStarpoint")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.GameLocation", "performAction")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.LevelBuilder", "tryToAddObject")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Locations.FarmCave", "setUpMushroomHouse")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Locations.LibraryMuseum", "getRewardsForPlayer")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Locations.Sewer", "populateShopStock")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Object", "getOne")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Object", "minutesElapsed")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Objects.ObjectFactory", "getItemFromDescription")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.SlimeHutch", "DayUpdate")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "generateNewFarm")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getAnimalShopStock")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getCarpenterStock")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getDwarfShopStock")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getItemFromStandardTextDescription")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getQiShopStock")&gt;
+&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getTravelingMerchantStock")&gt;
+<span class="keyword">Public</span> <span class="keyword">Shared</span> <span class="keyword">Function</span> <span class="identifier">Create</span> ( 
+	<span class="parameter">vector</span> <span class="keyword">As</span> <span class="identifier">Vector2</span>,
+	<span class="parameter">Id</span> <span class="keyword">As</span> <span class="identifier">Integer</span>,
+	Optional <span class="parameter">isRecipe</span> <span class="keyword">As</span> <span class="identifier">Boolean</span> = <span class="keyword">false</span>
+) <span class="keyword">As</span> <span class="identifier">Object</span></pre></div><div id="ID0EDCA_code_Div3" class="OH_CodeSnippetContainerCode" style="display: none"><pre xml:space="preserve"><span class="keyword">public</span>:
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Buildings.Barn", L"performActionOnConstruction")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Buildings.Barn", L"performActionOnUpgrade")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Buildings.Building", L"dayUpdate")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Buildings.Coop", L"performActionOnConstruction")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Buildings.Coop", L"performActionOnUpgrade")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Buildings.Coop", L"upgrade")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.CraftingRecipe", L"createItem")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Debris", L"updateChunks")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Event", L"checkAction")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Event", L"checkForNextCommand")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Events.SoundInTheNightEvent", L"makeChangesToLocation")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Farm", L"checkAction")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Farmer", L"tryToCraftItem")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Game1", L"loadForNewGame")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Game1", L"parseDebugInput")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.GameLocation", L"answerDialogueAction")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.GameLocation", L"doStarpoint")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.GameLocation", L"performAction")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.LevelBuilder", L"tryToAddObject")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Locations.FarmCave", L"setUpMushroomHouse")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Locations.LibraryMuseum", L"getRewardsForPlayer")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Locations.Sewer", L"populateShopStock")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Object", L"getOne")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Object", L"minutesElapsed")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Objects.ObjectFactory", L"getItemFromDescription")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.SlimeHutch", L"DayUpdate")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Utility", L"generateNewFarm")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Utility", L"getAnimalShopStock")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Utility", L"getCarpenterStock")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Utility", L"getDwarfShopStock")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Utility", L"getItemFromStandardTextDescription")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Utility", L"getQiShopStock")]
+[<span class="identifier">HookRedirectConstructorToMethodAttribute</span>(L"StardewValley.Utility", L"getTravelingMerchantStock")]
+<span class="keyword">static</span> <span class="identifier">Object</span>^ <span class="identifier">Create</span>(
+	<span class="identifier">Vector2</span> <span class="parameter">vector</span>, 
+	<span class="identifier">int</span> <span class="parameter">Id</span>, 
+	<span class="identifier">bool</span> <span class="parameter">isRecipe</span> = <span class="keyword">false</span>
+)</pre></div><div id="ID0EDCA_code_Div4" class="OH_CodeSnippetContainerCode" style="display: none"><pre xml:space="preserve">[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Barn", "performActionOnConstruction")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Barn", "performActionOnUpgrade")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Building", "dayUpdate")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Coop", "performActionOnConstruction")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Coop", "performActionOnUpgrade")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Buildings.Coop", "upgrade")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.CraftingRecipe", "createItem")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Debris", "updateChunks")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Event", "checkAction")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Event", "checkForNextCommand")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Events.SoundInTheNightEvent", "makeChangesToLocation")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Farm", "checkAction")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Farmer", "tryToCraftItem")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Game1", "loadForNewGame")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Game1", "parseDebugInput")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.GameLocation", "answerDialogueAction")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.GameLocation", "doStarpoint")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.GameLocation", "performAction")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.LevelBuilder", "tryToAddObject")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Locations.FarmCave", "setUpMushroomHouse")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Locations.LibraryMuseum", "getRewardsForPlayer")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Locations.Sewer", "populateShopStock")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Object", "getOne")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Object", "minutesElapsed")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Objects.ObjectFactory", "getItemFromDescription")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.SlimeHutch", "DayUpdate")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "generateNewFarm")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getAnimalShopStock")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getCarpenterStock")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getDwarfShopStock")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getItemFromStandardTextDescription")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getQiShopStock")&gt;]
+[&lt;<span class="identifier">HookRedirectConstructorToMethodAttribute</span>("StardewValley.Utility", "getTravelingMerchantStock")&gt;]
+<span class="keyword">static</span> <span class="keyword">member</span> <span class="identifier">Create</span> : 
+        <span class="parameter">vector</span> : <span class="identifier">Vector2</span> * 
+        <span class="parameter">Id</span> : <span class="identifier">int</span> * 
+        ?<span class="parameter">isRecipe</span> : <span class="identifier">bool</span> 
+(* Defaults:
+        <span class="keyword">let </span><span class="identifier">_</span><span class="identifier">isRecipe</span> = defaultArg <span class="identifier">isRecipe</span> <span class="keyword">false</span>
+*)
+<span class="keyword">-&gt;</span> <span class="identifier">Object</span> 
+</pre></div></div></div><script type="text/javascript">AddLanguageTabSet("ID0EDCA");</script><h4 class="subHeading">Parameters</h4><dl><dt><span class="parameter">vector</span></dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/bb199660" target="_blank">Vector2</a><br /><p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;param name="vector"/&gt; documentation for "M:Farmhand.API.Items.BigCraftable.Create(Microsoft.Xna.Framework.Vector2,System.Int32,System.Boolean)"]</p></dd><dt><span class="parameter">Id</span></dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/td2s409d" target="_blank">System<span id="LST3D74D197_1"></span><script type="text/javascript">AddLanguageSpecificTextSet("LST3D74D197_1?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Int32</a><br /><p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;param name="Id"/&gt; documentation for "M:Farmhand.API.Items.BigCraftable.Create(Microsoft.Xna.Framework.Vector2,System.Int32,System.Boolean)"]</p></dd><dt><span class="parameter">isRecipe</span> (Optional)</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/a28wyd50" target="_blank">System<span id="LST3D74D197_2"></span><script type="text/javascript">AddLanguageSpecificTextSet("LST3D74D197_2?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Boolean</a><br /><p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;param name="isRecipe"/&gt; documentation for "M:Farmhand.API.Items.BigCraftable.Create(Microsoft.Xna.Framework.Vector2,System.Int32,System.Boolean)"]</p></dd></dl><h4 class="subHeading">Return Value</h4>Type: <span class="nolink">Object</span><br /><p style="color: #dc143c; font-size: 8.5pt; font-weight: bold;">[Missing &lt;returns&gt; documentation for "M:Farmhand.API.Items.BigCraftable.Create(Microsoft.Xna.Framework.Vector2,System.Int32,System.Boolean)"]</p><div class="OH_CollapsibleAreaRegion" id="seeAlsoSection"><div class="OH_regiontitle">See Also</div><div class="OH_CollapsibleArea_HrDiv"><hr class="OH_CollapsibleArea_Hr" /></div></div><div class="OH_clear"> </div><h4 class="subHeading">Reference</h4><div class="seeAlsoStyle"><a href="T_Farmhand_API_Items_BigCraftable.htm">BigCraftable Class</a></div><div class="seeAlsoStyle"><a href="N_Farmhand_API_Items.htm">Farmhand.API.Items Namespace</a></div></div></div></div></div><div id="OH_footer" class="OH_footer"> </div></body></html>
