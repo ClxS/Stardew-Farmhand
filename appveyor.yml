@@ -73,7 +73,7 @@ build_script:
         git config --global core.safecrlf false
         git add -A 
         git commit -m "Updated documentation to %APPVEYOR_REPO_COMMIT%"
-        git push https://ClxS:%PushToken%@github.com/ClxS/Stardew-Farmhand.git -f
+        git push https://ClxS:$env:PushToken@github.com/ClxS/Stardew-Farmhand.git -f
 
         Set-Location -Path C:\projects\stardew-farmhand
       #}
