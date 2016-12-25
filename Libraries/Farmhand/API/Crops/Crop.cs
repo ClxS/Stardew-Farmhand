@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Farmhand.API.Crops
 {
-    public class Crop
+    public static class Crop
     {
         private static List<StardewValley.Crop> deserializedCrops = new List<StardewValley.Crop>();
 

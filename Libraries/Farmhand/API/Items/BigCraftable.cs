@@ -11,7 +11,7 @@ namespace Farmhand.API.Items
     /// <summary>
     /// A class which can be extended from to create big craftable items easier, and provides functionality related to big craftables
     /// </summary>
-    public class BigCraftable
+    public static class BigCraftable
     {
         private static List<StardewValley.Object> deserializedObjects = new List<StardewValley.Object>();
 
