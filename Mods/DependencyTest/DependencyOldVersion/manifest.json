@@ -1,0 +1,14 @@
+﻿{
+  "UniqueId": "DependencyOldVersion",
+  "Name": "DependencyOldVersion",
+  "Author": "ClxS",
+  "ModDll": "DependencyOldVersion",
+  "Version": "0.1",
+  "Description": "",
+  "Dependencies": [
+    {
+      "UniqueId": "DependencyBaseSuccess",
+      "MinimumVersion": "1.5" 
+    }
+  ]
+}

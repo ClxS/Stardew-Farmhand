@@ -1,0 +1,13 @@
+﻿{
+  "UniqueId": "DependencySuccess",
+  "Name": "DependencySuccess",
+  "Author": "ClxS",
+  "ModDll": "DependencySuccess",
+  "Version": "0.1",
+  "Description": "",
+  "Dependencies": [
+    {
+      "UniqueId": "DependencyBaseSuccess"
+    }
+  ]
+}

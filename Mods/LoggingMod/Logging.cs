@@ -9,17 +9,8 @@ namespace LoggingMod
 {
     internal class Logging : Mod
     {
-        public ModConfig Configuration { get; set; }
-
         public override void Entry()
         {
-            Configuration = ModConfiguration.Load<ModConfig>(ModSettings.ConfigurationFile);
-
-            if (Configuration != null)
-            {
-                //Log.IsVerbose = Configuration.UseVerboseLogging;
-            }
-
             Farmhand.Events.GameEvents.OnBeforeGameInitialised += OnGameInitialising;
             Farmhand.Events.GameEvents.OnAfterGameInitialised += OnGameInitialised;
             Farmhand.Events.GameEvents.OnBeforeLoadContent += GameEvents_OnBeforeLoadContent;

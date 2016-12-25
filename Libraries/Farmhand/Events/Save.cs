@@ -81,6 +81,7 @@ namespace Farmhand.Events
             BigCraftable.FixupBigCraftableIds(null, null);
             Crop.FixupCropIds(null, null);
             Weapon.FixupWeaponIds(null, null);
+            ModLoader.ReloadConfigurations();
 
             EventCommon.SafeInvoke(OnAfterLoad, null, new EventArgsOnAfterLoad());
         }

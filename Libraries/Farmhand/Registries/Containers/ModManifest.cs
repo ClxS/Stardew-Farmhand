@@ -44,15 +44,13 @@ namespace Farmhand.Registries.Containers
 
         public ManifestContent Content { get; set; }
 
-        private string _configurationFile;
-        public string ConfigurationFile
-        {
-            get { return $"{ModDirectory}\\{_configurationFile}"; }
-            set { _configurationFile = value; }
-        }
-        
         #region Manifest Instance Data
 
+        /// <summary>
+        /// Gets the configuration path for this mod.
+        /// </summary>
+        [JsonIgnore]
+        public string ConfigurationPath => $"{this.ModDirectory}\\Config";
         [JsonIgnore]
         public ModState ModState { get; set; }
         [JsonIgnore]
@@ -60,42 +58,55 @@ namespace Farmhand.Registries.Containers
         [JsonIgnore]
         public bool HasDll => !string.IsNullOrWhiteSpace(ModDll);
         [JsonIgnore]
-        public bool HasConfig => HasDll && !string.IsNullOrWhiteSpace(ConfigurationFile);
+        public bool HasConfig => HasDll && !string.IsNullOrWhiteSpace(ConfigurationPath);
         [JsonIgnore]
         public bool HasContent => Content != null && Content.HasContent;
         [JsonIgnore]
         public Assembly ModAssembly { get; set; }
         [JsonIgnore]
-        public object Instance { get; set; }
-        //[JsonIgnore]
-        //public StardewModdingAPI.Mod SmapiInstance { get; set; }
+        public Mod Instance { get; set; }
         [JsonIgnore]
         public string ModDirectory { get; set; }
 
         internal bool LoadModDll()
         {
-            if (Instance != null)
+            if (this.Instance != null)
             {
                 throw new Exception("Error! Mod has already been loaded!");
             }
 
             try
             {
-                ModAssembly = Assembly.Load(GetDllBytes());
-                if (ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Mod)) > 0)
+                this.ModAssembly = Assembly.Load(this.GetDllBytes());
+                if (this.ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Mod)) > 0)
                 {
-                    var type = ModAssembly.GetTypes().First(x => x.BaseType == typeof(Mod));
-                    Mod instance = (Mod)ModAssembly.CreateInstance(type.ToString());
+                    var type = this.ModAssembly.GetTypes().First(x => x.BaseType == typeof(Mod));
+                    var instance = (Mod)this.ModAssembly.CreateInstance(type.ToString());
                     if (instance != null)
                     {
                         instance.ModSettings = this;
+                        if (instance.ConfigurationSettings != null)
+                        {
+                            var config = instance.ConfigurationSettings;
+                            config.Manifest = this;
+                            if (config.DoesConfigurationFileExist())
+                            {
+                                config.Load();
+                            }
+                            else
+                            {
+                                // If there isn't an already saved config file to load, we should create one.
+                                config.Save();
+                            }
+                        }
                         instance.Entry();
+                        
                     }
-                    Instance = instance;
-                    Log.Verbose ($"Loaded mod dll: {Name}");
+                    this.Instance = instance;
+                    Log.Verbose($"Loaded mod dll: {this.Name}");
                 }
-               
-                if(Instance == null)
+
+                if (this.Instance == null)
                 {
                     throw new Exception("Invalid Mod DLL");
                 }
@@ -107,15 +118,14 @@ namespace Farmhand.Registries.Containers
                 {
                     foreach (var e in exception.LoaderExceptions)
                     {
-                        Log.Exception("loaderexceptions entry: " +
+                        Log.Exception("LoaderExceptions entry: " +
                             $"{e.Message} ${e.Source} ${e.TargetSite} ${e.StackTrace} ${e.Data}", e);
                     }
                 }
                 Log.Exception("Error loading mod DLL", ex);
-                //throw new Exception(string.Format($"Failed to load mod '{modDllPath}'\n\t-{ex.Message}\n\t\t-{ex.StackTrace}"), ex);
             }
 
-            return Instance != null;
+            return this.Instance != null;
         }
 
         internal byte[] GetDllBytes()
@@ -291,12 +301,30 @@ namespace Farmhand.Registries.Containers
                 XnbRegistry.RegisterItem(file.Original, file, this);
             }
         }
-        
+
+        /// <summary>
+        /// Gets a texture registered by this mod via it's manifest file
+        /// </summary>
+        /// <param name="id">
+        /// The id of the texture.
+        /// </param>
+        /// <returns>
+        /// The registered <see cref="Texture2D"/>.
+        /// </returns>
         public Texture2D GetTexture(string id)
         {
             return TextureRegistry.GetItem(id, this).Texture;
         }
 
+        /// <summary>
+        /// Gets a map registered by this mod via it's manifest file
+        /// </summary>
+        /// <param name="id">
+        /// The id of the map.
+        /// </param>
+        /// <returns>
+        /// The registered <see cref="Map"/>.
+        /// </returns>
         public Map GetMap(string id)
         {
             return MapRegistry.GetItem(id, this).Map;
@@ -304,12 +332,12 @@ namespace Farmhand.Registries.Containers
 
         #endregion
 
-        public void OnBeforeLoaded()
+        internal void OnBeforeLoaded()
         {
             BeforeLoaded?.Invoke(this, EventArgs.Empty);
         }
 
-        public void OnAfterLoaded()
+        internal void OnAfterLoaded()
         {
             AfterLoaded?.Invoke(this, EventArgs.Empty);
         }

@@ -10,8 +10,8 @@ namespace Farmhand.Events
     /// </summary>
     public static class GameEvents
     {
-        public static EventHandler<EventArgsOnGameInitialise> OnBeforeGameInitialised = delegate { };
-        public static EventHandler<EventArgsOnGameInitialised> OnAfterGameInitialised = delegate { };
+        public static event EventHandler<EventArgsOnGameInitialise> OnBeforeGameInitialised = delegate { };
+        public static event EventHandler<EventArgsOnGameInitialised> OnAfterGameInitialised = delegate { };
         public static event EventHandler OnBeforeLoadContent = delegate { };
         public static event EventHandler OnAfterLoadedContent = delegate { };
         public static event EventHandler OnBeforeUnloadContent = delegate { };
@@ -19,7 +19,8 @@ namespace Farmhand.Events
         public static event EventHandler<EventArgsOnBeforeGameUpdate> OnBeforeUpdateTick = delegate { };
         public static event EventHandler OnAfterUpdateTick = delegate { };
         public static event EventHandler<EventArgsOnAfterGameLoaded> OnAfterGameLoaded = delegate { };
-        
+        public static event EventHandler OnHalfSecondTick = delegate { };
+
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
         internal static void InvokeBeforeGameInitialise([ThisBind] object @this)
         {
@@ -54,6 +55,12 @@ namespace Farmhand.Events
         internal static void InvokeAfterUnloadedContent([ThisBind] object @this)
         {
             EventCommon.SafeInvoke(OnAfterUnloadedContent, @this);
+        }
+
+        // Invoked by property watcher
+        internal static void InvokeOnHalfSecondTick()
+        {
+            EventCommon.SafeInvoke(OnHalfSecondTick, null);
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Update")]
