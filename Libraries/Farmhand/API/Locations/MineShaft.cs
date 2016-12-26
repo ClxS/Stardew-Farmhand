@@ -10,7 +10,7 @@ namespace Farmhand.API.Locations
     /// <summary>
     /// Provides functions relating to the MineShaft location
     /// </summary>
-    public class MineShaft
+    public static class MineShaft
     {
         public static List<MineshaftMonsterSpawnChance> MonsterSpawnChances = new List<MineshaftMonsterSpawnChance>();
 

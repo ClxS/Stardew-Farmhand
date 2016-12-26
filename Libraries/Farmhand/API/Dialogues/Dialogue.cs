@@ -126,7 +126,7 @@ namespace Farmhand.API.Dialogues
         SelectChannel_Leave,                        // (Leave)
     }
 
-    public class Dialogue
+    public static class Dialogue
     {
         // The delegate called to decide if an answer should be included in a question
         public delegate bool IncludeAnswer();
