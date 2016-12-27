@@ -6,6 +6,7 @@
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
+    using System.Reflection;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
@@ -20,9 +21,20 @@
         internal static void Main(string[] args)
         {
             var root = args[0];
-            var payloadPath = Path.Combine(root, args[1]);
+            var payloadPath = args[1];
 
-            var json = File.ReadAllText("settings.json");
+            if (!Path.IsPathRooted(payloadPath))
+            {
+                payloadPath = Path.Combine(root, args[1]);
+            }
+
+            var location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            if (location == null)
+            {
+                throw new Exception("Assembly.GetExecutingAssembly().Location returned null!");
+            }
+
+            var json = File.ReadAllText(Path.Combine(location, "settings.json"));
             settings = JsonConvert.DeserializeObject<Settings>(json);
 
             foreach (var package in settings.Packages)
@@ -70,7 +82,7 @@
                 return;
             }
 
-            Stack<DirectoryInfo> searchDirectories = new Stack<DirectoryInfo>();
+            var searchDirectories = new Stack<DirectoryInfo>();
             searchDirectories.Push(root);
 
             do
@@ -105,7 +117,7 @@
 
         private static void CopyAllParallel(DirectoryInfo root, string targetRoot, string[] inclusions, string[] exclusions)
         {
-            ConcurrentStack<DirectoryInfo> searchDirectories = new ConcurrentStack<DirectoryInfo>();
+            var searchDirectories = new ConcurrentStack<DirectoryInfo>();
             searchDirectories.Push(root);
 
             Parallel.ForEach(

@@ -1,5 +1,6 @@
 /WorkingDirectory
 /Staging
+*.package
 
 *.dll
 !xml2json-xsl.dll
