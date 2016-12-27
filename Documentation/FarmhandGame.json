@@ -1,1 +1,0 @@
-{"doc" : {"assembly" : {"name" : "FarmhandGame"}, "members" : {"member" : {"name" : "T:Farmhand.Overrides.Game1", "summary" : "Overrides Stardew's Game1, allowing for advanced callback events to be added"}}}}
