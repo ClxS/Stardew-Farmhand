@@ -4,6 +4,6 @@
 
     internal class Settings
     {
-        public List<string> DeveloperFullExclusions { get; set; }
+        public List<Package> Packages { get; set; }
     }
 }
