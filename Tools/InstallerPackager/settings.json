@@ -2,7 +2,6 @@
   "Packages": [
     {
       "Name": "DeveloperFull",
-      "OutputDirectory": "DeveloperFull",
       "InclusionFilters": [
         ".*"
       ],
@@ -22,7 +21,6 @@
     },
     {
       "Name": "DeveloperLite",
-      "OutputDirectory": "DevelpperLite",
       "InclusionFilters": [
         ".*\\\\Farmhand.dll",
         ".*\\\\Farmhand.pdb",
@@ -39,7 +37,6 @@
     },
     {
       "Name": "Player",
-      "OutputDirectory": "Player",
       "InclusionFilters": [
         ".*\\\\Farmhand.dll",
         ".*\\\\FarmhandUI.dll",

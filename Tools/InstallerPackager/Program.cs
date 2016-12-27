@@ -46,7 +46,7 @@
         private static void PreparePackage(string root, string destinationRoot, Package package)
         {
             var tempDir = GetTemporaryDirectory();
-            var destination = Path.Combine(destinationRoot, package.OutputDirectory, package.Name + ".package");
+            var destination = Path.Combine(destinationRoot, package.Name + ".package");
             if (destination == null)
             {
                 throw new Exception("Invalid Destination Path");
