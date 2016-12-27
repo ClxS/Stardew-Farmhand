@@ -206,6 +206,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{A847360C-2B23-439B-B581-3C12AB5BD56F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmapiCompatibilityLayer", "Extensions\SmapiCompatibilityLayer\SmapiCompatibilityLayer.csproj", "{C5D41223-E5EF-410D-81B1-4F439AF4AF1C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C12052C1-872A-4B04-97FB-9347A4539C87} = {C12052C1-872A-4B04-97FB-9347A4539C87}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TitleSkipMod", "Mods\TitleSkipMod\TitleSkipMod.csproj", "{1834C3A1-43CC-4C26-AF46-6072319826FA}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -218,12 +221,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MenuTestMod", "Mods\MenuTes
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGlobalSettingsMod", "Mods\TestGlobalSettingsMod\TestGlobalSettingsMod.csproj", "{305329D3-FBC0-4BAA-9993-F04D6D72BF13}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C12052C1-872A-4B04-97FB-9347A4539C87} = {C12052C1-872A-4B04-97FB-9347A4539C87}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPerSaveSettingsMod", "Mods\TestPerSaveSettingsMod\TestPerSaveSettingsMod.csproj", "{00BF31C4-4C6A-435F-B9F0-BEAA18C4D868}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C12052C1-872A-4B04-97FB-9347A4539C87} = {C12052C1-872A-4B04-97FB-9347A4539C87}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependency Tests", "Dependency Tests", "{090B22A4-B940-4C4D-BE70-E68AA838832E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyBaseEntryFail", "Mods\DependencyTest\DependencyBaseEntryFail\DependencyBaseEntryFail.csproj", "{DBB5A36B-6BE8-4490-9128-32AB2DBA7A92}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C12052C1-872A-4B04-97FB-9347A4539C87} = {C12052C1-872A-4B04-97FB-9347A4539C87}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyBaseSuccess", "Mods\DependencyTest\DependencyBaseSuccess\DependencyBaseSuccess.csproj", "{21F17015-7EA1-4DF2-A3DD-EADD207C07E3}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -276,6 +288,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyMissing", "Mods\D
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyCascadeFail", "Mods\DependencyTest\DependencyCascadeFail\DependencyCascadeFail.csproj", "{52182B9A-F8E4-4922-B991-68FBFDB036EF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C12052C1-872A-4B04-97FB-9347A4539C87} = {C12052C1-872A-4B04-97FB-9347A4539C87}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{A81F8DF5-6398-4D3D-9E7A-BE5C7C90CD6B}"
 EndProject
