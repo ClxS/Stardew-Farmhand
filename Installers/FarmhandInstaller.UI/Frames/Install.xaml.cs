@@ -3,6 +3,8 @@
     using System.Windows;
     using System.Windows.Controls;
 
+    using FarmhandInstaller.UI.Utilities;
+
     /// <summary>
     /// Interaction logic for Install.xaml
     /// </summary>
@@ -23,6 +25,7 @@
 
         internal override void Start()
         {
+            PackageManager.InstallPackage();
         }
 
         private void ButtonTestSuccess_OnClick(object sender, RoutedEventArgs e)

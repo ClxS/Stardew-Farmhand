@@ -1,9 +1,10 @@
 ﻿namespace FarmhandInstaller.UI.Frames
 {
-    using System;
     using System.Diagnostics;
     using System.Windows;
     using System.Windows.Navigation;
+
+    using FarmhandInstaller.UI.Utilities;
 
     /// <summary>
     /// Interaction logic for DeveloperPackageSelection
@@ -12,9 +13,9 @@
     {
         internal static string CommandDevPackage => "next";
 
-        public DeveloperPackageSelection()
+        internal DeveloperPackageSelection()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -38,11 +39,13 @@
 
         private void ButtonPackageHard_OnClick(object sender, RoutedEventArgs e)
         {
+            InstallationContext.PackageType = PackageType.DeveloperFull;
             this.OnNavigate(CommandDevPackage);
         }
 
         private void ButtonPackageEasy_OnClick(object sender, RoutedEventArgs e)
         {
+            InstallationContext.PackageType = PackageType.DeveloperLite;
             this.OnNavigate(CommandDevPackage);
         }
     }

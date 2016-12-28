@@ -3,24 +3,26 @@
     using System;
     using System.IO;
     using System.Windows;
-    using System.Windows.Controls;
 
     using FarmhandInstaller.UI.Controls;
+    using FarmhandInstaller.UI.Utilities;
 
     /// <summary>
-    /// Interaction logic for DeveloperFindPaths.xaml
+    /// Interaction logic for DeveloperFindPaths
     /// </summary>
-    public partial class DeveloperFindPaths : BaseFrame
+    public partial class DeveloperFindPaths
     {
         internal static string CommandInstall => "install";
 
-        public DeveloperFindPaths()
+        internal DeveloperFindPaths()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         internal override void ClearFrame()
         {
+            this.finderInstallLocation.Value = InstallationContext.OutputPath;
+            this.finderStardewFolder.Value = InstallationContext.StardewPath;
         }
 
         internal override void Start()
@@ -29,6 +31,8 @@
 
         private void ButtonInstall_OnClick(object sender, RoutedEventArgs e)
         {
+            InstallationContext.OutputPath = this.finderInstallLocation.Value;
+            InstallationContext.StardewPath = this.finderStardewFolder.Value;
             this.OnNavigate(CommandInstall);
         }
 
@@ -48,7 +52,7 @@
                     e.ValidationFailureReason = "This is not a valid path";
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception)
             {
                 e.Valid = false;
                 e.ValidationFailureReason = "This is not a valid path";
@@ -96,7 +100,7 @@
                     e.ValidationFailureReason = "This is not a valid path";
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception)
             {
                 e.Valid = false;
                 e.ValidationFailureReason = "This is not a valid path";

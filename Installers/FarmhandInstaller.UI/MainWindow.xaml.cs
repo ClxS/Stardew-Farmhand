@@ -2,6 +2,9 @@
 {
     using System.Collections.Generic;
 
+    using FarmhandInstaller.UI.Utilities;
+    using FarmhandInstaller.UI.Utilities.Packages;
+
     /// <summary>
     /// Interaction logic for MainWindow
     /// </summary>
@@ -15,6 +18,12 @@
         public MainWindow()
         {
             this.InitializeComponent();
+
+            InstallationContext.AddNewModFromTemplate = true;
+            InstallationContext.OutputPath = "Z:\\Test";
+            InstallationContext.StardewPath = "Z:\\Games\\SteamLibrary\\steamapps\\common\\Stardew Valley";
+            var package = new DeveloperFullPackage();
+            package.Install();
 
             var frameWelcome = new Frames.Welcome();
             var framePackageSelect = new Frames.PackageSelection();

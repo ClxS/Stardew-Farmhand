@@ -5,6 +5,7 @@
     using System.Windows;
 
     using FarmhandInstaller.UI.Controls;
+    using FarmhandInstaller.UI.Utilities;
 
     /// <summary>
     /// Interaction logic for PlayerFindPaths
@@ -13,13 +14,15 @@
     {
         internal static string CommandInstall => "install";
 
-        public PlayerFindPaths()
+        internal PlayerFindPaths()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         internal override void ClearFrame()
         {
+            this.finderInstallLocation.Value = InstallationContext.OutputPath;
+            this.finderStardewFolder.Value = InstallationContext.StardewPath;
         }
 
         internal override void Start()
@@ -28,6 +31,8 @@
 
         private void ButtonInstall_OnClick(object sender, RoutedEventArgs e)
         {
+            InstallationContext.OutputPath = this.finderInstallLocation.Value;
+            InstallationContext.StardewPath = this.finderStardewFolder.Value;
             this.OnNavigate(CommandInstall);
         }
 

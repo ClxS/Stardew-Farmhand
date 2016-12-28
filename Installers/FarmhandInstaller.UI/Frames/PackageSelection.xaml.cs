@@ -2,6 +2,8 @@
 {
     using System.Windows;
 
+    using FarmhandInstaller.UI.Utilities;
+
     /// <summary>
     /// Interaction logic for PackageSelection.xaml
     /// </summary>
@@ -31,6 +33,7 @@
 
         private void ButtonPlayerPackage_OnClick(object sender, RoutedEventArgs e)
         {
+            InstallationContext.PackageType = PackageType.Player;
             this.OnNavigate(CommandPlayerPackage);
         }
 

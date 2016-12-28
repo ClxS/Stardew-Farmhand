@@ -2,9 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Documents;
 
     using FarmhandInstaller.UI.Frames;
 
@@ -51,8 +49,9 @@
             {
                 this.FrameStack.Pop();
                 this.CurrentFrame = this.FrameStack.Peek();
-                this.CurrentFrame.Start();
+                this.CurrentFrame.ClearFrame();
                 this.UpdateDisplayedFrame();
+                this.CurrentFrame.Start();
             }
         }
 

@@ -12,12 +12,29 @@
         /// <summary>
         /// Gets a value indicating whether is valid.
         /// </summary>
-        public bool IsValid { get; private set; } = false;
+        public bool IsValid { get; private set; }
 
         /// <summary>
         /// Called when a folder is selected
         /// </summary>
         public event EventHandler<EventArgsFolderSelected> Selected = delegate { };
+
+        /// <summary>
+        /// Gets or sets the value.
+        /// </summary>
+        public string Value
+        {
+            get
+            {
+                return this.textBoxFileName.Text;
+            }
+
+            set
+            {
+                this.textBoxFileName.Text = value;
+                this.Validate();
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FindFolder"/> class.
@@ -29,14 +46,16 @@
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            var dlg = new Microsoft.Win32.OpenFileDialog();
-            
+            var dlg = new Microsoft.Win32.OpenFileDialog
+            {
+                ValidateNames = false,
+                CheckFileExists = false,
+                CheckPathExists = false,
+                FileName = "Folder Selection.",
+                Filter = "None|(*.*)"
+            };
+
             // Set filter for file extension and default file extension 
-            dlg.ValidateNames = false;
-            dlg.CheckFileExists = false;
-            dlg.CheckPathExists = false;
-            dlg.FileName = "Folder Selection.";
-            dlg.Filter = "None|(*.*)";
 
             // Display OpenFileDialog by calling ShowDialog method 
             bool? result = dlg.ShowDialog();
@@ -77,6 +96,7 @@
                 this.iconPass.Visibility = Visibility.Visible;
                 this.iconFail.Visibility = Visibility.Collapsed;
             }
+
             this.IsValid = args.Valid;
         }
     }
