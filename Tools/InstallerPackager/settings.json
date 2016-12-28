@@ -24,18 +24,18 @@
     {
       "Name": "DeveloperLite",
       "InclusionFilters": [
-        ".*\\\\Farmhand.dll",
-        ".*\\\\Farmhand.pdb",
-        ".*\\\\FarmhandUI.dll",
-        ".*\\\\FarmhandUI.pdb",
-        ".*\\\\FarmhandGame.dll",
-        ".*\\\\FarmhandGame.pdb",
-        ".*\\\\FarmhandCharacter.dll",
-        ".*\\\\FarmhandCharacter.pdb",
-        ".*\\\\FarmhandPatcherFirstPass.dll",
-        ".*\\\\FarmhandPatcherSecondPass.dll",
-        ".*\\\\Extensions\\\\.*StardewModdingAPI.dll",
-        "(?!.*\\\\Mods\\\\ModTemplate.*).*\\\\Mods\\\\.*"
+        ".*\\\\[B|b]in\\\\Farmhand.dll",
+        ".*\\\\[B|b]in\\\\Farmhand.pdb",
+        ".*\\\\[B|b]in\\\\FarmhandUI.dll",
+        ".*\\\\[B|b]in\\\\FarmhandUI.pdb",
+        ".*\\\\[B|b]in\\\\FarmhandGame.dll",
+        ".*\\\\[B|b]in\\\\FarmhandGame.pdb",
+        ".*\\\\[B|b]in\\\\FarmhandCharacter.dll",
+        ".*\\\\[B|b]in\\\\FarmhandCharacter.pdb",
+        ".*\\\\[B|b]in\\\\FarmhandPatcherFirstPass.dll",
+        ".*\\\\[B|b]in\\\\FarmhandPatcherSecondPass.dll",
+        ".*\\\\WorkingDirectory\\\\Extensions\\\\.*StardewModdingAPI.dll",
+        ".*\\\\Mods\\\\ModTemplate\\\\.*"
       ]
     },
     {

@@ -1,7 +1,6 @@
 ﻿namespace InstallerPackager
 {
     using System;
-    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.IO;
     using System.IO.Compression;
@@ -28,6 +27,9 @@
                 payloadPath = Path.Combine(root, args[1]);
             }
 
+            root = SanitizePath(root);
+            payloadPath = SanitizePath(payloadPath);
+
             var location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (location == null)
             {
@@ -41,6 +43,16 @@
             {
                 PreparePackage(root, payloadPath, package);
             }
+        }
+
+        private static string SanitizePath(string root)
+        {
+            while (root.EndsWith("\\"))
+            {
+                root = root.Remove(root.Length - 1, 1);
+            }
+
+            return root;
         }
 
         private static void PreparePackage(string root, string destinationRoot, Package package)
