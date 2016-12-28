@@ -18,13 +18,7 @@
         public MainWindow()
         {
             this.InitializeComponent();
-
-            InstallationContext.AddNewModFromTemplate = true;
-            InstallationContext.OutputPath = "Z:\\Test";
-            InstallationContext.StardewPath = "Z:\\Games\\SteamLibrary\\steamapps\\common\\Stardew Valley";
-            var package = new DeveloperFullPackage();
-            package.Install();
-
+            
             var frameWelcome = new Frames.Welcome();
             var framePackageSelect = new Frames.PackageSelection();
             var frameDevPackageSelect = new Frames.DeveloperPackageSelection();
