@@ -6,9 +6,10 @@
         ".*"
       ],
       "ExclusionFilters": [
-        ".*\\\\Bin\\\\.*",
-        ".*\\\\obj\\\\.*",
+        ".*\\\\[B|b]in\\\\.*",
+        ".*\\\\[O|o]bj\\\\.*",
         ".*\\.git.*",
+        ".*\\.package",
         ".*appveyor.*",
         ".*PopulateSubmodules.bat.*",
         ".*README\\.md.*",
@@ -16,7 +17,8 @@
         ".*WorkingDirectory.*",
         ".*\\\\Staging\\\\.*",
         ".*\\\\packages\\\\.*",
-        ".*\\\\Documentation\\\\.*"
+        ".*\\\\Documentation\\\\.*",
+        "^(?!.+?(?=Libraries\\\\Farmhand\\\\Mods\\\\)).+?(?=Mods)Mods\\\\(?!ModTemplate).*"
       ]
     },
     {
@@ -32,7 +34,8 @@
         ".*\\\\FarmhandCharacter.pdb",
         ".*\\\\FarmhandPatcherFirstPass.dll",
         ".*\\\\FarmhandPatcherSecondPass.dll",
-        ".*\\\\Extensions\\\\.*StardewModdingAPI.dll"
+        ".*\\\\Extensions\\\\.*StardewModdingAPI.dll",
+        "(?!.*\\\\Mods\\\\ModTemplate.*).*\\\\Mods\\\\.*"
       ]
     },
     {

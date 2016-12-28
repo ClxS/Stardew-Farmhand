@@ -88,7 +88,9 @@
             do
             {
                 var source = searchDirectories.Pop();
-                var target = source == root ? targetRoot : Path.Combine(targetRoot, source.FullName.Remove(0, root.FullName.Length + 1));
+                var target = source == root
+                                         ? targetRoot
+                                         : targetRoot + source.FullName.Remove(0, root.FullName.Length);
 
                 // Copy each file into the new directory.
                 foreach (var fi in source.GetFiles().Where(f => inclusions.Any(i => Regex.IsMatch(f.FullName, i))))
@@ -117,16 +119,30 @@
 
         private static void CopyAllParallel(DirectoryInfo root, string targetRoot, string[] inclusions, string[] exclusions)
         {
-            var searchDirectories = new ConcurrentStack<DirectoryInfo>();
+            var fileDirectories = new List<DirectoryInfo>();
+            var searchDirectories = new Stack<DirectoryInfo>();
             searchDirectories.Push(root);
 
+            do
+            {
+                var source = searchDirectories.Pop();
+                fileDirectories.Add(source);
+
+                // Copy each subdirectory using recursion.
+                foreach (var sourceSubDir in source.GetDirectories())
+                {
+                    searchDirectories.Push(sourceSubDir);
+                }
+            }
+            while (searchDirectories.Count > 0);
+            
             Parallel.ForEach(
-                searchDirectories,
+                fileDirectories,
                 source =>
                 {
                     var target = source == root
                                         ? targetRoot
-                                        : Path.Combine(targetRoot, source.FullName.Remove(0, root.FullName.Length + 1));
+                                        : targetRoot + source.FullName.Remove(0, root.FullName.Length);
 
                     // Copy each file into the new directory.
                     foreach (
@@ -144,12 +160,6 @@
 
                         fi.CopyTo(Path.Combine(target, fi.Name), true);
                     }
-
-                    // Copy each subdirectory using recursion.
-                    foreach (var sourceSubDir in source.GetDirectories())
-                    {
-                        searchDirectories.Push(sourceSubDir);
-                    }
                 });
         }
 
@@ -162,6 +172,8 @@
                 tempDirectory = tempDirectory.Replace('.', '_');
             }
             while (Directory.Exists(tempDirectory));
+
+            tempDirectory += "\\FH";
 
             Directory.CreateDirectory(tempDirectory);
             return tempDirectory;
