@@ -1,0 +1,8 @@
+﻿{
+  "UniqueId": "ModTemplate",
+  "Name": "ModTemplate",
+  "ModDll": "ModTemplate",
+  "Author": "ModAuthor",
+  "Version": "1.0",
+  "Description": "ModDescription"
+}
