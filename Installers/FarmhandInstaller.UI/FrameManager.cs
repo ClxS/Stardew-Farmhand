@@ -49,9 +49,7 @@
             {
                 this.FrameStack.Pop();
                 this.CurrentFrame = this.FrameStack.Peek();
-                this.CurrentFrame.ClearFrame();
                 this.UpdateDisplayedFrame();
-                this.CurrentFrame.Start();
             }
         }
 
@@ -72,8 +70,11 @@
 
         private void UpdateDisplayedFrame()
         {
+            this.CurrentFrame.ClearFrame();
+
             this.ParentContainer.Children.Clear();
             this.ParentContainer.Children.Add(this.CurrentFrame);
+
             this.CurrentFrame.Start();
         }
     }
