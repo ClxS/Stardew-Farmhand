@@ -8,6 +8,11 @@
         xmlns:frames="clr-namespace:FarmhandInstaller.UI.Frames"
         mc:Ignorable="d"
         Title="Stardew Farmhand Installer" Height="300" Width="625" ResizeMode="NoResize">
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button x:Name="ButtonRightTitle" Content="Welcome" />
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
     <Grid x:Name="contentWrapper">
         <frames:Install></frames:Install>
     </Grid>

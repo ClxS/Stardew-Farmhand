@@ -18,12 +18,15 @@
         public MainWindow()
         {
             this.InitializeComponent();
-            
+
+            TitleInfoService.TitleInfoElement = this.ButtonRightTitle;
+
             var frameWelcome = new Frames.Welcome();
             var framePackageSelect = new Frames.PackageSelection();
             var frameDevPackageSelect = new Frames.DeveloperPackageSelection();
             var framePlayerPaths = new Frames.PlayerFindPaths();
             var frameDevPaths = new Frames.DeveloperFindPaths();
+            var frameEmptyMod = new Frames.CreateEmptyMod();
             var frameInstall = new Frames.Install();
             var frameFinished = new Frames.Finished();
             var frameError = new Frames.Error();
@@ -31,7 +34,7 @@
             var frames = new Frames.BaseFrame[]
                              {
                                  frameWelcome, framePackageSelect, frameDevPackageSelect, framePlayerPaths,
-                                 frameDevPaths, frameInstall, frameFinished, frameError
+                                 frameDevPaths, frameInstall, frameFinished, frameError, frameEmptyMod
                              };
 
             this.frameManager.Initialize(this.contentWrapper);
@@ -66,7 +69,19 @@
                     Element = frameDevPackageSelect,
                     TransitionCommands = new Dictionary<string, Frames.BaseFrame>
                 {
-                    { Frames.DeveloperPackageSelection.CommandDevPackage, frameDevPaths },
+                    { Frames.DeveloperPackageSelection.CommandNext, frameDevPaths },
+                    { Frames.DeveloperPackageSelection.CommandCreateEmptyMod, frameEmptyMod },
+                }
+                });
+
+            this.frameManager.RegisterFrame(
+                frameEmptyMod,
+                new FlowInformation
+                {
+                    Element = frameEmptyMod,
+                    TransitionCommands = new Dictionary<string, Frames.BaseFrame>
+                {
+                    { Frames.CreateEmptyMod.CommandNext, frameDevPaths },
                 }
                 });
 
