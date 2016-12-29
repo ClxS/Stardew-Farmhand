@@ -87,10 +87,10 @@
     <Compile Include="Utilities\EmbeddedResourceUtility.cs" />
     <Compile Include="Utilities\ModTemplateUtility.cs" />
     <Compile Include="Utilities\PackageManager.cs" />
-    <Compile Include="Utilities\Packages\DeveloperFullPackage.cs" />
-    <Compile Include="Utilities\Packages\DeveloperLitePackage.cs" />
-    <Compile Include="Utilities\Packages\IPackage.cs" />
-    <Compile Include="Utilities\Packages\PlayerPackage.cs" />
+    <Compile Include="Utilities\Package\DeveloperFullPackage.cs" />
+    <Compile Include="Utilities\Package\DeveloperLitePackage.cs" />
+    <Compile Include="Utilities\Package\IPackage.cs" />
+    <Compile Include="Utilities\Package\PlayerPackage.cs" />
     <Compile Include="Utilities\PackageType.cs" />
     <Compile Include="Utilities\TitleInfoService.cs" />
     <Page Include="Controls\FindFolder.xaml">
