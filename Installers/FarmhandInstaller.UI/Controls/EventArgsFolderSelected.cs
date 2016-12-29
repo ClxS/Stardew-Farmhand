@@ -14,6 +14,8 @@
 
         public bool Valid { get; set; }
 
+        public bool SuppressValidationError { get; set; } = false;
+
         public string ValidationFailureReason { get; set; }
     }
 }

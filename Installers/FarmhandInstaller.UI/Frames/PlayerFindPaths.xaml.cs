@@ -43,20 +43,29 @@
 
         private void FinderStardewFolder_OnSelected(object sender, EventArgsFolderSelected e)
         {
-            try
+            if (string.IsNullOrWhiteSpace(e.Folder))
             {
-                // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-                Path.GetFullPath(e.Folder);
-                if (!Path.IsPathRooted(e.Folder))
+                e.Valid = false;
+                e.SuppressValidationError = true;
+            }
+
+            if (e.Valid)
+            {
+                try
+                {
+                    // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+                    Path.GetFullPath(e.Folder);
+                    if (!Path.IsPathRooted(e.Folder))
+                    {
+                        e.Valid = false;
+                        e.ValidationFailureReason = "This is not a valid path";
+                    }
+                }
+                catch (System.Exception)
                 {
                     e.Valid = false;
                     e.ValidationFailureReason = "This is not a valid path";
                 }
-            }
-            catch (System.Exception)
-            {
-                e.Valid = false;
-                e.ValidationFailureReason = "This is not a valid path";
             }
 
             if (e.Valid && !Directory.Exists(e.Folder))
@@ -92,21 +101,30 @@
 
         private void FinderInstallLocation_OnSelected(object sender, EventArgsFolderSelected e)
         {
-            try
+            if (string.IsNullOrWhiteSpace(e.Folder))
             {
-                // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-                Path.GetFullPath(e.Folder);
+                e.Valid = false;
+                e.SuppressValidationError = true;
+            }
 
-                if (!Path.IsPathRooted(e.Folder))
+            if (e.Valid)
+            {
+                try
+                {
+                    // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+                    Path.GetFullPath(e.Folder);
+
+                    if (!Path.IsPathRooted(e.Folder))
+                    {
+                        e.Valid = false;
+                        e.ValidationFailureReason = "This is not a valid path";
+                    }
+                }
+                catch (System.Exception)
                 {
                     e.Valid = false;
                     e.ValidationFailureReason = "This is not a valid path";
                 }
-            }
-            catch (System.Exception)
-            {
-                e.Valid = false;
-                e.ValidationFailureReason = "This is not a valid path";
             }
 
             this.buttonInstall.IsEnabled = e.Valid && this.finderStardewFolder.IsValid;

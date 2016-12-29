@@ -86,20 +86,23 @@
             EventArgsFolderSelected args = new EventArgsFolderSelected(this.textBoxFileName.Text);
             this.Selected.Invoke(this, args);
 
-            this.iconFail.Visibility = Visibility.Hidden;
+            this.iconFail.Visibility = Visibility.Collapsed;
             this.iconPass.Visibility = Visibility.Hidden;
             this.textBlockValidation.Text = string.Empty;
 
-            if (!args.Valid)
+            if (!args.SuppressValidationError)
             {
-                this.textBlockValidation.Text = args.ValidationFailureReason;
-                this.iconFail.Visibility = Visibility.Visible;
-                this.iconPass.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                this.iconPass.Visibility = Visibility.Visible;
-                this.iconFail.Visibility = Visibility.Collapsed;
+                if (!args.Valid)
+                {
+                    this.textBlockValidation.Text = args.ValidationFailureReason;
+                    this.iconFail.Visibility = Visibility.Visible;
+                    this.iconPass.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    this.iconPass.Visibility = Visibility.Visible;
+                    this.iconFail.Visibility = Visibility.Collapsed;
+                }
             }
 
             this.IsValid = args.Valid;

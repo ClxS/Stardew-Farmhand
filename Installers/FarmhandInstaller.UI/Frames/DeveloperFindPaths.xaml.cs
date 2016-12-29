@@ -44,19 +44,28 @@
 
         private void FinderStardewFolder_OnSelected(object sender, EventArgsFolderSelected e)
         {
-            try
+            if (string.IsNullOrWhiteSpace(e.Folder))
             {
-                Path.GetFullPath(e.Folder); 
-                if (!Path.IsPathRooted(e.Folder))
+                e.Valid = false;
+                e.SuppressValidationError = true;
+            }
+
+            if (e.Valid)
+            {
+                try
+                {
+                    Path.GetFullPath(e.Folder);
+                    if (!Path.IsPathRooted(e.Folder))
+                    {
+                        e.Valid = false;
+                        e.ValidationFailureReason = "This is not a valid path";
+                    }
+                }
+                catch (Exception)
                 {
                     e.Valid = false;
                     e.ValidationFailureReason = "This is not a valid path";
                 }
-            }
-            catch (Exception)
-            {
-                e.Valid = false;
-                e.ValidationFailureReason = "This is not a valid path";
             }
 
             if (e.Valid && !Directory.Exists(e.Folder))
@@ -92,19 +101,28 @@
 
         private void FinderInstallLocation_OnSelected(object sender, EventArgsFolderSelected e)
         {
-            try
+            if (string.IsNullOrWhiteSpace(e.Folder))
             {
-                Path.GetFullPath(e.Folder);
-                if (!Path.IsPathRooted(e.Folder))
+                e.Valid = false;
+                e.SuppressValidationError = true;
+            }
+
+            if (e.Valid)
+            {
+                try
+                {
+                    Path.GetFullPath(e.Folder);
+                    if (!Path.IsPathRooted(e.Folder))
+                    {
+                        e.Valid = false;
+                        e.ValidationFailureReason = "This is not a valid path";
+                    }
+                }
+                catch (Exception)
                 {
                     e.Valid = false;
                     e.ValidationFailureReason = "This is not a valid path";
                 }
-            }
-            catch (Exception)
-            {
-                e.Valid = false;
-                e.ValidationFailureReason = "This is not a valid path";
             }
 
             if (e.Valid && Directory.Exists(e.Folder))
