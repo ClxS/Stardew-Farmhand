@@ -17,7 +17,7 @@
         /// <summary>
         /// Called when a folder is selected
         /// </summary>
-        public event EventHandler<EventArgsFolderSelected> Selected = delegate { };
+        internal event EventHandler<EventArgsFolderSelected> Selected = delegate { };
 
         /// <summary>
         /// Gets or sets the value.
@@ -78,6 +78,11 @@
 
         private void Validate()
         {
+            if (this.Selected == null)
+            {
+                return;
+            }
+
             EventArgsFolderSelected args = new EventArgsFolderSelected(this.textBoxFileName.Text);
             this.Selected.Invoke(this, args);
 

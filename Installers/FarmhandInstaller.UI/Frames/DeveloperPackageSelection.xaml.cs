@@ -11,8 +11,10 @@
     /// </summary>
     public partial class DeveloperPackageSelection : BaseFrame
     {
-        internal static string CommandDevPackage => "next";
+        internal static string CommandNext => "next";
 
+        internal static string CommandCreateEmptyMod => "createEmpty";
+        
         internal DeveloperPackageSelection()
         {
             this.InitializeComponent();
@@ -26,6 +28,7 @@
 
         internal override void ClearFrame()
         {
+            this.checkBoxCreateEmptyMod.IsChecked = InstallationContext.AddNewModFromTemplate;
         }
 
         internal override void Start()
@@ -40,13 +43,15 @@
         private void ButtonPackageHard_OnClick(object sender, RoutedEventArgs e)
         {
             InstallationContext.PackageType = PackageType.DeveloperFull;
-            this.OnNavigate(CommandDevPackage);
+            InstallationContext.AddNewModFromTemplate = this.checkBoxCreateEmptyMod.IsChecked ?? true;
+            this.OnNavigate(InstallationContext.AddNewModFromTemplate ? CommandCreateEmptyMod : CommandNext);
         }
 
         private void ButtonPackageEasy_OnClick(object sender, RoutedEventArgs e)
         {
             InstallationContext.PackageType = PackageType.DeveloperLite;
-            this.OnNavigate(CommandDevPackage);
+            InstallationContext.AddNewModFromTemplate = this.checkBoxCreateEmptyMod.IsChecked ?? true;
+            this.OnNavigate(InstallationContext.AddNewModFromTemplate ? CommandCreateEmptyMod : CommandNext);
         }
     }
 }

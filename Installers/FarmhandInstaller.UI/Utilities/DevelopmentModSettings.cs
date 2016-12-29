@@ -4,7 +4,7 @@
 
     internal class DevelopmentModSettings
     {
-        public string Name { get; set; } = "Example Mod";
+        public string Name { get; set; } = string.Empty;
 
         private string nameNoSpace;
 
@@ -24,9 +24,9 @@
             }
         }
 
-        public string Author { get; set; } = "Example Author";
+        public string Author { get; set; } = string.Empty;
 
-        public string Description { get; set; } = "Add your mod description here";
+        public string Description { get; set; } = string.Empty;
 
         public bool UsesSettingsFile { get; set; } = false;
     }

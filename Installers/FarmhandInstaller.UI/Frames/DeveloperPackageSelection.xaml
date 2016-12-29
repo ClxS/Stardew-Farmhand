@@ -38,6 +38,7 @@
                     <TextBlock FontWeight="Normal">Source + Project Structure</TextBlock>
                 </StackPanel>
             </Button>
+            <CheckBox x:Name="checkBoxCreateEmptyMod" IsChecked="True" Content="+ Create an empty mod" Margin="0,10,0,0"></CheckBox>
         </StackPanel>
         <Button Click="ButtonBack_OnClick" DockPanel.Dock="Bottom" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="0.5,0.5" Margin="10,0,0,10"/>
     </DockPanel>

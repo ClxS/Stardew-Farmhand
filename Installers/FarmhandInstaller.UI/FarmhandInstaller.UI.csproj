@@ -74,6 +74,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\EventArgsValidationRequested.cs" />
+    <Compile Include="Controls\ValidatedTextBox.xaml.cs">
+      <DependentUpon>ValidatedTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Frames\CreateEmptyMod.xaml.cs">
+      <DependentUpon>CreateEmptyMod.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\DevelopmentModSettings.cs" />
     <Compile Include="Utilities\DirectoryUtility.cs" />
     <Compile Include="Utilities\InstallationContext.cs" />
@@ -85,7 +92,16 @@
     <Compile Include="Utilities\Packages\IPackage.cs" />
     <Compile Include="Utilities\Packages\PlayerPackage.cs" />
     <Compile Include="Utilities\PackageType.cs" />
+    <Compile Include="Utilities\TitleInfoService.cs" />
     <Page Include="Controls\FindFolder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ValidatedTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Frames\CreateEmptyMod.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

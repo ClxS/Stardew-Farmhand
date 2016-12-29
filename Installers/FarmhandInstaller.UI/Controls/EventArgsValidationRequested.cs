@@ -2,15 +2,15 @@
 {
     using System;
 
-    internal class EventArgsFolderSelected : EventArgs
+    internal class EventArgsValidationRequested : EventArgs
     {
-        public EventArgsFolderSelected(string folder)
+        public EventArgsValidationRequested(string value)
         {
-            this.Folder = folder;
+            this.Value = value;
             this.Valid = true;
         }
 
-        public string Folder { get; private set; }
+        public string Value { get; private set; }
 
         public bool Valid { get; set; }
 

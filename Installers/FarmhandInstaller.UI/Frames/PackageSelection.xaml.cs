@@ -24,6 +24,7 @@
 
         internal override void Start()
         {
+            TitleInfoService.SetCurrentPage("Package Selection");
         }
 
         private void ButtonBack_OnClick(object sender, RoutedEventArgs e)
@@ -34,6 +35,7 @@
         private void ButtonPlayerPackage_OnClick(object sender, RoutedEventArgs e)
         {
             InstallationContext.PackageType = PackageType.Player;
+            TitleInfoService.SetPackageSelection("Player");
             this.OnNavigate(CommandPlayerPackage);
         }
 
