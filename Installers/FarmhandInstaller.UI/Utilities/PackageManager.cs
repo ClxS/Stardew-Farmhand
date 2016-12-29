@@ -2,7 +2,7 @@
 {
     using System;
 
-    using FarmhandInstaller.UI.Utilities.Packages;
+    using FarmhandInstaller.UI.Utilities.Package;
 
     internal class PackageManager
     {
