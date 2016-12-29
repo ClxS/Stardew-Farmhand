@@ -3,16 +3,21 @@
     using System;
     using System.Windows;
 
+    using FarmhandInstaller.UI.Utilities;
+
     /// <summary>
     /// Interaction logic for Welcome frame
     /// </summary>
-    public partial class Welcome : BaseFrame
+    public partial class Welcome
     {
         internal static string CommandNext => "next";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Welcome"/> class.
+        /// </summary>
         public Welcome()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         internal override void ClearFrame()
@@ -21,11 +26,12 @@
 
         internal override void Start()
         {
+            TitleInfoService.SetCurrentPage("Welcome");
         }
 
         private void ButtonNext_OnClick(object sender, RoutedEventArgs e)
         {
-            base.OnNavigate(CommandNext);
+            this.OnNavigate(CommandNext);
         }
     }
 }

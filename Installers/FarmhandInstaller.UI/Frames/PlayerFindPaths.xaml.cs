@@ -1,6 +1,5 @@
 ﻿namespace FarmhandInstaller.UI.Frames
 {
-    using System;
     using System.IO;
     using System.Windows;
 
@@ -10,7 +9,7 @@
     /// <summary>
     /// Interaction logic for PlayerFindPaths
     /// </summary>
-    public partial class PlayerFindPaths : BaseFrame
+    public partial class PlayerFindPaths
     {
         internal static string CommandInstall => "install";
 
@@ -27,6 +26,7 @@
 
         internal override void Start()
         {
+            TitleInfoService.SetCurrentPage("Set Location");
         }
 
         private void ButtonInstall_OnClick(object sender, RoutedEventArgs e)
@@ -45,6 +45,7 @@
         {
             try
             {
+                // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
                 Path.GetFullPath(e.Folder);
                 if (!Path.IsPathRooted(e.Folder))
                 {
@@ -52,7 +53,7 @@
                     e.ValidationFailureReason = "This is not a valid path";
                 }
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 e.Valid = false;
                 e.ValidationFailureReason = "This is not a valid path";
@@ -93,6 +94,7 @@
         {
             try
             {
+                // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
                 Path.GetFullPath(e.Folder);
 
                 if (!Path.IsPathRooted(e.Folder))
@@ -101,7 +103,7 @@
                     e.ValidationFailureReason = "This is not a valid path";
                 }
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 e.Valid = false;
                 e.ValidationFailureReason = "This is not a valid path";

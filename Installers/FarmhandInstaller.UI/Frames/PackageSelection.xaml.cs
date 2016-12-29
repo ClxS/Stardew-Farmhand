@@ -5,17 +5,20 @@
     using FarmhandInstaller.UI.Utilities;
 
     /// <summary>
-    /// Interaction logic for PackageSelection.xaml
+    /// Interaction logic for PackageSelection
     /// </summary>
-    public partial class PackageSelection : BaseFrame
+    public partial class PackageSelection
     {
         internal static string CommandPlayerPackage => "Player";
 
         internal static string CommandDeveloperPackage => "Developer";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PackageSelection"/> class.
+        /// </summary>
         public PackageSelection()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         internal override void ClearFrame()

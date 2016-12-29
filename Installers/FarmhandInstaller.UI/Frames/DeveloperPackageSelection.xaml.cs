@@ -9,7 +9,7 @@
     /// <summary>
     /// Interaction logic for DeveloperPackageSelection
     /// </summary>
-    public partial class DeveloperPackageSelection : BaseFrame
+    public partial class DeveloperPackageSelection
     {
         internal static string CommandNext => "next";
 
@@ -33,6 +33,7 @@
 
         internal override void Start()
         {
+            TitleInfoService.SetCurrentPage("Dev Package Selection");
         }
 
         private void ButtonBack_OnClick(object sender, RoutedEventArgs e)
@@ -44,6 +45,7 @@
         {
             InstallationContext.PackageType = PackageType.DeveloperFull;
             InstallationContext.AddNewModFromTemplate = this.checkBoxCreateEmptyMod.IsChecked ?? true;
+            TitleInfoService.SetPackageSelection("DevFull");
             this.OnNavigate(InstallationContext.AddNewModFromTemplate ? CommandCreateEmptyMod : CommandNext);
         }
 
@@ -51,6 +53,7 @@
         {
             InstallationContext.PackageType = PackageType.DeveloperLite;
             InstallationContext.AddNewModFromTemplate = this.checkBoxCreateEmptyMod.IsChecked ?? true;
+            TitleInfoService.SetPackageSelection("DevLite");
             this.OnNavigate(InstallationContext.AddNewModFromTemplate ? CommandCreateEmptyMod : CommandNext);
         }
     }

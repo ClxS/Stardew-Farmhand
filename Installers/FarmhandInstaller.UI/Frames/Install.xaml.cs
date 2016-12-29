@@ -1,22 +1,24 @@
 ﻿namespace FarmhandInstaller.UI.Frames
 {
     using System.Windows;
-    using System.Windows.Controls;
 
     using FarmhandInstaller.UI.Utilities;
 
     /// <summary>
-    /// Interaction logic for Install.xaml
+    /// Interaction logic for Install
     /// </summary>
-    public partial class Install : BaseFrame
+    public partial class Install
     {
         internal static string CommandFinished => "installed";
 
         internal static string CommandError => "error";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Install"/> class.
+        /// </summary>
         public Install()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         internal override void ClearFrame()
@@ -25,6 +27,7 @@
 
         internal override void Start()
         {
+            TitleInfoService.SetCurrentPage("Installing");
             PackageManager.InstallPackage();
         }
 

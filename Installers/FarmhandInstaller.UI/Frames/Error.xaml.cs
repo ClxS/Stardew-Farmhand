@@ -4,11 +4,16 @@
     using System.Windows;
     using System.Windows.Navigation;
 
+    using FarmhandInstaller.UI.Utilities;
+
     /// <summary>
-    /// Interaction logic for Error.xaml
+    /// Interaction logic for Error
     /// </summary>
-    public partial class Error : BaseFrame
+    public partial class Error
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Error"/> class.
+        /// </summary>
         public Error()
         {
             InitializeComponent();
@@ -20,6 +25,7 @@
 
         internal override void Start()
         {
+            TitleInfoService.SetCurrentPage("Error");
         }
 
         private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)

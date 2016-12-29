@@ -19,14 +19,15 @@
 
         internal override void ClearFrame()
         {
-        }
-
-        internal override void Start()
-        {
             this.NameTextBox.Value = InstallationContext.ModSettings.Name;
             this.AuthorTextBox.Value = InstallationContext.ModSettings.Author;
             this.DescriptionTextBox.Value = InstallationContext.ModSettings.Description;
             this.CheckBoxCreateEmptyMod.IsChecked = InstallationContext.ModSettings.UsesSettingsFile;
+        }
+
+        internal override void Start()
+        {
+            TitleInfoService.SetCurrentPage("Create Empty Mod");
         }
 
         private void ButtonBack_OnClick(object sender, RoutedEventArgs e)

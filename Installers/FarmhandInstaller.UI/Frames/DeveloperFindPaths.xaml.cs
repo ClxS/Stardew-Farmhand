@@ -27,6 +27,7 @@
 
         internal override void Start()
         {
+            TitleInfoService.SetCurrentPage("Set Location");
         }
 
         private void ButtonInstall_OnClick(object sender, RoutedEventArgs e)

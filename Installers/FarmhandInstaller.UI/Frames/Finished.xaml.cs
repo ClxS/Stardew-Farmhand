@@ -4,14 +4,19 @@
     using System.Windows;
     using System.Windows.Navigation;
 
+    using FarmhandInstaller.UI.Utilities;
+
     /// <summary>
-    /// Interaction logic for Finished.xaml
+    /// Interaction logic for Finished
     /// </summary>
-    public partial class Finished : BaseFrame
+    public partial class Finished
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Finished"/> class.
+        /// </summary>
         public Finished()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         internal override void ClearFrame()
@@ -20,6 +25,7 @@
 
         internal override void Start()
         {
+            TitleInfoService.SetCurrentPage("Complete!");
         }
 
         private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
