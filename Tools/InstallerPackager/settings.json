@@ -24,7 +24,7 @@
     {
       "Name": "DeveloperLite",
       "InclusionFilters": [
-        ".*\\Farmhand.sln",
+        ".*Farmhand.sln",
         ".*\\\\[B|b]in\\\\Farmhand.dll",
         ".*\\\\[B|b]in\\\\Farmhand.pdb",
         ".*\\\\[B|b]in\\\\FarmhandUI.dll",
