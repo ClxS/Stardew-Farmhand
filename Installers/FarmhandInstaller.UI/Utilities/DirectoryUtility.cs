@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Text.RegularExpressions;
 
     internal static class DirectoryUtility
@@ -44,7 +43,7 @@
             }
         }
 
-        public static void CopyAll(string sourcePath, string targetPath)
+        public static void CopyAll(string sourcePath, string targetPath, string exceptFilter = null)
         {
             var root = new DirectoryInfo(sourcePath);
             var searchDirectories = new Stack<DirectoryInfo>();
@@ -58,6 +57,11 @@
                 // Copy each file into the new directory.
                 foreach (var fi in source.GetFiles())
                 {
+                    if (exceptFilter != null && Regex.IsMatch(fi.FullName, exceptFilter))
+                    {
+                        continue;
+                    }
+
                     if (!Directory.Exists(target))
                     {
                         Directory.CreateDirectory(target);
