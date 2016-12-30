@@ -21,6 +21,29 @@
             return tempDirectory;
         }
 
+        public static void EnsureDirectoryExists(string directory)
+        {
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+        }
+
+        public static void CleanDirectory(string directory)
+        {
+            var di = new DirectoryInfo(directory);
+
+            foreach (var file in di.GetFiles())
+            {
+                file.Delete();
+            }
+
+            foreach (var dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+        }
+
         public static void CopyAll(string sourcePath, string targetPath)
         {
             var root = new DirectoryInfo(sourcePath);

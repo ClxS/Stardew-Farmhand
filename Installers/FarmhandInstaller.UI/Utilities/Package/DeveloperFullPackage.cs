@@ -6,9 +6,6 @@
     using System.Linq;
     using System.Text.RegularExpressions;
 
-    using ICSharpCode.SharpZipLib.Core;
-    using ICSharpCode.SharpZipLib.Zip;
-
     internal class DeveloperFullPackage : IPackage
     {
         public const string PackageFile = "FarmhandInstaller.UI.Payload.DeveloperFull.package";
@@ -23,38 +20,18 @@
 
         public void Install()
         {
-            this.EnsureOutputExists();
-            this.ClearOutputFolder();
-            this.ExtractPackageFile();
-            this.CopyStagingFiles();
+            DirectoryUtility.EnsureDirectoryExists(InstallationContext.OutputPath);
+            DirectoryUtility.CleanDirectory(InstallationContext.OutputPath);
+            PackageManager.ExtractPackageFile(PackageFile, InstallationContext.OutputPath);
+
+            var output = Path.Combine(InstallationContext.OutputPath, "Staging");
+            DirectoryUtility.CopyAll(InstallationContext.StardewPath, output);
+
             this.EditSolution();
         }
 
         #endregion
-
-        private void EnsureOutputExists()
-        {
-            if (!Directory.Exists(InstallationContext.OutputPath))
-            {
-                Directory.CreateDirectory(InstallationContext.OutputPath);
-            }
-        }
-
-        private void ClearOutputFolder()
-        {
-            var di = new DirectoryInfo(InstallationContext.OutputPath);
-
-            foreach (var file in di.GetFiles())
-            {
-                file.Delete();
-            }
-
-            foreach (var dir in di.GetDirectories())
-            {
-                dir.Delete(true);
-            }
-        }
-
+        
         private void EditSolution()
         {
             var solution = Path.Combine(InstallationContext.OutputPath, "Farmhand.sln");
@@ -103,55 +80,6 @@
             }
 
             File.WriteAllText(solution + "test.sln", text);
-        }
-
-        private void CopyStagingFiles()
-        {
-            var output = Path.Combine(InstallationContext.OutputPath, "Staging");
-            DirectoryUtility.CopyAll(InstallationContext.StardewPath, output);
-        }
-
-        private void ExtractPackageFile()
-        {
-            var output = InstallationContext.OutputPath;
-            var zipFile = Path.Combine(output, "package.zip");
-            EmbeddedResourceUtility.ExtractResource(PackageFile, zipFile);
-
-            ZipFile zf = null;
-            try
-            {
-                var fs = File.OpenRead(zipFile);
-                zf = new ZipFile(fs);
-
-                foreach (ZipEntry zipEntry in zf)
-                {
-                    var entryFileName = zipEntry.Name;
-                    var buffer = new byte[4096];
-                    var zipStream = zf.GetInputStream(zipEntry);
-
-                    var fullZipToPath = Path.Combine(output, entryFileName);
-                    var directoryName = Path.GetDirectoryName(fullZipToPath);
-                    if (directoryName.Length > 0)
-                    {
-                        Directory.CreateDirectory(directoryName);
-                    }
-
-                    using (var streamWriter = File.Create(fullZipToPath))
-                    {
-                        StreamUtils.Copy(zipStream, streamWriter, buffer);
-                    }
-                }
-            }
-            finally
-            {
-                if (zf != null)
-                {
-                    zf.IsStreamOwner = true; // Makes close also shut the underlying stream
-                    zf.Close(); // Ensure we release resources
-                }
-
-                File.Delete(zipFile);
-            }
         }
     }
 }
