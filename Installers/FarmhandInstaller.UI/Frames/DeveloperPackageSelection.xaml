@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:FarmhandInstaller.UI.Frames"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
-    <DockPanel Margin="0,25,0,0">
+    <DockPanel Margin="0,5,0,0">
         <Label DockPanel.Dock="Top" Content="Which developer package do you want?" HorizontalAlignment="Center" FontSize="15"/>
         <Label DockPanel.Dock="Top" HorizontalAlignment="Center" FontSize="11">
             <TextBlock TextWrapping="Wrap">
@@ -14,6 +14,8 @@
                project setup, however you'll have to follow the build instructions at the <Hyperlink NavigateUri="https://github.com/ClxS/Stardew-Farmhand" RequestNavigate="Hyperlink_OnRequestNavigate">
             GitHub Project Page
             </Hyperlink>
+            <LineBreak/>
+            (An Empty Mod is required for the Simple package)
             </TextBlock>
         </Label>
         
@@ -26,7 +28,7 @@
                     <TranslateTransform Y="10"/>
                 </TransformGroup>
             </StackPanel.RenderTransform>
-            <Button Click="ButtonPackageEasy_OnClick" x:Name="button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="223">
+            <Button Click="ButtonPackageEasy_OnClick" x:Name="ButtonDevLite" HorizontalAlignment="Left" VerticalAlignment="Top" Width="223">
                 <StackPanel>
                     <TextBlock FontWeight="Bold" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Top">Simple</TextBlock>
                     <TextBlock FontWeight="Normal">Just the binaries, PDBs, and project structure</TextBlock>
@@ -38,7 +40,7 @@
                     <TextBlock FontWeight="Normal">Source + Project Structure</TextBlock>
                 </StackPanel>
             </Button>
-            <CheckBox x:Name="checkBoxCreateEmptyMod" IsChecked="True" Content="+ Create an empty mod" Margin="0,10,0,0"></CheckBox>
+            <CheckBox x:Name="CheckBoxCreateEmptyMod" Unchecked="CheckBoxCreateEmptyMod_OnChecked" Checked="CheckBoxCreateEmptyMod_OnChecked" IsChecked="True" Content="+ Create an empty mod" Margin="0,10,0,0"></CheckBox>
         </StackPanel>
         <Button Click="ButtonBack_OnClick" DockPanel.Dock="Bottom" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="0.5,0.5" Margin="10,0,0,10"/>
     </DockPanel>

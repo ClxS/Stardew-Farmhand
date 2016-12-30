@@ -28,7 +28,8 @@
 
         internal override void ClearFrame()
         {
-            this.checkBoxCreateEmptyMod.IsChecked = InstallationContext.AddNewModFromTemplate;
+            this.CheckBoxCreateEmptyMod.IsChecked = InstallationContext.AddNewModFromTemplate;
+            this.ButtonDevLite.IsEnabled = this.CheckBoxCreateEmptyMod.IsChecked ?? false;
         }
 
         internal override void Start()
@@ -44,7 +45,7 @@
         private void ButtonPackageHard_OnClick(object sender, RoutedEventArgs e)
         {
             InstallationContext.PackageType = PackageType.DeveloperFull;
-            InstallationContext.AddNewModFromTemplate = this.checkBoxCreateEmptyMod.IsChecked ?? true;
+            InstallationContext.AddNewModFromTemplate = this.CheckBoxCreateEmptyMod.IsChecked ?? true;
             TitleInfoService.SetPackageSelection("DevFull");
             this.OnNavigate(InstallationContext.AddNewModFromTemplate ? CommandCreateEmptyMod : CommandNext);
         }
@@ -52,9 +53,14 @@
         private void ButtonPackageEasy_OnClick(object sender, RoutedEventArgs e)
         {
             InstallationContext.PackageType = PackageType.DeveloperLite;
-            InstallationContext.AddNewModFromTemplate = this.checkBoxCreateEmptyMod.IsChecked ?? true;
+            InstallationContext.AddNewModFromTemplate = this.CheckBoxCreateEmptyMod.IsChecked ?? true;
             TitleInfoService.SetPackageSelection("DevLite");
             this.OnNavigate(InstallationContext.AddNewModFromTemplate ? CommandCreateEmptyMod : CommandNext);
+        }
+
+        private void CheckBoxCreateEmptyMod_OnChecked(object sender, RoutedEventArgs e)
+        {
+            this.ButtonDevLite.IsEnabled = this.CheckBoxCreateEmptyMod.IsChecked ?? false;
         }
     }
 }
