@@ -81,6 +81,7 @@
     <Compile Include="Frames\CreateEmptyMod.xaml.cs">
       <DependentUpon>CreateEmptyMod.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\StardewPatcher.cs" />
     <Compile Include="Utilities\DevelopmentModSettings.cs" />
     <Compile Include="Utilities\DirectoryUtility.cs" />
     <Compile Include="Utilities\InstallationContext.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Utilities\Package\IPackage.cs" />
     <Compile Include="Utilities\Package\PlayerPackage.cs" />
     <Compile Include="Utilities\PackageType.cs" />
+    <Compile Include="Utilities\StardewPatcherPass.cs" />
     <Compile Include="Utilities\TitleInfoService.cs" />
     <Page Include="Controls\FindFolder.xaml">
       <SubType>Designer</SubType>
