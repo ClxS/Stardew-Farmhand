@@ -38,11 +38,13 @@
         ".*\\\\[B|b]in\\\\Newtonsoft.Json.dll",
         ".*\\\\[B|b]in\\\\Mono.Cecil.dll",
         ".*\\\\[B|b]in\\\\Mono.Cecil.Rocks.dll",
+        ".*\\\\Tools\\\\FarmhandDebugger\\\\.*",
         ".*\\\\WorkingDirectory\\\\Extensions\\\\.*StardewModdingAPI.dll",
         ".*\\\\Mods\\\\ModTemplate\\\\.*"
       ],
       "ExclusionFilters": [
-        ".*WorkingDirectory\\\\Mods.*"
+        ".*WorkingDirectory\\\\Mods.*",
+        ".*\\\\[O|o]bj\\\\.*"
       ]
     },
     {
