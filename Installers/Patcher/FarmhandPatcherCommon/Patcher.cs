@@ -15,6 +15,8 @@ namespace Farmhand
 
         public PatcherOptions Options { get; } = new PatcherOptions();
 
+        public string AssemblySearchDirectory { get; set; } = string.Empty;
+
         /// <summary>
         /// 
         /// </summary>
@@ -184,7 +186,9 @@ namespace Farmhand
                 options.InputAssemblies = inputs;
                 options.OutputFile = output;
                 options.DebugInfo = true;
-                options.SearchDirectories = new[] { Directory.GetCurrentDirectory() };
+                options.SearchDirectories = string.IsNullOrWhiteSpace(this.AssemblySearchDirectory) 
+                    ? new[] { Directory.GetCurrentDirectory() } 
+                    : new[] { Directory.GetCurrentDirectory(), this.AssemblySearchDirectory };
 
                 var repack = new ILRepack(options, logger);
                 repack.Repack();
