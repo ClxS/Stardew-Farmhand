@@ -72,7 +72,7 @@
                     zf.Close(); // Ensure we release resources
                 }
 
-                File.Delete(destination);
+                File.Delete(zip);
             }
         }
     }
