@@ -14,9 +14,9 @@ namespace Farmhand
         {
             InjectFarmhandCoreClasses(PatcherConstants.PassTwoPackageResult, PatcherConstants.PassOneFarmhandExe, PatcherConstants.FarmhandUiDll, PatcherConstants.FarmhandGameDll, PatcherConstants.FarmhandCharacterDll);
             var cecilContext = new CecilContext(PatcherConstants.PassTwoPackageResult, true);
-            FarmhandAssemblies.Add(Assembly.LoadFrom(PatcherConstants.FarmhandUiDll));
-            FarmhandAssemblies.Add(Assembly.LoadFrom(PatcherConstants.FarmhandGameDll));
-            FarmhandAssemblies.Add(Assembly.LoadFrom(PatcherConstants.FarmhandCharacterDll));
+            FarmhandAssemblies.Add(Assembly.LoadFrom(this.GetAssemblyPath(PatcherConstants.FarmhandUiDll)));
+            FarmhandAssemblies.Add(Assembly.LoadFrom(this.GetAssemblyPath(PatcherConstants.FarmhandGameDll)));
+            FarmhandAssemblies.Add(Assembly.LoadFrom(this.GetAssemblyPath(PatcherConstants.FarmhandCharacterDll)));
 
             HookApiEvents(cecilContext);
             HookOutputableApiEvents(cecilContext);

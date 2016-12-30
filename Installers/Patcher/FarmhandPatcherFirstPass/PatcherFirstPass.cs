@@ -16,13 +16,14 @@ namespace Farmhand
         public override void PatchStardew(string path = null)
         {
             path = path ?? PatcherConstants.StardewExe;
+            Assembly.LoadFrom(path);
             InjectFarmhandCoreClasses(PatcherConstants.PassOnePackageResult, path, PatcherConstants.FarmhandDll, 
                 PatcherConstants.JsonLibrary,
                 PatcherConstants.MonoCecilLibrary,
                 PatcherConstants.MonoCecilRocksLibrary
                 );
             var cecilContext = new CecilContext(PatcherConstants.PassOnePackageResult, true);
-            FarmhandAssemblies.Add(Assembly.LoadFrom(PatcherConstants.FarmhandDll));
+            FarmhandAssemblies.Add(Assembly.LoadFrom(this.GetAssemblyPath(PatcherConstants.FarmhandDll)));
             
             HookApiEvents(cecilContext);
             HookOutputableApiEvents(cecilContext);
@@ -35,7 +36,7 @@ namespace Farmhand
 
             Console.WriteLine("First Pass Installation Completed");
 
-            cecilContext.WriteAssembly(PatcherConstants.PassOneFarmhandExe, true);
+            cecilContext.WriteAssembly(this.GetAssemblyPath(PatcherConstants.PassOneFarmhandExe), true);
         }
 
         protected override void AlterTypeBaseFieldProtections(CecilContext context, Type type)
