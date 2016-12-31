@@ -20,6 +20,7 @@
         {
             var workingDir = Path.Combine(InstallationContext.OutputPath, "WorkingDirectory");
             var farmhandBinary = Path.Combine(workingDir, "Stardew Farmhand.exe");
+            var assemblyDirectory = Path.Combine(InstallationContext.OutputPath, "Bin");
 
             DirectoryUtility.EnsureDirectoryExists(InstallationContext.OutputPath);
             DirectoryUtility.CleanDirectory(InstallationContext.OutputPath);
@@ -29,7 +30,7 @@
 
             DirectoryUtility.CopyAll(InstallationContext.StardewPath, workingDir, ".*\\.exe");
 
-            StardewPatcher.Patch(farmhandBinary);
+            StardewPatcher.Patch(farmhandBinary, assemblyDirectory);
         }
 
         #endregion
