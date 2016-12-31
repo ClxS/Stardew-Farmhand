@@ -96,6 +96,14 @@
                 e.ValidationFailureReason = "Could not find the Content folder in folder";
             }
 
+            if (e.Valid && this.finderInstallLocation.IsValid)
+            {
+                if (this.finderInstallLocation.Value.Contains(e.Folder))
+                {
+                    this.finderInstallLocation.Validate();
+                }
+            }
+
             this.buttonInstall.IsEnabled = this.finderInstallLocation.IsValid && e.Valid;
         }
 
@@ -124,6 +132,25 @@
                 {
                     e.Valid = false;
                     e.ValidationFailureReason = "This is not a valid path";
+                }
+            }
+
+            if (e.Valid && Directory.Exists(e.Folder))
+            {
+                if (Directory.GetFiles(e.Folder).Length > 0 || Directory.GetDirectories(e.Folder).Length > 0)
+                {
+                    e.Valid = false;
+                    e.ValidationFailureReason = "Install folder must be empty";
+                    return;
+                }
+            }
+
+            if (e.Valid && !string.IsNullOrEmpty(this.finderStardewFolder.Value))
+            {
+                if (e.Folder.Contains(this.finderStardewFolder.Value))
+                {
+                    e.Valid = false;
+                    e.ValidationFailureReason = "Farmhand cannot be placed in the Stardew Valley folder";
                 }
             }
 

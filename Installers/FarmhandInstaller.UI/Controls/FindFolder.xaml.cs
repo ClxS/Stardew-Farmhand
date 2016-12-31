@@ -76,7 +76,7 @@
             this.Validate();
         }
 
-        private void Validate()
+        public void Validate()
         {
             if (this.Selected == null)
             {
