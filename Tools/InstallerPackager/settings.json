@@ -33,11 +33,13 @@
         ".*\\\\[B|b]in\\\\FarmhandGame.pdb",
         ".*\\\\[B|b]in\\\\FarmhandCharacter.dll",
         ".*\\\\[B|b]in\\\\FarmhandCharacter.pdb",
+        ".*\\\\[B|b]in\\\\FarmhandPatcherCommon.dll",
         ".*\\\\[B|b]in\\\\FarmhandPatcherFirstPass.dll",
         ".*\\\\[B|b]in\\\\FarmhandPatcherSecondPass.dll",
         ".*\\\\[B|b]in\\\\Newtonsoft.Json.dll",
         ".*\\\\[B|b]in\\\\Mono.Cecil.dll",
         ".*\\\\[B|b]in\\\\Mono.Cecil.Rocks.dll",
+        ".*\\\\[B|b]in\\\\Mono.Cecil.Pdb.dll",
         ".*\\\\Tools\\\\FarmhandDebugger\\\\.*",
         ".*\\\\WorkingDirectory\\\\Extensions\\\\.*StardewModdingAPI.dll",
         ".*\\\\Mods\\\\ModTemplate\\\\.*"
@@ -54,11 +56,13 @@
         ".*\\\\FarmhandUI.dll",
         ".*\\\\FarmhandGame.dll",
         ".*\\\\FarmhandCharacter.dll",
+        ".*\\\\FarmhandPatcherCommon.dll",
         ".*\\\\FarmhandPatcherFirstPass.dll",
         ".*\\\\FarmhandPatcherSecondPass.dll",
         ".*\\\\[B|b]in\\\\Newtonsoft.Json.dll",
         ".*\\\\[B|b]in\\\\Mono.Cecil.dll",
         ".*\\\\[B|b]in\\\\Mono.Cecil.Rocks.dll",
+        ".*\\\\[B|b]in\\\\Mono.Cecil.Pdb.dll",
         ".*\\\\Extensions\\\\.*StardewModdingAPI.dll"
       ],
       "ExclusionFilters": [
