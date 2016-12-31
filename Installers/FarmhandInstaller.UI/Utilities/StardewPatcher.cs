@@ -23,18 +23,17 @@
             return patcher as Patcher;
         }
 
-        public static void Patch(string outputPath, bool disableGrm = true)
+        public static void Patch(string outputPath, string assemblyDirectory, bool disableGrm = true)
         {
             var sdvPath = Path.Combine(InstallationContext.StardewPath, "Stardew Valley.exe");
-            var binPath = Path.Combine(InstallationContext.OutputPath, "Bin");
             
-            var patcher = CreatePatcher(StardewPatcherPass.PassOne, binPath);
-            patcher.Options.AssemblyDirectory = binPath;
+            var patcher = CreatePatcher(StardewPatcherPass.PassOne, assemblyDirectory);
+            patcher.Options.AssemblyDirectory = assemblyDirectory;
             patcher.Options.DisableGrm = disableGrm;
             patcher.PatchStardew(sdvPath);
 
-            patcher = CreatePatcher(StardewPatcherPass.PassTwo, binPath);
-            patcher.Options.AssemblyDirectory = binPath;
+            patcher = CreatePatcher(StardewPatcherPass.PassTwo, assemblyDirectory);
+            patcher.Options.AssemblyDirectory = assemblyDirectory;
             patcher.Options.DisableGrm = disableGrm;
             patcher.PatchStardew(outputPath);
         }
