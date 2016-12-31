@@ -81,6 +81,7 @@
     <Compile Include="Frames\CreateEmptyMod.xaml.cs">
       <DependentUpon>CreateEmptyMod.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\PackageStatusContext.cs" />
     <Compile Include="Utilities\StardewPatcher.cs" />
     <Compile Include="Utilities\DevelopmentModSettings.cs" />
     <Compile Include="Utilities\DirectoryUtility.cs" />

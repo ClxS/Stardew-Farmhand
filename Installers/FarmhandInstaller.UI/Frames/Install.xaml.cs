@@ -1,6 +1,7 @@
 ﻿namespace FarmhandInstaller.UI.Frames
 {
-    using System.Windows;
+    using System;
+    using System.Threading.Tasks;
 
     using FarmhandInstaller.UI.Utilities;
 
@@ -28,17 +29,62 @@
         internal override void Start()
         {
             TitleInfoService.SetCurrentPage("Installing");
-            PackageManager.InstallPackage();
+            Task.Factory.StartNew(() =>
+                {
+                    try
+                    {
+                        var context = new PackageStatusContext();
+                        context.ProgressUpdate += this.Context_ProgressUpdate;
+                        context.MessageUpdate += this.Context_MessageUpdate;
+
+                        PackageManager.InstallPackage(context);
+                        this.Complete();
+                    }
+                    catch (Exception)
+                    {
+                        this.Failure();
+                    }
+                });
         }
 
-        private void ButtonTestSuccess_OnClick(object sender, RoutedEventArgs e)
+        private void Context_MessageUpdate(object sender, EventArgs e)
         {
-            this.OnNavigate(CommandFinished);
+            var context = sender as PackageStatusContext;
+            if (context != null)
+            {
+                this.Dispatcher.Invoke(new Action(() =>
+                {
+                    this.LabelMessage.Content = context.Message;
+                }));
+            }
         }
 
-        private void ButtonTestFail_OnClick(object sender, RoutedEventArgs e)
+        private void Context_ProgressUpdate(object sender, EventArgs e)
         {
-            this.OnNavigate(CommandError);
+            var context = sender as PackageStatusContext;
+            if (context != null)
+            {
+                this.Dispatcher.Invoke(new Action(() =>
+                {
+                    this.InstallationProgress.Value = context.Progress;
+                }));
+            }
+        }
+
+        private void Failure()
+        {
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                this.OnNavigate(CommandError);
+            }));
+        }
+
+        internal void Complete()
+        {
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                this.OnNavigate(CommandFinished);
+            }));
         }
     }
 }

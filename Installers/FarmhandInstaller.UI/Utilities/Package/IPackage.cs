@@ -2,6 +2,6 @@
 {
     internal interface IPackage
     {
-        void Install();
+        void Install(PackageStatusContext context);
     }
 }

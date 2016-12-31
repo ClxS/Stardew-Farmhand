@@ -10,7 +10,7 @@
 
     internal class PackageManager
     {
-        public static void InstallPackage()
+        public static void InstallPackage(PackageStatusContext context)
         {
             IPackage package = null;
             switch (InstallationContext.PackageType)
@@ -31,7 +31,7 @@
                 throw new Exception("Unknown Package Type");
             }
 
-            package.Install();
+            package.Install(context);
         }
         
         public static void ExtractPackageFile(string fileName, string destination)

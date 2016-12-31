@@ -52,22 +52,27 @@
             return proxy;
         }
 
-        public static void Patch(string outputPath, string assemblyDirectory, bool disableGrm = true)
+        public static void Patch(string outputPath, string assemblyDirectory, bool disableGrm, PackageStatusContext context)
         {
             var domaininfo = new AppDomainSetup { ApplicationBase = Environment.CurrentDirectory };
             var adevidence = AppDomain.CurrentDomain.Evidence;
             var localDomain = AppDomain.CreateDomain("LocalDomain", adevidence, domaininfo);
 
             var sdvPath = Path.Combine(InstallationContext.StardewPath, "Stardew Valley.exe");
-            
+
+            context.SetState(60, "Creating First Pass Patcher");
             var patcher = CreatePatcher(StardewPatcherPass.PassOne, assemblyDirectory, localDomain);
+            context.SetState(65, "Loading Common Assemblies");
             patcher.LoadCommon(assemblyDirectory);
             patcher.SetOptions(assemblyDirectory, disableGrm);
+            context.SetState(70, "Patching Intermediate Executable");
             patcher.Patch(sdvPath);
 
+            context.SetState(75, "Creating Second Pass Patcher");
             patcher = CreatePatcher(StardewPatcherPass.PassTwo, assemblyDirectory, localDomain);
             patcher.LoadCommon(assemblyDirectory);
             patcher.SetOptions(assemblyDirectory, disableGrm);
+            context.SetState(80, "Patching Final Executable");
             patcher.Patch(outputPath);
 
             AppDomain.Unload(localDomain);

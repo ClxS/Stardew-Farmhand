@@ -18,25 +18,31 @@
 
         #region IPackage Members
 
-        public void Install()
+        public void Install(PackageStatusContext context)
         {
+            context.SetState(10, "Cleaning Output Directory");
             DirectoryUtility.EnsureDirectoryExists(InstallationContext.OutputPath);
             DirectoryUtility.CleanDirectory(InstallationContext.OutputPath);
+
+            context.SetState(25, "Extracting Package File");
             PackageManager.ExtractPackageFile(PackageFile, InstallationContext.OutputPath);
 
+            context.SetState(40, "Copying Stardew Valley Files");
             var output = Path.Combine(InstallationContext.OutputPath, "Staging");
             DirectoryUtility.CopyAll(InstallationContext.StardewPath, output);
 
-            this.EditSolution();
+            this.EditSolution(context);
         }
 
         #endregion
-        
-        private void EditSolution()
+
+        private void EditSolution(PackageStatusContext context)
         {
             var solution = Path.Combine(InstallationContext.OutputPath, "Farmhand.sln");
             var text = File.ReadAllText(solution);
             var projects = Regex.Matches(text, ProjectBlockMatch).Cast<Match>().ToList();
+
+            context.SetState(50, "Removing Mod Projects From Solution");
 
             Match modTemplateProject = null;
             var linesToCull = new List<string>();
@@ -65,6 +71,8 @@
 
             if (InstallationContext.AddNewModFromTemplate)
             {
+                context.SetState(80, "Adding new blank mod");
+
                 if (modTemplateProject == null)
                 {
                     throw new Exception(
@@ -79,6 +87,7 @@
                 ModTemplateUtility.PatchTemplateMod();
             }
 
+            context.SetState(100, "Writing Modified Solution");
             File.WriteAllText(solution + "test.sln", text);
         }
     }
