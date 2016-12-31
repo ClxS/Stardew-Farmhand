@@ -1,9 +1,9 @@
 ﻿namespace FarmhandInstaller.UI
 {
+    using System;
     using System.Collections.Generic;
 
     using FarmhandInstaller.UI.Utilities;
-    using FarmhandInstaller.UI.Utilities.Packages;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -11,14 +11,14 @@
     public partial class MainWindow
     {
         private readonly FrameManager frameManager = new FrameManager();
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
         public MainWindow()
         {
             this.InitializeComponent();
-
+            
             TitleInfoService.TitleInfoElement = this.ButtonRightTitle;
 
             var frameWelcome = new Frames.Welcome();
@@ -128,7 +128,7 @@
             this.frameManager.DisplayInitialFrame(frameWelcome);
         }
 
-        private void Frame_Back(object sender, System.EventArgs e)
+        private void Frame_Back(object sender, EventArgs e)
         {
             this.frameManager.Back();
         }
