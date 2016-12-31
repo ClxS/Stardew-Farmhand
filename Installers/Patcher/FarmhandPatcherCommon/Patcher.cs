@@ -204,7 +204,6 @@ namespace Farmhand
             {
                 Console.WriteLine($"FATAL ERROR: ILRepack: {ex.Message}");
                 throw new Exception("ILRepack Error", ex);
-                // ignored
             }
             finally
             {                
