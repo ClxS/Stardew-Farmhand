@@ -27,8 +27,10 @@
             <controls:ValidatedTextBox x:Name="NameTextBox" Changed="NameTextBox_OnChanged" FormLabel="Name" TextBoxWidth="300" Margin="0,0,0,0"></controls:ValidatedTextBox>
             <controls:ValidatedTextBox x:Name="AuthorTextBox" Changed="AuthorTextBox_OnChanged" FormLabel="Author" TextBoxWidth="300" Margin="0,10,0,0"></controls:ValidatedTextBox>
             <controls:ValidatedTextBox x:Name="DescriptionTextBox" Changed="DescriptionTextBox_OnChanged" FormLabel="Description" TextBoxWidth="300" TextBoxHeight="80" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,10,0,0"></controls:ValidatedTextBox>
-            
-            <CheckBox x:Name="CheckBoxCreateEmptyMod" IsChecked="True" Content="Uses Settings File" Margin="0,10,0,0"></CheckBox>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Use Settings File" Width="110" Margin="0,8,0,0"></Label>
+                <CheckBox x:Name="CheckBoxCreateEmptyMod" IsChecked="True" Content="" Margin="0,10,0,0"></CheckBox>
+            </StackPanel>
         </StackPanel>
         <DockPanel>
             <Button x:Name="ButtonNext" IsEnabled="False" DockPanel.Dock="Right" Click="ButtonNext_OnClick" Content="Next" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,10">
