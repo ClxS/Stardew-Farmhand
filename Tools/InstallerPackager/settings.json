@@ -56,6 +56,9 @@
         ".*\\\\FarmhandCharacter.dll",
         ".*\\\\FarmhandPatcherFirstPass.dll",
         ".*\\\\FarmhandPatcherSecondPass.dll",
+        ".*\\\\[B|b]in\\\\Newtonsoft.Json.dll",
+        ".*\\\\[B|b]in\\\\Mono.Cecil.dll",
+        ".*\\\\[B|b]in\\\\Mono.Cecil.Rocks.dll",
         ".*\\\\Extensions\\\\.*StardewModdingAPI.dll"
       ],
       "ExclusionFilters": [
