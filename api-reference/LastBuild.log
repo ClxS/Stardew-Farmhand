@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder and Tools" version="2015.10.10.0" projectFile="C:\projects\stardew-farmhand\Documentation\Farmhand\Farmhand.shfbproj" started="1/1/2017 9:44:56 PM">
+<shfbBuild product="Sandcastle Help File Builder and Tools" version="2015.10.10.0" projectFile="C:\projects\stardew-farmhand\Documentation\Farmhand\Farmhand.shfbproj" started="1/1/2017 9:56:02 PM">
 <buildStep step="Initializing">
 Finding tools...
 The Sandcastle tools are located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\&#39;
@@ -53,7 +53,7 @@ References to include (excluding framework assemblies):
 Copying XML comments files
     C:\projects\stardew-farmhand\Bin\Farmhand.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Farmhand.XML
 SHFB: Warning BE0063: &#39;C:\projects\stardew-farmhand\Libraries\Farmhand\..\..\Bin\Farmhand.XML&#39; matches a previously copied comments filename.  The duplicate will be copied to a unique name to preserve the comments it contains.
-    C:\projects\stardew-farmhand\Libraries\Farmhand\..\..\Bin\Farmhand.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\{6953a03e-8d4a-4284-9d40-aef1fbc15aab}
+    C:\projects\stardew-farmhand\Libraries\Farmhand\..\..\Bin\Farmhand.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\{7433cd8e-2323-4c07-a59f-28ee1278497c}
     C:\projects\stardew-farmhand\Libraries\FarmhandCharacter\..\..\Bin\FarmhandCharacter.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\FarmhandCharacter.XML
     C:\projects\stardew-farmhand\Libraries\FarmhandGame\..\..\Bin\FarmhandGame.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\FarmhandGame.XML
     C:\projects\stardew-farmhand\Libraries\FarmhandUI\..\..\Bin\FarmhandUI.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\FarmhandUI.XML
@@ -64,12 +64,12 @@ Generating shared content files (en-US, English (United States))...
 </buildStep>
 <buildStep step="GenerateApiFilter">
 Generating API filter for MRefBuilder...
-    Last step completed in 00:00:00.0313
+    Last step completed in 00:00:00.0156
 </buildStep>
 <buildStep step="GenerateReflectionInfo">
 Generating reflection information...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateRefInfo.proj]
-Build started 1/1/2017 9:44:57 PM.
+Build started 1/1/2017 9:56:03 PM.
 The target &quot;_ConvertPdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,37)&quot; does not exist in the project, and will be ignored.
 The target &quot;_CollectPdbFiles&quot; listed in an AfterTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,70)&quot; does not exist in the project, and will be ignored.
 The target &quot;_CollectMdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,38)&quot; does not exist in the project, and will be ignored.
@@ -92,13 +92,13 @@ Done Building Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\
 
 Build succeeded.
 
-Time Elapsed 00:00:03.43
-    Last step completed in 00:00:03.5101
+Time Elapsed 00:00:03.08
+    Last step completed in 00:00:03.1284
 </buildStep>
 <buildStep step="TransformReflectionInfo">
 Transforming reflection output...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - TransformManifest.proj]
-Build started 1/1/2017 9:45:01 PM.
+Build started 1/1/2017 9:56:06 PM.
 Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\TransformManifest.proj&quot; on node 1 (default targets).
 TransformManifest:
   XslTransform (v2015.10.10.0)
@@ -191,8 +191,8 @@ Done Building Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\
 
 Build succeeded.
 
-Time Elapsed 00:00:02.27
-    Last step completed in 00:00:02.3334
+Time Elapsed 00:00:01.92
+    Last step completed in 00:00:01.9688
 </buildStep>
 <buildStep step="GenerateNamespaceSummaries">
 Generating namespace summary information...
@@ -210,7 +210,7 @@ Merging conceptual and additional tables of contents...
 <buildStep step="GenerateIntermediateTableOfContents">
 Generating intermediate table of contents file...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateIntermediateTOC.proj]
-Build started 1/1/2017 9:45:03 PM.
+Build started 1/1/2017 9:56:08 PM.
 Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\GenerateIntermediateTOC.proj&quot; on node 1 (default targets).
 GenerateIntermediateTOC:
   XslTransform (v2015.10.10.0)
@@ -221,14 +221,14 @@ Done Building Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\
 
 Build succeeded.
 
-Time Elapsed 00:00:00.39
+Time Elapsed 00:00:00.21
 Generating conceptual content intermediate TOC file...
-    Last step completed in 00:00:00.4375
+    Last step completed in 00:00:00.2812
 </buildStep>
 <buildStep step="CreateBuildAssemblerConfigs">
 Creating Sandcastle configuration files...
     sandcastle.config
-    Last step completed in 00:00:00.2031
+    Last step completed in 00:00:00.1875
 </buildStep>
 <buildStep step="MergeCustomConfigs">
 Merging custom build component configurations
@@ -238,7 +238,7 @@ C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\sandcastle.conf
 <buildStep step="BuildReferenceTopics">
 Building reference help topics...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - BuildReferenceTopics.proj]
-Build started 1/1/2017 9:45:04 PM.
+Build started 1/1/2017 9:56:09 PM.
 Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\BuildReferenceTopics.proj&quot; on node 1 (default targets).
 BuildReferenceTopics:
   BuildAssembler (v2015.10.10.0)
@@ -255,8 +255,8 @@ Done Building Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\
 
 Build succeeded.
 
-Time Elapsed 00:00:53.81
-    Last step completed in 00:00:53.9538
+Time Elapsed 00:01:11.41
+    Last step completed in 00:01:11.4893
 </buildStep>
 <buildStep step="CombiningIntermediateTocFiles">
 Combining conceptual and API intermediate TOC files...
@@ -276,7 +276,7 @@ Processed 2559 HTML files
 Sorting keywords and generating See Also indices
 Saving website keyword index to C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\WebKI.xml
 Saving website table of contents to C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\WebTOC.xml
-    Last step completed in 00:00:02.1011
+    Last step completed in 00:00:01.4844
 </buildStep>
 <buildStep step="CopyStandardHelpContent">
 Copying standard help content...
@@ -365,7 +365,7 @@ C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyle
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\TOC.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\TOC.css
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\TOC.js -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\TOC.js
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\Web.Config -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\Web.Config
-    Last step completed in 00:00:00.5175
+    Last step completed in 00:00:00.3989
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating website table of contents file...
@@ -374,7 +374,7 @@ Generating website table of contents file...
 <buildStep step="GenerateFullTextIndex">
 Generating full-text index for the website...
 
-    Last step completed in 00:00:04.5313
+    Last step completed in 00:00:04.4540
 </buildStep>
 <buildStep step="CopyingWebsiteFiles">
 Copying website files to output folder...
@@ -385,15 +385,15 @@ Copied 1500 files
 Copied 2000 files
 Copied 2500 files
 Copied 2672 files for the website content
-    Last step completed in 00:00:00.9219
+    Last step completed in 00:00:00.8532
 </buildStep>
 <buildStep step="CleanIntermediates">
 Removing intermediate files...
-    Last step completed in 00:00:00.3437
+    Last step completed in 00:00:00.4062
 </buildStep>
 <buildStep step="Completed">
 
-Build completed successfully at 1/1/2017 9:46:06 PM.  Total time: 00:01:10.8929
+Build completed successfully at 1/1/2017 9:57:28 PM.  Total time: 00:01:25.9840
 
 </buildStep>
 </shfbBuild>
