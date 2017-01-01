@@ -4,8 +4,6 @@
     using System.IO;
     using System.Reflection;
 
-    using Farmhand;
-
     internal static class StardewPatcher
     {
         private class PatcherProxy : MarshalByRefObject
@@ -41,22 +39,26 @@
         private static PatcherProxy CreatePatcher(StardewPatcherPass pass, string assemblyLocation, AppDomain domain)
         {
             var type = typeof(PatcherProxy);
-            var proxy = (PatcherProxy)domain.CreateInstanceAndUnwrap(
-                type.Assembly.FullName,
-                type.FullName);
-                
-            proxy.Initialize(
-                pass == StardewPatcherPass.PassOne
-                    ? Path.Combine(assemblyLocation, "FarmhandPatcherFirstPass.dll")
-                    : Path.Combine(assemblyLocation, "FarmhandPatcherSecondPass.dll"),
-                pass == StardewPatcherPass.PassOne ? "Farmhand.PatcherFirstPass" : "Farmhand.PatcherSecondPass");
-            return proxy;
+            var assemblyFile = Assembly.GetExecutingAssembly().Location;
+            if (assemblyFile != null)
+            {
+                var proxy = (PatcherProxy)domain.CreateInstanceFromAndUnwrap(assemblyFile, type.FullName);
+                proxy.Initialize(
+                    pass == StardewPatcherPass.PassOne
+                        ? Path.Combine(assemblyLocation, "FarmhandPatcherFirstPass.dll")
+                        : Path.Combine(assemblyLocation, "FarmhandPatcherSecondPass.dll"),
+                    pass == StardewPatcherPass.PassOne ? "Farmhand.PatcherFirstPass" : "Farmhand.PatcherSecondPass");
+                return proxy;
+            }
+            else
+            {
+                throw new Exception("Could not find currently executing assembly location");
+            }
         }
-
+        
         public static void Patch(string outputPath, string assemblyDirectory, bool disableGrm, PackageStatusContext context)
         {
             var localDomain = AppDomain.CreateDomain("LocalDomain");
-            localDomain.AssemblyResolve += LocalDomain_AssemblyResolve;
 
             var sdvPath = Path.Combine(InstallationContext.StardewPath, "Stardew Valley.exe");
 
@@ -76,11 +78,6 @@
             patcher.Patch(outputPath);
 
             AppDomain.Unload(localDomain);
-        }
-        
-        private static Assembly LocalDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            return Assembly.GetExecutingAssembly();
         }
     }
 }
