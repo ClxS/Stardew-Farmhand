@@ -195,7 +195,9 @@ namespace Farmhand
 
                 options.OutputFile = output;
                 options.DebugInfo = true;
-                options.SearchDirectories = new[] { Directory.GetCurrentDirectory() };
+                options.SearchDirectories = string.IsNullOrEmpty(this.Options.AssemblyDirectory) 
+                    ? new[] { Directory.GetCurrentDirectory() } 
+                    : new[] { this.Options.AssemblyDirectory };
 
                 var repack = new ILRepack(options, logger);
                 repack.Repack();

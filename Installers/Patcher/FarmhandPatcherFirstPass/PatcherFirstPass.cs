@@ -17,12 +17,17 @@ namespace Farmhand
         {
             path = path ?? PatcherConstants.StardewExe;
             Assembly.LoadFrom(path);
-            InjectFarmhandCoreClasses(PatcherConstants.PassOnePackageResult, path, PatcherConstants.FarmhandDll, 
+
+            var repackOutput = this.GetAssemblyPath(PatcherConstants.PassOnePackageResult);
+            InjectFarmhandCoreClasses(
+                repackOutput,
+                path,
+                PatcherConstants.FarmhandDll,
                 PatcherConstants.JsonLibrary,
                 PatcherConstants.MonoCecilLibrary,
-                PatcherConstants.MonoCecilRocksLibrary
-                );
-            var cecilContext = new CecilContext(PatcherConstants.PassOnePackageResult, true);
+                PatcherConstants.MonoCecilRocksLibrary);
+
+            var cecilContext = new CecilContext(repackOutput, true);
             FarmhandAssemblies.Add(Assembly.LoadFrom(this.GetAssemblyPath(PatcherConstants.FarmhandDll)));
             
             HookApiEvents(cecilContext);
