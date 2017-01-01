@@ -88,7 +88,7 @@
             }
 
             context.SetState(100, "Writing Modified Solution");
-            File.WriteAllText(solution + "test.sln", text);
+            File.WriteAllText(solution, text);
         }
     }
 }
