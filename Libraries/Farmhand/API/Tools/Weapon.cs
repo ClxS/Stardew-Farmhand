@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Farmhand.API.Tools
 {
-    public class Weapon
+    public static class Weapon
     {
         private static List<StardewValley.Tools.MeleeWeapon> deserializedWeapons = new List<StardewValley.Tools.MeleeWeapon>();
 

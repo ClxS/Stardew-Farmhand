@@ -39,7 +39,7 @@ namespace Farmhand.API.Shops
         BigCraftable
     }
 
-    public class ShopUtilities
+    public static class ShopUtilities
     {
         // The delegate type which will control whether or not a given item will get added to the shop stock
         public delegate bool CheckIfAddShopStock();

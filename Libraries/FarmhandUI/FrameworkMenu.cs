@@ -1,6 +1,6 @@
-﻿// ReSharper disable StyleCop.SA1300
-namespace Farmhand.UI
+﻿namespace Farmhand.UI
 {
+    // ReSharper disable StyleCop.SA1300
     using System;
     using System.Collections.Generic;
     using System.Linq;

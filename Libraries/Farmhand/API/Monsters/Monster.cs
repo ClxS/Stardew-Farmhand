@@ -2,7 +2,7 @@
 
 namespace Farmhand.API.Monsters
 {
-    public class Monster
+    public static class Monster
     {
         public static Dictionary<string, MonsterInformation> Monsters { get; } = new Dictionary<string, MonsterInformation>();
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Farmhand.API.Tools
 {
-    public class Tool
+    public static class Tool
     {
         public static Dictionary<string, ToolInformation> Tools { get; } = new Dictionary<string, ToolInformation>();
 
