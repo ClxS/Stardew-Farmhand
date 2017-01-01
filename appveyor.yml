@@ -83,7 +83,7 @@ build_script:
 
         git config --global core.safecrlf false
         git add -A 
-        git commit -m "Updated documentation to %APPVEYOR_REPO_COMMIT%"
+        git commit -m "Updated documentation to $env:APPVEYOR_REPO_COMMIT"
         git push https://ClxS:$env:PushToken@github.com/ClxS/Stardew-Farmhand.git -f
 
         Set-Location -Path C:\projects\stardew-farmhand
@@ -115,7 +115,6 @@ artifacts:
 deploy:
 - provider: GitHub
   artifact: FarmhandInstaller
-  release: Farmhand v${APPVEYOR_REPO_TAG_NAME}
   auth_token:
     secure: 71Fs8tgv3qdm67kFg+R4TM/dwoLJdEbZf8cVX+4Rg4HJ1fBnHgh30KQ8Sp0b7sm8
   on:
