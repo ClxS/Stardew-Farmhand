@@ -10,17 +10,18 @@
     {
         private class PatcherProxy : MarshalByRefObject
         {
-            private Patcher Patcher { get; set; }
+            private dynamic Patcher { get; set; }
 
             public void Initialize(string assemblyPath, string type)
             {
                 var test = Assembly.UnsafeLoadFrom(assemblyPath);
                 var patcherType = test.GetType(type);
-                this.Patcher = (Patcher)Activator.CreateInstance(patcherType);
+                this.Patcher = Activator.CreateInstance(patcherType);
             }
 
             public void LoadCommon(string assemblyDirectory)
             {
+                Assembly.UnsafeLoadFrom(Path.Combine(assemblyDirectory, "ILRepack.dll"));
                 Assembly.UnsafeLoadFrom(Path.Combine(assemblyDirectory, "FarmhandPatcherCommon.dll"));
                 Assembly.UnsafeLoadFrom(Path.Combine(assemblyDirectory, "Farmhand.dll"));
             }
@@ -39,7 +40,7 @@
 
         private static PatcherProxy CreatePatcher(StardewPatcherPass pass, string assemblyLocation, AppDomain domain)
         {
-            Type type = typeof(PatcherProxy);
+            var type = typeof(PatcherProxy);
             var proxy = (PatcherProxy)domain.CreateInstanceAndUnwrap(
                 type.Assembly.FullName,
                 type.FullName);
