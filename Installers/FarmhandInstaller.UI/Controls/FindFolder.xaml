@@ -10,7 +10,7 @@
     <DockPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
         <TextBox x:Name="textBoxFileName" TextChanged="TextBoxFileName_OnTextChanged" VerticalAlignment="Top" HorizontalAlignment="Left" Width="300"/>
-        <Button Click="ButtonBase_OnClick" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Browse" Margin="0,0,10,0"/>
+        <Button Height="26" Click="ButtonBase_OnClick" VerticalAlignment="Top" HorizontalAlignment="Left" Content=". . ." Margin="0,0,10,0"/>
         <fa:ImageAwesome x:Name="iconFail" Visibility="Collapsed" Icon="TimesCircle" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Foreground="Red" />
         <fa:ImageAwesome x:Name="iconPass" Visibility="Hidden" Icon="CheckCircle" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20" Foreground="#FF09E413" />
         </StackPanel>
