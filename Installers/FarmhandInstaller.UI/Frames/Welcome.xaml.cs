@@ -27,6 +27,7 @@
         internal override void Start()
         {
             TitleInfoService.SetCurrentPage("Welcome");
+            TitleInfoService.SetPackageSelection(string.Empty);
         }
 
         private void ButtonNext_OnClick(object sender, RoutedEventArgs e)
