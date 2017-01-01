@@ -64,6 +64,16 @@ build_script:
           "/v:m")
         & $buildCmd $buildArgs
 
+        # Build the installer
+        $buildArgs = @(
+          "/m",
+          "/l:C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll",
+          "/p:Platform=Installer",
+          "/p:Configuration=Release",
+          "/p:DefineConstants=WINDOWS"
+          "/v:m")
+        & $buildCmd $buildArgs
+
         git clone https://github.com/ClxS/Stardew-Farmhand.git C:\projects\stardew-docs
         Set-Location -Path C:\projects\stardew-docs
         git checkout gh-pages
