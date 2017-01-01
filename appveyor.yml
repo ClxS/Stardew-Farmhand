@@ -62,5 +62,5 @@ build_script:
     PublishCoverity.0.10.0/PublishCoverity compress -o "$env:APPVEYOR_BUILD_FOLDER\$env:APPVEYOR_PROJECT_NAME.zip" -i "$env:APPVEYOR_BUILD_FOLDER\cov-int"
     PublishCoverity.0.10.0/PublishCoverity publish -z "$env:APPVEYOR_BUILD_FOLDER\$env:APPVEYOR_PROJECT_NAME.zip" -r ClxS/Stardew-Farmhand -t $env:CoverityProjectToken -e $env:CoverityNotificationEmail -d "Scheduled CI server build." --codeVersion "$formField"
 artifacts:
-  - path: Bin\Installer\FarmhandInstaller.exe
+  - path: Bin\Installer-Release\FarmhandInstaller.exe
     name: Farmhand Installer
