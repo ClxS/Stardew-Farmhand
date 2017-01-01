@@ -28,6 +28,7 @@
         internal override void Start()
         {
             TitleInfoService.SetCurrentPage("Package Selection");
+            TitleInfoService.SetPackageSelection(string.Empty);
         }
 
         private void ButtonBack_OnClick(object sender, RoutedEventArgs e)
