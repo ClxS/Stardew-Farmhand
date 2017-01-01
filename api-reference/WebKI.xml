@@ -255,27 +255,23 @@
   <HelpKINode Title="BeforeLoaded event" Url="html/E_Farmhand_Registries_Containers_ModManifest_BeforeLoaded.htm" />
   <HelpKINode Title="Bg field" Url="html/F_Farmhand_UI_FrameworkMenu_Bg.htm" />
   <HelpKINode Title="BigCraftable class">
-    <HelpKINode Title="BigCraftable Class" Url="html/T_Farmhand_Overrides_Game_Item_BigCraftable.htm" />
     <HelpKINode Title="BigCraftable Class" Url="html/T_Farmhand_API_Items_BigCraftable.htm" />
-    <HelpKINode Title="about BigCraftable class" Url="html/T_Farmhand_API_Items_BigCraftable.htm" />
+    <HelpKINode Title="BigCraftable Class" Url="html/T_Farmhand_Overrides_Game_Item_BigCraftable.htm" />
     <HelpKINode Title="about BigCraftable class" Url="html/T_Farmhand_Overrides_Game_Item_BigCraftable.htm" />
+    <HelpKINode Title="about BigCraftable class" Url="html/T_Farmhand_API_Items_BigCraftable.htm" />
     <HelpKINode Title="constructor" Url="html/Overload_Farmhand_Overrides_Game_Item_BigCraftable__ctor.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Farmhand_API_Items_BigCraftable__ctor.htm" />
     <HelpKINode Title="fields" Url="html/Fields_T_Farmhand_Overrides_Game_Item_BigCraftable.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_Overrides_Game_Item_BigCraftable.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_API_Items_BigCraftable.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_Overrides_Game_Item_BigCraftable.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_Overrides_Game_Item_BigCraftable.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_API_Items_BigCraftable.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_Overrides_Game_Item_BigCraftable.htm" />
   </HelpKINode>
   <HelpKINode Title="BigCraftable enumeration member">
     <HelpKINode Title="ItemCategory Enumeration" Url="html/T_Farmhand_API_Items_ItemCategory.htm" />
     <HelpKINode Title="StockType Enumeration" Url="html/T_Farmhand_API_Shops_StockType.htm" />
   </HelpKINode>
   <HelpKINode Title="BigCraftable property" Url="html/P_Farmhand_API_Player_QuestInformation_CraftingObjective_BigCraftable.htm" />
-  <HelpKINode Title="BigCraftable.BigCraftable constructor">
-    <HelpKINode Title="BigCraftable Constructor " Url="html/Overload_Farmhand_Overrides_Game_Item_BigCraftable__ctor.htm" />
-    <HelpKINode Title="BigCraftable Constructor " Url="html/M_Farmhand_API_Items_BigCraftable__ctor.htm" />
-  </HelpKINode>
+  <HelpKINode Title="BigCraftable.BigCraftable constructor" Url="html/Overload_Farmhand_Overrides_Game_Item_BigCraftable__ctor.htm" />
   <HelpKINode Title="BigCraftable.BigCraftables property" Url="html/P_Farmhand_API_Items_BigCraftable_BigCraftables.htm" />
   <HelpKINode Title="BigCraftable.Create method" Url="html/M_Farmhand_API_Items_BigCraftable_Create.htm" />
   <HelpKINode Title="BigCraftable.Information property" Url="html/P_Farmhand_Overrides_Game_Item_BigCraftable_Information.htm" />
@@ -787,12 +783,10 @@
   <HelpKINode Title="Crop class">
     <HelpKINode Title="Crop Class" Url="html/T_Farmhand_API_Crops_Crop.htm" />
     <HelpKINode Title="about Crop class" Url="html/T_Farmhand_API_Crops_Crop.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Farmhand_API_Crops_Crop__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_API_Crops_Crop.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_API_Crops_Crop.htm" />
   </HelpKINode>
   <HelpKINode Title="Crop property" Url="html/P_Farmhand_UI_Base_BaseMenuComponent_Crop.htm" />
-  <HelpKINode Title="Crop.Crop constructor" Url="html/M_Farmhand_API_Crops_Crop__ctor.htm" />
   <HelpKINode Title="Crop.Crops property" Url="html/P_Farmhand_API_Crops_Crop_Crops.htm" />
   <HelpKINode Title="Crop.RegisterCrop(Of T) method" Url="html/M_Farmhand_API_Crops_Crop_RegisterCrop__1.htm" />
   <HelpKINode Title="Crop.RegisterCrop&lt;T&gt; method" Url="html/M_Farmhand_API_Crops_Crop_RegisterCrop__1.htm" />
@@ -900,12 +894,10 @@
   <HelpKINode Title="Dialogue class">
     <HelpKINode Title="Dialogue Class" Url="html/T_Farmhand_API_Dialogues_Dialogue.htm" />
     <HelpKINode Title="about Dialogue class" Url="html/T_Farmhand_API_Dialogues_Dialogue.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Farmhand_API_Dialogues_Dialogue__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_API_Dialogues_Dialogue.htm" />
   </HelpKINode>
   <HelpKINode Title="Dialogue.AnswerResult delegate" Url="html/T_Farmhand_API_Dialogues_Dialogue_AnswerResult.htm" />
   <HelpKINode Title="Dialogue.AnswersKey method" Url="html/M_Farmhand_API_Dialogues_Dialogue_AnswersKey.htm" />
-  <HelpKINode Title="Dialogue.Dialogue constructor" Url="html/M_Farmhand_API_Dialogues_Dialogue__ctor.htm" />
   <HelpKINode Title="Dialogue.GetResponseArray method" Url="html/M_Farmhand_API_Dialogues_Dialogue_GetResponseArray.htm" />
   <HelpKINode Title="Dialogue.IncludeAnswer delegate" Url="html/T_Farmhand_API_Dialogues_Dialogue_IncludeAnswer.htm" />
   <HelpKINode Title="Dialogue.OpenQuestion method" Url="html/M_Farmhand_API_Dialogues_Dialogue_OpenQuestion.htm" />
@@ -1045,6 +1037,13 @@
   <HelpKINode Title="DownActive property" Url="html/P_Farmhand_UI_Containers_ScrollableCollectionComponent_DownActive.htm" />
   <HelpKINode Title="DownButton property" Url="html/P_Farmhand_UI_Containers_ScrollableCollectionComponent_DownButton.htm" />
   <HelpKINode Title="DownScroll field" Url="html/F_Farmhand_UI_Form_DropdownFormComponent_DownScroll.htm" />
+  <HelpKINode Title="draw method">
+    <HelpKINode Title="FrameworkMenu.draw Method " Url="html/M_Farmhand_UI_FrameworkMenu_draw.htm" />
+    <HelpKINode Title="GameLogger.draw Method " Url="html/M_Farmhand_Logging_Loggers_GameLogger_draw.htm" />
+    <HelpKINode Title="StardewObject.draw Method " Url="html/Overload_Farmhand_Overrides_Game_Item_StardewObject_draw.htm" />
+    <HelpKINode Title="TitleMenu.draw Method " Url="html/M_Farmhand_UI_TitleMenu_draw.htm" />
+    <HelpKINode Title="DisableableOptionCheckbox.draw Method " Url="html/M_Farmhand_UI_Components_DisableableOptionCheckbox_draw.htm" />
+  </HelpKINode>
   <HelpKINode Title="Draw method">
     <HelpKINode Title="AnimatedComponent.Draw Method " Url="html/M_Farmhand_UI_Generic_AnimatedComponent_Draw.htm" />
     <HelpKINode Title="BaseMenuComponent.Draw Method " Url="html/M_Farmhand_UI_Base_BaseMenuComponent_Draw.htm" />
@@ -1057,25 +1056,18 @@
     <HelpKINode Title="DropdownFormComponent.DropdownSelect.Draw Method " Url="html/M_Farmhand_UI_Form_DropdownFormComponent_DropdownSelect_Draw.htm" />
     <HelpKINode Title="FormCollectionComponent.Draw Method " Url="html/M_Farmhand_UI_Containers_FormCollectionComponent_Draw.htm" />
     <HelpKINode Title="FrameComponent.Draw Method " Url="html/M_Farmhand_UI_Generic_FrameComponent_Draw.htm" />
+    <HelpKINode Title="Game1.Draw Method " Url="html/M_Farmhand_Overrides_Game1_Draw.htm" />
+    <HelpKINode Title="GenericCollectionComponent.Draw Method " Url="html/M_Farmhand_UI_Containers_GenericCollectionComponent_Draw.htm" />
     <HelpKINode Title="HeartsComponent.Draw Method " Url="html/M_Farmhand_UI_Generic_HeartsComponent_Draw.htm" />
     <HelpKINode Title="IMenuComponent.Draw Method " Url="html/M_Farmhand_UI_Interfaces_IMenuComponent_Draw.htm" />
-    <HelpKINode Title="TextboxFormComponent.Draw Method " Url="html/M_Farmhand_UI_Form_TextboxFormComponent_Draw.htm" />
+    <HelpKINode Title="LabelComponent.Draw Method " Url="html/M_Farmhand_UI_Generic_LabelComponent_Draw.htm" />
     <HelpKINode Title="PlusMinusFormComponent.Draw Method " Url="html/M_Farmhand_UI_Form_PlusMinusFormComponent_Draw.htm" />
     <HelpKINode Title="ProgressbarComponent.Draw Method " Url="html/M_Farmhand_UI_Generic_ProgressbarComponent_Draw.htm" />
     <HelpKINode Title="ScrollableCollectionComponent.Draw Method " Url="html/M_Farmhand_UI_Containers_ScrollableCollectionComponent_Draw.htm" />
-    <HelpKINode Title="Game1.Draw Method " Url="html/M_Farmhand_Overrides_Game1_Draw.htm" />
-    <HelpKINode Title="GenericCollectionComponent.Draw Method " Url="html/M_Farmhand_UI_Containers_GenericCollectionComponent_Draw.htm" />
-    <HelpKINode Title="LabelComponent.Draw Method " Url="html/M_Farmhand_UI_Generic_LabelComponent_Draw.htm" />
     <HelpKINode Title="SliderFormComponent(T).Draw Method " Url="html/M_Farmhand_UI_Form_SliderFormComponent_1_Draw.htm" />
     <HelpKINode Title="TablistComponent.Draw Method " Url="html/M_Farmhand_UI_Containers_TablistComponent_Draw.htm" />
+    <HelpKINode Title="TextboxFormComponent.Draw Method " Url="html/M_Farmhand_UI_Form_TextboxFormComponent_Draw.htm" />
     <HelpKINode Title="TextComponent.Draw Method " Url="html/M_Farmhand_UI_Generic_TextComponent_Draw.htm" />
-  </HelpKINode>
-  <HelpKINode Title="draw method">
-    <HelpKINode Title="FrameworkMenu.draw Method " Url="html/M_Farmhand_UI_FrameworkMenu_draw.htm" />
-    <HelpKINode Title="TitleMenu.draw Method " Url="html/M_Farmhand_UI_TitleMenu_draw.htm" />
-    <HelpKINode Title="DisableableOptionCheckbox.draw Method " Url="html/M_Farmhand_UI_Components_DisableableOptionCheckbox_draw.htm" />
-    <HelpKINode Title="GameLogger.draw Method " Url="html/M_Farmhand_Logging_Loggers_GameLogger_draw.htm" />
-    <HelpKINode Title="StardewObject.draw Method " Url="html/Overload_Farmhand_Overrides_Game_Item_StardewObject_draw.htm" />
   </HelpKINode>
   <HelpKINode Title="drawAsProp method" Url="html/M_Farmhand_Overrides_Game_Item_StardewObject_drawAsProp.htm" />
   <HelpKINode Title="DrawChrome property" Url="html/P_Farmhand_UI_FrameworkMenu_DrawChrome.htm" />
@@ -3553,12 +3545,10 @@
   <HelpKINode Title="MineShaft class">
     <HelpKINode Title="MineShaft Class" Url="html/T_Farmhand_API_Locations_MineShaft.htm" />
     <HelpKINode Title="about MineShaft class" Url="html/T_Farmhand_API_Locations_MineShaft.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Farmhand_API_Locations_MineShaft__ctor.htm" />
     <HelpKINode Title="fields" Url="html/Fields_T_Farmhand_API_Locations_MineShaft.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_API_Locations_MineShaft.htm" />
   </HelpKINode>
   <HelpKINode Title="MineShaft.AddMonsterSpawnChance method" Url="html/M_Farmhand_API_Locations_MineShaft_AddMonsterSpawnChance.htm" />
-  <HelpKINode Title="MineShaft.MineShaft constructor" Url="html/M_Farmhand_API_Locations_MineShaft__ctor.htm" />
   <HelpKINode Title="MineShaft.MineshaftMonsterSpawnChance class">
     <HelpKINode Title="MineShaft.MineshaftMonsterSpawnChance Class" Url="html/T_Farmhand_API_Locations_MineShaft_MineshaftMonsterSpawnChance.htm" />
     <HelpKINode Title="about MineShaft.MineshaftMonsterSpawnChance class" Url="html/T_Farmhand_API_Locations_MineShaft_MineshaftMonsterSpawnChance.htm" />
@@ -3751,24 +3741,20 @@
   </HelpKINode>
   <HelpKINode Title="MoneyReward property" Url="html/P_Farmhand_API_Player_QuestInformation_MoneyReward.htm" />
   <HelpKINode Title="Monster class">
-    <HelpKINode Title="Monster Class" Url="html/T_Farmhand_API_Monsters_Monster.htm" />
     <HelpKINode Title="Monster Class" Url="html/T_Farmhand_Overrides_Character_Monster.htm" />
+    <HelpKINode Title="Monster Class" Url="html/T_Farmhand_API_Monsters_Monster.htm" />
     <HelpKINode Title="about Monster class" Url="html/T_Farmhand_API_Monsters_Monster.htm" />
     <HelpKINode Title="about Monster class" Url="html/T_Farmhand_Overrides_Character_Monster.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Farmhand_API_Monsters_Monster__ctor.htm" />
     <HelpKINode Title="constructor" Url="html/M_Farmhand_Overrides_Character_Monster__ctor.htm" />
     <HelpKINode Title="fields" Url="html/Fields_T_Farmhand_Overrides_Character_Monster.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_API_Monsters_Monster.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_Overrides_Character_Monster.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_Overrides_Character_Monster.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_API_Monsters_Monster.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_API_Monsters_Monster.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_Overrides_Character_Monster.htm" />
   </HelpKINode>
   <HelpKINode Title="Monster enumeration member" Url="html/T_Farmhand_API_Player_QuestInformation_QuestType.htm" />
   <HelpKINode Title="Monster.Information field" Url="html/F_Farmhand_Overrides_Character_Monster_Information.htm" />
-  <HelpKINode Title="Monster.Monster constructor">
-    <HelpKINode Title="Monster Constructor " Url="html/M_Farmhand_API_Monsters_Monster__ctor.htm" />
-    <HelpKINode Title="Monster Constructor " Url="html/M_Farmhand_Overrides_Character_Monster__ctor.htm" />
-  </HelpKINode>
+  <HelpKINode Title="Monster.Monster constructor" Url="html/M_Farmhand_Overrides_Character_Monster__ctor.htm" />
   <HelpKINode Title="Monster.Monsters property" Url="html/P_Farmhand_API_Monsters_Monster_Monsters.htm" />
   <HelpKINode Title="Monster.RegisterMonster method" Url="html/M_Farmhand_API_Monsters_Monster_RegisterMonster.htm" />
   <HelpKINode Title="MonsterInformation class">
@@ -3884,21 +3870,21 @@
   <HelpKINode Title="North enumeration member" Url="html/T_Farmhand_API_NPCs_NpcInformation_NpcDirection.htm" />
   <HelpKINode Title="North field" Url="html/F_Farmhand_API_NPCs_NpcUtility_Direction_North.htm" />
   <HelpKINode Title="Not property" Url="html/P_Farmhand_API_NPCs_Schedules_ScheduleDirections_Not.htm" />
-  <HelpKINode Title="NPC class">
-    <HelpKINode Title="about NPC class" Url="html/T_Farmhand_Overrides_Character_NPC.htm" />
-    <HelpKINode Title="NPC Class" Url="html/T_Farmhand_Overrides_Character_NPC.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Farmhand_Overrides_Character_NPC__ctor.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_Overrides_Character_NPC.htm" />
-    <HelpKINode Title="fields" Url="html/Fields_T_Farmhand_Overrides_Character_NPC.htm" />
-    <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_Overrides_Character_NPC.htm" />
-  </HelpKINode>
   <HelpKINode Title="Npc class">
-    <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_API_NPCs_Npc.htm" />
-    <HelpKINode Title="Npc Class" Url="html/T_Farmhand_API_NPCs_Npc.htm" />
     <HelpKINode Title="about Npc class" Url="html/T_Farmhand_API_NPCs_Npc.htm" />
     <HelpKINode Title="fields" Url="html/Fields_T_Farmhand_API_NPCs_Npc.htm" />
-    <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_API_NPCs_Npc.htm" />
+    <HelpKINode Title="Npc Class" Url="html/T_Farmhand_API_NPCs_Npc.htm" />
     <HelpKINode Title="constructor" Url="html/M_Farmhand_API_NPCs_Npc__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_API_NPCs_Npc.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_API_NPCs_Npc.htm" />
+  </HelpKINode>
+  <HelpKINode Title="NPC class">
+    <HelpKINode Title="fields" Url="html/Fields_T_Farmhand_Overrides_Character_NPC.htm" />
+    <HelpKINode Title="NPC Class" Url="html/T_Farmhand_Overrides_Character_NPC.htm" />
+    <HelpKINode Title="about NPC class" Url="html/T_Farmhand_Overrides_Character_NPC.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Farmhand_Overrides_Character_NPC__ctor.htm" />
+    <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_Overrides_Character_NPC.htm" />
+    <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_Overrides_Character_NPC.htm" />
   </HelpKINode>
   <HelpKINode Title="NPC.Information field" Url="html/F_Farmhand_Overrides_Character_NPC_Information.htm" />
   <HelpKINode Title="Npc.Npc constructor" Url="html/M_Farmhand_API_NPCs_Npc__ctor.htm" />
@@ -4975,7 +4961,6 @@
   <HelpKINode Title="ShopUtilities class">
     <HelpKINode Title="ShopUtilities Class" Url="html/T_Farmhand_API_Shops_ShopUtilities.htm" />
     <HelpKINode Title="about ShopUtilities class" Url="html/T_Farmhand_API_Shops_ShopUtilities.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Farmhand_API_Shops_ShopUtilities__ctor.htm" />
     <HelpKINode Title="fields" Url="html/Fields_T_Farmhand_API_Shops_ShopUtilities.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_API_Shops_ShopUtilities.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_API_Shops_ShopUtilities.htm" />
@@ -4988,7 +4973,6 @@
   <HelpKINode Title="ShopUtilities.Infinite field" Url="html/F_Farmhand_API_Shops_ShopUtilities_Infinite.htm" />
   <HelpKINode Title="ShopUtilities.RegisteredShops property" Url="html/P_Farmhand_API_Shops_ShopUtilities_RegisteredShops.htm" />
   <HelpKINode Title="ShopUtilities.RegisterShop method" Url="html/M_Farmhand_API_Shops_ShopUtilities_RegisterShop.htm" />
-  <HelpKINode Title="ShopUtilities.ShopUtilities constructor" Url="html/M_Farmhand_API_Shops_ShopUtilities__ctor.htm" />
   <HelpKINode Title="ShortHex enumeration member" Url="html/T_Farmhand_Helpers_ColorFormats.htm" />
   <HelpKINode Title="ShouldTimePassCheck event" Url="html/E_Farmhand_Events_TimeEvents_ShouldTimePassCheck.htm" />
   <HelpKINode Title="ShowButtonsTimer property" Url="html/P_Farmhand_UI_TitleMenu_ShowButtonsTimer.htm" />
@@ -5095,10 +5079,10 @@
     <HelpKINode Title="StardewObject Class" Url="html/T_Farmhand_Overrides_Game_Item_StardewObject.htm" />
     <HelpKINode Title="about StardewObject class" Url="html/T_Farmhand_Overrides_Game_Item_StardewObject.htm" />
     <HelpKINode Title="about StardewObject class" Url="html/T_Farmhand_Overrides_StardewObject.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Farmhand_Overrides_StardewObject__ctor.htm" />
     <HelpKINode Title="constructor" Url="html/Overload_Farmhand_Overrides_Game_Item_StardewObject__ctor.htm" />
-    <HelpKINode Title="fields" Url="html/Fields_T_Farmhand_Overrides_StardewObject.htm" />
+    <HelpKINode Title="constructor" Url="html/M_Farmhand_Overrides_StardewObject__ctor.htm" />
     <HelpKINode Title="fields" Url="html/Fields_T_Farmhand_Overrides_Game_Item_StardewObject.htm" />
+    <HelpKINode Title="fields" Url="html/Fields_T_Farmhand_Overrides_StardewObject.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_Overrides_Game_Item_StardewObject.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_Overrides_StardewObject.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_Overrides_Game_Item_StardewObject.htm" />
@@ -5461,7 +5445,6 @@
   <HelpKINode Title="Tool class">
     <HelpKINode Title="Tool Class" Url="html/T_Farmhand_API_Tools_Tool.htm" />
     <HelpKINode Title="about Tool class" Url="html/T_Farmhand_API_Tools_Tool.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Farmhand_API_Tools_Tool__ctor.htm" />
     <HelpKINode Title="fields" Url="html/Fields_T_Farmhand_API_Tools_Tool.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_API_Tools_Tool.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_API_Tools_Tool.htm" />
@@ -5471,7 +5454,6 @@
   <HelpKINode Title="Tool.NextAvailableIndex field" Url="html/F_Farmhand_API_Tools_Tool_NextAvailableIndex.htm" />
   <HelpKINode Title="Tool.RegisterTool(Of T) method" Url="html/M_Farmhand_API_Tools_Tool_RegisterTool__1.htm" />
   <HelpKINode Title="Tool.RegisterTool&lt;T&gt; method" Url="html/M_Farmhand_API_Tools_Tool_RegisterTool__1.htm" />
-  <HelpKINode Title="Tool.Tool constructor" Url="html/M_Farmhand_API_Tools_Tool__ctor.htm" />
   <HelpKINode Title="Tool.Tools property" Url="html/P_Farmhand_API_Tools_Tool_Tools.htm" />
   <HelpKINode Title="ToolAttachment class">
     <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_API_Player_MailInformation_ToolAttachment.htm" />
@@ -5609,17 +5591,17 @@
   <HelpKINode Title="UpActive property" Url="html/P_Farmhand_UI_Containers_ScrollableCollectionComponent_UpActive.htm" />
   <HelpKINode Title="UpButton property" Url="html/P_Farmhand_UI_Containers_ScrollableCollectionComponent_UpButton.htm" />
   <HelpKINode Title="Update method">
+    <HelpKINode Title="IMenuComponent.Update Method " Url="html/M_Farmhand_UI_Interfaces_IMenuComponent_Update.htm" />
     <HelpKINode Title="AnimatedComponent.Update Method " Url="html/M_Farmhand_UI_Generic_AnimatedComponent_Update.htm" />
-    <HelpKINode Title="ClickableAnimatedComponent.Update Method " Url="html/M_Farmhand_UI_Generic_ClickableAnimatedComponent_Update.htm" />
     <HelpKINode Title="BaseMenuComponent.Update Method " Url="html/M_Farmhand_UI_Base_BaseMenuComponent_Update.htm" />
+    <HelpKINode Title="ClickableAnimatedComponent.Update Method " Url="html/M_Farmhand_UI_Generic_ClickableAnimatedComponent_Update.htm" />
     <HelpKINode Title="FormCollectionComponent.Update Method " Url="html/M_Farmhand_UI_Containers_FormCollectionComponent_Update.htm" />
     <HelpKINode Title="GenericCollectionComponent.Update Method " Url="html/M_Farmhand_UI_Containers_GenericCollectionComponent_Update.htm" />
-    <HelpKINode Title="IMenuComponent.Update Method " Url="html/M_Farmhand_UI_Interfaces_IMenuComponent_Update.htm" />
     <HelpKINode Title="TablistComponent.Update Method " Url="html/M_Farmhand_UI_Containers_TablistComponent_Update.htm" />
   </HelpKINode>
   <HelpKINode Title="update method">
-    <HelpKINode Title="TitleMenu.update Method " Url="html/M_Farmhand_UI_TitleMenu_update.htm" />
     <HelpKINode Title="FrameworkMenu.update Method " Url="html/M_Farmhand_UI_FrameworkMenu_update.htm" />
+    <HelpKINode Title="TitleMenu.update Method " Url="html/M_Farmhand_UI_TitleMenu_update.htm" />
   </HelpKINode>
   <HelpKINode Title="UpdateDrawOrder method">
     <HelpKINode Title="FormCollectionComponent.UpdateDrawOrder Method " Url="html/M_Farmhand_UI_Containers_FormCollectionComponent_UpdateDrawOrder.htm" />
@@ -5725,7 +5707,6 @@
   <HelpKINode Title="Weapon class">
     <HelpKINode Title="Weapon Class" Url="html/T_Farmhand_API_Tools_Weapon.htm" />
     <HelpKINode Title="about Weapon class" Url="html/T_Farmhand_API_Tools_Weapon.htm" />
-    <HelpKINode Title="constructor" Url="html/M_Farmhand_API_Tools_Weapon__ctor.htm" />
     <HelpKINode Title="methods" Url="html/Methods_T_Farmhand_API_Tools_Weapon.htm" />
     <HelpKINode Title="properties" Url="html/Properties_T_Farmhand_API_Tools_Weapon.htm" />
   </HelpKINode>
@@ -5734,7 +5715,6 @@
   <HelpKINode Title="Weapon.RegisteredTypeInformation property" Url="html/P_Farmhand_API_Tools_Weapon_RegisteredTypeInformation.htm" />
   <HelpKINode Title="Weapon.RegisterWeapon(Of T) method" Url="html/M_Farmhand_API_Tools_Weapon_RegisterWeapon__1.htm" />
   <HelpKINode Title="Weapon.RegisterWeapon&lt;T&gt; method" Url="html/M_Farmhand_API_Tools_Weapon_RegisterWeapon__1.htm" />
-  <HelpKINode Title="Weapon.Weapon constructor" Url="html/M_Farmhand_API_Tools_Weapon__ctor.htm" />
   <HelpKINode Title="Weapon.Weapons property" Url="html/P_Farmhand_API_Tools_Weapon_Weapons.htm" />
   <HelpKINode Title="WeaponInformation class">
     <HelpKINode Title="WeaponInformation Class" Url="html/T_Farmhand_API_Tools_WeaponInformation.htm" />
