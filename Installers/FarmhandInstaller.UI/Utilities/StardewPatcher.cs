@@ -55,9 +55,8 @@
 
         public static void Patch(string outputPath, string assemblyDirectory, bool disableGrm, PackageStatusContext context)
         {
-            var domaininfo = new AppDomainSetup { ApplicationBase = Environment.CurrentDirectory };
-            var adevidence = AppDomain.CurrentDomain.Evidence;
-            var localDomain = AppDomain.CreateDomain("LocalDomain", adevidence, domaininfo);
+            var localDomain = AppDomain.CreateDomain("LocalDomain");
+            localDomain.AssemblyResolve += LocalDomain_AssemblyResolve;
 
             var sdvPath = Path.Combine(InstallationContext.StardewPath, "Stardew Valley.exe");
 
@@ -77,6 +76,11 @@
             patcher.Patch(outputPath);
 
             AppDomain.Unload(localDomain);
+        }
+        
+        private static Assembly LocalDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            return Assembly.GetExecutingAssembly();
         }
     }
 }
