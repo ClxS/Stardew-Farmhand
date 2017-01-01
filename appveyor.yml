@@ -52,7 +52,7 @@ build_script:
       & $buildCmd $buildArgs
       
       # If we're on the release branch and a tag was just pushed
-      #if ($env:APPVEYOR_REPO_TAG -eq "True" -And $env:APPVEYOR_REPO_BRANCH -eq "master") {
+      if ($env:APPVEYOR_REPO_TAG -eq "True") {
         # Build documentation
         $buildArgs = @(
           "/m",
@@ -88,7 +88,7 @@ build_script:
 
         Set-Location -Path C:\projects\stardew-farmhand
       }
-    #}
+    }
 - ps: |
     if ($env:APPVEYOR_SCHEDULED_BUILD -ne "True") {
       return
@@ -115,6 +115,8 @@ artifacts:
 deploy:
 - provider: GitHub
   artifact: FarmhandInstaller
-  release: Farmhand ${APPVEYOR_REPO_TAG_NAME}
+  release: Farmhand v${APPVEYOR_REPO_TAG_NAME}
   auth_token:
     secure: 71Fs8tgv3qdm67kFg+R4TM/dwoLJdEbZf8cVX+4Rg4HJ1fBnHgh30KQ8Sp0b7sm8
+  on:
+    APPVEYOR_REPO_TAG: true
