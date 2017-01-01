@@ -10,7 +10,7 @@
 
         public static bool IncludeStardewModdingApi { get; set; }
 
-        public static bool AddNewModFromTemplate { get; set; }
+        public static bool AddNewModFromTemplate { get; set; } = true;
 
         public static DevelopmentModSettings ModSettings { get; set; } = new DevelopmentModSettings();
     }
