@@ -1,0 +1,77 @@
+﻿{
+  "Packages": [
+    {
+      "Name": "DeveloperFull",
+      "InclusionFilters": [
+        ".*"
+      ],
+      "ExclusionFilters": [
+        ".*\\\\[B|b]in\\\\.*",
+        ".*\\\\[O|o]bj\\\\.*",
+        ".*\\.git.*",
+        ".*\\.package",
+        ".*appveyor.*",
+        ".*PopulateSubmodules.bat.*",
+        ".*README\\.md.*",
+        ".*\\.vs.*",
+        ".*WorkingDirectory.*",
+        ".*\\\\Staging\\\\.*",
+        ".*\\\\packages\\\\.*",
+        ".*\\\\Documentation\\\\.*",
+        "^(?!.+?(?=Libraries\\\\Farmhand\\\\Mods\\\\)).+?(?=Mods)Mods\\\\(?!ModTemplate).*"
+      ]
+    },
+    {
+      "Name": "DeveloperLite",
+      "InclusionFilters": [
+        ".*Farmhand.sln",
+        ".*\\\\[B|b]in\\\\Farmhand.dll",
+        ".*\\\\[B|b]in\\\\Farmhand.pdb",
+        ".*\\\\[B|b]in\\\\FarmhandUI.dll",
+        ".*\\\\[B|b]in\\\\FarmhandUI.pdb",
+        ".*\\\\[B|b]in\\\\FarmhandGame.dll",
+        ".*\\\\[B|b]in\\\\FarmhandGame.pdb",
+        ".*\\\\[B|b]in\\\\FarmhandCharacter.dll",
+        ".*\\\\[B|b]in\\\\FarmhandCharacter.pdb",
+        ".*\\\\[B|b]in\\\\FarmhandPatcherCommon.dll",
+        ".*\\\\[B|b]in\\\\FarmhandPatcherFirstPass.dll",
+        ".*\\\\[B|b]in\\\\FarmhandPatcherSecondPass.dll",
+        ".*\\\\[B|b]in\\\\ILRepack.dll",
+        ".*\\\\[B|b]in\\\\Newtonsoft.Json.dll",
+        ".*\\\\[B|b]in\\\\Mono.Cecil.dll",
+        ".*\\\\[B|b]in\\\\Mono.Cecil.Rocks.dll",
+        ".*\\\\[B|b]in\\\\Mono.Cecil.Pdb.dll",
+        ".*\\\\Tools\\\\FarmhandDebugger\\\\.*",
+        ".*\\\\WorkingDirectory\\\\Extensions\\\\.*StardewModdingAPI.dll",
+        ".*\\\\Mods\\\\ModTemplate\\\\.*"
+      ],
+      "ExclusionFilters": [
+        ".*WorkingDirectory\\\\Mods.*",
+        ".*\\\\[O|o]bj\\\\.*"
+      ]
+    },
+    {
+      "Name": "Player",
+      "InclusionFilters": [
+        ".*\\\\Farmhand.dll",
+        ".*\\\\FarmhandUI.dll",
+        ".*\\\\FarmhandGame.dll",
+        ".*\\\\FarmhandCharacter.dll",
+        ".*\\\\FarmhandPatcherCommon.dll",
+        ".*\\\\FarmhandPatcherFirstPass.dll",
+        ".*\\\\FarmhandPatcherSecondPass.dll",
+        ".*\\\\[B|b]in\\\\ILRepack.dll",
+        ".*\\\\[B|b]in\\\\Newtonsoft.Json.dll",
+        ".*\\\\[B|b]in\\\\Mono.Cecil.dll",
+        ".*\\\\[B|b]in\\\\Mono.Cecil.Rocks.dll",
+        ".*\\\\[B|b]in\\\\Mono.Cecil.Pdb.dll",
+        ".*\\\\Extensions\\\\.*StardewModdingAPI.dll"
+      ],
+      "ExclusionFilters": [
+        ".*WorkingDirectory\\\\Mods.*",
+        ".*\\\\[O|o]bj\\\\.*"
+      ]
+    }
+  ]
+  
+}

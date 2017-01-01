@@ -14,12 +14,17 @@ namespace Farmhand
         protected List<Assembly> FarmhandAssemblies { get; set; } = new List<Assembly>();
 
         public PatcherOptions Options { get; } = new PatcherOptions();
-
+        
         /// <summary>
         /// 
         /// </summary>
         /// <param name="path">Stardew Exe Path (Pass 1), or Farmhand Output Path (Pass 2)</param>
         public abstract void PatchStardew(string path = null);
+
+        public string GetAssemblyPath(string assembly)
+        {
+            return string.IsNullOrEmpty(this.Options.AssemblyDirectory) ? assembly : Path.Combine(this.Options.AssemblyDirectory, assembly);
+        }
         
         protected void HookConstructionRedirectors<T>(CecilContext cecilContext)
         {
@@ -181,10 +186,18 @@ namespace Farmhand
             ILogger logger = new RepackLogger();
             try
             {
-                options.InputAssemblies = inputs;
+                options.InputAssemblies = string.IsNullOrEmpty(this.Options.AssemblyDirectory) 
+                    ? inputs 
+                    : inputs.Select(n => 
+                        Path.IsPathRooted(n) 
+                            ? n 
+                            : Path.Combine(this.Options.AssemblyDirectory, n)).ToArray();
+
                 options.OutputFile = output;
                 options.DebugInfo = true;
-                options.SearchDirectories = new[] { Directory.GetCurrentDirectory() };
+                options.SearchDirectories = string.IsNullOrEmpty(this.Options.AssemblyDirectory) 
+                    ? new[] { Directory.GetCurrentDirectory() } 
+                    : new[] { this.Options.AssemblyDirectory };
 
                 var repack = new ILRepack(options, logger);
                 repack.Repack();
@@ -193,7 +206,6 @@ namespace Farmhand
             {
                 Console.WriteLine($"FATAL ERROR: ILRepack: {ex.Message}");
                 throw new Exception("ILRepack Error", ex);
-                // ignored
             }
             finally
             {                

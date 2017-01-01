@@ -1,0 +1,21 @@
+﻿<local:BaseFrame x:Class="FarmhandInstaller.UI.Frames.Error"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FarmhandInstaller.UI.Frames"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <DockPanel Margin="20,10,0,0">
+        <TextBlock DockPanel.Dock="Top" FontSize="20">Uh oh!</TextBlock>
+        <TextBlock DockPanel.Dock="Top" Margin="30,20,0,0">It looks like there was a problem installing Stardew-Farmhand</TextBlock>
+        <TextBlock DockPanel.Dock="Top" Margin="30,10,0,0">For help for help with this issue, please visit the  
+            <Hyperlink NavigateUri="http://community.playstarbound.com/forums/mods.215/" RequestNavigate="Hyperlink_OnRequestNavigate">
+                Official Stardew Modding Forums
+            </Hyperlink>
+        </TextBlock>
+        <TextBlock DockPanel.Dock="Top" Margin="30,10,0,0">And to help us solve the problem, please copy the info below into your message:</TextBlock>
+        <TextBox DockPanel.Dock="Top" Width="500" Margin="0,10,0,0" Height="100" IsReadOnly="True" Text="Some info about the exception here"></TextBox>
+        <Button  DockPanel.Dock="Bottom" Click="ButtonClose_OnClick" Content="Close" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="0.5,0.5" Margin="10,0,0,10"/>
+    </DockPanel>
+</local:BaseFrame>
