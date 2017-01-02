@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using Farmhand.Logging;
-using Newtonsoft.Json;
-using StardewValley;
-
-namespace Farmhand.Extensibility
+﻿namespace Farmhand.Extensibility
 {
-    public class ExtensibilityManager
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+
+    using Farmhand.Logging;
+
+    using Newtonsoft.Json;
+
+    using StardewValley;
+
+    internal class ExtensibilityManager
     {
         internal static List<FarmhandExtension> Extensions { get; set; } = new List<FarmhandExtension>();
 
@@ -20,15 +22,23 @@ namespace Farmhand.Extensibility
             var appRoot = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             if (appRoot == null)
+            {
                 throw new NullReferenceException("appRoot was null");
+            }
 
-            var extensions = Directory.GetFiles(Path.Combine(appRoot, Constants.ExtensionsDirectory), "manifest.json", SearchOption.AllDirectories);
+            var extensionsDirectory = Path.Combine(appRoot, Constants.ExtensionsDirectory);
+            if (!Directory.Exists(extensionsDirectory))
+            {
+                return;
+            }
+
+            var extensions = Directory.GetFiles(extensionsDirectory, "manifest.json", SearchOption.AllDirectories);
 
             foreach (var extension in extensions)
             {
                 try
                 {
-                    Log.Verbose($"Loading Extension Manifest");
+                    Log.Verbose("Loading Extension Manifest");
                     ExtensionManifest manifest;
                     using (var r = new StreamReader(extension))
                     {
@@ -46,19 +56,20 @@ namespace Farmhand.Extensibility
                     }
 
                     var extensionRoot = Path.GetDirectoryName(extension);
-                    if (extensionRoot == null)
-                    {
-                        Log.Error($"Path.GetDirectoryName(extension) returned null!");
-                        return;
-                    }
 
                     var extensionDll = Path.Combine(extensionRoot, manifest.ExtensionDll) + ".dll";
                     var assm = Assembly.LoadFrom(extensionDll);
-                    if (assm.GetTypes().Count(x => x.BaseType == typeof(FarmhandExtension)) <= 0) continue;
+                    if (assm.GetTypes().Count(x => x.BaseType == typeof(FarmhandExtension)) <= 0)
+                    {
+                        continue;
+                    }
 
                     var type = assm.GetTypes().First(x => x.BaseType == typeof(FarmhandExtension));
                     var inst = (FarmhandExtension)assm.CreateInstance(type.ToString());
-                    if (inst == null) continue;
+                    if (inst == null)
+                    {
+                        continue;
+                    }
 
                     inst.OwnAssembly = assm;
                     inst.Manifest = manifest;
@@ -83,10 +94,11 @@ namespace Farmhand.Extensibility
                 var mods = Directory.GetFiles(folder, "*.json", SearchOption.AllDirectories);
                 return mods.Any();
             }
+
             return false;
         }
 
-        public static void LoadMods(string modsPath)
+        internal static void LoadMods(string modsPath)
         {
             foreach (var ext in Extensions)
             {
@@ -94,7 +106,7 @@ namespace Farmhand.Extensibility
             }
         }
 
-        public static void SetGameInstance(Game1 game1)
+        internal static void SetGameInstance(Game1 game1)
         {
             foreach (var extensions in Extensions)
             {
