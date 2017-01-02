@@ -1,6 +1,8 @@
 ﻿namespace Farmhand.UI
 {
     using Farmhand.Attributes;
+    using Farmhand.Events;
+    using Farmhand.Events.Arguments.GraphicsEvents;
     using Farmhand.Logging;
     using Farmhand.Logging.Loggers;
 
@@ -20,7 +22,7 @@
         [Hook(HookType.Entry, "Farmhand.Events.EventManager", "ManualHookup")]
         public static void HookUpDrawEvent()
         {
-            GameLogger.ChatBoxDraw += ChatBoxDraw;
+            GraphicsEvents.ChatBoxDraw += ChatBoxDraw;
         }
 
         private static LogEntryType GetLogEntryType(string message)
@@ -79,7 +81,7 @@
             }
         }
 
-        private static void ChatBoxDraw(object sender, ChatBoxDrawEventArgs chatBoxDrawEventArgs)
+        private static void ChatBoxDraw(object sender, EventArgsChatBoxDraw chatBoxDrawEventArgs)
         {
             var @this = chatBoxDrawEventArgs.ChatBox;
             var b = chatBoxDrawEventArgs.SpriteBatch;

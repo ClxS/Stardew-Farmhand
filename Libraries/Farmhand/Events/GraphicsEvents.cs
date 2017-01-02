@@ -5,6 +5,8 @@ using StardewValley;
 
 namespace Farmhand.Events
 {
+    using Microsoft.Xna.Framework.Graphics;
+
     /// <summary>
     /// Contains events relating to graphics
     /// </summary>
@@ -47,26 +49,29 @@ namespace Farmhand.Events
         /// <summary>
         /// Occurs before the GUI is drawn. Does not check for conditional statements.
         /// </summary>
-
         public static event EventHandler OnPreRenderGuiEventNoCheck = delegate { };
+
         /// <summary>
         /// Occurs after the GUI is drawn. Does not check for conditional statements.
         /// </summary>
-
         public static event EventHandler OnPostRenderGuiEventNoCheck = delegate { };
+
         /// <summary>
         /// Occurs before the HUD is drawn. Does not check for conditional statements.
         /// </summary>
-
         public static event EventHandler OnPreRenderHudEventNoCheck = delegate { };
+
         /// <summary>
         /// Occurs after the HUD is drawn. Does not check for conditional statements.
         /// </summary>
-
         public static event EventHandler OnPostRenderHudEventNoCheck = delegate { };
 
         public static event EventHandler OnDrawInRenderTick = delegate { };
 
+        /// <summary>
+        /// Occurs when the chat box is drawn.
+        /// </summary>
+        public static event EventHandler<EventArgsChatBoxDraw> ChatBoxDraw = delegate { };
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Window_ClientSizeChanged")]
         public static void InvokeResize([ThisBind] Game1 @this)
@@ -85,7 +90,13 @@ namespace Farmhand.Events
         {
             EventCommon.SafeInvoke(OnAfterDraw, @this);
         }
-        
+
+        [Hook(HookType.Entry, "StardewValley.Menus.ChatBox", "draw")]
+        public static bool OnChatBoxDraw([ThisBind] object @this, [InputBind(typeof(SpriteBatch), "b")] SpriteBatch b)
+        {
+            return EventCommon.SafeCancellableInvoke(ChatBoxDraw, @this, new EventArgsChatBoxDraw((StardewValley.Menus.ChatBox)@this, b));
+        }
+
         public static void InvokeOnPreRenderEvent(object @this)
         {
             OnPreRenderEvent.Invoke(@this, EventArgs.Empty);

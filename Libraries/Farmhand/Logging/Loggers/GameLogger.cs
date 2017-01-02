@@ -1,45 +1,48 @@
-﻿using System;
-using System.ComponentModel;
-using Farmhand.Attributes;
-using Farmhand.Events;
-using Microsoft.Xna.Framework.Graphics;
-using StardewValley;
-using StardewValley.Menus;
-
-namespace Farmhand.Logging.Loggers
+﻿namespace Farmhand.Logging.Loggers
 {
-    public class ChatBoxDrawEventArgs : CancelEventArgs
-    {
-        public ChatBoxDrawEventArgs(ChatBox chatBox, SpriteBatch spriteBatch)
-        {
-            ChatBox = chatBox;
-            SpriteBatch = spriteBatch;
-        }
-        public ChatBox ChatBox;
-        public SpriteBatch SpriteBatch;
-    }
+    using System;
 
+    using StardewValley;
+    using StardewValley.Menus;
+
+    /// <summary>
+    ///     Writes to the in-game Chat Box
+    /// </summary>
     public class GameLogger : ILogger
     {
-        public static EventHandler<ChatBoxDrawEventArgs> ChatBoxDraw = delegate { };
+        #region ILogger Members
 
+        /// <summary>
+        ///     Writes the message to the log.
+        /// </summary>
+        /// <param name="logItem">
+        ///     The entry to log.
+        /// </param>
         public void Write(LogEntry logItem)
         {
-            if (Game1.onScreenMenus == null || Game1.content == null) return;
+            if (Game1.onScreenMenus == null || Game1.content == null)
+            {
+                return;
+            }
 
             if (Game1.ChatBox == null)
             {
                 Game1.onScreenMenus?.Add(new ChatBox());
             }
+
             if (Game1.ChatBox != null)
             {
-                Game1.ChatBox?.receiveChatMessage($"[FHLOG-{GetTypeSuffix(logItem.Type)}] {DateTime.Now.ToLongTimeString()} - {logItem.Message}", 0L);
+                Game1.ChatBox?.receiveChatMessage(
+                    $"[FHLOG-{this.GetTypeSuffix(logItem.Type)}] {DateTime.Now.ToLongTimeString()} - {logItem.Message}",
+                    0L);
             }
         }
 
+        #endregion
+
         private string GetTypeSuffix(LogEntryType type)
         {
-            switch(type)
+            switch (type)
             {
                 case LogEntryType.Info:
                     return "Inf";
@@ -56,12 +59,6 @@ namespace Farmhand.Logging.Loggers
                 default:
                     return "Ver";
             }
-        }
-
-        [Hook(HookType.Entry, "StardewValley.Menus.ChatBox", "draw")]
-        public static bool draw([ThisBind] object @this, [InputBind(typeof(SpriteBatch), "b")] SpriteBatch b)
-        {
-            return ChatBoxDraw.GetInvocationList().Length <= 1 || EventCommon.SafeCancellableInvoke(ChatBoxDraw, null, new ChatBoxDrawEventArgs((ChatBox)@this, b));
         }
     }
 }

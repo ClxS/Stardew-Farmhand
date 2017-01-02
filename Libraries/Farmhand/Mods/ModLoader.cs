@@ -1,40 +1,35 @@
-﻿using Newtonsoft.Json;
-using Farmhand.Attributes;
-using Farmhand.Registries;
-using Farmhand.Registries.Containers;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using Farmhand.Events;
-using Farmhand.Extensibility;
-using Farmhand.Helpers;
-using Farmhand.Logging;
-using StardewValley;
-
-namespace Farmhand
+﻿namespace Farmhand
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+
+    using Farmhand.Attributes;
+    using Farmhand.Events;
+    using Farmhand.Events.Arguments;
+    using Farmhand.Extensibility;
+    using Farmhand.Helpers;
+    using Farmhand.Logging;
+    using Farmhand.Registries;
+    using Farmhand.Registries.Containers;
+
+    using Newtonsoft.Json;
+
+    using StardewValley;
+
     /// <summary>
-    /// Handles loading mods
+    ///     Handles loading mods
     /// </summary>
     public static class ModLoader
     {
         /// <summary>
-        /// This value stores all the valid mod search directories
+        ///     Gets the valid mod search directories
         /// </summary>
-        public static List<string> ModPaths = new List<string>
-        {
-            Constants.DefaultModPath
-        };
-        
-        internal static EventManager ModEventManager = new EventManager();
+        public static List<string> ModPaths { get; internal set; } = new List<string> { Constants.DefaultModPath };
 
-        /// <summary>
-        /// States whether or not we're using SMAPI mods, so that certain things can be disabled if not. Defaults to false and is automatically set by
-        /// the ModLoader when encountering a SMAPI mod
-        /// </summary>
-        public static bool UsingSmapiMods = false;
+        internal static EventManager ModEventManager { get; } = new EventManager();
 
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void LoadMods()
@@ -43,9 +38,8 @@ namespace Farmhand
             Log.Info($"Stardew Farmhand v{Constants.Version}");
 
             ApiEvents.OnModError += ApiEvents_OnModError;
-            AppDomain currentDomain = AppDomain.CurrentDomain;
+            var currentDomain = AppDomain.CurrentDomain;
             currentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
-
 
             Log.Success("Initializing Mappings");
             GlobalRouteManager.InitialiseMappings();
@@ -72,6 +66,7 @@ namespace Farmhand
                 Log.Error(ex.Message);
                 Log.Error(ex.StackTrace);
             }
+
             var numModsLoaded = ModRegistry.GetRegisteredItems().Count(n => n.ModState == ModState.Loaded);
             Log.Info($"{numModsLoaded} Mods Loaded!");
 
@@ -84,18 +79,23 @@ namespace Farmhand
             {
                 return Assembly.GetExecutingAssembly();
             }
+
             if (args.Name.StartsWith("StardewModdingAPI"))
             {
                 return Assembly.GetExecutingAssembly();
             }
-            if (args.Name.StartsWith("Stardew Farmhand.int1")) // Problematic injection - never got Assembly corrected from a intermediate assembly
+
+            if (args.Name.StartsWith("Stardew Farmhand.int1"))
             {
+                // Problematic injection - never got Assembly corrected from a intermediate assembly
                 return Assembly.GetExecutingAssembly();
             }
+
             if (args.Name.StartsWith("Newtonsoft.Json"))
             {
                 return Assembly.GetExecutingAssembly();
             }
+
             if (args.Name.StartsWith("Mono.Cecil"))
             {
                 return Assembly.GetExecutingAssembly();
@@ -103,7 +103,8 @@ namespace Farmhand
 
             foreach (var extension in ExtensibilityManager.Extensions)
             {
-                if (extension?.Manifest?.AssemblyRedirect != null && extension.Manifest.AssemblyRedirect.Contains(args.Name))
+                if (extension?.Manifest?.AssemblyRedirect != null
+                    && extension.Manifest.AssemblyRedirect.Contains(args.Name))
                 {
                     return extension.OwnAssembly;
                 }
@@ -112,9 +113,12 @@ namespace Farmhand
             return null;
         }
 
-        private static void ApiEvents_OnModError(object sender, Events.Arguments.EventArgsOnModError e)
+        private static void ApiEvents_OnModError(object sender, EventArgsOnModError e)
         {
-            var mod = (ModManifest)ModRegistry.GetRegisteredItems().FirstOrDefault(n => n.IsFarmhandMod && ((ModManifest)n).ModAssembly == e.Assembly);
+            var mod =
+                (ModManifest)
+                ModRegistry.GetRegisteredItems()
+                    .FirstOrDefault(n => n.IsFarmhandMod && ((ModManifest)n).ModAssembly == e.Assembly);
             if (mod != null)
             {
                 Log.Exception($"Exception thrown by mod: {mod.Name} - {mod.Author}", e.Exception);
@@ -125,13 +129,13 @@ namespace Farmhand
                 Log.Exception($"Exception thrown by unknown mod with assembly: {e.Assembly.FullName}", e.Exception);
                 DetachAssemblyDelegates(e.Assembly);
             }
-
         }
 
         private static void ValidateModManifests()
         {
             var registeredMods = ModRegistry.GetRegisteredItems();
-            foreach (var mod in registeredMods.Where(n => n.IsFarmhandMod && n.ModState == ModState.Unloaded).Cast<ModManifest>())
+            foreach (var mod in
+                registeredMods.Where(n => n.IsFarmhandMod && n.ModState == ModState.Unloaded).Cast<ModManifest>())
             {
                 try
                 {
@@ -140,11 +144,16 @@ namespace Farmhand
                         mod.UniqueId = new UniqueId<string>(Guid.NewGuid().ToString());
                     }
 
-                    if (mod.UniqueId.ThisId.Contains("\\") || mod.HasContent && mod.Content.Textures != null && mod.Content.Textures.Any(n => n.Id.Contains("\\")))
+                    if (!mod.UniqueId.ThisId.Contains("\\")
+                        && (!mod.HasContent || mod.Content.Textures == null
+                            || !mod.Content.Textures.Any(n => n.Id.Contains("\\"))))
                     {
-                        Log.Error($"Error - {mod.Name} by {mod.Author} manifest is invalid. UniqueIDs cannot contain \"\\\"");
-                        mod.ModState = ModState.InvalidManifest;
+                        continue;
                     }
+
+                    Log.Error(
+                        $"Error - {mod.Name} by {mod.Author} manifest is invalid. UniqueIDs cannot contain \"\\\"");
+                    mod.ModState = ModState.InvalidManifest;
                 }
                 catch (Exception ex)
                 {
@@ -156,28 +165,25 @@ namespace Farmhand
         private static void LoadFinalMods()
         {
             Func<ModManifest[], List<ModManifest>, List<ModManifest>, List<ModManifest>, ModManifest[]> getModsForThisPass = (mods, modsLoaded, modsErrored, modsProcessed) =>
-                {
-                    Func<ModDependency, bool> isDependencyLoaded = (dependency) =>
-                        {
-                            if (dependency.IsRequired)
+                    {
+                        Func<ModDependency, bool> isDependencyLoaded = dependency =>
                             {
-                                return modsLoaded.Any(ld => ld.UniqueId.Equals(dependency.UniqueId));
-                            }
-                            else
-                            {
+                                if (dependency.IsRequired)
+                                {
+                                    return modsLoaded.Any(ld => ld.UniqueId.Equals(dependency.UniqueId));
+                                }
+
                                 var dependentMod = mods.FirstOrDefault(n => n.UniqueId.Equals(dependency.UniqueId));
                                 return dependentMod?.ModState != ModState.Unloaded;
-                            }
-                        };
-                    
-                    return
-                        mods.Where(
-                                n =>
-                                    n.ModState == ModState.Unloaded &&
-                                    (n.Dependencies == null || 
-                                    n.Dependencies.All(d => isDependencyLoaded(d))))
-                            .ToArray();
-                };
+                            };
+
+                        return
+                            mods.Where(
+                                    n =>
+                                        n.ModState == ModState.Unloaded
+                                        && (n.Dependencies == null || n.Dependencies.All(d => isDependencyLoaded(d))))
+                                .ToArray();
+                    };
 
             var modsToLoad = ModRegistry.GetRegisteredItems().Where(n => n.IsFarmhandMod).Cast<ModManifest>().ToArray();
             var loadedMods = new List<ModManifest>();
@@ -249,10 +255,10 @@ namespace Farmhand
         {
             Log.Error($"Marking {erroredMod.Name} dependency hierarchy as failed");
 
-            Stack<IModManifest> problemMods = new Stack<IModManifest>();
+            var problemMods = new Stack<IModManifest>();
 
             // We use this one to avoid circular resolution issues
-            List<IModManifest> resolvedMods = new List<IModManifest>();
+            var resolvedMods = new List<IModManifest>();
 
             problemMods.Push(erroredMod);
 
@@ -264,16 +270,19 @@ namespace Farmhand
                     ModRegistry.GetRegisteredItems()
                         .Where(n => n.IsFarmhandMod)
                         .Cast<ModManifest>()
-                        .Where(n => n.Dependencies != null && n.Dependencies.Any(
-                                    d => d.IsRequired && mod.UniqueId.Equals(d.UniqueId)));
+                        .Where(
+                            n =>
+                                n.Dependencies != null
+                                && n.Dependencies.Any(d => d.IsRequired && mod.UniqueId.Equals(d.UniqueId)));
 
                 foreach (var dependant in dependants)
                 {
                     dependant.ModState = ModState.DependencyLoadError;
                     if (!resolvedMods.Contains(dependant))
                     {
-                        Log.Verbose($"\tDisabling {dependant.Name} due to {mod.Name} failure." +
-                            (mod == erroredMod ? string.Empty : $" (Cascaded failure loading {erroredMod.Name}"));
+                        Log.Verbose(
+                            $"\tDisabling {dependant.Name} due to {mod.Name} failure."
+                            + (mod == erroredMod ? string.Empty : $" (Cascaded failure loading {erroredMod.Name}"));
                         problemMods.Push(dependant);
                     }
                 }
@@ -287,15 +296,18 @@ namespace Farmhand
         {
             var registeredMods = ModRegistry.GetRegisteredItems().Where(n => n.IsFarmhandMod).Cast<ModManifest>();
 
-            //Loop to verify every dependent mod is available. 
-            bool stateChange = false;
+            // Loop to verify every dependent mod is available. 
+            bool stateChange;
             var modInfos = registeredMods as ModManifest[] ?? registeredMods.ToArray();
             do
             {
                 stateChange = false;
                 foreach (var mod in modInfos)
                 {
-                    if (mod.ModState == ModState.MissingDependency || mod.Dependencies == null) continue;
+                    if (mod.ModState == ModState.MissingDependency || mod.Dependencies == null)
+                    {
+                        continue;
+                    }
 
                     foreach (var dependency in mod.Dependencies.Where(n => n.IsRequired))
                     {
@@ -313,33 +325,40 @@ namespace Farmhand
                             mod.ModState = ModState.MissingDependency;
                             dependency.DependencyState = DependencyState.ParentMissing;
                             stateChange = true;
-                            Log.Error($"Failed to load {mod.Name} due to missing dependency missing dependency: {dependency.UniqueId}");
+                            Log.Error(
+                                $"Failed to load {mod.Name} due to missing dependency missing dependency: {dependency.UniqueId}");
                         }
                         else
                         {
                             var dependencyVersion = dependencyMatch.Version;
-                            if (dependencyVersion == null) continue;
+                            if (dependencyVersion == null)
+                            {
+                                continue;
+                            }
 
                             if (dependency.MinimumVersion != null && dependency.MinimumVersion > dependencyVersion)
                             {
                                 mod.ModState = ModState.MissingDependency;
                                 dependency.DependencyState = DependencyState.TooLowVersion;
                                 stateChange = true;
-                                Log.Error($"Failed to load {mod.Name} due to minimum version incompatibility with {dependency.UniqueId}: " +
-                                          $"v.{dependencyMatch.Version} < v.{dependency.MinimumVersion}");
+                                Log.Error(
+                                    $"Failed to load {mod.Name} due to minimum version incompatibility with {dependency.UniqueId}: "
+                                    + $"v.{dependencyMatch.Version} < v.{dependency.MinimumVersion}");
                             }
                             else if (dependency.MaximumVersion != null && dependency.MaximumVersion < dependencyVersion)
                             {
                                 mod.ModState = ModState.MissingDependency;
                                 dependency.DependencyState = DependencyState.TooHighVersion;
                                 stateChange = true;
-                                Log.Error($"Failed to load {mod.Name} due to maximum version incompatibility with {dependency.UniqueId}: " +
-                                          $"v.{dependencyMatch.Version} > v.{dependency.MaximumVersion}");
+                                Log.Error(
+                                    $"Failed to load {mod.Name} due to maximum version incompatibility with {dependency.UniqueId}: "
+                                    + $"v.{dependencyMatch.Version} > v.{dependency.MaximumVersion}");
                             }
                         }
                     }
                 }
-            } while (stateChange);
+            }
+            while (stateChange);
         }
 
         private static void LoadModManifests()
@@ -357,17 +376,17 @@ namespace Farmhand
                             var modInfo = JsonConvert.DeserializeObject<ModManifest>(json, new VersionConverter());
 
                             modInfo.ModDirectory = perModPath;
-                            ModRegistry.RegisterItem(modInfo.UniqueId ?? new UniqueId<string>(Guid.NewGuid().ToString()), modInfo);
+                            ModRegistry.RegisterItem(
+                                modInfo.UniqueId ?? new UniqueId<string>(Guid.NewGuid().ToString()),
+                                modInfo);
                         }
                     }
                 }
-
-
             }
         }
 
         /// <summary>
-        /// Forcibly deactivates a mod by detaching it's event listeners.
+        ///     Forcibly deactivates a mod by detaching it's event listeners.
         /// </summary>
         /// <param name="mod">The mod to deactive</param>
         /// <param name="state">The new state of this mod. Defaults to ModState.Deactivated</param>
@@ -378,7 +397,7 @@ namespace Farmhand
         }
 
         /// <summary>
-        /// Forcibly deactivates a mod by detaching it's event listeners.
+        ///     Forcibly deactivates a mod by detaching it's event listeners.
         /// </summary>
         /// <param name="mod">The manifest of the mod to deactive</param>
         /// <param name="state">The new state of this mod. Defaults to ModState.Deactivated</param>
@@ -399,7 +418,7 @@ namespace Farmhand
         }
 
         /// <summary>
-        /// Forcibly detaches event delegates associated with a particular assembly
+        ///     Forcibly detaches event delegates associated with a particular assembly
         /// </summary>
         /// <param name="assembly">The assembly the detach</param>
         public static void DetachAssemblyDelegates(Assembly assembly)
@@ -411,7 +430,7 @@ namespace Farmhand
         }
 
         /// <summary>
-        /// Reattaches disabled delegates for previously disabled mods
+        ///     Reattaches disabled delegates for previously disabled mods
         /// </summary>
         /// <param name="mod">The mod to reactivate</param>
         public static void ReactivateMod(Mod mod)
@@ -420,7 +439,7 @@ namespace Farmhand
         }
 
         /// <summary>
-        /// Reattaches disabled delegates for previously disabled mods
+        ///     Reattaches disabled delegates for previously disabled mods
         /// </summary>
         /// <param name="mod">The manifest of the mod to reactivate</param>
         public static void ReactivateMod(ModManifest mod)
@@ -432,7 +451,7 @@ namespace Farmhand
         }
 
         /// <summary>
-        /// Forces the game to reload mod configurations which use save specific settings.
+        ///     Forces the game to reload mod configurations which use save specific settings.
         /// </summary>
         public static void ReloadConfigurations()
         {

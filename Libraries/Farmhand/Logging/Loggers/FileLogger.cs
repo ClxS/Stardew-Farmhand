@@ -1,46 +1,69 @@
-﻿using System;
-using System.IO;
-
-namespace Farmhand.Logging.Loggers
+﻿namespace Farmhand.Logging.Loggers
 {
+    using System;
+    using System.IO;
+
+    /// <summary>
+    ///     Writes to a log file in %AppData%/StardewValley/ErrorLogs/Farmhand-$Date$-log.txt
+    /// </summary>
     public class FileLogger : ILogger
     {
-        private static string LogDir => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "StardewValley", "ErrorLogs");
+        private StreamWriter file;
 
-        private StreamWriter _file;
+        private static string LogDir
+            =>
+                Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "StardewValley",
+                    "ErrorLogs");
+
         private StreamWriter File
         {
             get
             {
-                if (_file == null)
+                if (this.file != null)
                 {
-                    _file = new StreamWriter(Path.Combine(LogDir, $"Farmhand-{DateTime.Now.ToLongDateString()}-log.txt"));
-                    _file.AutoFlush = true;
+                    return this.file;
                 }
-                return _file;
+
+                this.file = new StreamWriter(
+                    Path.Combine(LogDir, $"Farmhand-{DateTime.Now.ToLongDateString()}-log.txt"));
+                this.file.AutoFlush = true;
+
+                return this.file;
             }
         }
 
-        ~FileLogger()
-        {
-            if (_file != null)
-            {
-                _file.Close();
-                _file.Dispose();
-                _file = null;
-            }
-        }
+        #region ILogger Members
 
+        /// <summary>
+        ///     Writes the message to the log.
+        /// </summary>
+        /// <param name="logItem">
+        ///     The entry to log.
+        /// </param>
         public void Write(LogEntry logItem)
         {
             try
             {
-                File.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {logItem.Message}");
+                this.File.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {logItem.Message}");
             }
             catch (Exception)
             {
                 Console.WriteLine("ERROR ERROR ERROR");
                 throw;
+            }
+        }
+
+        #endregion
+
+        ~FileLogger()
+        {
+            if (this.file != null)
+            {
+                this.file.Close();
+                this.file.Dispose();
+                this.file = null;
             }
         }
     }

@@ -212,6 +212,7 @@
     <Compile Include="Events\Arguments\GlobalRoute\EventArgsGlobalRoute.cs" />
     <Compile Include="Events\Arguments\GlobalRoute\EventArgsGlobalRouteCancellable.cs" />
     <Compile Include="Events\Arguments\GlobalRoute\EventArgsGlobalRouteReturnable.cs" />
+    <Compile Include="Events\Arguments\GraphicsEvents\EventArgsChatBoxDraw.cs" />
     <Compile Include="Events\Arguments\GraphicsEvents\EventArgsClientSizeChanged.cs" />
     <Compile Include="Events\Arguments\LocationEvents\EventArgsLocationsChanged.cs" />
     <Compile Include="Events\Arguments\LocationEvents\EventArgsOnBeforeCheckAction.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="FarmhandConfig.cs" />
     <Compile Include="Helpers\ArgumentsHelper.cs" />
     <Compile Include="Helpers\ReferenceFix.cs" />
+    <Compile Include="Helpers\VersionConverter.cs" />
     <Compile Include="Mods\ModSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
@@ -259,7 +261,6 @@
     <Compile Include="Helpers\Randomizer.cs" />
     <Compile Include="Helpers\UniqueId.cs" />
     <Compile Include="Helpers\UniqueIdConverter.cs" />
-    <Compile Include="Helpers\VersionConverter.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LogEntry.cs" />
     <Compile Include="Logging\LogEntryColor.cs" />
@@ -269,9 +270,9 @@
     <Compile Include="Logging\Loggers\GameLogger.cs" />
     <Compile Include="Logging\Loggers\ILogger.cs" />
     <Compile Include="Logging\Loggers\VisualStudioLogger.cs" />
-    <Compile Include="Menus\ChatBox.cs" />
-    <Compile Include="Menus\GameMenu.cs" />
-    <Compile Include="Menus\TitleMenu.cs" />
+    <Compile Include="Overrides\Menus\ChatBox.cs" />
+    <Compile Include="Overrides\Menus\GameMenu.cs" />
+    <Compile Include="Overrides\Menus\TitleMenu.cs" />
     <Compile Include="Mods\Mod.cs" />
     <Compile Include="Mods\ModLoader.cs" />
     <Compile Include="Mods\ModState.cs" />

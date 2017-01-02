@@ -1,34 +1,26 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace Farmhand.Logging.Loggers
+﻿namespace Farmhand.Logging.Loggers
 {
+    using System;
+    using System.Diagnostics;
+
+    /// <summary>
+    /// Writes to the VisualStudio output log via Debug.WriteLine
+    /// </summary>
     public class VisualStudioLogger : ILogger
     {
+        #region ILogger Members
+
+        /// <summary>
+        ///     Writes the message to the log.
+        /// </summary>
+        /// <param name="logItem">
+        ///     The entry to log.
+        /// </param>
         public void Write(LogEntry logItem)
         {
             Debug.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {logItem.Message}");
         }
-        
-        private ConsoleColor ConvertConsoleColour(LogEntryType type)
-        {
-            switch (type)
-            {
-                case LogEntryType.Verbose:
-                    return ConsoleColor.DarkGray;
-                case LogEntryType.Info:
-                    return ConsoleColor.Gray;
-                case LogEntryType.Success:
-                    return ConsoleColor.Green;
-                case LogEntryType.Error:
-                    return ConsoleColor.Red;
-                case LogEntryType.Comment:
-                    return ConsoleColor.DarkGreen;
-                case LogEntryType.Warning:
-                    return ConsoleColor.Yellow;
-                default: return ConsoleColor.Gray;
-            }
 
-        }
+        #endregion
     }
 }

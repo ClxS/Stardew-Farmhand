@@ -1,44 +1,48 @@
-﻿using System;
-
-namespace Farmhand.Helpers
+﻿namespace Farmhand.Helpers
 {
+    using System;
+
     /// <summary>
-    /// The Mersenne Twister is a pseudorandom number generator.
+    ///     The Mersenne Twister is a pseudo random number generator.
     /// </summary>
     internal class MersenneTwister : IDisposable
     {
         #region Fields
 
         private const short N = 624;
+
         private const short M = 397;
+
         private const uint MatrixA = 0x9908b0df;
+
         private const uint UpperMask = 0x80000000;
+
         private const uint LowerMask = 0x7fffffff;
-        private uint[] _mt;
-        private ushort _mti;
-        private uint[] _mag01;
-        private bool _disposed;
+
+        private uint[] mt;
+
+        private ushort mti;
+
+        private uint[] mag01;
+
+        private bool disposed;
 
         #endregion
 
         #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MersenneTwister"/> class with given seed value.
-        /// </summary>
-        /// <param name="seed"></param>
+        
         public MersenneTwister(uint seed)
         {
-            Init();
-            InitGenRand(seed);
+            this.Init();
+            this.InitGenRand(seed);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MersenneTwister"/> class.
+        ///     Initializes a new instance of the <see cref="MersenneTwister" /> class.
         /// </summary>
         public MersenneTwister()
         {
-            Init();
+            this.Init();
 
             var seedKey = new uint[6];
             var rnseed = new byte[8];
@@ -50,26 +54,23 @@ namespace Farmhand.Helpers
             seedKey[4] = ((uint)rnseed[0] << 24) | ((uint)rnseed[1] << 16) | ((uint)rnseed[2] << 8) | rnseed[3];
             seedKey[5] = ((uint)rnseed[4] << 24) | ((uint)rnseed[5] << 16) | ((uint)rnseed[6] << 8) | rnseed[7];
 
-            InitByArray(seedKey);
+            this.InitByArray(seedKey);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MersenneTwister"/> class with given seed array.
+        ///     Initializes a new instance of the <see cref="MersenneTwister" /> class with given seed array.
         /// </summary>
         /// <param name="initKey">An array for initializing keys.</param>
         public MersenneTwister(uint[] initKey)
         {
-            Init();
+            this.Init();
 
-            InitByArray(initKey);
+            this.InitByArray(initKey);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
+        
         ~MersenneTwister()
         {
-            Dispose(false);
+            this.Dispose(false);
         }
 
         #endregion
@@ -77,79 +78,75 @@ namespace Farmhand.Helpers
         #region Methods
 
         /// <summary>
-        /// Releases all resources used by the current instance of <see cref="MersenneTwister"/>.
+        ///     Releases all resources used by the current instance of <see cref="MersenneTwister" />.
         /// </summary>
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        /// <summary>
-        /// Releases all resources used by the current instance of <see cref="MersenneTwister"/>.
-        /// </summary>
+        
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposed)
+            if (this.disposed)
             {
                 return;
             }
 
             if (disposing)
             {
-                _mt = null;
-                _mag01 = null;
+                this.mt = null;
+                this.mag01 = null;
             }
 
-            _disposed = true;
+            this.disposed = true;
         }
 
         private void Init()
         {
-            _mt = new uint[N];
-            _mag01 = new uint[] { 0, MatrixA };
-            _mti = N + 1;
+            this.mt = new uint[N];
+            this.mag01 = new uint[] { 0, MatrixA };
+            this.mti = N + 1;
         }
 
         /// <summary>
-        /// Initializes mt[N] with a seed.
+        ///     Initializes mt[N] with a seed.
         /// </summary>
         /// <param name="seed">Seed value.</param>
         private void InitGenRand(uint seed)
         {
-            _mt[0] = seed;
+            this.mt[0] = seed;
 
-            for (_mti = 1; _mti < N; _mti++)
+            for (this.mti = 1; this.mti < N; this.mti++)
             {
-                _mt[_mti] = 1812433253 * (_mt[_mti - 1] ^ (_mt[_mti - 1] >> 30)) + _mti;
+                this.mt[this.mti] = 1812433253 * (this.mt[this.mti - 1] ^ (this.mt[this.mti - 1] >> 30))
+                                      + this.mti;
             }
         }
 
         /// <summary>
-        /// Initialize by an array with array-length.
+        ///     Initialize by an array with array-length.
         /// </summary>
         /// <param name="initKey">An array for initializing keys.</param>
         private void InitByArray(uint[] initKey)
         {
-            uint i, j;
-            int k;
             var keyLength = initKey.Length;
 
-            InitGenRand(19650218);
+            this.InitGenRand(19650218);
 
-            i = 1;
-            j = 0;
-            k = N > keyLength ? N : keyLength;
+            uint i = 1;
+            uint j = 0;
+            var k = N > keyLength ? N : keyLength;
 
             for (; k > 0; k--)
             {
-                _mt[i] = (_mt[i] ^ ((_mt[i - 1] ^ (_mt[i - 1] >> 30)) * 1664525)) + initKey[j] + j;
+                this.mt[i] = (this.mt[i] ^ ((this.mt[i - 1] ^ (this.mt[i - 1] >> 30)) * 1664525)) + initKey[j] + j;
                 i++;
                 j++;
 
                 if (i >= N)
                 {
-                    _mt[0] = _mt[N - 1];
+                    this.mt[0] = this.mt[N - 1];
                     i = 1;
                 }
 
@@ -158,56 +155,53 @@ namespace Farmhand.Helpers
                     j = 0;
                 }
             }
+
             for (k = N - 1; k > 0; k--)
             {
-                _mt[i] = (_mt[i] ^ ((_mt[i - 1] ^ (_mt[i - 1] >> 30)) * 1566083941)) - i;
+                this.mt[i] = (this.mt[i] ^ ((this.mt[i - 1] ^ (this.mt[i - 1] >> 30)) * 1566083941)) - i;
                 i++;
 
                 if (i >= N)
                 {
-                    _mt[0] = _mt[N - 1];
+                    this.mt[0] = this.mt[N - 1];
                     i = 1;
                 }
             }
 
-            _mt[0] = 0x80000000;
+            this.mt[0] = 0x80000000;
         }
-
-        /// <summary>
-        /// Generates a random number on [0,0xffffffff]-Interval.
-        /// </summary>
-        /// <returns>Returns generated number.</returns>
+        
         public uint GenRandInt32()
         {
             uint y;
 
-            if (_mti >= N)
+            if (this.mti >= N)
             {
                 short kk;
 
-                if (_mti == N + 1)
+                if (this.mti == N + 1)
                 {
-                    InitGenRand(5489);
+                    this.InitGenRand(5489);
                 }
 
                 for (kk = 0; kk < N - M; kk++)
                 {
-                    y = ((_mt[kk] & UpperMask) | (_mt[kk + 1] & LowerMask)) >> 1;
-                    _mt[kk] = _mt[kk + M] ^ _mag01[_mt[kk + 1] & 1] ^ y;
+                    y = ((this.mt[kk] & UpperMask) | (this.mt[kk + 1] & LowerMask)) >> 1;
+                    this.mt[kk] = this.mt[kk + M] ^ this.mag01[this.mt[kk + 1] & 1] ^ y;
                 }
 
                 for (; kk < N - 1; kk++)
                 {
-                    y = ((_mt[kk] & UpperMask) | (_mt[kk + 1] & LowerMask)) >> 1;
-                    _mt[kk] = _mt[kk + (M - N)] ^ _mag01[_mt[kk + 1] & 1] ^ y;
+                    y = ((this.mt[kk] & UpperMask) | (this.mt[kk + 1] & LowerMask)) >> 1;
+                    this.mt[kk] = this.mt[kk + (M - N)] ^ this.mag01[this.mt[kk + 1] & 1] ^ y;
                 }
 
-                y = ((_mt[N - 1] & UpperMask) | (_mt[0] & LowerMask)) >> 1;
-                _mt[N - 1] = _mt[M - 1] ^ _mag01[_mt[0] & 1] ^ y;
-                _mti = 0;
+                y = ((this.mt[N - 1] & UpperMask) | (this.mt[0] & LowerMask)) >> 1;
+                this.mt[N - 1] = this.mt[M - 1] ^ this.mag01[this.mt[0] & 1] ^ y;
+                this.mti = 0;
             }
 
-            y = _mt[_mti++];
+            y = this.mt[this.mti++];
             y ^= y >> 11;
             y ^= (y << 7) & 0x9d2c5680;
             y ^= (y << 15) & 0xefc60000;
@@ -215,38 +209,34 @@ namespace Farmhand.Helpers
 
             return y;
         }
+        
+        public uint GenRandInt31() => this.GenRandInt32() >> 1;
 
         /// <summary>
-        /// Generates a random number on [0,0x7fffffff]-Interval.
+        ///     Generates a random number on [0,1]-real-Interval.
         /// </summary>
         /// <returns>Returns generated number.</returns>
-        public uint GenRandInt31() => GenRandInt32() >> 1;
+        public double GenRandReal1() => this.GenRandInt32() * (1.0 / 4294967295.0);
 
         /// <summary>
-        /// Generates a random number on [0,1]-real-Interval.
+        ///     Generates a random number on [0,1)-real-Interval.
         /// </summary>
         /// <returns>Returns generated number.</returns>
-        public double GenRandReal1() => GenRandInt32() * (1.0 / 4294967295.0);
+        public double GenRandReal2() => this.GenRandInt32() * (1.0 / 4294967296.0);
 
         /// <summary>
-        /// Generates a random number on [0,1)-real-Interval.
+        ///     Generates a random number on (0,1)-real-Interval
         /// </summary>
         /// <returns>Returns generated number.</returns>
-        public double GenRandReal2() => GenRandInt32() * (1.0 / 4294967296.0);
+        public double GenRandReal3() => (this.GenRandInt32() + 0.5) * (1.0 / 4294967296.0);
 
         /// <summary>
-        /// Generates a random number on (0,1)-real-Interval
-        /// </summary>
-        /// <returns>Returns generated number.</returns>
-        public double GenRandReal3() => (GenRandInt32() + 0.5) * (1.0 / 4294967296.0);
-
-        /// <summary>
-        /// Generates a random number on [0,1) with 53-bit resolution.
+        ///     Generates a random number on [0,1) with 53-bit resolution.
         /// </summary>
         /// <returns>Returns generated number.</returns>
         public double GenRandRes53()
         {
-            uint a = GenRandInt32() >> 5, b = GenRandInt32() >> 6;
+            uint a = this.GenRandInt32() >> 5, b = this.GenRandInt32() >> 6;
 
             return (a * 67108864.0 + b) * (1.0 / 9007199254740992.0);
         }

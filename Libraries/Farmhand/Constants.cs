@@ -5,6 +5,7 @@
     using System.Reflection;
 
     using Farmhand.Helpers;
+    using Farmhand.Helpers.Randomizer;
 
     /// <summary>
     ///     Various useful constants used by the API

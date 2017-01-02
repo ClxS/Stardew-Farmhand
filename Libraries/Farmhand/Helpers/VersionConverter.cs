@@ -1,34 +1,32 @@
-﻿using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
-namespace Farmhand.Helpers
+﻿namespace Farmhand.Helpers
 {
-    public class VersionConverter : JsonConverter
-    {
-        public class SmapiVersion
-        {
-            public int MajorVersion = 0;
-            public int MinorVersion = 0;
-            public int PatchVersion = 0;
-            public string Build = "";
-        }
-        private readonly Type[] _types;
+    using System;
 
-        public VersionConverter(params Type[] types)
-        {
-            _types = types;
-        }
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+
+    internal class VersionConverter : JsonConverter
+    {
+        public override bool CanRead => true;
+
+        public override bool CanWrite => false;
+
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException("Unnecessary because CanWrite is false. The type will skip the converter.");
+            throw new NotImplementedException(
+                "Unnecessary because CanWrite is false. The type will skip the converter.");
         }
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+
+        public override object ReadJson(
+            JsonReader reader,
+            Type objectType,
+            object existingValue,
+            JsonSerializer serializer)
         {
-            JObject jObject = null;
+            JObject jsonObject = null;
             if (reader.TokenType == JsonToken.StartObject)
             {
-                jObject = JObject.Load(reader);
+                jsonObject = JObject.Load(reader);
             }
 
             object retValue = null;
@@ -37,32 +35,39 @@ namespace Farmhand.Helpers
                 case JsonToken.StartObject:
                     break;
                 case JsonToken.EndObject:
-                    if (jObject != null)
+                    if (jsonObject != null)
                     {
-                        var tmp = jObject.ToObject<SmapiVersion>();
+                        var tmp = jsonObject.ToObject<SimpleVersion>();
                         retValue = new Version(tmp.MajorVersion, tmp.MinorVersion, tmp.PatchVersion);
                     }
+
                     break;
                 case JsonToken.String:
                     retValue = new Version((string)reader.Value);
                     break;
             }
 
-            if (retValue == null)
-            {
-                retValue = new Version(0, 0, 0);
-            }
-
-            return retValue;
+            return retValue ?? (retValue = new Version(0, 0, 0));
         }
-
-        public override bool CanRead => true;
-
-        public override bool CanWrite => false;
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(System.Version) == objectType;
+            return typeof(Version) == objectType;
         }
+
+        #region Nested type: SimpleVersion
+
+        internal class SimpleVersion
+        {
+            public string Build { get; set; } = string.Empty;
+
+            public int MajorVersion { get; set; } = 0;
+
+            public int MinorVersion { get; set; } = 0;
+
+            public int PatchVersion { get; set; } = 0;
+        }
+
+        #endregion
     }
 }

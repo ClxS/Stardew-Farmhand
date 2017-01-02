@@ -1,21 +1,32 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace Farmhand.Logging.Loggers
+﻿namespace Farmhand.Logging.Loggers
 {
+    using System;
+
+    /// <summary>
+    ///     Writes to the console using Console.WriteLine
+    /// </summary>
     public class ConsoleLogger : ILogger
     {
+        #region ILogger Members
+
+        /// <summary>
+        ///     Writes the message to the log.
+        /// </summary>
+        /// <param name="logItem">
+        ///     The entry to log.
+        /// </param>
         public void Write(LogEntry logItem)
         {
-            Debug.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {logItem.Message}");
-            SetConsoleColour(logItem.Type);
+            this.SetConsoleColour(logItem.Type);
             Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {logItem.Message}");
-            SetConsoleColour(logItem.Type);
+            this.SetConsoleColour(logItem.Type);
         }
+
+        #endregion
 
         private void SetConsoleColour(LogEntryType type)
         {
-            Console.ForegroundColor = ConvertConsoleColour(type);
+            Console.ForegroundColor = this.ConvertConsoleColour(type);
         }
 
         private ConsoleColor ConvertConsoleColour(LogEntryType type)
@@ -34,9 +45,9 @@ namespace Farmhand.Logging.Loggers
                     return ConsoleColor.DarkGreen;
                 case LogEntryType.Warning:
                     return ConsoleColor.Yellow;
-                default: return ConsoleColor.Gray;
+                default:
+                    return ConsoleColor.Gray;
             }
-
         }
     }
 }

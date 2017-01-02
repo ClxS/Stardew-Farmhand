@@ -326,7 +326,7 @@
 
         private static byte[] FixDll(AssemblyDefinition asm, string cachePath)
         {
-            DefinitionResolver.Fix(asm);
+            ReferenceHelper.ReferenceResolver.DefinitionResolver.Fix(asm);
 
             byte[] bytes;
             using (var stream = new MemoryStream())
