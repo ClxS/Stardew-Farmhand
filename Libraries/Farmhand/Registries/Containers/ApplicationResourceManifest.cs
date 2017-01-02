@@ -1,26 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Farmhand.Helpers;
-
-namespace Farmhand.Registries.Containers
+﻿namespace Farmhand.Registries.Containers
 {
-    public class ApplicationResourceManifest
+    using System;
+    using System.Collections.Generic;
+
+    using Farmhand.Helpers;
+    using Farmhand.Logging;
+
+    internal class ApplicationResourceManifest
     {
-        public static List<ApplicationResourceManifest> LoadedManifests { get; set; } = new List<ApplicationResourceManifest>();
+        public static List<ApplicationResourceManifest> LoadedManifests { get; set; } =
+            new List<ApplicationResourceManifest>();
 
         public ManifestContent Content { get; set; }
 
         public void LoadContent()
         {
-            if (Content == null)
-                return;
-
-            Logging.Log.Verbose("Loading Content");
-            if (Content.Textures != null)
+            if (this.Content == null)
             {
-                foreach (var texture in Content.Textures)
+                return;
+            }
+
+            Log.Verbose("Loading Content");
+            if (this.Content.Textures != null)
+            {
+                foreach (var texture in this.Content.Textures)
                 {
                     texture.Texture = ApplicationResourcesUtility.LoadTexture(texture.File);
 
@@ -29,14 +32,14 @@ namespace Farmhand.Registries.Containers
                         throw new Exception($"Missing API Texture: {texture.File}");
                     }
 
-                    Logging.Log.Verbose($"Registering new API texture: {texture.Id}");
+                    Log.Verbose($"Registering new API texture: {texture.Id}");
                     TextureRegistry.RegisterItem(texture.Id, texture);
                 }
             }
 
-            if (Content.Maps != null)
+            if (this.Content.Maps != null)
             {
-                foreach (var map in Content.Maps)
+                foreach (var map in this.Content.Maps)
                 {
                     map.Map = ApplicationResourcesUtility.LoadMap(map.File);
 
@@ -45,29 +48,39 @@ namespace Farmhand.Registries.Containers
                         throw new Exception($"Missing API map: {map.AbsoluteFilePath}");
                     }
 
-                    Logging.Log.Verbose($"Registering new API map: {map.Id}");
+                    Log.Verbose($"Registering new API map: {map.Id}");
                     MapRegistry.RegisterItem(map.Id, map);
                 }
             }
 
-            if (Content.Xnb == null) return;
+            if (this.Content.Xnb == null)
+            {
+                return;
+            }
 
-            foreach (var file in Content.Xnb)
+            foreach (var file in this.Content.Xnb)
             {
                 if (file.IsXnb)
                 {
                     throw new NotImplementedException();
                 }
+
                 file.OwningMod = null;
 
                 if (!file.Exists(null))
                 {
                     if (file.IsXnb)
+                    {
                         throw new Exception($"Replacement File: {file.AbsoluteFilePath}");
+                    }
+
                     if (file.IsTexture)
+                    {
                         throw new Exception($"Replacement Texture: {file.Texture}");
+                    }
                 }
-                Logging.Log.Verbose("Registering new API texture XNB override");
+
+                Log.Verbose("Registering new API texture XNB override");
                 XnbRegistry.RegisterItem(file.Original, file);
             }
         }

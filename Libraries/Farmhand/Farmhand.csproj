@@ -295,7 +295,6 @@
     <Compile Include="Registries\Registry.cs" />
     <Compile Include="Registries\TextureRegistry.cs" />
     <Compile Include="Registries\XnbRegistry.cs" />
-    <Compile Include="Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="API\Machines\" />

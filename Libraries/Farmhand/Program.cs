@@ -1,13 +1,20 @@
-﻿using System.IO;
-using Newtonsoft.Json;
-
-namespace Farmhand
+﻿namespace Farmhand
 {
+    using System.IO;
+
+    using Newtonsoft.Json;
+
+    /// <summary>
+    ///     Holds Farmhand configuration details.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        ///     Gets or sets the Farmhand configuration.
+        /// </summary>
         public static FarmhandConfig Config { get; set; }
-        
-        public static void ReadConfig()
+
+        internal static void ReadConfig()
         {
             try
             {

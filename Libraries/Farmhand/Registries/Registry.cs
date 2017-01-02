@@ -1,79 +1,84 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Farmhand.Registries
+﻿namespace Farmhand.Registries
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     /// <summary>
-    /// A general use registry class. 
+    ///     A general use registry class.
     /// </summary>
     /// <typeparam name="TKey">The UniqueID type</typeparam>
     /// <typeparam name="T">The type to store</typeparam>
-    public class Registry<TKey, T> where T : class
-    {        
+    public class Registry<TKey, T>
+        where T : class
+    {
         /// <summary>
-        /// Default Constructor
+        ///     Initializes a new instance of the <see cref="Registry{TKey,T}" /> class.
         /// </summary>
-        public Registry() 
+        public Registry()
         {
-            RegisteredItems = new Dictionary<TKey, T>();
+            this.RegisteredItems = new Dictionary<TKey, T>();
         }
+
         /// <summary>
-        /// Registered Items
+        ///     Gets or sets the registered items.
         /// </summary>
         protected Dictionary<TKey, T> RegisteredItems { get; set; }
 
         /// <summary>
-        /// Returns the value with the matching key
+        ///     Returns the value with the matching key
         /// </summary>
         /// <param name="key">Key to find</param>
-        /// <returns></returns>
+        /// <returns>
+        ///     The item specified by the key.
+        /// </returns>
         public virtual T GetItem(TKey key)
         {
-            var registryItem = RegisteredItems.ContainsKey(key) ? RegisteredItems[key] : null;
+            var registryItem = this.RegisteredItems.ContainsKey(key) ? this.RegisteredItems[key] : null;
             return registryItem;
         }
-        
 
         /// <summary>
-        /// Registers a new item
+        ///     Registers a new item
         /// </summary>
         /// <param name="key">Key to register with</param>
         /// <param name="item">Item to register</param>
         public virtual void RegisterItem(TKey key, T item)
         {
-            if (GetItem(key) == null)
+            if (this.GetItem(key) == null)
             {
-                RegisteredItems[key] = item;
+                this.RegisteredItems[key] = item;
             }
         }
 
         /// <summary>
-        /// Gets all registered items
+        ///     Gets all registered items
         /// </summary>
         /// <returns>All registered items</returns>
         public virtual IEnumerable<T> GetRegisteredItems()
         {
-            return RegisteredItems.Select(n => n.Value);
+            return this.RegisteredItems.Select(n => n.Value);
         }
 
         /// <summary>
-        /// Returns the internal dictionary object
+        ///     Returns the internal dictionary object
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        ///     A <see cref="Registry{TKey,T}" /> of all items.
+        /// </returns>
         public virtual Dictionary<TKey, T> GetAll()
         {
-            return RegisteredItems;
+            return this.RegisteredItems;
         }
 
         /// <summary>
-        /// Removes an item
+        ///     Removes an item
         /// </summary>
         /// <param name="key">Key of item to remove</param>
         public virtual void UnregisterItem(TKey key)
         {
-            if (GetItem(key) != null)
+            if (this.GetItem(key) != null)
             {
-                RegisteredItems.Remove(key);
+                this.RegisteredItems.Remove(key);
             }
         }
     }

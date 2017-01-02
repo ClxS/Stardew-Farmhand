@@ -1,36 +1,65 @@
-﻿using Newtonsoft.Json;
-using xTile.Format;
-
-namespace Farmhand.Registries.Containers
+﻿namespace Farmhand.Registries.Containers
 {
+    using Newtonsoft.Json;
+
+    using xTile;
+    using xTile.Format;
+
+    /// <summary>
+    ///     Defines a mods custom map information.
+    /// </summary>
     public class ModMap
     {
+        [JsonIgnore]
+        private Map map;
+
+        /// <summary>
+        ///     Gets or sets the file for this map.
+        /// </summary>
         public string File { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the ID for this map.
+        /// </summary>
         public string Id { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the absolute file path.
+        /// </summary>
         [JsonIgnore]
         public string AbsoluteFilePath { get; set; }
 
+        /// <summary>
+        ///     Gets the map.
+        /// </summary>
         [JsonIgnore]
-        private xTile.Map _map;
-
-        [JsonIgnore]
-        public xTile.Map Map
+        public Map Map
         {
             get
             {
-                if (_map == null && Exists())
+                if (this.map == null && this.Exists())
                 {
-                    _map = FormatManager.Instance.LoadMap(AbsoluteFilePath);
+                    this.map = FormatManager.Instance.LoadMap(this.AbsoluteFilePath);
                 }
-                return _map;
+
+                return this.map;
             }
-            internal set { _map = value; }
+
+            internal set
+            {
+                this.map = value;
+            }
         }
 
+        /// <summary>
+        ///     Gets whether this map exists.
+        /// </summary>
+        /// <returns>
+        ///     Whether the map exists.
+        /// </returns>
         public bool Exists()
         {
-            return !string.IsNullOrEmpty(AbsoluteFilePath) && System.IO.File.Exists(AbsoluteFilePath);
+            return !string.IsNullOrEmpty(this.AbsoluteFilePath) && System.IO.File.Exists(this.AbsoluteFilePath);
         }
     }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Farmhand.Helpers;
-
-namespace Farmhand.Registries.Containers
+﻿namespace Farmhand.Registries.Containers
 {
+    using System;
+
+    using Farmhand.Helpers;
+
     public interface IModManifest
     {
         UniqueId<string> UniqueId { get; }

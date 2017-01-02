@@ -1,37 +1,70 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json;
-using StardewValley;
-using System.IO;
-
-namespace Farmhand.Registries.Containers
+﻿namespace Farmhand.Registries.Containers
 {
+    using System.IO;
+
+    using Microsoft.Xna.Framework.Graphics;
+
+    using Newtonsoft.Json;
+
+    using StardewValley;
+
+    /// <summary>
+    ///     Contains a texture located on disk.
+    /// </summary>
     public class DiskTexture
     {
+        [JsonIgnore]
+        private Texture2D texture;
+
+        /// <summary>
+        ///     Gets or sets the file for this texture.
+        /// </summary>
         public string File { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the ID for this texture.
+        /// </summary>
         public string Id { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the absolute file path to this texture.
+        /// </summary>
         [JsonIgnore]
         public string AbsoluteFilePath { get; set; }
 
+        /// <summary>
+        ///     Gets the <see cref="Texture2D" />.
+        /// </summary>
         [JsonIgnore]
-        private Texture2D _texture;
-
-        [JsonIgnore]
-        public Texture2D Texture {
+        public Texture2D Texture
+        {
             get
             {
-                if(_texture == null && Exists())
+                if (this.texture == null && this.Exists())
                 {
-                    _texture = Texture2D.FromStream(Game1.graphics.GraphicsDevice, new FileStream(AbsoluteFilePath, FileMode.Open));
+                    this.texture = Texture2D.FromStream(
+                        Game1.graphics.GraphicsDevice,
+                        new FileStream(this.AbsoluteFilePath, FileMode.Open));
                 }
-                return _texture;
+
+                return this.texture;
             }
-            internal set { _texture = value; }
+
+            internal set
+            {
+                this.texture = value;
+            }
         }
 
+        /// <summary>
+        ///     Gets whether this texture exists on disk.
+        /// </summary>
+        /// <returns>
+        ///     Whether the texture exists.
+        /// </returns>
         public bool Exists()
         {
-            return !string.IsNullOrEmpty(AbsoluteFilePath) && System.IO.File.Exists(AbsoluteFilePath);
+            return !string.IsNullOrEmpty(this.AbsoluteFilePath) && System.IO.File.Exists(this.AbsoluteFilePath);
         }
     }
 }
