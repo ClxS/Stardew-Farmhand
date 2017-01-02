@@ -16,7 +16,7 @@
         /// </summary>
         public Error()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         internal override void ClearFrame()
@@ -26,6 +26,19 @@
         internal override void Start()
         {
             TitleInfoService.SetCurrentPage("Error");
+
+            if (InstallationContext.Exception != null)
+            {
+                this.ExceptionInfo.Text = InstallationContext.Exception.Message;
+                this.ExceptionInfo.Text += "\n" + InstallationContext.Exception.StackTrace;
+
+                if (InstallationContext.Exception.InnerException != null)
+                {
+                    this.ExceptionInfo.Text += "\n\nInner Exception:\n";
+                    this.ExceptionInfo.Text += InstallationContext.Exception.InnerException.Message;
+                    this.ExceptionInfo.Text += InstallationContext.Exception.InnerException.StackTrace;
+                }
+            }
         }
 
         private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)

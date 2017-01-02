@@ -1,5 +1,7 @@
 ﻿namespace FarmhandInstaller.UI.Utilities
 {
+    using System;
+
     internal static class InstallationContext
     {
         public static string StardewPath { get; set; }
@@ -13,5 +15,7 @@
         public static bool AddNewModFromTemplate { get; set; } = true;
 
         public static DevelopmentModSettings ModSettings { get; set; } = new DevelopmentModSettings();
+
+        public static Exception Exception { get; set; }
     }
 }

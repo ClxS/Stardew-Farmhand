@@ -15,7 +15,7 @@
             </Hyperlink>
         </TextBlock>
         <TextBlock DockPanel.Dock="Top" Margin="30,10,0,0">And to help us solve the problem, please copy the info below into your message:</TextBlock>
-        <TextBox DockPanel.Dock="Top" Width="500" Margin="0,10,0,0" Height="100" IsReadOnly="True" Text="Some info about the exception here"></TextBox>
+        <TextBox x:Name="ExceptionInfo" DockPanel.Dock="Top" Width="500" Margin="0,10,0,0" Height="100" IsReadOnly="True" Text=""></TextBox>
         <Button  DockPanel.Dock="Bottom" Click="ButtonClose_OnClick" Content="Close" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="0.5,0.5" Margin="10,0,0,10"/>
     </DockPanel>
 </local:BaseFrame>

@@ -40,9 +40,9 @@
                         PackageManager.InstallPackage(context);
                         this.Complete();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        this.Failure();
+                        this.Failure(ex);
                     }
                 });
         }
@@ -71,10 +71,11 @@
             }
         }
 
-        private void Failure()
+        private void Failure(Exception ex)
         {
             this.Dispatcher.Invoke(new Action(() =>
             {
+                InstallationContext.Exception = ex;
                 this.OnNavigate(CommandError);
             }));
         }
