@@ -1,82 +1,90 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
-using Microsoft.Xna.Framework.Graphics;
-using StardewModdingAPI;
-using StardewModdingAPI.Events;
-using StardewModdingAPI.Framework;
-using StardewModdingAPI.Inheritance;
-using StardewValley;
-using Monitor = StardewModdingAPI.Framework.Monitor;
-
-namespace SmapiCompatibilityLayer
+﻿namespace SmapiCompatibilityLayer
 {
-    class CompatibilityLayer : Farmhand.Extensibility.FarmhandExtension
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading;
+
+    using StardewModdingAPI;
+    using StardewModdingAPI.Framework;
+    using StardewModdingAPI.Inheritance;
+
+    using StardewValley;
+
+    using Monitor = StardewModdingAPI.Framework.Monitor;
+
+    internal class CompatibilityLayer : Farmhand.Extensibility.FarmhandExtension
     {
-        public override string ModSubdirectory => this.Manifest.ModsFolder;
-        public override Type GameOverrideClass => typeof(SmapiGameOverride);
-
-        private static LogFileManager _logFile;
-        private static LogFileManager LogFile
-        {
-            get
-            {
-                if (_logFile != null)
-                {
-                    return _logFile;
-                }
-
-                var projectType = typeof(StardewModdingAPI.Program);
-                var fieldInfo = projectType.GetField("LogFile", BindingFlags.Static | BindingFlags.NonPublic);
-                _logFile = (LogFileManager)fieldInfo?.GetValue(null);
-                return _logFile;
-            }
-        }
-
-        private static bool? _developerMode;
-        private static bool DeveloperMode
-        {
-            get
-            {
-                if (_developerMode != null)
-                {
-                    return _developerMode.Value;
-                }
-
-                var projectType = typeof(StardewModdingAPI.Program);
-                var fieldInfo = projectType.GetField("DeveloperMode", BindingFlags.Static | BindingFlags.NonPublic);
-                _developerMode = (bool)fieldInfo.GetValue(null);
-                return _developerMode.Value;
-            }
-        }
-
-        private static IMonitor _monitor;
         public static IMonitor Monitor
         {
             get
             {
-                if (_monitor != null)
+                if (monitor != null)
                 {
-                    return _monitor;
+                    return monitor;
                 }
 
-                var projectType = typeof(StardewModdingAPI.Program);
+                var projectType = typeof(Program);
                 var fieldInfo = projectType.GetField("Monitor", BindingFlags.Static | BindingFlags.NonPublic);
-                _monitor = (IMonitor)fieldInfo.GetValue(null);
-                return _monitor;
+                if (fieldInfo != null)
+                {
+                    monitor = (IMonitor)fieldInfo.GetValue(null);
+                }
+
+                return monitor;
             }
         }
 
+        public override string ModSubdirectory => this.Manifest.ModsFolder;
+
+        public override Type GameOverrideClass => typeof(SmapiGameOverride);
+
+        private static LogFileManager logFile;
+
+        private static LogFileManager LogFile
+        {
+            get
+            {
+                if (logFile != null)
+                {
+                    return logFile;
+                }
+
+                var projectType = typeof(Program);
+                var fieldInfo = projectType.GetField("LogFile", BindingFlags.Static | BindingFlags.NonPublic);
+                logFile = (LogFileManager)fieldInfo?.GetValue(null);
+                return logFile;
+            }
+        }
+
+        private static bool? developerMode;
+
+        private static bool DeveloperMode
+        {
+            get
+            {
+                if (developerMode != null)
+                {
+                    return developerMode.Value;
+                }
+
+                var projectType = typeof(Program);
+                var fieldInfo = projectType.GetField("DeveloperMode", BindingFlags.Static | BindingFlags.NonPublic);
+                developerMode = fieldInfo != null && (bool)fieldInfo.GetValue(null);
+                return developerMode.Value;
+            }
+        }
+
+        private static IMonitor monitor;
+        
         public override Game1 GameInstance
         {
             get { return Program.gamePtr; }
             set { Program.gamePtr = (SGame)value; }
         }
-        
 
         public override void Initialise()
         {
@@ -93,18 +101,18 @@ namespace SmapiCompatibilityLayer
 
         public override void LoadMods(string modsDirectory)
         {
-            var smapiModsDirectory = Path.Combine(modsDirectory, ModSubdirectory);
+            var smapiModsDirectory = Path.Combine(modsDirectory, this.ModSubdirectory);
             if (!Directory.Exists(smapiModsDirectory))
             {
                 Directory.CreateDirectory(smapiModsDirectory);
             }
 
-            var projectType = typeof(StardewModdingAPI.Program);
+            var projectType = typeof(Program);
             FieldInfo modPathField = projectType.GetField("ModPath", BindingFlags.Static | BindingFlags.NonPublic);
             modPathField?.SetValue(null, smapiModsDirectory);
 
             MethodInfo loadModsMethod = projectType.GetMethod("LoadMods", BindingFlags.Static | BindingFlags.NonPublic);
-            loadModsMethod.Invoke(null, new object[] {});
+            loadModsMethod.Invoke(null, new object[] { });
         }
 
         public override IEnumerable<Type> GetEventClasses()

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Farmhand;
-using Farmhand.Helpers;
-using Farmhand.Registries.Containers;
-
-namespace SmapiCompatibilityLayer
+﻿namespace SmapiCompatibilityLayer
 {
-    class SmapiModManifest : IModManifest
+    using System;
+
+    using Farmhand;
+    using Farmhand.Helpers;
+    using Farmhand.Registries.Containers;
+
+    internal class SmapiModManifest : IModManifest
     {
         public UniqueId<string> UniqueId { get; set; }
 
