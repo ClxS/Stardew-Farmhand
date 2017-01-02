@@ -16,7 +16,7 @@ namespace TestToolMod.Weapons
             Speed = 0,
             AddedPrecision = 0,
             AddedDefense = 0,
-            WeaponType = 3,
+            WeaponType = WeaponType.Special,
             AddedAreaOfEffect = 0,
             CritChance = .02f,
             CritMultiplier = 3
