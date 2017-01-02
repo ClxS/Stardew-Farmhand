@@ -1,9 +1,9 @@
-﻿namespace FarmhandInstaller.UI.Frames
+﻿namespace Farmhand.Installers.Frames
 {
     using System.Windows;
 
-    using FarmhandInstaller.UI.Controls;
-    using FarmhandInstaller.UI.Utilities;
+    using Farmhand.Installers.Controls;
+    using Farmhand.Installers.Utilities;
 
     /// <summary>
     /// Interaction logic for CreateEmptyMod

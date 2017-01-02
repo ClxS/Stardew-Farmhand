@@ -1,4 +1,4 @@
-﻿namespace FarmhandInstaller.UI.Utilities
+﻿namespace Farmhand.Installers.Utilities
 {
     using System;
     using System.IO;
@@ -47,7 +47,7 @@
                     pass == StardewPatcherPass.PassOne
                         ? Path.Combine(assemblyLocation, "FarmhandPatcherFirstPass.dll")
                         : Path.Combine(assemblyLocation, "FarmhandPatcherSecondPass.dll"),
-                    pass == StardewPatcherPass.PassOne ? "Farmhand.PatcherFirstPass" : "Farmhand.PatcherSecondPass");
+                    pass == StardewPatcherPass.PassOne ? "Farmhand.Installers.Patcher.PatcherFirstPass" : "Farmhand.Installers.Patcher.PatcherSecondPass");
                 return proxy;
             }
             else

@@ -1,9 +1,9 @@
-﻿namespace FarmhandInstaller.UI.Utilities
+﻿namespace Farmhand.Installers.Utilities
 {
     using System;
     using System.IO;
 
-    using FarmhandInstaller.UI.Utilities.Package;
+    using Farmhand.Installers.Utilities.Package;
 
     using ICSharpCode.SharpZipLib.Core;
     using ICSharpCode.SharpZipLib.Zip;

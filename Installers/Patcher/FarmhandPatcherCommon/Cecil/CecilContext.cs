@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Cecil
+﻿namespace Farmhand.Installers.Patcher.Cecil
 {
     using System;
     using System.Collections.Generic;
@@ -46,19 +46,19 @@
         private AssemblyDefinition AssemblyDefinition { get; }
 
         /// <summary>
-        /// Gets the IL Processor for a specific method.
+        ///     Gets the IL Processor for a specific method.
         /// </summary>
         /// <param name="type">
-        /// The type containing the method.
+        ///     The type containing the method.
         /// </param>
         /// <param name="method">
-        /// The method to get the processor for.
+        ///     The method to get the processor for.
         /// </param>
         /// <returns>
-        /// The <see cref="ILProcessor"/> for the specified method..
+        ///     The <see cref="ILProcessor" /> for the specified method..
         /// </returns>
         /// <exception cref="Exception">
-        /// Throws an exception if AssemblyDefinition is null, or if either a type of method is not specified.
+        ///     Throws an exception if AssemblyDefinition is null, or if either a type of method is not specified.
         /// </exception>
         public ILProcessor GetMethodIlProcessor(string type, string method)
         {
@@ -86,19 +86,19 @@
         }
 
         /// <summary>
-        /// Gets a Cecil type definition.
+        ///     Gets a Cecil type definition.
         /// </summary>
         /// <param name="type">
-        /// The type to get the definition for.
+        ///     The type to get the definition for.
         /// </param>
         /// <param name="toCheck">
-        /// A collection of types to check for the provided them. (Defaults to null)
+        ///     A collection of types to check for the provided them. (Defaults to null)
         /// </param>
         /// <returns>
-        /// The <see cref="TypeDefinition"/> for the provided type.
+        ///     The <see cref="TypeDefinition" /> for the provided type.
         /// </returns>
         /// <exception cref="Exception">
-        /// Throws an exception if AssemblyDefinition is null, or a type is not specified.
+        ///     Throws an exception if AssemblyDefinition is null, or a type is not specified.
         /// </exception>
         public TypeDefinition GetTypeDefinition(string type, Collection<TypeDefinition> toCheck = null)
         {
@@ -142,10 +142,10 @@
         }
 
         /// <summary>
-        /// Gets the types in the loaded AssemblyDefinition.
+        ///     Gets the types in the loaded AssemblyDefinition.
         /// </summary>
         /// <returns>
-        /// An <see cref="IEnumerable&lt;TypeDefinition&gt;"/> of type definitions.
+        ///     An <see cref="IEnumerable&lt;TypeDefinition&gt;" /> of type definitions.
         /// </returns>
         public IEnumerable<TypeDefinition> GetTypes()
         {
@@ -153,10 +153,10 @@
         }
 
         /// <summary>
-        /// Gets all methods in the loaded AssemblyDefinition
+        ///     Gets all methods in the loaded AssemblyDefinition
         /// </summary>
         /// <returns>
-        /// An <see cref="IEnumerable&lt;MethodDefinition&gt;"/> of method definitions.
+        ///     An <see cref="IEnumerable&lt;MethodDefinition&gt;" /> of method definitions.
         /// </returns>
         public IEnumerable<MethodDefinition> GetMethods()
         {
@@ -164,16 +164,18 @@
         }
 
         /// <summary>
-        /// Imports a <see cref="TypeReference"/> for the provided type from the AssemblyDefinition.
+        ///     Imports a <see cref="TypeReference" /> for the provided type from the AssemblyDefinition.
         /// </summary>
         /// <param name="type">
-        /// The type to get a reference to.
+        ///     The type to get a reference to.
         /// </param>
         /// <returns>
-        /// The <see cref="TypeReference"/> of the provided type.
+        ///     The <see cref="TypeReference" /> of the provided type.
         /// </returns>
         /// <exception cref="Exception">
-        /// Throws an exception if <param name="type"/> is null
+        ///     Throws an exception if
+        ///     <param name="type" />
+        ///     is null
         /// </exception>
         public TypeReference GetTypeReference(Type type)
         {
@@ -186,19 +188,19 @@
         }
 
         /// <summary>
-        /// Gets a method definition.
+        ///     Gets a method definition.
         /// </summary>
         /// <param name="type">
-        /// The type containing the method.
+        ///     The type containing the method.
         /// </param>
         /// <param name="method">
-        /// The method to get a definition for.
+        ///     The method to get a definition for.
         /// </param>
         /// <param name="selector">
-        /// A selector to filter certain methods. (Defaults to null)
+        ///     A selector to filter certain methods. (Defaults to null)
         /// </param>
         /// <returns>
-        /// A <see cref="MethodDefinition"/> for the specified type.
+        ///     A <see cref="MethodDefinition" /> for the specified type.
         /// </returns>
         public MethodDefinition GetMethodDefinition(
             string type,
@@ -210,28 +212,28 @@
 
             if (typeDef != null)
             {
-                methodDef = selector == null 
-                    ? typeDef.Methods.FirstOrDefault(m => m.Name == method) 
-                    : typeDef.Methods.Where(m => m.Name == method).FirstOrDefault(selector);
+                methodDef = selector == null
+                                ? typeDef.Methods.FirstOrDefault(m => m.Name == method)
+                                : typeDef.Methods.Where(m => m.Name == method).FirstOrDefault(selector);
             }
 
             return methodDef;
         }
 
         /// <summary>
-        /// Gets a method definition.
+        ///     Gets a method definition.
         /// </summary>
         /// <param name="type">
-        /// The type containing the method.
+        ///     The type containing the method.
         /// </param>
         /// <param name="method">
-        /// The full name of the method to get a definition for.
+        ///     The full name of the method to get a definition for.
         /// </param>
         /// <param name="selector">
-        /// A selector to filter certain methods. (Defaults to null)
+        ///     A selector to filter certain methods. (Defaults to null)
         /// </param>
         /// <returns>
-        /// A <see cref="MethodDefinition"/> for the specified type.
+        ///     A <see cref="MethodDefinition" /> for the specified type.
         /// </returns>
         public MethodDefinition GetMethodDefinitionFullName(
             string type,
@@ -243,25 +245,25 @@
 
             if (typeDef != null)
             {
-                methodDef = selector == null ? 
-                    typeDef.Methods.FirstOrDefault(m => m.FullName == method) 
-                    : typeDef.Methods.Where(m => m.FullName == method).FirstOrDefault(selector);
+                methodDef = selector == null
+                                ? typeDef.Methods.FirstOrDefault(m => m.FullName == method)
+                                : typeDef.Methods.Where(m => m.FullName == method).FirstOrDefault(selector);
             }
 
             return methodDef;
         }
 
         /// <summary>
-        /// Gets a reference to the first constructor of a type.
+        ///     Gets a reference to the first constructor of a type.
         /// </summary>
         /// <param name="typeDefinition">
-        /// The <see cref="TypeDefinition"/> of the type containing the constructor.
+        ///     The <see cref="TypeDefinition" /> of the type containing the constructor.
         /// </param>
         /// <param name="selector">
-        /// A selector to filter certain constructors. (Defaults to null)
+        ///     A selector to filter certain constructors. (Defaults to null)
         /// </param>
         /// <returns>
-        /// The <see cref="MethodReference"/> for the constructor.
+        ///     The <see cref="MethodReference" /> for the constructor.
         /// </returns>
         public MethodReference GetConstructorReference(
             TypeDefinition typeDefinition,
@@ -273,16 +275,16 @@
         }
 
         /// <summary>
-        /// Gets a reference to the first constructor of a type.
+        ///     Gets a reference to the first constructor of a type.
         /// </summary>
         /// <param name="typeDefinition">
-        /// The <see cref="TypeDefinition"/> of the type containing the constructor.
+        ///     The <see cref="TypeDefinition" /> of the type containing the constructor.
         /// </param>
         /// <param name="method">
-        /// The name of the constructor to get.
+        ///     The name of the constructor to get.
         /// </param>
         /// <returns>
-        /// The <see cref="MethodReference"/> for the constructor.
+        ///     The <see cref="MethodReference" /> for the constructor.
         /// </returns>
         public MethodReference GetConstructorReference(TypeDefinition typeDefinition, string method)
         {
@@ -291,16 +293,16 @@
         }
 
         /// <summary>
-        /// Gets a <see cref="PropertyDefinition"/> for the specified property.
+        ///     Gets a <see cref="PropertyDefinition" /> for the specified property.
         /// </summary>
         /// <param name="type">
-        /// The type containing the property.
+        ///     The type containing the property.
         /// </param>
         /// <param name="property">
-        /// The name of the property.
+        ///     The name of the property.
         /// </param>
         /// <returns>
-        /// The <see cref="PropertyDefinition"/> for the specified property.
+        ///     The <see cref="PropertyDefinition" /> for the specified property.
         /// </returns>
         public PropertyDefinition GetPropertyDefinition(string type, string property)
         {
@@ -316,16 +318,16 @@
         }
 
         /// <summary>
-        /// Gets a <see cref="FieldDefinition"/> for the specified field.
+        ///     Gets a <see cref="FieldDefinition" /> for the specified field.
         /// </summary>
         /// <param name="type">
-        /// The type containing the field.
+        ///     The type containing the field.
         /// </param>
         /// <param name="field">
-        /// The name of the field.
+        ///     The name of the field.
         /// </param>
         /// <returns>
-        /// The <see cref="FieldDefinition"/> for the specified field.
+        ///     The <see cref="FieldDefinition" /> for the specified field.
         /// </returns>
         public FieldDefinition GetFieldDefinition(string type, string field)
         {
@@ -341,16 +343,16 @@
         }
 
         /// <summary>
-        /// Imports a method into the AssemblyDefinition.
+        ///     Imports a method into the AssemblyDefinition.
         /// </summary>
         /// <param name="method">
-        /// The <see cref="MethodBase"/> of the method to import.
+        ///     The <see cref="MethodBase" /> of the method to import.
         /// </param>
         /// <returns>
-        /// The <see cref="MethodReference"/> of the imported method.
+        ///     The <see cref="MethodReference" /> of the imported method.
         /// </returns>
         /// <exception cref="Exception">
-        /// Throws an exception if the AssemblyDefinition is null.
+        ///     Throws an exception if the AssemblyDefinition is null.
         /// </exception>
         public MethodReference ImportMethod(MethodBase method)
         {
@@ -369,16 +371,16 @@
         }
 
         /// <summary>
-        /// Imports a method into the AssemblyDefinition.
+        ///     Imports a method into the AssemblyDefinition.
         /// </summary>
         /// <param name="method">
-        /// The <see cref="MethodReference"/> of the method to import.
+        ///     The <see cref="MethodReference" /> of the method to import.
         /// </param>
         /// <returns>
-        /// The <see cref="MethodReference"/> of the imported method.
+        ///     The <see cref="MethodReference" /> of the imported method.
         /// </returns>
         /// <exception cref="Exception">
-        /// Throws an exception if the AssemblyDefinition is null.
+        ///     Throws an exception if the AssemblyDefinition is null.
         /// </exception>
         public MethodReference ImportMethod(MethodReference method)
         {
@@ -397,13 +399,13 @@
         }
 
         /// <summary>
-        /// Writes the modified assembly to disk.
+        ///     Writes the modified assembly to disk.
         /// </summary>
         /// <param name="file">
-        /// The output file.
+        ///     The output file.
         /// </param>
         /// <param name="writePdb">
-        /// Whether an updated PDB should also be written. 
+        ///     Whether an updated PDB should also be written.
         /// </param>
         public void WriteAssembly(string file, bool writePdb = false)
         {
@@ -423,10 +425,10 @@
         }
 
         /// <summary>
-        /// Inserts a new type into the AssemblyDefinition
+        ///     Inserts a new type into the AssemblyDefinition
         /// </summary>
         /// <param name="type">
-        /// The <see cref="TypeDefinition"/> to insert.
+        ///     The <see cref="TypeDefinition" /> to insert.
         /// </param>
         public void InsertType(TypeDefinition type)
         {

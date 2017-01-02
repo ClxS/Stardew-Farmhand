@@ -1,4 +1,4 @@
-﻿namespace FarmhandInstaller.UI.Utilities.Package
+﻿namespace Farmhand.Installers.Utilities.Package
 {
     using System;
     using System.Collections.Generic;
@@ -6,13 +6,13 @@
     using System.Linq;
     using System.Text.RegularExpressions;
 
+    using Farmhand.Installers.Utilities;
+
     internal class DeveloperFullPackage : IPackage
     {
-        public const string PackageFile = "FarmhandInstaller.UI.Payload.DeveloperFull.package";
+        public const string PackageFile = "Farmhand.Installers.Payload.DeveloperFull.package";
 
         private const string ProjectBlockMatch = @"(?=Project\()(.|\n)+?(?=EndProject\s)EndProject\s*\n";
-
-        private const string ModsFolderProjectMatch = ".*\"Mods\"(.|\\n)*";
 
         private const string ProjectIdMatch = "(?<=, \"{)(.*?)(?=})";
 

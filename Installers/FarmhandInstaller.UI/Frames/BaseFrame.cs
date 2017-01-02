@@ -1,4 +1,4 @@
-﻿namespace FarmhandInstaller.UI.Frames
+﻿namespace Farmhand.Installers.Frames
 {
     using System;
     using System.Windows.Controls;

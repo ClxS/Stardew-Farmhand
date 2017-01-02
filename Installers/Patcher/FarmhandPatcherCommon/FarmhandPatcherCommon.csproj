@@ -7,7 +7,7 @@
     <ProjectGuid>{7F304954-A190-4003-B11E-A9043113396D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Farmhand</RootNamespace>
+    <RootNamespace>Farmhand.Installers.Patcher</RootNamespace>
     <AssemblyName>FarmhandPatcherCommon</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

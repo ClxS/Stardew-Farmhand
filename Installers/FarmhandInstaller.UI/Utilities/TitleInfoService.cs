@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
-
-namespace FarmhandInstaller.UI.Utilities
+﻿namespace Farmhand.Installers.Utilities
 {
+    using System.Windows.Controls;
+
     internal static class TitleInfoService
     {
         public static Button TitleInfoElement { get; set; }

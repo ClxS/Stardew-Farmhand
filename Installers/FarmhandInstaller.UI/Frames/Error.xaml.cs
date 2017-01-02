@@ -1,10 +1,10 @@
-﻿namespace FarmhandInstaller.UI.Frames
+﻿namespace Farmhand.Installers.Frames
 {
     using System.Diagnostics;
     using System.Windows;
     using System.Windows.Navigation;
 
-    using FarmhandInstaller.UI.Utilities;
+    using Farmhand.Installers.Utilities;
 
     /// <summary>
     /// Interaction logic for Error

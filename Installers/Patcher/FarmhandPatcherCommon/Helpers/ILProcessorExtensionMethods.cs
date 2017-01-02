@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Helpers
+﻿namespace Farmhand.Installers.Patcher.Helpers
 {
     using System.Collections.Generic;
 
@@ -6,21 +6,21 @@
     using Mono.Cecil.Cil;
 
     /// <summary>
-    /// Extension methods for <see cref="ILProcessor"/>
+    ///     Extension methods for <see cref="ILProcessor" />
     /// </summary>
     public static class IlProcessorExtensionMethods
     {
         /// <summary>
-        /// Pushes a string to the stack.
+        ///     Pushes a string to the stack.
         /// </summary>
         /// <param name="il">
-        /// The <see cref="ILProcessor"/>.
+        ///     The <see cref="ILProcessor" />.
         /// </param>
         /// <param name="str">
-        /// The string to push.
+        ///     The string to push.
         /// </param>
         /// <returns>
-        /// The IL <see cref="Instruction"/> for this operation.
+        ///     The IL <see cref="Instruction" /> for this operation.
         /// </returns>
         public static Instruction PushStringToStack(this ILProcessor il, string str)
         {
@@ -28,16 +28,16 @@
         }
 
         /// <summary>
-        /// Pushes an integer to the stack.
+        ///     Pushes an integer to the stack.
         /// </summary>
         /// <param name="il">
-        /// The <see cref="ILProcessor"/>.
+        ///     The <see cref="ILProcessor" />.
         /// </param>
         /// <param name="index">
-        /// The integer to push.
+        ///     The integer to push.
         /// </param>
         /// <returns>
-        /// The IL <see cref="Instruction"/> for this operation.
+        ///     The IL <see cref="Instruction" /> for this operation.
         /// </returns>
         public static Instruction PushInt32ToStack(this ILProcessor il, int index)
         {
@@ -45,16 +45,16 @@
         }
 
         /// <summary>
-        /// Pushes a variable reference to the stack.
+        ///     Pushes a variable reference to the stack.
         /// </summary>
         /// <param name="il">
-        /// The <see cref="ILProcessor"/>.
+        ///     The <see cref="ILProcessor" />.
         /// </param>
         /// <param name="var">
-        /// The variable reference to push.
+        ///     The variable reference to push.
         /// </param>
         /// <returns>
-        /// The IL <see cref="Instruction"/> for this operation.
+        ///     The IL <see cref="Instruction" /> for this operation.
         /// </returns>
         public static Instruction PushVariableReferenceToStack(this ILProcessor il, VariableDefinition var)
         {
@@ -62,19 +62,19 @@
         }
 
         /// <summary>
-        /// Creates a new array
+        ///     Creates a new array
         /// </summary>
         /// <param name="il">
-        /// The <see cref="ILProcessor"/>.
+        ///     The <see cref="ILProcessor" />.
         /// </param>
         /// <param name="type">
-        /// The type of the array.
+        ///     The type of the array.
         /// </param>
         /// <param name="count">
-        /// The number of elements of the array.
+        ///     The number of elements of the array.
         /// </param>
         /// <returns>
-        /// The IL <see cref="Instruction"/> for this operation.
+        ///     The IL <see cref="Instruction" /> for this operation.
         /// </returns>
         public static Instruction[] CreateArray(this ILProcessor il, TypeReference type, int count)
         {
@@ -82,28 +82,28 @@
         }
 
         /// <summary>
-        /// Inserts a parameter into an array
+        ///     Inserts a parameter into an array
         /// </summary>
         /// <param name="il">
-        /// The <see cref="ILProcessor"/>.
+        ///     The <see cref="ILProcessor" />.
         /// </param>
         /// <param name="param">
-        /// The parameter to insert into the array.
+        ///     The parameter to insert into the array.
         /// </param>
         /// <param name="index">
-        /// The index in which to insert the parameter.
+        ///     The index in which to insert the parameter.
         /// </param>
         /// <returns>
-        /// The IL <see cref="Instruction"/> for this operation.
+        ///     The IL <see cref="Instruction" /> for this operation.
         /// </returns>
         public static Instruction[] InsertParameterIntoArray(this ILProcessor il, ParameterDefinition param, int index)
         {
             var instructions = new List<Instruction>
-            {
-                il.Create(OpCodes.Dup),
-                il.Create(OpCodes.Ldc_I4, index),
-                il.Create(OpCodes.Ldarg, param)
-            };
+                                   {
+                                       il.Create(OpCodes.Dup),
+                                       il.Create(OpCodes.Ldc_I4, index),
+                                       il.Create(OpCodes.Ldarg, param)
+                                   };
 
             if (param.ParameterType.IsPrimitive)
             {
@@ -115,16 +115,16 @@
         }
 
         /// <summary>
-        /// Makes a call to a method
+        ///     Makes a call to a method
         /// </summary>
         /// <param name="il">
-        /// The <see cref="ILProcessor"/>.
+        ///     The <see cref="ILProcessor" />.
         /// </param>
         /// <param name="method">
-        /// The method to call.
+        ///     The method to call.
         /// </param>
         /// <returns>
-        /// The IL <see cref="Instruction"/> for this operation.
+        ///     The IL <see cref="Instruction" /> for this operation.
         /// </returns>
         public static Instruction Call(this ILProcessor il, MethodDefinition method)
         {
@@ -132,16 +132,16 @@
         }
 
         /// <summary>
-        /// Makes a branch if the value at the top of the stack is false.
+        ///     Makes a branch if the value at the top of the stack is false.
         /// </summary>
         /// <param name="il">
-        /// The <see cref="ILProcessor"/>.
+        ///     The <see cref="ILProcessor" />.
         /// </param>
         /// <param name="dest">
-        /// The <see cref="Instruction"/> to branch to.
+        ///     The <see cref="Instruction" /> to branch to.
         /// </param>
         /// <returns>
-        /// The IL <see cref="Instruction"/> for this operation.
+        ///     The IL <see cref="Instruction" /> for this operation.
         /// </returns>
         public static Instruction BranchIfFalse(this ILProcessor il, Instruction dest)
         {
@@ -149,16 +149,16 @@
         }
 
         /// <summary>
-        /// Makes an unconditional branch to the provided instruction.
+        ///     Makes an unconditional branch to the provided instruction.
         /// </summary>
         /// <param name="il">
-        /// The <see cref="ILProcessor"/>.
+        ///     The <see cref="ILProcessor" />.
         /// </param>
         /// <param name="dest">
-        /// The <see cref="Instruction"/> to branch to.
+        ///     The <see cref="Instruction" /> to branch to.
         /// </param>
         /// <returns>
-        /// The IL <see cref="Instruction"/> for this operation.
+        ///     The IL <see cref="Instruction" /> for this operation.
         /// </returns>
         public static Instruction BranchUnconditional(this ILProcessor il, Instruction dest)
         {
@@ -166,16 +166,16 @@
         }
 
         /// <summary>
-        /// Pushes a field to the stack.
+        ///     Pushes a field to the stack.
         /// </summary>
         /// <param name="il">
-        /// The <see cref="ILProcessor"/>.
+        ///     The <see cref="ILProcessor" />.
         /// </param>
         /// <param name="field">
-        /// The field to push.
+        ///     The field to push.
         /// </param>
         /// <returns>
-        /// The IL <see cref="Instruction"/> for this operation.
+        ///     The IL <see cref="Instruction" /> for this operation.
         /// </returns>
         public static Instruction PushFieldToStack(this ILProcessor il, FieldDefinition field)
         {
@@ -183,16 +183,16 @@
         }
 
         /// <summary>
-        /// Pops the value at the top of the stack into a variable.
+        ///     Pops the value at the top of the stack into a variable.
         /// </summary>
         /// <param name="il">
-        /// The <see cref="ILProcessor"/>.
+        ///     The <see cref="ILProcessor" />.
         /// </param>
         /// <param name="var">
-        /// The variable to pop into.
+        ///     The variable to pop into.
         /// </param>
         /// <returns>
-        /// The IL <see cref="Instruction"/> for this operation.
+        ///     The IL <see cref="Instruction" /> for this operation.
         /// </returns>
         public static Instruction PopStackIntoVariable(this ILProcessor il, VariableDefinition var)
         {
@@ -200,19 +200,19 @@
         }
 
         /// <summary>
-        /// Pushes a variable to the stack and unboxes it.
+        ///     Pushes a variable to the stack and unboxes it.
         /// </summary>
         /// <param name="il">
-        /// The <see cref="ILProcessor"/>.
+        ///     The <see cref="ILProcessor" />.
         /// </param>
         /// <param name="var">
-        /// The variable to push to the stack.
+        ///     The variable to push to the stack.
         /// </param>
         /// <param name="type">
-        /// The type of the variable being pushed.
+        ///     The type of the variable being pushed.
         /// </param>
         /// <returns>
-        /// The IL <see cref="Instruction"/>s for this operation.
+        ///     The IL <see cref="Instruction" />s for this operation.
         /// </returns>
         public static Instruction[] LoadAndUnboxObject(this ILProcessor il, VariableDefinition var, TypeReference type)
         {

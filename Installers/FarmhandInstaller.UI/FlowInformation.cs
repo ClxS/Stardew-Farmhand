@@ -1,8 +1,8 @@
-﻿namespace FarmhandInstaller.UI
+﻿namespace Farmhand.Installers
 {
     using System.Collections.Generic;
 
-    using FarmhandInstaller.UI.Frames;
+    using Farmhand.Installers.Frames;
 
     internal class FlowInformation
     {

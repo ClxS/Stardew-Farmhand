@@ -1,4 +1,4 @@
-﻿namespace FarmhandInstaller.UI.Utilities
+﻿namespace Farmhand.Installers.Utilities
 {
     internal enum PackageType
     {

@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Reflection
+﻿namespace Farmhand.Installers.Patcher.Reflection
 {
     using System;
     using System.Reflection;

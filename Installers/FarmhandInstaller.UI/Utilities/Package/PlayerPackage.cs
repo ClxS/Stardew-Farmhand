@@ -1,11 +1,12 @@
-﻿namespace FarmhandInstaller.UI.Utilities.Package
+﻿namespace Farmhand.Installers.Utilities.Package
 {
-    using System;
     using System.IO;
+
+    using Farmhand.Installers.Utilities;
 
     internal class PlayerPackage : IPackage
     {
-        public const string PackageFile = "FarmhandInstaller.UI.Payload.Player.package";
+        public const string PackageFile = "Farmhand.Installers.Payload.Player.package";
 
         #region IPackage Members
 

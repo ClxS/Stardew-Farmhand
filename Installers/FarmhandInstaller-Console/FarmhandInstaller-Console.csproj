@@ -7,7 +7,7 @@
     <ProjectGuid>{23EF7A22-E67F-4CB5-A83E-EC108BBA3201}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FarmhandInstaller_Console</RootNamespace>
+    <RootNamespace>Farmhand.Installers</RootNamespace>
     <AssemblyName>FarmhandInstaller-Console</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

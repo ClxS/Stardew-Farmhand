@@ -1,16 +1,16 @@
-﻿namespace FarmhandInstaller.UI
+﻿namespace Farmhand.Installers
 {
     using System;
     using System.Collections.Generic;
     using System.Windows.Controls;
 
-    using FarmhandInstaller.UI.Frames;
-
+    using Farmhand.Installers.Frames;
+    
     internal class FrameManager
     {
-        private Dictionary<BaseFrame, FlowInformation> FlowInformation { get; set; } = new Dictionary<BaseFrame, FlowInformation>();
+        private Dictionary<BaseFrame, FlowInformation> FlowInformation { get; } = new Dictionary<BaseFrame, FlowInformation>();
         
-        private Stack<BaseFrame> FrameStack { get; set; } = new Stack<BaseFrame>();
+        private Stack<BaseFrame> FrameStack { get; } = new Stack<BaseFrame>();
 
         private BaseFrame CurrentFrame { get; set; }
 

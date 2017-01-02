@@ -1,7 +1,7 @@
-﻿namespace FarmhandInstaller.UI.Utilities
+﻿namespace Farmhand.Installers.Utilities
 {
     using System;
-
+    
     internal static class InstallationContext
     {
         public static string StardewPath { get; set; }

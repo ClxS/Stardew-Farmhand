@@ -1,11 +1,11 @@
-﻿<local:BaseFrame x:Class="FarmhandInstaller.UI.Frames.CreateEmptyMod"
+﻿<frames:BaseFrame x:Class="Farmhand.Installers.Frames.CreateEmptyMod"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FarmhandInstaller.UI.Frames"
-             xmlns:fa="http://schemas.fontawesome.io/icons/"
-             xmlns:controls="clr-namespace:FarmhandInstaller.UI.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:fa="http://schemas.fontawesome.io/icons/"
+                  xmlns:frames="clr-namespace:Farmhand.Installers.Frames"
+             xmlns:controls1="clr-namespace:Farmhand.Installers.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
     <DockPanel Margin="0,5,0,0">
@@ -24,9 +24,9 @@
                     <TranslateTransform Y="10"/>
                 </TransformGroup>
             </StackPanel.RenderTransform>
-            <controls:ValidatedTextBox x:Name="NameTextBox" Changed="NameTextBox_OnChanged" FormLabel="Name" TextBoxWidth="300" Margin="0,0,0,0"></controls:ValidatedTextBox>
-            <controls:ValidatedTextBox x:Name="AuthorTextBox" Changed="AuthorTextBox_OnChanged" FormLabel="Author" TextBoxWidth="300" Margin="0,10,0,0"></controls:ValidatedTextBox>
-            <controls:ValidatedTextBox x:Name="DescriptionTextBox" Changed="DescriptionTextBox_OnChanged" FormLabel="Description" TextBoxWidth="300" TextBoxHeight="80" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,10,0,0"></controls:ValidatedTextBox>
+            <controls1:ValidatedTextBox x:Name="NameTextBox" Changed="NameTextBox_OnChanged" FormLabel="Name" TextBoxWidth="300" Margin="0,0,0,0"></controls1:ValidatedTextBox>
+            <controls1:ValidatedTextBox x:Name="AuthorTextBox" Changed="AuthorTextBox_OnChanged" FormLabel="Author" TextBoxWidth="300" Margin="0,10,0,0"></controls1:ValidatedTextBox>
+            <controls1:ValidatedTextBox x:Name="DescriptionTextBox" Changed="DescriptionTextBox_OnChanged" FormLabel="Description" TextBoxWidth="300" TextBoxHeight="80" AcceptsReturn="True" TextWrapping="Wrap" Margin="0,10,0,0"></controls1:ValidatedTextBox>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Use Settings File" Width="110" Margin="0,8,0,0"></Label>
                 <CheckBox x:Name="CheckBoxCreateEmptyMod" IsChecked="True" Content="" Margin="0,10,0,0"></CheckBox>
@@ -46,4 +46,5 @@
             <Button DockPanel.Dock="Left" Click="ButtonBack_OnClick" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="0.5,0.5" Margin="10,0,0,10"/>
         </DockPanel>
     </DockPanel>
-</local:BaseFrame>
+</frames:BaseFrame>
+

@@ -1,21 +1,27 @@
-﻿using Farmhand;
-using System;
-using System.Linq;
-using System.Reflection;
-
-namespace FarmhandInstaller_Console
+﻿namespace Farmhand.Installers
 {
-    class Program
+    using System;
+    using System.Linq;
+    using System.Reflection;
+
+    internal class Program
     {
         public enum Pass
         {
+            /// <summary>
+            /// First Pass
+            /// </summary>
             PassOne,
+
+            /// <summary>
+            /// Second Pass
+            /// </summary>
             PassTwo
         }
-        
-        static void Main(string[] args)
+
+        internal static void Main(string[] args)
         {
-            Patcher patcher;
+            Patcher.Patcher patcher;
             bool grmDisabled = args.Any(a => a.Equals("-disablegrm"));
 
             if (args.Any(a => a.Equals("-pass1")))
@@ -33,17 +39,15 @@ namespace FarmhandInstaller_Console
             else
             {
                 Console.WriteLine("Invalid build pass");
-            }
-
-            
+            }            
         }
 
-        static Patcher CreatePatcher(Pass pass)
+        internal static Patcher.Patcher CreatePatcher(Pass pass)
         {
             Assembly patcherAssembly = Assembly.LoadFrom(pass == Pass.PassOne ? "FarmhandPatcherFirstPass.dll" : "FarmhandPatcherSecondPass.dll");
-            Type patcherType = patcherAssembly.GetType(pass == Pass.PassOne ? "Farmhand.PatcherFirstPass" : "Farmhand.PatcherSecondPass");
+            Type patcherType = patcherAssembly.GetType(pass == Pass.PassOne ? "Farmhand.Installers.Patcher.PatcherFirstPass" : "Farmhand.Installers.Patcher.PatcherSecondPass");
             object patcher = Activator.CreateInstance(patcherType);
-            return patcher as Patcher;
+            return patcher as Patcher.Patcher;
         }
     }
 }

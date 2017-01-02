@@ -1,9 +1,10 @@
-﻿namespace FarmhandInstaller.UI
+﻿namespace Farmhand.Installers
 {
     using System;
     using System.Collections.Generic;
 
-    using FarmhandInstaller.UI.Utilities;
+    using Farmhand.Installers.Frames;
+    using Farmhand.Installers.Utilities;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -21,17 +22,17 @@
             
             TitleInfoService.TitleInfoElement = this.ButtonRightTitle;
 
-            var frameWelcome = new Frames.Welcome();
-            var framePackageSelect = new Frames.PackageSelection();
-            var frameDevPackageSelect = new Frames.DeveloperPackageSelection();
-            var framePlayerPaths = new Frames.PlayerFindPaths();
-            var frameDevPaths = new Frames.DeveloperFindPaths();
-            var frameEmptyMod = new Frames.CreateEmptyMod();
-            var frameInstall = new Frames.Install();
-            var frameFinished = new Frames.Finished();
-            var frameError = new Frames.Error();
+            var frameWelcome = new Welcome();
+            var framePackageSelect = new PackageSelection();
+            var frameDevPackageSelect = new DeveloperPackageSelection();
+            var framePlayerPaths = new PlayerFindPaths();
+            var frameDevPaths = new DeveloperFindPaths();
+            var frameEmptyMod = new CreateEmptyMod();
+            var frameInstall = new Install();
+            var frameFinished = new Finished();
+            var frameError = new Error();
 
-            var frames = new Frames.BaseFrame[]
+            var frames = new BaseFrame[]
                              {
                                  frameWelcome, framePackageSelect, frameDevPackageSelect, framePlayerPaths,
                                  frameDevPaths, frameInstall, frameFinished, frameError, frameEmptyMod
@@ -44,9 +45,9 @@
                 new FlowInformation
             {
                 Element = frameWelcome,
-                TransitionCommands = new Dictionary<string, Frames.BaseFrame>
+                TransitionCommands = new Dictionary<string, BaseFrame>
                 {
-                    { Frames.Welcome.CommandNext, framePackageSelect }
+                    { Welcome.CommandNext, framePackageSelect }
                 }
             });
 
@@ -55,10 +56,10 @@
                 new FlowInformation
                 {
                     Element = framePackageSelect,
-                    TransitionCommands = new Dictionary<string, Frames.BaseFrame>
+                    TransitionCommands = new Dictionary<string, BaseFrame>
                 {
-                    { Frames.PackageSelection.CommandPlayerPackage, framePlayerPaths },
-                    { Frames.PackageSelection.CommandDeveloperPackage, frameDevPackageSelect }
+                    { PackageSelection.CommandPlayerPackage, framePlayerPaths },
+                    { PackageSelection.CommandDeveloperPackage, frameDevPackageSelect }
                 }
             });
 
@@ -67,10 +68,10 @@
                 new FlowInformation
                 {
                     Element = frameDevPackageSelect,
-                    TransitionCommands = new Dictionary<string, Frames.BaseFrame>
+                    TransitionCommands = new Dictionary<string, BaseFrame>
                 {
-                    { Frames.DeveloperPackageSelection.CommandNext, frameDevPaths },
-                    { Frames.DeveloperPackageSelection.CommandCreateEmptyMod, frameEmptyMod },
+                    { DeveloperPackageSelection.CommandNext, frameDevPaths },
+                    { DeveloperPackageSelection.CommandCreateEmptyMod, frameEmptyMod },
                 }
                 });
 
@@ -79,9 +80,9 @@
                 new FlowInformation
                 {
                     Element = frameEmptyMod,
-                    TransitionCommands = new Dictionary<string, Frames.BaseFrame>
+                    TransitionCommands = new Dictionary<string, BaseFrame>
                 {
-                    { Frames.CreateEmptyMod.CommandNext, frameDevPaths },
+                    { CreateEmptyMod.CommandNext, frameDevPaths },
                 }
                 });
 
@@ -90,9 +91,9 @@
                 new FlowInformation
                 {
                     Element = frameDevPaths,
-                    TransitionCommands = new Dictionary<string, Frames.BaseFrame>
+                    TransitionCommands = new Dictionary<string, BaseFrame>
                 {
-                    { Frames.DeveloperFindPaths.CommandInstall, frameInstall },
+                    { DeveloperFindPaths.CommandInstall, frameInstall },
                 }
                 });
 
@@ -101,9 +102,9 @@
                 new FlowInformation
                 {
                     Element = framePlayerPaths,
-                    TransitionCommands = new Dictionary<string, Frames.BaseFrame>
+                    TransitionCommands = new Dictionary<string, BaseFrame>
                 {
-                    { Frames.PlayerFindPaths.CommandInstall, frameInstall },
+                    { PlayerFindPaths.CommandInstall, frameInstall },
                 }
                 });
 
@@ -112,10 +113,10 @@
                 new FlowInformation
                 {
                     Element = frameInstall,
-                    TransitionCommands = new Dictionary<string, Frames.BaseFrame>
+                    TransitionCommands = new Dictionary<string, BaseFrame>
                 {
-                    { Frames.Install.CommandFinished, frameFinished },
-                    { Frames.Install.CommandError, frameError }
+                    { Install.CommandFinished, frameFinished },
+                    { Install.CommandError, frameError }
                 }
                 });
 
@@ -133,7 +134,7 @@
             this.frameManager.Back();
         }
 
-        private void Frame_Navigate(object sender, Frames.EventArgsFrameCommand e)
+        private void Frame_Navigate(object sender, EventArgsFrameCommand e)
         {
             this.frameManager.HandleCommand(e.Command);
         }

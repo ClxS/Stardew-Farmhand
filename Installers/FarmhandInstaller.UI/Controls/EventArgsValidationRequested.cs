@@ -1,4 +1,4 @@
-﻿namespace FarmhandInstaller.UI.Controls
+﻿namespace Farmhand.Installers.Controls
 {
     using System;
 

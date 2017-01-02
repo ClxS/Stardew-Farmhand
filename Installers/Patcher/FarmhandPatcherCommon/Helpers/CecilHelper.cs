@@ -1,17 +1,18 @@
-﻿namespace Farmhand.Helpers
+﻿namespace Farmhand.Installers.Patcher.Helpers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using Farmhand.Cecil;
+    using Farmhand.Installers.Patcher;
+    using Farmhand.Installers.Patcher.Cecil;
 
     using Mono.Cecil;
     using Mono.Cecil.Cil;
     using Mono.Cecil.Rocks;
 
     /// <summary>
-    /// A utility class which provides various common methods related to IL manipulation.
+    ///     A utility class which provides various common methods related to IL manipulation.
     /// </summary>
     public static class CecilHelper
     {
@@ -313,34 +314,34 @@
         }
 
         /// <summary>
-        /// Injects a call to method into the start of another method.
+        ///     Injects a call to method into the start of another method.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="injectReceiverType">
-        /// The type containing the method to inject into.
+        ///     The type containing the method to inject into.
         /// </param>
         /// <param name="injectReceiverMethod">
-        /// The method to inject into.
+        ///     The method to inject into.
         /// </param>
         /// <param name="injectedType">
-        /// The type containing the method being injected.
+        ///     The type containing the method being injected.
         /// </param>
         /// <param name="injectedMethod">
-        /// The method to inject.
+        ///     The method to inject.
         /// </param>
         /// <typeparam name="TParam">
-        /// The type of the attribute specifying the attribute base class.
+        ///     The type of the attribute specifying the attribute base class.
         /// </typeparam>
         /// <typeparam name="TThis">
-        /// The type of the attribute binding to the this value.
+        ///     The type of the attribute binding to the this value.
         /// </typeparam>
         /// <typeparam name="TInput">
-        /// The type of the attribute binding to input parameters.
+        ///     The type of the attribute binding to input parameters.
         /// </typeparam>
         /// <typeparam name="TLocal">
-        /// The type of the attribute binding to local variables.
+        ///     The type of the attribute binding to local variables.
         /// </typeparam>
         public static void InjectEntryMethod<TParam, TThis, TInput, TLocal>(
             CecilContext stardewContext,
@@ -352,7 +353,9 @@
             var methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
             if (methodDefinition.HasGenericParameters)
             {
-                var injectReceiverMethodDef = stardewContext.GetMethodDefinition(injectReceiverType, injectReceiverMethod);
+                var injectReceiverMethodDef = stardewContext.GetMethodDefinition(
+                    injectReceiverType,
+                    injectReceiverMethod);
 
                 var inst = new GenericInstanceMethod(methodDefinition);
                 for (var i = 0; i < methodDefinition.GenericParameters.Count; ++i)
@@ -383,40 +386,40 @@
         }
 
         /// <summary>
-        /// Injects a call to method into the start of another method, and supports returning early.
+        ///     Injects a call to method into the start of another method, and supports returning early.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="injectReceiverType">
-        /// The type containing the method to inject into.
+        ///     The type containing the method to inject into.
         /// </param>
         /// <param name="injectReceiverMethod">
-        /// The method to inject into.
+        ///     The method to inject into.
         /// </param>
         /// <param name="injectedType">
-        /// The type containing the method being injected.
+        ///     The type containing the method being injected.
         /// </param>
         /// <param name="injectedMethod">
-        /// The method to inject.
+        ///     The method to inject.
         /// </param>
         /// <typeparam name="TParam">
-        /// The type of the attribute specifying the attribute base class.
+        ///     The type of the attribute specifying the attribute base class.
         /// </typeparam>
         /// <typeparam name="TThis">
-        /// The type of the attribute binding to the this value.
+        ///     The type of the attribute binding to the this value.
         /// </typeparam>
         /// <typeparam name="TInput">
-        /// The type of the attribute binding to input parameters.
+        ///     The type of the attribute binding to input parameters.
         /// </typeparam>
         /// <typeparam name="TLocal">
-        /// The type of the attribute binding to local variables.
+        ///     The type of the attribute binding to local variables.
         /// </typeparam>
         /// <typeparam name="TUseOutput">
-        /// The type of the attribute binding the to local UseOutput variable.
+        ///     The type of the attribute binding the to local UseOutput variable.
         /// </typeparam>
         /// <typeparam name="TMethodOutputBind">
-        /// The type of the attribute binding to the method return setter attribute.
+        ///     The type of the attribute binding to the method return setter attribute.
         /// </typeparam>
         public static void InjectReturnableEntryMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(
             CecilContext stardewContext,
@@ -428,7 +431,9 @@
             var methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
             if (methodDefinition.HasGenericParameters)
             {
-                var injectReceiverMethodDef = stardewContext.GetMethodDefinition(injectReceiverType, injectReceiverMethod);
+                var injectReceiverMethodDef = stardewContext.GetMethodDefinition(
+                    injectReceiverType,
+                    injectReceiverMethod);
 
                 var inst = new GenericInstanceMethod(methodDefinition);
                 for (var i = 0; i < methodDefinition.GenericParameters.Count; ++i)
@@ -455,34 +460,34 @@
         }
 
         /// <summary>
-        /// Injects a call to method into the end of another method.
+        ///     Injects a call to method into the end of another method.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="injectReceiverType">
-        /// The type containing the method to inject into.
+        ///     The type containing the method to inject into.
         /// </param>
         /// <param name="injectReceiverMethod">
-        /// The method to inject into.
+        ///     The method to inject into.
         /// </param>
         /// <param name="injectedType">
-        /// The type containing the method being injected.
+        ///     The type containing the method being injected.
         /// </param>
         /// <param name="injectedMethod">
-        /// The method to inject.
+        ///     The method to inject.
         /// </param>
         /// <typeparam name="TParam">
-        /// The type of the attribute specifying the attribute base class.
+        ///     The type of the attribute specifying the attribute base class.
         /// </typeparam>
         /// <typeparam name="TThis">
-        /// The type of the attribute binding to the this value.
+        ///     The type of the attribute binding to the this value.
         /// </typeparam>
         /// <typeparam name="TInput">
-        /// The type of the attribute binding to input parameters.
+        ///     The type of the attribute binding to input parameters.
         /// </typeparam>
         /// <typeparam name="TLocal">
-        /// The type of the attribute binding to local variables.
+        ///     The type of the attribute binding to local variables.
         /// </typeparam>
         public static void InjectExitMethod<TParam, TThis, TInput, TLocal>(
             CecilContext stardewContext,
@@ -494,7 +499,9 @@
             var methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
             if (methodDefinition.HasGenericParameters)
             {
-                var injectReceiverMethodDef = stardewContext.GetMethodDefinition(injectReceiverType, injectReceiverMethod);
+                var injectReceiverMethodDef = stardewContext.GetMethodDefinition(
+                    injectReceiverType,
+                    injectReceiverMethod);
 
                 var inst = new GenericInstanceMethod(methodDefinition);
                 for (var i = 0; i < methodDefinition.GenericParameters.Count; ++i)
@@ -523,40 +530,40 @@
         }
 
         /// <summary>
-        /// Injects a call to method into the end of another method, and supports returning a value from the called method.
+        ///     Injects a call to method into the end of another method, and supports returning a value from the called method.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="injectReceiverType">
-        /// The type containing the method to inject into.
+        ///     The type containing the method to inject into.
         /// </param>
         /// <param name="injectReceiverMethod">
-        /// The method to inject into.
+        ///     The method to inject into.
         /// </param>
         /// <param name="injectedType">
-        /// The type containing the method being injected.
+        ///     The type containing the method being injected.
         /// </param>
         /// <param name="injectedMethod">
-        /// The method to inject.
+        ///     The method to inject.
         /// </param>
         /// <typeparam name="TParam">
-        /// The type of the attribute specifying the attribute base class.
+        ///     The type of the attribute specifying the attribute base class.
         /// </typeparam>
         /// <typeparam name="TThis">
-        /// The type of the attribute binding to the this value.
+        ///     The type of the attribute binding to the this value.
         /// </typeparam>
         /// <typeparam name="TInput">
-        /// The type of the attribute binding to input parameters.
+        ///     The type of the attribute binding to input parameters.
         /// </typeparam>
         /// <typeparam name="TLocal">
-        /// The type of the attribute binding to local variables.
+        ///     The type of the attribute binding to local variables.
         /// </typeparam>
         /// <typeparam name="TUseOutput">
-        /// The type of the attribute binding the to local UseOutput variable.
+        ///     The type of the attribute binding the to local UseOutput variable.
         /// </typeparam>
         /// <typeparam name="TMethodOutputBind">
-        /// The type of the attribute binding to the method return setter attribute.
+        ///     The type of the attribute binding to the method return setter attribute.
         /// </typeparam>
         public static void InjectReturnableExitMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(
             CecilContext stardewContext,
@@ -568,7 +575,9 @@
             var methodDefinition = stardewContext.GetMethodDefinition(injectedType, injectedMethod);
             if (methodDefinition.HasGenericParameters)
             {
-                var injectReceiverMethodDef = stardewContext.GetMethodDefinition(injectReceiverType, injectReceiverMethod);
+                var injectReceiverMethodDef = stardewContext.GetMethodDefinition(
+                    injectReceiverType,
+                    injectReceiverMethod);
 
                 var inst = new GenericInstanceMethod(methodDefinition);
                 for (var i = 0; i < methodDefinition.GenericParameters.Count; ++i)
@@ -597,19 +606,19 @@
         }
 
         /// <summary>
-        /// Injects a call to the Global Route Manager at the start of the method.
+        ///     Injects a call to the Global Route Manager at the start of the method.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="injectReceiverType">
-        /// The type containing the method to be injected into.
+        ///     The type containing the method to be injected into.
         /// </param>
         /// <param name="injectReceiverMethod">
-        /// The method being injected into.
+        ///     The method being injected into.
         /// </param>
         /// <param name="index">
-        /// The unique index for this method.
+        ///     The unique index for this method.
         /// </param>
         public static void InjectGlobalRoutePreMethod(
             CecilContext stardewContext,
@@ -641,17 +650,17 @@
             var voidType = stardewContext.GetTypeReference(typeof(void));
 
             var newInstructions = new List<Instruction>
-            {
-                processor.Create(OpCodes.Ldsfld, fieldDefinition),
-                processor.Create(OpCodes.Brfalse, first),
-                processor.Create(OpCodes.Ldc_I4, index),
-                processor.Create(OpCodes.Call, methodIsListenedTo),
-                processor.Create(OpCodes.Brfalse, first),
-                processor.Create(OpCodes.Ldc_I4, index),
-                processor.Create(OpCodes.Ldstr, injectReceiverType),
-                processor.Create(OpCodes.Ldstr, injectReceiverMethod)
-            };
-            
+                                      {
+                                          processor.Create(OpCodes.Ldsfld, fieldDefinition),
+                                          processor.Create(OpCodes.Brfalse, first),
+                                          processor.Create(OpCodes.Ldc_I4, index),
+                                          processor.Create(OpCodes.Call, methodIsListenedTo),
+                                          processor.Create(OpCodes.Brfalse, first),
+                                          processor.Create(OpCodes.Ldc_I4, index),
+                                          processor.Create(OpCodes.Ldstr, injectReceiverType),
+                                          processor.Create(OpCodes.Ldstr, injectReceiverMethod)
+                                      };
+
             var outputVar = new VariableDefinition("GlobalRouteOutput", objectType);
             processor.Body.Variables.Add(outputVar);
             newInstructions.Add(processor.Create(OpCodes.Ldloca, outputVar));
@@ -714,19 +723,19 @@
         }
 
         /// <summary>
-        /// Injects a call to the Global Route Manager at the end of the method.
+        ///     Injects a call to the Global Route Manager at the end of the method.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="injectReceiverType">
-        /// The type containing the method to be injected into.
+        ///     The type containing the method to be injected into.
         /// </param>
         /// <param name="injectReceiverMethod">
-        /// The method being injected into.
+        ///     The method being injected into.
         /// </param>
         /// <param name="index">
-        /// The unique index for this method.
+        ///     The unique index for this method.
         /// </param>
         public static void InjectGlobalRoutePostMethod(
             CecilContext stardewContext,
@@ -769,13 +778,13 @@
             foreach (var ret in retInstructions)
             {
                 var newInstructions = new List<Instruction>
-                {
-                    processor.PushFieldToStack(isEnabledField),
-                    processor.BranchIfFalse(ret),
-                    processor.PushInt32ToStack(index),
-                    processor.Call(methodIsListenedTo),
-                    processor.BranchIfFalse(ret)
-                };
+                                          {
+                                              processor.PushFieldToStack(isEnabledField),
+                                              processor.BranchIfFalse(ret),
+                                              processor.PushInt32ToStack(index),
+                                              processor.Call(methodIsListenedTo),
+                                              processor.BranchIfFalse(ret)
+                                          };
 
                 if (returnsValue)
                 {
@@ -799,8 +808,7 @@
                 }
 
                 var argIndex = 0;
-                newInstructions.AddRange(
-                    processor.CreateArray(objectType, method.Parameters.Count + (hasThis ? 1 : 0)));
+                newInstructions.AddRange(processor.CreateArray(objectType, method.Parameters.Count + (hasThis ? 1 : 0)));
 
                 if (method.HasThis)
                 {
@@ -845,25 +853,25 @@
         }
 
         /// <summary>
-        /// Redirects a constructor from base.
+        ///     Redirects a constructor from base.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="newConstructorType">
-        /// The <see cref="Type"/> containing the new constructor.
+        ///     The <see cref="Type" /> containing the new constructor.
         /// </param>
         /// <param name="oldConstructorTypes">
-        /// The <see cref="Type"/> of the old constructors to be redirected.
+        ///     The <see cref="Type" /> of the old constructors to be redirected.
         /// </param>
         /// <param name="type">
-        /// The type containing the method to perform the redirections.
+        ///     The type containing the method to perform the redirections.
         /// </param>
         /// <param name="method">
-        /// The method to redirect the constructors.
+        ///     The method to redirect the constructors.
         /// </param>
         /// <param name="parameters">
-        /// The parameters of the constructor.
+        ///     The parameters of the constructor.
         /// </param>
         public static void RedirectConstructorFromBase(
             CecilContext stardewContext,
@@ -877,7 +885,9 @@
             var typeDef = stardewContext.GetTypeDefinition(newConstructorType.Namespace + "." + newConstructorType.Name);
             if (newConstructorType.BaseType != null)
             {
-                var typeDefBase = stardewContext.GetTypeDefinition(newConstructorType.BaseType.Namespace + "." + newConstructorType.BaseType.Name);
+                var typeDefBase =
+                    stardewContext.GetTypeDefinition(
+                        newConstructorType.BaseType.Namespace + "." + newConstructorType.BaseType.Name);
 
                 var newConstructorReference = stardewContext.GetConstructorReference(typeDef);
                 var oldConstructorReference = stardewContext.GetConstructorReference(typeDefBase);
@@ -929,7 +939,7 @@
             return reference;
         }
 
-/*
+        /*
         private static MethodReference MakeGenericInstanceMethod(this MethodReference self, TypeReference[] arguments)
         {
             if (self == null)
@@ -958,22 +968,22 @@
 */
 
         /// <summary>
-        /// Redirects a constructor from base.
+        ///     Redirects a constructor from base.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="asmType">
-        /// The <see cref="Type"/> containing the new constructor.
+        ///     The <see cref="Type" /> containing the new constructor.
         /// </param>
         /// <param name="type">
-        /// The type containing the method to perform the redirections.
+        ///     The type containing the method to perform the redirections.
         /// </param>
         /// <param name="method">
-        /// The method to redirect the constructors.
+        ///     The method to redirect the constructors.
         /// </param>
         /// <param name="parameters">
-        /// The parameters of the constructor.
+        ///     The parameters of the constructor.
         /// </param>
         public static void RedirectConstructorFromBase(
             CecilContext stardewContext,
@@ -1045,28 +1055,28 @@
         }
 
         /// <summary>
-        /// Redirects a constructor to a method, such as a factory method.
+        ///     Redirects a constructor to a method, such as a factory method.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="asmType">
-        /// The <see cref="Type"/> containing the old constructor.
+        ///     The <see cref="Type" /> containing the old constructor.
         /// </param>
         /// <param name="type">
-        /// The type containing the method to perform the redirections.
+        ///     The type containing the method to perform the redirections.
         /// </param>
         /// <param name="method">
-        /// The method to redirect the constructors.
+        ///     The method to redirect the constructors.
         /// </param>
         /// <param name="methodType">
-        /// The type containing the method to replace the constructor with.
+        ///     The type containing the method to replace the constructor with.
         /// </param>
         /// <param name="methodName">
-        /// The method to replace the constructor with.
+        ///     The method to replace the constructor with.
         /// </param>
         /// <param name="parameters">
-        /// The parameters to the replaced constructor.
+        ///     The parameters to the replaced constructor.
         /// </param>
         public static void RedirectConstructorToMethod(
             CecilContext stardewContext,
@@ -1129,22 +1139,22 @@
         }
 
         /// <summary>
-        /// Replaces an IL 'call' instruction with a 'call virtual' instruction.
+        ///     Replaces an IL 'call' instruction with a 'call virtual' instruction.
         /// </summary>
         /// <param name="cecilContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="fullName">
-        /// The name of the type containing the method whose call is to be replaced
+        ///     The name of the type containing the method whose call is to be replaced
         /// </param>
         /// <param name="name">
-        /// The name of the method whose call is being replaced.
+        ///     The name of the method whose call is being replaced.
         /// </param>
         /// <param name="type">
-        /// The type containing the method where the replacements are to be done.
+        ///     The type containing the method where the replacements are to be done.
         /// </param>
         /// <param name="method">
-        /// The method where the replacements are to be done.
+        ///     The method where the replacements are to be done.
         /// </param>
         public static void SetVirtualCallOnMethod(
             CecilContext cecilContext,
@@ -1166,13 +1176,13 @@
         }
 
         /// <summary>
-        /// Sets all methods of a type to be marked as virtual.
+        ///     Sets all methods of a type to be marked as virtual.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="typeName">
-        /// The name of the type to perform the operation on.
+        ///     The name of the type to perform the operation on.
         /// </param>
         public static void SetVirtualOnBaseMethods(CecilContext stardewContext, string typeName)
         {
@@ -1196,16 +1206,16 @@
         }
 
         /// <summary>
-        /// Changes the protection on all members of a type.
+        ///     Changes the protection on all members of a type.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="public">
-        /// Whether the methods should be marked as public.
+        ///     Whether the methods should be marked as public.
         /// </param>
         /// <param name="typeName">
-        /// The name of the type to perform the operation on.
+        ///     The name of the type to perform the operation on.
         /// </param>
         public static void AlterProtectionOnTypeMembers(CecilContext stardewContext, bool @public, string typeName)
         {
@@ -1259,16 +1269,16 @@
         }
 
         /// <summary>
-        /// Injects all Global Route Manager hooks.
+        ///     Injects all Global Route Manager hooks.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         public static void HookAllGlobalRouteMethods(CecilContext stardewContext)
         {
             var methods =
                 stardewContext.GetMethods().Where(n => n.DeclaringType.Namespace.StartsWith("StardewValley")).ToArray();
-            
+
             var listenedMethodField = stardewContext.GetFieldDefinition(
                 "Farmhand.Events.GlobalRouteManager",
                 "ListenedMethods");
@@ -1277,7 +1287,7 @@
             var setValue = processor.Create(OpCodes.Stsfld, listenedMethodField);
             processor.InsertAfter(processor.Body.Instructions[processor.Body.Instructions.Count - 2], loadInt);
             processor.InsertAfter(loadInt, setValue);
-            
+
             for (var i = 0; i < methods.Length; ++i)
             {
                 // InjectGlobalRoutePreMethod(stardewContext, methods[i].DeclaringType.FullName, methods[i].Name, i);
@@ -1305,12 +1315,12 @@
             }
 
             var newInstructions = new List<Instruction>
-            {
-                processor.Create(OpCodes.Ldstr, className),
-                processor.Create(OpCodes.Ldstr, methodName),
-                processor.Create(OpCodes.Ldc_I4, index),
-                processor.Create(OpCodes.Call, mapMethodDefinition)
-            };
+                                      {
+                                          processor.Create(OpCodes.Ldstr, className),
+                                          processor.Create(OpCodes.Ldstr, methodName),
+                                          processor.Create(OpCodes.Ldc_I4, index),
+                                          processor.Create(OpCodes.Call, mapMethodDefinition)
+                                      };
 
             processor.Body.SimplifyMacros();
             if (newInstructions.Any())
@@ -1338,16 +1348,16 @@
         }
 
         /// <summary>
-        /// Alters the protection on a type.
+        ///     Alters the protection on a type.
         /// </summary>
         /// <param name="stardewContext">
-        /// The <see cref="CecilContext"/>.
+        ///     The <see cref="CecilContext" />.
         /// </param>
         /// <param name="isPublic">
-        /// Whether the type should be named public.
+        ///     Whether the type should be named public.
         /// </param>
         /// <param name="typeName">
-        /// The name of the type to perform the operation on.
+        ///     The name of the type to perform the operation on.
         /// </param>
         public static void AlterProtectionOnType(CecilContext stardewContext, bool isPublic, string typeName)
         {
@@ -1355,15 +1365,16 @@
             type.IsPublic = isPublic;
             type.IsNotPublic = !isPublic;
         }
-        
+
         /// <summary>
-        /// Takes the Type.FullName property of a generic type, and converts it to a format suitable for identifying generic types.
+        ///     Takes the Type.FullName property of a generic type, and converts it to a format suitable for identifying generic
+        ///     types.
         /// </summary>
         /// <param name="genericTypeFullName">
-        /// The generic type full name.
+        ///     The generic type full name.
         /// </param>
         /// <returns>
-        /// The modified type name.
+        ///     The modified type name.
         /// </returns>
         public static string ConvertGenericTypeFullNameToGenericTypeParameterFormat(string genericTypeFullName)
         {
