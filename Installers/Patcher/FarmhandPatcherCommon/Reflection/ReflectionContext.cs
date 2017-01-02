@@ -1,24 +1,28 @@
-﻿using System;
-using System.Reflection;
-using Mono.Cecil;
-
-namespace Farmhand.Reflection
+﻿namespace Farmhand.Reflection
 {
-    public class ReflectionContext
-    {
-        private AssemblyDefinition AssemblyDefinition { get; }
+    using System;
+    using System.Reflection;
 
+    using Mono.Cecil;
+
+    internal class ReflectionContext
+    {
         public ReflectionContext(string assemblyPath)
         {
-            AssemblyDefinition = AssemblyDefinition.ReadAssembly(assemblyPath);
-            //_assemblyDefinition = AssemblyDefinition.ReadAssembly(Constants.StardewExePath);
+            this.AssemblyDefinition = AssemblyDefinition.ReadAssembly(assemblyPath);
+
+            // _assemblyDefinition = AssemblyDefinition.ReadAssembly(Constants.StardewExePath);
         }
-        
-        public ConstructorInfo GetSmapiTypeContructor(string type)
+
+        private AssemblyDefinition AssemblyDefinition { get; }
+
+        public ConstructorInfo GetSmapiTypeConstructor(string type)
         {
-            if (AssemblyDefinition == null)
+            if (this.AssemblyDefinition == null)
+            {
                 throw new Exception("ERROR Assembly not properly read. Cannot parse");
-            
+            }
+
             ConstructorInfo methodInfo = null;
 
             var reflectionType = Assembly.GetExecutingAssembly().GetType(type);
@@ -32,8 +36,10 @@ namespace Farmhand.Reflection
 
         public MethodInfo GetMethodReference(string type, string method)
         {
-            if (AssemblyDefinition == null)
+            if (this.AssemblyDefinition == null)
+            {
                 throw new Exception("ERROR Assembly not properly read. Cannot parse");
+            }
 
             MethodInfo methodInfo = null;
             var reflectionType = Assembly.GetExecutingAssembly().GetType(type);
@@ -43,6 +49,6 @@ namespace Farmhand.Reflection
             }
 
             return methodInfo;
-        }        
+        }
     }
 }
