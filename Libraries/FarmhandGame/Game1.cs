@@ -18,7 +18,7 @@ namespace Farmhand.Overrides
     /// <summary>
     /// Overrides Stardew's Game1, allowing for advanced callback events to be added
     /// </summary>
-    public class Game1 : GameOverrideBase
+    public class Game1 : StardewValley.Game1
     {
         public readonly Dictionary<string, Action<GameTime>> VersionSpecificOverrides = new Dictionary<string, Action<GameTime>>();
         

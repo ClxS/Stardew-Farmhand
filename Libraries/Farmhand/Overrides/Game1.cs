@@ -1,10 +1,10 @@
-﻿using Farmhand.Attributes;
-
-namespace Farmhand.Overrides
+﻿namespace Farmhand.Overrides
 {
+    using Farmhand.Attributes;
+
     [HookForceVirtualBase]
     [HookAlterBaseFieldProtection(LowestProtection.Protected)]
-    public class GameOverrideBase : StardewValley.Game1
+    internal class GameOverrideBase : StardewValley.Game1
     {
     }
 }

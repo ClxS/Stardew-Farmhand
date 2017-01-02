@@ -277,7 +277,6 @@
     <Compile Include="Mods\ModState.cs" />
     <Compile Include="Overrides\Characters\Monster.cs" />
     <Compile Include="Overrides\Game1.cs" />
-    <Compile Include="Overrides\SerializableDictionary.cs" />
     <Compile Include="Overrides\ShopMenu.cs" />
     <Compile Include="Overrides\StardewObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
