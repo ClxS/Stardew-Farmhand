@@ -9,12 +9,12 @@
     using StardewValley.Menus;
 
     /// <summary>
-    /// Game-related API Functionality
+    ///     Game-related API Functionality
     /// </summary>
     public static class Game
     {
         /// <summary>
-        /// Gets or sets the current active clickable menu.
+        ///     Gets or sets the current active clickable menu.
         /// </summary>
         public static IClickableMenu ActiveClickableMenu
         {
@@ -22,6 +22,7 @@
             {
                 return Game1.activeClickableMenu;
             }
+
             set
             {
                 Game1.activeClickableMenu = value;
@@ -29,34 +30,22 @@
         }
 
         /// <summary>
-        /// Gets a value indicating whether has loaded game.
+        ///     Gets a value indicating whether has loaded game.
         /// </summary>
-        public static bool HasLoadedGame
-        {
-            get
-            {
-                return Game1.hasLoadedGame;
-            }
-        }
+        public static bool HasLoadedGame => Game1.hasLoadedGame;
 
         /// <summary>
-        /// Gets the current event.
+        ///     Gets the current event.
         /// </summary>
-        public static Event CurrentEvent
-        {
-            get
-            {
-                return Game1.CurrentEvent;
-            }
-        }
+        public static Event CurrentEvent => Game1.CurrentEvent;
 
         /// <summary>
-        /// Gets the current player.
+        ///     Gets the current player.
         /// </summary>
         public static Farmer Player => Game1.player;
 
         /// <summary>
-        /// Gets a save's unique identifier
+        ///     Gets a saves unique identifier
         /// </summary>
         public static ulong GameUniqueId => Game1.uniqueIDForThisGame;
 

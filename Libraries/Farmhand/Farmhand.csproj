@@ -139,11 +139,14 @@
     <Compile Include="API\Pulse\Resource.cs" />
     <Compile Include="API\Serializer.cs" />
     <Compile Include="API\Shops\ShopInformation.cs" />
+    <Compile Include="API\Shops\Shops.cs" />
     <Compile Include="API\Shops\StockEntry.cs" />
+    <Compile Include="API\Shops\StockType.cs" />
     <Compile Include="API\Tools\Tool.cs" />
     <Compile Include="API\Tools\ToolInformation.cs" />
     <Compile Include="API\Tools\Weapon.cs" />
     <Compile Include="API\Tools\WeaponInformation.cs" />
+    <Compile Include="API\Tools\WeaponType.cs" />
     <Compile Include="API\Utilities\IdManager.cs" />
     <Compile Include="API\Generic\ItemQuantityPair.cs" />
     <Compile Include="API\Player\Player.cs" />

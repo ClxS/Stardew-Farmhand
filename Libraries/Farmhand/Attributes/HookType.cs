@@ -1,17 +1,17 @@
 namespace Farmhand.Attributes
 {
     /// <summary>
-    /// Used by the installer. Specifies where a call hook is inserted.
+    ///     Used by the installer. Specifies where a call hook is inserted.
     /// </summary>
     public enum HookType
     {
         /// <summary>
-        /// At the start of a method.
+        ///     At the start of a method.
         /// </summary>
         Entry,
 
         /// <summary>
-        /// Just before return.
+        ///     Just before return.
         /// </summary>
         Exit
     }

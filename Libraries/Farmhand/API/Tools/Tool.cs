@@ -1,34 +1,56 @@
-﻿using Farmhand.API.Utilities;
-using StardewValley;
-using System;
-using System.Collections.Generic;
-
-namespace Farmhand.API.Tools
+﻿namespace Farmhand.API.Tools
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Farmhand.API.Utilities;
+
+    using StardewValley;
+
+    /// <summary>
+    ///     Tool-related API functionality.
+    /// </summary>
     public static class Tool
     {
-        public static Dictionary<string, ToolInformation> Tools { get; } = new Dictionary<string, ToolInformation>();
-
-        public static int NextAvailableIndex = 0;
-
+        /// <summary>
+        ///     The initial count of tools.
+        /// </summary>
         public const int InitialTools = 36;
 
         /// <summary>
-        /// Registers a new tool
+        ///     Gets the next available index.
         /// </summary>
-        /// <param name="tool">Information of tool to register</param>
+        public static int NextAvailableIndex { get; private set; }
+
+        internal static Dictionary<string, ToolInformation> Tools { get; } = new Dictionary<string, ToolInformation>();
+
+        /// <summary>
+        ///     Registers a new tool
+        /// </summary>
+        /// <typeparam name="T">
+        ///     The type of the tool.
+        /// </typeparam>
+        /// <param name="tool">
+        ///     Information of tool to register
+        /// </param>
         public static void RegisterTool<T>(ToolInformation tool)
         {
             if (Game1.toolSpriteSheet == null)
             {
-                throw new Exception("objectInformation is null! This likely occurs if you try to register an item before AfterContentLoaded");
+                throw new Exception(
+                    "objectInformation is null! This likely occurs if you try to register an item before AfterContentLoaded");
             }
 
             tool.Id = NextAvailableIndex;
             NextAvailableIndex++;
 
             Tools.Add(tool.Name, tool);
-            TextureUtility.AddSpriteToSpritesheet(ref Game1.toolSpriteSheet, tool.Texture, InitialTools + tool.Id, 112, 32);
+            TextureUtility.AddSpriteToSpritesheet(
+                ref Game1.toolSpriteSheet,
+                tool.Texture,
+                InitialTools + tool.Id,
+                112,
+                32);
         }
     }
 }

@@ -1,50 +1,77 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-
-namespace Farmhand.API.Tools
+﻿namespace Farmhand.API.Tools
 {
+    using Microsoft.Xna.Framework.Graphics;
+
+    /// <summary>
+    ///     Contains custom tool information.
+    /// </summary>
     public class ToolInformation
     {
-        // Tool name
+        /// <summary>
+        ///     Gets the tool ID.
+        /// </summary>
+        public int Id { get; internal set; }
+
+        /// <summary>
+        ///     Gets or sets the tool name.
+        /// </summary>
         public string Name { get; set; }
 
-        // Tool Texture
+        /// <summary>
+        ///     Gets or sets the texture.
+        /// </summary>
         public Texture2D Texture { get; set; }
 
-        // Tool Index Id
-        public int Id { get; set; }
-
-        // Tool Description
+        /// <summary>
+        ///     Gets or sets the description.
+        /// </summary>
         public string Description { get; set; }
 
-        // Stackable?
+        /// <summary>
+        ///     Gets or sets a value indicating whether stackable.
+        /// </summary>
         public bool Stackable { get; set; } = false;
 
-        // Number of attachment slots
+        /// <summary>
+        ///     Gets or sets the attachment slots.
+        /// </summary>
         public int AttachmentSlots { get; set; } = 0;
 
-        // Upgrade level
+        /// <summary>
+        ///     Gets or sets the upgrade level.
+        /// </summary>
         public int UpgradeLevel { get; set; } = -1;
 
-        // Determine, based off the Id of the tool, where the InitialParentIndex is
+        /// <summary>
+        ///     Determine, based off the Id of the tool, where the InitialParentIndex is.
+        /// </summary>
+        /// <returns>
+        ///     The initial parent index.
+        /// </returns>
         public int GetInitialParentIndex()
         {
-            int largeIndex = Tool.InitialTools + Id;
+            var largeIndex = Tool.InitialTools + this.Id;
 
-            int XLarge = largeIndex % 3;
-            int YLarge = largeIndex / 3;
+            var xLarge = largeIndex % 3;
+            var yLarge = largeIndex / 3;
 
-            int XSmall = XLarge * 7;
-            int YSmall = YLarge * 2;
+            var xSmall = xLarge * 7;
+            var ySmall = yLarge * 2;
 
-            int SmallIndex = XSmall + (YSmall * 21);
+            var smallIndex = xSmall + ySmall * 21;
 
-            return SmallIndex;
+            return smallIndex;
         }
 
-        // Determine, based off the Id of the tool, where the IndexOfMenuItem is
+        /// <summary>
+        ///     Determine, based off the Id of the tool, where the IndexOfMenuItem is
+        /// </summary>
+        /// <returns>
+        ///     The menu item index.
+        /// </returns>
         public int GetIndexOfMenuItem()
         {
-            return GetInitialParentIndex() + 26;
+            return this.GetInitialParentIndex() + 26;
         }
     }
 }

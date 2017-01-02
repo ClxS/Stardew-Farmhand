@@ -3,79 +3,85 @@
     using Microsoft.Xna.Framework.Graphics;
 
     /// <summary>
-    /// Contains custom weapon information.
+    ///     Contains custom weapon information.
     /// </summary>
     public class WeaponInformation
     {
         /// <summary>
-        /// Gets the ID for the weapon.
+        ///     Gets the ID for the weapon.
         /// </summary>
         public int Id { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the texture for the weapon.
+        ///     Gets or sets the texture for the weapon.
         /// </summary>
         public Texture2D Texture { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the name of the weapon.
+        /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the weapon description.
+        ///     Gets or sets the weapon description.
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum damage.
+        ///     Gets or sets the minimum damage.
         /// </summary>
         public int MinDamage { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum damage.
+        ///     Gets or sets the maximum damage.
         /// </summary>
         public int MaxDamage { get; set; }
 
         /// <summary>
-        /// Gets or sets the knockback.
+        ///     Gets or sets the knockback.
         /// </summary>
         public float Knockback { get; set; }
 
         /// <summary>
-        /// Gets or sets the attack speed.
+        ///     Gets or sets the attack speed.
         /// </summary>
         public int Speed { get; set; }
 
         /// <summary>
-        /// Gets or sets the added precision.
+        ///     Gets or sets the added precision.
         /// </summary>
         public int AddedPrecision { get; set; }
 
         /// <summary>
-        /// Gets or sets the added defense.
+        ///     Gets or sets the added defense.
         /// </summary>
         public int AddedDefense { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the weapon type.
+        /// </summary>
         public WeaponType WeaponType { get; set; }
 
         /// <summary>
-        /// Gets or sets the added area of effect.
+        ///     Gets or sets the added area of effect.
         /// </summary>
         public int AddedAreaOfEffect { get; set; }
 
         /// <summary>
-        /// Gets or sets the critical hit chance.
+        ///     Gets or sets the critical hit chance.
         /// </summary>
         public float CritChance { get; set; }
 
         /// <summary>
-        /// Gets or sets the critical hit multiplier.
+        ///     Gets or sets the critical hit multiplier.
         /// </summary>
         public float CritMultiplier { get; set; }
 
         /// <summary>
-        /// The to string.
+        ///     The to string.
         /// </summary>
         /// <returns>
-        /// The <see cref="string"/>.
+        ///     The <see cref="string" />.
         /// </returns>
         public override string ToString()
         {

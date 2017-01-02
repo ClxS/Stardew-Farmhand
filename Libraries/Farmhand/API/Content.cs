@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Farmhand.Content;
-
-namespace Farmhand.API
+﻿namespace Farmhand.API
 {
+    using Farmhand.Content;
+
+    using StardewValley;
+
+    /// <summary>
+    /// Content-related API functionality.
+    /// </summary>
     public static class Content
     {
-        public static ContentManager ContentManager => StardewValley.Game1.content as ContentManager;
+        /// <summary>
+        /// Gets the game's <see cref="ContentManager"/>.
+        /// </summary>
+        public static ContentManager ContentManager => Game1.content as ContentManager;
     }
 }
