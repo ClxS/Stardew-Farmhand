@@ -1,22 +1,28 @@
-﻿using System;
-using Farmhand.API.Locations;
-using xTile;
-
-namespace Farmhand.Content.Injectors.Maps
+﻿namespace Farmhand.Content.Injectors.Maps
 {
-    public class MapInjector : IContentInjector
+    using System;
+
+    using Farmhand.API.Locations;
+    using Farmhand.Logging;
+
+    using xTile;
+
+    internal class MapInjector : IContentInjector
     {
+        #region IContentInjector Members
+
         public bool IsLoader => false;
+
         public bool IsInjector => true;
 
         public bool HandlesAsset(Type type, string asset)
         {
-            return (type == typeof(Map));
+            return type == typeof(Map);
         }
 
         public T Load<T>(ContentManager contentManager, string assetName)
         {
-            Logging.Log.Error("You shouldn't be here!");
+            Log.Error("You shouldn't be here!");
             return default(T);
         }
 
@@ -24,10 +30,14 @@ namespace Farmhand.Content.Injectors.Maps
         {
             var map = obj as Map;
             if (map == null)
+            {
                 throw new Exception($"Unexpected type for {assetName}");
+            }
 
             map = LocationUtilities.MergeMaps(map, assetName);
             output = map;
         }
+
+        #endregion
     }
 }

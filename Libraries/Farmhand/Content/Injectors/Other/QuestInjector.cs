@@ -1,21 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Farmhand.Content.Injectors.Other
+﻿namespace Farmhand.Content.Injectors.Other
 {
-    public class QuestInjector : IContentInjector
+    using System;
+    using System.Collections.Generic;
+
+    using Farmhand.API.Player;
+    using Farmhand.Logging;
+
+    internal class QuestInjector : IContentInjector
     {
+        #region IContentInjector Members
+
         public bool IsLoader => false;
+
         public bool IsInjector => true;
 
         public bool HandlesAsset(Type type, string asset)
         {
             return asset == "Data\\Quests";
         }
-        
+
         public T Load<T>(ContentManager contentManager, string assetName)
         {
-            Logging.Log.Error("You shouldn't be here!");
+            Log.Error("You shouldn't be here!");
             return default(T);
         }
 
@@ -23,12 +29,16 @@ namespace Farmhand.Content.Injectors.Other
         {
             var quests = obj as Dictionary<int, string>;
             if (quests == null)
+            {
                 throw new Exception($"Unexpected type for {assetName}");
+            }
 
-            foreach (var quest in Farmhand.API.Player.Quest.Quests)
+            foreach (var quest in Quest.Quests)
             {
                 quests[quest.Value.Id] = quest.Value.ToString();
             }
         }
+
+        #endregion
     }
 }

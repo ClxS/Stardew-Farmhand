@@ -1,31 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using StardewValley;
-
-namespace Farmhand.Content.Injectors.NPCs
+﻿namespace Farmhand.Content.Injectors.NPCs
 {
-    class ScheduleLoader : IContentInjector
-    {
-        public bool IsLoader => true;
-        public bool IsInjector => false;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
 
+    using Farmhand.API.NPCs;
+
+    using StardewValley;
+
+    internal class ScheduleLoader : IContentInjector
+    {
         public List<string> SchedulesExceptions
-            => Directory.GetFiles($"{Game1.content.RootDirectory}\\Characters\\schedules")
-                .Select(file => file?.Replace("Content\\", "").Replace(".xnb", ""))
-                .ToList();
+            =>
+                Directory.GetFiles($"{Game1.content.RootDirectory}\\Characters\\schedules")
+                    .Select(file => file?.Replace("Content\\", string.Empty).Replace(".xnb", string.Empty))
+                    .ToList();
+
+        #region IContentInjector Members
+
+        public bool IsLoader => true;
+
+        public bool IsInjector => false;
 
         public bool HandlesAsset(Type type, string assetName)
         {
-            var baseName = assetName.Replace("Characters\\schedules\\", "");
-            return API.NPCs.Npc.Npcs.ContainsKey(baseName);
+            var baseName = assetName.Replace("Characters\\schedules\\", string.Empty);
+            return Npc.Npcs.ContainsKey(baseName);
         }
 
         public T Load<T>(ContentManager contentManager, string assetName)
         {
-            var baseName = assetName.Replace("Characters\\schedules\\", "");
-            var schedule = API.NPCs.Npc.Npcs[baseName].Item1.Schedules.BuildSchedule();
+            var baseName = assetName.Replace("Characters\\schedules\\", string.Empty);
+            var schedule = Npc.Npcs[baseName].Item1.Schedules.BuildSchedule();
 
             return (T)Convert.ChangeType(schedule, typeof(T));
         }
@@ -34,5 +41,7 @@ namespace Farmhand.Content.Injectors.NPCs
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

@@ -1,21 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Farmhand.Content.Injectors.Mail
+﻿namespace Farmhand.Content.Injectors.Mail
 {
-    public class MailInjector : IContentInjector
+    using System;
+    using System.Collections.Generic;
+
+    using Farmhand.API.Player;
+    using Farmhand.Logging;
+
+    internal class MailInjector : IContentInjector
     {
+        #region IContentInjector Members
+
         public bool IsLoader => false;
+
         public bool IsInjector => true;
 
         public bool HandlesAsset(Type type, string asset)
         {
             return asset == "Data\\mail";
         }
-        
+
         public T Load<T>(ContentManager contentManager, string assetName)
         {
-            Logging.Log.Error("You shouldn't be here!");
+            Log.Error("You shouldn't be here!");
             return default(T);
         }
 
@@ -23,12 +29,16 @@ namespace Farmhand.Content.Injectors.Mail
         {
             var mailBox = obj as Dictionary<string, string>;
             if (mailBox == null)
+            {
                 throw new Exception($"Unexpected type for {assetName}");
+            }
 
-            foreach (var mail in API.Player.Mail.MailBox)
+            foreach (var mail in Mail.MailBox)
             {
                 mailBox[mail.Value.Id] = mail.Value.ToString();
             }
         }
+
+        #endregion
     }
 }

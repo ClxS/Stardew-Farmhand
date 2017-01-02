@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Farmhand.Content.Injectors.Other
+﻿namespace Farmhand.Content.Injectors.Other
 {
-    class CropInjector : IContentInjector
+    using System;
+    using System.Collections.Generic;
+
+    using Farmhand.API.Crops;
+    using Farmhand.Logging;
+
+    internal class CropInjector : IContentInjector
     {
+        #region IContentInjector Members
+
         public bool IsLoader => false;
+
         public bool IsInjector => true;
 
         public bool HandlesAsset(Type type, string asset)
@@ -15,7 +21,7 @@ namespace Farmhand.Content.Injectors.Other
 
         public T Load<T>(ContentManager contentManager, string assetName)
         {
-            Logging.Log.Error("You shouldn't be here!");
+            Log.Error("You shouldn't be here!");
             return default(T);
         }
 
@@ -23,12 +29,16 @@ namespace Farmhand.Content.Injectors.Other
         {
             var crops = obj as Dictionary<int, string>;
             if (crops == null)
+            {
                 throw new Exception($"Unexpected type for {assetName}");
+            }
 
-            foreach (var crop in API.Crops.Crop.Crops)
+            foreach (var crop in Crop.Crops)
             {
                 crops[crop.Value.Seed] = crop.Value.ToString();
             }
         }
+
+        #endregion
     }
 }

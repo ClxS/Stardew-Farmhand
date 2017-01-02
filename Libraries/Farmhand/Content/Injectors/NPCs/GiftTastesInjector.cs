@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Farmhand.Content.Injectors.NPCs
+﻿namespace Farmhand.Content.Injectors.NPCs
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Farmhand.API.NPCs;
+    using Farmhand.Logging;
+
     internal class GiftTastesInjector : IContentInjector
     {
+        #region IContentInjector Members
+
         public bool IsLoader => false;
+
         public bool IsInjector => true;
 
         public bool HandlesAsset(Type type, string asset)
@@ -15,7 +21,7 @@ namespace Farmhand.Content.Injectors.NPCs
 
         public T Load<T>(ContentManager contentManager, string assetName)
         {
-            Logging.Log.Error("You shouldn't be here!");
+            Log.Error("You shouldn't be here!");
             return default(T);
         }
 
@@ -23,12 +29,16 @@ namespace Farmhand.Content.Injectors.NPCs
         {
             var giftTastes = obj as Dictionary<string, string>;
             if (giftTastes == null)
+            {
                 throw new Exception($"Unexpected type for {assetName}");
+            }
 
-            foreach (var npc in API.NPCs.Npc.Npcs)
+            foreach (var npc in Npc.Npcs)
             {
                 giftTastes[npc.Value.Item1.Name] = npc.Value.Item1.GiftTastes.ToString();
             }
         }
+
+        #endregion
     }
 }

@@ -1,54 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Farmhand.Helpers;
-using Newtonsoft.Json;
-
-namespace Farmhand.Extensibility
+﻿namespace Farmhand.Extensibility
 {
+    using System.Collections.Generic;
+
+    using Farmhand.Helpers;
+
+    using Newtonsoft.Json;
+
+    /// <summary>
+    ///     Contains information collected from the extensions manifest.json file
+    /// </summary>
     public class ExtensionManifest
     {
         /// <summary>
-        /// A unique identifier for this extension
+        ///     Gets A unique identifier for this extension
         /// </summary>
         [JsonConverter(typeof(UniqueIdConverter))]
-        public UniqueId<string> UniqueId { get; set; }
+        [JsonProperty]
+        public UniqueId<string> UniqueId { get; internal set; }
 
         /// <summary>
-        /// The display name for this extension
+        ///     Gets the display name for this extension
         /// </summary>
-        public string Name { get; set; }
+        [JsonProperty]
+        public string Name { get; internal set; }
 
         /// <summary>
-        /// The author of this extension
+        ///     Gets the author of this extension
         /// </summary>
-        public string Author { get; set; }
+        [JsonProperty]
+        public string Author { get; internal set; }
 
         /// <summary>
-        /// The primary DLL for this extension
+        ///     Gets the primary DLL for this extension
         /// </summary>
-        public string ExtensionDll { get; set; }
+        [JsonProperty]
+        public string ExtensionDll { get; internal set; }
 
         /// <summary>
-        /// The extension's description
+        ///     Gets the extension's description
         /// </summary>
-        public string Descrption { get; set; }
+        [JsonProperty]
+        public string Description { get; internal set; }
 
         /// <summary>
-        /// If set to true, the extension DLL will not be loaded if there are no
-        /// mod manifests located in it's ModsFolder
+        ///     Gets a value indicating whether the extension DLL will not be loaded if there are no
+        ///     mod manifests located in it's ModsFolder
         /// </summary>
-        public bool LoadOnlyIfModsPresent { get; set; }
+        [JsonProperty]
+        public bool LoadOnlyIfModsPresent { get; internal set; }
 
         /// <summary>
-        /// The subdirectory in the mods folder which contains the mods to be handled by this extension
+        ///     Gets the subdirectory in the mods folder which contains the mods to be handled by this extension
         /// </summary>
-        public string ModsFolder { get; set; }
+        [JsonProperty]
+        public string ModsFolder { get; internal set; }
 
         /// <summary>
-        /// Any assemblies which should have their references redirected to this assembly.
+        ///     Gets any assemblies which should have their references redirected to this assembly.
         /// </summary>
-        public List<string> AssemblyRedirect { get; set; }
+        [JsonProperty]
+        public List<string> AssemblyRedirect { get; internal set; }
     }
 }

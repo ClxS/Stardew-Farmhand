@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Farmhand.Content.Injectors.NPCs.Monsters
+﻿namespace Farmhand.Content.Injectors.NPCs.Monsters
 {
-    class MonsterInjector : IContentInjector
+    using System;
+    using System.Collections.Generic;
+
+    using Farmhand.API.Monsters;
+    using Farmhand.Logging;
+
+    internal class MonsterInjector : IContentInjector
     {
+        #region IContentInjector Members
+
         public bool IsLoader => false;
+
         public bool IsInjector => true;
 
         public bool HandlesAsset(Type type, string asset)
@@ -15,7 +21,7 @@ namespace Farmhand.Content.Injectors.NPCs.Monsters
 
         public T Load<T>(ContentManager contentManager, string assetName)
         {
-            Logging.Log.Error("You shouldn't be here!");
+            Log.Error("You shouldn't be here!");
             return default(T);
         }
 
@@ -23,12 +29,16 @@ namespace Farmhand.Content.Injectors.NPCs.Monsters
         {
             var monsters = obj as Dictionary<string, string>;
             if (monsters == null)
+            {
                 throw new Exception($"Unexpected type for {assetName}");
+            }
 
-            foreach (var monster in API.Monsters.Monster.Monsters)
+            foreach (var monster in Monster.Monsters)
             {
                 monsters[monster.Value.Name] = monster.Value.ToString();
             }
         }
+
+        #endregion
     }
 }

@@ -249,6 +249,11 @@
     <Compile Include="Extensibility\ExtensionManifest.cs" />
     <Compile Include="FarmhandConfig.cs" />
     <Compile Include="Helpers\ArgumentsHelper.cs" />
+    <Compile Include="Helpers\Randomizer\AgeRanges.cs" />
+    <Compile Include="Helpers\Randomizer\CasingRules.cs" />
+    <Compile Include="Helpers\Randomizer\Data.cs" />
+    <Compile Include="Helpers\Randomizer\Extensions.cs" />
+    <Compile Include="Helpers\Randomizer\RUtils.cs" />
     <Compile Include="Helpers\ReferenceFix.cs" />
     <Compile Include="Helpers\VersionConverter.cs" />
     <Compile Include="Mods\ModSettings.cs" />
@@ -258,7 +263,7 @@
     <Compile Include="Helpers\ApplicationResourcesUtility.cs" />
     <Compile Include="Helpers\MainRedirect.cs" />
     <Compile Include="Helpers\MersenneTwister.cs" />
-    <Compile Include="Helpers\Randomizer.cs" />
+    <Compile Include="Helpers\Randomizer\Randomizer.cs" />
     <Compile Include="Helpers\UniqueId.cs" />
     <Compile Include="Helpers\UniqueIdConverter.cs" />
     <Compile Include="Logging\Log.cs" />
