@@ -1,72 +1,171 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json;
-using Farmhand.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Farmhand.Helpers;
-using xTile;
-using Mono.Cecil;
-using System.Security.Cryptography;
-using System.IO;
-
-namespace Farmhand.Registries.Containers
+﻿namespace Farmhand.Registries.Containers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Security.Cryptography;
+
+    using Farmhand.Helpers;
+    using Farmhand.Logging;
+
+    using Microsoft.Xna.Framework.Graphics;
+
+    using Mono.Cecil;
+
+    using Newtonsoft.Json;
+
+    using xTile;
+
+    /// <summary>
+    ///     Contains registration information for a Farmhand mod.
+    /// </summary>
     public class ModManifest : IModManifest
     {
-        public ModManifest()
-        {
-            ModState = ModState.Unloaded;
-        }
-
-        public static event EventHandler BeforeLoaded;
-        public static event EventHandler AfterLoaded;
-
         private static readonly SHA1CryptoServiceProvider Sha1 = new SHA1CryptoServiceProvider();
 
-        [JsonConverter(typeof(UniqueIdConverter))]
-        public UniqueId<string> UniqueId { get; set; }
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ModManifest" /> class.
+        /// </summary>
+        public ModManifest()
+        {
+            this.ModState = ModState.Unloaded;
+        }
 
+        /// <summary>
+        ///     Gets the mod DLL.
+        /// </summary>
+        [JsonProperty]
+        public string ModDll { get; internal set; }
+
+        /// <summary>
+        ///     Gets the mod dependencies.
+        /// </summary>
+        [JsonProperty]
+        public List<ModDependency> Dependencies { get; internal set; }
+
+        /// <summary>
+        ///     Gets the content for this mod.
+        /// </summary>
+        [JsonProperty]
+        public ManifestContent Content { get; internal set; }
+
+        #region IModManifest Members
+
+        /// <summary>
+        ///     Gets the unique ID for this mod.
+        /// </summary>
+        [JsonConverter(typeof(UniqueIdConverter))]
+        [JsonProperty]
+        public UniqueId<string> UniqueId { get; internal set; }
+
+        /// <summary>
+        ///     Gets whether this is a Farmhand mod.
+        /// </summary>
         public bool IsFarmhandMod => true;
 
-        public string ModDll { get; set; }
+        /// <summary>
+        ///     Gets the name of this mod.
+        /// </summary>
+        [JsonProperty]
+        public string Name { get; internal set; }
 
-        public string Name { get; set; }
+        /// <summary>
+        ///     Gets the author of this mod.
+        /// </summary>
+        [JsonProperty]
+        public string Author { get; internal set; }
 
-        public string Author { get; set; }
+        /// <summary>
+        ///     Gets the version of this mod.
+        /// </summary>
+        [JsonProperty]
+        public Version Version { get; internal set; }
 
-        public Version Version { get; set; }
+        /// <summary>
+        ///     Gets the description of this mod.
+        /// </summary>
+        [JsonProperty]
+        public string Description { get; internal set; }
 
-        public string Description { get; set; }
+        #endregion
 
-        public List<ModDependency> Dependencies { get; set; }
+        /// <summary>
+        ///     Fires just prior to loading the mod.
+        /// </summary>
+        public static event EventHandler BeforeLoaded;
 
-        public ManifestContent Content { get; set; }
+        /// <summary>
+        ///     Fires just after loading the mod.
+        /// </summary>
+        public static event EventHandler AfterLoaded;
+
+        internal void OnBeforeLoaded()
+        {
+            BeforeLoaded?.Invoke(this, EventArgs.Empty);
+        }
+
+        internal void OnAfterLoaded()
+        {
+            AfterLoaded?.Invoke(this, EventArgs.Empty);
+        }
 
         #region Manifest Instance Data
 
         /// <summary>
-        /// Gets the configuration path for this mod.
+        ///     Gets the configuration path for this mod.
         /// </summary>
         [JsonIgnore]
         public string ConfigurationPath => $"{this.ModDirectory}\\Config";
+
+        /// <summary>
+        ///     Gets the mod load state.
+        /// </summary>
         [JsonIgnore]
-        public ModState ModState { get; set; }
+        public ModState ModState { get; internal set; }
+
+        /// <summary>
+        ///     Gets or sets the last exception thrown by this mod.
+        /// </summary>
         [JsonIgnore]
         public Exception LastException { get; set; }
+
+        /// <summary>
+        ///     Gets whether this mod has a DLL.
+        /// </summary>
         [JsonIgnore]
-        public bool HasDll => !string.IsNullOrWhiteSpace(ModDll);
+        public bool HasDll => !string.IsNullOrWhiteSpace(this.ModDll);
+
+        /// <summary>
+        ///     Gets whether this mod has a config file.
+        /// </summary>
         [JsonIgnore]
-        public bool HasConfig => HasDll && !string.IsNullOrWhiteSpace(ConfigurationPath);
+        public bool HasConfig => this.HasDll && !string.IsNullOrWhiteSpace(this.ConfigurationPath);
+
+        /// <summary>
+        ///     Gets whether this mod has defined content.
+        /// </summary>
         [JsonIgnore]
-        public bool HasContent => Content != null && Content.HasContent;
+        public bool HasContent => this.Content != null && this.Content.HasContent;
+
+        /// <summary>
+        ///     Gets the mod assembly.
+        /// </summary>
         [JsonIgnore]
-        public Assembly ModAssembly { get; set; }
+        public Assembly ModAssembly { get; internal set; }
+
+        /// <summary>
+        ///     Gets the instance.
+        /// </summary>
         [JsonIgnore]
-        public Mod Instance { get; set; }
+        public Mod Instance { get; internal set; }
+
+        /// <summary>
+        ///     Gets the mod directory.
+        /// </summary>
         [JsonIgnore]
-        public string ModDirectory { get; set; }
+        public string ModDirectory { get; internal set; }
 
         internal bool LoadModDll()
         {
@@ -99,9 +198,10 @@ namespace Farmhand.Registries.Containers
                                 config.Save();
                             }
                         }
+
                         instance.Entry();
-                        
                     }
+
                     this.Instance = instance;
                     Log.Verbose($"Loaded mod dll: {this.Name}");
                 }
@@ -118,10 +218,13 @@ namespace Farmhand.Registries.Containers
                 {
                     foreach (var e in exception.LoaderExceptions)
                     {
-                        Log.Exception("LoaderExceptions entry: " +
-                            $"{e.Message} ${e.Source} ${e.TargetSite} ${e.StackTrace} ${e.Data}", e);
+                        Log.Exception(
+                            "LoaderExceptions entry: "
+                            + $"{e.Message} ${e.Source} ${e.TargetSite} ${e.StackTrace} ${e.Data}",
+                            e);
                     }
                 }
+
                 Log.Exception("Error loading mod DLL", ex);
             }
 
@@ -130,7 +233,7 @@ namespace Farmhand.Registries.Containers
 
         internal byte[] GetDllBytes()
         {
-            var modDllPath = $"{ModDirectory}\\{ModDll}";
+            var modDllPath = $"{this.ModDirectory}\\{this.ModDll}";
 
             if (!modDllPath.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -141,7 +244,6 @@ namespace Farmhand.Registries.Containers
             // it doesn't see the Farmhand game. Everything will still be 
             // in the state for when the assembly would first be loaded.
             // This will fix the references so the mods will actually work.
-            //
             // For loading mods from other platforms:
             // There are also problems with XNA <=> Mono. Simply replacing
             // the assembly name isn't really possible in this case, since
@@ -160,11 +262,15 @@ namespace Farmhand.Registries.Containers
                 // We only want to go to the effort of fixing everything if 
                 // there is a reference that even needs fixing.
                 // Also, the bad references will need to be removed.
-                if (ReferenceHelper.MatchesPlatform(asmRef)) continue;
+                if (ReferenceHelper.MatchesPlatform(asmRef))
+                {
+                    continue;
+                }
 
                 shouldFix = true;
                 toRemove.Add(asmRef);
             }
+
             foreach (var @ref in toRemove)
             {
                 // However, we can't just simply remove the old references.
@@ -183,10 +289,15 @@ namespace Farmhand.Registries.Containers
                     // We want to cache any 'fixed' assemblies so that we don't have to
                     // go through and fix everything again. However if the mod is updated
                     // or something, it will need to be fixed again.
-                    string check = Convert.ToBase64String(Sha1.ComputeHash(bytes));
-                    check = check.Replace("=", "").Replace('+', '-').Replace('/', '_'); // Fix for valid file name. = is just padding
-                    string checkPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                                                    "StardewValley", "cache", ModDll + "-" + check + ".dll");
+                    var check = Convert.ToBase64String(Sha1.ComputeHash(bytes));
+                    check = check.Replace("=", string.Empty).Replace('+', '-').Replace('/', '_');
+
+                    // Fix for valid file name. = is just padding
+                    var checkPath = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                        "StardewValley",
+                        "cache",
+                        this.ModDll + "-" + check + ".dll");
                     if (File.Exists(checkPath))
                     {
                         try
@@ -199,15 +310,21 @@ namespace Farmhand.Registries.Containers
                             bytes = FixDll(asm, checkPath);
                         }
                     }
-                    else bytes = FixDll(asm, checkPath);
+                    else
+                    {
+                        bytes = FixDll(asm, checkPath);
+                    }
                 }
-                else bytes = FixDll(asm, null);
+                else
+                {
+                    bytes = FixDll(asm, null);
+                }
             }
 
             return bytes;
         }
 
-        private static byte[] FixDll( AssemblyDefinition asm, string cachePath )
+        private static byte[] FixDll(AssemblyDefinition asm, string cachePath)
         {
             DefinitionResolver.Fix(asm);
 
@@ -223,16 +340,12 @@ namespace Farmhand.Registries.Containers
                 try
                 {
                     var dir = Path.GetDirectoryName(cachePath);
-                    if (dir != null)
+                    if (!Directory.Exists(dir))
                     {
-                        if (!Directory.Exists(dir))
-                            Directory.CreateDirectory(dir);
-                        File.WriteAllBytes(cachePath, bytes);
+                        Directory.CreateDirectory(dir);
                     }
-                    else
-                    {
-                        throw new Exception("Path.GetDirectoryName(cachePath) returned null");
-                    }
+
+                    File.WriteAllBytes(cachePath, bytes);
                 }
                 catch (Exception ex)
                 {
@@ -245,15 +358,17 @@ namespace Farmhand.Registries.Containers
 
         internal void LoadContent()
         {
-            if (Content == null)
+            if (this.Content == null)
+            {
                 return;
+            }
 
             Log.Verbose("Loading Content");
-            if (Content.Textures != null)
+            if (this.Content.Textures != null)
             {
-                foreach (var texture in Content.Textures)
+                foreach (var texture in this.Content.Textures)
                 {
-                    texture.AbsoluteFilePath = $"{ModDirectory}\\{Constants.ModContentDirectory}\\{texture.File}";
+                    texture.AbsoluteFilePath = $"{this.ModDirectory}\\{Constants.ModContentDirectory}\\{texture.File}";
 
                     if (!texture.Exists())
                     {
@@ -265,11 +380,11 @@ namespace Farmhand.Registries.Containers
                 }
             }
 
-            if (Content.Maps != null)
+            if (this.Content.Maps != null)
             {
-                foreach (var map in Content.Maps)
+                foreach (var map in this.Content.Maps)
                 {
-                    map.AbsoluteFilePath = $"{ModDirectory}\\{Constants.ModContentDirectory}\\{map.File}";
+                    map.AbsoluteFilePath = $"{this.ModDirectory}\\{Constants.ModContentDirectory}\\{map.File}";
 
                     if (!map.Exists())
                     {
@@ -281,35 +396,45 @@ namespace Farmhand.Registries.Containers
                 }
             }
 
-            if (Content.Xnb == null) return;
+            if (this.Content.Xnb == null)
+            {
+                return;
+            }
 
-            foreach (var file in Content.Xnb)
+            foreach (var file in this.Content.Xnb)
             {
                 if (file.IsXnb)
                 {
-                    file.AbsoluteFilePath = $"{ModDirectory}\\{Constants.ModContentDirectory}\\{file.File}";
+                    file.AbsoluteFilePath = $"{this.ModDirectory}\\{Constants.ModContentDirectory}\\{file.File}";
                 }
+
                 file.OwningMod = this;
                 if (!file.Exists(this))
                 {
                     if (file.IsXnb)
+                    {
                         throw new Exception($"Replacement File: {file.AbsoluteFilePath}");
+                    }
+
                     if (file.IsTexture)
+                    {
                         throw new Exception($"Replacement Texture: {file.Texture}");
+                    }
                 }
+
                 Log.Verbose("Registering new texture XNB override");
                 XnbRegistry.RegisterItem(file.Original, file, this);
             }
         }
 
         /// <summary>
-        /// Gets a texture registered by this mod via it's manifest file
+        ///     Gets a texture registered by this mod via it's manifest file
         /// </summary>
         /// <param name="id">
-        /// The id of the texture.
+        ///     The id of the texture.
         /// </param>
         /// <returns>
-        /// The registered <see cref="Texture2D"/>.
+        ///     The registered <see cref="Texture2D" />.
         /// </returns>
         public Texture2D GetTexture(string id)
         {
@@ -317,13 +442,13 @@ namespace Farmhand.Registries.Containers
         }
 
         /// <summary>
-        /// Gets a map registered by this mod via it's manifest file
+        ///     Gets a map registered by this mod via it's manifest file
         /// </summary>
         /// <param name="id">
-        /// The id of the map.
+        ///     The id of the map.
         /// </param>
         /// <returns>
-        /// The registered <see cref="Map"/>.
+        ///     The registered <see cref="Map" />.
         /// </returns>
         public Map GetMap(string id)
         {
@@ -331,15 +456,5 @@ namespace Farmhand.Registries.Containers
         }
 
         #endregion
-
-        internal void OnBeforeLoaded()
-        {
-            BeforeLoaded?.Invoke(this, EventArgs.Empty);
-        }
-
-        internal void OnAfterLoaded()
-        {
-            AfterLoaded?.Invoke(this, EventArgs.Empty);
-        }
     }
 }

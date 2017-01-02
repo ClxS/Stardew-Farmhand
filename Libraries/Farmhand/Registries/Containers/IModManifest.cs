@@ -8,18 +8,18 @@ namespace Farmhand.Registries.Containers
 {
     public interface IModManifest
     {
-        UniqueId<string> UniqueId { get; set; }
+        UniqueId<string> UniqueId { get; }
 
         bool IsFarmhandMod { get; }
 
-        string Name { get; set; }
+        string Name { get; }
 
-        string Author { get; set; }
+        string Author { get; }
 
-        string Description { get; set; }
+        string Description { get; }
 
-        ModState ModState { get; set; }
+        ModState ModState { get; }
 
-        Version Version { get; set; }
+        Version Version { get; }
     }
 }
