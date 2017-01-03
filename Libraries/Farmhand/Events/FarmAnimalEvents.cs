@@ -13,15 +13,17 @@ namespace Farmhand.Events
         /// <summary>
         /// Triggers when an animal eats grass
         /// </summary>
-        public static EventHandler<EventArgsOnAnimalEatGrass> OnBeforeEatGrass = delegate { };
+        public static event EventHandler<EventArgsOnAnimalEatGrass> OnBeforeEatGrass = delegate { };
+
         /// <summary>
         /// Triggers when an animal makes sound
         /// </summary>
-        public static EventHandler<CancelEventArgs> OnMakeSound = delegate { };
+        public static event EventHandler<CancelEventArgs> OnMakeSound = delegate { };
+
         /// <summary>
         /// Triggers when an animal is pushed by a player
         /// </summary>
-        public static EventHandler<CancelEventArgs> OnFarmerPushing = delegate { };
+        public static event EventHandler<CancelEventArgs> OnFarmerPushing = delegate { };
         
         [Hook(HookType.Entry, "StardewValley.FarmAnimal", "eatGrass")]
         internal static bool InvokeOnBeforeEatGrass([ThisBind] object @this)
