@@ -20,7 +20,7 @@
     using Cat = StardewValley.Characters.Cat;
 
     /// <summary>
-    /// Providers override serializer functionality.
+    ///     Providers override serializer functionality.
     /// </summary>
     public class Serializer
     {
@@ -31,9 +31,9 @@
         private static XmlSerializer injectedLocationSerializer;
 
         private static bool injected;
-        
+
         internal static List<Type> InjectedTypes { get; } = new List<Type>();
-        
+
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void AttachListeners()
         {
@@ -67,10 +67,10 @@
         }
 
         /// <summary>
-        /// Registers a type for serialization.
+        ///     Registers a type for serialization.
         /// </summary>
         /// <typeparam name="T">
-        /// The type to register.
+        ///     The type to register.
         /// </typeparam>
         public static void RegisterType<T>()
         {
