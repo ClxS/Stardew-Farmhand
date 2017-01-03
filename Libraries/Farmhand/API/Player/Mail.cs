@@ -9,8 +9,11 @@
     /// </summary>
     public static class Mail
     {
-        internal static Dictionary<string, MailInformation> MailBox { get; } 
-            = new Dictionary<string, MailInformation>();
+        // TODO: Make this internal, provide read-only access
+        /// <summary>
+        ///     Gets the mail box.
+        /// </summary>
+        public static Dictionary<string, MailInformation> MailBox { get; } = new Dictionary<string, MailInformation>();
 
         /// <summary>
         ///     Register a mail item to be inserted into the game.
