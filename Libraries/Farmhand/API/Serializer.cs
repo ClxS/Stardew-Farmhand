@@ -32,7 +32,10 @@
 
         private static bool injected;
 
-        internal static List<Type> InjectedTypes { get; } = new List<Type>();
+        /// <summary>
+        ///     Gets the injected types.
+        /// </summary>
+        public static List<Type> InjectedTypes { get; } = new List<Type>();
 
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void AttachListeners()
