@@ -3,49 +3,49 @@
     using System;
 
     /// <summary>
-    /// Information about a quest.
+    ///     Information about a quest.
     /// </summary>
     public class QuestInformation
     {
         #region QuestType enum
 
         /// <summary>
-        /// An enumeration of quest types.
+        ///     An enumeration of quest types.
         /// </summary>
         public enum QuestType
         {
             /// <summary>
-            /// Quest to build something.
+            ///     Quest to build something.
             /// </summary>
             Building,
 
             /// <summary>
-            /// Quest to craft something.
+            ///     Quest to craft something.
             /// </summary>
             Crafting,
 
             /// <summary>
-            /// Quest to harvest something.
+            ///     Quest to harvest something.
             /// </summary>
             ItemHarvest,
 
             /// <summary>
-            /// Quest to deliver something.
+            ///     Quest to deliver something.
             /// </summary>
             ItemDelivery,
 
             /// <summary>
-            /// Quest to visit a location.
+            ///     Quest to visit a location.
             /// </summary>
             Location,
 
             /// <summary>
-            /// Quest to find a lost item.
+            ///     Quest to find a lost item.
             /// </summary>
             LostItem,
 
             /// <summary>
-            /// Quest to kill a monster.
+            ///     Quest to kill a monster.
             /// </summary>
             Monster
         }
@@ -53,58 +53,58 @@
         #endregion
 
         /// <summary>
-        /// Gets the quest's unique ID. This is assigned on registering this request.
+        ///     Gets the quest's unique ID. This is assigned on registering this request.
         /// </summary>
         public int Id { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the quest type.
+        ///     Gets or sets the quest type.
         /// </summary>
         public QuestType Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the quest title.
+        ///     Gets or sets the quest title.
         /// </summary>
         public string QuestTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets the quest description.
+        ///     Gets or sets the quest description.
         /// </summary>
         public string QuestDescription { get; set; }
 
         /// <summary>
-        /// Gets or sets the quest objective.
+        ///     Gets or sets the quest objective.
         /// </summary>
         public Objective QuestObjective { get; set; }
 
         /// <summary>
-        /// Gets or sets the following quests.
+        ///     Gets or sets the following quests.
         /// </summary>
         public int[] NextQuests { get; set; } = { -1 };
 
         /// <summary>
-        /// Gets or sets the money reward for this request.
+        ///     Gets or sets the money reward for this request.
         /// </summary>
         public int MoneyReward { get; set; } = -1;
 
         /// <summary>
-        /// Gets or sets the reward description.
+        ///     Gets or sets the reward description.
         /// </summary>
         public string RewardDescription { get; set; } = "-1";
 
         /// <summary>
-        /// Gets or sets a value indicating whether the quest can be canceled.
+        ///     Gets or sets a value indicating whether the quest can be canceled.
         /// </summary>
         public bool CanBeCancelled { get; set; }
 
         /// <summary>
-        /// Gets the quest objective.
+        ///     Gets the quest objective.
         /// </summary>
         /// <returns>
-        /// The object in the game's expected format.
+        ///     The object in the game's expected format.
         /// </returns>
         /// <exception cref="Exception">
-        /// Throws an exception when this.Type is not a valid QuestType.
+        ///     Throws an exception when this.Type is not a valid QuestType.
         /// </exception>
         public string GetObjective()
         {
@@ -137,10 +137,10 @@
         }
 
         /// <summary>
-        /// Gets the quest information in the game's expected format.
+        ///     Gets the quest information in the game's expected format.
         /// </summary>
         /// <returns>
-        /// The quest information as a string.
+        ///     The quest information as a string.
         /// </returns>
         public override string ToString()
         {
@@ -164,12 +164,12 @@
         #region Nested type: BuildingObjective
 
         /// <summary>
-        /// An objective which involves building something.
+        ///     An objective which involves building something.
         /// </summary>
         public class BuildingObjective : Objective
         {
             /// <summary>
-            /// Gets or sets the building name.
+            ///     Gets or sets the building name.
             /// </summary>
             public string BuildingName { get; set; }
         }
@@ -179,17 +179,17 @@
         #region Nested type: CraftingObjective
 
         /// <summary>
-        /// An objective which involves crafting something.
+        ///     An objective which involves crafting something.
         /// </summary>
         public class CraftingObjective : Objective
         {
             /// <summary>
-            /// Gets or sets the item id.
+            ///     Gets or sets the item id.
             /// </summary>
             public int ItemId { get; set; }
 
             /// <summary>
-            /// Gets or sets a value indicating whether the item is a big craftable.
+            ///     Gets or sets a value indicating whether the item is a big craftable.
             /// </summary>
             public bool BigCraftable { get; set; }
         }
@@ -199,27 +199,27 @@
         #region Nested type: ItemDeliveryObjective
 
         /// <summary>
-        /// An objective which involves delivering something.
+        ///     An objective which involves delivering something.
         /// </summary>
         public class ItemDeliveryObjective : Objective
         {
             /// <summary>
-            /// Gets or sets the NPC to deliver to.
+            ///     Gets or sets the NPC to deliver to.
             /// </summary>
             public string NpcName { get; set; }
 
             /// <summary>
-            /// Gets or sets the item id.
+            ///     Gets or sets the item id.
             /// </summary>
             public int ItemId { get; set; }
 
             /// <summary>
-            /// Gets or sets the amount desired.
+            ///     Gets or sets the amount desired.
             /// </summary>
             public int Amount { get; set; } = 1;
 
             /// <summary>
-            /// Gets or sets the completion message.
+            ///     Gets or sets the completion message.
             /// </summary>
             public string CompletionMessage { get; set; }
         }
@@ -229,17 +229,17 @@
         #region Nested type: ItemHarvestObjective
 
         /// <summary>
-        /// An objective which involves harvesting something.
+        ///     An objective which involves harvesting something.
         /// </summary>
         public class ItemHarvestObjective : Objective
         {
             /// <summary>
-            /// Gets or sets the item id.
+            ///     Gets or sets the item id.
             /// </summary>
             public int ItemId { get; set; }
 
             /// <summary>
-            /// Gets or sets the amount.
+            ///     Gets or sets the amount.
             /// </summary>
             public int Amount { get; set; } = 1;
         }
@@ -249,12 +249,12 @@
         #region Nested type: LocationObjective
 
         /// <summary>
-        /// An objective which involves visiting a location.
+        ///     An objective which involves visiting a location.
         /// </summary>
         public class LocationObjective : Objective
         {
             /// <summary>
-            /// Gets or sets the map name.
+            ///     Gets or sets the map name.
             /// </summary>
             public string MapName { get; set; }
         }
@@ -264,37 +264,37 @@
         #region Nested type: LostItemObjective
 
         /// <summary>
-        /// An objective which involves finding something.
+        ///     An objective which involves finding something.
         /// </summary>
         public class LostItemObjective : Objective
         {
             /// <summary>
-            /// Gets or sets the NPC to deliver to.
+            ///     Gets or sets the NPC to deliver to.
             /// </summary>
             public string NpcName { get; set; }
 
             /// <summary>
-            /// Gets or sets the item id.
+            ///     Gets or sets the item id.
             /// </summary>
             public int ItemId { get; set; }
 
             /// <summary>
-            /// Gets or sets the map name.
+            ///     Gets or sets the map name.
             /// </summary>
             public string MapName { get; set; }
 
             /// <summary>
-            /// Gets or sets the item X pos.
+            ///     Gets or sets the item X pos.
             /// </summary>
             public int ItemXPos { get; set; }
 
             /// <summary>
-            /// Gets or sets the item Y pos.
+            ///     Gets or sets the item Y pos.
             /// </summary>
             public int ItemYPos { get; set; }
 
             /// <summary>
-            /// Gets or sets the completion message.
+            ///     Gets or sets the completion message.
             /// </summary>
             public string CompletionMessage { get; set; }
         }
@@ -304,17 +304,17 @@
         #region Nested type: MonsterObjective
 
         /// <summary>
-        /// An objective which involves killing something.
+        ///     An objective which involves killing something.
         /// </summary>
         public class MonsterObjective : Objective
         {
             /// <summary>
-            /// Gets or sets the monster name.
+            ///     Gets or sets the monster name.
             /// </summary>
             public string MonsterName { get; set; }
 
             /// <summary>
-            /// Gets or sets the amount.
+            ///     Gets or sets the amount.
             /// </summary>
             public string Amount { get; set; }
         }
@@ -324,12 +324,12 @@
         #region Nested type: Objective
 
         /// <summary>
-        /// A quest objective.
+        ///     A quest objective.
         /// </summary>
         public abstract class Objective
         {
             /// <summary>
-            /// Gets or sets the objective description.
+            ///     Gets or sets the objective description.
             /// </summary>
             public string ObjectiveDescription { get; set; }
         }

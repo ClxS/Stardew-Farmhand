@@ -22,7 +22,6 @@ namespace TestQuestMod
         {
             Quest.RegisterQuest(new QuestInformation
             {
-                Id = 200,
                 Type = QuestType.Location,
                 QuestTitle = "Who Was That?",
                 QuestDescription = "You've been told by a stranger to go to the Beach, Wonder why...",
@@ -36,7 +35,6 @@ namespace TestQuestMod
 
             Quest.RegisterQuest(new QuestInformation
             {
-                Id = 201,
                 Type = QuestType.ItemDelivery,
                 QuestTitle = "Clint's Strange Need",
                 QuestDescription = "You found this note as soon as you got the the Beach, It seems that Clint wants Lewis' \"Shorts\"... This is starting to get weird...",
@@ -53,7 +51,6 @@ namespace TestQuestMod
 
             Quest.RegisterQuest(new QuestInformation
             {
-                Id = 202,
                 Type = QuestType.ItemDelivery,
                 QuestTitle = "Iridium Bars?",
                 QuestDescription = "What in the world is Clint planning to do with the Mayor's \"Shorts\" and Iridium Bars... Maybe I should stop thinking about it.",
