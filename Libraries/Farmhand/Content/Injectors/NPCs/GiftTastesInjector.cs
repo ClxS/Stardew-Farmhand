@@ -35,7 +35,7 @@
 
             foreach (var npc in Npc.Npcs)
             {
-                giftTastes[npc.Value.Item1.Name] = npc.Value.Item1.GiftTastes.ToString();
+                giftTastes[npc.Value.Item1.Name] = npc.Value.Item1.GiftTastes.BuildTasteInformation();
             }
         }
 

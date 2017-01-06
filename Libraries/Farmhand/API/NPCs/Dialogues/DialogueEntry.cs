@@ -1,16 +1,41 @@
 ﻿namespace Farmhand.API.NPCs.Dialogues
 {
+    /// <summary>
+    ///     A single dialogue entry.
+    /// </summary>
     public class DialogueEntry
     {
-        public string DialogueId { get; set; }
-        public string Message { get; set; }
-
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="DialogueEntry" /> class.
+        /// </summary>
+        /// <param name="dialogueId">
+        ///     The dialogue entry ID.
+        /// </param>
+        /// <param name="message">
+        ///     The message text.
+        /// </param>
         public DialogueEntry(string dialogueId, string message)
         {
-            DialogueId = dialogueId;
-            Message = message;
+            this.DialogueId = dialogueId;
+            this.Message = message;
         }
 
-        public override string ToString() => Message;
+        /// <summary>
+        ///     Gets or sets the dialogue ID.
+        /// </summary>
+        public string DialogueId { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the message text.
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        ///     Gets the dialogue text.
+        /// </summary>
+        /// <returns>
+        ///     The dialogue text.
+        /// </returns>
+        public override string ToString() => this.Message;
     }
 }

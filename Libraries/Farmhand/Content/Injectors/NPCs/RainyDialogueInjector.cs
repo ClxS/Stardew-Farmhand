@@ -35,7 +35,7 @@
 
             foreach (var npc in Npc.Npcs)
             {
-                rainyDialogue[npc.Value.Item1.Name] = npc.Value.Item1.Dialogues.GetRainyDialogue;
+                rainyDialogue[npc.Value.Item1.Name] = npc.Value.Item1.Dialogues.RainyDialogue.ToString();
             }
         }
 
