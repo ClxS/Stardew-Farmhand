@@ -222,8 +222,8 @@
     <Compile Include="Events\Arguments\LocationEvents\EventArgsOnCurrentLocationChanged.cs" />
     <Compile Include="Events\Arguments\LocationEvents\EventArgsGetMonsterForThisLevel.cs" />
     <Compile Include="Events\Arguments\LocationEvents\EventArgsOnBeforeWarp.cs" />
+    <Compile Include="Events\Arguments\MailEvents\EventArgsOpenedLetter.cs" />
     <Compile Include="Events\Arguments\MailEvents\EventArgsOpenedMail.cs" />
-    <Compile Include="Events\Arguments\MailEvents\EventArgsOpenedMailWithAttachment.cs" />
     <Compile Include="Events\Arguments\MenuEvents\EventArgsOnMenuChanged.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnFarmerChanged.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\EventArgsOnItemAddedToInventory.cs" />
