@@ -1,5 +1,7 @@
 ﻿namespace Farmhand.API.NPCs.Schedules
 {
+    using Farmhand.API.NPCs.Characteristics;
+
     /// <summary>
     ///     The schedule directions.
     /// </summary>
@@ -64,7 +66,7 @@
             string mapName,
             int posX,
             int posY,
-            int facing,
+            Direction facing,
             string end = null,
             bool behavior = false)
         {
@@ -132,7 +134,7 @@
         /// <summary>
         ///     Gets or sets the facing direction.
         /// </summary>
-        public int FacingDirection { get; set; }
+        public Direction FacingDirection { get; set; }
 
         /// <summary>
         ///     Gets or sets the end behavior.
@@ -168,7 +170,7 @@
                                     ? $"\\\" {this.EndMessage}\\\""
                                     : (this.EndBehavior != null ? $" {this.EndBehavior}" : string.Empty)
                               : string.Empty;
-            return $"{this.TimeOfDay} {this.MapName} {this.EndX} {this.EndY} {this.FacingDirection}{message}";
+            return $"{this.TimeOfDay} {this.MapName} {this.EndX} {this.EndY} {(int)this.FacingDirection}{message}";
         }
     }
 }

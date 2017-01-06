@@ -6,6 +6,7 @@ using Farmhand.API.NPCs.Schedules;
 using Microsoft.Xna.Framework;
 using StardewValley;
 
+
 namespace TestNPCMod.NPCs
 {
     public class Troy : Farmhand.Overrides.Character.NPC
@@ -18,20 +19,20 @@ namespace TestNPCMod.NPCs
             DisplayName = "Troy",
             Texture = TestNpcMod.Instance.ModSettings.GetTexture("sprite_TestNPC"),
             Portrait = TestNpcMod.Instance.ModSettings.GetTexture("sprite_TestNPC_Portrait"),
-            Age = NpcInformation.NpcAge.Teen,
-            Manners = NpcInformation.NpcManners.Polite,
-            SocialAnxiety = NpcInformation.NpcSocial.Shy,
-            Optimism = NpcInformation.NpcOptimism.Positive,
-            Gender = NpcInformation.NpcGender.Male,
-            HomeRegion = NpcInformation.NpcHomeRegion.Town,
+            Age = Farmhand.API.NPCs.Characteristics.Age.Teen,
+            Manners = Farmhand.API.NPCs.Characteristics.Manners.Polite,
+            SocialAnxiety = Farmhand.API.NPCs.Characteristics.SocialAttitude.Shy,
+            Optimism = Farmhand.API.NPCs.Characteristics.Optimism.Positive,
+            Gender = Farmhand.API.NPCs.Characteristics.Gender.Male,
+            HomeRegion = Farmhand.API.NPCs.Characteristics.HomeRegion.Town,
 
-            BirthdaySeason = NpcUtility.BirthdaySeason.Winter,
+            BirthdaySeason = Farmhand.API.NPCs.Characteristics.BirthdaySeason.Winter,
             BirthdayDate = 13,
 
             DefaultX = 64,
             DefaultY = 17,
-            DefaultMap = NpcUtility.Maps.Farm,
-            DefaultFacingDirection = NpcInformation.NpcDirection.West,
+            DefaultMap = Farmhand.API.Locations.DefaultMaps.Farm,
+            DefaultFacingDirection = Farmhand.API.NPCs.Characteristics.Direction.West,
 
             IsDatable = false,
 
@@ -80,13 +81,12 @@ namespace TestNPCMod.NPCs
                         {
                             Directions = new List<ScheduleDirections>
                             {
-                                new ScheduleDirections(1000, NpcUtility.Maps.WizardHouse, 11, 13,
-                                    NpcUtility.Direction.East),
-                                new ScheduleDirections(1200, NpcUtility.Maps.Mountain, 57, 20, NpcUtility.Direction.West,
-                                    "Nothing beats the fresh mountain breeze... Don't you think?"),
-                                new ScheduleDirections(1900, NpcUtility.Maps.WizardHouse, 2, 6,
-                                    NpcUtility.Direction.West,
-                                    "I'm not sure what it is, but something doesn't feel right.")
+                                new ScheduleDirections(1000, Farmhand.API.Locations.DefaultMaps.WizardHouse, 11, 13,
+                                    Farmhand.API.NPCs.Characteristics.Direction.East),
+                                new ScheduleDirections(1200, Farmhand.API.Locations.DefaultMaps.Mountain, 57, 20,
+                                    Farmhand.API.NPCs.Characteristics.Direction.West, "Nothing beats the fresh mountain breeze... Don't you think?"),
+                                new ScheduleDirections(1900, Farmhand.API.Locations.DefaultMaps.WizardHouse, 2, 6,
+                                    Farmhand.API.NPCs.Characteristics.Direction.West, "I'm not sure what it is, but something doesn't feel right.")
                             }
                         },
                         new SchedulePathInformation("default")
@@ -100,15 +100,15 @@ namespace TestNPCMod.NPCs
                         {
                             Directions = new List<ScheduleDirections>
                             {
-                                new ScheduleDirections(1000, NpcUtility.Maps.WizardHouse, 2, 16,
-                                    NpcUtility.Direction.West),
-                                new ScheduleDirections(1400, NpcUtility.Maps.WizardHouse, 3, 19,
-                                    NpcUtility.Direction.South),
-                                new ScheduleDirections(1700, NpcUtility.Maps.WizardHouse, 11, 13,
-                                    NpcUtility.Direction.North,
+                                new ScheduleDirections(1000, Farmhand.API.Locations.DefaultMaps.WizardHouse, 2, 16,
+                                    Farmhand.API.NPCs.Characteristics.Direction.West),
+                                new ScheduleDirections(1400, Farmhand.API.Locations.DefaultMaps.WizardHouse, 3, 19,
+                                    Farmhand.API.NPCs.Characteristics.Direction.South),
+                                new ScheduleDirections(1700, Farmhand.API.Locations.DefaultMaps.WizardHouse, 11, 13,
+                                    Farmhand.API.NPCs.Characteristics.Direction.North,
                                     "The rain always annoyed me in the past, But now I find it kind of soothing.#$e#Why is that I wonder..."),
-                                new ScheduleDirections(2100, NpcUtility.Maps.WizardHouse, 2, 6,
-                                    NpcUtility.Direction.West)
+                                new ScheduleDirections(2100, Farmhand.API.Locations.DefaultMaps.WizardHouse, 2, 6,
+                                    Farmhand.API.NPCs.Characteristics.Direction.West)
                             }
                         }
                     }
