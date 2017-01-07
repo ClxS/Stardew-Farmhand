@@ -841,17 +841,13 @@ Global
 		{252ED98F-B947-4D38-A8D0-AC90A5BCBE7C}.Release|Documentation.ActiveCfg = Release|Any CPU
 		{252ED98F-B947-4D38-A8D0-AC90A5BCBE7C}.Release|Installer.ActiveCfg = Release|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Documentation.ActiveCfg = Debug|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Documentation.Build.0 = Debug|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Installer.ActiveCfg = Debug|Any CPU
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Installer.Build.0 = Debug|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Documentation.ActiveCfg = Release|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Documentation.Build.0 = Release|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Installer.ActiveCfg = Release|Any CPU
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Installer.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
