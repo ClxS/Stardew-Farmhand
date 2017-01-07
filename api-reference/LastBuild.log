@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder and Tools" version="2015.10.10.0" projectFile="C:\projects\stardew-farmhand\Documentation\Farmhand\Farmhand.shfbproj" started="1/1/2017 10:11:39 PM">
+<shfbBuild product="Sandcastle Help File Builder and Tools" version="2015.10.10.0" projectFile="C:\projects\stardew-farmhand\Documentation\Farmhand\Farmhand.shfbproj" started="1/7/2017 4:29:36 PM">
 <buildStep step="Initializing">
 Finding tools...
 The Sandcastle tools are located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\&#39;
@@ -53,23 +53,23 @@ References to include (excluding framework assemblies):
 Copying XML comments files
     C:\projects\stardew-farmhand\Bin\Farmhand.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Farmhand.XML
 SHFB: Warning BE0063: &#39;C:\projects\stardew-farmhand\Libraries\Farmhand\..\..\Bin\Farmhand.XML&#39; matches a previously copied comments filename.  The duplicate will be copied to a unique name to preserve the comments it contains.
-    C:\projects\stardew-farmhand\Libraries\Farmhand\..\..\Bin\Farmhand.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\{8b17a6f9-0a8d-4aae-87a2-7db74a5c4a8c}
+    C:\projects\stardew-farmhand\Libraries\Farmhand\..\..\Bin\Farmhand.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\{7207bdb0-6b58-470b-a110-dd92fb134421}
     C:\projects\stardew-farmhand\Libraries\FarmhandCharacter\..\..\Bin\FarmhandCharacter.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\FarmhandCharacter.XML
     C:\projects\stardew-farmhand\Libraries\FarmhandGame\..\..\Bin\FarmhandGame.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\FarmhandGame.XML
     C:\projects\stardew-farmhand\Libraries\FarmhandUI\..\..\Bin\FarmhandUI.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\FarmhandUI.XML
 </buildStep>
 <buildStep step="GenerateSharedContent">
 Generating shared content files (en-US, English (United States))...
-    Last step completed in 00:00:00.0167
+    Last step completed in 00:00:00.0313
 </buildStep>
 <buildStep step="GenerateApiFilter">
 Generating API filter for MRefBuilder...
-    Last step completed in 00:00:00.0146
+    Last step completed in 00:00:00.0156
 </buildStep>
 <buildStep step="GenerateReflectionInfo">
 Generating reflection information...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateRefInfo.proj]
-Build started 1/1/2017 10:11:41 PM.
+Build started 1/7/2017 4:29:38 PM.
 The target &quot;_ConvertPdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,37)&quot; does not exist in the project, and will be ignored.
 The target &quot;_CollectPdbFiles&quot; listed in an AfterTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,70)&quot; does not exist in the project, and will be ignored.
 The target &quot;_CollectMdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,38)&quot; does not exist in the project, and will be ignored.
@@ -82,7 +82,7 @@ GenerateRefInfo:
   Copyright c 2006-2015, Microsoft Corporation, All Rights Reserved.
   Portions Copyright c 2006-2015, Eric Woodruff, All Rights Reserved.
   Loaded 5 assemblies for reflection and 12 dependency assemblies.
-  Wrote information on 57 namespaces, 519 types, and 3287 members
+  Wrote information on 56 namespaces, 495 types, and 3153 members
   Copying file from &quot;reflection.org&quot; to &quot;reflection.all&quot;.
   XslTransform (v2015.10.10.0)
   Copyright c 2006-2015, Microsoft Corporation, All Rights Reserved.
@@ -92,13 +92,13 @@ Done Building Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\
 
 Build succeeded.
 
-Time Elapsed 00:00:03.20
-    Last step completed in 00:00:03.3193
+Time Elapsed 00:00:02.85
+    Last step completed in 00:00:02.9375
 </buildStep>
 <buildStep step="TransformReflectionInfo">
 Transforming reflection output...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - TransformManifest.proj]
-Build started 1/1/2017 10:11:44 PM.
+Build started 1/7/2017 4:29:41 PM.
 Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\TransformManifest.proj&quot; on node 1 (default targets).
 TransformManifest:
   XslTransform (v2015.10.10.0)
@@ -108,7 +108,7 @@ TransformManifest:
   Copying file from &quot;reflection.xml&quot; to &quot;reflection.ungrouped&quot;.
   AddNamespaceGroups (v2015.10.10.0)
   Copyright c 2006-2015, Eric Woodruff, All Rights Reserved
-  Added 7 namespace group entries
+  Added 8 namespace group entries
   Copying file from &quot;reflection.xml&quot; to &quot;reflection.nofilenames&quot;.
   XslTransform (v2015.10.10.0)
   Copyright c 2006-2015, Microsoft Corporation, All Rights Reserved.
@@ -129,7 +129,7 @@ TransformManifest:
     Unique name M_Farmhand_API_Locations_LocationUtilities_MergeMaps_1 generated for M:Farmhand.API.Locations.LocationUtilities.MergeMaps(xTile.Map,System.String)
     Unique name M_Farmhand_API_Locations_MapInformation__ctor_1 generated for M:Farmhand.API.Locations.MapInformation.#ctor(Farmhand.Mod,xTile.Map,System.Int32,System.Int32,Farmhand.API.Locations.MapOverride)
     Unique name M_Farmhand_API_NPCs_Schedules_ScheduleDirections__ctor_1 generated for M:Farmhand.API.NPCs.Schedules.ScheduleDirections.#ctor(System.Boolean,System.String)
-    Unique name M_Farmhand_API_NPCs_Schedules_ScheduleDirections__ctor_2 generated for M:Farmhand.API.NPCs.Schedules.ScheduleDirections.#ctor(System.Int32,System.String,System.Int32,System.Int32,System.Int32,System.String,System.Boolean)
+    Unique name M_Farmhand_API_NPCs_Schedules_ScheduleDirections__ctor_2 generated for M:Farmhand.API.NPCs.Schedules.ScheduleDirections.#ctor(System.Int32,System.String,System.Int32,System.Int32,Farmhand.API.NPCs.Characteristics.Direction,System.String,System.Boolean)
     Unique name M_Farmhand_API_Player_Player_AddObject_1 generated for M:Farmhand.API.Player.Player.AddObject(System.Int32,StardewValley.Farmer)
     Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_1 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,Farmhand.API.Shops.Shops,Farmhand.API.Items.BigCraftableInformation,System.Int32,System.Int32)
     Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_2 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,Farmhand.API.Shops.Shops,Farmhand.API.Items.ItemInformation,Farmhand.API.Shops.ShopUtilities.CheckIfAddShopStock,System.Int32,System.Int32)
@@ -151,10 +151,10 @@ TransformManifest:
     Unique name M_Farmhand_Attributes_HookRedirectConstructorToMethodAttribute__ctor_1 generated for M:Farmhand.Attributes.HookRedirectConstructorToMethodAttribute.#ctor(System.String,System.String,System.Type[])
     Unique name M_Farmhand_Content_ContentManager__ctor_1 generated for M:Farmhand.Content.ContentManager.#ctor(System.IServiceProvider,System.String,System.Globalization.CultureInfo,System.String)
     Unique name M_Farmhand_Events_GlobalRouteManager_GlobalRoutePostInvoke_1 generated for M:Farmhand.Events.GlobalRouteManager.GlobalRoutePostInvoke(System.Int32,System.String,System.String,System.Object[])
-    Unique name M_Farmhand_Helpers_Randomizer__ctor_1 generated for M:Farmhand.Helpers.Randomizer.#ctor(System.Func{System.Double})
-    Unique name M_Farmhand_Helpers_Randomizer__ctor_2 generated for M:Farmhand.Helpers.Randomizer.#ctor(System.UInt32)
     Unique name M_Farmhand_Helpers_UniqueId_1_Equals_1 generated for M:Farmhand.Helpers.UniqueId`1.Equals(System.Object)
     Unique name M_Farmhand_Helpers_UniqueId_1_Equals_2 generated for M:Farmhand.Helpers.UniqueId`1.Equals(`0)
+    Unique name M_Farmhand_Helpers_Randomizer_Randomizer__ctor_1 generated for M:Farmhand.Helpers.Randomizer.Randomizer.#ctor(System.Func{System.Double})
+    Unique name M_Farmhand_Helpers_Randomizer_Randomizer__ctor_2 generated for M:Farmhand.Helpers.Randomizer.Randomizer.#ctor(System.UInt32)
     Unique name M_Farmhand_Overrides_Game_Item_BigCraftable__ctor_1 generated for M:Farmhand.Overrides.Game.Item.BigCraftable.#ctor(Farmhand.API.Items.BigCraftableInformation,Microsoft.Xna.Framework.Vector2,System.Boolean)
     Unique name M_Farmhand_Overrides_Game_Item_StardewObject__ctor_1 generated for M:Farmhand.Overrides.Game.Item.StardewObject.#ctor(Microsoft.Xna.Framework.Vector2,System.Int32,System.Boolean)
     Unique name M_Farmhand_Overrides_Game_Item_StardewObject__ctor_2 generated for M:Farmhand.Overrides.Game.Item.StardewObject.#ctor(Microsoft.Xna.Framework.Vector2,System.Int32,System.Int32)
@@ -191,17 +191,17 @@ Done Building Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\
 
 Build succeeded.
 
-Time Elapsed 00:00:01.96
-    Last step completed in 00:00:02.0156
+Time Elapsed 00:00:02.00
+    Last step completed in 00:00:02.0625
 </buildStep>
 <buildStep step="GenerateNamespaceSummaries">
 Generating namespace summary information...
-    Last step completed in 00:00:00.1406
+    Last step completed in 00:00:00.1875
 </buildStep>
 <buildStep step="CopyAdditionalContent">
 Copying additional content files...
 No additional content to copy
-    Last step completed in 00:00:00.0156
+    Last step completed in 00:00:00.0000
 </buildStep>
 <buildStep step="MergeTablesOfContents">
 Merging conceptual and additional tables of contents...
@@ -210,7 +210,7 @@ Merging conceptual and additional tables of contents...
 <buildStep step="GenerateIntermediateTableOfContents">
 Generating intermediate table of contents file...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateIntermediateTOC.proj]
-Build started 1/1/2017 10:11:46 PM.
+Build started 1/7/2017 4:29:43 PM.
 Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\GenerateIntermediateTOC.proj&quot; on node 1 (default targets).
 GenerateIntermediateTOC:
   XslTransform (v2015.10.10.0)
@@ -221,24 +221,24 @@ Done Building Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\
 
 Build succeeded.
 
-Time Elapsed 00:00:00.26
+Time Elapsed 00:00:00.40
 Generating conceptual content intermediate TOC file...
-    Last step completed in 00:00:00.3281
+    Last step completed in 00:00:00.4688
 </buildStep>
 <buildStep step="CreateBuildAssemblerConfigs">
 Creating Sandcastle configuration files...
     sandcastle.config
-    Last step completed in 00:00:00.2344
+    Last step completed in 00:00:00.1563
 </buildStep>
 <buildStep step="MergeCustomConfigs">
 Merging custom build component configurations
 C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\sandcastle.config
-    Last step completed in 00:00:00.0000
+    Last step completed in 00:00:00.0156
 </buildStep>
 <buildStep step="BuildReferenceTopics">
 Building reference help topics...
 [C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - BuildReferenceTopics.proj]
-Build started 1/1/2017 10:11:47 PM.
+Build started 1/7/2017 4:29:44 PM.
 Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\BuildReferenceTopics.proj&quot; on node 1 (default targets).
 BuildReferenceTopics:
   BuildAssembler (v2015.10.10.0)
@@ -247,20 +247,20 @@ BuildReferenceTopics:
   Loading configuration...
   ResolveReferenceLinksComponent: The MSDN content ID cache &#39;C:\Users\appveyor\AppData\Local\EWSoftware\Sandcastle Help File Builder\Cache\MsdnContentId.cache&#39; does not exist yet.  All IDs will be looked up in this build which will slow it down.
   Processing topics...
-  Processed 2559 topic(s)
+  Processed 2448 topic(s)
   CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 7 of 15.
   CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 6 of 30.
-  ResolveReferenceLinksComponent: New MSDN content ID cache size: 157 entries
+  ResolveReferenceLinksComponent: New MSDN content ID cache size: 117 entries
 Done Building Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\BuildReferenceTopics.proj&quot; (default targets).
 
 Build succeeded.
 
-Time Elapsed 00:01:05.89
-    Last step completed in 00:01:05.9692
+Time Elapsed 00:00:46.41
+    Last step completed in 00:00:46.5137
 </buildStep>
 <buildStep step="CombiningIntermediateTocFiles">
 Combining conceptual and API intermediate TOC files...
-    Last step completed in 00:00:00.0313
+    Last step completed in 00:00:00.0156
 </buildStep>
 <buildStep step="ExtractingHtmlInfo">
 Extracting HTML info for HTML Help 1 and/or website...
@@ -272,11 +272,11 @@ E-Mail: Eric@EWoodruff.us
 Using LCID &#39;1033&#39;, code page &#39;65001&#39;, encoding charset &#39;UTF-8&#39;.
 
 Processing website files in C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website
-Processed 2559 HTML files
+Processed 2448 HTML files
 Sorting keywords and generating See Also indices
 Saving website keyword index to C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\WebKI.xml
 Saving website table of contents to C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\WebTOC.xml
-    Last step completed in 00:00:02.1613
+    Last step completed in 00:00:01.9276
 </buildStep>
 <buildStep step="CopyStandardHelpContent">
 Copying standard help content...
@@ -365,7 +365,7 @@ C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyle
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\TOC.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\TOC.css
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\TOC.js -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\TOC.js
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\Web.Config -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\Web.Config
-    Last step completed in 00:00:00.4219
+    Last step completed in 00:00:00.5906
 </buildStep>
 <buildStep step="GenerateHelpFormatTableOfContents">
 Generating website table of contents file...
@@ -374,7 +374,7 @@ Generating website table of contents file...
 <buildStep step="GenerateFullTextIndex">
 Generating full-text index for the website...
 
-    Last step completed in 00:00:04.5312
+    Last step completed in 00:00:04.3101
 </buildStep>
 <buildStep step="CopyingWebsiteFiles">
 Copying website files to output folder...
@@ -384,16 +384,16 @@ Copied 1000 files
 Copied 1500 files
 Copied 2000 files
 Copied 2500 files
-Copied 2672 files for the website content
-    Last step completed in 00:00:01.0469
+Copied 2561 files for the website content
+    Last step completed in 00:00:00.9377
 </buildStep>
 <buildStep step="CleanIntermediates">
 Removing intermediate files...
-    Last step completed in 00:00:00.2969
+    Last step completed in 00:00:00.2813
 </buildStep>
 <buildStep step="Completed">
 
-Build completed successfully at 1/1/2017 10:13:01 PM.  Total time: 00:01:22.1151
+Build completed successfully at 1/7/2017 4:30:38 PM.  Total time: 00:01:02.0477
 
 </buildStep>
 </shfbBuild>
