@@ -297,7 +297,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Farmhand", "Documentation\Farmhand\Farmhand.shfbproj", "{59F0456F-20B9-4C5B-AF84-EF55A6D2906B}"
 	ProjectSection(ProjectDependencies) = postProject
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F} = {6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}
 		{C12052C1-872A-4B04-97FB-9347A4539C87} = {C12052C1-872A-4B04-97FB-9347A4539C87}
 	EndProjectSection
 EndProject
@@ -408,10 +407,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModTemplate", "Mods\ModTemp
 	ProjectSection(ProjectDependencies) = postProject
 		{C12052C1-872A-4B04-97FB-9347A4539C87} = {C12052C1-872A-4B04-97FB-9347A4539C87}
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PresentationStyles", "PresentationStyles", "{EFC943F6-358A-45B4-80F1-064536F65945}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationStyles", "Documentation\PresentationStyles\Source\PresentationStyles.csproj", "{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -840,12 +835,6 @@ Global
 		{252ED98F-B947-4D38-A8D0-AC90A5BCBE7C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{252ED98F-B947-4D38-A8D0-AC90A5BCBE7C}.Release|Documentation.ActiveCfg = Release|Any CPU
 		{252ED98F-B947-4D38-A8D0-AC90A5BCBE7C}.Release|Installer.ActiveCfg = Release|Any CPU
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Documentation.ActiveCfg = Debug|Any CPU
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Installer.ActiveCfg = Debug|Any CPU
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Documentation.ActiveCfg = Release|Any CPU
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Installer.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -905,7 +894,5 @@ Global
 		{EC6EEC58-4907-4A9B-B76D-30F20B4AAC39} = {17763EAD-C4E7-4DC1-95D7-B70892939CF0}
 		{E17E0031-5951-41E4-8949-7695E8387A3F} = {8090819E-F6FF-4299-AA01-8088ABCA8D05}
 		{252ED98F-B947-4D38-A8D0-AC90A5BCBE7C} = {D8EB8FAC-BCAC-499D-BD13-81672F19F0E9}
-		{EFC943F6-358A-45B4-80F1-064536F65945} = {A81F8DF5-6398-4D3D-9E7A-BE5C7C90CD6B}
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F} = {EFC943F6-358A-45B4-80F1-064536F65945}
 	EndGlobalSection
 EndGlobal
