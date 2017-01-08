@@ -43,7 +43,7 @@ build_script:
     $buildArgs = @(
       "/m",
       "/l:C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll",
-      "/p:Platform=\"Any CPU\"",
+      '/p:Platform="Any CPU"',
       "/p:Configuration=$env:CONFIGURATION",
       "/p:DefineConstants=WINDOWS"
       "/v:m")
