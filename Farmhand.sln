@@ -411,7 +411,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModTemplate", "Mods\ModTemp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PresentationStyles", "PresentationStyles", "{EFC943F6-358A-45B4-80F1-064536F65945}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationStyles", "Documentation\PresentationStyles\PresentationStyles.csproj", "{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationStyles", "Documentation\PresentationStyles\Source\PresentationStyles.csproj", "{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -842,11 +842,9 @@ Global
 		{252ED98F-B947-4D38-A8D0-AC90A5BCBE7C}.Release|Installer.ActiveCfg = Release|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Documentation.ActiveCfg = Debug|Any CPU
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Documentation.Build.0 = Debug|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Debug|Installer.ActiveCfg = Debug|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Documentation.ActiveCfg = Release|Any CPU
-		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Documentation.Build.0 = Release|Any CPU
 		{6F6DD3A5-9C9E-448A-963D-C047D0FBDE3F}.Release|Installer.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

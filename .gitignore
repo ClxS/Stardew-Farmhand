@@ -5,6 +5,7 @@
 
 *.dll
 !xml2json-xsl.dll
+!PresentationStyles.dll
 
 packages/
 *.symlink
