@@ -43,17 +43,21 @@ build_script:
     $buildArgs = @(
       "/m",
       "/l:C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll",
+      "/p:Platform=\"Any CPU\"",
       "/p:Configuration=$env:CONFIGURATION",
       "/p:DefineConstants=WINDOWS"
       "/v:m")
 
     # If build is not a scheduled one, than simply build project with MSBuild.
     if ($env:APPVEYOR_SCHEDULED_BUILD -ne "True") {
+      Write-Host "Compiling AnyCPU"
+
       & $buildCmd $buildArgs
       
       # If we're on the release branch and a tag was just pushed
       if ($env:APPVEYOR_REPO_TAG -eq "True") {
         # Build documentation
+        Write-Host "Compiling Documentation"
         $buildArgs = @(
           "/m",
           "/t:Documentation\Farmhand"
@@ -65,6 +69,7 @@ build_script:
         & $buildCmd $buildArgs
 
         # Build the installer
+        Write-Host "Compiling Installer"
         $buildArgs = @(
           "/m",
           "/l:C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll",
