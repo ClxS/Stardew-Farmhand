@@ -8,6 +8,9 @@
 
     using Microsoft.Xna.Framework.Graphics;
 
+    /// <summary>
+    ///     Information about a mod NPC.
+    /// </summary>
     public class NpcInformation
     {
         /// <summary>
