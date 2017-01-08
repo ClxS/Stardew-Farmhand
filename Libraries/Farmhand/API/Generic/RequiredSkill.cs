@@ -3,7 +3,7 @@ namespace Farmhand.API.Generic
     /// <summary>
     ///     Used to define a skill requirement.
     /// </summary>
-    public class RequiredSkillRequiredSkill
+    public class RequiredSkill
     {
         /// <summary>
         ///     Gets or sets the skill level required.

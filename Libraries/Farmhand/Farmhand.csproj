@@ -161,7 +161,7 @@
     <Compile Include="API\Player\Player.cs" />
     <Compile Include="API\Crafting\RecipeUnlockType.cs" />
     <Compile Include="API\Generic\RequiredSkill.cs" />
-    <Compile Include="API\Generic\Skill.cs" />
+    <Compile Include="API\Player\Skill.cs" />
     <Compile Include="API\Shops\ShopUtilities.cs" />
     <Compile Include="API\Utilities\TextureUtility.cs" />
     <Compile Include="Attributes\HookAlterProtectionAttribute.cs" />
