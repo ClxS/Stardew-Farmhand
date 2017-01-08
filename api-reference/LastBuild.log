@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shfbBuild product="Sandcastle Help File Builder and Tools" version="2015.10.10.0" projectFile="C:\projects\stardew-farmhand\Documentation\Farmhand\Farmhand.shfbproj" started="1/8/2017 1:00:13 PM">
+<buildStep step="Initializing">
+Finding tools...
+The Sandcastle tools are located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\&#39;
+Locating components in the following folder(s):
+    C:\projects\stardew-farmhand\Documentation\PresentationStyles\Compiled\
+    C:\projects\stardew-farmhand\Documentation\Farmhand
+    C:\ProgramData\EWSoftware\Sandcastle Help File Builder\Components and Plug-Ins\
+    C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\
+Framework reflection data location: C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\Data\.NETFramework
+    Last step completed in 00:00:02.2687
+</buildStep>
+<buildStep step="Failed">
+
+SHFB: Error BE0001: The PresentationStyle property value of &#39;Farmhand&#39; is not recognized as a valid presentation style definition
+   at SandcastleBuilder.Utils.BuildEngine.BuildProcess.Build()
+
+</buildStep>
+</shfbBuild>
