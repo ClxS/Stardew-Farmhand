@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder and Tools" version="2015.10.10.0" projectFile="C:\projects\stardew-farmhand\Documentation\Farmhand\Farmhand.shfbproj" started="1/8/2017 2:06:46 PM">
+<shfbBuild product="Sandcastle Help File Builder and Tools" version="2015.10.10.0" projectFile="C:\projects\stardew-farmhand\Documentation\Farmhand\Farmhand.shfbproj" started="1/8/2017 2:43:37 PM">
 <buildStep step="Initializing">
 Finding tools...
 The Sandcastle tools are located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\&#39;
@@ -9,12 +9,390 @@ Locating components in the following folder(s):
     C:\ProgramData\EWSoftware\Sandcastle Help File Builder\Components and Plug-Ins\
     C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\
 Framework reflection data location: C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\Data\.NETFramework
-    Last step completed in 00:00:01.6842
+Using presentation style &#39;VS2013&#39; located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013&#39;
+Loading and initializing plug-ins...
+Lightweight Website Style Version 2015.10.10.0
+Copyright &#169; 2006-2015, Eric Woodruff, All Rights Reserved
+Portions Copyright &#169; 2014, Sam Harwell, All Rights Reserved
+-------------------------------
+Clearing any prior web/markdown output...
 </buildStep>
-<buildStep step="Failed">
+<buildStep step="ValidatingDocumentationSources">
+Validating and copying documentation source information
+Source: C:\projects\stardew-farmhand\Bin\Farmhand.dll
+    Found assembly &#39;C:\projects\stardew-farmhand\Bin\Farmhand.dll&#39;
+Source: C:\projects\stardew-farmhand\Bin\Farmhand.XML
+Source: C:\projects\stardew-farmhand\Libraries\Farmhand\Farmhand.csproj
+    Found project &#39;C:\projects\stardew-farmhand\Libraries\Farmhand\Farmhand.csproj&#39;
+Source: C:\projects\stardew-farmhand\Libraries\FarmhandCharacter\FarmhandCharacter.csproj
+    Found project &#39;C:\projects\stardew-farmhand\Libraries\FarmhandCharacter\FarmhandCharacter.csproj&#39;
+Source: C:\projects\stardew-farmhand\Libraries\FarmhandGame\FarmhandGame.csproj
+    Found project &#39;C:\projects\stardew-farmhand\Libraries\FarmhandGame\FarmhandGame.csproj&#39;
+Source: C:\projects\stardew-farmhand\Libraries\FarmhandUI\FarmhandUI.csproj
+    Found project &#39;C:\projects\stardew-farmhand\Libraries\FarmhandUI\FarmhandUI.csproj&#39;
 
-SHFB: Error BE0001: The PresentationStyle property value of &#39;Farmhand&#39; is not recognized as a valid presentation style definition
-   at SandcastleBuilder.Utils.BuildEngine.BuildProcess.Build()
+Parsing project files
+    Found assembly &#39;C:\projects\stardew-farmhand\Libraries\Farmhand\..\..\Bin\Farmhand.dll&#39;
+    Found assembly &#39;C:\projects\stardew-farmhand\Libraries\FarmhandCharacter\..\..\Bin\FarmhandCharacter.dll&#39;
+    Found assembly &#39;C:\projects\stardew-farmhand\Libraries\FarmhandGame\..\..\Bin\FarmhandGame.dll&#39;
+    Found assembly &#39;C:\projects\stardew-farmhand\Libraries\FarmhandUI\..\..\Bin\FarmhandUI.dll&#39;
+
+References to include (excluding framework assemblies):
+    Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553
+    Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86
+    Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553
+    Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553
+    Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86
+    Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL
+    Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL
+    Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL
+    Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL
+    Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL
+    Stardew Farmhand.int1
+    Stardew Farmhand.int1, Version=1.0.5924.126, Culture=neutral, processorArchitecture=x86
+    Stardew Farmhand.int1, Version=1.0.5940.30711, Culture=neutral, processorArchitecture=x86
+    Stardew Valley, Version=1.0.6124.28359, Culture=neutral, processorArchitecture=x86
+    xTile, Version=2.0.4.0, Culture=neutral, processorArchitecture=x86
+    xTile, Version=2.0.4.0, Culture=neutral, PublicKeyToken=null
+
+Copying XML comments files
+    C:\projects\stardew-farmhand\Bin\Farmhand.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Farmhand.XML
+SHFB: Warning BE0063: &#39;C:\projects\stardew-farmhand\Libraries\Farmhand\..\..\Bin\Farmhand.XML&#39; matches a previously copied comments filename.  The duplicate will be copied to a unique name to preserve the comments it contains.
+    C:\projects\stardew-farmhand\Libraries\Farmhand\..\..\Bin\Farmhand.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\{92b2549f-7506-4a84-9be6-55e4c1998299}
+    C:\projects\stardew-farmhand\Libraries\FarmhandCharacter\..\..\Bin\FarmhandCharacter.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\FarmhandCharacter.XML
+    C:\projects\stardew-farmhand\Libraries\FarmhandGame\..\..\Bin\FarmhandGame.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\FarmhandGame.XML
+    C:\projects\stardew-farmhand\Libraries\FarmhandUI\..\..\Bin\FarmhandUI.XML -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\FarmhandUI.XML
+</buildStep>
+<buildStep step="GenerateSharedContent">
+Generating shared content files (en-US, English (United States))...
+<plugIn name="Lightweight Website Style" behavior="After" priority="1000">
+</plugIn>    Last step completed in 00:00:00.0502
+</buildStep>
+<buildStep step="GenerateApiFilter">
+Generating API filter for MRefBuilder...
+    Last step completed in 00:00:00.0157
+</buildStep>
+<buildStep step="GenerateReflectionInfo">
+Generating reflection information...
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateRefInfo.proj]
+Build started 1/8/2017 2:43:39 PM.
+The target &quot;_ConvertPdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,37)&quot; does not exist in the project, and will be ignored.
+The target &quot;_CollectPdbFiles&quot; listed in an AfterTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (34,70)&quot; does not exist in the project, and will be ignored.
+The target &quot;_CollectMdbFiles&quot; listed in a BeforeTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,38)&quot; does not exist in the project, and will be ignored.
+The target &quot;_CopyMdbFiles&quot; listed in an AfterTargets attribute at &quot;C:\Program Files (x86)\MSBuild\14.0\Microsoft.Common.targets\ImportAfter\Xamarin.Common.targets (41,71)&quot; does not exist in the project, and will be ignored.
+Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\GenerateRefInfo.proj&quot; on node 1 (default targets).
+PrepareForBuild:
+  Creating directory &quot;obj\Release\&quot;.
+GenerateRefInfo:
+  MRefBuilder (v2015.10.10.0)
+  Copyright c 2006-2015, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2015, Eric Woodruff, All Rights Reserved.
+  Loaded 5 assemblies for reflection and 12 dependency assemblies.
+  Wrote information on 56 namespaces, 495 types, and 3153 members
+  Copying file from &quot;reflection.org&quot; to &quot;reflection.all&quot;.
+  XslTransform (v2015.10.10.0)
+  Copyright c 2006-2015, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2015, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\MergeDuplicates.xsl&#39;.
+Done Building Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\GenerateRefInfo.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.24
+    Last step completed in 00:00:03.3571
+</buildStep>
+<buildStep step="TransformReflectionInfo">
+Transforming reflection output...
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - TransformManifest.proj]
+Build started 1/8/2017 2:43:42 PM.
+Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\TransformManifest.proj&quot; on node 1 (default targets).
+TransformManifest:
+  XslTransform (v2015.10.10.0)
+  Copyright c 2006-2015, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2015, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\\ProductionTransforms\ApplyVSDocModel.xsl&#39;.
+  Copying file from &quot;reflection.xml&quot; to &quot;reflection.ungrouped&quot;.
+  AddNamespaceGroups (v2015.10.10.0)
+  Copyright c 2006-2015, Eric Woodruff, All Rights Reserved
+  Added 8 namespace group entries
+  Copying file from &quot;reflection.xml&quot; to &quot;reflection.nofilenames&quot;.
+  XslTransform (v2015.10.10.0)
+  Copyright c 2006-2015, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2015, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\AddFilenames.xsl&#39;.
+    Unique name M_Farmhand_ModLoader_DeactivateMod_1 generated for M:Farmhand.ModLoader.DeactivateMod(Farmhand.Registries.Containers.ModManifest,Farmhand.ModState,System.Exception)
+    Unique name M_Farmhand_ModLoader_ReactivateMod_1 generated for M:Farmhand.ModLoader.ReactivateMod(Farmhand.Registries.Containers.ModManifest)
+    Unique name M_Farmhand_API_Dialogues_Dialogue_RegisterNewAnswer_1 generated for M:Farmhand.API.Dialogues.Dialogue.RegisterNewAnswer(System.String,Farmhand.API.Dialogues.DialogueAnswerInformation)
+    Unique name M_Farmhand_API_Dialogues_Dialogue_RegisterNewResult_1 generated for M:Farmhand.API.Dialogues.Dialogue.RegisterNewResult(System.String,System.String,Farmhand.API.Dialogues.DialogueResultInformation)
+    Unique name M_Farmhand_API_Dialogues_Dialogue_RemoveDefaultAnswer_1 generated for M:Farmhand.API.Dialogues.Dialogue.RemoveDefaultAnswer(System.String,Farmhand.API.Dialogues.DialogueAnswerRemovalInformation)
+    Unique name M_Farmhand_API_Dialogues_DialogueAnswerInformation__ctor_1 generated for M:Farmhand.API.Dialogues.DialogueAnswerInformation.#ctor(Farmhand.Mod,Farmhand.API.Dialogues.Answers,System.String,Farmhand.API.Dialogues.DialogueResultInformation,Farmhand.API.Dialogues.Dialogue.IncludeAnswer)
+    Unique name M_Farmhand_API_Dialogues_DialogueAnswerInformation__ctor_2 generated for M:Farmhand.API.Dialogues.DialogueAnswerInformation.#ctor(Farmhand.Mod,System.String,System.String,Farmhand.API.Dialogues.DialogueResultInformation)
+    Unique name M_Farmhand_API_Dialogues_DialogueAnswerInformation__ctor_3 generated for M:Farmhand.API.Dialogues.DialogueAnswerInformation.#ctor(Farmhand.Mod,System.String,System.String,Farmhand.API.Dialogues.DialogueResultInformation,Farmhand.API.Dialogues.Dialogue.IncludeAnswer)
+    Unique name M_Farmhand_API_Dialogues_DialogueAnswerRemovalInformation__ctor_1 generated for M:Farmhand.API.Dialogues.DialogueAnswerRemovalInformation.#ctor(Farmhand.Mod,Farmhand.API.Dialogues.Answers,Farmhand.API.Dialogues.Dialogue.RemoveAnswer)
+    Unique name M_Farmhand_API_Dialogues_DialogueQuestionInformation__ctor_1 generated for M:Farmhand.API.Dialogues.DialogueQuestionInformation.#ctor(Farmhand.Mod,System.Collections.Generic.List{Farmhand.API.Dialogues.DialogueAnswerInformation},System.String,System.String)
+    Unique name M_Farmhand_API_Locations_Location_RegisterAction_1 generated for M:Farmhand.API.Locations.Location.RegisterAction(System.String,Farmhand.API.Locations.MapActionInformation)
+    Unique name M_Farmhand_API_Locations_Location_RegisterTouchAction_1 generated for M:Farmhand.API.Locations.Location.RegisterTouchAction(System.String,Farmhand.API.Locations.MapTouchActionInformation)
+    Unique name M_Farmhand_API_Locations_LocationUtilities_MergeMaps_1 generated for M:Farmhand.API.Locations.LocationUtilities.MergeMaps(xTile.Map,System.String)
+    Unique name M_Farmhand_API_Locations_MapInformation__ctor_1 generated for M:Farmhand.API.Locations.MapInformation.#ctor(Farmhand.Mod,xTile.Map,System.Int32,System.Int32,Farmhand.API.Locations.MapOverride)
+    Unique name M_Farmhand_API_NPCs_Schedules_ScheduleDirections__ctor_1 generated for M:Farmhand.API.NPCs.Schedules.ScheduleDirections.#ctor(System.Boolean,System.String)
+    Unique name M_Farmhand_API_NPCs_Schedules_ScheduleDirections__ctor_2 generated for M:Farmhand.API.NPCs.Schedules.ScheduleDirections.#ctor(System.Int32,System.String,System.Int32,System.Int32,Farmhand.API.NPCs.Characteristics.Direction,System.String,System.Boolean)
+    Unique name M_Farmhand_API_Player_Player_AddObject_1 generated for M:Farmhand.API.Player.Player.AddObject(System.Int32,StardewValley.Farmer)
+    Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_1 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,Farmhand.API.Shops.Shops,Farmhand.API.Items.BigCraftableInformation,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_2 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,Farmhand.API.Shops.Shops,Farmhand.API.Items.ItemInformation,Farmhand.API.Shops.ShopUtilities.CheckIfAddShopStock,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_3 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,Farmhand.API.Shops.Shops,Farmhand.API.Items.ItemInformation,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_4 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,Farmhand.API.Shops.Shops,Farmhand.API.Shops.StockType,System.Int32,Farmhand.API.Shops.ShopUtilities.CheckIfAddShopStock,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_5 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,Farmhand.API.Shops.Shops,Farmhand.API.Shops.StockType,System.Int32,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_6 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,System.String,Farmhand.API.Items.BigCraftableInformation,Farmhand.API.Shops.ShopUtilities.CheckIfAddShopStock,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_7 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,System.String,Farmhand.API.Items.BigCraftableInformation,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_8 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,System.String,Farmhand.API.Items.ItemInformation,Farmhand.API.Shops.ShopUtilities.CheckIfAddShopStock,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_9 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,System.String,Farmhand.API.Items.ItemInformation,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_10 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,System.String,Farmhand.API.Shops.StockType,System.Int32,Farmhand.API.Shops.ShopUtilities.CheckIfAddShopStock,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_ShopUtilities_AddToShopStock_11 generated for M:Farmhand.API.Shops.ShopUtilities.AddToShopStock(Farmhand.Mod,System.String,Farmhand.API.Shops.StockType,System.Int32,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_StockEntry__ctor_1 generated for M:Farmhand.API.Shops.StockEntry.#ctor(Farmhand.Mod,Farmhand.API.Items.BigCraftableInformation,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_StockEntry__ctor_2 generated for M:Farmhand.API.Shops.StockEntry.#ctor(Farmhand.Mod,Farmhand.API.Items.ItemInformation,Farmhand.API.Shops.ShopUtilities.CheckIfAddShopStock,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_StockEntry__ctor_3 generated for M:Farmhand.API.Shops.StockEntry.#ctor(Farmhand.Mod,Farmhand.API.Items.ItemInformation,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_StockEntry__ctor_4 generated for M:Farmhand.API.Shops.StockEntry.#ctor(Farmhand.Mod,Farmhand.API.Shops.StockType,System.Int32,Farmhand.API.Shops.ShopUtilities.CheckIfAddShopStock,System.Int32,System.Int32)
+    Unique name M_Farmhand_API_Shops_StockEntry__ctor_5 generated for M:Farmhand.API.Shops.StockEntry.#ctor(Farmhand.Mod,Farmhand.API.Shops.StockType,System.Int32,System.Int32,System.Int32)
+    Unique name M_Farmhand_Attributes_HookRedirectConstructorFromBaseAttribute__ctor_1 generated for M:Farmhand.Attributes.HookRedirectConstructorFromBaseAttribute.#ctor(System.String,System.String,System.Type[],System.Type[])
+    Unique name M_Farmhand_Attributes_HookRedirectConstructorToMethodAttribute__ctor_1 generated for M:Farmhand.Attributes.HookRedirectConstructorToMethodAttribute.#ctor(System.String,System.String,System.Type[])
+    Unique name M_Farmhand_Content_ContentManager__ctor_1 generated for M:Farmhand.Content.ContentManager.#ctor(System.IServiceProvider,System.String,System.Globalization.CultureInfo,System.String)
+    Unique name M_Farmhand_Events_GlobalRouteManager_GlobalRoutePostInvoke_1 generated for M:Farmhand.Events.GlobalRouteManager.GlobalRoutePostInvoke(System.Int32,System.String,System.String,System.Object[])
+    Unique name M_Farmhand_Helpers_UniqueId_1_Equals_1 generated for M:Farmhand.Helpers.UniqueId`1.Equals(System.Object)
+    Unique name M_Farmhand_Helpers_UniqueId_1_Equals_2 generated for M:Farmhand.Helpers.UniqueId`1.Equals(`0)
+    Unique name M_Farmhand_Helpers_Randomizer_Randomizer__ctor_1 generated for M:Farmhand.Helpers.Randomizer.Randomizer.#ctor(System.Func{System.Double})
+    Unique name M_Farmhand_Helpers_Randomizer_Randomizer__ctor_2 generated for M:Farmhand.Helpers.Randomizer.Randomizer.#ctor(System.UInt32)
+    Unique name M_Farmhand_Overrides_Game_Item_BigCraftable__ctor_1 generated for M:Farmhand.Overrides.Game.Item.BigCraftable.#ctor(Farmhand.API.Items.BigCraftableInformation,Microsoft.Xna.Framework.Vector2,System.Boolean)
+    Unique name M_Farmhand_Overrides_Game_Item_StardewObject__ctor_1 generated for M:Farmhand.Overrides.Game.Item.StardewObject.#ctor(Microsoft.Xna.Framework.Vector2,System.Int32,System.Boolean)
+    Unique name M_Farmhand_Overrides_Game_Item_StardewObject__ctor_2 generated for M:Farmhand.Overrides.Game.Item.StardewObject.#ctor(Microsoft.Xna.Framework.Vector2,System.Int32,System.Int32)
+    Unique name M_Farmhand_Overrides_Game_Item_StardewObject__ctor_3 generated for M:Farmhand.Overrides.Game.Item.StardewObject.#ctor(Microsoft.Xna.Framework.Vector2,System.Int32,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+    Unique name M_Farmhand_Overrides_Game_Item_StardewObject__ctor_4 generated for M:Farmhand.Overrides.Game.Item.StardewObject.#ctor(System.Int32,System.Int32,System.Boolean,System.Int32,System.Int32)
+    Unique name M_Farmhand_Overrides_Game_Item_StardewObject_draw_1 generated for M:Farmhand.Overrides.Game.Item.StardewObject.draw(Microsoft.Xna.Framework.Graphics.SpriteBatch,System.Int32,System.Int32,System.Single,System.Single)
+    Unique name M_Farmhand_Registries_ModRegistry_GetItem_1 generated for M:Farmhand.Registries.ModRegistry.GetItem(System.String)
+    Unique name M_Farmhand_UI_FrameworkMenu__ctor_1 generated for M:Farmhand.UI.FrameworkMenu.#ctor(Microsoft.Xna.Framework.Rectangle,System.Boolean,System.Boolean)
+    Unique name M_Farmhand_UI_GameMenu__ctor_1 generated for M:Farmhand.UI.GameMenu.#ctor(System.Int32,System.Int32)
+    Unique name M_Farmhand_UI_KeyboardSubscriberProxy_RecieveTextInput_1 generated for M:Farmhand.UI.KeyboardSubscriberProxy.RecieveTextInput(System.String)
+    Unique name M_Farmhand_UI_ShopMenu__ctor_1 generated for M:Farmhand.UI.ShopMenu.#ctor(System.Collections.Generic.List{StardewValley.Item},System.Int32,System.String)
+    Unique name M_Farmhand_UI_ShopMenu_CompareShopStocks_1 generated for M:Farmhand.UI.ShopMenu.CompareShopStocks(System.Collections.Generic.List{StardewValley.Item},System.Collections.Generic.List{StardewValley.Item})
+    Unique name M_Farmhand_UI_ShopMenu_GetShopType_1 generated for M:Farmhand.UI.ShopMenu.GetShopType(System.Collections.Generic.List{StardewValley.Item},System.Int32,System.String)
+    Unique name M_Farmhand_UI_Base_BaseInteractiveMenuComponent__ctor_1 generated for M:Farmhand.UI.Base.BaseInteractiveMenuComponent.#ctor(Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Texture2D,System.Nullable{Microsoft.Xna.Framework.Rectangle})
+    Unique name M_Farmhand_UI_Base_BaseKeyboardFormComponent_TextReceived_1 generated for M:Farmhand.UI.Base.BaseKeyboardFormComponent.TextReceived(System.String)
+    Unique name M_Farmhand_UI_Base_BaseMenuComponent__ctor_1 generated for M:Farmhand.UI.Base.BaseMenuComponent.#ctor(Microsoft.Xna.Framework.Rectangle,Microsoft.Xna.Framework.Graphics.Texture2D,System.Nullable{Microsoft.Xna.Framework.Rectangle})
+    Unique name M_Farmhand_UI_Containers_FormCollectionComponent__ctor_1 generated for M:Farmhand.UI.Containers.FormCollectionComponent.#ctor(Microsoft.Xna.Framework.Rectangle,System.Collections.Generic.List{Farmhand.UI.Interfaces.IMenuComponent})
+    Unique name M_Farmhand_UI_Containers_GenericCollectionComponent__ctor_1 generated for M:Farmhand.UI.Containers.GenericCollectionComponent.#ctor(Microsoft.Xna.Framework.Rectangle,System.Collections.Generic.List{Farmhand.UI.Interfaces.IMenuComponent})
+    Unique name M_Farmhand_UI_Form_ButtonFormComponent__ctor_1 generated for M:Farmhand.UI.Form.ButtonFormComponent.#ctor(Microsoft.Xna.Framework.Point,System.String,Farmhand.UI.Base.BaseInteractiveMenuComponent.ClickHandler)
+    Unique name M_Farmhand_UI_Form_DropdownFormComponent__ctor_1 generated for M:Farmhand.UI.Form.DropdownFormComponent.#ctor(Microsoft.Xna.Framework.Point,System.Int32,System.Collections.Generic.List{System.String},Farmhand.UI.Base.BaseInteractiveMenuComponent.ValueChanged{System.String})
+    Unique name M_Farmhand_UI_Form_PlusMinusFormComponent_TextReceived_1 generated for M:Farmhand.UI.Form.PlusMinusFormComponent.TextReceived(System.String)
+    Unique name M_Farmhand_UI_Form_SliderFormComponent__ctor_1 generated for M:Farmhand.UI.Form.SliderFormComponent.#ctor(Microsoft.Xna.Framework.Point,System.Int32,System.Int32,Farmhand.UI.Base.BaseInteractiveMenuComponent.ValueChanged{System.Int32})
+    Unique name M_Farmhand_UI_Form_SliderFormComponent_1__ctor_1 generated for M:Farmhand.UI.Form.SliderFormComponent`1.#ctor(Microsoft.Xna.Framework.Point,System.Int32,System.Collections.Generic.List{`0},Farmhand.UI.Base.BaseInteractiveMenuComponent.ValueChanged{`0})
+    Unique name M_Farmhand_UI_Form_TextboxFormComponent__ctor_1 generated for M:Farmhand.UI.Form.TextboxFormComponent.#ctor(Microsoft.Xna.Framework.Point,System.Int32,Farmhand.UI.Base.BaseInteractiveMenuComponent.ValueChanged{System.String})
+    Unique name M_Farmhand_UI_Form_TextboxFormComponent__ctor_2 generated for M:Farmhand.UI.Form.TextboxFormComponent.#ctor(Microsoft.Xna.Framework.Point,System.Int32,System.Predicate{System.String},Farmhand.UI.Base.BaseInteractiveMenuComponent.ValueChanged{System.String})
+    Unique name M_Farmhand_UI_Form_TextboxFormComponent__ctor_3 generated for M:Farmhand.UI.Form.TextboxFormComponent.#ctor(Microsoft.Xna.Framework.Point,System.Predicate{System.String},Farmhand.UI.Base.BaseInteractiveMenuComponent.ValueChanged{System.String})
+    Unique name M_Farmhand_UI_Form_TextboxFormComponent_TextReceived_1 generated for M:Farmhand.UI.Form.TextboxFormComponent.TextReceived(System.String)
+    Unique name M_Farmhand_UI_Interfaces_IKeyboardComponent_TextReceived_1 generated for M:Farmhand.UI.Interfaces.IKeyboardComponent.TextReceived(System.String)
+  XslTransform (v2015.10.10.0)
+  Copyright c 2006-2015, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2015, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\ReflectionToManifest.xsl&#39;.
+Done Building Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\TransformManifest.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.07
+    Last step completed in 00:00:02.3526
+</buildStep>
+<buildStep step="GenerateNamespaceSummaries">
+Generating namespace summary information...
+    Last step completed in 00:00:00.1562
+</buildStep>
+<buildStep step="CopyAdditionalContent">
+Copying additional content files...
+No additional content to copy
+    Last step completed in 00:00:00.0156
+</buildStep>
+<buildStep step="MergeTablesOfContents">
+Merging conceptual and additional tables of contents...
+    Last step completed in 00:00:00.0000
+</buildStep>
+<buildStep step="GenerateIntermediateTableOfContents">
+Generating intermediate table of contents file...
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - GenerateIntermediateTOC.proj]
+Build started 1/8/2017 2:43:45 PM.
+Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\GenerateIntermediateTOC.proj&quot; on node 1 (default targets).
+GenerateIntermediateTOC:
+  XslTransform (v2015.10.10.0)
+  Copyright c 2006-2015, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2015, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\\ProductionTransforms\CreateVSToc.xsl&#39;.
+Done Building Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\GenerateIntermediateTOC.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.23
+Generating conceptual content intermediate TOC file...
+    Last step completed in 00:00:00.2813
+</buildStep>
+<buildStep step="CreateBuildAssemblerConfigs">
+Creating Sandcastle configuration files...
+    sandcastle.config
+    Last step completed in 00:00:00.1875
+</buildStep>
+<buildStep step="MergeCustomConfigs">
+Merging custom build component configurations
+C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\sandcastle.config
+    Last step completed in 00:00:00.0156
+</buildStep>
+<buildStep step="BuildReferenceTopics">
+Building reference help topics...
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - BuildReferenceTopics.proj]
+Build started 1/8/2017 2:43:45 PM.
+Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\BuildReferenceTopics.proj&quot; on node 1 (default targets).
+BuildReferenceTopics:
+  BuildAssembler (v2015.10.10.0)
+  Copyright c 2006-2015, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright c 2006-2015, Eric Woodruff, All Rights Reserved.
+  Loading configuration...
+  ResolveReferenceLinksComponent: The MSDN content ID cache &#39;C:\Users\appveyor\AppData\Local\EWSoftware\Sandcastle Help File Builder\Cache\MsdnContentId.cache&#39; does not exist yet.  All IDs will be looked up in this build which will slow it down.
+  Processing topics...
+  Processed 2448 topic(s)
+  CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 7 of 15.
+  CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 6 of 30.
+  ResolveReferenceLinksComponent: New MSDN content ID cache size: 117 entries
+Done Building Project &quot;C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\BuildReferenceTopics.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:01:09.12
+    Last step completed in 00:01:09.1858
+</buildStep>
+<buildStep step="CombiningIntermediateTocFiles">
+Combining conceptual and API intermediate TOC files...
+    Last step completed in 00:00:00.0156
+</buildStep>
+<buildStep step="ExtractingHtmlInfo">
+Extracting HTML info for HTML Help 1 and/or website...
+[C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe - ExtractHtmlInfo.proj]
+Sandcastle Help File Builder and Tools, version 2015.10.10.0
+Copyright c 2006-2015, Eric Woodruff, All Rights Reserved
+E-Mail: Eric@EWoodruff.us
+
+Using LCID &#39;1033&#39;, code page &#39;65001&#39;, encoding charset &#39;UTF-8&#39;.
+
+Processing website files in C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website
+Processed 2448 HTML files
+Sorting keywords and generating See Also indices
+Saving website keyword index to C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\WebKI.xml
+Saving website table of contents to C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\WebTOC.xml
+    Last step completed in 00:00:01.7189
+</buildStep>
+<buildStep step="CopyStandardHelpContent">
+Copying standard help content...
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertCaution.png -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\AlertCaution.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertNote.png -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\AlertNote.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\AlertSecurity.png -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\AlertSecurity.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\CFW.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\CFW.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\CodeExample.png -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\CodeExample.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\favicon.ico -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\favicon.ico
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privclass.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\privclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privdelegate.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\privdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privenumeration.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\privenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privevent.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\privevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privextension.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\privextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privfield.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\privfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privinterface.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\privinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privmethod.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\privmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privproperty.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\privproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\privstructure.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\privstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protclass.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\protclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protdelegate.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\protdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protenumeration.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\protenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protevent.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\protevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protextension.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\protextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protfield.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\protfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protinterface.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\protinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protmethod.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\protmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protoperator.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\protoperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protproperty.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\protproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\protstructure.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\protstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubclass.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\pubclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubdelegate.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\pubdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubenumeration.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\pubenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubevent.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\pubevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubextension.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\pubextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubfield.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\pubfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubinterface.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\pubinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubmethod.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\pubmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\puboperator.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\puboperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubproperty.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\pubproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\pubstructure.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\pubstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\SectionCollapsed.png -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\SectionCollapsed.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\SectionExpanded.png -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\SectionExpanded.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\slMobile.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\slMobile.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\static.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\static.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\icons\xna.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\xna.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\scripts\branding.js -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\scripts\branding.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-cs-CZ.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-cs-CZ.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-de-DE.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-de-DE.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-en-US.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-en-US.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-es-ES.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-es-ES.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-fr-FR.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-fr-FR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Help1.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-Help1.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-HelpViewer.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-HelpViewer.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-it-IT.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-it-IT.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ja-JP.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-ja-JP.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ko-KR.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-ko-KR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-pl-PL.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-pl-PL.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-pt-BR.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-pt-BR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-ru-RU.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-ru-RU.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-tr-TR.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-tr-TR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-Website.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-Website.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-zh-CN.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-zh-CN.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding-zh-TW.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding-zh-TW.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\styles\branding.css -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\styles\branding.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\index.html -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\index.html
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\search.html -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\search.html
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\SearchHelp.aspx -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\SearchHelp.aspx
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\SearchHelp.inc.php -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\SearchHelp.inc.php
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\SearchHelp.php -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\SearchHelp.php
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\Web.Config -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\Web.Config
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\Search.png -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\Search.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocClose.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\TocClose.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocCollapsed.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\TocCollapsed.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocExpanded.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\TocExpanded.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\icons\TocOpen.gif -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\icons\TocOpen.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\branding-Website.js -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\scripts\branding-Website.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2013\Web\scripts\jquery-1.11.0.min.js -&gt; C:\projects\stardew-farmhand\Documentation\Farmhand\Help\Working\Output\Website\scripts\jquery-1.11.0.min.js
+    Last step completed in 00:00:00.3907
+</buildStep>
+<buildStep step="GenerateHelpFormatTableOfContents">
+Generating website table of contents file...
+    Last step completed in 00:00:00.0000
+</buildStep>
+<buildStep step="GenerateFullTextIndex">
+Generating full-text index for the website...
+
+<plugIn name="Lightweight Website Style" behavior="After" priority="1000">
+Adding lightweight search and TOC elements to each topic...
+</plugIn>    Last step completed in 00:00:05.3320
+</buildStep>
+<buildStep step="CopyingWebsiteFiles">
+Copying website files to output folder...
+
+Copied 500 files
+Copied 1000 files
+Copied 1500 files
+Copied 2000 files
+Copied 2500 files
+Copied 3000 files
+Copied 3241 files for the website content
+    Last step completed in 00:00:01.3463
+</buildStep>
+<buildStep step="CleanIntermediates">
+Removing intermediate files...
+    Last step completed in 00:00:00.5839
+</buildStep>
+<buildStep step="Completed">
+
+Build completed successfully at 1/8/2017 2:45:04 PM.  Total time: 00:01:27.3451
 
 </buildStep>
 </shfbBuild>
