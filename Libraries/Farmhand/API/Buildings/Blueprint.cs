@@ -1,36 +1,52 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Farmhand.Attributes;
-using StardewValley;
-using StardewValley.Menus;
-
-namespace Farmhand.API.Buildings
+﻿namespace Farmhand.API.Buildings
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
+    using Farmhand.Attributes;
+    using Farmhand.Logging;
+
+    using StardewValley;
+    using StardewValley.Menus;
+
+    /// <summary>
+    ///     Blueprint-related API functionality.
+    /// </summary>
     public static class Blueprint
     {
-        public static List<IBlueprint> Blueprints = new List<IBlueprint>();
+        /// <summary>
+        ///     Gets the list of registered blueprints.
+        /// </summary>
+        public static List<IBlueprint> Blueprints { get; } = new List<IBlueprint>();
+
+        /// <summary>
+        ///     Registers a blueprint to the API.
+        /// </summary>
+        /// <param name="blueprint">
+        ///     The blueprint to register.
+        /// </param>
+        public static void RegisterBlueprint(IBlueprint blueprint)
+        {
+            Blueprints.Add(blueprint);
+        }
 
         [Hook(HookType.Exit, "StardewValley.Menus.CarpenterMenu", ".ctor")]
         internal static void ConstructorMenuCreated([ThisBind] object @this)
         {
-            var bpField = typeof(CarpenterMenu).GetField("blueprints", BindingFlags.NonPublic |
-                         BindingFlags.Instance);
-            if (bpField != null)
+            var blueprintsField = typeof(CarpenterMenu).GetField(
+                "blueprints",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            if (blueprintsField != null)
             {
-                Logging.Log.Success("Injecting custom BluePrints");
-                var blueprints = (List<StardewValley.BluePrint>)bpField.GetValue(@this);
+                Log.Success("Injecting custom BluePrints");
+                var blueprints = (List<BluePrint>)blueprintsField.GetValue(@this);
                 blueprints.AddRange(Blueprints.Where(n => n.IsCarpenterBlueprint).Select(n => new BluePrint(n.Name)));
             }
             else
             {
-                Logging.Log.Error("Could not find carpenter blueprint list");
+                Log.Error("Could not find carpenter blueprint list");
             }
-        }
-
-        public static void RegisterBlueprint(IBlueprint blueprint)
-        {
-            Blueprints.Add(blueprint);
         }
     }
 }
