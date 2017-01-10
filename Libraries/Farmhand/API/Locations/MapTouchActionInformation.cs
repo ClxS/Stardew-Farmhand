@@ -3,12 +3,12 @@
     using System;
 
     /// <summary>
-    ///     Information about a map action.
+    ///     Information about a map touch action.
     /// </summary>
-    public class MapActionInformation
+    public class MapTouchActionInformation
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="MapActionInformation" /> class.
+        ///     Initializes a new instance of the <see cref="MapTouchActionInformation" /> class.
         /// </summary>
         /// <param name="owner">
         ///     The owning mod.
@@ -19,7 +19,7 @@
         /// <param name="callback">
         ///     The callback to call when the action occurs.
         /// </param>
-        public MapActionInformation(Mod owner, string action, Func<string, bool> callback)
+        public MapTouchActionInformation(Mod owner, string action, Func<string, string[], bool> callback)
         {
             this.Owner = owner;
             this.Action = action;
@@ -34,7 +34,7 @@
         /// <summary>
         ///     Gets or sets the callback.
         /// </summary>
-        public Func<string, bool> Callback { get; set; }
+        public Func<string, string[], bool> Callback { get; set; }
 
         /// <summary>
         ///     Gets or sets the owning mod.
