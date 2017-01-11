@@ -1,58 +1,92 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-
-namespace Farmhand.API.Items
+﻿namespace Farmhand.API.Items
 {
+    using Microsoft.Xna.Framework.Graphics;
+
     /// <summary>
-    /// Contains general big craftables information
+    ///     Contains general big craftables information
     /// </summary>
     public class BigCraftableInformation
     {
-        // Big Craftable ID
-        public int Id { get; set; }
-
-        // Big Craftable Texture
-        public Texture2D Texture { get; set; }
-
-        // Big Craftable name
-        public string Name { get; set; }
-
-        // Big Craftable price
-        public int Price { get; set; }
-
-        // Big Craftable edibility
-        public int Edibility { get; set; } = -300;
-
-        // Big Craftable type
-        public ItemType Type { get; set; }
-
-        // Big Craftable category
+        /// <summary>
+        ///     Gets or sets the category.
+        /// </summary>
         public ItemCategory Category { get; set; } = ItemCategory.None;
 
-        // Description
-        public string Description { get; set; } = "";
+        /// <summary>
+        ///     Gets or sets the description.
+        /// </summary>
+        public string Description { get; set; } = string.Empty;
 
-        // Can be set outdoors?
-        public bool SetOutdoors { get; set; }
+        /// <summary>
+        ///     Gets or sets the edibility.
+        /// </summary>
+        public int Edibility { get; set; } = -300;
 
-        // Can be set indoors?
-        public bool SetIndoors { get; set; }
-
-        // Fragility
+        /// <summary>
+        ///     Gets or sets the fragility.
+        /// </summary>
         public int Fragility { get; set; } = 0;
 
-        // Is it a lamp?
+        /// <summary>
+        ///     Gets the id.
+        /// </summary>
+        /// <remarks>
+        ///     Only assigned after registering the item.
+        /// </remarks>
+        public int Id { get; internal set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the item is a lamp.
+        /// </summary>
         public bool IsLamp { get; set; } = false;
 
+        /// <summary>
+        ///     Gets or sets the name.
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the price.
+        /// </summary>
+        public int Price { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether can be placed indoors.
+        /// </summary>
+        public bool SetIndoors { get; set; }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether can be placed outdoors.
+        /// </summary>
+        public bool SetOutdoors { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the texture.
+        /// </summary>
+        public Texture2D Texture { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the item type.
+        /// </summary>
+        public ItemType Type { get; set; }
+
+        /// <summary>
+        ///     Converts the information into a game compatible string.
+        /// </summary>
+        /// <returns>
+        ///     The <see cref="string" />.
+        /// </returns>
         public override string ToString()
         {
             // combine the Type and Category, if there is a category
-            string typeAndCategoryString = $"{Type}";
-            if (Category != ItemCategory.None)
+            string typeAndCategoryString = $"{this.Type}";
+            if (this.Category != ItemCategory.None)
             {
-                typeAndCategoryString += $" {(int)Category}";
+                typeAndCategoryString += $" {(int)this.Category}";
             }
 
-            return $"{Name}/{Price}/{Edibility}/{typeAndCategoryString}/{Description}/{SetOutdoors}/{SetIndoors}/{Fragility}/{IsLamp}";
+            return
+                $"{this.Name}/{this.Price}/{this.Edibility}/{typeAndCategoryString}/{this.Description}/{this.SetOutdoors}/{this.SetIndoors}/{this.Fragility}/{this.IsLamp}";
         }
     }
 }

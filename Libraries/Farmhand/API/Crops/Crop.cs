@@ -50,19 +50,9 @@
             TextureUtility.AddSpriteToSpritesheet(ref Game1.cropSpriteSheet, crop.Texture, crop.Id, 128, 32);
             RegisteredTypeInformation[typeof(T)] = crop;
         }
-
-        /// <summary>
-        ///     Registers a crop for de-serialization purposes.
-        /// </summary>
-        /// <param name="this">
-        ///     The this.
-        /// </param>
-        /// <remarks>
-        ///     Is called from the default constructor of StardewValley.Crop,
-        ///     and alerts this registry to fix its ID after loading is finished
-        /// </remarks>
+        
         [Hook(HookType.Exit, "StardewValley.Crop", "System.Void StardewValley.Crop::.ctor()")]
-        public static void RegisterDeserializingCrop([ThisBind] object @this)
+        internal static void RegisterDeserializingCrop([ThisBind] object @this)
         {
             var crop = @this as StardewValley.Crop;
             if (crop != null)

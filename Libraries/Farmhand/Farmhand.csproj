@@ -110,6 +110,8 @@
     <Compile Include="API\Locations\DefaultMaps.cs" />
     <Compile Include="API\Locations\GameLocationExtensionMethods.cs" />
     <Compile Include="API\Locations\MapActionInformation.cs" />
+    <Compile Include="API\Locations\MapOverride.cs" />
+    <Compile Include="API\Locations\MapTouchActionInformation.cs" />
     <Compile Include="API\NPCs\Characteristics\BirthdaySeason.cs" />
     <Compile Include="API\NPCs\Characteristics\Gender.cs" />
     <Compile Include="API\NPCs\Characteristics\HomeRegion.cs" />

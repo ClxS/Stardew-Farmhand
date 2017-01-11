@@ -60,7 +60,7 @@ namespace Farmhand.API.Items
 
         // Is called from the default constructor of StardewValley.Object, and alerts this item registry to fix its ID after loading is finished
         [Hook(HookType.Exit, "StardewValley.Object", "System.Void StardewValley.Object::.ctor()")]
-        public static void RegisterDeserializingObject([ThisBind] object @this)
+        internal static void RegisterDeserializingObject([ThisBind] object @this)
         {
             if (@this is StardewValley.Object)
             {
