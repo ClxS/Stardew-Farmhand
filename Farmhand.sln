@@ -408,9 +408,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModTemplate", "Mods\ModTemp
 		{C12052C1-872A-4B04-97FB-9347A4539C87} = {C12052C1-872A-4B04-97FB-9347A4539C87}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILRepack", "Extensions\ILRepack\ILRepack.csproj", "{4A253A60-D998-4CA2-B9D5-46567A2FBF80}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILRepack", "External\ILRepack\ILRepack.csproj", "{4A253A60-D998-4CA2-B9D5-46567A2FBF80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "Extensions\cecil\Mono.Cecil.csproj", "{D68133BD-1E63-496E-9EDE-4FBDBF77B486}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Cecil", "External\cecil\Mono.Cecil.csproj", "{D68133BD-1E63-496E-9EDE-4FBDBF77B486}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -4633,10 +4633,10 @@ Global
 		{4A253A60-D998-4CA2-B9D5-46567A2FBF80}.winphone_Release|Installer.Build.0 = Release|Any CPU
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Any CPU.ActiveCfg = net_4_0_Debug|Any CPU
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Any CPU.Build.0 = net_4_0_Debug|Any CPU
-		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Documentation.ActiveCfg = winphone_Debug|Any CPU
-		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Documentation.Build.0 = winphone_Debug|Any CPU
-		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Installer.ActiveCfg = winphone_Debug|Any CPU
-		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Installer.Build.0 = winphone_Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Documentation.ActiveCfg = silverlight_Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Documentation.Build.0 = silverlight_Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Installer.ActiveCfg = silverlight_Debug|Any CPU
+		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.Debug|Installer.Build.0 = silverlight_Debug|Any CPU
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.net_2_0_Debug|Any CPU.ActiveCfg = net_2_0_Debug|Any CPU
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.net_2_0_Debug|Any CPU.Build.0 = net_2_0_Debug|Any CPU
 		{D68133BD-1E63-496E-9EDE-4FBDBF77B486}.net_2_0_Debug|Documentation.ActiveCfg = net_2_0_Debug|Any CPU

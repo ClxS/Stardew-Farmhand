@@ -12,6 +12,9 @@
     <DefineConstants>TRACE;NET_4_0;</DefineConstants>
     <OutputPath>..\..\Bin\Test\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'winphone_Release'">
+    <DefineConstants>TRACE;NET_4_0</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Mono.Cecil.Cil\Code.cs" />
     <Compile Include="Mono.Cecil.Cil\CodeWriter.cs" />
