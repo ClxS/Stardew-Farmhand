@@ -6,17 +6,14 @@
     using System.Reflection;
 
     using Farmhand.Attributes;
-    using Farmhand.Helpers;
     using Farmhand.Installers.Patcher.Cecil;
     using Farmhand.Installers.Patcher.Helpers;
     using Farmhand.Logging;
 
-    using Patcher = Farmhand.Installers.Patcher.Patcher;
-
     /// <summary>
     ///     Performs the first-pass alterations to the game.
     /// </summary>
-    public class PatcherSecondPass : Installers.Patcher.Patcher
+    public class PatcherSecondPass : Patcher
     {
         /// <summary>
         ///     Patches the game's executable.
@@ -159,7 +156,8 @@
                         {
                             case HookType.Entry:
                                 CecilHelper
-                                    .InjectEntryMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>(
+                                    .InjectEntryMethod
+                                    <ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>(
                                         cecilContext,
                                         hookTypeName,
                                         hookMethodName,
@@ -168,7 +166,8 @@
                                 break;
                             case HookType.Exit:
                                 CecilHelper
-                                    .InjectExitMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>(
+                                    .InjectExitMethod
+                                    <ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>(
                                         cecilContext,
                                         hookTypeName,
                                         hookMethodName,
@@ -223,7 +222,9 @@
                         {
                             case HookType.Entry:
                                 CecilHelper
-                                    .InjectReturnableEntryMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute, UseOutputBindAttribute, MethodOutputBindAttribute>(
+                                    .InjectReturnableEntryMethod
+                                    <ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute,
+                                        UseOutputBindAttribute, MethodOutputBindAttribute>(
                                         cecilContext,
                                         hookTypeName,
                                         hookMethodName,
@@ -232,7 +233,9 @@
                                 break;
                             case HookType.Exit:
                                 CecilHelper
-                                    .InjectReturnableExitMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute, UseOutputBindAttribute, MethodOutputBindAttribute>(
+                                    .InjectReturnableExitMethod
+                                    <ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute,
+                                        UseOutputBindAttribute, MethodOutputBindAttribute>(
                                         cecilContext,
                                         hookTypeName,
                                         hookMethodName,
