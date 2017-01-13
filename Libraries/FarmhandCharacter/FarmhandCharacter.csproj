@@ -7,7 +7,7 @@
     <ProjectGuid>{7C722998-FBFD-438C-9446-E67154EDBFC5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Farmhand.Overrides.Character</RootNamespace>
+    <RootNamespace>Farmhand.Character</RootNamespace>
     <AssemblyName>FarmhandCharacter</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

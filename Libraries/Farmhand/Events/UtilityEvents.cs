@@ -3,7 +3,6 @@
     using System;
 
     using Farmhand.Attributes;
-    using Farmhand.Events.Arguments;
     using Farmhand.Events.Arguments.UtilityEvents;
 
     /// <summary>
