@@ -8,6 +8,8 @@
     using System.Reflection;
     using System.Threading;
 
+    using Farmhand.Extensibility;
+
     using StardewModdingAPI;
     using StardewModdingAPI.Framework;
     using StardewModdingAPI.Inheritance;
@@ -16,8 +18,14 @@
 
     using Monitor = StardewModdingAPI.Framework.Monitor;
 
-    internal class CompatibilityLayer : Farmhand.Extensibility.FarmhandExtension
+    internal class CompatibilityLayer : FarmhandExtension
     {
+        private static LogFileManager logFile;
+
+        private static bool? developerMode;
+
+        private static IMonitor monitor;
+
         public static IMonitor Monitor
         {
             get
@@ -42,8 +50,6 @@
 
         public override Type GameOverrideClass => typeof(SmapiGameOverride);
 
-        private static LogFileManager logFile;
-
         private static LogFileManager LogFile
         {
             get
@@ -59,8 +65,6 @@
                 return logFile;
             }
         }
-
-        private static bool? developerMode;
 
         private static bool DeveloperMode
         {
@@ -78,12 +82,17 @@
             }
         }
 
-        private static IMonitor monitor;
-        
         public override Game1 GameInstance
         {
-            get { return Program.gamePtr; }
-            set { Program.gamePtr = (SGame)value; }
+            get
+            {
+                return Program.gamePtr;
+            }
+
+            set
+            {
+                Program.gamePtr = (SGame)value;
+            }
         }
 
         public override void Initialise()
@@ -96,7 +105,9 @@
             Log.ModRegistry = Program.ModRegistry;
 
             // add info header
-            Log.Monitor.Log($"Farmhand-SMAPI {Constants.Version} with Stardew Valley {Game1.version} on {Environment.OSVersion}", LogLevel.Info);
+            Log.Monitor.Log(
+                $"Farmhand-SMAPI {Constants.Version} with Stardew Valley {Game1.version} on {Environment.OSVersion}",
+                LogLevel.Info);
         }
 
         public override void LoadMods(string modsDirectory)
@@ -108,16 +119,17 @@
             }
 
             var projectType = typeof(Program);
-            FieldInfo modPathField = projectType.GetField("ModPath", BindingFlags.Static | BindingFlags.NonPublic);
+            var modPathField = projectType.GetField("ModPath", BindingFlags.Static | BindingFlags.NonPublic);
             modPathField?.SetValue(null, smapiModsDirectory);
 
-            MethodInfo loadModsMethod = projectType.GetMethod("LoadMods", BindingFlags.Static | BindingFlags.NonPublic);
+            var loadModsMethod = projectType.GetMethod("LoadMods", BindingFlags.Static | BindingFlags.NonPublic);
             loadModsMethod.Invoke(null, new object[] { });
         }
 
         public override IEnumerable<Type> GetEventClasses()
         {
-            return Assembly.GetExecutingAssembly()
+            return
+                Assembly.GetExecutingAssembly()
                     .GetTypes()
                     .Where(t => string.Equals(t.Namespace, "StardewModdingAPI.Events", StringComparison.Ordinal))
                     .ToList();

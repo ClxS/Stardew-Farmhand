@@ -1,10 +1,10 @@
-﻿using System;
-
-namespace FarmhandDebugger
+﻿namespace FarmhandDebugger
 {
-    class Program
+    using System;
+
+    internal class Program
     {
-        static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+        private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
         {
             Console.WriteLine(e.ExceptionObject.ToString());
             Console.WriteLine("Press Enter to continue");
@@ -12,11 +12,11 @@ namespace FarmhandDebugger
             Environment.Exit(1);
         }
 
-        static int Main()
+        private static int Main()
         {
-            System.AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
 
-            StardewFarmhandLauncher launcher = new StardewFarmhandLauncher();
+            var launcher = new StardewFarmhandLauncher();
             try
             {
                 if (!launcher.Launch())
@@ -24,12 +24,13 @@ namespace FarmhandDebugger
                     throw new Exception("Could not launch Stardew Farmhand");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine("FATAL EXCEPTION: " + ex.InnerException.Message);
+                Console.WriteLine("FATAL EXCEPTION: " + ex.InnerException?.Message);
 
                 return -1;
             }
+
             return 0;
         }
     }

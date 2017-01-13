@@ -1,27 +1,32 @@
-﻿using System;
-using System.Reflection;
-
-namespace FarmhandDebugger
+﻿namespace FarmhandDebugger
 {
-    public class StardewFarmhandLauncher
+    using System;
+    using System.Reflection;
+
+    internal class StardewFarmhandLauncher
     {
-        private Assembly _FarmhandAssembly;
-        public Assembly FarmhandAssembly => _FarmhandAssembly ?? (_FarmhandAssembly = Assembly.LoadFrom(Constants.FarmhandExeName));
+        private Assembly farmhandAssembly;
+
+        public Assembly FarmhandAssembly
+            => this.farmhandAssembly ?? (this.farmhandAssembly = Assembly.LoadFrom(Constants.FarmhandExeName));
 
         public bool Launch()
         {
-            if (FarmhandAssembly == null)
+            if (this.FarmhandAssembly == null)
+            {
                 return false;
-                        
+            }
+
             Console.WriteLine("Starting Stardew Valley...");
             try
             {
-                FarmhandAssembly.EntryPoint.Invoke(null, new object[] { new string[0] });
+                this.FarmhandAssembly.EntryPoint.Invoke(null, new object[] { new string[0] });
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 return false;
             }
+
             return true;
         }
     }
