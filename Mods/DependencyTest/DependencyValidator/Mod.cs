@@ -20,7 +20,7 @@ namespace DependencyTest
             GameEvents.AfterGameInitialised += GameEvents_OnAfterGameInitialised;
         }
 
-        private void GameEvents_OnAfterGameInitialised(object sender, Farmhand.Events.Arguments.GameEvents.EventArgsOnGameInitialised e)
+        private void GameEvents_OnAfterGameInitialised(object sender, Farmhand.Events.Arguments.GameEvents.GameInitialisedEventArgs e)
         {
             var baseFail = ModRegistry.GetItem("DependencyBaseEntryFail");
             var baseSuccess = ModRegistry.GetItem("DependencyBaseSuccess");

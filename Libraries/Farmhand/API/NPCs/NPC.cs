@@ -65,7 +65,7 @@
             SaveEvents.AfterLoad += SaveEvents_OnAfterLoad;
         }
 
-        private static void SaveEvents_OnAfterLoad(object sender, EventArgsOnAfterLoad e)
+        private static void SaveEvents_OnAfterLoad(object sender, AfterLoadEventArgs e)
         {
             foreach (var npc in Npcs.Values)
             {
@@ -85,7 +85,7 @@
             }
         }
 
-        private static void GameEvents_OnAfterGameLoaded(object sender, EventArgsOnAfterGameLoaded e)
+        private static void GameEvents_OnAfterGameLoaded(object sender, AfterGameLoadedEventArgs e)
         {
             afterGameLoadedFired = true;
             foreach (var npc in Npcs.Values)

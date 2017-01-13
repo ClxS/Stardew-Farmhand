@@ -6,28 +6,33 @@
     public enum Skill
     {
         /// <summary>
-        ///     Combat skill.
-        /// </summary>
-        Combat,
-
-        /// <summary>
         ///     Farming skill.
         /// </summary>
-        Farming,
+        Farming = 0,
 
         /// <summary>
         ///     Fishing skill.
         /// </summary>
-        Fishing,
+        Fishing = 1,
 
         /// <summary>
         ///     Foraging skill.
         /// </summary>
-        Foraging,
+        Foraging = 2,
 
         /// <summary>
         ///     Mining skill.
         /// </summary>
-        Mining
+        Mining = 3,
+
+        /// <summary>
+        ///     Combat skill.
+        /// </summary>
+        Combat = 4,
+
+        /// <summary>
+        ///     Luck skill.
+        /// </summary>
+        Luck = 5
     }
 }

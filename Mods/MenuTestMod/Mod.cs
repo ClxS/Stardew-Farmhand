@@ -38,7 +38,7 @@
             ControlEvents.KeyReleased += ControlEvents_OnKeyReleased;
         }
 
-        private static void ControlEvents_OnKeyReleased(object sender, Farmhand.Events.Arguments.ControlEvents.EventArgsKeyPressed e)
+        private static void ControlEvents_OnKeyReleased(object sender, Farmhand.Events.Arguments.ControlEvents.KeyPressedEventArgs e)
         {
             if (e.KeyPressed == Keys.F5)
             {

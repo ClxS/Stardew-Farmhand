@@ -14,7 +14,7 @@ namespace TestWarpMod
             Farmhand.Events.LocationEvents.BeforeWarp += LinusPrivacy;
         }
 
-        public static void LinusPrivacy( object sender, EventArgsOnBeforeWarp args )
+        public static void LinusPrivacy( object sender, BeforeWarpEventArgs args )
         {
             if ( args.LocationAfterWarp.Name == "Tent" && ( StardewValley.Game1.timeOfDay < 900 || StardewValley.Game1.timeOfDay >= 2000 ) )
             {

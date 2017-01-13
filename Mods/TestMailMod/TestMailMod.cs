@@ -25,7 +25,7 @@ namespace TestMailMod
 
         private bool SentMail;
 
-        private void ControlEvents_KeyPressed(object sender, EventArgsKeyPressed e)
+        private void ControlEvents_KeyPressed(object sender, KeyPressedEventArgs e)
         {   
             if (e.KeyPressed == Keys.F3)
             {

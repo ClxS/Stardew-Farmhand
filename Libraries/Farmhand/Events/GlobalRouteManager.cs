@@ -20,9 +20,9 @@
 
     internal static class GlobalRouteManager
     {
-        private static List<Action<EventArgsGlobalRoute>>[] preListeners;
+        private static List<Action<GlobalRouteEventArgs>>[] preListeners;
 
-        private static List<Action<EventArgsGlobalRoute>>[] postListeners;
+        private static List<Action<GlobalRouteEventArgs>>[] postListeners;
 
         private static readonly Dictionary<string, int> MapIndexes = new Dictionary<string, int>();
 
@@ -30,11 +30,11 @@
 
         public static bool IsEnabled { get; set; }
 
-        private static List<Action<EventArgsGlobalRoute>>[] PreListeners
-            => preListeners ?? (preListeners = new List<Action<EventArgsGlobalRoute>>[ListenedMethods]);
+        private static List<Action<GlobalRouteEventArgs>>[] PreListeners
+            => preListeners ?? (preListeners = new List<Action<GlobalRouteEventArgs>>[ListenedMethods]);
 
-        private static List<Action<EventArgsGlobalRoute>>[] PostListeners
-            => postListeners ?? (postListeners = new List<Action<EventArgsGlobalRoute>>[ListenedMethods]);
+        private static List<Action<GlobalRouteEventArgs>>[] PostListeners
+            => postListeners ?? (postListeners = new List<Action<GlobalRouteEventArgs>>[ListenedMethods]);
 
         public static void MapIndex(string type, string method, int index)
         {
@@ -87,7 +87,7 @@
                 return false;
             }
 
-            var evtArgs = new EventArgsGlobalRouteReturnable(type, method, @params, null);
+            var evtArgs = new GlobalRouteReturnableEventArgs(type, method, @params, null);
             foreach (var evt in PreListeners[index])
             {
                 evt.Invoke(evtArgs);
@@ -107,7 +107,7 @@
 
             if (PostListeners[index] != null)
             {
-                var evtArgs = new EventArgsGlobalRoute(type, method, @params);
+                var evtArgs = new GlobalRouteEventArgs(type, method, @params);
                 foreach (var evt in PostListeners[index])
                 {
                     evt.Invoke(evtArgs);
@@ -129,7 +129,7 @@
 
             if (PostListeners[index] != null)
             {
-                var evtArgs = new EventArgsGlobalRouteReturnable(type, method, @params, output);
+                var evtArgs = new GlobalRouteReturnableEventArgs(type, method, @params, output);
                 foreach (var evt in PostListeners[index])
                 {
                     evt.Invoke(evtArgs);
@@ -174,7 +174,7 @@
             ListenerType listenerType,
             string type,
             string method,
-            Action<EventArgsGlobalRoute> callback)
+            Action<GlobalRouteEventArgs> callback)
         {
             var key = $"{type}.{method}";
             int index;
@@ -184,7 +184,7 @@
                 {
                     if (PreListeners[index] == null)
                     {
-                        PreListeners[index] = new List<Action<EventArgsGlobalRoute>>();
+                        PreListeners[index] = new List<Action<GlobalRouteEventArgs>>();
                     }
 
                     PreListeners[index].Add(callback);
@@ -193,7 +193,7 @@
                 {
                     if (PostListeners[index] == null)
                     {
-                        PostListeners[index] = new List<Action<EventArgsGlobalRoute>>();
+                        PostListeners[index] = new List<Action<GlobalRouteEventArgs>>();
                     }
 
                     PostListeners[index].Add(callback);
@@ -219,7 +219,7 @@
         /// <param name="method">The method to listen for</param>
         /// <param name="callback">The delegate to remove. This must be the same instance used when first registering the listener</param>
         [Obsolete("Something wrong with this")]
-        public static void Remove(string type, string method, Action<EventArgsGlobalRoute> callback)
+        public static void Remove(string type, string method, Action<GlobalRouteEventArgs> callback)
         {
             // var key = $"{type}.{method}";
             // if (Listeners.ContainsKey(key))

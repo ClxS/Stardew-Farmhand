@@ -20,12 +20,12 @@
         /// <summary>
         ///     Fired prior to time changes.
         /// </summary>
-        public static event EventHandler<EventArgsIntChanged> BeforeTimeChanged = delegate { };
+        public static event EventHandler<IntChangedEventArgs> BeforeTimeChanged = delegate { };
 
         /// <summary>
         ///     Fired after time changes.
         /// </summary>
-        public static event EventHandler<EventArgsIntChanged> AfterTimeChanged = delegate { };
+        public static event EventHandler<IntChangedEventArgs> AfterTimeChanged = delegate { };
 
         /// <summary>
         ///     Fired before day changes.
@@ -69,7 +69,7 @@
         /// <remarks>
         ///     You can use this event to prevent the game's clock from progressing.
         /// </remarks>
-        public static event EventHandler<EventArgsShouldTimePassCheck> ShouldTimePassCheck = delegate { };
+        public static event EventHandler<ShouldTimePassEventArgs> ShouldTimePassCheck = delegate { };
 
         [Hook(HookType.Entry, "StardewValley.Game1", "performTenMinuteClockUpdate")]
         internal static void OnBeforeTimeChanged()
@@ -80,14 +80,14 @@
                 newTime = newTime - newTime % 100 + 100;
             }
 
-            EventCommon.SafeInvoke(BeforeTimeChanged, null, new EventArgsIntChanged(Game1.timeOfDay, newTime));
+            EventCommon.SafeInvoke(BeforeTimeChanged, null, new IntChangedEventArgs(Game1.timeOfDay, newTime));
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "performTenMinuteClockUpdate")]
         internal static void OnAfterTimeChanged()
         {
             var oldTime = Game1.timeOfDay - 10;
-            EventCommon.SafeInvoke(AfterTimeChanged, null, new EventArgsIntChanged(oldTime, Game1.timeOfDay));
+            EventCommon.SafeInvoke(AfterTimeChanged, null, new IntChangedEventArgs(oldTime, Game1.timeOfDay));
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "newDayAfterFade")]
@@ -119,7 +119,7 @@
         {
             if (!DidShouldTimePassCheckThisFrame)
             {
-                var ev = new EventArgsShouldTimePassCheck(shouldPass);
+                var ev = new ShouldTimePassEventArgs(shouldPass);
                 EventCommon.SafeInvoke(ShouldTimePassCheck, null, ev);
                 PreviousTimePassResult = ev.TimeShouldPass;
                 DidShouldTimePassCheckThisFrame = true;

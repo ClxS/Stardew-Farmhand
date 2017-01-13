@@ -23,7 +23,7 @@
         ///     This fires just after the game's loadForNewGame method.
         ///     TODO: API functionality should trigger this
         /// </remarks>
-        public static event EventHandler<EventArgsLocationsChanged> LocationsChanged = delegate { };
+        public static event EventHandler<LocationsChangedEventArgs> LocationsChanged = delegate { };
 
         /// <summary>
         ///     Fires just after a location's object list changes.
@@ -48,7 +48,7 @@
         /// <remarks>
         ///     This event is returnable, allowing you to handle actions on your own and notify the game that you have done so.
         /// </remarks>
-        public static event EventHandler<EventArgsOnBeforeCheckAction> BeforeCheckAction = delegate { };
+        public static event EventHandler<BeforeCheckActionEventArgs> BeforeCheckAction = delegate { };
 
         /// <summary>
         ///     Fires just before loading the objects in a location.
@@ -69,7 +69,7 @@
         /// <remarks>
         ///     This event is cancellable, allowing you to prevent the warping of a player.
         /// </remarks>
-        public static event EventHandler<EventArgsOnBeforeWarp> BeforeWarp = delegate { };
+        public static event EventHandler<BeforeWarpEventArgs> BeforeWarp = delegate { };
 
         /// <summary>
         ///     Fired just before changing the current location.
@@ -77,12 +77,12 @@
         /// <remarks>
         ///     TODO: Not yet implemented
         /// </remarks>
-        public static event EventHandler<EventArgsOnCurrentLocationChanged> CurrentLocationChanged = delegate { };
+        public static event EventHandler<CurrentLocationChangedEventArgs> CurrentLocationChanged = delegate { };
 
         [Hook(HookType.Exit, "StardewValley.Game1", "loadForNewGame")]
         internal static void OnLocationsChanged()
         {
-            EventCommon.SafeInvoke(LocationsChanged, null, new EventArgsLocationsChanged(Game1.locations));
+            EventCommon.SafeInvoke(LocationsChanged, null, new LocationsChangedEventArgs(Game1.locations));
         }
 
         [Hook(HookType.Entry, "StardewValley.GameLocation", "loadObjects")]
@@ -99,7 +99,7 @@
             [InputBind(typeof(Rectangle), "viewport")] Rectangle viewport,
             [InputBind(typeof(Farmer), "who")] Farmer who)
         {
-            var eventArgs = new EventArgsOnBeforeCheckAction((GameLocation)@this, location, viewport, who);
+            var eventArgs = new BeforeCheckActionEventArgs((GameLocation)@this, location, viewport, who);
             EventCommon.SafeInvoke(BeforeCheckAction, @this, eventArgs);
             return eventArgs.Handled;
         }
@@ -121,7 +121,7 @@
             return EventCommon.SafeCancellableInvoke(
                 BeforeWarp,
                 null,
-                new EventArgsOnBeforeWarp(locationAfterWarp, tileX, tileY, facingDirectionAfterWarp));
+                new BeforeWarpEventArgs(locationAfterWarp, tileX, tileY, facingDirectionAfterWarp));
         }
 
         [PendingHook]
@@ -130,7 +130,7 @@
             EventCommon.SafeInvoke(
                 CurrentLocationChanged,
                 null,
-                new EventArgsOnCurrentLocationChanged(priorLocation, newLocation));
+                new CurrentLocationChangedEventArgs(priorLocation, newLocation));
         }
 
         [Hook(HookType.Entry, "StardewValley.GameLocation", "objectCollectionChanged")]

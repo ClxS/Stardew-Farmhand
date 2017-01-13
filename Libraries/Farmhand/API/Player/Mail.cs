@@ -45,7 +45,7 @@
             MailBox[mailInformation.Id] = mailInformation;
         }
 
-        private static void MailEvents_OpenedMail(object sender, EventArgsOpenedMail e)
+        private static void MailEvents_OpenedMail(object sender, OpenedMailEventArgs e)
         {
             var letterMenu = sender as LetterViewerMenu;
             if (letterMenu != null)

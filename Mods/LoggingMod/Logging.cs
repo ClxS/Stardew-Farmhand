@@ -50,17 +50,17 @@ namespace LoggingMod
         {
         }
 
-        private void SaveEvents_OnAfterLoad(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnAfterLoad e)
+        private void SaveEvents_OnAfterLoad(object sender, Farmhand.Events.Arguments.SaveEvents.AfterLoadEventArgs e)
         {
             Log.Success($"SaveEvents_OnAfterLoad");
         }
 
-        private void SaveEvents_OnBeforeLoad(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnBeforeLoad e)
+        private void SaveEvents_OnBeforeLoad(object sender, Farmhand.Events.Arguments.SaveEvents.BeforeLoadEventArgs e)
         {
             Log.Success($"SaveEvents_OnBeforeLoad {e.Filename}");
         }
 
-        private void SaveEvents_OnAfterSave(object sender, Farmhand.Events.Arguments.SaveEvents.EventArgsOnAfterSave e)
+        private void SaveEvents_OnAfterSave(object sender, Farmhand.Events.Arguments.SaveEvents.AfterSaveEventArgs e)
         {
             Log.Success("SaveEvents_OnAfterSave");
         }
@@ -85,7 +85,7 @@ namespace LoggingMod
 
         }
 
-        private void PlayerEvents_OnBeforePlayerTakesDamage(object sender, EventArgsOnBeforePlayerTakesDamage e)
+        private void PlayerEvents_OnBeforePlayerTakesDamage(object sender, BeforePlayerTakesDamageEventArgs e)
         {
             Log.Info("PlayerEvents_OnBeforePlayerTakesDamage");
         }

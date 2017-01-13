@@ -22,17 +22,17 @@
         /// <remarks>
         ///     This event is cancellable, which will prevent damage being applied.
         /// </remarks>
-        public static event EventHandler<EventArgsOnBeforePlayerTakesDamage> BeforePlayerTakesDamage = delegate { };
+        public static event EventHandler<BeforePlayerTakesDamageEventArgs> BeforePlayerTakesDamage = delegate { };
 
         /// <summary>
         ///     Fires just after a player takes damage.
         /// </summary>
-        public static event EventHandler<EventArgsOnAfterPlayerTakesDamage> AfterPlayerTakesDamage = delegate { };
+        public static event EventHandler<AfterPlayerTakesDamageEventArgs> AfterPlayerTakesDamage = delegate { };
 
         /// <summary>
         ///     Fires after a player has finished eating.
         /// </summary>
-        public static event EventHandler<EventArgsOnPlayerDoneEating> PlayerDoneEating = delegate { };
+        public static event EventHandler<PlayerDoneEatingEventArgs> PlayerDoneEating = delegate { };
 
         /// <summary>
         ///     Fires after an item has been added to the inventory.
@@ -40,7 +40,7 @@
         /// <remarks>
         ///     This event is returnable, allowing you to override the item added to the inventory.
         /// </remarks>
-        public static event EventHandler<EventArgsOnItemAddedToInventory> ItemAddedToInventory = delegate { };
+        public static event EventHandler<ItemAddedToInventoryEventArgs> ItemAddedToInventory = delegate { };
 
         /// <summary>
         ///     Fires just prior to gaining experience.
@@ -57,12 +57,12 @@
         ///     This is invoked by the property watcher, so may occur a full frame after the
         ///     change actually occurred.
         /// </remarks>
-        public static event EventHandler<EventArgsOnFarmerChanged> FarmerChanged = delegate { };
+        public static event EventHandler<FarmerChangedEventArgs> FarmerChanged = delegate { };
 
         /// <summary>
         ///     Fires just after leveling up a skill.
         /// </summary>
-        public static event EventHandler<EventArgsOnLevelUp> LevelUp = delegate { };
+        public static event EventHandler<LevelUpEventArgs> LevelUp = delegate { };
 
         /// <summary>
         ///     Fires when the player changes shirt.
@@ -150,24 +150,24 @@
             return EventCommon.SafeCancellableInvoke(
                 BeforePlayerTakesDamage,
                 null,
-                new EventArgsOnBeforePlayerTakesDamage());
+                new BeforePlayerTakesDamageEventArgs());
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "farmerTakeDamage")]
         internal static void OnAfterPlayerTakesDamage()
         {
-            EventCommon.SafeInvoke(AfterPlayerTakesDamage, null, new EventArgsOnAfterPlayerTakesDamage());
+            EventCommon.SafeInvoke(AfterPlayerTakesDamage, null, new AfterPlayerTakesDamageEventArgs());
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "doneEating")]
         internal static void OnPlayerDoneEating()
         {
-            EventCommon.SafeInvoke(PlayerDoneEating, null, new EventArgsOnPlayerDoneEating());
+            EventCommon.SafeInvoke(PlayerDoneEating, null, new PlayerDoneEatingEventArgs());
         }
 
         internal static void OnFarmerChanged(Farmer priorFarmer, Farmer newFarmer)
         {
-            EventCommon.SafeInvoke(FarmerChanged, newFarmer, new EventArgsOnFarmerChanged(priorFarmer, newFarmer));
+            EventCommon.SafeInvoke(FarmerChanged, newFarmer, new FarmerChangedEventArgs(priorFarmer, newFarmer));
         }
 
         [Hook(HookType.Entry, "StardewValley.Farmer", "changeShirt")]
@@ -252,7 +252,7 @@
             [ThisBind] object @this,
             [InputBind(typeof(Item), "item")] Item item)
         {
-            var eventArgs = new EventArgsOnItemAddedToInventory(item);
+            var eventArgs = new ItemAddedToInventoryEventArgs(item);
             EventCommon.SafeInvoke(ItemAddedToInventory, @this, eventArgs);
             useOutput = eventArgs.IsHandled;
             return eventArgs.Item;
@@ -276,7 +276,7 @@
         {
             if (originalLevel != newLevel)
             {
-                EventCommon.SafeInvoke(LevelUp, @this, new EventArgsOnLevelUp(which, newLevel, originalLevel));
+                EventCommon.SafeInvoke(LevelUp, @this, new LevelUpEventArgs(which, newLevel, originalLevel));
             }
         }
     }

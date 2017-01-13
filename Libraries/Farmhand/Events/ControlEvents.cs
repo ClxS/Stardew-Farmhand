@@ -15,61 +15,61 @@
         /// <summary>
         ///     Fired on keyboard state change.
         /// </summary>
-        public static event EventHandler<EventArgsKeyboardStateChanged> KeyboardChanged = delegate { };
+        public static event EventHandler<KeyboardStateChangedEventArgs> KeyboardChanged = delegate { };
 
         /// <summary>
         ///     Fired on key press.
         /// </summary>
-        public static event EventHandler<EventArgsKeyPressed> KeyPressed = delegate { };
+        public static event EventHandler<KeyPressedEventArgs> KeyPressed = delegate { };
 
         /// <summary>
         ///     Fired on key release.
         /// </summary>
-        public static event EventHandler<EventArgsKeyPressed> KeyReleased = delegate { };
+        public static event EventHandler<KeyPressedEventArgs> KeyReleased = delegate { };
 
         /// <summary>
         ///     Fired on mouse state change.
         /// </summary>
-        public static event EventHandler<EventArgsMouseStateChanged> MouseChanged = delegate { };
+        public static event EventHandler<MouseStateChangedEventArgs> MouseChanged = delegate { };
 
         /// <summary>
         ///     Fired on controller button pressed.
         /// </summary>
-        public static event EventHandler<EventArgsControllerButtonPressed> ControllerButtonPressed = delegate { };
+        public static event EventHandler<ControllerButtonPressedEventArgs> ControllerButtonPressed = delegate { };
 
         /// <summary>
         ///     Fired on controller button released.
         /// </summary>
-        public static event EventHandler<EventArgsControllerButtonReleased> ControllerButtonReleased = delegate { };
+        public static event EventHandler<ControllerButtonReleasedEventArgs> ControllerButtonReleased = delegate { };
 
         /// <summary>
         ///     Fired on controller trigger pressed.
         /// </summary>
-        public static event EventHandler<EventArgsControllerTriggerPressed> ControllerTriggerPressed = delegate { };
+        public static event EventHandler<ControllerTriggerPressedEventArgs> ControllerTriggerPressed = delegate { };
 
         /// <summary>
         ///     Fired on controller trigger released.
         /// </summary>
-        public static event EventHandler<EventArgsControllerTriggerReleased> ControllerTriggerReleased = delegate { };
+        public static event EventHandler<ControllerTriggerReleasedEventArgs> ControllerTriggerReleased = delegate { };
 
         internal static void OnKeyboardChanged(KeyboardState priorState, KeyboardState newState)
         {
-            EventCommon.SafeInvoke(KeyboardChanged, null, new EventArgsKeyboardStateChanged(priorState, newState));
+            EventCommon.SafeInvoke(KeyboardChanged, null, new KeyboardStateChangedEventArgs(priorState, newState));
         }
 
         internal static void OnMouseChanged(MouseState priorState, MouseState newState)
         {
-            EventCommon.SafeInvoke(MouseChanged, null, new EventArgsMouseStateChanged(priorState, newState));
+            EventCommon.SafeInvoke(MouseChanged, null, new MouseStateChangedEventArgs(priorState, newState));
         }
 
         internal static void OnKeyPressed(Keys key)
         {
-            EventCommon.SafeInvoke(KeyPressed, null, new EventArgsKeyPressed(key));
+            EventCommon.SafeInvoke(KeyPressed, null, new KeyPressedEventArgs(key));
         }
 
         internal static void OnKeyReleased(Keys key)
         {
-            EventCommon.SafeInvoke(KeyReleased, null, new EventArgsKeyPressed(key));
+            EventCommon.SafeInvoke(KeyReleased, null, new KeyPressedEventArgs(key));
         }
 
         internal static void OnButtonPressed(PlayerIndex playerIndex, Buttons buttons)
@@ -77,7 +77,7 @@
             EventCommon.SafeInvoke(
                 ControllerButtonPressed,
                 null,
-                new EventArgsControllerButtonPressed(playerIndex, buttons));
+                new ControllerButtonPressedEventArgs(playerIndex, buttons));
         }
 
         internal static void OnButtonReleased(PlayerIndex playerIndex, Buttons buttons)
@@ -85,7 +85,7 @@
             EventCommon.SafeInvoke(
                 ControllerButtonReleased,
                 null,
-                new EventArgsControllerButtonReleased(playerIndex, buttons));
+                new ControllerButtonReleasedEventArgs(playerIndex, buttons));
         }
 
         internal static void OnTriggerPressed(PlayerIndex playerIndex, Buttons buttons, float value)
@@ -93,7 +93,7 @@
             EventCommon.SafeInvoke(
                 ControllerTriggerPressed,
                 null,
-                new EventArgsControllerTriggerPressed(playerIndex, buttons, value));
+                new ControllerTriggerPressedEventArgs(playerIndex, buttons, value));
         }
 
         internal static void OnTriggerReleased(PlayerIndex playerIndex, Buttons buttons, float value)
@@ -101,7 +101,7 @@
             EventCommon.SafeInvoke(
                 ControllerTriggerReleased,
                 null,
-                new EventArgsControllerTriggerReleased(playerIndex, buttons, value));
+                new ControllerTriggerReleasedEventArgs(playerIndex, buttons, value));
         }
     }
 }

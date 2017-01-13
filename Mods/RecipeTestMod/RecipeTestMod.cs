@@ -32,7 +32,7 @@ namespace RecipeTestMod
             Farmhand.API.Crafting.CraftingRecipe.RegisterRecipe(VoidStar.Recipe);
         }
         
-        private void PlayerEvents_OnFarmerChanged(object sender, EventArgsOnFarmerChanged e)
+        private void PlayerEvents_OnFarmerChanged(object sender, FarmerChangedEventArgs e)
         {
             Farmhand.API.Player.Player.AddRecipe(VoidStar.Recipe.PrivateName);
             Farmhand.API.Player.Player.AddObject(new Heart(Heart.Information));

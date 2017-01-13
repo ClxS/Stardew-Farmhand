@@ -121,7 +121,7 @@
             }
         }
 
-        internal static void ControlEvents_MouseChanged(object s, EventArgsMouseStateChanged e)
+        internal static void ControlEvents_MouseChanged(object s, MouseStateChangedEventArgs e)
         {
             if (e.NewState.LeftButton == ButtonState.Pressed && e.PriorState.LeftButton == ButtonState.Released)
             {
@@ -164,7 +164,7 @@
             }
         }
 
-        internal static void ControlEvents_KeyboardChanged(object s, EventArgsKeyboardStateChanged e)
+        internal static void ControlEvents_KeyboardChanged(object s, KeyboardStateChangedEventArgs e)
         {
             IEnumerable<Keys> old = e.PriorState.GetPressedKeys();
             foreach (var key in e.NewState.GetPressedKeys())

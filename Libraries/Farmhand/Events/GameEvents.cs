@@ -15,12 +15,12 @@
         /// <summary>
         ///     Fires just before the game is initialised.
         /// </summary>
-        public static event EventHandler<EventArgsOnGameInitialise> BeforeGameInitialised = delegate { };
+        public static event EventHandler<GameInitialiseEventArgs> BeforeGameInitialised = delegate { };
 
         /// <summary>
         ///     Fires just after the game is initialised.
         /// </summary>
-        public static event EventHandler<EventArgsOnGameInitialised> AfterGameInitialised = delegate { };
+        public static event EventHandler<GameInitialisedEventArgs> AfterGameInitialised = delegate { };
 
         /// <summary>
         ///     Fires just before the game loads it's initial content.
@@ -49,7 +49,7 @@
         ///     This event is cancellable, allowing you to prevent the game from being able to update it's own state.
         ///     You should only use this if you know what you are doing.
         /// </remarks>
-        public static event EventHandler<EventArgsOnBeforeGameUpdate> BeforeUpdateTick = delegate { };
+        public static event EventHandler<BeforeGameUpdateEventArgs> BeforeUpdateTick = delegate { };
 
         /// <summary>
         ///     Fires just after executing the games update tick.
@@ -62,7 +62,7 @@
         /// <remarks>
         ///     This event is fired at the end of Game1::loadForNewGame
         /// </remarks>
-        public static event EventHandler<EventArgsOnAfterGameLoaded> AfterGameLoaded = delegate { };
+        public static event EventHandler<AfterGameLoadedEventArgs> AfterGameLoaded = delegate { };
 
         /// <summary>
         ///     Fires every 0.5 seconds.
@@ -76,13 +76,13 @@
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
         internal static void OnBeforeGameInitialise([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(BeforeGameInitialised, @this, new EventArgsOnGameInitialise());
+            EventCommon.SafeInvoke(BeforeGameInitialised, @this, new GameInitialiseEventArgs());
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "Initialize")]
         internal static void OnAfterGameInitialise([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(AfterGameInitialised, @this, new EventArgsOnGameInitialised());
+            EventCommon.SafeInvoke(AfterGameInitialised, @this, new GameInitialisedEventArgs());
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "LoadContent")]
@@ -120,7 +120,7 @@
             [ThisBind] object @this,
             [InputBind(typeof(GameTime), "gameTime")] GameTime gt)
         {
-            return EventCommon.SafeCancellableInvoke(BeforeUpdateTick, @this, new EventArgsOnBeforeGameUpdate(gt));
+            return EventCommon.SafeCancellableInvoke(BeforeUpdateTick, @this, new BeforeGameUpdateEventArgs(gt));
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "Update")]
@@ -133,7 +133,7 @@
         [Hook(HookType.Exit, "StardewValley.Game1", "loadForNewGame")]
         internal static void OnAfterGameLoaded([InputBind(typeof(bool), "loadedGame")] bool loadedGame)
         {
-            EventCommon.SafeInvoke(AfterGameLoaded, null, new EventArgsOnAfterGameLoaded(loadedGame));
+            EventCommon.SafeInvoke(AfterGameLoaded, null, new AfterGameLoadedEventArgs(loadedGame));
         }
     }
 }

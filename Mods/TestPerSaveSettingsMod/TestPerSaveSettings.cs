@@ -17,7 +17,7 @@
             ControlEvents.KeyPressed += ControlEvents_OnKeyPressed;
         }
 
-        private void ControlEvents_OnKeyPressed(object sender, Farmhand.Events.Arguments.ControlEvents.EventArgsKeyPressed e)
+        private void ControlEvents_OnKeyPressed(object sender, Farmhand.Events.Arguments.ControlEvents.KeyPressedEventArgs e)
         {
             if (e.KeyPressed == Keys.F7)
             {

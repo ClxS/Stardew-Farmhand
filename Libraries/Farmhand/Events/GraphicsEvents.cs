@@ -18,7 +18,7 @@
         /// <summary>
         ///     Fires when the game's window resizes.
         /// </summary>
-        public static event EventHandler<EventArgsClientSizeChanged> Resize = delegate { };
+        public static event EventHandler<ClientSizeChangedEventArgs> Resize = delegate { };
 
         /// <summary>
         ///     Fires just before the main Draw method.
@@ -88,7 +88,7 @@
         /// <summary>
         ///     Occurs when the chat box is drawn.
         /// </summary>
-        public static event EventHandler<EventArgsChatBoxDraw> ChatBoxDraw = delegate { };
+        public static event EventHandler<ChatBoxDrawEventArgs> ChatBoxDraw = delegate { };
 
         // ReSharper disable once StyleCop.SA1600
         [Hook(HookType.Entry, "StardewValley.Game1", "Window_ClientSizeChanged")]
@@ -97,7 +97,7 @@
             EventCommon.SafeInvoke(
                 Resize,
                 @this,
-                new EventArgsClientSizeChanged(@this.Window.ClientBounds.Width, @this.Window.ClientBounds.Height));
+                new ClientSizeChangedEventArgs(@this.Window.ClientBounds.Width, @this.Window.ClientBounds.Height));
         }
 
         // ReSharper disable once StyleCop.SA1600
@@ -118,7 +118,7 @@
         [Hook(HookType.Entry, "StardewValley.Menus.ChatBox", "draw")]
         public static bool OnChatBoxDraw([ThisBind] object @this, [InputBind(typeof(SpriteBatch), "b")] SpriteBatch b)
         {
-            return EventCommon.SafeCancellableInvoke(ChatBoxDraw, @this, new EventArgsChatBoxDraw((ChatBox)@this, b));
+            return EventCommon.SafeCancellableInvoke(ChatBoxDraw, @this, new ChatBoxDrawEventArgs((ChatBox)@this, b));
         }
 
         // ReSharper disable once StyleCop.SA1600

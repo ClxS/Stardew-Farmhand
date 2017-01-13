@@ -9,6 +9,7 @@
     using Farmhand.Attributes;
     using Farmhand.Events;
     using Farmhand.Events.Arguments;
+    using Farmhand.Events.Arguments.ApiEvents;
     using Farmhand.Extensibility;
     using Farmhand.Helpers;
     using Farmhand.Logging;
@@ -113,7 +114,7 @@
             return null;
         }
 
-        private static void ApiEvents_OnModError(object sender, EventArgsOnModError e)
+        private static void ApiEvents_OnModError(object sender, ModErrorEventArgs e)
         {
             var mod =
                 (ModManifest)

@@ -37,7 +37,7 @@ namespace EnableDebugMod
             return false;
         }
 
-        private void ControlEvents_OnKeyPressed(object sender, EventArgsKeyPressed e)
+        private void ControlEvents_OnKeyPressed(object sender, KeyPressedEventArgs e)
         {
             if (Game1.paused)
                 return;

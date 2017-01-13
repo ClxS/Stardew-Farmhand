@@ -18,7 +18,7 @@
         /// <remarks>
         ///     TODO: Not yet implemented
         /// </remarks>
-        public static event EventHandler<EventArgsOnMenuChanged> MenuChanged = delegate { };
+        public static event EventHandler<MenuChangedEventArgs> MenuChanged = delegate { };
 
         /// <summary>
         ///     Fires just after showing end of night menu.
@@ -28,7 +28,7 @@
         [PendingHook]
         internal static void OnMenuChanged(IClickableMenu priorMenu, IClickableMenu newMenu)
         {
-            EventCommon.SafeInvoke(MenuChanged, null, new EventArgsOnMenuChanged(priorMenu, newMenu));
+            EventCommon.SafeInvoke(MenuChanged, null, new MenuChangedEventArgs(priorMenu, newMenu));
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "showEndOfNightStuff")]

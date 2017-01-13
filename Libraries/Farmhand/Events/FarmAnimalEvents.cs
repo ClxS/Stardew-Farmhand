@@ -5,6 +5,7 @@
 
     using Farmhand.Attributes;
     using Farmhand.Events.Arguments;
+    using Farmhand.Events.Arguments.AnimalEvents;
 
     /// <summary>
     ///     Contains events relating to farm animals
@@ -17,7 +18,7 @@
         /// <remarks>
         ///     This event is cancellable, allowing you to prevent the animal eating grass.
         /// </remarks>
-        public static event EventHandler<EventArgsOnAnimalEatGrass> BeforeEatGrass = delegate { };
+        public static event EventHandler<AnimalEatGrassEventArgs> BeforeEatGrass = delegate { };
 
         /// <summary>
         ///     Fires when an animal makes sound.
@@ -38,7 +39,7 @@
         [Hook(HookType.Entry, "StardewValley.FarmAnimal", "eatGrass")]
         internal static bool OnBeforeEatGrass([ThisBind] object @this)
         {
-            return EventCommon.SafeCancellableInvoke(BeforeEatGrass, @this, new EventArgsOnAnimalEatGrass());
+            return EventCommon.SafeCancellableInvoke(BeforeEatGrass, @this, new AnimalEatGrassEventArgs());
         }
 
         [Hook(HookType.Entry, "StardewValley.FarmAnimal", "makeSound")]

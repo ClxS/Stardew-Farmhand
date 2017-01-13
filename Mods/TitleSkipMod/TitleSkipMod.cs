@@ -10,7 +10,7 @@
             MenuEvents.MenuChanged += this.MenuEvents_OnMenuChanged;
         }
 
-        private void MenuEvents_OnMenuChanged(object sender, Farmhand.Events.Arguments.MenuEvents.EventArgsOnMenuChanged e)
+        private void MenuEvents_OnMenuChanged(object sender, Farmhand.Events.Arguments.MenuEvents.MenuChangedEventArgs e)
         {
             var menu = e.NewMenu as Farmhand.UI.TitleMenu;
             if (menu == null)

@@ -18,22 +18,22 @@
         /// <summary>
         ///     Fires just before opening a letter/sign.
         /// </summary>
-        public static event EventHandler<EventArgsOpenedLetter> BeforeOpenedLetter = delegate { };
+        public static event EventHandler<OpenedLetterEventArgs> BeforeOpenedLetter = delegate { };
 
         /// <summary>
         ///     Fires just after opening a letter/sign.
         /// </summary>
-        public static event EventHandler<EventArgsOpenedLetter> AfterOpenedLetter = delegate { };
+        public static event EventHandler<OpenedLetterEventArgs> AfterOpenedLetter = delegate { };
 
         /// <summary>
         ///     Fires just before opening a piece of mail.
         /// </summary>
-        public static event EventHandler<EventArgsOpenedMail> BeforeOpenedMail = delegate { };
+        public static event EventHandler<OpenedMailEventArgs> BeforeOpenedMail = delegate { };
 
         /// <summary>
         ///     Fires just after opening a piece of mail.
         /// </summary>
-        public static event EventHandler<EventArgsOpenedMail> AfterOpenedMail = delegate { };
+        public static event EventHandler<OpenedMailEventArgs> AfterOpenedMail = delegate { };
 
         [Hook(HookType.Entry, "StardewValley.Menus.LetterViewerMenu",
             "System.Void StardewValley.Menus.LetterViewerMenu::.ctor(System.String)")]
@@ -41,14 +41,14 @@
             [ThisBind] object @this,
             [InputBind(typeof(string), "text")] string text)
         {
-            EventCommon.SafeInvoke(BeforeOpenedLetter, @this, new EventArgsOpenedLetter(text));
+            EventCommon.SafeInvoke(BeforeOpenedLetter, @this, new OpenedLetterEventArgs(text));
         }
 
         [Hook(HookType.Exit, "StardewValley.Menus.LetterViewerMenu",
             "System.Void StardewValley.Menus.LetterViewerMenu::.ctor(System.String)")]
         internal static void OnAfterOpenedMail([ThisBind] object @this, [InputBind(typeof(string), "text")] string text)
         {
-            EventCommon.SafeInvoke(AfterOpenedLetter, @this, new EventArgsOpenedLetter(text));
+            EventCommon.SafeInvoke(AfterOpenedLetter, @this, new OpenedLetterEventArgs(text));
         }
 
         [Hook(HookType.Entry, "StardewValley.Menus.LetterViewerMenu",
@@ -77,7 +77,7 @@
             EventCommon.SafeInvoke(
                 BeforeOpenedMail,
                 @this,
-                new EventArgsOpenedMail(message, mailTitle, previousAttachType, previousAttachValue));
+                new OpenedMailEventArgs(message, mailTitle, previousAttachType, previousAttachValue));
         }
 
         [Hook(HookType.Exit, "StardewValley.Menus.LetterViewerMenu",
@@ -90,7 +90,7 @@
             EventCommon.SafeInvoke(
                 AfterOpenedMail,
                 @this,
-                new EventArgsOpenedMail(mail, mailTitle, previousAttachType, previousAttachValue));
+                new OpenedMailEventArgs(mail, mailTitle, previousAttachType, previousAttachValue));
 
             previousAttachType = null;
             previousAttachValue = null;

@@ -43,7 +43,7 @@
             GameEvents.BeforeUpdateTick += GameEvents_OnBeforeUpdateTick;
         }
 
-        private static void GameEvents_OnBeforeUpdateTick(object sender, EventArgsOnBeforeGameUpdate e)
+        private static void GameEvents_OnBeforeUpdateTick(object sender, BeforeGameUpdateEventArgs e)
         {
             if (!injected)
             {

@@ -81,7 +81,7 @@
             }
         }
 
-        private static void ChatBoxDraw(object sender, EventArgsChatBoxDraw chatBoxDrawEventArgs)
+        private static void ChatBoxDraw(object sender, ChatBoxDrawEventArgs chatBoxDrawEventArgs)
         {
             var @this = chatBoxDrawEventArgs.ChatBox;
             var b = chatBoxDrawEventArgs.SpriteBatch;

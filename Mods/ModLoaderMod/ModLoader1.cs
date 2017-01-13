@@ -16,7 +16,7 @@ namespace ModLoaderMod
             Farmhand.Events.GameEvents.AfterGameInitialised += OnAfterGameInitialise;         
         }
         
-        public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
+        public void OnAfterGameInitialise(object sender, GameInitialisedEventArgs e)
         {
             var test = ModRegistry.GetRegisteredItems();
             var texture = ModSettings.GetTexture("icon_menuModsButton");
