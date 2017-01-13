@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace TestMonsterMod.Monsters
 {
-    class TestMonster : Farmhand.Overrides.Character.Monster
+    class TestMonster : Farmhand.Character.Monster
     {
 
         public TestMonster(MonsterInformation Information, Vector2 Position)

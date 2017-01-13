@@ -9,7 +9,7 @@ using StardewValley;
 
 namespace TestNPCMod.NPCs
 {
-    public class Troy : Farmhand.Overrides.Character.NPC
+    public class Troy : Farmhand.Character.NPC
     {
         #region Registration Information
         private static NpcInformation _information;
