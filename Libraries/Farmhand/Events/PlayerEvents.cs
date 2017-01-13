@@ -124,13 +124,17 @@ namespace Farmhand.Events
             return EventCommon.SafeCancellableInvoke(OnChangeGender, @this, new CancelEventArgs());
         }
 
-        //[Hook(HookType.Exit, "StardewValley.Farmer", "addItemToInventory")]
-        //internal static bool InvokeItemAddedToInventory(
-        //    [ThisBind] object @this,
-        //    [InputBind(typeof(Item), "item")] Item item)
-        //{
-        //    return EventCommon.SafeCancellableInvoke(OnItemAddedToInventory, @this, new EventArgsOnItemAddedToInventory(item));
-        //}
+        [HookReturnable(HookType.Exit, "StardewValley.Farmer", "addItemToInventory")]
+        internal static Item InvokeItemAddedToInventory(
+            [UseOutputBind] out bool useOutput,
+            [ThisBind] object @this,
+            [InputBind(typeof(Item), "item")] Item item)
+        {
+            var eventArgs = new EventArgsOnItemAddedToInventory(item);
+            EventCommon.SafeInvoke(OnItemAddedToInventory, @this, eventArgs);
+            useOutput = eventArgs.IsHandled;
+            return eventArgs.Item;
+        }
 
         [Hook(HookType.Entry, "StardewValley.Farmer", "gainExperience")]
         internal static bool InvokeOnBeforeGainExperience([ThisBind] object @this,

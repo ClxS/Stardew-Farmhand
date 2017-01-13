@@ -1,15 +1,29 @@
-﻿using System.ComponentModel;
-using StardewValley;
-
-namespace Farmhand.Events.Arguments.PlayerEvents
+﻿namespace Farmhand.Events.Arguments.PlayerEvents
 {
-    public class EventArgsOnItemAddedToInventory : CancelEventArgs
+    using StardewValley;
+
+    public class EventArgsOnItemAddedToInventory : ReturnableEventArgs
     {
+        private Item item;
+
         public EventArgsOnItemAddedToInventory(Item item)
         {
-            Item = item;
+            this.item = item;
         }
 
-        public Item Item { get; set; }
+        public Item Item
+        {
+            get
+            {
+                return this.item;
+            }
+
+            set
+            {
+                this.item = value;
+
+                this.IsHandled = true;
+            }
+        }
     }
 }

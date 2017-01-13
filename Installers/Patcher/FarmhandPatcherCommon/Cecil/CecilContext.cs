@@ -213,8 +213,10 @@
             if (typeDef != null)
             {
                 methodDef = selector == null
-                                ? typeDef.Methods.FirstOrDefault(m => m.Name == method)
-                                : typeDef.Methods.Where(m => m.Name == method).FirstOrDefault(selector);
+                                ? (typeDef.Methods.FirstOrDefault(m => m.Name == method)
+                                   ?? typeDef.Methods.FirstOrDefault(m => m.FullName == method))
+                                : typeDef.Methods.Where(m => m.Name == method || m.Name == method)
+                                    .FirstOrDefault(selector);
             }
 
             return methodDef;
