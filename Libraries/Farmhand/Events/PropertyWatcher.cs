@@ -492,7 +492,9 @@
                         ControlEvents.OnTriggerPressed(
                             i,
                             b,
-                            b == Buttons.LeftTrigger ? GamePad.GetState(i).Triggers.Left : GamePad.GetState(i).Triggers.Right);
+                            b == Buttons.LeftTrigger
+                                ? GamePad.GetState(i).Triggers.Left
+                                : GamePad.GetState(i).Triggers.Right);
                     }
                     else
                     {
@@ -510,7 +512,9 @@
                         ControlEvents.OnTriggerReleased(
                             i,
                             b,
-                            b == Buttons.LeftTrigger ? GamePad.GetState(i).Triggers.Left : GamePad.GetState(i).Triggers.Right);
+                            b == Buttons.LeftTrigger
+                                ? GamePad.GetState(i).Triggers.Left
+                                : GamePad.GetState(i).Triggers.Right);
                     }
                     else
                     {

@@ -4,7 +4,6 @@
     using System.IO;
     using System.Reflection;
 
-    using Farmhand.Helpers;
     using Farmhand.Helpers.Randomizer;
 
     /// <summary>

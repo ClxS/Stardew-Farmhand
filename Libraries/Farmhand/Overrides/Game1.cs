@@ -2,9 +2,11 @@
 {
     using Farmhand.Attributes;
 
+    using StardewValley;
+
     [HookForceVirtualBase]
     [HookAlterBaseFieldProtection(LowestProtection.Protected)]
-    internal class GameOverrideBase : StardewValley.Game1
+    internal class GameOverrideBase : Game1
     {
     }
 }

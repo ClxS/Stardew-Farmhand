@@ -1,5 +1,7 @@
 ﻿namespace Farmhand.API.Items
 {
+    using StardewValley;
+
     // ReSharper disable StyleCop.SA1602
 
     /// <summary>
@@ -9,72 +11,72 @@
     {
         None = 0,
 
-        Greens = StardewValley.Object.GreensCategory,
+        Greens = object.GreensCategory,
 
-        Gem = StardewValley.Object.GemCategory,
+        Gem = object.GemCategory,
 
-        Vegetable = StardewValley.Object.VegetableCategory,
+        Vegetable = object.VegetableCategory,
 
-        Fish = StardewValley.Object.FishCategory,
+        Fish = object.FishCategory,
 
-        Egg = StardewValley.Object.EggCategory,
+        Egg = object.EggCategory,
 
-        Milk = StardewValley.Object.MilkCategory,
+        Milk = object.MilkCategory,
 
-        Cooking = StardewValley.Object.CookingCategory,
+        Cooking = object.CookingCategory,
 
-        Crafting = StardewValley.Object.CraftingCategory,
+        Crafting = object.CraftingCategory,
 
-        BigCraftable = StardewValley.Object.BigCraftableCategory,
+        BigCraftable = object.BigCraftableCategory,
 
-        Fruit = StardewValley.Object.FruitsCategory,
+        Fruit = object.FruitsCategory,
 
-        Seeds = StardewValley.Object.SeedsCategory,
+        Seeds = object.SeedsCategory,
 
-        Minerals = StardewValley.Object.mineralsCategory,
+        Minerals = object.mineralsCategory,
 
-        Flowers = StardewValley.Object.flowersCategory,
+        Flowers = object.flowersCategory,
 
-        Meat = StardewValley.Object.meatCategory,
+        Meat = object.meatCategory,
 
-        Metal = StardewValley.Object.metalResources,
+        Metal = object.metalResources,
 
-        Building = StardewValley.Object.buildingResources,
+        Building = object.buildingResources,
 
-        SellAtPierres = StardewValley.Object.sellAtPierres,
+        SellAtPierres = object.sellAtPierres,
 
-        SellAtPierresAndMarnies = StardewValley.Object.sellAtPierresAndMarnies,
+        SellAtPierresAndMarnies = object.sellAtPierresAndMarnies,
 
-        Fertilizer = StardewValley.Object.fertilizerCategory,
+        Fertilizer = object.fertilizerCategory,
 
-        Junk = StardewValley.Object.junkCategory,
+        Junk = object.junkCategory,
 
-        Bait = StardewValley.Object.baitCategory,
+        Bait = object.baitCategory,
 
-        Tackle = StardewValley.Object.tackleCategory,
+        Tackle = object.tackleCategory,
 
-        SellAtFishShop = StardewValley.Object.sellAtFishShopCategory,
+        SellAtFishShop = object.sellAtFishShopCategory,
 
-        Furniture = StardewValley.Object.furnitureCategory,
+        Furniture = object.furnitureCategory,
 
-        Ingredient = StardewValley.Object.ingredientsCategory,
+        Ingredient = object.ingredientsCategory,
 
-        ArtisanGoods = StardewValley.Object.artisanGoodsCategory,
+        ArtisanGoods = object.artisanGoodsCategory,
 
-        Syrup = StardewValley.Object.syrupCategory,
+        Syrup = object.syrupCategory,
 
-        MonsterLoot = StardewValley.Object.monsterLootCategory,
+        MonsterLoot = object.monsterLootCategory,
 
-        Equipment = StardewValley.Object.equipmentCategory,
+        Equipment = object.equipmentCategory,
 
-        Hat = StardewValley.Object.hatCategory,
+        Hat = object.hatCategory,
 
-        Ring = StardewValley.Object.ringCategory,
+        Ring = object.ringCategory,
 
-        Weapon = StardewValley.Object.weaponCategory,
+        Weapon = object.weaponCategory,
 
-        Boots = StardewValley.Object.bootsCategory,
+        Boots = object.bootsCategory,
 
-        Tool = StardewValley.Object.toolCategory
+        Tool = object.toolCategory
     }
 }

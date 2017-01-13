@@ -3,7 +3,6 @@
     using System;
     using System.Reflection;
 
-    using Farmhand.Events.Arguments;
     using Farmhand.Events.Arguments.ApiEvents;
     using Farmhand.Registries.Containers;
 

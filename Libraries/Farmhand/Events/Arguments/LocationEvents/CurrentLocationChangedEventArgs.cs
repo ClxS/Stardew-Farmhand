@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Events.Arguments.LocationEvents
+namespace Farmhand.Events.Arguments.LocationEvents
 {
     using System;
 

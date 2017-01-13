@@ -76,24 +76,41 @@
         /// </summary>
         public static List<IContentInjector> ContentInjectors { get; } = new List<IContentInjector>
                                                                              {
-                                                                                 new ModXnbInjector(),
-                                                                                 new BlueprintInjector(),
-                                                                                 new MonsterLoader(),
-                                                                                 new MonsterInjector(),
-                                                                                 new CropInjector(),
-                                                                                 new WeaponInjector(),
-                                                                                 new BigCraftableInjector(),
-                                                                                 new DelegatedContentInjector(),
-                                                                                 new MapInjector(),
-                                                                                 new MailInjector(),
-                                                                                 new QuestInjector(),
+                                                                                 new ModXnbInjector
+                                                                                     (),
+                                                                                 new BlueprintInjector
+                                                                                     (),
+                                                                                 new MonsterLoader
+                                                                                     (),
+                                                                                 new MonsterInjector
+                                                                                     (),
+                                                                                 new CropInjector
+                                                                                     (),
+                                                                                 new WeaponInjector
+                                                                                     (),
+                                                                                 new BigCraftableInjector
+                                                                                     (),
+                                                                                 new DelegatedContentInjector
+                                                                                     (),
+                                                                                 new MapInjector(
+                                                                                 ),
+                                                                                 new MailInjector
+                                                                                     (),
+                                                                                 new QuestInjector
+                                                                                     (),
                                                                                  /* Begin NPC Injectors */
-                                                                                 new DialogueLoader(),
-                                                                                 new GiftTastesInjector(),
-                                                                                 new NpcDispositionsInjector(),
+                                                                                 new DialogueLoader
+                                                                                     (),
+                                                                                 new GiftTastesInjector
+                                                                                     (),
+                                                                                 new NpcDispositionsInjector
+                                                                                     (),
                                                                                  new NpcLoader(),
-                                                                                 new RainyDialogueInjector(),
-                                                                                 new ScheduleLoader()
+                                                                                 new RainyDialogueInjector
+                                                                                     (),
+                                                                                 new ScheduleLoader
+                                                                                     ()
+                                                                                 
                                                                                  /* End NPC Injectors */
                                                                              };
 

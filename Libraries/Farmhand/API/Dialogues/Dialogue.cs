@@ -425,9 +425,11 @@
 
         // Injects the create question dialog call
         [Hook(HookType.Entry, "StardewValley.GameLocation",
-            "System.Void StardewValley.GameLocation::createQuestionDialogue(System.String,StardewValley.Response[],System.String)")]
+            "System.Void StardewValley.GameLocation::createQuestionDialogue(System.String,StardewValley.Response[],System.String)"
+        )]
         [Hook(HookType.Entry, "StardewValley.GameLocation",
-            "System.Void StardewValley.GameLocation::createQuestionDialogue(System.String,StardewValley.Response[],System.String,StardewValley.Object)")]
+            "System.Void StardewValley.GameLocation::createQuestionDialogue(System.String,StardewValley.Response[],System.String,StardewValley.Object)"
+        )]
         internal static void InjectQuestionDialogueOverload1(
             [InputBind(typeof(Response[]), "answerChoices", true)] ref Response[] answerChoices,
             [InputBind(typeof(string), "dialogKey")] string dialogKey)
@@ -483,7 +485,7 @@
             }
 
             // Add any non-null values in the array into the finalResponses list
-            foreach (Response t in answerChoices)
+            foreach (var t in answerChoices)
             {
                 if (t != null)
                 {

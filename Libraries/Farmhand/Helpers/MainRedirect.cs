@@ -50,8 +50,7 @@
         private static FieldInfo BuildSteamField
             => buildSteamField ?? (buildSteamField = ProgramType.GetField("build_steam"));
 
-        private static FieldInfo BuildGogField => buildGogField ?? (buildGogField = ProgramType.GetField("build_gog"))
-        ;
+        private static FieldInfo BuildGogField => buildGogField ?? (buildGogField = ProgramType.GetField("build_gog"));
 
         private static FieldInfo GamePtrField => gamePtrField ?? (gamePtrField = ProgramType.GetField("gamePtr"));
 

@@ -1,4 +1,5 @@
-﻿#pragma warning disable 1591
+﻿
+#pragma warning disable 1591
 
 namespace Farmhand.Attributes
 {

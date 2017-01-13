@@ -50,7 +50,7 @@
             TextureUtility.AddSpriteToSpritesheet(ref Game1.cropSpriteSheet, crop.Texture, crop.Id, 128, 32);
             RegisteredTypeInformation[typeof(T)] = crop;
         }
-        
+
         [Hook(HookType.Exit, "StardewValley.Crop", "System.Void StardewValley.Crop::.ctor()")]
         internal static void RegisterDeserializingCrop([ThisBind] object @this)
         {

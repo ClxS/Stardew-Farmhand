@@ -139,6 +139,8 @@
 #endif
         }
 
+        #region Nested type: ReferenceResolver
+
         // Fix references to other things. The ones we fix are the external references,
         // but everything still needs to be checked, even if the top-level is fine.
         // Stupid generics.
@@ -235,7 +237,10 @@
                     MethSpecField.SetValue(instanceMethod, Fix(def, instanceMethod.ElementMethod));
                     for (var i = 0; i < instanceMethod.GenericParameters.Count; ++i)
                     {
-                        instanceMethod.GenericParameters[i] = Fix(def, instanceMethod, instanceMethod.GenericParameters[i]);
+                        instanceMethod.GenericParameters[i] = Fix(
+                            def,
+                            instanceMethod,
+                            instanceMethod.GenericParameters[i]);
                     }
 
                     for (var i = 0; i < instanceMethod.GenericArguments.Count; ++i)
@@ -468,5 +473,7 @@
 
             #endregion
         }
+
+        #endregion
     }
 }

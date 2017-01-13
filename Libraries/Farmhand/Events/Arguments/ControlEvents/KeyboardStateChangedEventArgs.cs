@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Events.Arguments.ControlEvents
+namespace Farmhand.Events.Arguments.ControlEvents
 {
     using System;
 

@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Events.Arguments.AnimalEvents
+namespace Farmhand.Events.Arguments.AnimalEvents
 {
     using System.ComponentModel;
 

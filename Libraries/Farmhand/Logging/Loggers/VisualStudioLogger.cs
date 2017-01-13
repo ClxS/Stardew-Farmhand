@@ -4,7 +4,7 @@
     using System.Diagnostics;
 
     /// <summary>
-    /// Writes to the VisualStudio output log via Debug.WriteLine
+    ///     Writes to the VisualStudio output log via Debug.WriteLine
     /// </summary>
     public class VisualStudioLogger : ILogger
     {

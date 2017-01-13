@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Events.Arguments.ControlEvents
+namespace Farmhand.Events.Arguments.ControlEvents
 {
     using System;
 
@@ -6,21 +6,21 @@
     using Microsoft.Xna.Framework.Input;
 
     /// <summary>
-    /// Arguments for ControllerTriggerPressed.
+    ///     Arguments for ControllerTriggerPressed.
     /// </summary>
     public class ControllerTriggerPressedEventArgs : EventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControllerTriggerPressedEventArgs"/> class.
+        ///     Initializes a new instance of the <see cref="ControllerTriggerPressedEventArgs" /> class.
         /// </summary>
         /// <param name="playerIndex">
-        /// The player index.
+        ///     The player index.
         /// </param>
         /// <param name="buttonPressed">
-        /// The button pressed.
+        ///     The button pressed.
         /// </param>
         /// <param name="value">
-        /// The value.
+        ///     The value.
         /// </param>
         public ControllerTriggerPressedEventArgs(PlayerIndex playerIndex, Buttons buttonPressed, float value)
         {
@@ -30,17 +30,17 @@
         }
 
         /// <summary>
-        /// Gets the player index.
+        ///     Gets the player index.
         /// </summary>
         public PlayerIndex PlayerIndex { get; }
 
         /// <summary>
-        /// Gets the button pressed.
+        ///     Gets the button pressed.
         /// </summary>
         public Buttons ButtonPressed { get; }
 
         /// <summary>
-        /// Gets the strength of the trigger press.
+        ///     Gets the strength of the trigger press.
         /// </summary>
         public float Value { get; }
     }

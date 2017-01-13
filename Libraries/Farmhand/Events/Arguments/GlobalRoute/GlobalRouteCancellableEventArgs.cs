@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Events.Arguments.GlobalRoute
+namespace Farmhand.Events.Arguments.GlobalRoute
 {
     /// <summary>
     ///     Arguments for GlobalRouteCancellable.

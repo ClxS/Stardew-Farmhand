@@ -23,16 +23,6 @@
         public virtual Vector2 AnimalDoor { get; set; } = -Vector2.One; // [5-6]
 
         /// <summary>
-        ///     The blueprint string.
-        /// </summary>
-        public string BlueprintString
-            =>
-                $"{this.MaterialsRequired.ToItemSetString()}/{this.TileSize.X}/{this.TileSize.Y}/{this.HumanDoor.X}/{this.HumanDoor.Y}/{this.AnimalDoor.X}/{this.AnimalDoor.Y}/{this.MapWarpTo}/"
-                + $"{this.Description}/{this.BlueprintType}/{this.BuildingToUpdate}/{this.SourceViewRect.X}/{this.SourceViewRect.Y}/{this.MaxOccupants}/{this.ActionBehaviour ?? "null"}/"
-                + $"{this.SuitableBuildingLocations.ToSpaceSeparatedString()}"
-                + (this.MoneyRequired >= 0 ? $"/{this.MoneyRequired}" : string.Empty);
-
-        /// <summary>
         ///     Gets or sets the blueprint type.
         /// </summary>
         public virtual BlueprintType BlueprintType { get; set; } // [9]
@@ -51,11 +41,6 @@
         ///     Gets or sets the position of the human door.
         /// </summary>
         public virtual Vector2 HumanDoor { get; set; } = -Vector2.One; // [3-4]
-
-        /// <summary>
-        ///     The is carpenter blueprint.
-        /// </summary>
-        public virtual bool IsCarpenterBlueprint => this.MoneyRequired >= 0;
 
         /// <summary>
         ///     Gets or sets the map warp to.
@@ -78,11 +63,6 @@
         public virtual int MoneyRequired { get; set; } = -1;
 
         /// <summary>
-        ///     Gets or sets the name.
-        /// </summary>
-        public virtual string Name { get; set; }
-
-        /// <summary>
         ///     Gets or sets the texture source of the building.
         /// </summary>
         public virtual Vector2 SourceViewRect { get; set; } // [11-12]
@@ -96,5 +76,29 @@
         ///     Gets or sets the tile size.
         /// </summary>
         public virtual Vector2 TileSize { get; set; } // [1-2]
+
+        #region IBlueprint Members
+
+        /// <summary>
+        ///     The blueprint string.
+        /// </summary>
+        public string BlueprintString
+            =>
+                $"{this.MaterialsRequired.ToItemSetString()}/{this.TileSize.X}/{this.TileSize.Y}/{this.HumanDoor.X}/{this.HumanDoor.Y}/{this.AnimalDoor.X}/{this.AnimalDoor.Y}/{this.MapWarpTo}/"
+                + $"{this.Description}/{this.BlueprintType}/{this.BuildingToUpdate}/{this.SourceViewRect.X}/{this.SourceViewRect.Y}/{this.MaxOccupants}/{this.ActionBehaviour ?? "null"}/"
+                + $"{this.SuitableBuildingLocations.ToSpaceSeparatedString()}"
+                + (this.MoneyRequired >= 0 ? $"/{this.MoneyRequired}" : string.Empty);
+
+        /// <summary>
+        ///     The is carpenter blueprint.
+        /// </summary>
+        public virtual bool IsCarpenterBlueprint => this.MoneyRequired >= 0;
+
+        /// <summary>
+        ///     Gets or sets the name.
+        /// </summary>
+        public virtual string Name { get; set; }
+
+        #endregion
     }
 }

@@ -104,6 +104,8 @@
             return null;
         }
 
+        #region Nested type: MineshaftMonsterSpawnChance
+
         /// <summary>
         ///     A data class which holds monster spawn chance information for the mineshaft
         /// </summary>
@@ -166,5 +168,7 @@
             /// </summary>
             public double SpawnWeight { get; set; }
         }
+
+        #endregion
     }
 }

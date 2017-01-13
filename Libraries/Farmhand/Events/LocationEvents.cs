@@ -111,7 +111,8 @@
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1",
-            "System.Void StardewValley.Game1::warpFarmer(StardewValley.GameLocation,System.Int32,System.Int32,System.Int32,System.Boolean)")]
+            "System.Void StardewValley.Game1::warpFarmer(StardewValley.GameLocation,System.Int32,System.Int32,System.Int32,System.Boolean)"
+        )]
         internal static bool OnBeforeWarp(
             [InputBind(typeof(GameLocation), "locationAfterWarp")] GameLocation locationAfterWarp,
             [InputBind(typeof(int), "tileX")] int tileX,

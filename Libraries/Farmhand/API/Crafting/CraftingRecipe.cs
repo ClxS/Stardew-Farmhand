@@ -58,7 +58,8 @@
         /// </summary>
         public string RecipeString
             =>
-                $"{this.MaterialsRequired.ToItemSetString()}/{this.Category}/{this.ItemsProduced.ToItemSetString()}/{this.IsBigCraftable}/{this.SkillString}";
+                $"{this.MaterialsRequired.ToItemSetString()}/{this.Category}/{this.ItemsProduced.ToItemSetString()}/{this.IsBigCraftable}/{this.SkillString}"
+        ;
 
         /// <summary>
         ///     Gets or sets the <see cref="RecipeUnlockType" />.

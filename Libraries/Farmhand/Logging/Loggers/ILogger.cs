@@ -1,7 +1,7 @@
 ﻿namespace Farmhand.Logging.Loggers
 {
     /// <summary>
-    /// The Logger interface.
+    ///     The Logger interface.
     /// </summary>
     public interface ILogger
     {

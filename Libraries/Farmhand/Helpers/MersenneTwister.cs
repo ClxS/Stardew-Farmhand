@@ -30,7 +30,7 @@
         #endregion
 
         #region Constructors
-        
+
         public MersenneTwister(uint seed)
         {
             this.Init();
@@ -67,7 +67,7 @@
 
             this.InitByArray(initKey);
         }
-        
+
         ~MersenneTwister()
         {
             this.Dispose(false);
@@ -85,7 +85,7 @@
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
+
         protected virtual void Dispose(bool disposing)
         {
             if (this.disposed)
@@ -119,8 +119,7 @@
 
             for (this.mti = 1; this.mti < N; this.mti++)
             {
-                this.mt[this.mti] = 1812433253 * (this.mt[this.mti - 1] ^ (this.mt[this.mti - 1] >> 30))
-                                      + this.mti;
+                this.mt[this.mti] = 1812433253 * (this.mt[this.mti - 1] ^ (this.mt[this.mti - 1] >> 30)) + this.mti;
             }
         }
 
@@ -170,7 +169,7 @@
 
             this.mt[0] = 0x80000000;
         }
-        
+
         public uint GenRandInt32()
         {
             uint y;
@@ -209,7 +208,7 @@
 
             return y;
         }
-        
+
         public uint GenRandInt31() => this.GenRandInt32() >> 1;
 
         /// <summary>

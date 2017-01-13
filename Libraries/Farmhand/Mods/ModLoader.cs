@@ -8,7 +8,6 @@
 
     using Farmhand.Attributes;
     using Farmhand.Events;
-    using Farmhand.Events.Arguments;
     using Farmhand.Events.Arguments.ApiEvents;
     using Farmhand.Extensibility;
     using Farmhand.Helpers;

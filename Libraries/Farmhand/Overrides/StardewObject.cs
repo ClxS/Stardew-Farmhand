@@ -1,10 +1,12 @@
 ﻿namespace Farmhand.Overrides
 {
     using Farmhand.Attributes;
-    
+
+    using StardewValley;
+
     [HookForceVirtualBase]
     [HookAlterBaseFieldProtection(LowestProtection.Protected)]
-    internal class StardewObject : StardewValley.Object
+    internal class StardewObject : Object
     {
     }
 }

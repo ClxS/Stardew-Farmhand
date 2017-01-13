@@ -4,7 +4,6 @@
     using System.ComponentModel;
 
     using Farmhand.Attributes;
-    using Farmhand.Events.Arguments;
     using Farmhand.Events.Arguments.AnimalEvents;
 
     /// <summary>

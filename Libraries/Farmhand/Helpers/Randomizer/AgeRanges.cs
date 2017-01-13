@@ -1,32 +1,32 @@
 ﻿namespace Farmhand.Helpers.Randomizer
 {
     /// <summary>
-    /// An enumeration of age ranges for the randomizer.
+    ///     An enumeration of age ranges for the randomizer.
     /// </summary>
     public enum AgeRanges
     {
         /// <summary>
-        /// Child ages.
+        ///     Child ages.
         /// </summary>
         Child,
 
         /// <summary>
-        /// Teen ages.
+        ///     Teen ages.
         /// </summary>
         Teen,
 
         /// <summary>
-        /// Adult ages.
+        ///     Adult ages.
         /// </summary>
         Adult,
 
         /// <summary>
-        /// Senior ages.
+        ///     Senior ages.
         /// </summary>
         Senior,
 
         /// <summary>
-        /// All ages.
+        ///     All ages.
         /// </summary>
         All
     }

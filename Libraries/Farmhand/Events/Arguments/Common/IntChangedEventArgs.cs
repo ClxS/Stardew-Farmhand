@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Events.Arguments.Common
+namespace Farmhand.Events.Arguments.Common
 {
     using System;
 

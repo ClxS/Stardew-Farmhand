@@ -8,7 +8,7 @@
     using static Data;
 
     /// <summary>
-    /// A utility class to generate random information.
+    ///     A utility class to generate random information.
     /// </summary>
     public class Randomizer
     {
@@ -239,7 +239,7 @@
         ///     Returns a list of n random terms.
         /// </summary>
         /// <typeparam name="T">
-        /// The type of terms to return.
+        ///     The type of terms to return.
         /// </typeparam>
         /// <param name="generator">Generator function to produce items.</param>
         /// <param name="count">The count of produced items.</param>
@@ -562,7 +562,7 @@
 
             return this.NextNatural(range[0], range[1]);
         }
-        
+
         #endregion
 
         #region Date\Time

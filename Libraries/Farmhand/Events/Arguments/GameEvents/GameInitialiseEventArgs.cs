@@ -1,9 +1,9 @@
-﻿namespace Farmhand.Events.Arguments.GameEvents
+namespace Farmhand.Events.Arguments.GameEvents
 {
     using System;
 
     /// <summary>
-    /// Arguments for GameInitialise.
+    ///     Arguments for GameInitialise.
     /// </summary>
     public class GameInitialiseEventArgs : EventArgs
     {

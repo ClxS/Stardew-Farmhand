@@ -29,7 +29,7 @@
             // Iterate over all the arguments, performing actions where requested
             string currentAction = null;
             var subArgs = new List<string>();
-            foreach (string arg in args)
+            foreach (var arg in args)
             {
                 // New actions are signaled with a -
                 if (arg.StartsWith("-"))

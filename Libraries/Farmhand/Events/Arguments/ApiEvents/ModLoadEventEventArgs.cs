@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Events.Arguments.ApiEvents
+namespace Farmhand.Events.Arguments.ApiEvents
 {
     using System;
 
