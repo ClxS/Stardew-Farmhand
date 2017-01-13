@@ -1,95 +1,144 @@
-﻿using Farmhand.Attributes;
-using Farmhand.Logging;
-using Farmhand.Events.Arguments.TimeEvents;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using Farmhand.Events.Arguments.Common;
-using StardewValley;
-
-namespace Farmhand.Events
+﻿namespace Farmhand.Events
 {
+    using System;
+
+    using Farmhand.Attributes;
+    using Farmhand.Events.Arguments.Common;
+    using Farmhand.Events.Arguments.TimeEvents;
+
+    using StardewValley;
+
     /// <summary>
-    /// Contains events relating to time
+    ///     Contains events relating to time.
     /// </summary>
     public static class TimeEvents
     {
-#pragma warning disable 67
-        public static event EventHandler<EventArgsIntChanged> OnBeforeTimeChanged = delegate { };
-        public static event EventHandler<EventArgsIntChanged> OnAfterTimeChanged = delegate { };
-        public static event EventHandler OnBeforeDayChanged = delegate { };
-        public static event EventHandler OnAfterDayChanged = delegate { };
-        public static event EventHandler OnBeforeSeasonChanged = delegate { };
-        public static event EventHandler OnAfterSeasonChanged = delegate { };
+        internal static bool DidShouldTimePassCheckThisFrame { get; set; }
 
-        public static event EventHandler OnBeforeYearChanged = delegate { };
-        public static event EventHandler OnAfterYearChanged = delegate { };
+        internal static bool PreviousTimePassResult { get; set; }
 
+        /// <summary>
+        ///     Fired prior to time changes.
+        /// </summary>
+        public static event EventHandler<EventArgsIntChanged> BeforeTimeChanged = delegate { };
+
+        /// <summary>
+        ///     Fired after time changes.
+        /// </summary>
+        public static event EventHandler<EventArgsIntChanged> AfterTimeChanged = delegate { };
+
+        /// <summary>
+        ///     Fired before day changes.
+        /// </summary>
+        public static event EventHandler BeforeDayChanged = delegate { };
+
+        /// <summary>
+        ///     Fired after day changes.
+        /// </summary>
+        public static event EventHandler AfterDayChanged = delegate { };
+
+        /// <summary>
+        ///     Fired just before season changes.
+        /// </summary>
+        public static event EventHandler BeforeSeasonChanged = delegate { };
+
+        /// <summary>
+        ///     Fired just after season changes.
+        /// </summary>
+        public static event EventHandler AfterSeasonChanged = delegate { };
+
+        /// <summary>
+        ///     Fired just before year changes.
+        /// </summary>
+        /// <remarks>
+        ///     TODO: Not yet implemented
+        /// </remarks>
+        public static event EventHandler BeforeYearChanged = delegate { };
+
+        /// <summary>
+        ///     Fired just after year changes.
+        /// </summary>
+        /// <remarks>
+        ///     TODO: Not yet implemented
+        /// </remarks>
+        public static event EventHandler AfterYearChanged = delegate { };
+
+        /// <summary>
+        ///     Fires when the game checks whether time should pass.
+        /// </summary>
+        /// <remarks>
+        ///     You can use this event to prevent the game's clock from progressing.
+        /// </remarks>
         public static event EventHandler<EventArgsShouldTimePassCheck> ShouldTimePassCheck = delegate { };
-#pragma warning restore 67
 
         [Hook(HookType.Entry, "StardewValley.Game1", "performTenMinuteClockUpdate")]
-        internal static void InvokeBeforeTimeChanged()
+        internal static void OnBeforeTimeChanged()
         {
             var newTime = Game1.timeOfDay + 10;
             if (newTime % 100 >= 60)
-                newTime = newTime - (newTime % 100) + 100;
-            
-            EventCommon.SafeInvoke(OnBeforeTimeChanged, null, new EventArgsIntChanged(Game1.timeOfDay, newTime));
+            {
+                newTime = newTime - newTime % 100 + 100;
+            }
+
+            EventCommon.SafeInvoke(BeforeTimeChanged, null, new EventArgsIntChanged(Game1.timeOfDay, newTime));
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "performTenMinuteClockUpdate")]
-        internal static void InvokeAfterTimeChanged()
+        internal static void OnAfterTimeChanged()
         {
             var oldTime = Game1.timeOfDay - 10;
-            EventCommon.SafeInvoke(OnAfterTimeChanged, null, new EventArgsIntChanged(oldTime, Game1.timeOfDay));
+            EventCommon.SafeInvoke(AfterTimeChanged, null, new EventArgsIntChanged(oldTime, Game1.timeOfDay));
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "newDayAfterFade")]
-        internal static void InvokeBeforeDayChanged()
+        internal static void OnBeforeDayChanged()
         {
-            EventCommon.SafeInvoke(OnBeforeDayChanged, null);
+            EventCommon.SafeInvoke(BeforeDayChanged, null);
         }
+
         [Hook(HookType.Exit, "StardewValley.Game1", "newDayAfterFade")]
-        internal static void InvokeAfterDayChanged()
+        internal static void OnAfterDayChanged()
         {
-            EventCommon.SafeInvoke(OnAfterDayChanged, null);
+            EventCommon.SafeInvoke(AfterDayChanged, null);
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "newSeason")]
-        internal static void InvokeBeforeSeasonChanged()
+        internal static void OnBeforeSeasonChanged()
         {
-            EventCommon.SafeInvoke(OnBeforeSeasonChanged, null);
+            EventCommon.SafeInvoke(BeforeSeasonChanged, null);
         }
+
         [Hook(HookType.Exit, "StardewValley.Game1", "newSeason")]
-        internal static void InvokeAfterSeasonChanged()
+        internal static void OnAfterSeasonChanged()
         {
-            EventCommon.SafeInvoke(OnAfterSeasonChanged, null);
+            EventCommon.SafeInvoke(AfterSeasonChanged, null);
         }
 
-        //[PendingHook]
-        //internal static void InvokeBeforeYearChanged() 
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        internal static bool DidShouldTimePassCheckThisFrame;
-        internal static bool PrevTimePassResult;
         [HookReturnable(HookType.Exit, "StardewValley.Game1", "shouldTimePass")]
-        [SuppressMessage("ReSharper", "RedundantAssignment")]
-        internal static bool ShouldTimePass(
-            [UseOutputBind] ref bool useOutput,
-            [MethodOutputBind] bool shouldPass )
+        internal static bool OnShouldTimePass([UseOutputBind] out bool useOutput, [MethodOutputBind] bool shouldPass)
         {
-            if ( !DidShouldTimePassCheckThisFrame )
+            if (!DidShouldTimePassCheckThisFrame)
             {
                 var ev = new EventArgsShouldTimePassCheck(shouldPass);
                 EventCommon.SafeInvoke(ShouldTimePassCheck, null, ev);
-                PrevTimePassResult = ev.TimeShouldPass;
+                PreviousTimePassResult = ev.TimeShouldPass;
                 DidShouldTimePassCheckThisFrame = true;
             }
 
             useOutput = true;
-            return PrevTimePassResult;
+            return PreviousTimePassResult;
+        }
+
+        [PendingHook]
+        internal static void OnBeforeYearChanged()
+        {
+            BeforeYearChanged(null, EventArgs.Empty);
+        }
+
+        [PendingHook]
+        internal static void OnAfterYearChanged()
+        {
+            AfterYearChanged(null, EventArgs.Empty);
         }
     }
 }

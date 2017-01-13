@@ -40,7 +40,7 @@
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void AttachListeners()
         {
-            GameEvents.OnBeforeUpdateTick += GameEvents_OnBeforeUpdateTick;
+            GameEvents.BeforeUpdateTick += GameEvents_OnBeforeUpdateTick;
         }
 
         private static void GameEvents_OnBeforeUpdateTick(object sender, EventArgsOnBeforeGameUpdate e)

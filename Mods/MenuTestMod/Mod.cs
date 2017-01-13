@@ -34,8 +34,8 @@
 
         public override void Entry()
         {
-            GameEvents.OnAfterUpdateTick += GameEvents_UpdateTick;
-            ControlEvents.OnKeyReleased += ControlEvents_OnKeyReleased;
+            GameEvents.AfterUpdateTick += GameEvents_UpdateTick;
+            ControlEvents.KeyReleased += ControlEvents_OnKeyReleased;
         }
 
         private static void ControlEvents_OnKeyReleased(object sender, Farmhand.Events.Arguments.ControlEvents.EventArgsKeyPressed e)
@@ -79,8 +79,8 @@
                 return;
             }
 
-            GameEvents.OnAfterUpdateTick -= GameEvents_UpdateTick;
-            GameEvents.OnHalfSecondTick += GameEvents_HalfSecondTick;
+            GameEvents.AfterUpdateTick -= GameEvents_UpdateTick;
+            GameEvents.HalfSecondTick += GameEvents_HalfSecondTick;
             Menu = new FrameworkMenu(new Point(256, 168));
             TablistComponent tablist = new TablistComponent(new Rectangle(0, 0, Menu.ZoomEventRegion.Width, Menu.ZoomEventRegion.Height));
             Rectangle size = tablist.ZoomEventRegion;

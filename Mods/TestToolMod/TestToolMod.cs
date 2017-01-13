@@ -5,6 +5,8 @@ using TestToolMod.Weapons;
 
 namespace TestToolMod
 {
+    using Farmhand.Overrides.Game;
+
     public class TestToolMod : Mod
     {
         public static TestToolMod Instance;
@@ -16,8 +18,8 @@ namespace TestToolMod
             Farmhand.API.Serializer.RegisterType<TestTool>();
             Farmhand.API.Serializer.RegisterType<TestWeapon>();
 
-            Farmhand.Events.GameEvents.OnAfterLoadedContent += GameEvents_OnAfterLoadedContent;
-            Farmhand.Events.PlayerEvents.OnFarmerChanged += PlayerEvents_OnFarmerChanged;
+            Farmhand.Events.GameEvents.AfterLoadedContent += GameEvents_OnAfterLoadedContent;
+            Farmhand.Events.PlayerEvents.FarmerChanged += PlayerEvents_OnFarmerChanged;
         }
 
         private void GameEvents_OnAfterLoadedContent(object sender, System.EventArgs e)

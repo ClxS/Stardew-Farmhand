@@ -14,7 +14,7 @@
 
         public override void Entry()
         {
-            ControlEvents.OnKeyPressed += ControlEvents_OnKeyPressed;
+            ControlEvents.KeyPressed += ControlEvents_OnKeyPressed;
         }
 
         private void ControlEvents_OnKeyPressed(object sender, Farmhand.Events.Arguments.ControlEvents.EventArgsKeyPressed e)

@@ -1,14 +1,16 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
-
-namespace Farmhand.Events
+﻿namespace Farmhand.Events
 {
+    using System;
+    using System.ComponentModel;
+    using System.Linq;
+
+    /// <summary>
+    ///     Contains useful common methods used by event classes.
+    /// </summary>
     public static class EventCommon
     {
         /// <summary>
-        /// Safely invokes an event and reports when mods throw exceptions. This overload handles ordinary EventHandler events
+        ///     Safely invokes an event and reports when mods throw exceptions. This overload handles ordinary EventHandler events
         /// </summary>
         /// <param name="evt">Event to throw</param>
         /// <param name="sender">Sender to pass to event</param>
@@ -22,14 +24,15 @@ namespace Farmhand.Events
                 }
                 catch (Exception e)
                 {
-                    Assembly causingAssembly = @delegate.Method?.DeclaringType?.Assembly;
-                    ApiEvents.InvokeOnModError(causingAssembly, e);
+                    var causingAssembly = @delegate.Method?.DeclaringType?.Assembly;
+                    ApiEvents.OnModError(causingAssembly, e);
                 }
             }
         }
 
         /// <summary>
-        /// Safely invokes an event and reports when mods throw exceptions. This overload handles delegates with custom arguments
+        ///     Safely invokes an event and reports when mods throw exceptions. This overload handles delegates with custom
+        ///     arguments
         /// </summary>
         /// <typeparam name="T">Type of event arguments. Must inherit from EventArgs</typeparam>
         /// <param name="evt">Event to throw</param>
@@ -45,21 +48,23 @@ namespace Farmhand.Events
                 }
                 catch (Exception e)
                 {
-                    Assembly causingAssembly = @delegate.Method?.DeclaringType?.Assembly;
-                    ApiEvents.InvokeOnModError(causingAssembly, e);
+                    var causingAssembly = @delegate.Method?.DeclaringType?.Assembly;
+                    ApiEvents.OnModError(causingAssembly, e);
                 }
             }
         }
 
         /// <summary>
-        /// Safely invokes an event and reports when mods throw exceptions. This overload handles delegates with custom arguments
+        ///     Safely invokes an event and reports when mods throw exceptions. This overload handles delegates with custom
+        ///     arguments
         /// </summary>
         /// <typeparam name="T">Type of event arguments. Must inherit from CancelEventArgs</typeparam>
         /// <param name="evt">Event to throw</param>
         /// <param name="sender">Sender to pass to event</param>
         /// <param name="args">Arguments to pass to event</param>
         /// <returns>True when event was canceled by a delegate</returns>
-        public static bool SafeCancellableInvoke<T>(EventHandler<T> evt, object sender, T args) where T : CancelEventArgs
+        public static bool SafeCancellableInvoke<T>(EventHandler<T> evt, object sender, T args)
+            where T : CancelEventArgs
         {
             var cancel = false;
             foreach (var @delegate in evt.GetInvocationList().Cast<EventHandler<T>>())
@@ -71,10 +76,11 @@ namespace Farmhand.Events
                 }
                 catch (Exception e)
                 {
-                    Assembly causingAssembly = @delegate.Method?.DeclaringType?.Assembly;
-                    ApiEvents.InvokeOnModError(causingAssembly, e);
+                    var causingAssembly = @delegate.Method?.DeclaringType?.Assembly;
+                    ApiEvents.OnModError(causingAssembly, e);
                 }
             }
+
             return cancel;
         }
     }

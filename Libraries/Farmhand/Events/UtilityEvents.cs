@@ -1,17 +1,24 @@
-﻿using Farmhand.Attributes;
-using Farmhand.Events.Arguments;
-using System;
-
-namespace Farmhand.Events
+﻿namespace Farmhand.Events
 {
+    using System;
+
+    using Farmhand.Attributes;
+    using Farmhand.Events.Arguments;
+
+    /// <summary>
+    ///     Events which are used for utility purposes.
+    /// </summary>
     public class UtilityEvents
     {
-        public static event EventHandler<EventArgsOnGetDwarfShopStock> OnPostGetDwarfShopStock = delegate { };
+        /// <summary>
+        ///     Fires when the game tries to get the Dwarfs shop stock.
+        /// </summary>
+        public static event EventHandler<EventArgsOnGetDwarfShopStock> PostGetDwarfShopStock = delegate { };
 
         [Hook(HookType.Exit, "StardewValley.Utility", "getDwarfShopStock")]
-        internal static void InvokePostGetDwarfShopStock()
+        internal static void OnPostGetDwarfShopStock()
         {
-            EventCommon.SafeInvoke(OnPostGetDwarfShopStock, null, new EventArgsOnGetDwarfShopStock());
+            EventCommon.SafeInvoke(PostGetDwarfShopStock, null, new EventArgsOnGetDwarfShopStock());
         }
     }
 }

@@ -11,31 +11,27 @@ namespace LoggingMod
     {
         public override void Entry()
         {
-            Farmhand.Events.GameEvents.OnBeforeGameInitialised += OnGameInitialising;
-            Farmhand.Events.GameEvents.OnAfterGameInitialised += OnGameInitialised;
-            Farmhand.Events.GameEvents.OnBeforeLoadContent += GameEvents_OnBeforeLoadContent;
-            Farmhand.Events.GameEvents.OnAfterLoadedContent += GameEvents_OnAfterLoadedContent;
-            Farmhand.Events.GameEvents.OnBeforeUpdateTick += GameEvents_OnBeforeUpdateTick;
-            Farmhand.Events.GameEvents.OnAfterUpdateTick += GameEvents_OnAfterUpdateTick;
-            Farmhand.Events.GraphicsEvents.OnResize += GraphicsEvents_OnResize;
-            Farmhand.Events.GraphicsEvents.OnBeforeDraw += GraphicsEvents_OnBeforeDraw;
-            Farmhand.Events.GraphicsEvents.OnAfterDraw += GraphicsEvents_OnAfterDraw;
-            Farmhand.Events.LocationEvents.OnLocationsChanged += LocationEvents_OnLocationsChanged;
-            Farmhand.Events.LocationEvents.OnBeforeWarp += LocationEvents_OnBeforeWarp;
-            Farmhand.Events.LocationEvents.OnCurrentLocationChanged += LocationEvents_OnCurrentLocationChanged;
-            Farmhand.Events.LocationEvents.OnLocationObjectsChanged += LocationEvents_OnLocationObjectsChanged;
-            Farmhand.Events.PlayerEvents.OnBeforePlayerTakesDamage += PlayerEvents_OnBeforePlayerTakesDamage;
-            Farmhand.Events.UiEvents.OnAfterIClickableMenuInitialized += UiEvents_OnAfterIClickableMenuInitialized;
-            Farmhand.Events.LocationEvents.OnBeforeLocationLoadObjects += LocationEvents_OnBeforeLocationLoadObjects;
-            Farmhand.Events.LocationEvents.OnAfterLocationLoadObjects += LocationEvents_OnAfterLocationLoadObjects;
-            Farmhand.Events.SaveEvents.OnBeforeSave += SaveEvents_OnBeforeSave;
-            Farmhand.Events.SaveEvents.OnAfterSave += SaveEvents_OnAfterSave;
-            Farmhand.Events.SaveEvents.OnBeforeLoad += SaveEvents_OnBeforeLoad;
-            Farmhand.Events.SaveEvents.OnAfterLoad += SaveEvents_OnAfterLoad;
-            Farmhand.Events.SerializerEvents.UnknownNode += SerializerEvents_UnknownNode;
-            Farmhand.Events.SerializerEvents.UnknownElement += SerializerEvents_UnknownElement;
-            Farmhand.Events.SerializerEvents.UnknownAttribute += SerializerEvents_UnknownAttribute;
-            Farmhand.Events.SerializerEvents.UnreferencedObject += SerializerEvents_UnreferencedObject;
+            Farmhand.Events.GameEvents.BeforeGameInitialised += OnGameInitialising;
+            Farmhand.Events.GameEvents.AfterGameInitialised += OnGameInitialised;
+            Farmhand.Events.GameEvents.BeforeLoadContent += GameEvents_OnBeforeLoadContent;
+            Farmhand.Events.GameEvents.AfterLoadedContent += GameEvents_OnAfterLoadedContent;
+            Farmhand.Events.GameEvents.BeforeUpdateTick += GameEvents_OnBeforeUpdateTick;
+            Farmhand.Events.GameEvents.AfterUpdateTick += GameEvents_OnAfterUpdateTick;
+            Farmhand.Events.GraphicsEvents.Resize += GraphicsEvents_OnResize;
+            Farmhand.Events.GraphicsEvents.BeforeDraw += GraphicsEvents_OnBeforeDraw;
+            Farmhand.Events.GraphicsEvents.AfterDraw += GraphicsEvents_OnAfterDraw;
+            Farmhand.Events.LocationEvents.LocationsChanged += LocationEvents_OnLocationsChanged;
+            Farmhand.Events.LocationEvents.BeforeWarp += LocationEvents_OnBeforeWarp;
+            Farmhand.Events.LocationEvents.CurrentLocationChanged += LocationEvents_OnCurrentLocationChanged;
+            Farmhand.Events.LocationEvents.LocationObjectsChanged += LocationEvents_OnLocationObjectsChanged;
+            Farmhand.Events.PlayerEvents.BeforePlayerTakesDamage += PlayerEvents_OnBeforePlayerTakesDamage;
+            Farmhand.Events.UiEvents.AfterIClickableMenuInitialized += UiEvents_OnAfterIClickableMenuInitialized;
+            Farmhand.Events.LocationEvents.BeforeLocationLoadObjects += LocationEvents_OnBeforeLocationLoadObjects;
+            Farmhand.Events.LocationEvents.AfterLocationLoadObjects += LocationEvents_OnAfterLocationLoadObjects;
+            Farmhand.Events.SaveEvents.BeforeSave += SaveEvents_OnBeforeSave;
+            Farmhand.Events.SaveEvents.AfterSave += SaveEvents_OnAfterSave;
+            Farmhand.Events.SaveEvents.BeforeLoad += SaveEvents_OnBeforeLoad;
+            Farmhand.Events.SaveEvents.AfterLoad += SaveEvents_OnAfterLoad;
         }
 
         private void SerializerEvents_UnreferencedObject(object sender, UnreferencedObjectEventArgs e)

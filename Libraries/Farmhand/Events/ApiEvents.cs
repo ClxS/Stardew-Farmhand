@@ -1,55 +1,55 @@
-﻿using Farmhand.Events.Arguments;
-using Farmhand.Events.Arguments.ApiEvents;
-using Farmhand.Registries.Containers;
-using System;
-using System.Reflection;
-
-namespace Farmhand.Events
+﻿namespace Farmhand.Events
 {
+    using System;
+    using System.Reflection;
+
+    using Farmhand.Events.Arguments;
+    using Farmhand.Events.Arguments.ApiEvents;
+    using Farmhand.Registries.Containers;
+
     /// <summary>
-    /// Contains events relating to the API
+    ///     Contains events relating to the API
     /// </summary>
     public static class ApiEvents
     {
         /// <summary>
-        /// Triggered when a mod throws an unhandled exception
+        ///     Fires when a mod throws an unhandled exception.
         /// </summary>
-        public static event EventHandler<EventArgsOnModError> OnModError = delegate { };
+        public static event EventHandler<EventArgsOnModError> ModError = delegate { };
 
         /// <summary>
-        /// Triggers just prior to loading the content/assembly of a mod
+        ///     Fires just prior to loading the content/assembly of a mod.
         /// </summary>
-        public static event EventHandler<EventArgsOnModLoadEvent> OnModPreLoad = delegate { };
+        public static event EventHandler<EventArgsOnModLoadEvent> ModPreLoad = delegate { };
 
         /// <summary>
-        /// Triggers just prior to after the content/assembly of a mod
+        ///     Fires just prior to after the content/assembly of a mod.
         /// </summary>
-        public static event EventHandler<EventArgsOnModLoadEvent> OnModPostLoad = delegate { };
+        public static event EventHandler<EventArgsOnModLoadEvent> ModPostLoad = delegate { };
 
         /// <summary>
-        /// Triggers when an exception occurs during loading the content/assembly of a mod
+        ///     Fires when an exception occurs during loading the content/assembly of a mod.
         /// </summary>
-        public static event EventHandler<EventArgsOnModLoadEvent> OnModLoadError = delegate { };
+        public static event EventHandler<EventArgsOnModLoadEvent> ModLoadError = delegate { };
 
-
-        internal static void InvokeOnModError(Assembly erroredAssembly, Exception ex)
+        internal static void OnModError(Assembly erroredAssembly, Exception ex)
         {
-            EventCommon.SafeInvoke(OnModError, null, new EventArgsOnModError(erroredAssembly, ex));
+            EventCommon.SafeInvoke(ModError, null, new EventArgsOnModError(erroredAssembly, ex));
         }
 
-        internal static void InvokeModPreLoad(ModManifest mod)
+        internal static void OnModPreLoad(ModManifest mod)
         {
-            EventCommon.SafeInvoke(OnModPreLoad, null, new EventArgsOnModLoadEvent(mod));
+            EventCommon.SafeInvoke(ModPreLoad, null, new EventArgsOnModLoadEvent(mod));
         }
 
-        internal static void InvokeModPostLoad(ModManifest mod)
+        internal static void OnModPostLoad(ModManifest mod)
         {
-            EventCommon.SafeInvoke(OnModPostLoad, null, new EventArgsOnModLoadEvent(mod));
+            EventCommon.SafeInvoke(ModPostLoad, null, new EventArgsOnModLoadEvent(mod));
         }
 
-        internal static void InvokeModLoadError(ModManifest mod)
+        internal static void OnModLoadError(ModManifest mod)
         {
-            EventCommon.SafeInvoke(OnModLoadError, null, new EventArgsOnModLoadEvent(mod));
+            EventCommon.SafeInvoke(ModLoadError, null, new EventArgsOnModLoadEvent(mod));
         }
     }
 }

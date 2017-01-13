@@ -1,32 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Farmhand.Attributes;
-using Farmhand.Extensibility;
-using Microsoft.Xna.Framework;
-using StardewValley;
-
-namespace Farmhand.Events
+﻿namespace Farmhand.Events
 {
-    public class EventManager
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Xml.Serialization;
+
+    using Farmhand.Attributes;
+    using Farmhand.Extensibility;
+
+    using Microsoft.Xna.Framework;
+
+    using StardewValley;
+
+    internal class EventManager
     {
-        public static readonly PropertyWatcher Watcher = new PropertyWatcher();
-        readonly Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>> _detachedDelegates = new Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>>();
+        internal static readonly PropertyWatcher Watcher = new PropertyWatcher();
+
+        private readonly Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>> detachedDelegates =
+            new Dictionary<Assembly, Dictionary<EventInfo, Delegate[]>>();
 
         private static IEnumerable<Type> GetFarmhandEvents()
         {
-            var FarmhandTypes = Assembly.GetExecutingAssembly()
+            var farmhandTypes =
+                Assembly.GetExecutingAssembly()
                     .GetTypes()
                     .Where(t => string.Equals(t.Namespace, "Farmhand.Events", StringComparison.Ordinal))
                     .ToList();
 
             foreach (var layer in ExtensibilityManager.Extensions)
             {
-                FarmhandTypes.AddRange(layer.GetEventClasses());
+                farmhandTypes.AddRange(layer.GetEventClasses());
             }
 
-            return FarmhandTypes;
+            return farmhandTypes;
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
@@ -44,26 +51,26 @@ namespace Farmhand.Events
             SaveGame.locationSerializer.UnknownAttribute += FarmerSerializer_UnknownAttribute;
             SaveGame.locationSerializer.UnknownNode += FarmerSerializer_UnknownNode;
             SaveGame.locationSerializer.UnreferencedObject += FarmerSerializer_UnreferencedObject;
-            
-            //Farmhand.Events.PlayerEvents.OnFarmerChanged += Farmhand.API.Items.Item.FixupItemIds;
+
+            // Farmhand.Events.PlayerEvents.OnFarmerChanged += Farmhand.API.Items.Item.FixupItemIds;
         }
 
-        private static void FarmerSerializer_UnreferencedObject(object sender, System.Xml.Serialization.UnreferencedObjectEventArgs e)
+        private static void FarmerSerializer_UnreferencedObject(object sender, UnreferencedObjectEventArgs e)
         {
             SerializerEvents.OnUnreferencedObject(sender, e);
         }
 
-        private static void FarmerSerializer_UnknownNode(object sender, System.Xml.Serialization.XmlNodeEventArgs e)
+        private static void FarmerSerializer_UnknownNode(object sender, XmlNodeEventArgs e)
         {
             SerializerEvents.OnUnknownNode(sender, e);
         }
 
-        private static void FarmerSerializer_UnknownAttribute(object sender, System.Xml.Serialization.XmlAttributeEventArgs e)
+        private static void FarmerSerializer_UnknownAttribute(object sender, XmlAttributeEventArgs e)
         {
             SerializerEvents.OnUnknownAttribute(sender, e);
         }
 
-        private static void FarmerSerializer_UnknownElement(object sender, System.Xml.Serialization.XmlElementEventArgs e)
+        private static void FarmerSerializer_UnknownElement(object sender, XmlElementEventArgs e)
         {
             SerializerEvents.OnUnknownElement(sender, e);
         }
@@ -81,25 +88,33 @@ namespace Farmhand.Events
                 throw new Exception("Assembly cannot be null");
             }
 
-            if (_detachedDelegates.ContainsKey(assembly))
+            if (this.detachedDelegates.ContainsKey(assembly))
             {
                 throw new Exception("Detached delegates already exist for this assembly");
             }
 
-
-            Dictionary<EventInfo, Delegate[]> detachedDelegates = new Dictionary<EventInfo, Delegate[]>();
+            var localDetachedDelegates = new Dictionary<EventInfo, Delegate[]>();
 
             var testTypes = GetFarmhandEvents();
+            const BindingFlags Flags =
+                BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public
+                | BindingFlags.FlattenHierarchy;
             foreach (var type in testTypes)
             {
                 foreach (var evt in type.GetEvents())
                 {
-                    var fi = type.GetField(evt.Name, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy);
-                    if (fi == null) continue;
+                    var fi = type.GetField(evt.Name, Flags);
+                    if (fi == null)
+                    {
+                        continue;
+                    }
 
                     var del = (Delegate)fi.GetValue(null);
-                    var delegates = del.GetInvocationList().Where(n => n.Method.DeclaringType != null && n.Method.DeclaringType.Assembly == assembly).ToArray();
-                    detachedDelegates[evt] = delegates;
+                    var delegates =
+                        del.GetInvocationList()
+                            .Where(n => n.Method.DeclaringType != null && n.Method.DeclaringType.Assembly == assembly)
+                            .ToArray();
+                    localDetachedDelegates[evt] = delegates;
 
                     foreach (var @delegate in delegates)
                     {
@@ -108,14 +123,17 @@ namespace Farmhand.Events
                 }
             }
 
-            _detachedDelegates[assembly] = detachedDelegates;
+            this.detachedDelegates[assembly] = localDetachedDelegates;
         }
 
         public void ReattachDelegates(Assembly assembly)
         {
-            if (!_detachedDelegates.ContainsKey(assembly)) return;
+            if (!this.detachedDelegates.ContainsKey(assembly))
+            {
+                return;
+            }
 
-            var delegates = _detachedDelegates[assembly];
+            var delegates = this.detachedDelegates[assembly];
 
             foreach (var delegateEvent in delegates)
             {
@@ -126,8 +144,7 @@ namespace Farmhand.Events
                 }
             }
 
-            _detachedDelegates.Remove(assembly);
+            this.detachedDelegates.Remove(assembly);
         }
-        
     }
 }

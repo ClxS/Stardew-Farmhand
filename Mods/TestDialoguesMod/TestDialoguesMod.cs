@@ -19,7 +19,7 @@ namespace TestDialoguesMod
             Dialogue.RegisterNewAnswer(Questions.Carpenter, newRobinAnswer);
 
             // Remove robin's "Leave" option
-            DialogueAnswerRemovalInformation removeRobinLeave = new DialogueAnswerRemovalInformation(Instance, Answers.Carpenter_Leave);
+            DialogueAnswerRemovalInformation removeRobinLeave = new DialogueAnswerRemovalInformation(Instance, Answers.CarpenterLeave);
             Dialogue.RemoveDefaultAnswer(Questions.Carpenter, removeRobinLeave);
         }
 

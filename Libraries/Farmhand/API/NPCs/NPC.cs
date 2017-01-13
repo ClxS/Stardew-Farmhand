@@ -61,8 +61,8 @@
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void AttachListeners()
         {
-            GameEvents.OnAfterGameLoaded += GameEvents_OnAfterGameLoaded;
-            SaveEvents.OnAfterLoad += SaveEvents_OnAfterLoad;
+            GameEvents.AfterGameLoaded += GameEvents_OnAfterGameLoaded;
+            SaveEvents.AfterLoad += SaveEvents_OnAfterLoad;
         }
 
         private static void SaveEvents_OnAfterLoad(object sender, EventArgsOnAfterLoad e)

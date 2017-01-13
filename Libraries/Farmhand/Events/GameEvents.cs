@@ -1,88 +1,139 @@
-﻿using Farmhand.Attributes;
-using System;
-using Microsoft.Xna.Framework;
-using Farmhand.Events.Arguments.GameEvents;
-
-namespace Farmhand.Events
+﻿namespace Farmhand.Events
 {
+    using System;
+
+    using Farmhand.Attributes;
+    using Farmhand.Events.Arguments.GameEvents;
+
+    using Microsoft.Xna.Framework;
+
     /// <summary>
-    /// Contains events relating to the main game state
+    ///     Contains events relating to the main game state
     /// </summary>
     public static class GameEvents
     {
-        public static event EventHandler<EventArgsOnGameInitialise> OnBeforeGameInitialised = delegate { };
-        public static event EventHandler<EventArgsOnGameInitialised> OnAfterGameInitialised = delegate { };
-        public static event EventHandler OnBeforeLoadContent = delegate { };
-        public static event EventHandler OnAfterLoadedContent = delegate { };
-        public static event EventHandler OnBeforeUnloadContent = delegate { };
-        public static event EventHandler OnAfterUnloadedContent = delegate { };
-        public static event EventHandler<EventArgsOnBeforeGameUpdate> OnBeforeUpdateTick = delegate { };
-        public static event EventHandler OnAfterUpdateTick = delegate { };
-        public static event EventHandler<EventArgsOnAfterGameLoaded> OnAfterGameLoaded = delegate { };
-        public static event EventHandler OnHalfSecondTick = delegate { };
+        /// <summary>
+        ///     Fires just before the game is initialised.
+        /// </summary>
+        public static event EventHandler<EventArgsOnGameInitialise> BeforeGameInitialised = delegate { };
+
+        /// <summary>
+        ///     Fires just after the game is initialised.
+        /// </summary>
+        public static event EventHandler<EventArgsOnGameInitialised> AfterGameInitialised = delegate { };
+
+        /// <summary>
+        ///     Fires just before the game loads it's initial content.
+        /// </summary>
+        public static event EventHandler BeforeLoadContent = delegate { };
+
+        /// <summary>
+        ///     Fires just after the game loads it's initial content.
+        /// </summary>
+        public static event EventHandler AfterLoadedContent = delegate { };
+
+        /// <summary>
+        ///     Fires just before the game unloads it's content.
+        /// </summary>
+        public static event EventHandler BeforeUnloadContent = delegate { };
+
+        /// <summary>
+        ///     Fires just after the game unloads it's content.
+        /// </summary>
+        public static event EventHandler AfterUnloadedContent = delegate { };
+
+        /// <summary>
+        ///     Fires just before executing the games update tick.
+        /// </summary>
+        /// <remarks>
+        ///     This event is cancellable, allowing you to prevent the game from being able to update it's own state.
+        ///     You should only use this if you know what you are doing.
+        /// </remarks>
+        public static event EventHandler<EventArgsOnBeforeGameUpdate> BeforeUpdateTick = delegate { };
+
+        /// <summary>
+        ///     Fires just after executing the games update tick.
+        /// </summary>
+        public static event EventHandler AfterUpdateTick = delegate { };
+
+        /// <summary>
+        ///     Fires just after a game is loaded.
+        /// </summary>
+        /// <remarks>
+        ///     This event is fired at the end of Game1::loadForNewGame
+        /// </remarks>
+        public static event EventHandler<EventArgsOnAfterGameLoaded> AfterGameLoaded = delegate { };
+
+        /// <summary>
+        ///     Fires every 0.5 seconds.
+        /// </summary>
+        /// <remarks>
+        ///     This event is managed by the property watcher, so will fire at the
+        ///     beginning of Game1.Update in the frame after the event occurs.
+        /// </remarks>
+        public static event EventHandler HalfSecondTick = delegate { };
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
-        internal static void InvokeBeforeGameInitialise([ThisBind] object @this)
+        internal static void OnBeforeGameInitialise([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnBeforeGameInitialised, @this, new EventArgsOnGameInitialise());
+            EventCommon.SafeInvoke(BeforeGameInitialised, @this, new EventArgsOnGameInitialise());
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "Initialize")]
-        internal static void InvokeAfterGameInitialise([ThisBind] object @this)
+        internal static void OnAfterGameInitialise([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnAfterGameInitialised, @this, new EventArgsOnGameInitialised());
+            EventCommon.SafeInvoke(AfterGameInitialised, @this, new EventArgsOnGameInitialised());
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "LoadContent")]
-        internal static void InvokeBeforeLoadContent([ThisBind] object @this)
+        internal static void OnBeforeLoadContent([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnBeforeLoadContent, @this);
+            EventCommon.SafeInvoke(BeforeLoadContent, @this);
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "LoadContent")]
-        internal static void InvokeAfterLoadedContent([ThisBind] object @this)
+        internal static void OnAfterLoadedContent([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnAfterLoadedContent, @this);
+            EventCommon.SafeInvoke(AfterLoadedContent, @this);
         }
-                
+
         [Hook(HookType.Entry, "StardewValley.Game1", "UnloadContent")]
-        internal static void InvokeBeforeUnloadContent([ThisBind] object @this)
+        internal static void OnBeforeUnloadContent([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnBeforeUnloadContent, @this);
+            EventCommon.SafeInvoke(BeforeUnloadContent, @this);
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "UnloadContent")]
-        internal static void InvokeAfterUnloadedContent([ThisBind] object @this)
+        internal static void OnAfterUnloadedContent([ThisBind] object @this)
         {
-            EventCommon.SafeInvoke(OnAfterUnloadedContent, @this);
+            EventCommon.SafeInvoke(AfterUnloadedContent, @this);
         }
 
         // Invoked by property watcher
-        internal static void InvokeOnHalfSecondTick()
+        internal static void OnHalfSecondTick()
         {
-            EventCommon.SafeInvoke(OnHalfSecondTick, null);
+            EventCommon.SafeInvoke(HalfSecondTick, null);
         }
 
         [Hook(HookType.Entry, "StardewValley.Game1", "Update")]
-        internal static bool InvokeBeforeUpdate(
-            [ThisBind] object @this, 
+        internal static bool OnBeforeUpdate(
+            [ThisBind] object @this,
             [InputBind(typeof(GameTime), "gameTime")] GameTime gt)
         {
-            return EventCommon.SafeCancellableInvoke(OnBeforeUpdateTick, @this, new EventArgsOnBeforeGameUpdate(gt));
+            return EventCommon.SafeCancellableInvoke(BeforeUpdateTick, @this, new EventArgsOnBeforeGameUpdate(gt));
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "Update")]
-        internal static void InvokeAfterUpdate([ThisBind] object @this)
+        internal static void OnAfterUpdate([ThisBind] object @this)
         {
             TimeEvents.DidShouldTimePassCheckThisFrame = false;
-            EventCommon.SafeInvoke(OnAfterUpdateTick, @this);
+            EventCommon.SafeInvoke(AfterUpdateTick, @this);
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "loadForNewGame")]
-        internal static void InvokeAfterGameLoaded(
-            [InputBind(typeof(bool), "loadedGame")] bool loadedGame)
+        internal static void OnAfterGameLoaded([InputBind(typeof(bool), "loadedGame")] bool loadedGame)
         {
-            EventCommon.SafeInvoke(OnAfterGameLoaded, null, new EventArgsOnAfterGameLoaded(loadedGame));
+            EventCommon.SafeInvoke(AfterGameLoaded, null, new EventArgsOnAfterGameLoaded(loadedGame));
         }
     }
 }

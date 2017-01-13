@@ -37,7 +37,7 @@
             Log.Info($"Stardew Valley v{Game1.version}");
             Log.Info($"Stardew Farmhand v{Constants.Version}");
 
-            ApiEvents.OnModError += ApiEvents_OnModError;
+            ApiEvents.ModError += ApiEvents_OnModError;
             var currentDomain = AppDomain.CurrentDomain;
             currentDomain.AssemblyResolve += CurrentDomainOnAssemblyResolve;
 
@@ -206,7 +206,7 @@
                     Log.Verbose($"Loading mod: {mod.Name} by {mod.Author}");
                     try
                     {
-                        ApiEvents.InvokeModPreLoad(mod);
+                        ApiEvents.OnModPreLoad(mod);
                         mod.OnBeforeLoaded();
                         if (mod.HasContent)
                         {
@@ -218,7 +218,7 @@
                             if (!mod.LoadModDll())
                             {
                                 mod.ModState = ModState.Errored;
-                                ApiEvents.InvokeModLoadError(mod);
+                                ApiEvents.OnModLoadError(mod);
                                 erroredMods.Add(mod);
                                 BubbleDependencyLoadError(mod);
                                 continue;
@@ -228,14 +228,14 @@
                         mod.ModState = ModState.Loaded;
                         mod.OnAfterLoaded();
                         Log.Success($"Loaded Mod: {mod.Name} v{mod.Version} by {mod.Author}");
-                        ApiEvents.InvokeModPostLoad(mod);
+                        ApiEvents.OnModPostLoad(mod);
                         loadedMods.Add(mod);
                     }
                     catch (Exception ex)
                     {
                         mod.ModState = ModState.Errored;
                         Log.Exception($"Error loading mod {mod.Name} by {mod.Author}", ex);
-                        ApiEvents.InvokeModLoadError(mod);
+                        ApiEvents.OnModLoadError(mod);
                         erroredMods.Add(mod);
                         BubbleDependencyLoadError(mod);
                         break;

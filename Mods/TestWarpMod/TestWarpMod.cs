@@ -11,7 +11,7 @@ namespace TestWarpMod
         {
             Instance = this;
 
-            Farmhand.Events.LocationEvents.OnBeforeWarp += LinusPrivacy;
+            Farmhand.Events.LocationEvents.BeforeWarp += LinusPrivacy;
         }
 
         public static void LinusPrivacy( object sender, EventArgsOnBeforeWarp args )

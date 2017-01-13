@@ -1,29 +1,40 @@
-﻿using Farmhand.Attributes;
-using Farmhand.Events.Arguments.MenuEvents;
-using StardewValley.Menus;
-using System;
-
-namespace Farmhand.Events
+﻿namespace Farmhand.Events
 {
+    using System;
+
+    using Farmhand.Attributes;
+    using Farmhand.Events.Arguments.MenuEvents;
+
+    using StardewValley.Menus;
+
     /// <summary>
-    /// Contains events relating to menus
+    ///     Contains events relating to menus
     /// </summary>
     public static class MenuEvents
     {
-        public static event EventHandler<EventArgsOnMenuChanged> OnMenuChanged = delegate { };
+        /// <summary>
+        ///     Fires just after the menu changes.
+        /// </summary>
+        /// <remarks>
+        ///     TODO: Not yet implemented
+        /// </remarks>
+        public static event EventHandler<EventArgsOnMenuChanged> MenuChanged = delegate { };
 
-        public static event EventHandler OnShowEndOfNightMenus = delegate { };
-        
+        /// <summary>
+        ///     Fires just after showing end of night menu.
+        /// </summary>
+        public static event EventHandler ShowEndOfNightMenus = delegate { };
+
         [PendingHook]
-        internal static void InvokeMenuChanged(IClickableMenu priorMenu, IClickableMenu newMenu)
+        internal static void OnMenuChanged(IClickableMenu priorMenu, IClickableMenu newMenu)
         {
-            EventCommon.SafeInvoke(OnMenuChanged, null, new EventArgsOnMenuChanged(priorMenu, newMenu));
+            EventCommon.SafeInvoke(MenuChanged, null, new EventArgsOnMenuChanged(priorMenu, newMenu));
         }
 
         [Hook(HookType.Exit, "StardewValley.Game1", "showEndOfNightStuff")]
-        internal static void InvokeShowEndOfNightMenus()
+        internal static void OnShowEndOfNightMenus()
         {
-            EventCommon.SafeInvoke(OnShowEndOfNightMenus, null);
+            EventCommon.SafeInvoke(ShowEndOfNightMenus, null);
         }
     }
 }

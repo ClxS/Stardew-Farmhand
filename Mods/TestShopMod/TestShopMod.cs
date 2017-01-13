@@ -15,8 +15,8 @@ namespace TestShopMod
 
             Farmhand.API.Serializer.RegisterType<DimensionalSack>();
 
-            Farmhand.Events.GameEvents.OnAfterLoadedContent += GameEvents_OnAfterLoadedContent;
-            Farmhand.Events.PlayerEvents.OnFarmerChanged += PlayerEvents_OnFarmerChanged;
+            Farmhand.Events.GameEvents.AfterLoadedContent += GameEvents_OnAfterLoadedContent;
+            Farmhand.Events.PlayerEvents.FarmerChanged += PlayerEvents_OnFarmerChanged;
         }
 
         private void GameEvents_OnAfterLoadedContent(object sender, System.EventArgs e)

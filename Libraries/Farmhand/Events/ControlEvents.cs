@@ -1,86 +1,107 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
-using Farmhand.Events.Arguments.ControlEvents;
-
-namespace Farmhand.Events
+﻿namespace Farmhand.Events
 {
+    using System;
+
+    using Farmhand.Events.Arguments.ControlEvents;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
+
     /// <summary>
-    /// Contains events relating to controls. (Keyboard/Mouse/Gamepad)
+    ///     Contains events relating to controls. (Keyboard/Mouse/Gamepad)
     /// </summary>
     public static class ControlEvents
     {
         /// <summary>
-        /// Triggered on keyboard state change
+        ///     Fired on keyboard state change.
         /// </summary>
-        public static event EventHandler<EventArgsKeyboardStateChanged> OnKeyboardChanged = delegate { };
+        public static event EventHandler<EventArgsKeyboardStateChanged> KeyboardChanged = delegate { };
+
         /// <summary>
-        /// Triggered on key press
+        ///     Fired on key press.
         /// </summary>
-        public static event EventHandler<EventArgsKeyPressed> OnKeyPressed = delegate { };
+        public static event EventHandler<EventArgsKeyPressed> KeyPressed = delegate { };
+
         /// <summary>
-        /// Triggered on key release
+        ///     Fired on key release.
         /// </summary>
-        public static event EventHandler<EventArgsKeyPressed> OnKeyReleased = delegate { };
+        public static event EventHandler<EventArgsKeyPressed> KeyReleased = delegate { };
+
         /// <summary>
-        /// Triggered on mouse state change
+        ///     Fired on mouse state change.
         /// </summary>
-        public static event EventHandler<EventArgsMouseStateChanged> OnMouseChanged = delegate { };
+        public static event EventHandler<EventArgsMouseStateChanged> MouseChanged = delegate { };
+
         /// <summary>
-        /// Triggered on controller button pressed
+        ///     Fired on controller button pressed.
         /// </summary>
-        public static event EventHandler<EventArgsControllerButtonPressed> OnControllerButtonPressed = delegate { };
+        public static event EventHandler<EventArgsControllerButtonPressed> ControllerButtonPressed = delegate { };
+
         /// <summary>
-        /// Triggered on controller button released
+        ///     Fired on controller button released.
         /// </summary>
-        public static event EventHandler<EventArgsControllerButtonReleased> OnControllerButtonReleased = delegate { };
+        public static event EventHandler<EventArgsControllerButtonReleased> ControllerButtonReleased = delegate { };
+
         /// <summary>
-        /// Triggered on controller trigger pressed
+        ///     Fired on controller trigger pressed.
         /// </summary>
-        public static event EventHandler<EventArgsControllerTriggerPressed> OnControllerTriggerPressed = delegate { };
+        public static event EventHandler<EventArgsControllerTriggerPressed> ControllerTriggerPressed = delegate { };
+
         /// <summary>
-        /// Triggered on controller trigger released
+        ///     Fired on controller trigger released.
         /// </summary>
-        public static event EventHandler<EventArgsControllerTriggerReleased> OnControllerTriggerReleased = delegate { };
-        
-        internal static void InvokeKeyboardChanged(KeyboardState priorState, KeyboardState newState)
+        public static event EventHandler<EventArgsControllerTriggerReleased> ControllerTriggerReleased = delegate { };
+
+        internal static void OnKeyboardChanged(KeyboardState priorState, KeyboardState newState)
         {
-            EventCommon.SafeInvoke(OnKeyboardChanged, null, new EventArgsKeyboardStateChanged(priorState, newState));
+            EventCommon.SafeInvoke(KeyboardChanged, null, new EventArgsKeyboardStateChanged(priorState, newState));
         }
-        
-        internal static void InvokeMouseChanged(MouseState priorState, MouseState newState)
+
+        internal static void OnMouseChanged(MouseState priorState, MouseState newState)
         {
-            EventCommon.SafeInvoke(OnMouseChanged, null, new EventArgsMouseStateChanged(priorState, newState));
+            EventCommon.SafeInvoke(MouseChanged, null, new EventArgsMouseStateChanged(priorState, newState));
         }
-        
-        internal static void InvokeKeyPressed(Keys key)
+
+        internal static void OnKeyPressed(Keys key)
         {
-            EventCommon.SafeInvoke(OnKeyPressed, null, new EventArgsKeyPressed(key));
+            EventCommon.SafeInvoke(KeyPressed, null, new EventArgsKeyPressed(key));
         }
-        
-        internal static void InvokeKeyReleased(Keys key)
+
+        internal static void OnKeyReleased(Keys key)
         {
-            EventCommon.SafeInvoke(OnKeyReleased, null, new EventArgsKeyPressed(key));
+            EventCommon.SafeInvoke(KeyReleased, null, new EventArgsKeyPressed(key));
         }
-        
-        internal static void InvokeButtonPressed(PlayerIndex playerIndex, Buttons buttons)
+
+        internal static void OnButtonPressed(PlayerIndex playerIndex, Buttons buttons)
         {
-            EventCommon.SafeInvoke(OnControllerButtonPressed, null, new EventArgsControllerButtonPressed(playerIndex, buttons));
+            EventCommon.SafeInvoke(
+                ControllerButtonPressed,
+                null,
+                new EventArgsControllerButtonPressed(playerIndex, buttons));
         }
-        
-        internal static void InvokeButtonReleased(PlayerIndex playerIndex, Buttons buttons)
+
+        internal static void OnButtonReleased(PlayerIndex playerIndex, Buttons buttons)
         {
-            EventCommon.SafeInvoke(OnControllerButtonReleased, null, new EventArgsControllerButtonReleased(playerIndex, buttons));
+            EventCommon.SafeInvoke(
+                ControllerButtonReleased,
+                null,
+                new EventArgsControllerButtonReleased(playerIndex, buttons));
         }
-        
-        internal static void InvokeTriggerPressed(PlayerIndex playerIndex, Buttons buttons, float value)
+
+        internal static void OnTriggerPressed(PlayerIndex playerIndex, Buttons buttons, float value)
         {
-            EventCommon.SafeInvoke(OnControllerTriggerPressed, null, new EventArgsControllerTriggerPressed(playerIndex, buttons, value));
+            EventCommon.SafeInvoke(
+                ControllerTriggerPressed,
+                null,
+                new EventArgsControllerTriggerPressed(playerIndex, buttons, value));
         }
-        
-        internal static void InvokeTriggerReleased(PlayerIndex playerIndex, Buttons buttons, float value)
+
+        internal static void OnTriggerReleased(PlayerIndex playerIndex, Buttons buttons, float value)
         {
-            EventCommon.SafeInvoke(OnControllerTriggerReleased, null, new EventArgsControllerTriggerReleased(playerIndex, buttons, value));
+            EventCommon.SafeInvoke(
+                ControllerTriggerReleased,
+                null,
+                new EventArgsControllerTriggerReleased(playerIndex, buttons, value));
         }
     }
 }

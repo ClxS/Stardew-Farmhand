@@ -17,7 +17,7 @@ namespace DependencyTest
         /// </summary>
         public override void Entry()
         {
-            GameEvents.OnAfterGameInitialised += GameEvents_OnAfterGameInitialised;
+            GameEvents.AfterGameInitialised += GameEvents_OnAfterGameInitialised;
         }
 
         private void GameEvents_OnAfterGameInitialised(object sender, Farmhand.Events.Arguments.GameEvents.EventArgsOnGameInitialised e)

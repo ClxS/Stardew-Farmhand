@@ -8,15 +8,17 @@ using xTile.Dimensions;
 
 namespace Farmhand.Events.Arguments.LocationEvents
 {
-    public class EventArgsOnBeforeCheckAction : EventArgs
+    public class EventArgsOnBeforeCheckAction : ReturnableEventArgs
     {
+        private bool handled;
+
         public EventArgsOnBeforeCheckAction(GameLocation gameLocation, Location tileLocation, Rectangle viewport, Farmer farmer)
         {
             GameLocation = gameLocation;
             TileLocation = tileLocation;
             Viewport = viewport;
             Farmer = farmer;
-            Handled = false;
+            handled = false;
         }
 
         /// <summary>
@@ -43,6 +45,17 @@ namespace Farmhand.Events.Arguments.LocationEvents
         /// Whether this event has been handled by a mod. You should only set this to true to 
         /// prevent interfering with other mods.
         /// </summary>
-        public bool Handled { get; set; }
+        public bool Handled
+        {
+            get
+            {
+                return this.handled;
+            }
+            set
+            {
+                this.handled = value;
+                this.IsHandled = true;
+            }
+        }
     }
 }

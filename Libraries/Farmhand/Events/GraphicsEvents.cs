@@ -1,155 +1,190 @@
-﻿using Farmhand.Attributes;
-using System;
-using Farmhand.Events.Arguments.GraphicsEvents;
-using StardewValley;
-
-namespace Farmhand.Events
+﻿namespace Farmhand.Events
 {
+    using System;
+
+    using Farmhand.Attributes;
+    using Farmhand.Events.Arguments.GraphicsEvents;
+
     using Microsoft.Xna.Framework.Graphics;
 
+    using StardewValley;
+    using StardewValley.Menus;
+
     /// <summary>
-    /// Contains events relating to graphics
+    ///     Contains events relating to graphics
     /// </summary>
     public static class GraphicsEvents
     {
-        public static event EventHandler<EventArgsClientSizeChanged> OnResize = delegate { };
-        public static event EventHandler OnBeforeDraw = delegate { };
-        public static event EventHandler OnAfterDraw = delegate { };
-        
         /// <summary>
-        /// Occurs before anything is drawn.
+        ///     Fires when the game's window resizes.
         /// </summary>
-        public static event EventHandler OnPreRenderEvent = delegate { };
+        public static event EventHandler<EventArgsClientSizeChanged> Resize = delegate { };
 
         /// <summary>
-        /// Occurs before the GUI is drawn.
+        ///     Fires just before the main Draw method.
         /// </summary>
-        public static event EventHandler OnPreRenderGuiEvent = delegate { };
+        public static event EventHandler BeforeDraw = delegate { };
 
         /// <summary>
-        /// Occurs after the GUI is drawn.
+        ///     First just after the main Draw method.
         /// </summary>
-        public static event EventHandler OnPostRenderGuiEvent = delegate { };
+        public static event EventHandler AfterDraw = delegate { };
 
         /// <summary>
-        /// Occurs before the HUD is drawn.
+        ///     Fires before anything is drawn.
         /// </summary>
-        public static event EventHandler OnPreRenderHudEvent = delegate { };
+        public static event EventHandler PreRenderEvent = delegate { };
 
         /// <summary>
-        /// Occurs after the HUD is drawn.
+        ///     Fires before the GUI is drawn.
         /// </summary>
-        public static event EventHandler OnPostRenderHudEvent = delegate { };
+        public static event EventHandler PreRenderGuiEvent = delegate { };
 
         /// <summary>
-        /// Occurs after everything is drawn.
+        ///     Fires after the GUI is drawn.
         /// </summary>
-        public static event EventHandler OnPostRenderEvent = delegate { };
+        public static event EventHandler PostRenderGuiEvent = delegate { };
 
         /// <summary>
-        /// Occurs before the GUI is drawn. Does not check for conditional statements.
+        ///     Fires before the HUD is drawn.
         /// </summary>
-        public static event EventHandler OnPreRenderGuiEventNoCheck = delegate { };
+        public static event EventHandler PreRenderHudEvent = delegate { };
 
         /// <summary>
-        /// Occurs after the GUI is drawn. Does not check for conditional statements.
+        ///     Fires after the HUD is drawn.
         /// </summary>
-        public static event EventHandler OnPostRenderGuiEventNoCheck = delegate { };
+        public static event EventHandler PostRenderHudEvent = delegate { };
 
         /// <summary>
-        /// Occurs before the HUD is drawn. Does not check for conditional statements.
+        ///     Fires after everything is drawn.
         /// </summary>
-        public static event EventHandler OnPreRenderHudEventNoCheck = delegate { };
+        public static event EventHandler PostRenderEvent = delegate { };
 
         /// <summary>
-        /// Occurs after the HUD is drawn. Does not check for conditional statements.
+        ///     Fires before the GUI is drawn. Does not check for conditional statements.
         /// </summary>
-        public static event EventHandler OnPostRenderHudEventNoCheck = delegate { };
-
-        public static event EventHandler OnDrawInRenderTick = delegate { };
+        public static event EventHandler PreRenderGuiEventNoCheck = delegate { };
 
         /// <summary>
-        /// Occurs when the chat box is drawn.
+        ///     Fires after the GUI is drawn. Does not check for conditional statements.
+        /// </summary>
+        public static event EventHandler PostRenderGuiEventNoCheck = delegate { };
+
+        /// <summary>
+        ///     Fires before the HUD is drawn. Does not check for conditional statements.
+        /// </summary>
+        public static event EventHandler PreRenderHudEventNoCheck = delegate { };
+
+        /// <summary>
+        ///     Fires after the HUD is drawn. Does not check for conditional statements.
+        /// </summary>
+        public static event EventHandler PostRenderHudEventNoCheck = delegate { };
+
+        /// <summary>
+        ///     Fires just prior to drawing into final render target.
+        /// </summary>
+        public static event EventHandler DrawInRenderTick = delegate { };
+
+        /// <summary>
+        ///     Occurs when the chat box is drawn.
         /// </summary>
         public static event EventHandler<EventArgsChatBoxDraw> ChatBoxDraw = delegate { };
 
+        // ReSharper disable once StyleCop.SA1600
         [Hook(HookType.Entry, "StardewValley.Game1", "Window_ClientSizeChanged")]
-        public static void InvokeResize([ThisBind] Game1 @this)
+        public static void OnResize([ThisBind] Game1 @this)
         {
-            EventCommon.SafeInvoke(OnResize, @this, new EventArgsClientSizeChanged(@this.Window.ClientBounds.Width, @this.Window.ClientBounds.Height));
-        }
-        
-        [Hook(HookType.Entry, "StardewValley.Game1", "Draw")]
-        public static void InvokeBeforeDraw([ThisBind] object @this)
-        {
-            EventCommon.SafeInvoke(OnBeforeDraw, @this);
-        }
-        
-        [Hook(HookType.Exit, "StardewValley.Game1", "Draw")]
-        public static void InvokeAfterDraw([ThisBind] object @this)
-        {
-            EventCommon.SafeInvoke(OnAfterDraw, @this);
+            EventCommon.SafeInvoke(
+                Resize,
+                @this,
+                new EventArgsClientSizeChanged(@this.Window.ClientBounds.Width, @this.Window.ClientBounds.Height));
         }
 
+        // ReSharper disable once StyleCop.SA1600
+        [Hook(HookType.Entry, "StardewValley.Game1", "Draw")]
+        public static void OnBeforeDraw([ThisBind] object @this)
+        {
+            EventCommon.SafeInvoke(BeforeDraw, @this);
+        }
+
+        // ReSharper disable once StyleCop.SA1600
+        [Hook(HookType.Exit, "StardewValley.Game1", "Draw")]
+        public static void OnAfterDraw([ThisBind] object @this)
+        {
+            EventCommon.SafeInvoke(AfterDraw, @this);
+        }
+
+        // ReSharper disable once StyleCop.SA1600
         [Hook(HookType.Entry, "StardewValley.Menus.ChatBox", "draw")]
         public static bool OnChatBoxDraw([ThisBind] object @this, [InputBind(typeof(SpriteBatch), "b")] SpriteBatch b)
         {
-            return EventCommon.SafeCancellableInvoke(ChatBoxDraw, @this, new EventArgsChatBoxDraw((StardewValley.Menus.ChatBox)@this, b));
+            return EventCommon.SafeCancellableInvoke(ChatBoxDraw, @this, new EventArgsChatBoxDraw((ChatBox)@this, b));
         }
 
-        public static void InvokeOnPreRenderEvent(object @this)
+        // ReSharper disable once StyleCop.SA1600
+        public static void OnPreRenderEvent(object @this)
         {
-            OnPreRenderEvent.Invoke(@this, EventArgs.Empty);
+            PreRenderEvent.Invoke(@this, EventArgs.Empty);
         }
 
-        public static void InvokeOnPreRenderGuiEvent(object @this)
+        // ReSharper disable once StyleCop.SA1600
+        public static void OnPreRenderGuiEvent(object @this)
         {
-            OnPreRenderGuiEvent.Invoke(@this, EventArgs.Empty);
+            PreRenderGuiEvent.Invoke(@this, EventArgs.Empty);
         }
 
-        public static void InvokeOnPostRenderGuiEvent(object @this)
+        // ReSharper disable once StyleCop.SA1600
+        public static void OnPostRenderGuiEvent(object @this)
         {
-            OnPostRenderGuiEvent.Invoke(@this, EventArgs.Empty);
+            PostRenderGuiEvent.Invoke(@this, EventArgs.Empty);
         }
 
-        public static void InvokeOnPreRenderHudEvent(object @this)
+        // ReSharper disable once StyleCop.SA1600
+        public static void OnPreRenderHudEvent(object @this)
         {
-            OnPreRenderHudEvent.Invoke(@this, EventArgs.Empty);
+            PreRenderHudEvent.Invoke(@this, EventArgs.Empty);
         }
 
-        public static void InvokeOnPostRenderHudEvent(object @this)
+        // ReSharper disable once StyleCop.SA1600
+        public static void OnPostRenderHudEvent(object @this)
         {
-            OnPostRenderHudEvent.Invoke(@this, EventArgs.Empty);
+            PostRenderHudEvent.Invoke(@this, EventArgs.Empty);
         }
 
-        public static void InvokeOnPostRenderEvent(object @this)
+        // ReSharper disable once StyleCop.SA1600
+        public static void OnPostRenderEvent(object @this)
         {
-            OnPostRenderEvent.Invoke(@this, EventArgs.Empty);
+            PostRenderEvent.Invoke(@this, EventArgs.Empty);
         }
 
-        public static void InvokeOnPreRenderGuiEventNoCheck(object @this)
+        // ReSharper disable once StyleCop.SA1600
+        public static void OnPreRenderGuiEventNoCheck(object @this)
         {
-            OnPreRenderGuiEventNoCheck.Invoke(@this, EventArgs.Empty);
+            PreRenderGuiEventNoCheck.Invoke(@this, EventArgs.Empty);
         }
 
-        public static void InvokeOnPostRenderGuiEventNoCheck(object @this)
+        // ReSharper disable once StyleCop.SA1600
+        public static void OnPostRenderGuiEventNoCheck(object @this)
         {
-            OnPostRenderGuiEventNoCheck.Invoke(@this, EventArgs.Empty);
+            PostRenderGuiEventNoCheck.Invoke(@this, EventArgs.Empty);
         }
 
-        public static void InvokeOnPreRenderHudEventNoCheck(object @this)
+        // ReSharper disable once StyleCop.SA1600
+        public static void OnPreRenderHudEventNoCheck(object @this)
         {
-            OnPreRenderHudEventNoCheck.Invoke(@this, EventArgs.Empty);
+            PreRenderHudEventNoCheck.Invoke(@this, EventArgs.Empty);
         }
 
-        public static void InvokeOnPostRenderHudEventNoCheck(object @this)
+        // ReSharper disable once StyleCop.SA1600
+        public static void OnPostRenderHudEventNoCheck(object @this)
         {
-            OnPostRenderHudEventNoCheck.Invoke(@this, EventArgs.Empty);
+            PostRenderHudEventNoCheck.Invoke(@this, EventArgs.Empty);
         }
 
-        public static void InvokeDrawInRenderTargetTick(object @this)
+        // ReSharper disable once StyleCop.SA1600
+        public static void OnDrawInRenderTargetTick(object @this)
         {
-            OnDrawInRenderTick.Invoke(null, EventArgs.Empty);
+            DrawInRenderTick.Invoke(null, EventArgs.Empty);
         }
     }
 }

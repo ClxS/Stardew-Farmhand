@@ -15,7 +15,7 @@ namespace TestQuestMod
     {
         public override void Entry()
         {
-            GameEvents.OnAfterLoadedContent += GameEvents_AfterContentLoaded;
+            GameEvents.AfterLoadedContent += GameEvents_AfterContentLoaded;
         }
 
         private void GameEvents_AfterContentLoaded(object sender, EventArgs e)

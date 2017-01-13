@@ -23,7 +23,7 @@ namespace TestMapActionMod
 
             Location.RegisterTouchAction(new MapTouchActionInformation(Instance, "Warp", TouchActionHandler));
 
-            GameEvents.OnAfterLoadedContent += GameEvents_AfterContentLoaded;
+            GameEvents.AfterLoadedContent += GameEvents_AfterContentLoaded;
         }
 
         private void GameEvents_AfterContentLoaded(object sender, EventArgs e)

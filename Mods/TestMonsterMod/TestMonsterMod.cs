@@ -12,7 +12,7 @@ namespace TestMonsterMod
 
         public override void Entry()
         {
-            Farmhand.Events.GameEvents.OnAfterLoadedContent += GameEvents_OnAfterLoadedContent;
+            Farmhand.Events.GameEvents.AfterLoadedContent += GameEvents_OnAfterLoadedContent;
         }
 
         private void GameEvents_OnAfterLoadedContent(object sender, System.EventArgs e)

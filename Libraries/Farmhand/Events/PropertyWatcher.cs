@@ -1,148 +1,386 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using StardewValley;
-using StardewValley.Menus;
-using Farmhand.Logging;
-
-namespace Farmhand.Events
+﻿namespace Farmhand.Events
 {
-    public class PropertyWatcher
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Farmhand.Logging;
+
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Input;
+
+    using StardewValley;
+    using StardewValley.Menus;
+
+    internal class PropertyWatcher
     {
-        private static bool HasLoadFired { get; set; } = false;
+        private static bool HasLoadFired { get; set; }
+
         private KeyboardState KStateNow { get; set; }
+
         private KeyboardState KStatePrior { get; set; }
+
         private MouseState MStateNow { get; set; }
+
         private MouseState MStatePrior { get; set; }
+
         private Keys[] CurrentlyPressedKeys { get; set; }
+
         private Keys[] PreviouslyPressedKeys { get; set; } = new Keys[0];
+
         private Keys[] FramePressedKeys
         {
-            get { return CurrentlyPressedKeys.Where(x => !PreviouslyPressedKeys.Contains(x)).ToArray(); }
+            get
+            {
+                return this.CurrentlyPressedKeys.Where(x => !this.PreviouslyPressedKeys.Contains(x)).ToArray();
+            }
         }
+
         private Keys[] FrameReleasedKeys
         {
-            get { return PreviouslyPressedKeys.Where(x => !CurrentlyPressedKeys.Contains(x)).ToArray(); }
+            get
+            {
+                return this.PreviouslyPressedKeys.Where(x => !this.CurrentlyPressedKeys.Contains(x)).ToArray();
+            }
         }
-        private Buttons[][] PreviouslyPressedButtons { get; set; } = new Buttons[4][];
+
+        private Buttons[][] PreviouslyPressedButtons { get; } = new Buttons[4][];
+
         private IClickableMenu PreviousActiveMenu { get; set; }
+
         private GameLocation PreviousGameLocation { get; set; }
+
         private Farmer PreviousFarmer { get; set; }
 
         private int LastSaveProgress { get; set; }
+
         private int LastLoadProgress { get; set; }
+
         private int HalfSecondPoll { get; set; }
 
         private bool WasButtonJustPressed(Buttons button, ButtonState buttonState, PlayerIndex stateIndex)
         {
-            return buttonState == ButtonState.Pressed && !PreviouslyPressedButtons[(int)stateIndex].Contains(button);
+            return buttonState == ButtonState.Pressed
+                   && !this.PreviouslyPressedButtons[(int)stateIndex].Contains(button);
         }
 
         private bool WasButtonJustReleased(Buttons button, ButtonState buttonState, PlayerIndex stateIndex)
         {
-            return buttonState == ButtonState.Released && PreviouslyPressedButtons[(int)stateIndex].Contains(button);
+            return buttonState == ButtonState.Released
+                   && this.PreviouslyPressedButtons[(int)stateIndex].Contains(button);
         }
 
         private bool WasButtonJustPressed(Buttons button, float value, PlayerIndex stateIndex)
         {
-            return WasButtonJustPressed(button, value > 0.2f ? ButtonState.Pressed : ButtonState.Released, stateIndex);
+            return this.WasButtonJustPressed(
+                button,
+                value > 0.2f ? ButtonState.Pressed : ButtonState.Released,
+                stateIndex);
         }
 
         private bool WasButtonJustReleased(Buttons button, float value, PlayerIndex stateIndex)
         {
-            return WasButtonJustReleased(button, value > 0.2f ? ButtonState.Pressed : ButtonState.Released, stateIndex);
+            return this.WasButtonJustReleased(
+                button,
+                value > 0.2f ? ButtonState.Pressed : ButtonState.Released,
+                stateIndex);
         }
 
         public Buttons[] GetButtonsDown(PlayerIndex index)
         {
             var state = GamePad.GetState(index);
             var buttons = new List<Buttons>();
-            if (!state.IsConnected) return buttons.ToArray();
+            if (!state.IsConnected)
+            {
+                return buttons.ToArray();
+            }
 
-            if (state.Buttons.A == ButtonState.Pressed) buttons.Add(Buttons.A);
-            if (state.Buttons.B == ButtonState.Pressed) buttons.Add(Buttons.B);
-            if (state.Buttons.Back == ButtonState.Pressed) buttons.Add(Buttons.Back);
-            if (state.Buttons.BigButton == ButtonState.Pressed) buttons.Add(Buttons.BigButton);
-            if (state.Buttons.LeftShoulder == ButtonState.Pressed) buttons.Add(Buttons.LeftShoulder);
-            if (state.Buttons.LeftStick == ButtonState.Pressed) buttons.Add(Buttons.LeftStick);
-            if (state.Buttons.RightShoulder == ButtonState.Pressed) buttons.Add(Buttons.RightShoulder);
-            if (state.Buttons.RightStick == ButtonState.Pressed) buttons.Add(Buttons.RightStick);
-            if (state.Buttons.Start == ButtonState.Pressed) buttons.Add(Buttons.Start);
-            if (state.Buttons.X == ButtonState.Pressed) buttons.Add(Buttons.X);
-            if (state.Buttons.Y == ButtonState.Pressed) buttons.Add(Buttons.Y);
-            if (state.DPad.Up == ButtonState.Pressed) buttons.Add(Buttons.DPadUp);
-            if (state.DPad.Down == ButtonState.Pressed) buttons.Add(Buttons.DPadDown);
-            if (state.DPad.Left == ButtonState.Pressed) buttons.Add(Buttons.DPadLeft);
-            if (state.DPad.Right == ButtonState.Pressed) buttons.Add(Buttons.DPadRight);
-            if (state.Triggers.Left > 0.2f) buttons.Add(Buttons.LeftTrigger);
-            if (state.Triggers.Right > 0.2f) buttons.Add(Buttons.RightTrigger);
+            if (state.Buttons.A == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.A);
+            }
+
+            if (state.Buttons.B == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.B);
+            }
+
+            if (state.Buttons.Back == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.Back);
+            }
+
+            if (state.Buttons.BigButton == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.BigButton);
+            }
+
+            if (state.Buttons.LeftShoulder == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.LeftShoulder);
+            }
+
+            if (state.Buttons.LeftStick == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.LeftStick);
+            }
+
+            if (state.Buttons.RightShoulder == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.RightShoulder);
+            }
+
+            if (state.Buttons.RightStick == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.RightStick);
+            }
+
+            if (state.Buttons.Start == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.Start);
+            }
+
+            if (state.Buttons.X == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.X);
+            }
+
+            if (state.Buttons.Y == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.Y);
+            }
+
+            if (state.DPad.Up == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.DPadUp);
+            }
+
+            if (state.DPad.Down == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.DPadDown);
+            }
+
+            if (state.DPad.Left == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.DPadLeft);
+            }
+
+            if (state.DPad.Right == ButtonState.Pressed)
+            {
+                buttons.Add(Buttons.DPadRight);
+            }
+
+            if (state.Triggers.Left > 0.2f)
+            {
+                buttons.Add(Buttons.LeftTrigger);
+            }
+
+            if (state.Triggers.Right > 0.2f)
+            {
+                buttons.Add(Buttons.RightTrigger);
+            }
+
             return buttons.ToArray();
         }
 
         public Buttons[] GetFramePressedButtons(PlayerIndex index)
         {
-            GamePadState state = GamePad.GetState(index);
-            List<Buttons> buttons = new List<Buttons>();
+            var state = GamePad.GetState(index);
+            var buttons = new List<Buttons>();
             if (state.IsConnected)
             {
-                if (WasButtonJustPressed(Buttons.A, state.Buttons.A, index)) buttons.Add(Buttons.A);
-                if (WasButtonJustPressed(Buttons.B, state.Buttons.B, index)) buttons.Add(Buttons.B);
-                if (WasButtonJustPressed(Buttons.Back, state.Buttons.Back, index)) buttons.Add(Buttons.Back);
-                if (WasButtonJustPressed(Buttons.BigButton, state.Buttons.BigButton, index)) buttons.Add(Buttons.BigButton);
-                if (WasButtonJustPressed(Buttons.LeftShoulder, state.Buttons.LeftShoulder, index)) buttons.Add(Buttons.LeftShoulder);
-                if (WasButtonJustPressed(Buttons.LeftStick, state.Buttons.LeftStick, index)) buttons.Add(Buttons.LeftStick);
-                if (WasButtonJustPressed(Buttons.RightShoulder, state.Buttons.RightShoulder, index)) buttons.Add(Buttons.RightShoulder);
-                if (WasButtonJustPressed(Buttons.RightStick, state.Buttons.RightStick, index)) buttons.Add(Buttons.RightStick);
-                if (WasButtonJustPressed(Buttons.Start, state.Buttons.Start, index)) buttons.Add(Buttons.Start);
-                if (WasButtonJustPressed(Buttons.X, state.Buttons.X, index)) buttons.Add(Buttons.X);
-                if (WasButtonJustPressed(Buttons.Y, state.Buttons.Y, index)) buttons.Add(Buttons.Y);
-                if (WasButtonJustPressed(Buttons.DPadUp, state.DPad.Up, index)) buttons.Add(Buttons.DPadUp);
-                if (WasButtonJustPressed(Buttons.DPadDown, state.DPad.Down, index)) buttons.Add(Buttons.DPadDown);
-                if (WasButtonJustPressed(Buttons.DPadLeft, state.DPad.Left, index)) buttons.Add(Buttons.DPadLeft);
-                if (WasButtonJustPressed(Buttons.DPadRight, state.DPad.Right, index)) buttons.Add(Buttons.DPadRight);
-                if (WasButtonJustPressed(Buttons.LeftTrigger, state.Triggers.Left, index)) buttons.Add(Buttons.LeftTrigger);
-                if (WasButtonJustPressed(Buttons.RightTrigger, state.Triggers.Right, index)) buttons.Add(Buttons.RightTrigger);
+                if (this.WasButtonJustPressed(Buttons.A, state.Buttons.A, index))
+                {
+                    buttons.Add(Buttons.A);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.B, state.Buttons.B, index))
+                {
+                    buttons.Add(Buttons.B);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.Back, state.Buttons.Back, index))
+                {
+                    buttons.Add(Buttons.Back);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.BigButton, state.Buttons.BigButton, index))
+                {
+                    buttons.Add(Buttons.BigButton);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.LeftShoulder, state.Buttons.LeftShoulder, index))
+                {
+                    buttons.Add(Buttons.LeftShoulder);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.LeftStick, state.Buttons.LeftStick, index))
+                {
+                    buttons.Add(Buttons.LeftStick);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.RightShoulder, state.Buttons.RightShoulder, index))
+                {
+                    buttons.Add(Buttons.RightShoulder);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.RightStick, state.Buttons.RightStick, index))
+                {
+                    buttons.Add(Buttons.RightStick);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.Start, state.Buttons.Start, index))
+                {
+                    buttons.Add(Buttons.Start);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.X, state.Buttons.X, index))
+                {
+                    buttons.Add(Buttons.X);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.Y, state.Buttons.Y, index))
+                {
+                    buttons.Add(Buttons.Y);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.DPadUp, state.DPad.Up, index))
+                {
+                    buttons.Add(Buttons.DPadUp);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.DPadDown, state.DPad.Down, index))
+                {
+                    buttons.Add(Buttons.DPadDown);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.DPadLeft, state.DPad.Left, index))
+                {
+                    buttons.Add(Buttons.DPadLeft);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.DPadRight, state.DPad.Right, index))
+                {
+                    buttons.Add(Buttons.DPadRight);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.LeftTrigger, state.Triggers.Left, index))
+                {
+                    buttons.Add(Buttons.LeftTrigger);
+                }
+
+                if (this.WasButtonJustPressed(Buttons.RightTrigger, state.Triggers.Right, index))
+                {
+                    buttons.Add(Buttons.RightTrigger);
+                }
             }
+
             return buttons.ToArray();
         }
 
         public Buttons[] GetFrameReleasedButtons(PlayerIndex index)
         {
-            GamePadState state = GamePad.GetState(index);
-            List<Buttons> buttons = new List<Buttons>();
+            var state = GamePad.GetState(index);
+            var buttons = new List<Buttons>();
             if (state.IsConnected)
             {
-                if (WasButtonJustReleased(Buttons.A, state.Buttons.A, index)) buttons.Add(Buttons.A);
-                if (WasButtonJustReleased(Buttons.B, state.Buttons.B, index)) buttons.Add(Buttons.B);
-                if (WasButtonJustReleased(Buttons.Back, state.Buttons.Back, index)) buttons.Add(Buttons.Back);
-                if (WasButtonJustReleased(Buttons.BigButton, state.Buttons.BigButton, index)) buttons.Add(Buttons.BigButton);
-                if (WasButtonJustReleased(Buttons.LeftShoulder, state.Buttons.LeftShoulder, index)) buttons.Add(Buttons.LeftShoulder);
-                if (WasButtonJustReleased(Buttons.LeftStick, state.Buttons.LeftStick, index)) buttons.Add(Buttons.LeftStick);
-                if (WasButtonJustReleased(Buttons.RightShoulder, state.Buttons.RightShoulder, index)) buttons.Add(Buttons.RightShoulder);
-                if (WasButtonJustReleased(Buttons.RightStick, state.Buttons.RightStick, index)) buttons.Add(Buttons.RightStick);
-                if (WasButtonJustReleased(Buttons.Start, state.Buttons.Start, index)) buttons.Add(Buttons.Start);
-                if (WasButtonJustReleased(Buttons.X, state.Buttons.X, index)) buttons.Add(Buttons.X);
-                if (WasButtonJustReleased(Buttons.Y, state.Buttons.Y, index)) buttons.Add(Buttons.Y);
-                if (WasButtonJustReleased(Buttons.DPadUp, state.DPad.Up, index)) buttons.Add(Buttons.DPadUp);
-                if (WasButtonJustReleased(Buttons.DPadDown, state.DPad.Down, index)) buttons.Add(Buttons.DPadDown);
-                if (WasButtonJustReleased(Buttons.DPadLeft, state.DPad.Left, index)) buttons.Add(Buttons.DPadLeft);
-                if (WasButtonJustReleased(Buttons.DPadRight, state.DPad.Right, index)) buttons.Add(Buttons.DPadRight);
-                if (WasButtonJustReleased(Buttons.LeftTrigger, state.Triggers.Left, index)) buttons.Add(Buttons.LeftTrigger);
-                if (WasButtonJustReleased(Buttons.RightTrigger, state.Triggers.Right, index)) buttons.Add(Buttons.RightTrigger);
+                if (this.WasButtonJustReleased(Buttons.A, state.Buttons.A, index))
+                {
+                    buttons.Add(Buttons.A);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.B, state.Buttons.B, index))
+                {
+                    buttons.Add(Buttons.B);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.Back, state.Buttons.Back, index))
+                {
+                    buttons.Add(Buttons.Back);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.BigButton, state.Buttons.BigButton, index))
+                {
+                    buttons.Add(Buttons.BigButton);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.LeftShoulder, state.Buttons.LeftShoulder, index))
+                {
+                    buttons.Add(Buttons.LeftShoulder);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.LeftStick, state.Buttons.LeftStick, index))
+                {
+                    buttons.Add(Buttons.LeftStick);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.RightShoulder, state.Buttons.RightShoulder, index))
+                {
+                    buttons.Add(Buttons.RightShoulder);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.RightStick, state.Buttons.RightStick, index))
+                {
+                    buttons.Add(Buttons.RightStick);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.Start, state.Buttons.Start, index))
+                {
+                    buttons.Add(Buttons.Start);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.X, state.Buttons.X, index))
+                {
+                    buttons.Add(Buttons.X);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.Y, state.Buttons.Y, index))
+                {
+                    buttons.Add(Buttons.Y);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.DPadUp, state.DPad.Up, index))
+                {
+                    buttons.Add(Buttons.DPadUp);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.DPadDown, state.DPad.Down, index))
+                {
+                    buttons.Add(Buttons.DPadDown);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.DPadLeft, state.DPad.Left, index))
+                {
+                    buttons.Add(Buttons.DPadLeft);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.DPadRight, state.DPad.Right, index))
+                {
+                    buttons.Add(Buttons.DPadRight);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.LeftTrigger, state.Triggers.Left, index))
+                {
+                    buttons.Add(Buttons.LeftTrigger);
+                }
+
+                if (this.WasButtonJustReleased(Buttons.RightTrigger, state.Triggers.Right, index))
+                {
+                    buttons.Add(Buttons.RightTrigger);
+                }
             }
+
             return buttons.ToArray();
         }
-        
+
         internal void CheckForChanges(GameTime gameTime)
         {
             try
             {
-                CheckControlChanges();
-                CheckPropertyChanges();
-                CheckSaveEvent();
-                CheckTimeEvents(gameTime);
+                this.CheckControlChanges();
+                this.CheckPropertyChanges();
+                this.CheckSaveEvent();
+                this.CheckTimeEvents(gameTime);
             }
             catch (Exception)
             {
@@ -152,30 +390,30 @@ namespace Farmhand.Events
 
         private void CheckTimeEvents(GameTime gameTime)
         {
-            HalfSecondPoll += gameTime.ElapsedGameTime.Milliseconds;
-            if (HalfSecondPoll > 500)
+            this.HalfSecondPoll += gameTime.ElapsedGameTime.Milliseconds;
+            if (this.HalfSecondPoll > 500)
             {
-                HalfSecondPoll = HalfSecondPoll % 500;
-                GameEvents.InvokeOnHalfSecondTick();
+                this.HalfSecondPoll = this.HalfSecondPoll % 500;
+                GameEvents.OnHalfSecondTick();
             }
         }
 
         private void CheckSaveEvent()
         {
-            if (LastLoadProgress < 100)
+            if (this.LastLoadProgress < 100)
             {
                 if (Game1.currentLoader != null)
                 {
                     var currentLoadProgress = Game1.currentLoader.Current;
-                    if (currentLoadProgress != LastLoadProgress)
+                    if (currentLoadProgress != this.LastLoadProgress)
                     {
-                        LastLoadProgress = currentLoadProgress;
-                        SaveEvents.InvokeOnAfterSaveProgress(LastLoadProgress);
+                        this.LastLoadProgress = currentLoadProgress;
+                        SaveEvents.OnAfterSaveProgress(this.LastLoadProgress);
                     }
 
-                    if (LastLoadProgress >= 100)
+                    if (this.LastLoadProgress >= 100)
                     {
-                        SaveEvents.InvokeOnAfterLoad();
+                        SaveEvents.OnAfterLoad();
                         HasLoadFired = true;
                     }
                 }
@@ -187,17 +425,17 @@ namespace Farmhand.Events
                 var saveProgress = saveEnumerator.Current;
                 if (saveProgress > 0)
                 {
-                    if (LastSaveProgress < 100)
+                    if (this.LastSaveProgress < 100)
                     {
-                        if (saveProgress != LastSaveProgress)
+                        if (saveProgress != this.LastSaveProgress)
                         {
-                            LastSaveProgress = saveProgress;
-                            SaveEvents.InvokeOnAfterSaveProgress(LastLoadProgress);
+                            this.LastSaveProgress = saveProgress;
+                            SaveEvents.OnAfterSaveProgress(this.LastLoadProgress);
                         }
 
-                        if (LastSaveProgress >= 100)
+                        if (this.LastSaveProgress >= 100)
                         {
-                            SaveEvents.InvokeOnAfterSave();
+                            SaveEvents.OnAfterSave();
                         }
                     }
                 }
@@ -206,89 +444,97 @@ namespace Farmhand.Events
 
         private void CheckPropertyChanges()
         {
-            if (Game1.activeClickableMenu != null && Game1.activeClickableMenu != PreviousActiveMenu)
+            if (Game1.activeClickableMenu != null && Game1.activeClickableMenu != this.PreviousActiveMenu)
             {
-                MenuEvents.InvokeMenuChanged(PreviousActiveMenu, Game1.activeClickableMenu);
-                PreviousActiveMenu = Game1.activeClickableMenu;
+                MenuEvents.OnMenuChanged(this.PreviousActiveMenu, Game1.activeClickableMenu);
+                this.PreviousActiveMenu = Game1.activeClickableMenu;
             }
-            
-            if (Game1.currentLocation != PreviousGameLocation)
+
+            if (Game1.currentLocation != this.PreviousGameLocation)
             {
-                Farmhand.Events.LocationEvents.InvokeCurrentLocationChanged(PreviousGameLocation, Game1.currentLocation);
-                PreviousGameLocation = Game1.currentLocation;
+                LocationEvents.OnCurrentLocationChanged(this.PreviousGameLocation, Game1.currentLocation);
+                this.PreviousGameLocation = Game1.currentLocation;
             }
-                        
-            if (PropertyWatcher.HasLoadFired && Game1.player != PreviousFarmer)
+
+            if (HasLoadFired && Game1.player != this.PreviousFarmer)
             {
-                var previous = PreviousFarmer;
-                PreviousFarmer = Game1.player;
-                Log.Success($"Farmer Changed: {Game1.player?.name} - previous: {PreviousFarmer?.name}");
-                Farmhand.Events.PlayerEvents.InvokeFarmerChanged(previous, Game1.player);                
+                var previous = this.PreviousFarmer;
+                this.PreviousFarmer = Game1.player;
+                Log.Success($"Farmer Changed: {Game1.player?.name} - previous: {this.PreviousFarmer?.name}");
+                PlayerEvents.OnFarmerChanged(previous, Game1.player);
             }
         }
 
-
         private void CheckControlChanges()
         {
-            KStateNow = Keyboard.GetState();
-            CurrentlyPressedKeys = KStateNow.GetPressedKeys();
+            this.KStateNow = Keyboard.GetState();
+            this.CurrentlyPressedKeys = this.KStateNow.GetPressedKeys();
 
-            MStateNow = Mouse.GetState();
+            this.MStateNow = Mouse.GetState();
 
-            foreach (var k in FramePressedKeys)
-                ControlEvents.InvokeKeyPressed(k);
+            foreach (var k in this.FramePressedKeys)
+            {
+                ControlEvents.OnKeyPressed(k);
+            }
 
-            foreach (var k in FrameReleasedKeys)
-                ControlEvents.InvokeKeyReleased(k);
+            foreach (var k in this.FrameReleasedKeys)
+            {
+                ControlEvents.OnKeyReleased(k);
+            }
 
             for (var i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
             {
-                var buttons = GetFramePressedButtons(i);
+                var buttons = this.GetFramePressedButtons(i);
                 foreach (var b in buttons)
                 {
                     if (b == Buttons.LeftTrigger || b == Buttons.RightTrigger)
                     {
-                        ControlEvents.InvokeTriggerPressed(i, b, b == Buttons.LeftTrigger ? GamePad.GetState(i).Triggers.Left : GamePad.GetState(i).Triggers.Right);
+                        ControlEvents.OnTriggerPressed(
+                            i,
+                            b,
+                            b == Buttons.LeftTrigger ? GamePad.GetState(i).Triggers.Left : GamePad.GetState(i).Triggers.Right);
                     }
                     else
                     {
-                        ControlEvents.InvokeButtonPressed(i, b);
+                        ControlEvents.OnButtonPressed(i, b);
                     }
                 }
             }
 
-            for (PlayerIndex i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
+            for (var i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
             {
-                foreach (Buttons b in GetFrameReleasedButtons(i))
+                foreach (var b in this.GetFrameReleasedButtons(i))
                 {
                     if (b == Buttons.LeftTrigger || b == Buttons.RightTrigger)
                     {
-                        ControlEvents.InvokeTriggerReleased(i, b, b == Buttons.LeftTrigger ? GamePad.GetState(i).Triggers.Left : GamePad.GetState(i).Triggers.Right);
+                        ControlEvents.OnTriggerReleased(
+                            i,
+                            b,
+                            b == Buttons.LeftTrigger ? GamePad.GetState(i).Triggers.Left : GamePad.GetState(i).Triggers.Right);
                     }
                     else
                     {
-                        ControlEvents.InvokeButtonReleased(i, b);
+                        ControlEvents.OnButtonReleased(i, b);
                     }
                 }
             }
 
-
-            if (KStateNow != KStatePrior)
+            if (this.KStateNow != this.KStatePrior)
             {
-                ControlEvents.InvokeKeyboardChanged(KStatePrior, KStateNow);
-                KStatePrior = KStateNow;
+                ControlEvents.OnKeyboardChanged(this.KStatePrior, this.KStateNow);
+                this.KStatePrior = this.KStateNow;
             }
 
-            if (MStateNow != MStatePrior)
+            if (this.MStateNow != this.MStatePrior)
             {
-                ControlEvents.InvokeMouseChanged(MStatePrior, MStateNow);
-                MStatePrior = MStateNow;
+                ControlEvents.OnMouseChanged(this.MStatePrior, this.MStateNow);
+                this.MStatePrior = this.MStateNow;
             }
 
-            PreviouslyPressedKeys = CurrentlyPressedKeys;
-            for (PlayerIndex i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
+            this.PreviouslyPressedKeys = this.CurrentlyPressedKeys;
+            for (var i = PlayerIndex.One; i <= PlayerIndex.Four; i++)
             {
-                PreviouslyPressedButtons[(int)i] = GetButtonsDown(i);
+                this.PreviouslyPressedButtons[(int)i] = this.GetButtonsDown(i);
             }
         }
     }

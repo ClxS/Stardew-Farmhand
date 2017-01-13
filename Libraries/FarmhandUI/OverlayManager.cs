@@ -90,18 +90,18 @@
 
         private static void Init()
         {
-            GameEvents.OnAfterUpdateTick += GameEvents_UpdateTick;
-            GraphicsEvents.OnPostRenderGuiEvent += GraphicsEvents_OnPostRenderGuiEvent;
-            ControlEvents.OnMouseChanged += ControlEvents_MouseChanged;
-            ControlEvents.OnKeyboardChanged += ControlEvents_KeyboardChanged;
+            GameEvents.AfterUpdateTick += GameEvents_UpdateTick;
+            GraphicsEvents.PostRenderGuiEvent += GraphicsEvents_OnPostRenderGuiEvent;
+            ControlEvents.MouseChanged += ControlEvents_MouseChanged;
+            ControlEvents.KeyboardChanged += ControlEvents_KeyboardChanged;
         }
 
         private static void Uninit()
         {
-            GameEvents.OnAfterUpdateTick -= GameEvents_UpdateTick;
-            GraphicsEvents.OnPostRenderGuiEvent -= GraphicsEvents_OnPostRenderGuiEvent;
-            ControlEvents.OnMouseChanged -= ControlEvents_MouseChanged;
-            ControlEvents.OnKeyboardChanged -= ControlEvents_KeyboardChanged;
+            GameEvents.AfterUpdateTick -= GameEvents_UpdateTick;
+            GraphicsEvents.PostRenderGuiEvent -= GraphicsEvents_OnPostRenderGuiEvent;
+            ControlEvents.MouseChanged -= ControlEvents_MouseChanged;
+            ControlEvents.KeyboardChanged -= ControlEvents_KeyboardChanged;
         }
 
         internal static void GameEvents_UpdateTick(object s, EventArgs e)

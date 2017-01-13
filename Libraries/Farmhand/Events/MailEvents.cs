@@ -6,18 +6,33 @@
     using Farmhand.Attributes;
     using Farmhand.Events.Arguments.MailEvents;
 
+    /// <summary>
+    ///     Contains events related to mailing.
+    /// </summary>
     public static class MailEvents
     {
         private static string previousAttachType;
 
         private static string previousAttachValue;
 
+        /// <summary>
+        ///     Fires just before opening a letter/sign.
+        /// </summary>
         public static event EventHandler<EventArgsOpenedLetter> BeforeOpenedLetter = delegate { };
 
+        /// <summary>
+        ///     Fires just after opening a letter/sign.
+        /// </summary>
         public static event EventHandler<EventArgsOpenedLetter> AfterOpenedLetter = delegate { };
 
+        /// <summary>
+        ///     Fires just before opening a piece of mail.
+        /// </summary>
         public static event EventHandler<EventArgsOpenedMail> BeforeOpenedMail = delegate { };
 
+        /// <summary>
+        ///     Fires just after opening a piece of mail.
+        /// </summary>
         public static event EventHandler<EventArgsOpenedMail> AfterOpenedMail = delegate { };
 
         [Hook(HookType.Entry, "StardewValley.Menus.LetterViewerMenu",
@@ -76,6 +91,9 @@
                 AfterOpenedMail,
                 @this,
                 new EventArgsOpenedMail(mail, mailTitle, previousAttachType, previousAttachValue));
+
+            previousAttachType = null;
+            previousAttachValue = null;
         }
     }
 }

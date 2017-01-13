@@ -1,80 +1,84 @@
-﻿using System;
-using Farmhand.Attributes;
-using Farmhand.Events.Arguments.SaveEvents;
-using System.Collections.Generic;
-using Farmhand.API.Items;
-using Farmhand.API.Crops;
-using Farmhand.API.Tools;
-
-namespace Farmhand.Events
+﻿namespace Farmhand.Events
 {
+    using System;
+
+    using Farmhand.API.Crops;
+    using Farmhand.API.Items;
+    using Farmhand.API.Tools;
+    using Farmhand.Attributes;
+    using Farmhand.Events.Arguments.SaveEvents;
+
     /// <summary>
-    /// Contains events related to saving/loading
+    ///     Contains events related to saving/loading.
     /// </summary>
     public static class SaveEvents
     {
         /// <summary>
-        /// Triggered prior to saving
+        ///     Triggered just prior to saving
         /// </summary>
-        public static event EventHandler OnBeforeSave = delegate { };
+        public static event EventHandler BeforeSave = delegate { };
 
         /// <summary>
-        /// Triggered prior to loading
+        ///     Triggered prior to loading
         /// </summary>
-        public static event EventHandler<EventArgsOnBeforeLoad> OnBeforeLoad = delegate { };
+        public static event EventHandler<EventArgsOnBeforeLoad> BeforeLoad = delegate { };
 
         /// <summary>
-        /// Triggered after progress towards saving is made. 100 is complete
+        ///     Triggered after progress towards saving is made. 100 is complete
         /// </summary>
-        public static event EventHandler<EventArgsOnProgress> OnAfterSaveProgress = delegate { };
+        public static event EventHandler<EventArgsOnProgress> AfterSaveProgress = delegate { };
 
         /// <summary>
-        /// Triggered after progress towards loading is made. 100 is complete
+        ///     Triggered after progress towards loading is made. 100 is complete
         /// </summary>
-        public static event EventHandler<EventArgsOnProgress> OnAfterLoadProgress = delegate { };
+        public static event EventHandler<EventArgsOnProgress> AfterLoadProgress = delegate { };
 
         /// <summary>
-        /// Triggered after loading is complete
+        ///     Triggered after loading is complete
         /// </summary>
-        public static event EventHandler<EventArgsOnAfterLoad> OnAfterLoad = delegate { };
+        /// <remarks>
+        ///     Just prior to firing this method, the API will fix up mismatched IDs and reload
+        ///     mod configurations.
+        /// </remarks>
+        public static event EventHandler<EventArgsOnAfterLoad> AfterLoad = delegate { };
 
         /// <summary>
-        /// Triggered after loading is complete
+        ///     Triggered after loading is complete
         /// </summary>
-        public static event EventHandler<EventArgsOnAfterSave> OnAfterSave = delegate { };
+        public static event EventHandler<EventArgsOnAfterSave> AfterSave = delegate { };
 
         [Hook(HookType.Entry, "StardewValley.SaveGame", "Save")]
-        internal static void InvokeOnBeforeSave()
+        internal static void OnBeforeSave()
         {
-            EventCommon.SafeInvoke(OnBeforeSave, null);
+            EventCommon.SafeInvoke(BeforeSave, null);
         }
-        
+
         [Hook(HookType.Entry, "StardewValley.SaveGame", "Load")]
-        internal static bool InvokeOnBeforeLoad([InputBind(typeof(string), "filename")] string filename)
+        internal static bool OnBeforeLoad([InputBind(typeof(string), "filename")] string filename)
         {
-            return EventCommon.SafeCancellableInvoke(OnBeforeLoad, null, new EventArgsOnBeforeLoad(filename));
+            return EventCommon.SafeCancellableInvoke(BeforeLoad, null, new EventArgsOnBeforeLoad(filename));
         }
 
         // Triggered by PropertyWatcher
-        internal static void InvokeOnAfterSaveProgress(int current)
+        internal static void OnAfterSaveProgress(int current)
         {
-            EventCommon.SafeInvoke(OnAfterSaveProgress, null, new EventArgsOnProgress(current));
+            EventCommon.SafeInvoke(AfterSaveProgress, null, new EventArgsOnProgress(current));
         }
 
         // Triggered by PropertyWatcher
-        internal static void InvokeOnAfterLoadProgress(int current)
+        internal static void OnAfterLoadProgress(int current)
         {
-            EventCommon.SafeInvoke(OnAfterLoadProgress, null, new EventArgsOnProgress(current));
+            EventCommon.SafeInvoke(AfterLoadProgress, null, new EventArgsOnProgress(current));
         }
 
         // Triggered by PropertyWatcher
-        internal static void InvokeOnAfterSave()
+        internal static void OnAfterSave()
         {
-            EventCommon.SafeInvoke(OnAfterSave, null, new EventArgsOnAfterSave());
+            EventCommon.SafeInvoke(AfterSave, null, new EventArgsOnAfterSave());
         }
 
         // Triggered by PropertyWatcher
-        internal static void InvokeOnAfterLoad()
+        internal static void OnAfterLoad()
         {
             // Fix IDs after load, in all our ID based registries
             Item.FixupItemIds(null, null);
@@ -83,7 +87,7 @@ namespace Farmhand.Events
             Weapon.FixupWeaponIds(null, null);
             ModLoader.ReloadConfigurations();
 
-            EventCommon.SafeInvoke(OnAfterLoad, null, new EventArgsOnAfterLoad());
+            EventCommon.SafeInvoke(AfterLoad, null, new EventArgsOnAfterLoad());
         }
     }
 }

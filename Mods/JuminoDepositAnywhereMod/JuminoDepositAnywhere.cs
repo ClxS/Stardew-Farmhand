@@ -12,7 +12,7 @@ namespace JuminoDepositAnywhereMod
     {
         public override void Entry()
         {
-            GameEvents.OnAfterUpdateTick += GameEvents_OnAfterUpdateTick;
+            GameEvents.AfterUpdateTick += GameEvents_OnAfterUpdateTick;
         }
 
         private void GameEvents_OnAfterUpdateTick(object sender, EventArgs e)

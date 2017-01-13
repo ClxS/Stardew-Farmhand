@@ -23,8 +23,8 @@ namespace TestNPCMod
         public override void Entry()
         {
             Instance = this;
-            GameEvents.OnAfterLoadedContent += GameEvents_OnAfterLoadedContent;
-            ControlEvents.OnKeyPressed += (obj, ev) =>
+            GameEvents.AfterLoadedContent += GameEvents_OnAfterLoadedContent;
+            ControlEvents.KeyPressed += (obj, ev) =>
             {
                 var keyState = Keyboard.GetState();
                 if (keyState.IsKeyDown(Keys.F2) && !Game1.oldKBState.IsKeyDown(Keys.F2))

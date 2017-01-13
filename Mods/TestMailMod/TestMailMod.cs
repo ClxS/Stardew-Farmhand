@@ -19,8 +19,8 @@ namespace TestMailMod
     {
         public override void Entry()
         {
-            GameEvents.OnAfterLoadedContent += GameEvents_AfterContentLoaded;
-            ControlEvents.OnKeyPressed += ControlEvents_KeyPressed;
+            GameEvents.AfterLoadedContent += GameEvents_AfterContentLoaded;
+            ControlEvents.KeyPressed += ControlEvents_KeyPressed;
         }
 
         private bool SentMail;

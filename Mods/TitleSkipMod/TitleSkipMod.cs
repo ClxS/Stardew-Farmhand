@@ -7,7 +7,7 @@
     {
         public override void Entry()
         {
-            MenuEvents.OnMenuChanged += this.MenuEvents_OnMenuChanged;
+            MenuEvents.MenuChanged += this.MenuEvents_OnMenuChanged;
         }
 
         private void MenuEvents_OnMenuChanged(object sender, Farmhand.Events.Arguments.MenuEvents.EventArgsOnMenuChanged e)

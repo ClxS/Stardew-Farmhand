@@ -16,7 +16,7 @@ namespace EnableDebugMod
         public override void Entry()
         {
             Instance = this;
-            ControlEvents.OnKeyPressed += ControlEvents_OnKeyPressed;
+            ControlEvents.KeyPressed += ControlEvents_OnKeyPressed;
             Farmhand.API.Debug.Debug.RegisterDebugCommand("testcommand", new DebugInformation(Instance, HandleCommands));
             Farmhand.API.Debug.Debug.RegisterDebugCommand("uh", new DebugInformation(Instance, HandleCommands));
         }

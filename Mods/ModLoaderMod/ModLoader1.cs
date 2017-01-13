@@ -13,7 +13,7 @@ namespace ModLoaderMod
         public override void Entry()
         {
             Instance = this;
-            Farmhand.Events.GameEvents.OnAfterGameInitialised += OnAfterGameInitialise;         
+            Farmhand.Events.GameEvents.AfterGameInitialised += OnAfterGameInitialise;         
         }
         
         public void OnAfterGameInitialise(object sender, EventArgsOnGameInitialised e)
