@@ -4,7 +4,7 @@ using StardewValley;
 
 namespace TestBigCraftableMod.BigCraftables
 {
-    public class TestBigCraftable : Farmhand.Overrides.Game.Item.BigCraftable
+    public class TestBigCraftable : Farmhand.Game.Item.BigCraftable
     {
         private static BigCraftableInformation _information;
         public static BigCraftableInformation StaticInformation => _information ?? (_information = new Farmhand.API.Items.BigCraftableInformation

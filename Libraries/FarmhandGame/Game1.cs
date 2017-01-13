@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Overrides.Game
+﻿namespace Farmhand.Game
 {
     using System;
     using System.Collections.Generic;

@@ -5,7 +5,7 @@ using TestToolMod.Weapons;
 
 namespace TestToolMod
 {
-    using Farmhand.Overrides.Game;
+    using Farmhand.Game;
 
     public class TestToolMod : Mod
     {

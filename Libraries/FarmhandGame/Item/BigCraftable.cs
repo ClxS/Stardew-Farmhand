@@ -1,31 +1,42 @@
-﻿using Farmhand.API.Items;
-using Microsoft.Xna.Framework;
-using StardewValley;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
-using xTile.Dimensions;
-
-namespace Farmhand.Overrides.Game.Item
+﻿namespace Farmhand.Game.Item
 {
+    using Farmhand.API.Items;
+
+    using Microsoft.Xna.Framework;
+
+    /// <summary>
+    ///     Acts as a base class for BigCraftable objects.
+    /// </summary>
     public class BigCraftable : StardewObject
     {
-        // Big Craftable Information
-        public BigCraftableInformation Information { get; set; }
-
-        // Default constructor for serialization
-        protected BigCraftable() :
-            base()
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="BigCraftable" /> class.
+        /// </summary>
+        protected BigCraftable()
         {
-
         }
 
-        public BigCraftable(BigCraftableInformation information, Vector2 vector, bool isRecipe = false) :
-            base(vector, information.Id, isRecipe)
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="BigCraftable" /> class.
+        /// </summary>
+        /// <param name="information">
+        ///     The BigCraftable information.
+        /// </param>
+        /// <param name="tileLocation">
+        ///     The tile location.
+        /// </param>
+        /// <param name="isRecipe">
+        ///     Whether it is instantiated by a recipe.
+        /// </param>
+        public BigCraftable(BigCraftableInformation information, Vector2 tileLocation, bool isRecipe = false)
+            : base(tileLocation, information.Id, isRecipe)
         {
             this.Information = information;
         }
+
+        /// <summary>
+        ///     Gets or sets Big Craftable information.
+        /// </summary>
+        public BigCraftableInformation Information { get; set; }
     }
 }

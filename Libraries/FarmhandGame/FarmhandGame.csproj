@@ -7,7 +7,7 @@
     <ProjectGuid>{B2D9D9D6-F121-4797-8BB8-5263EF26FBF8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Farmhand.Overrides.Game</RootNamespace>
+    <RootNamespace>Farmhand.Game</RootNamespace>
     <AssemblyName>FarmhandGame</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

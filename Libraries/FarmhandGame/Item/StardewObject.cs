@@ -1,51 +1,56 @@
-﻿using Farmhand.API.Items;
-using Microsoft.Xna.Framework;
-using StardewValley;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
-using xTile.Dimensions;
-using System.Runtime.Serialization;
-using Farmhand.Logging;
-using Farmhand.Attributes;
-
-namespace Farmhand.Overrides.Game.Item
+﻿namespace Farmhand.Game.Item
 {
-    public class StardewObject : StardewValley.Object
+    // ReSharper disable RedundantOverriddenMember
+    // ReSharper disable StyleCop.SA1300
+    // ReSharper disable StyleCop.SA1600
+    using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
+
+    using StardewValley;
+
+    public class StardewObject : Object
     {
-
         // All the constructors offered by StardewValley.Object
-        public StardewObject() :
-            base()
+        public StardewObject()
         {
         }
 
-        public StardewObject(Vector2 vector, int Id, bool isRecipe = false) :
-            base(vector, Id, isRecipe)
+        public StardewObject(Vector2 vector, int id, bool isRecipe = false)
+            : base(vector, id, isRecipe)
         {
         }
 
-        public StardewObject(int parentSheetIndex, int initialStack, bool isRecipe = false, int price = -1, int quality = 0) :
-            base(parentSheetIndex, initialStack, isRecipe, price, quality)
+        public StardewObject(
+            int parentSheetIndex,
+            int initialStack,
+            bool isRecipe = false,
+            int price = -1,
+            int quality = 0)
+            : base(parentSheetIndex, initialStack, isRecipe, price, quality)
         {
         }
 
-        public StardewObject(Vector2 tileLocation, int parentSheetIndex, int initialStack) :
-            base(tileLocation, parentSheetIndex, initialStack)
+        public StardewObject(Vector2 tileLocation, int parentSheetIndex, int initialStack)
+            : base(tileLocation, parentSheetIndex, initialStack)
         {
         }
 
-        public StardewObject(Vector2 tileLocation, int parentSheetIndex, string name, bool canBeSetDown, bool canBeGrabbed, bool isHoedirt, bool isSpawnedObject) :
-            base(tileLocation, parentSheetIndex, name, canBeSetDown, canBeGrabbed, isHoedirt, isSpawnedObject)
+        public StardewObject(
+            Vector2 tileLocation,
+            int parentSheetIndex,
+            string name,
+            bool canBeSetDown,
+            bool canBeGrabbed,
+            bool isHoedirt,
+            bool isSpawnedObject)
+            : base(tileLocation, parentSheetIndex, name, canBeSetDown, canBeGrabbed, isHoedirt, isSpawnedObject)
         {
         }
 
         // Overriden methods
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void actionOnPlayerEntry()
         {
@@ -53,7 +58,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void actionWhenBeingHeld(Farmer who)
         {
@@ -61,7 +66,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool actionWhenPurchased()
         {
@@ -69,7 +74,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void actionWhenStopBeingHeld(Farmer who)
         {
@@ -77,7 +82,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override int addToStack(int amount)
         {
@@ -85,7 +90,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void addWorkingAnimation(GameLocation environment)
         {
@@ -93,7 +98,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool canBeGivenAsGift()
         {
@@ -101,7 +106,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool canBePlacedHere(GameLocation l, Vector2 tile)
         {
@@ -109,7 +114,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool canBePlacedInWater()
         {
@@ -117,7 +122,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool canBeShipped()
         {
@@ -125,7 +130,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool canBeTrashed()
         {
@@ -133,7 +138,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool checkForAction(Farmer who, bool justCheckingForActivity = false)
         {
@@ -141,7 +146,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override string checkForSpecialItemHoldUpMeessage()
         {
@@ -149,7 +154,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool clicked(Farmer who)
         {
@@ -157,7 +162,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void consumeRecipe(Farmer who)
         {
@@ -165,7 +170,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool countsForShippedCollection()
         {
@@ -173,7 +178,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void DayUpdate(GameLocation location)
         {
@@ -181,7 +186,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void draw(SpriteBatch spriteBatch, int x, int y, float alpha = 1)
         {
@@ -189,15 +194,20 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
-        public override void draw(SpriteBatch spriteBatch, int xNonTile, int yNonTile, float layerDepth, float alpha = 1)
+        public override void draw(
+            SpriteBatch spriteBatch,
+            int xNonTile,
+            int yNonTile,
+            float layerDepth,
+            float alpha = 1)
         {
             base.draw(spriteBatch, xNonTile, yNonTile, layerDepth, alpha);
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void drawAsProp(SpriteBatch b)
         {
@@ -205,15 +215,21 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
-        public override void drawInMenu(SpriteBatch spriteBatch, Vector2 location, float scaleSize, float transparency, float layerDepth, bool drawStackNumber)
+        public override void drawInMenu(
+            SpriteBatch spriteBatch,
+            Vector2 location,
+            float scaleSize,
+            float transparency,
+            float layerDepth,
+            bool drawStackNumber)
         {
             base.drawInMenu(spriteBatch, location, scaleSize, transparency, layerDepth, drawStackNumber);
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void drawPlacementBounds(SpriteBatch spriteBatch, GameLocation location)
         {
@@ -221,7 +237,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void drawWhenHeld(SpriteBatch spriteBatch, Vector2 objectPosition, Farmer f)
         {
@@ -229,7 +245,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void farmerAdjacentAction()
         {
@@ -237,15 +253,15 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
-        public override Microsoft.Xna.Framework.Rectangle getBoundingBox(Vector2 tileLocation)
+        public override Rectangle getBoundingBox(Vector2 tileLocation)
         {
             return base.getBoundingBox(tileLocation);
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override Color getCategoryColor()
         {
@@ -253,7 +269,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override string getCategoryName()
         {
@@ -261,7 +277,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override string getDescription()
         {
@@ -269,7 +285,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override int getHealth()
         {
@@ -277,7 +293,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override Vector2 getLocalPosition(xTile.Dimensions.Rectangle viewport)
         {
@@ -285,15 +301,15 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
-        public override StardewValley.Item getOne()
+        public override Item getOne()
         {
             return base.getOne();
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override Vector2 getScale()
         {
@@ -301,7 +317,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override int getStack()
         {
@@ -309,7 +325,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void hoverAction()
         {
@@ -317,7 +333,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void initializeLightSource(Vector2 tileLocation)
         {
@@ -325,7 +341,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool isActionable(Farmer who)
         {
@@ -333,7 +349,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool isAnimalProduct()
         {
@@ -341,7 +357,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool isForage(GameLocation location)
         {
@@ -349,7 +365,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool isPassable()
         {
@@ -357,7 +373,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool isPlaceable()
         {
@@ -365,7 +381,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override int maximumStackSize()
         {
@@ -373,7 +389,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool minutesElapsed(int minutes, GameLocation environment)
         {
@@ -381,7 +397,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool onExplosion(Farmer who, GameLocation location)
         {
@@ -389,7 +405,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool performDropDownAction(Farmer who)
         {
@@ -397,15 +413,15 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
-        public override bool performObjectDropInAction(StardewValley.Object dropIn, bool probe, Farmer who)
+        public override bool performObjectDropInAction(Object dropIn, bool probe, Farmer who)
         {
             return base.performObjectDropInAction(dropIn, probe, who);
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void performRemoveAction(Vector2 tileLocation, GameLocation environment)
         {
@@ -413,7 +429,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool performToolAction(Tool t)
         {
@@ -421,7 +437,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool performUseAction()
         {
@@ -429,7 +445,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override bool placementAction(GameLocation location, int x, int y, Farmer who = null)
         {
@@ -437,7 +453,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void reloadSprite()
         {
@@ -445,7 +461,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void rot()
         {
@@ -453,7 +469,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override int salePrice()
         {
@@ -461,7 +477,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override int sellToStorePrice()
         {
@@ -469,7 +485,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void setHealth(int health)
         {
@@ -477,7 +493,7 @@ namespace Farmhand.Overrides.Game.Item
         }
 
         /// <summary>
-        /// Calling conditions, usage, and return value significance unkown
+        ///     Calling conditions, usage, and return value significance unknown
         /// </summary>
         public override void updateWhenCurrentLocation(GameTime time)
         {

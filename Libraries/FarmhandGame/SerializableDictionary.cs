@@ -1,25 +1,30 @@
-﻿using Farmhand.Attributes;
-using StardewValley;
-using System;
-using System.Collections.Generic;
-using System.Xml;
-using System.Xml.Serialization;
-
-namespace Farmhand.Overrides.Game
+﻿namespace Farmhand.Game
 {
-    public static class SerializableDictionaryOverrides
+    using System;
+    using System.Collections.Generic;
+    using System.Xml;
+    using System.Xml.Serialization;
+
+    using Farmhand.API;
+    using Farmhand.Attributes;
+
+    using StardewValley;
+
+    internal static class SerializableDictionaryOverrides
     {
-        private static Dictionary<Type, XmlSerializer> SerializerCache = new Dictionary<Type, XmlSerializer>();
+        private static readonly Dictionary<Type, XmlSerializer> SerializerCache = new Dictionary<Type, XmlSerializer>();
 
         [Hook(HookType.Entry, "StardewValley.SerializableDictionary`2", "ReadXml")]
-        internal static bool ReadXmlOverride<TKey, TValue>([ThisBind] object @this,
+        internal static bool ReadXmlOverride<TKey, TValue>(
+            [ThisBind] object @this,
             [InputBind(typeof(XmlReader), "reader")] XmlReader reader)
         {
             return ReadXmlGeneric<TKey, TValue>(@this, reader);
         }
 
         [Hook(HookType.Entry, "StardewValley.SerializableDictionary`2", "WriteXml")]
-        internal static bool WriteXmlOverride<TKey, TValue>([ThisBind] object @this,
+        internal static bool WriteXmlOverride<TKey, TValue>(
+            [ThisBind] object @this,
             [InputBind(typeof(XmlWriter), "writer")] XmlWriter writer)
         {
             return WriteXmlGeneric<TKey, TValue>(@this, writer);
@@ -32,7 +37,7 @@ namespace Farmhand.Overrides.Game
                 return SerializerCache[type];
             }
 
-            var serializer = new XmlSerializer(type, API.Serializer.InjectedTypes.ToArray());
+            var serializer = new XmlSerializer(type, Serializer.InjectedTypes.ToArray());
             SerializerCache[type] = serializer;
             return serializer;
         }
@@ -41,7 +46,10 @@ namespace Farmhand.Overrides.Game
         {
             var serializableDictionary = @this as SerializableDictionary<TKey, TValue>;
 
-            if (serializableDictionary == null) return false;
+            if (serializableDictionary == null)
+            {
+                return false;
+            }
 
             var dictionary = serializableDictionary;
             var xmlSerializer1 = GetSerializerForType(typeof(TKey));
@@ -53,7 +61,7 @@ namespace Farmhand.Overrides.Game
             {
                 return true;
             }
-            
+
             while (reader.NodeType != XmlNodeType.EndElement)
             {
                 reader.ReadStartElement("item");
@@ -65,10 +73,11 @@ namespace Farmhand.Overrides.Game
                 reader.ReadEndElement();
                 dictionary.Add(key, obj);
                 reader.ReadEndElement();
-                var num = (int)reader.MoveToContent();
+                reader.MoveToContent();
             }
+
             reader.ReadEndElement();
-            
+
             return true;
         }
 
@@ -76,22 +85,25 @@ namespace Farmhand.Overrides.Game
         {
             var serializableDictionary = @this as SerializableDictionary<TKey, TValue>;
 
-            if (serializableDictionary == null) return false;
-            
+            if (serializableDictionary == null)
+            {
+                return false;
+            }
+
             var serializer = GetSerializerForType(typeof(TKey));
             var serializer2 = GetSerializerForType(typeof(TValue));
-            Dictionary<TKey, TValue>.KeyCollection.Enumerator enumerator = serializableDictionary.Keys.GetEnumerator();
+            var enumerator = serializableDictionary.Keys.GetEnumerator();
             try
             {
                 while (enumerator.MoveNext())
                 {
-                    TKey current = enumerator.Current;
+                    var current = enumerator.Current;
                     writer.WriteStartElement("item");
                     writer.WriteStartElement("key");
                     serializer.Serialize(writer, current);
                     writer.WriteEndElement();
                     writer.WriteStartElement("value");
-                    TValue o = serializableDictionary[current];
+                    var o = serializableDictionary[current];
                     serializer2.Serialize(writer, o);
                     writer.WriteEndElement();
                     writer.WriteEndElement();
@@ -101,6 +113,7 @@ namespace Farmhand.Overrides.Game
             {
                 enumerator.Dispose();
             }
+
             return true;
         }
     }
