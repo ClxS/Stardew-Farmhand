@@ -28,12 +28,13 @@
         public int Fragility { get; set; } = 0;
 
         /// <summary>
-        ///     Gets the id.
+        ///     Gets or sets the id.
         /// </summary>
         /// <remarks>
-        ///     Only assigned after registering the item.
+        ///     You should not assign to this. It is only settable for the game's XmlSerializer compatibility. It is assigned by
+        ///     the API after registering the item.
         /// </remarks>
-        public int Id { get; internal set; }
+        public int Id { get; set; }
 
         /// <summary>
         ///     Gets or sets a value indicating whether the item is a lamp.
