@@ -47,7 +47,7 @@
         {
         }
 
-        // Overriden methods
+        // Overridden methods
 
         /// <summary>
         ///     Calling conditions, usage, and return value significance unknown

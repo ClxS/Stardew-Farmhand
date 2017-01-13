@@ -436,9 +436,18 @@
         /// <returns>
         ///     The registered <see cref="Texture2D" />.
         /// </returns>
+        /// <exception cref="NullReferenceException">
+        ///     Thrown if no matching texture was found in <see cref="TextureRegistry" />.
+        /// </exception>
         public Texture2D GetTexture(string id)
         {
-            return TextureRegistry.GetItem(id, this).Texture;
+            var item = TextureRegistry.GetItem(id, this);
+            if (item == null)
+            {
+                throw new NullReferenceException($"Found no matching registered texture in TextureRegistry: {id}");
+            }
+
+            return item.Texture;
         }
 
         /// <summary>
@@ -450,9 +459,18 @@
         /// <returns>
         ///     The registered <see cref="Map" />.
         /// </returns>
+        /// <exception cref="NullReferenceException">
+        ///     Thrown if no matching texture was found in <see cref="MapRegistry" />.
+        /// </exception>
         public Map GetMap(string id)
         {
-            return MapRegistry.GetItem(id, this).Map;
+            var item = MapRegistry.GetItem(id, this);
+            if (item == null)
+            {
+                throw new NullReferenceException($"Found no matching registered map in MapRegistry: {id}");
+            }
+
+            return item.Map;
         }
 
         #endregion

@@ -514,6 +514,8 @@
         /// </param>
         public override void releaseLeftClick(int x, int y)
         {
+            base.releaseLeftClick(x, y);
+
             if (this.HoverInElement == null)
             {
                 return;
@@ -543,6 +545,7 @@
         /// </param>
         public override void leftClickHeld(int x, int y)
         {
+            base.leftClickHeld(x, y);
             if (this.HoverInElement == null)
             {
                 return;
@@ -567,6 +570,7 @@
         public override void receiveLeftClick(int x, int y, bool playSound = true)
         {
             base.receiveLeftClick(x, y, playSound);
+
             var p = new Point(x, y);
             var o = new Point(this.Area.X + Zoom10, this.Area.Y + Zoom10);
             if (this.FloatingComponent != null && this.FloatingComponent.InBounds(p, o))

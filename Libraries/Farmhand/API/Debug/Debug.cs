@@ -40,10 +40,15 @@
         [Hook(HookType.Entry, "StardewValley.Game1", "parseDebugInput")]
         internal static bool ParseDebugInput([InputBind(typeof(string), "debugInput")] string debugInput)
         {
+            if (debugInput == null)
+            {
+                return false;
+            }
+
             var useOutput = false;
-            debugInput = debugInput?.Trim();
-            var command = debugInput?.Split(' ')[0];
-            var parameters = debugInput?.Split(' ').Skip(1).ToArray();
+            debugInput = debugInput.Trim();
+            var command = debugInput.Split(' ')[0];
+            var parameters = debugInput.Split(' ').Skip(1).ToArray();
 
             if (command == null)
             {

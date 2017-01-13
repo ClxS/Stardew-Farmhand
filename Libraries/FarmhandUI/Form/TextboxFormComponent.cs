@@ -332,7 +332,10 @@
                         }
                     }
 
-                    this.Parent.GiveFocus(first);
+                    if (first != null)
+                    {
+                        this.Parent.GiveFocus(first);
+                    }
                     return;
                 case 13:
                     if (this.EnterPressed != null)

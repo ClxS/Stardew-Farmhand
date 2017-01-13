@@ -39,12 +39,32 @@
         /// <param name="item">
         ///     Information of item to register
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if item is null.
+        /// </exception>
+        /// <exception cref="Exception">
+        /// Thrown if Game1.objectSpriteSheet is null.
+        /// </exception>
+        /// <exception cref="NullReferenceException">
+        /// Thrown if item.Texture could not be found in <see cref="TextureRegistry"/> or could not be loaded.
+        /// </exception>
         public static void RegisterItem<T>(ItemInformation item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));    
+            }
+
             if (Game1.objectSpriteSheet == null)
             {
                 throw new Exception(
                     "objectInformation is null! This likely occurs if you try to register an item before AfterContentLoaded");
+            }
+
+            var texture = TextureRegistry.GetItem(item.Texture)?.Texture;
+            if (texture == null)
+            {
+                throw new NullReferenceException($"Texture ({item.Texture}) could not be located in registry.");
             }
 
             item.Id = IdManager.AssignNewIdSequential(Game1.objectInformation);
@@ -52,7 +72,7 @@
             RegisteredTypeInformation[typeof(T)] = item;
             TextureUtility.AddSpriteToSpritesheet(
                 ref Game1.objectSpriteSheet,
-                TextureRegistry.GetItem(item.Texture)?.Texture,
+                texture,
                 item.Id,
                 16,
                 16);

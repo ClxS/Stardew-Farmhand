@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Farmhand.Installers.Patcher;
     using Farmhand.Installers.Patcher.Cecil;
 
     using Mono.Cecil;
@@ -992,6 +991,11 @@
             string method,
             Type[] parameters)
         {
+            if (asmType.BaseType == null)
+            {
+                return;
+            }
+
             var parametersString = string.Empty;
             for (var i = 0; i < parameters.Length; i++)
             {
@@ -1012,16 +1016,18 @@
 
             var newConstructor = asmType.GetConstructor(parameters);
 
-            if (asmType.BaseType == null)
-            {
-                return;
-            }
-
             var oldConstructor = asmType.BaseType.GetConstructor(parameters);
+
+            if (oldConstructor == null)
+            {
+                throw new NullReferenceException(
+                    $"Failed to get matching constructor for type ({asmType.BaseType.FullName}) with parameters ({parameters})");
+            }
 
             if (newConstructor == null)
             {
-                return;
+                throw new NullReferenceException(
+                    $"Failed to get matching constructor for type ({asmType.FullName}) with parameters ({parameters})");
             }
 
             // Build a FullName version of newConstructor.Name
@@ -1030,9 +1036,10 @@
                 asmType.FullName,
                 newConstructorFullName);
 
-            if (oldConstructor == null)
+            if (newConstructorReference == null)
             {
-                return;
+                throw new NullReferenceException(
+                    $"Failed to get matching method definition for constructor: {asmType.FullName}.{newConstructorFullName}");
             }
 
             // Build a FullName version of oldConstructor.Name
@@ -1282,6 +1289,12 @@
             var listenedMethodField = stardewContext.GetFieldDefinition(
                 "Farmhand.Events.GlobalRouteManager",
                 "ListenedMethods");
+            if (listenedMethodField == null)
+            {
+                throw new NullReferenceException(
+                    "Failed to get field definition for (Farmhand.Events.GlobalRouteManager.ListenedMethods)");
+            }
+
             var processor = stardewContext.GetMethodIlProcessor("Farmhand.Events.GlobalRouteManager", ".cctor");
             var loadInt = processor.Create(OpCodes.Ldc_I4, methods.Length);
             var setValue = processor.Create(OpCodes.Stsfld, listenedMethodField);
@@ -1398,9 +1411,9 @@
                 {
                     // The only garbage symbol we should have to deal with is stray '[', but we can't get rid of them all, since we may need open and close brackets for arrays
                     // So, if a '[' doesn't have a matching ']' after it, it's garbage and can be ignored, while everything else gets tacked on our converted string
-                    if (!commaSeparated[c][characterNum].Equals('[')
-                        || (characterNum != commaSeparated[c].Length - 1
-                        && commaSeparated[c][characterNum + 1].Equals(']')))
+                    if ((!commaSeparated[c][characterNum].Equals('[')
+                        || characterNum != commaSeparated[c].Length - 1)
+                        && commaSeparated[c][characterNum + 1].Equals(']'))
                     {
                         convertedString += commaSeparated[c][characterNum];
                     }

@@ -372,6 +372,21 @@
             ReadOnlyCollection<TileSheet> list,
             MapInformation map)
         {
+            if (toMatch == null)
+            {
+                throw new ArgumentNullException(nameof(toMatch));
+            }
+
+            if (list == null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
+
+            if (map == null)
+            {
+                throw new ArgumentNullException(nameof(map));
+            }
+
             TileSheet matchingTileSheet = null;
             foreach (var injectingTileSheet in list)
             {
