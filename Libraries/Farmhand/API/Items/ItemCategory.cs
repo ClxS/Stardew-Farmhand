@@ -11,72 +11,72 @@
     {
         None = 0,
 
-        Greens = object.GreensCategory,
+        Greens = Object.GreensCategory,
 
-        Gem = object.GemCategory,
+        Gem = Object.GemCategory,
 
-        Vegetable = object.VegetableCategory,
+        Vegetable = Object.VegetableCategory,
 
-        Fish = object.FishCategory,
+        Fish = Object.FishCategory,
 
-        Egg = object.EggCategory,
+        Egg = Object.EggCategory,
 
-        Milk = object.MilkCategory,
+        Milk = Object.MilkCategory,
 
-        Cooking = object.CookingCategory,
+        Cooking = Object.CookingCategory,
 
-        Crafting = object.CraftingCategory,
+        Crafting = Object.CraftingCategory,
 
-        BigCraftable = object.BigCraftableCategory,
+        BigCraftable = Object.BigCraftableCategory,
 
-        Fruit = object.FruitsCategory,
+        Fruit = Object.FruitsCategory,
 
-        Seeds = object.SeedsCategory,
+        Seeds = Object.SeedsCategory,
 
-        Minerals = object.mineralsCategory,
+        Minerals = Object.mineralsCategory,
 
-        Flowers = object.flowersCategory,
+        Flowers = Object.flowersCategory,
 
-        Meat = object.meatCategory,
+        Meat = Object.meatCategory,
 
-        Metal = object.metalResources,
+        Metal = Object.metalResources,
 
-        Building = object.buildingResources,
+        Building = Object.buildingResources,
 
-        SellAtPierres = object.sellAtPierres,
+        SellAtPierres = Object.sellAtPierres,
 
-        SellAtPierresAndMarnies = object.sellAtPierresAndMarnies,
+        SellAtPierresAndMarnies = Object.sellAtPierresAndMarnies,
 
-        Fertilizer = object.fertilizerCategory,
+        Fertilizer = Object.fertilizerCategory,
 
-        Junk = object.junkCategory,
+        Junk = Object.junkCategory,
 
-        Bait = object.baitCategory,
+        Bait = Object.baitCategory,
 
-        Tackle = object.tackleCategory,
+        Tackle = Object.tackleCategory,
 
-        SellAtFishShop = object.sellAtFishShopCategory,
+        SellAtFishShop = Object.sellAtFishShopCategory,
 
-        Furniture = object.furnitureCategory,
+        Furniture = Object.furnitureCategory,
 
-        Ingredient = object.ingredientsCategory,
+        Ingredient = Object.ingredientsCategory,
 
-        ArtisanGoods = object.artisanGoodsCategory,
+        ArtisanGoods = Object.artisanGoodsCategory,
 
-        Syrup = object.syrupCategory,
+        Syrup = Object.syrupCategory,
 
-        MonsterLoot = object.monsterLootCategory,
+        MonsterLoot = Object.monsterLootCategory,
 
-        Equipment = object.equipmentCategory,
+        Equipment = Object.equipmentCategory,
 
-        Hat = object.hatCategory,
+        Hat = Object.hatCategory,
 
-        Ring = object.ringCategory,
+        Ring = Object.ringCategory,
 
-        Weapon = object.weaponCategory,
+        Weapon = Object.weaponCategory,
 
-        Boots = object.bootsCategory,
+        Boots = Object.bootsCategory,
 
-        Tool = object.toolCategory
+        Tool = Object.toolCategory
     }
 }
