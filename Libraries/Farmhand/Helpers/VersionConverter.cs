@@ -47,7 +47,7 @@
                     break;
             }
 
-            return retValue ?? (retValue = new Version(0, 0, 0));
+            return retValue ?? (new Version(0, 0, 0));
         }
 
         public override bool CanConvert(Type objectType)

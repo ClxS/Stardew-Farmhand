@@ -1109,7 +1109,7 @@
             }
             catch (Exception ex)
             {
-                Log.Exception($"An error occured in the overridden draw loop", ex);
+                Log.Exception("An error occurred in the overridden draw loop", ex);
             }
         }
     }

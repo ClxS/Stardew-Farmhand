@@ -4,7 +4,6 @@
     using Farmhand.Events;
     using Farmhand.Events.Arguments.GraphicsEvents;
     using Farmhand.Logging;
-    using Farmhand.Logging.Loggers;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
