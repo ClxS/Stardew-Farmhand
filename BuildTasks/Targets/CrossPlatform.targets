@@ -1,0 +1,14 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Platform)' == 'Linux' ">
+    <MonoGamePlatform>Linux</MonoGamePlatform>
+    <DefineConstants>LINUX;MONO</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'MacOSX' ">
+    <MonoGamePlatform>MacOSX</MonoGamePlatform>
+    <DefineConstants>MACOSX;MONO</DefineConstants>
+  </PropertyGroup>
+	<PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <DefineConstants>WINDOWS</DefineConstants>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" Condition=" '$(Platform)' == 'Linux' or '$(Platform)' == 'MacOSX' " />
+</Project>
