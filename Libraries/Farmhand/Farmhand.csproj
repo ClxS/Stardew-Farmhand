@@ -72,7 +72,7 @@
       <HintPath>$(SolutionDir)\Staging\Windows\xTile.dll</HintPath>
     </Reference>
     <Reference Include="Stardew Valley">
-      <HintPath>..\..\Staging\Windows\Stardew Valley.exe</HintPath>
+      <HintPath>$(SolutionDir)\Staging\Windows\Stardew Valley.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'Linux' Or '$(Platform)' == 'MacOSX' ">
