@@ -1,7 +1,5 @@
 ﻿namespace Farmhand.Registries.Containers
 {
-    using System.IO;
-
     using Microsoft.Xna.Framework.Graphics;
 
     using Newtonsoft.Json;
@@ -44,7 +42,7 @@
                 {
                     this.texture = Texture2D.FromStream(
                         Game1.graphics.GraphicsDevice,
-                        new FileStream(this.AbsoluteFilePath, FileMode.Open));
+                        new System.IO.FileStream(this.AbsoluteFilePath, System.IO.FileMode.Open));
                 }
 
                 return this.texture;

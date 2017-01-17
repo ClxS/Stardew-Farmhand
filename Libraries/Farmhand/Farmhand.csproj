@@ -10,7 +10,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Farmhand</RootNamespace>
     <AssemblyName>Farmhand</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <OutputPath>..\..\Bin\$(PlatformName)\$(Configuration)\</OutputPath>
@@ -56,7 +55,7 @@
     <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Mono.Cecil.0.9.6.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
       <Private>True</Private>
-    </Reference>
+    </Reference>    
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -79,7 +78,10 @@
   <ItemGroup Condition=" '$(Platform)' == 'Linux' Or '$(Platform)' == 'MacOSX' ">
     <Reference Include="xTile, Version=2.0.4.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)\Staging\Unix\xTile.dll</HintPath>
+      <HintPath>$(SolutionDir)\Staging\Windows\xTile.dll</HintPath>
+    </Reference>
+    <Reference Include="Stardew Valley">
+      <HintPath>$(SolutionDir)\Staging\Linux\StardewValley.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

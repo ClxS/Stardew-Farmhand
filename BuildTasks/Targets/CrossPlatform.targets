@@ -3,15 +3,18 @@
     <MonoGamePlatform>Linux</MonoGamePlatform>
     <DefineConstants>LINUX;MONO</DefineConstants>
     <PlatformName>Linux</PlatformName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'MacOSX' ">
     <MonoGamePlatform>MacOSX</MonoGamePlatform>
     <DefineConstants>MACOSX;MONO</DefineConstants>
     <PlatformName>MacOSX</PlatformName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
 	<PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-    <DefineConstants>WINDOWS</DefineConstants>
+    <DefineConstants>WINDOWS;XNA</DefineConstants>
     <PlatformName>Windows</PlatformName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" Condition=" '$(Platform)' == 'Linux' or '$(Platform)' == 'MacOSX' " />
 </Project>
