@@ -2,6 +2,8 @@
 {
     using System.IO;
 
+    using Microsoft.Xna.Framework.Graphics;
+
     using Newtonsoft.Json;
 
     /// <summary>

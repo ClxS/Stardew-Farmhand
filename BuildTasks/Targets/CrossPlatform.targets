@@ -16,5 +16,5 @@
     <PlatformName>Windows</PlatformName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" Condition=" '$(Platform)' == 'Linux' or '$(Platform)' == 'MacOSX' " />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="('$(Platform)' == 'Linux' or '$(Platform)' == 'MacOSX') And Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
 </Project>

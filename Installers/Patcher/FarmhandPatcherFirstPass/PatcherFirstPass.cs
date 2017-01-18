@@ -23,7 +23,13 @@
         /// <param name="path">Game's executable Path</param>
         public override void PatchStardew(string path = null)
         {
-            path = path ?? PatcherConstants.StardewExe;
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));    
+            }
+
+            Console.WriteLine("Patching using " + path);
+
             Assembly.LoadFrom(path);
 
             var repackOutput = this.GetAssemblyPath(PatcherConstants.PassOnePackageResult);

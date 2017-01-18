@@ -21,6 +21,11 @@
         /// <param name="path">The final executable output path</param>
         public override void PatchStardew(string path = null)
         {
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));    
+            }
+
             var repackOutput = this.GetAssemblyPath(PatcherConstants.PassTwoPackageResult);
             this.InjectFarmhandCoreClasses(
                 repackOutput,
@@ -45,8 +50,7 @@
             this.HookGlobalRouting(cecilContext);
 
             Console.WriteLine("Second Pass Installation Completed");
-
-            path = path ?? PatcherConstants.FarmhandExe;
+            
             var directory = Path.GetDirectoryName(path);
 
             if (directory == null)

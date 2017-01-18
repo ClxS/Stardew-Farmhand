@@ -12,12 +12,7 @@
         ///     The games executable name.
         /// </summary>
         public static string StardewExe => "Stardew Valley.exe";
-
-        /// <summary>
-        ///     The default farmhand executable path.
-        /// </summary>
-        public static string FarmhandExe => $@"{CurrentAssemblyDirectory}..\..\WorkingDirectory\Stardew Farmhand.exe";
-
+        
         /// <summary>
         ///     The farmhand DLL name.
         /// </summary>
@@ -52,12 +47,7 @@
         ///     The first-pass patching result assembly name.
         /// </summary>
         public static string PassOneFarmhandExe => "Stardew Farmhand.int1.dll";
-
-        /// <summary>
-        ///     The second-pass patching result assembly name.
-        /// </summary>
-        public static string PassTwoFarmhandExe => FarmhandExe;
-
+        
         /// <summary>
         ///     The JSON library assembly name.
         /// </summary>
