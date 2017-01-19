@@ -31,7 +31,9 @@
             EventCommon.SafeInvoke(MenuChanged, null, new MenuChangedEventArgs(priorMenu, newMenu));
         }
 
+#if WINDOWS
         [Hook(HookType.Exit, "StardewValley.Game1", "showEndOfNightStuff")]
+#endif
         internal static void OnShowEndOfNightMenus()
         {
             EventCommon.SafeInvoke(ShowEndOfNightMenus, null);
