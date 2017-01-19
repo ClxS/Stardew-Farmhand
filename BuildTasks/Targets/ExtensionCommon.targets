@@ -1,0 +1,6 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<OutputPath>$(SolutionDir)\WorkingDirectory\$(PlatformName)\$(Configuration)\Extensions\$(AssemblyName)</OutputPath>
+    	<PlatformTarget>x86</PlatformTarget>
+	</PropertyGroup>
+</Project>

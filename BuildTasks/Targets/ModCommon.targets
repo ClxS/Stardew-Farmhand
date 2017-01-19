@@ -1,0 +1,21 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup Condition=" '$(Platform)' == 'Linux' ">
+		<PlatformName>Linux</PlatformName>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Platform)' == 'MacOSX' ">
+		<PlatformName>MacOSX</PlatformName>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+		<PlatformName>Windows</PlatformName>
+	</PropertyGroup>
+	<PropertyGroup>
+		<OutputPath>$(SolutionDir)\WorkingDirectory\$(PlatformName)\$(Configuration)\Mods\$(AssemblyName)</OutputPath>
+    	<PlatformTarget>x86</PlatformTarget>
+	</PropertyGroup>
+	<ItemGroup>
+	 	<Reference Include="Stardew Farmhand">
+	      	<HintPath>$(SolutionDir)\WorkingDirectory\$(PlatformName)\$(Configuration)\Stardew Farmhand.exe</HintPath>
+	      	<Private>False</Private>
+	    </Reference>
+    </ItemGroup>
+</Project>

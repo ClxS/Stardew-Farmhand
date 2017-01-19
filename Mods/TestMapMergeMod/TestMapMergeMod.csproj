@@ -17,27 +17,17 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\WorkingDirectory\Mods\TestMapMergeMod\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\WorkingDirectory\Mods\TestMapMergeMod\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\BuildTasks\Targets\ModCommon.targets" />
   <ItemGroup>
-    <Reference Include="Stardew Farmhand">
-      <HintPath>..\..\WorkingDirectory\Stardew Farmhand.exe</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,7 +39,8 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="xTile">
-      <HintPath>..\..\Staging\xTile.dll</HintPath>
+      <HintPath>$(SolutionDir)\Staging\Windows\xTile.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
