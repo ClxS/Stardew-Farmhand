@@ -36,7 +36,7 @@
   <ItemGroup>
     <Reference Include="Stardew Farmhand, Version=1.0.6124.28359, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\WorkingDirectory\Windows\Debug\Stardew Farmhand.exe</HintPath>
+      <HintPath>..\..\WorkingDirectory\$(PlatformName)\$(Configuration)\Stardew Farmhand.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
