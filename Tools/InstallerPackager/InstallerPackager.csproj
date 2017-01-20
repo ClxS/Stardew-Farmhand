@@ -15,7 +15,10 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Linux' or '$(Configuration)|$(Platform)' == 'Release|Linux' or '$(Configuration)|$(Platform)' == 'Debug|MacOSX' or '$(Configuration)|$(Platform)' == 'Release|MacOSX'">
+  <PropertyGroup Condition="'$(Platform)' == 'Linux'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)' == 'MacOSX'">
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
