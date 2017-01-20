@@ -2,10 +2,10 @@
   <PropertyGroup>
     <OutputPath>$(SolutionDir)\Bin\$(PlatformName)\$(Configuration)\</OutputPath>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <WarningLevel>4</WarningLevel>  
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 </Project>
