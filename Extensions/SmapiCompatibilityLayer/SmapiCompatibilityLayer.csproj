@@ -16,6 +16,9 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Linux' or '$(Configuration)|$(Platform)' == 'Release|Linux' or '$(Configuration)|$(Platform)' == 'Debug|MacOSX' or '$(Configuration)|$(Platform)' == 'Release|MacOSX'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>

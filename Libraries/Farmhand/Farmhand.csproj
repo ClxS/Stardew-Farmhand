@@ -15,7 +15,7 @@
     <TargetFrameworkProfile />
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Linux'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Linux' or '$(Configuration)|$(Platform)' == 'Release|Linux' or '$(Configuration)|$(Platform)' == 'Debug|MacOSX' or '$(Configuration)|$(Platform)' == 'Release|MacOSX'">
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
