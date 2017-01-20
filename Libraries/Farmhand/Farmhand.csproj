@@ -72,9 +72,14 @@
       <HintPath>$(SolutionDir)\Staging\Windows\Stardew Valley.exe</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup Condition=" '$(Platform)' == 'Linux' Or '$(Platform)' == 'MacOSX' ">
+  <ItemGroup Condition=" '$(Platform)' == 'Linux' ">
     <Reference Include="Stardew Valley">
-      <HintPath>$(SolutionDir)\Staging\Linux\StardewValley.exe</HintPath>
+      <HintPath>..\..\Staging\Linux\StardewValley.exe</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Platform)' == 'MacOSX' ">
+    <Reference Include="Stardew Valley">
+      <HintPath>..\..\Staging\Linux\StardewValley.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
