@@ -3,8 +3,8 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="$(SolutionDir)\BuildTasks\Targets\CrossPlatform.targets" />
   <Import Project="$(SolutionDir)\BuildTasks\Targets\Common.targets" />
-  <PropertyGroup Condition="'$(Platform)' == 'Debug|Linux' or '$(Platform)' == 'MacOSX' or '$(Platform)' == 'AnyCPU'">
-    <DefineConstants>FH</DefineConstants>
+  <PropertyGroup Condition="'$(Platform)' == 'Linux' or '$(Platform)' == 'MacOSX'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
