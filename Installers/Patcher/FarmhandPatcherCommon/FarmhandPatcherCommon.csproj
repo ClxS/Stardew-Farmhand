@@ -2,10 +2,7 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="$(SolutionDir)\BuildTasks\Targets\CrossPlatform.targets" />
-  <Import Project="$(SolutionDir)\BuildTasks\Targets\Common.targets" />  
-  <PropertyGroup Condition="'$(Platform)' == 'Linux' or '$(Platform)' == 'MacOSX' or '$(Platform)' == 'AnyCPU'">
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-  </PropertyGroup>
+  <Import Project="$(SolutionDir)\BuildTasks\Targets\Common.targets" />    
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -17,6 +14,9 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Linux'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
