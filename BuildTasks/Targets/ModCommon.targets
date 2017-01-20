@@ -14,7 +14,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 	 	<Reference Include="Stardew Farmhand">
-	      	<HintPath>$(SolutionDir)\WorkingDirectory\$(PlatformName)\$(Configuration)\Stardew Farmhand.exe</HintPath>
+	      	<HintPath>$(SolutionDir)\WorkingDirectory\Windows\$(Configuration)\Stardew Farmhand.exe</HintPath>
 	      	<Private>False</Private>
 	    </Reference>
     </ItemGroup>
