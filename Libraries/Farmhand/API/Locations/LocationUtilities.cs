@@ -382,8 +382,6 @@
                 throw new ArgumentNullException(nameof(list));
             }
 
-            
-
             TileSheet matchingTileSheet = null;
             foreach (var injectingTileSheet in list)
             {
