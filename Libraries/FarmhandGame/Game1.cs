@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Farmhand.Attributes;
     using Farmhand.Events;
     using Farmhand.Logging;
 
@@ -23,13 +24,14 @@
     /// <summary>
     ///     Overrides Stardew's Game1, allowing for advanced callback events to be added
     /// </summary>
+    [HookRedirectConstructorFromBase("Farmhand.API.Game", "GetFarmhandOverrideInstance", new Type[] { })]
     public class Game1 : StardewValley.Game1
     {
         internal readonly Dictionary<string, Action<GameTime>> VersionSpecificOverrides =
             new Dictionary<string, Action<GameTime>>();
 
         internal bool ZoomLevelIsOne => options.zoomLevel.Equals(1.0f);
-
+        
         /// <summary>
         ///     Main Draw loop.
         /// </summary>
@@ -78,9 +80,9 @@
                         null,
                         null);
                     activeClickableMenu.drawBackground(spriteBatch);
-                    GraphicsEvents.OnPreRenderGuiEvent(this);
+                    GraphicsEvents.OnPreRenderGuiEvent(this, spriteBatch, gameTime, this.screen);
                     activeClickableMenu.draw(spriteBatch);
-                    GraphicsEvents.OnPostRenderGuiEvent(this);
+                    GraphicsEvents.OnPostRenderGuiEvent(this, spriteBatch, gameTime, this.screen);
                     spriteBatch.End();
                     if (this.ZoomLevelIsOne)
                     {
@@ -340,7 +342,7 @@
                         SamplerState.PointClamp,
                         null,
                         null);
-                    GraphicsEvents.OnPreRenderEvent(this);
+                    GraphicsEvents.OnPreRenderEvent(this, spriteBatch, gameTime, this.screen);
                     background?.draw(spriteBatch);
                     mapDisplayDevice.BeginScene(spriteBatch);
                     currentLocation.Map.GetLayer("Back")
@@ -914,12 +916,12 @@
                         this.drawBillboard();
                     }
 
-                    GraphicsEvents.OnPreRenderHudEventNoCheck(this);
+                    GraphicsEvents.OnPreRenderHudEventNoCheck(this, spriteBatch, gameTime, this.screen);
                     if ((displayHUD || eventUp) && currentBillboard == 0 && gameMode == 3 && !freezeControls && !panMode)
                     {
-                        GraphicsEvents.OnPreRenderHudEvent(this);
+                        GraphicsEvents.OnPreRenderHudEvent(this, spriteBatch, gameTime, this.screen);
                         this.drawHUD();
-                        GraphicsEvents.OnPostRenderHudEvent(this);
+                        GraphicsEvents.OnPostRenderHudEvent(this, spriteBatch, gameTime, this.screen);
                     }
                     else if (activeClickableMenu == null && farmEvent == null)
                     {
@@ -935,7 +937,7 @@
                             1f);
                     }
 
-                    GraphicsEvents.OnPostRenderHudEventNoCheck(this);
+                    GraphicsEvents.OnPostRenderHudEventNoCheck(this, spriteBatch, gameTime, this.screen);
 
                     if (hudMessages.Any() && (!eventUp || isFestival()))
                     {
@@ -1063,24 +1065,24 @@
                         0.9999999f);
                 }
 
-                GraphicsEvents.OnPreRenderGuiEventNoCheck(this);
+                GraphicsEvents.OnPreRenderGuiEventNoCheck(this, spriteBatch, gameTime, this.screen);
                 if (activeClickableMenu != null)
                 {
-                    GraphicsEvents.OnPreRenderGuiEvent(this);
+                    GraphicsEvents.OnPreRenderGuiEvent(this, spriteBatch, gameTime, this.screen);
                     activeClickableMenu.draw(spriteBatch);
-                    GraphicsEvents.OnPostRenderGuiEvent(this);
+                    GraphicsEvents.OnPostRenderGuiEvent(this, spriteBatch, gameTime, this.screen);
                 }
                 else
                 {
                     farmEvent?.drawAboveEverything(spriteBatch);
                 }
 
-                GraphicsEvents.OnPostRenderGuiEventNoCheck(this);
+                GraphicsEvents.OnPostRenderGuiEventNoCheck(this, spriteBatch, gameTime, this.screen);
 
-                GraphicsEvents.OnPostRenderEvent(this);
+                GraphicsEvents.OnPostRenderEvent(this, spriteBatch, gameTime, this.screen);
                 spriteBatch.End();
 
-                GraphicsEvents.OnDrawInRenderTargetTick(this);
+                GraphicsEvents.OnDrawInRenderTargetTick(this, spriteBatch, gameTime, this.screen);
 
                 if (!this.ZoomLevelIsOne)
                 {
