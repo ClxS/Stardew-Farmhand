@@ -49,26 +49,41 @@
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\MenuEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\MineEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\PlayerEvents.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\SaveEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Events\TimeEvents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\AssemblyRewriting\AssemblyTypeRewriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\AssemblyRewriting\CacheEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\AssemblyRewriting\CachePaths.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\AssemblyRewriting\RewriteResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\DeprecationLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\DeprecationManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\GitRelease.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\InternalExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\LogFileManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\ModAssemblyLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\Models\GitRelease.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\Models\IncompatibleMod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\Models\UserSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\ModRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\Monitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\Reflection\CacheEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\Reflection\PrivateField.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\Reflection\PrivateMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\Reflection\ReflectionHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\UpdateHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Framework\UserSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\IManifest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\IMod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\IModHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\IModRegistry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\IMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Inheritance\ChangeType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Inheritance\ItemStackChange.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Inheritance\SGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Inheritance\SObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\IPrivateField.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\IPrivateMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\IReflectionHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\ISemanticVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Log.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\LogInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\LogLevel.cs" />
@@ -77,11 +92,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Mod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\ModHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Program.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\SemanticVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\Version.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\icon.ico" />
-    <Content Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\StardewModdingAPI-settings.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\StardewModdingAPI.config.json" />
     <Content Include="$(MSBuildThisFileDirectory)Source\src\StardewModdingAPI\steam_appid.txt" />
   </ItemGroup>
   <ItemGroup>
