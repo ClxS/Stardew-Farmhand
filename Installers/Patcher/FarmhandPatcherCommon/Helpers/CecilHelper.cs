@@ -1411,12 +1411,12 @@
                 {
                     // The only garbage symbol we should have to deal with is stray '[', but we can't get rid of them all, since we may need open and close brackets for arrays
                     // So, if a '[' doesn't have a matching ']' after it, it's garbage and can be ignored, while everything else gets tacked on our converted string
-                    if ((!commaSeparated[c][characterNum].Equals('[')
-                        || characterNum != commaSeparated[c].Length - 1)
-                        && commaSeparated[c][characterNum + 1].Equals(']'))
+                    if (commaSeparated[c][characterNum].Equals('[') && (characterNum >= commaSeparated[c].Length || !commaSeparated[c][characterNum + 1].Equals(']')))
                     {
-                        convertedString += commaSeparated[c][characterNum];
+                        continue;
                     }
+
+                    convertedString += commaSeparated[c][characterNum];
                 }
 
                 // Comma separation between the generic parameters
