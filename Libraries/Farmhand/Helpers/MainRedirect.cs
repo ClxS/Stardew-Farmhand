@@ -189,12 +189,6 @@
             return false;
         }
 
-        [Hook(HookType.Exit, "StardewValley.Game1", ".ctor")]
-        internal static void CorrectGraphicsProfile()
-        {
-            Game1.graphics.GraphicsProfile = GraphicsProfile.HiDef;
-        }
-
         private static void HandleException(object sender, UnhandledExceptionEventArgs args)
         {
             if (HandlingException || !GameTesterMode)
