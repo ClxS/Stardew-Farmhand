@@ -214,6 +214,7 @@
     <Compile Include="Events\Arguments\ControlEvents\KeyboardStateChangedEventArgs.cs" />
     <Compile Include="Events\Arguments\ControlEvents\KeyPressedEventArgs.cs" />
     <Compile Include="Events\Arguments\ControlEvents\MouseStateChangedEventArgs.cs" />
+    <Compile Include="Events\Arguments\GraphicsEvents\DrawEvent.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\AfterPlayerTakesDamageEventArgs.cs" />
     <Compile Include="Events\Arguments\AnimalEvents\AnimalEatGrassEventArgs.cs" />
     <Compile Include="Events\Arguments\GameEvents\AfterGameLoadedEventArgs.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="Extensibility\ExtensibilityManager.cs" />
     <Compile Include="Extensibility\ExtensionManifest.cs" />
     <Compile Include="FarmhandConfig.cs" />
+    <Compile Include="Graphics\GraphicsHooks.cs" />
     <Compile Include="Helpers\ArgumentsHelper.cs" />
     <Compile Include="Helpers\Randomizer\AgeRanges.cs" />
     <Compile Include="Helpers\Randomizer\CasingRules.cs" />
