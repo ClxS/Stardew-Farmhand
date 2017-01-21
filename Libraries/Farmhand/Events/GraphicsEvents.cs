@@ -90,6 +90,8 @@
         /// </summary>
         public static event EventHandler<ChatBoxDrawEventArgs> ChatBoxDraw = delegate { };
 
+        internal static bool IsMidDrawCall { get; set; }
+
         // ReSharper disable once StyleCop.SA1600
         [Hook(HookType.Entry, "StardewValley.Game1", "Window_ClientSizeChanged")]
         public static void OnResize([ThisBind] Game1 @this)
@@ -105,12 +107,14 @@
         public static void OnBeforeDraw([ThisBind] object @this)
         {
             EventCommon.SafeInvoke(BeforeDraw, @this);
+            IsMidDrawCall = true;
         }
 
         // ReSharper disable once StyleCop.SA1600
         [Hook(HookType.Exit, "StardewValley.Game1", "Draw")]
         public static void OnAfterDraw([ThisBind] object @this)
         {
+            IsMidDrawCall = false;
             EventCommon.SafeInvoke(AfterDraw, @this);
         }
 
