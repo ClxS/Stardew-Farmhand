@@ -1,37 +1,39 @@
-﻿using Farmhand.Events.Arguments;
-using Farmhand.Logging;
-using System;
-using System.Xml.Serialization;
-using Farmhand;
-using StardewValley;
-
-namespace LoggingMod
+﻿namespace LoggingMod
 {
+    using System;
+    using System.ComponentModel;
+    using System.Xml.Serialization;
+
+    using Farmhand;
+    using Farmhand.Events.Arguments;
+    using Farmhand.Events.Arguments.SaveEvents;
+    using Farmhand.Logging;
+
     internal class Logging : Mod
     {
         public override void Entry()
         {
-            Farmhand.Events.GameEvents.BeforeGameInitialised += OnGameInitialising;
-            Farmhand.Events.GameEvents.AfterGameInitialised += OnGameInitialised;
-            Farmhand.Events.GameEvents.BeforeLoadContent += GameEvents_OnBeforeLoadContent;
-            Farmhand.Events.GameEvents.AfterLoadedContent += GameEvents_OnAfterLoadedContent;
-            Farmhand.Events.GameEvents.BeforeUpdateTick += GameEvents_OnBeforeUpdateTick;
-            Farmhand.Events.GameEvents.AfterUpdateTick += GameEvents_OnAfterUpdateTick;
-            Farmhand.Events.GraphicsEvents.Resize += GraphicsEvents_OnResize;
-            Farmhand.Events.GraphicsEvents.BeforeDraw += GraphicsEvents_OnBeforeDraw;
-            Farmhand.Events.GraphicsEvents.AfterDraw += GraphicsEvents_OnAfterDraw;
-            Farmhand.Events.LocationEvents.LocationsChanged += LocationEvents_OnLocationsChanged;
-            Farmhand.Events.LocationEvents.BeforeWarp += LocationEvents_OnBeforeWarp;
-            Farmhand.Events.LocationEvents.CurrentLocationChanged += LocationEvents_OnCurrentLocationChanged;
-            Farmhand.Events.LocationEvents.LocationObjectsChanged += LocationEvents_OnLocationObjectsChanged;
-            Farmhand.Events.PlayerEvents.BeforePlayerTakesDamage += PlayerEvents_OnBeforePlayerTakesDamage;
-            Farmhand.Events.UiEvents.AfterIClickableMenuInitialized += UiEvents_OnAfterIClickableMenuInitialized;
-            Farmhand.Events.LocationEvents.BeforeLocationLoadObjects += LocationEvents_OnBeforeLocationLoadObjects;
-            Farmhand.Events.LocationEvents.AfterLocationLoadObjects += LocationEvents_OnAfterLocationLoadObjects;
-            Farmhand.Events.SaveEvents.BeforeSave += SaveEvents_OnBeforeSave;
-            Farmhand.Events.SaveEvents.AfterSave += SaveEvents_OnAfterSave;
-            Farmhand.Events.SaveEvents.BeforeLoad += SaveEvents_OnBeforeLoad;
-            Farmhand.Events.SaveEvents.AfterLoad += SaveEvents_OnAfterLoad;
+            // Farmhand.Events.GameEvents.BeforeGameInitialised += OnGameInitialising;
+            // Farmhand.Events.GameEvents.AfterGameInitialised += OnGameInitialised;
+            // Farmhand.Events.GameEvents.BeforeLoadContent += GameEvents_OnBeforeLoadContent;
+            // Farmhand.Events.GameEvents.AfterLoadedContent += GameEvents_OnAfterLoadedContent;
+            // Farmhand.Events.GameEvents.BeforeUpdateTick += GameEvents_OnBeforeUpdateTick;
+            // Farmhand.Events.GameEvents.AfterUpdateTick += GameEvents_OnAfterUpdateTick;
+            // Farmhand.Events.GraphicsEvents.Resize += GraphicsEvents_OnResize;
+            // Farmhand.Events.GraphicsEvents.BeforeDraw += GraphicsEvents_OnBeforeDraw;
+            // Farmhand.Events.GraphicsEvents.AfterDraw += GraphicsEvents_OnAfterDraw;
+            // Farmhand.Events.LocationEvents.LocationsChanged += LocationEvents_OnLocationsChanged;
+            // Farmhand.Events.LocationEvents.BeforeWarp += LocationEvents_OnBeforeWarp;
+            // Farmhand.Events.LocationEvents.CurrentLocationChanged += LocationEvents_OnCurrentLocationChanged;
+            // Farmhand.Events.LocationEvents.LocationObjectsChanged += LocationEvents_OnLocationObjectsChanged;
+            // Farmhand.Events.PlayerEvents.BeforePlayerTakesDamage += PlayerEvents_OnBeforePlayerTakesDamage;
+            // Farmhand.Events.UiEvents.AfterIClickableMenuInitialized += UiEvents_OnAfterIClickableMenuInitialized;
+            // Farmhand.Events.LocationEvents.BeforeLocationLoadObjects += LocationEvents_OnBeforeLocationLoadObjects;
+            // Farmhand.Events.LocationEvents.AfterLocationLoadObjects += LocationEvents_OnAfterLocationLoadObjects;
+            // Farmhand.Events.SaveEvents.BeforeSave += SaveEvents_OnBeforeSave;
+            // Farmhand.Events.SaveEvents.AfterSave += SaveEvents_OnAfterSave;
+            // Farmhand.Events.SaveEvents.BeforeLoad += SaveEvents_OnBeforeLoad;
+            // Farmhand.Events.SaveEvents.AfterLoad += SaveEvents_OnAfterLoad;
         }
 
         private void SerializerEvents_UnreferencedObject(object sender, UnreferencedObjectEventArgs e)
@@ -50,17 +52,17 @@ namespace LoggingMod
         {
         }
 
-        private void SaveEvents_OnAfterLoad(object sender, Farmhand.Events.Arguments.SaveEvents.AfterLoadEventArgs e)
+        private void SaveEvents_OnAfterLoad(object sender, AfterLoadEventArgs e)
         {
             Log.Success($"SaveEvents_OnAfterLoad");
         }
 
-        private void SaveEvents_OnBeforeLoad(object sender, Farmhand.Events.Arguments.SaveEvents.BeforeLoadEventArgs e)
+        private void SaveEvents_OnBeforeLoad(object sender, BeforeLoadEventArgs e)
         {
             Log.Success($"SaveEvents_OnBeforeLoad {e.Filename}");
         }
 
-        private void SaveEvents_OnAfterSave(object sender, Farmhand.Events.Arguments.SaveEvents.AfterSaveEventArgs e)
+        private void SaveEvents_OnAfterSave(object sender, AfterSaveEventArgs e)
         {
             Log.Success("SaveEvents_OnAfterSave");
         }
@@ -75,14 +77,13 @@ namespace LoggingMod
             Log.Info("LocationEvents_OnAfterLocationLoadObjects");
         }
 
-        private void LocationEvents_OnBeforeLocationLoadObjects(object sender, System.ComponentModel.CancelEventArgs e)
+        private void LocationEvents_OnBeforeLocationLoadObjects(object sender, CancelEventArgs e)
         {
             Log.Info("LocationEvents_OnBeforeLocationLoadObjects");
         }
 
         private void UiEvents_OnAfterIClickableMenuInitialized(object sender, EventArgs e)
         {
-
         }
 
         private void PlayerEvents_OnBeforePlayerTakesDamage(object sender, BeforePlayerTakesDamageEventArgs e)
@@ -112,12 +113,12 @@ namespace LoggingMod
 
         private void GraphicsEvents_OnAfterDraw(object sender, EventArgs e)
         {
-            //Log.Error("GraphicsEvents_OnAfterDraw");
+            // Log.Error("GraphicsEvents_OnAfterDraw");
         }
 
         private void GraphicsEvents_OnBeforeDraw(object sender, EventArgs e)
         {
-            //Log.Success("GraphicsEvents_OnBeforeDraw");
+            // Log.Success("GraphicsEvents_OnBeforeDraw");
         }
 
         private void GraphicsEvents_OnResize(object sender, EventArgs e)
@@ -127,13 +128,13 @@ namespace LoggingMod
 
         private void GameEvents_OnAfterUpdateTick(object sender, EventArgs e)
         {
-            //Log.Verbose("GameEvents_OnAfterUpdateTick");
-            //Log.Verbose($"X: {Game1.player.position.X / Game1.tileSize}, Y:  {Game1.player.position.Y / Game1.tileSize}");
+            // Log.Verbose("GameEvents_OnAfterUpdateTick");
+            // Log.Verbose($"X: {Game1.player.position.X / Game1.tileSize}, Y:  {Game1.player.position.Y / Game1.tileSize}");
         }
 
         private void GameEvents_OnBeforeUpdateTick(object sender, EventArgs e)
         {
-            //Log.Verbose("GameEvents_OnBeforeUpdateTick");
+            // Log.Verbose("GameEvents_OnBeforeUpdateTick");
         }
 
         private void GameEvents_OnAfterLoadedContent(object sender, EventArgs e)
