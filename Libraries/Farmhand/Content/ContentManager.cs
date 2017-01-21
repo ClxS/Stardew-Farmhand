@@ -163,11 +163,9 @@
         /// </returns>
         public LocalizedContentManager CreateContentManager(string rootDirectory)
         {
-            return new LocalizedContentManager(
+            return new ContentManager(
                 this.ServiceProvider,
-                rootDirectory,
-                this.CurrentCulture,
-                this.LanguageCodeOverride);
+                rootDirectory);
         }
 
         /// <summary>

@@ -17,8 +17,6 @@
 
     internal class ModXnbInjector : IContentInjector
     {
-        private static List<LocalizedContentManager> modManagers;
-
         private readonly Dictionary<string, Texture2D> cachedAlteredTextures = new Dictionary<string, Texture2D>();
 
         #region IContentInjector Members
@@ -89,25 +87,10 @@
         }
 
         #endregion
-
-        private void LoadModManagers(ContentManager contentManager)
-        {
-            if (modManagers != null)
-            {
-                return;
-            }
-
-            modManagers = new List<LocalizedContentManager>();
-            foreach (var modPath in ModLoader.ModPaths)
-            {
-                modManagers.Add(contentManager.CreateContentManager(modPath));
-            }
-        }
-
+        
         private LocalizedContentManager GetContentManagerForMod(ContentManager contentManager, ModXnb mod)
         {
-            this.LoadModManagers(contentManager);
-            return modManagers.FirstOrDefault(n => mod.OwningMod.ModDirectory.Contains(n.RootDirectory));
+            return Farmhand.API.Content.GetContentManagerForMod(mod.OwningMod);
         }
 
         private object LoadTexture(
