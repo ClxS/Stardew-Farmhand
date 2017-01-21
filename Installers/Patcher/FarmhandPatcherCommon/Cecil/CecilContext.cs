@@ -1,4 +1,5 @@
-﻿namespace Farmhand.Installers.Patcher.Cecil
+﻿using Mono.Cecil.Mdb;
+namespace Farmhand.Installers.Patcher.Cecil
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +10,7 @@
     using Mono.Cecil;
     using Mono.Cecil.Cil;
     using Mono.Cecil.Pdb;
+  
     using Mono.Collections.Generic;
 
     /// <summary>
@@ -27,12 +29,15 @@
         /// </param>
         public CecilContext(string assembly, bool loadPdb = false)
         {
-            var pdbPath = Path.GetDirectoryName(assembly) + Path.GetFileNameWithoutExtension(assembly) + ".pdb";
+			bool mono = Type.GetType("Mono.Runtime") != null;
+			Type readerProvider = mono ? typeof(MdbReaderProvider) : typeof(PdbReaderProvider);
+
+			var pdbPath = Path.GetDirectoryName(assembly) + Path.GetFileName(assembly) + $".{(mono?"m":"p")}db";
             if (loadPdb && File.Exists(pdbPath))
             {
                 var readerParameters = new ReaderParameters
                                            {
-                                               SymbolReaderProvider = new PdbReaderProvider(),
+                                               SymbolReaderProvider = (ISymbolReaderProvider)Activator.CreateInstance(readerProvider),
                                                ReadSymbols = true
                                            };
                 this.AssemblyDefinition = AssemblyDefinition.ReadAssembly(assembly, readerParameters);
@@ -128,7 +133,7 @@
                     break;
                 }
 
-                if (type.StartsWith(def.FullName) && def.HasNestedTypes)
+                if (type.StartsWith(def.FullName, StringComparison.Ordinal) && def.HasNestedTypes)
                 {
                     typeDef = this.GetTypeDefinition(type, def.NestedTypes);
                     if (typeDef != null)
@@ -411,11 +416,14 @@
         /// </param>
         public void WriteAssembly(string file, bool writePdb = false)
         {
+        	bool mono = Type.GetType("Mono.Runtime") != null;
+			Type writerProvider = mono ? typeof(MdbWriterProvider) : typeof(PdbWriterProvider);
+        
             if (writePdb)
             {
                 var writerParameters = new WriterParameters
                                            {
-                                               SymbolWriterProvider = new PdbWriterProvider(),
+                                               SymbolWriterProvider = (ISymbolWriterProvider)Activator.CreateInstance(writerProvider),
                                                WriteSymbols = true
                                            };
                 this.AssemblyDefinition.Write(file, writerParameters);
