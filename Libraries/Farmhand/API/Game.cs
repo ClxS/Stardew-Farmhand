@@ -5,6 +5,8 @@
 
     using Farmhand.Extensibility;
 
+    using Microsoft.Xna.Framework.Graphics;
+
     using StardewValley;
     using StardewValley.Menus;
 
@@ -45,6 +47,11 @@
         public static Farmer Player => Game1.player;
 
         /// <summary>
+        ///     Gets the graphics device.
+        /// </summary>
+        public static GraphicsDevice GraphicsDevice => Game1.graphics?.GraphicsDevice;
+
+        /// <summary>
         ///     Gets a saves unique identifier
         /// </summary>
         public static ulong GameUniqueId => Game1.uniqueIDForThisGame;
@@ -57,6 +64,11 @@
                 return (Game1)Activator.CreateInstance(overridingExtension.GameOverrideClass);
             }
 
+            return GetFarmhandOverrideInstance();
+        }
+
+        internal static Game1 GetFarmhandOverrideInstance()
+        {
             return new Game1();
         }
     }
