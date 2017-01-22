@@ -70,17 +70,22 @@
             foreach (var npc in Npcs.Values)
             {
                 var expectedLocation = Location.AllLocations.FirstOrDefault(l => l.name == npc.Item1.DefaultMap);
-                var presentLocations = Location.AllLocations.Where(n => n.characters.Any(c => c.GetType() == npc.Item2));
-
-                foreach (var location in presentLocations)
+                var presentLocations = Location.AllLocations.Where(n => n.characters.Any(c => c.GetType() == npc.Item2)).ToArray();
+                
+                if (presentLocations.Length > 1 || presentLocations.First() != expectedLocation)
                 {
-                    location.characters.RemoveAll(c => c.GetType() == npc.Item2);
-                }
+                    foreach (var location in presentLocations)
+                    {
+                        location.characters.RemoveAll(c => c.GetType() == npc.Item2);
+                    }
 
-                if (expectedLocation != null)
-                {
-                    var obj = (NPC)Activator.CreateInstance(npc.Item2);
-                    expectedLocation.AddCharacter(obj);
+                    if (expectedLocation != null)
+                    {
+                        var obj = (NPC)Activator.CreateInstance(npc.Item2);
+                        obj.updateDialogue();
+                        obj.dayUpdate(Game1.dayOfMonth);
+                        expectedLocation.AddCharacter(obj);
+                    }
                 }
             }
         }
@@ -94,6 +99,8 @@
                 if (location != null)
                 {
                     var obj = (NPC)Activator.CreateInstance(npc.Item2);
+                    obj.updateDialogue();
+                    obj.dayUpdate(Game1.dayOfMonth);
                     location.AddCharacter(obj);
                 }
             }
