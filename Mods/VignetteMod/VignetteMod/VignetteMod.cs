@@ -11,7 +11,7 @@
 
     using Game = Farmhand.API.Game;
 
-    internal class VignetteMod : Farmhand.Mod
+    internal class Mod : Farmhand.Mod
     {
         private Effect effect;
 
@@ -33,13 +33,17 @@
             // End the already running one
             e.SpriteBatch.End();
 
-            this.EnsureTargetSizeMatches(e.Screen);
-
-            this.DrawFullscreenQuad(e.SpriteBatch, e.Screen, this.effectTarget, this.effect);
-            this.DrawFullscreenQuad(e.SpriteBatch, this.effectTarget, e.Screen, this.effect);
-
-            // Restore the previous sprite settings
-            e.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
+            try
+            {
+                this.EnsureTargetSizeMatches(e.Screen);
+                this.DrawFullscreenQuad(e.SpriteBatch, e.Screen, e.Screen, this.effect);
+                this.DrawFullscreenQuad(e.SpriteBatch, this.effectTarget, e.Screen, this.effect);
+            }
+            finally
+            {
+                // Restore the previous sprite settings
+                e.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
+            }
         }
 
         private void EnsureTargetSizeMatches(RenderTarget2D screen)
