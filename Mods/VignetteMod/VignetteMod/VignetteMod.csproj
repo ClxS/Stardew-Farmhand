@@ -80,7 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VignetteModContent\VignetteModContent.contentproj">
+    <ProjectReference Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets')" Include="..\VignetteModContent\VignetteModContent.contentproj">
       <Name>VignetteModContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
