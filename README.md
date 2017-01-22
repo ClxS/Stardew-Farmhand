@@ -53,7 +53,7 @@ Once the solution is open, the Stardew Farmhand executable can be compiled by **
 ######Project Dependencies and Gotcha's
 
 Because of how the project is structured, there are 3 tiers of dependencies in the core project.
-- Tier 1: The first tier includes projects without and dependencies. This tier consists mostly of Farmhand.csproj, and is compiled into the Teir 2 dependency by the BuildFarmhandIntermediate project.
+- Tier 1: The first tier includes projects without any dependencies. This tier consists mostly of Farmhand.csproj, and is compiled into the Teir 2 dependency by the BuildFarmhandIntermediate project.
 
 - Tier 2: These projects (Libraries/Farmhand{X}) depend on the build output from BuildFarmhandIntermediate (StardewFarmhand.int1.dll). These libraries build upon modifications made by the Tier 1 changes, and are themselves a part of Stardew Farmhand after being compiled into the Tier 3 dependency, the final executable, by the BuildFarmhandFinal project.
 
