@@ -82,8 +82,6 @@
                     if (expectedLocation != null)
                     {
                         var obj = (NPC)Activator.CreateInstance(npc.Item2);
-                        obj.updateDialogue();
-                        obj.dayUpdate(Game1.dayOfMonth);
                         expectedLocation.AddCharacter(obj);
                     }
                 }
