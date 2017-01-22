@@ -72,7 +72,7 @@
                 var expectedLocation = Location.AllLocations.FirstOrDefault(l => l.name == npc.Item1.DefaultMap);
                 var presentLocations = Location.AllLocations.Where(n => n.characters.Any(c => c.GetType() == npc.Item2)).ToArray();
                 
-                if (presentLocations.Length > 1 || presentLocations.First() != expectedLocation)
+                if (presentLocations.Length > 1 || presentLocations.FirstOrDefault() != expectedLocation)
                 {
                     foreach (var location in presentLocations)
                     {
