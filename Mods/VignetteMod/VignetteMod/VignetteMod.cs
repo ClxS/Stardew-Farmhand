@@ -36,7 +36,7 @@
             try
             {
                 this.EnsureTargetSizeMatches(e.Screen);
-                this.DrawFullscreenQuad(e.SpriteBatch, e.Screen, e.Screen, this.effect);
+                this.DrawFullscreenQuad(e.SpriteBatch, e.Screen, this.effectTarget, this.effect);
                 this.DrawFullscreenQuad(e.SpriteBatch, this.effectTarget, e.Screen, this.effect);
             }
             finally
