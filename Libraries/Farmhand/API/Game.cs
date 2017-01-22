@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Reflection;
 
     using Farmhand.Extensibility;
 
@@ -64,7 +65,9 @@
             {
                 if (screen == null)
                 {
-                    screen = (RenderTarget2D)typeof(Game1).GetField("screen").GetValue(null);
+                    screen =
+                        (RenderTarget2D)
+                        typeof(Game1).GetField("screen", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(Game1.game1);
                 }
 
                 return screen;
