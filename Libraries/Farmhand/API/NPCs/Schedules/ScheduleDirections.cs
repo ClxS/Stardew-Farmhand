@@ -167,7 +167,7 @@
             var msg = this.EndMessage != null || this.EndBehavior != null;
             var message = msg
                               ? this.EndMessage != null
-                                    ? $"\\\" {this.EndMessage}\\\""
+                                    ? $" \\\"{this.EndMessage}\\\""
                                     : (this.EndBehavior != null ? $" {this.EndBehavior}" : string.Empty)
                               : string.Empty;
             return $"{this.TimeOfDay} {this.MapName} {this.EndX} {this.EndY} {(int)this.FacingDirection}{message}";
