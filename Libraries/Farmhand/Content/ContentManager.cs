@@ -5,7 +5,6 @@
     using System.Globalization;
     using System.Linq;
 
-    using Farmhand.API.Debug;
     using Farmhand.Attributes;
     using Farmhand.Content.Injectors;
     using Farmhand.Content.Injectors.Blueprints;
@@ -93,14 +92,16 @@
                                                                                      (),
                                                                                  new DelegatedContentInjector
                                                                                      (),
-                                                                                 new MapInjector
-                                                                                     (),
+                                                                                 new MapInjector(
+                                                                                 ),
                                                                                  new MailInjector
                                                                                      (),
                                                                                  new QuestInjector
                                                                                      (),
                                                                                  /* Begin NPC Injectors */
                                                                                  new DialogueLoader
+                                                                                     (),
+                                                                                 new PortraitLoader
                                                                                      (),
                                                                                  new GiftTastesInjector
                                                                                      (),
@@ -178,12 +179,7 @@
         public override T Load<T>(string assetName)
         {
             var output = default(T);
-
-            if (assetName.Contains("Troy"))
-            {
-                Log.Error("TEST");
-            }
-
+            
             try
             {
                 var loaders = ContentInjectors.Where(n => n.IsLoader && n.HandlesAsset(typeof(T), assetName)).ToArray();

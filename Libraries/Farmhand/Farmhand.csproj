@@ -191,6 +191,7 @@
     <Compile Include="Content\Injectors\NPCs\GiftTastesInjector.cs" />
     <Compile Include="Content\Injectors\NPCs\NpcDispositionsInjector.cs" />
     <Compile Include="Content\Injectors\NPCs\NpcLoader.cs" />
+    <Compile Include="Content\Injectors\NPCs\PortraitLoader.cs" />
     <Compile Include="Content\Injectors\NPCs\RainyDialogueInjector.cs" />
     <Compile Include="Content\Injectors\NPCs\ScheduleLoader.cs" />
     <Compile Include="Content\Injectors\Other\CropInjector.cs" />
