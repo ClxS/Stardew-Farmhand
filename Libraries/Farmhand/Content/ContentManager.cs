@@ -5,6 +5,7 @@
     using System.Globalization;
     using System.Linq;
 
+    using Farmhand.API.Debug;
     using Farmhand.Attributes;
     using Farmhand.Content.Injectors;
     using Farmhand.Content.Injectors.Blueprints;
@@ -92,8 +93,8 @@
                                                                                      (),
                                                                                  new DelegatedContentInjector
                                                                                      (),
-                                                                                 new MapInjector(
-                                                                                 ),
+                                                                                 new MapInjector
+                                                                                     (),
                                                                                  new MailInjector
                                                                                      (),
                                                                                  new QuestInjector
@@ -124,6 +125,7 @@
                                                                        @"Characters\Dialogue\Gunther",
                                                                        @"Characters\Dialogue\Marlon",
                                                                        @"Characters\Dialogue\Henchman",
+                                                                       @"Characters\Dialogue\Dudley",
                                                                        @"Characters\schedules\Wizard",
                                                                        @"Characters\schedules\Dwarf",
                                                                        @"Characters\schedules\Mister Qi",
@@ -132,7 +134,8 @@
                                                                        @"Characters\schedules\Gunther",
                                                                        @"Characters\schedules\Marlon",
                                                                        @"Characters\schedules\Henchman",
-                                                                       @"Data\Festivals\spring1"
+                                                                       @"Data\Festivals\spring1",
+                                                                       @"Data\Festivals\spring12"
                                                                    };
 
         /// <summary>
@@ -163,9 +166,7 @@
         /// </returns>
         public LocalizedContentManager CreateContentManager(string rootDirectory)
         {
-            return new ContentManager(
-                this.ServiceProvider,
-                rootDirectory);
+            return new ContentManager(this.ServiceProvider, rootDirectory);
         }
 
         /// <summary>
@@ -177,6 +178,11 @@
         public override T Load<T>(string assetName)
         {
             var output = default(T);
+
+            if (assetName.Contains("Troy"))
+            {
+                Log.Error("TEST");
+            }
 
             try
             {
