@@ -15,6 +15,8 @@
     /// </summary>
     public static class Game
     {
+        private static RenderTarget2D screen;
+
         /// <summary>
         ///     Gets or sets the current active clickable menu.
         /// </summary>
@@ -55,6 +57,19 @@
         ///     Gets a saves unique identifier
         /// </summary>
         public static ulong GameUniqueId => Game1.uniqueIDForThisGame;
+
+        internal static RenderTarget2D Screen
+        {
+            get
+            {
+                if (screen == null)
+                {
+                    screen = (RenderTarget2D)typeof(Game1).GetField("screen").GetValue(null);
+                }
+
+                return screen;
+            }
+        }
 
         internal static Game1 CreateGameInstance()
         {

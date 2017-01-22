@@ -275,6 +275,7 @@
     <Compile Include="Extensibility\ExtensionManifest.cs" />
     <Compile Include="FarmhandConfig.cs" />
     <Compile Include="Graphics\GraphicsHooks.cs" />
+    <Compile Include="Graphics\PostProcessing\PostProcessing.cs" />
     <Compile Include="Helpers\ArgumentsHelper.cs" />
     <Compile Include="Helpers\Randomizer\AgeRanges.cs" />
     <Compile Include="Helpers\Randomizer\CasingRules.cs" />
