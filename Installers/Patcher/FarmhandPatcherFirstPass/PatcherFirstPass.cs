@@ -146,7 +146,7 @@
                                 break;
                             case HookType.Exit:
                                 CecilHelper
-                                    .InjectExitMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>(
+                                    .InjectExitMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute, MethodOutputBindAttribute>(
                                         cecilContext,
                                         hookTypeName,
                                         hookMethodName,
@@ -199,7 +199,7 @@
                         {
                             case HookType.Entry:
                                 CecilHelper
-                                    .InjectReturnableEntryMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute, UseOutputBindAttribute, MethodOutputBindAttribute>(
+                                    .InjectReturnableEntryMethod<ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute, UseOutputBindAttribute>(
                                         cecilContext,
                                         hookTypeName,
                                         hookMethodName,

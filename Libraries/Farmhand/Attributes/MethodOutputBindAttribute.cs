@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    ///     Used by the installer. Gets the otherwise outputted variable from a HookReturnable marked exit method
+    ///     Gets the otherwise outputted variable from a hook exit method
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
     public class MethodOutputBindAttribute : ParameterBindAttribute

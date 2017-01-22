@@ -167,7 +167,7 @@
                             case HookType.Exit:
                                 CecilHelper
                                     .InjectExitMethod
-                                    <ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute>(
+                                    <ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute, MethodOutputBindAttribute>(
                                         cecilContext,
                                         hookTypeName,
                                         hookMethodName,
@@ -224,7 +224,7 @@
                                 CecilHelper
                                     .InjectReturnableEntryMethod
                                     <ParameterBindAttribute, ThisBindAttribute, InputBindAttribute, LocalBindAttribute,
-                                        UseOutputBindAttribute, MethodOutputBindAttribute>(
+                                        UseOutputBindAttribute>(
                                         cecilContext,
                                         hookTypeName,
                                         hookMethodName,

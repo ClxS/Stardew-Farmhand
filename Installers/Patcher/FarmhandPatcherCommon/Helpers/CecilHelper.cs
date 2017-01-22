@@ -15,7 +15,7 @@
     /// </summary>
     public static class CecilHelper
     {
-        private static void InjectMethod<TParam, TThis, TInput, TLocal>(
+        private static void InjectMethod<TParam, TThis, TInput, TLocal, TMethodOutput>(
             CecilContext stardewContext,
             ILProcessor processor,
             Instruction target,
@@ -25,80 +25,46 @@
         {
             processor.Body.SimplifyMacros();
 
-            var callEnterInstruction = processor.Create(OpCodes.Call, method);
+            var instructions = new List<Instruction>();
+            
+            if (isExit && method.HasParameters)
+            {
+                if (method.Parameters.Any(p => p.CustomAttributes.Any(a => a.AttributeType.FullName == typeof(TMethodOutput).FullName)))
+                {
+                    if (processor.Body.Variables.All(n => n.Name != "OldReturnContainer"))
+                    {
+                        var outVarContainer = new VariableDefinition("OldReturnContainer", processor.Body.Method.ReturnType);
+                        processor.Body.Variables.Add(outVarContainer);
+                        instructions.Add(processor.Create(OpCodes.Dup));
+                        instructions.Add(processor.Create(OpCodes.Stloc, outVarContainer));
+                    }
+                }
+            }
 
             if (method.HasThis)
             {
-                var loadObjInstruction = processor.Create(OpCodes.Ldarg_0);
-                processor.InsertBefore(target, loadObjInstruction);
+                instructions.Add(processor.Create(OpCodes.Ldarg_0));
             }
 
             if (method.HasParameters)
             {
-                Instruction previousInstruction = null;
-                var paramLdInstruction = target;
-                var first = true;
                 foreach (var parameter in method.Parameters)
                 {
-                    paramLdInstruction =
-                        GetInstructionForParameter<TParam, TThis, TInput, TLocal, Patcher, Patcher>(
+                    var paramLdInstruction =
+                        GetInstructionForParameter<TParam, TThis, TInput, TLocal, Patcher, TMethodOutput>(
                             processor,
                             parameter);
+
                     if (paramLdInstruction == null)
                     {
                         throw new Exception($"Error parsing parameter setup on {parameter.Name}");
                     }
 
-                    if (isExit)
-                    {
-                        if (first)
-                        {
-                            first = false;
-                            processor.Replace(target, paramLdInstruction);
-                        }
-                        else
-                        {
-                            processor.InsertAfter(previousInstruction, paramLdInstruction);
-                        }
-
-                        previousInstruction = paramLdInstruction;
-                    }
-                    else
-                    {
-                        processor.InsertBefore(target, paramLdInstruction);
-                    }
-                }
-
-                if (isExit)
-                {
-                    if (first)
-                    {
-                        processor.Replace(target, callEnterInstruction);
-                        processor.InsertAfter(callEnterInstruction, processor.Create(OpCodes.Ret));
-                    }
-                    else
-                    {
-                        processor.InsertAfter(previousInstruction, callEnterInstruction);
-                        processor.InsertAfter(callEnterInstruction, processor.Create(OpCodes.Ret));
-                    }
-                }
-                else
-                {
-                    processor.InsertAfter(paramLdInstruction, callEnterInstruction);
+                    instructions.Add(paramLdInstruction);
                 }
             }
-            else
-            {
-                if (isExit)
-                {
-                    processor.Replace(target, callEnterInstruction);
-                    processor.InsertAfter(callEnterInstruction, processor.Create(OpCodes.Ret));
-                }
-                else
-                {
-                    processor.InsertBefore(target, callEnterInstruction);
-                }
-            }
+            
+            instructions.Add(processor.Create(OpCodes.Call, method));
 
             if (cancelable)
             {
@@ -109,8 +75,13 @@
                         "Cancelable hooks are only supported for methods returning void");
                 }
 
-                var branch = processor.Create(OpCodes.Brtrue, processor.Body.Instructions.Last());
-                processor.InsertAfter(callEnterInstruction, branch);
+                instructions.Add(processor.Create(OpCodes.Brtrue, processor.Body.Instructions.Last()));
+            }
+
+            //instructions.Reverse();
+            foreach (var inst in instructions)
+            {
+                processor.InsertBefore(target, inst);
             }
 
             processor.Body.OptimizeMacros();
@@ -281,7 +252,7 @@
             return instruction;
         }
 
-        private static void InjectMethod<TParam, TThis, TInput, TLocal>(
+        private static void InjectMethod<TParam, TThis, TInput, TLocal, TMethodOutput>(
             CecilContext stardewContext,
             ILProcessor processor,
             IEnumerable<Instruction> targets,
@@ -290,7 +261,7 @@
         {
             foreach (var target in targets.ToList())
             {
-                InjectMethod<TParam, TThis, TInput, TLocal>(stardewContext, processor, target, method, isExit);
+                InjectMethod<TParam, TThis, TInput, TLocal, TMethodOutput>(stardewContext, processor, target, method, isExit);
             }
         }
 
@@ -363,7 +334,7 @@
                 }
 
                 var processor = stardewContext.GetMethodIlProcessor(injectReceiverType, injectReceiverMethod);
-                InjectMethod<TParam, TThis, TInput, TLocal>(
+                InjectMethod<TParam, TThis, TInput, TLocal, object>(
                     stardewContext,
                     processor,
                     processor.Body.Instructions.First(),
@@ -374,7 +345,7 @@
             else
             {
                 var processor = stardewContext.GetMethodIlProcessor(injectReceiverType, injectReceiverMethod);
-                InjectMethod<TParam, TThis, TInput, TLocal>(
+                InjectMethod<TParam, TThis, TInput, TLocal, object>(
                     stardewContext,
                     processor,
                     processor.Body.Instructions.First(),
@@ -417,10 +388,7 @@
         /// <typeparam name="TUseOutput">
         ///     The type of the attribute binding the to local UseOutput variable.
         /// </typeparam>
-        /// <typeparam name="TMethodOutputBind">
-        ///     The type of the attribute binding to the method return setter attribute.
-        /// </typeparam>
-        public static void InjectReturnableEntryMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(
+        public static void InjectReturnableEntryMethod<TParam, TThis, TInput, TLocal, TUseOutput>(
             CecilContext stardewContext,
             string injectReceiverType,
             string injectReceiverMethod,
@@ -441,7 +409,7 @@
                 }
 
                 var processor = stardewContext.GetMethodIlProcessor(injectReceiverType, injectReceiverMethod);
-                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(
+                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput, object>(
                     stardewContext,
                     processor,
                     processor.Body.Instructions.First(),
@@ -450,7 +418,7 @@
             else
             {
                 var processor = stardewContext.GetMethodIlProcessor(injectReceiverType, injectReceiverMethod);
-                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput, TMethodOutputBind>(
+                InjectReturnableMethod<TParam, TThis, TInput, TLocal, TUseOutput, object>(
                     stardewContext,
                     processor,
                     processor.Body.Instructions.First(),
@@ -488,7 +456,10 @@
         /// <typeparam name="TLocal">
         ///     The type of the attribute binding to local variables.
         /// </typeparam>
-        public static void InjectExitMethod<TParam, TThis, TInput, TLocal>(
+        /// <typeparam name="TMethodOutput">
+        ///     The type of the attribute binding to the method return setter attribute.
+        /// </typeparam>
+        public static void InjectExitMethod<TParam, TThis, TInput, TLocal, TMethodOutput>(
             CecilContext stardewContext,
             string injectReceiverType,
             string injectReceiverMethod,
@@ -509,7 +480,7 @@
                 }
 
                 var processor = stardewContext.GetMethodIlProcessor(injectReceiverType, injectReceiverMethod);
-                InjectMethod<TParam, TThis, TInput, TLocal>(
+                InjectMethod<TParam, TThis, TInput, TLocal, TMethodOutput>(
                     stardewContext,
                     processor,
                     processor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret),
@@ -519,7 +490,7 @@
             else
             {
                 var processor = stardewContext.GetMethodIlProcessor(injectReceiverType, injectReceiverMethod);
-                InjectMethod<TParam, TThis, TInput, TLocal>(
+                InjectMethod<TParam, TThis, TInput, TLocal, TMethodOutput>(
                     stardewContext,
                     processor,
                     processor.Body.Instructions.Where(i => i.OpCode == OpCodes.Ret),
