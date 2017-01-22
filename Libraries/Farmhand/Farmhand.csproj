@@ -216,6 +216,8 @@
     <Compile Include="Events\Arguments\ControlEvents\KeyPressedEventArgs.cs" />
     <Compile Include="Events\Arguments\ControlEvents\MouseStateChangedEventArgs.cs" />
     <Compile Include="Events\Arguments\GraphicsEvents\DrawEvent.cs" />
+    <Compile Include="Events\Arguments\LocationEvents\AfterCheckActionEventArgs.cs" />
+    <Compile Include="Events\Arguments\NpcEvents\BeforeCheckAction.cs" />
     <Compile Include="Events\Arguments\PlayerEvents\AfterPlayerTakesDamageEventArgs.cs" />
     <Compile Include="Events\Arguments\AnimalEvents\AnimalEatGrassEventArgs.cs" />
     <Compile Include="Events\Arguments\GameEvents\AfterGameLoadedEventArgs.cs" />
@@ -261,6 +263,7 @@
     <Compile Include="Events\MailEvents.cs" />
     <Compile Include="Events\MenuEvents.cs" />
     <Compile Include="Events\MineShaftEvents.cs" />
+    <Compile Include="Events\NpcEvents.cs" />
     <Compile Include="Events\PlayerEvents.cs" />
     <Compile Include="Events\PropertyWatcher.cs" />
     <Compile Include="Events\Save.cs" />
