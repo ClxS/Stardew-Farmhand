@@ -263,7 +263,7 @@ _Pvt_Extensions
 .idea/
 *.sln.iml
 
-# macOS specific ignores
+# macOS specific
 *.DS_Store
 
 !/Libraries/**/[Dd]ebug/
