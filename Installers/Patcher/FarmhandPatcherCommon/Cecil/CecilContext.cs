@@ -1,4 +1,4 @@
-﻿using Mono.Cecil.Mdb;
+using Mono.Cecil.Mdb;
 namespace Farmhand.Installers.Patcher.Cecil
 {
     using System;
@@ -10,7 +10,7 @@ namespace Farmhand.Installers.Patcher.Cecil
     using Mono.Cecil;
     using Mono.Cecil.Cil;
     using Mono.Cecil.Pdb;
-  
+	using Mono.Cecil.Mdb;
     using Mono.Collections.Generic;
 
     /// <summary>
@@ -29,15 +29,17 @@ namespace Farmhand.Installers.Patcher.Cecil
         /// </param>
         public CecilContext(string assembly, bool loadPdb = false)
         {
-			bool mono = Type.GetType("Mono.Runtime") != null;
-			Type readerProvider = mono ? typeof(MdbReaderProvider) : typeof(PdbReaderProvider);
+			var mono = Type.GetType("Mono.Runtime") != null;
+			ISymbolReaderProvider readerProvider;
+			if (mono) readerProvider = new MdbReaderProvider(); else readerProvider = new PdbReaderProvider();
+
 
 			var pdbPath = Path.GetDirectoryName(assembly) + Path.GetFileName(assembly) + $".{(mono?"m":"p")}db";
             if (loadPdb && File.Exists(pdbPath))
             {
                 var readerParameters = new ReaderParameters
                                            {
-                                               SymbolReaderProvider = (ISymbolReaderProvider)Activator.CreateInstance(readerProvider),
+                                               SymbolReaderProvider = readerProvider,
                                                ReadSymbols = true
                                            };
                 this.AssemblyDefinition = AssemblyDefinition.ReadAssembly(assembly, readerParameters);
@@ -416,14 +418,15 @@ namespace Farmhand.Installers.Patcher.Cecil
         /// </param>
         public void WriteAssembly(string file, bool writePdb = false)
         {
-        	bool mono = Type.GetType("Mono.Runtime") != null;
-			Type writerProvider = mono ? typeof(MdbWriterProvider) : typeof(PdbWriterProvider);
-        
+			var mono = Type.GetType("Mono.Runtime") != null;
+			ISymbolWriterProvider writerProvider;
+			if (mono) writerProvider = new MdbWriterProvider(); else writerProvider = new PdbWriterProvider();
+
             if (writePdb)
             {
                 var writerParameters = new WriterParameters
                                            {
-                                               SymbolWriterProvider = (ISymbolWriterProvider)Activator.CreateInstance(writerProvider),
+                                               SymbolWriterProvider = writerProvider,
                                                WriteSymbols = true
                                            };
                 this.AssemblyDefinition.Write(file, writerParameters);
