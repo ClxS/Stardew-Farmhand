@@ -43,7 +43,7 @@
     <Reference Include="System.Core" />
     <Reference Include="xTile, Version=2.0.4.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)\Staging\Windows\xTile.dll</HintPath>
+      <HintPath>$(SolutionDir)\Staging\$(Platform)\xTile.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
