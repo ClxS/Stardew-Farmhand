@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'MacOSX' ">
     <Reference Include="Stardew Valley">
-      <HintPath>..\..\Staging\Linux\StardewValley.exe</HintPath>
+      <HintPath>..\..\Staging\MacOSX\StardewValley.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
