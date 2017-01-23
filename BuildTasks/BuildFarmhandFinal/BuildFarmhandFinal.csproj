@@ -46,8 +46,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PostBuildEvent>"$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\FarmhandInstaller-Console.exe" -pass2 -disablegrm "$(SolutionDir)WorkingDirectory\$(PlatformName)\$(Configuration)\Stardew Farmhand.exe"
 robocopy "$(SolutionDir)\Staging\$(PlatformName)" "$(SolutionDir)\WorkingDirectory\$(PlatformName)\$(Configuration)" *.* /XF *.exe* /NFL /NDL /NJH /NJS /nc /ns /np /E &amp; Ver &gt; nil</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'Linux' Or '$(Platform)' == 'MacOSX' ">
+    <PostBuildEvent>mono "$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\FarmhandInstaller-Console.exe" -pass2 -disablegrm "$(SolutionDir)WorkingDirectory\$(PlatformName)\$(Configuration)\Stardew Farmhand.exe"
+rsync -av --exclude='*.exe*' "$(SolutionDir)Staging\$(PlatformName)\" "$(SolutionDir)\WorkingDirectory\$(PlatformName)\$(Configuration)" &gt;/dev/null 2&gt;&amp;1</PostBuildEvent>
   </PropertyGroup>
 </Project>
