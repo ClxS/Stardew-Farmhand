@@ -117,7 +117,7 @@
         ///     Gets the configuration path for this mod.
         /// </summary>
         [JsonIgnore]
-        public string ConfigurationPath => $"{this.ModDirectory}\\Config";
+		public string ConfigurationPath => Path.Combine(this.ModDirectory, "Config");
 
         /// <summary>
         ///     Gets the mod load state.
@@ -233,7 +233,7 @@
 
         internal byte[] GetDllBytes()
         {
-            var modDllPath = $"{this.ModDirectory}\\{this.ModDll}";
+			var modDllPath = Path.Combine(this.ModDirectory, this.ModDll);
 
             if (!modDllPath.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
             {
@@ -368,7 +368,7 @@
             {
                 foreach (var texture in this.Content.Textures)
                 {
-                    texture.AbsoluteFilePath = $"{this.ModDirectory}\\{Constants.ModContentDirectory}\\{texture.File}";
+					texture.AbsoluteFilePath = Path.Combine(this.ModDirectory, Constants.ModContentDirectory, texture.File);
 
                     if (!texture.Exists())
                     {
@@ -384,7 +384,7 @@
             {
                 foreach (var map in this.Content.Maps)
                 {
-                    map.AbsoluteFilePath = $"{this.ModDirectory}\\{Constants.ModContentDirectory}\\{map.File}";
+					map.AbsoluteFilePath = Path.Combine(this.ModDirectory, Constants.ModContentDirectory, map.File);
 
                     if (!map.Exists())
                     {
@@ -405,7 +405,7 @@
             {
                 if (file.IsXnb)
                 {
-                    file.AbsoluteFilePath = $"{this.ModDirectory}\\{Constants.ModContentDirectory}\\{file.File}";
+					file.AbsoluteFilePath = Path.Combine(this.ModDirectory, Constants.ModContentDirectory, file.File);
                 }
 
                 file.OwningMod = this;
