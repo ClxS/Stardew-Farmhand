@@ -8,6 +8,7 @@
     using Farmhand.Attributes;
     using Farmhand.Content.Injectors;
     using Farmhand.Content.Injectors.Blueprints;
+    using Farmhand.Content.Injectors.Effects;
     using Farmhand.Content.Injectors.Items;
     using Farmhand.Content.Injectors.Mail;
     using Farmhand.Content.Injectors.Maps;
@@ -23,8 +24,8 @@
     ///     overrides. Can also be used by mods
     ///     to load their own XNB data
     /// </summary>
-    [HookRedirectConstructorFromBase("StardewValley.Game1", ".ctor", new[] { typeof(IServiceProvider), typeof(string) })
-    ]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", ".ctor",
+        new[] { typeof(IServiceProvider), typeof(string) })]
     [HookRedirectConstructorFromBase("StardewValley.Game1", "dummyLoad",
         new[] { typeof(IServiceProvider), typeof(string) })]
     [HookRedirectConstructorFromBase("StardewValley.Game1", "LoadContent",
@@ -74,47 +75,31 @@
         /// <summary>
         ///     Gets a <see cref="List{T}" /> which contains the injectors used for loading assets.
         /// </summary>
-        public static List<IContentInjector> ContentInjectors { get; } = new List<IContentInjector>
-                                                                             {
-                                                                                 new ModXnbInjector
-                                                                                     (),
-                                                                                 new BlueprintInjector
-                                                                                     (),
-                                                                                 new MonsterLoader
-                                                                                     (),
-                                                                                 new MonsterInjector
-                                                                                     (),
-                                                                                 new CropInjector
-                                                                                     (),
-                                                                                 new WeaponInjector
-                                                                                     (),
-                                                                                 new BigCraftableInjector
-                                                                                     (),
-                                                                                 new DelegatedContentInjector
-                                                                                     (),
-                                                                                 new MapInjector(
-                                                                                 ),
-                                                                                 new MailInjector
-                                                                                     (),
-                                                                                 new QuestInjector
-                                                                                     (),
-                                                                                 /* Begin NPC Injectors */
-                                                                                 new DialogueLoader
-                                                                                     (),
-                                                                                 new PortraitLoader
-                                                                                     (),
-                                                                                 new GiftTastesInjector
-                                                                                     (),
-                                                                                 new NpcDispositionsInjector
-                                                                                     (),
-                                                                                 new NpcLoader(),
-                                                                                 new RainyDialogueInjector
-                                                                                     (),
-                                                                                 new ScheduleLoader
-                                                                                     ()
-                                                                                 
-                                                                                 /* End NPC Injectors */
-                                                                             };
+        public static List<IContentInjector> ContentInjectors { get; } =
+            new List<IContentInjector>
+                {
+                    new ModXnbInjector(),
+                    new BlueprintInjector(),
+                    new MonsterLoader(),
+                    new MonsterInjector(),
+                    new CropInjector(),
+                    new WeaponInjector(),
+                    new BigCraftableInjector(),
+                    new DelegatedContentInjector(),
+                    new MapInjector(),
+                    new MailInjector(),
+                    new QuestInjector(),
+                    /* Begin NPC Injectors */
+                    new DialogueLoader(),
+                    new PortraitLoader(),
+                    new GiftTastesInjector(),
+                    new NpcDispositionsInjector(),
+                    new NpcLoader(),
+                    new RainyDialogueInjector(),
+                    new ScheduleLoader(),
+                    /* End NPC Injectors */
+                    new EffectLoader()
+                };
 
         /// <summary>
         ///     Gets a list of expected problematic assets. The game has quite a lot of missing XNBs that throw exceptions.
@@ -179,12 +164,15 @@
         public override T Load<T>(string assetName)
         {
             var output = default(T);
-            
+
             try
             {
-                var loaders = ContentInjectors.Where(n => n.IsLoader && n.HandlesAsset(typeof(T), assetName)).ToArray();
+                var loaders =
+                    ContentInjectors.Where(n => n.IsLoader && n.HandlesAsset(typeof(T), assetName))
+                        .ToArray();
                 var injectors =
-                    ContentInjectors.Where(n => !n.IsLoader && n.HandlesAsset(typeof(T), assetName)).ToArray();
+                    ContentInjectors.Where(n => !n.IsLoader && n.HandlesAsset(typeof(T), assetName))
+                        .ToArray();
 
                 if (loaders.Length > 1)
                 {

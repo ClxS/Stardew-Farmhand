@@ -26,7 +26,7 @@
         {
             GameEvents.AfterLoadedContent += this.GameEvents_AfterLoadedContent;
             GraphicsEvents.PreRenderHudEventNoCheck += this.GraphicsEvents_PreRenderHudEventNoCheck;
-            ControlEvents.KeyPressed += ControlEvents_KeyPressed;
+            ControlEvents.KeyPressed += this.ControlEvents_KeyPressed;
 
             this.power = 15.0f;
             this.falloff = 0.25f;
@@ -58,7 +58,7 @@
 
         private void GameEvents_AfterLoadedContent(object sender, EventArgs e)
         {
-            this.effect = Content.GetContentManagerForMod(this).Load<Effect>("Effects/Vignette.Xna");
+            this.effect = Content.GetContentManagerForMod(this).Load<Effect>("Effects/Vignette");
             this.powerParameter = this.effect.Parameters["Power"];
             this.falloffParameter = this.effect.Parameters["Falloff"];
             this.powerParameter.SetValue(this.power);
