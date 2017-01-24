@@ -39,7 +39,7 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="xTile">
-      <HintPath>$(SolutionDir)\Staging\Windows\xTile.dll</HintPath>
+      <HintPath>$(SolutionDir)\Staging\$(Platform)\xTile.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

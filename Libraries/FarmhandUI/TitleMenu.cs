@@ -1,4 +1,5 @@
-﻿namespace Farmhand.UI
+﻿using System.IO;
+namespace Farmhand.UI
 {
     using System;
     using System.Collections.Generic;
@@ -356,7 +357,7 @@
             if (this.folderButton.containsPoint(x, y))
             {
                 Game1.playSound("select");
-                Process.Start($"{Environment.CurrentDirectory}\\Mods");
+				Process.Start(Path.Combine(Environment.CurrentDirectory, "Mods"));
             }
         }
 
