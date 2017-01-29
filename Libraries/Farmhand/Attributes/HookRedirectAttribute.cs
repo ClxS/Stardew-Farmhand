@@ -6,7 +6,7 @@
     ///     Used by the installer. Redirects a method (unused).
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public sealed class HookRedirectAttribute : Attribute
+    public sealed class HookRedirectAttribute : FarmhandHook
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="HookRedirectAttribute" /> class.

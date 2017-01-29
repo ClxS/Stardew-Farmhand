@@ -4,6 +4,8 @@
     using System.Linq;
     using System.Reflection;
 
+    using Farmhand.Installers.Patcher;
+
     internal class Program
     {
         public enum Pass
@@ -27,13 +29,13 @@
             if (args.Any(a => a.Equals("-pass1")))
             {
                 patcher = CreatePatcher(Pass.PassOne);
-                patcher.Options.DisableGrm = grmDisabled;
+                PatcherOptions.DisableGrm = grmDisabled;
                 patcher.PatchStardew();
             }
             else if (args.Any(a => a.Equals("-pass2")))
             {
                 patcher = CreatePatcher(Pass.PassTwo);
-                patcher.Options.DisableGrm = grmDisabled;
+                PatcherOptions.DisableGrm = grmDisabled;
                 patcher.PatchStardew();
             }
             else

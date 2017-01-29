@@ -24,7 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -57,11 +57,42 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Injection\CecilInjectionProcessor.cs" />
+    <Compile Include="Injection\Components\CecilInjectOrder.cs" />
+    <Compile Include="Injection\Components\Hooks\Converters\IReturnableHookHandlerAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Hooks\HookHandler.cs" />
+    <Compile Include="Injection\Components\IHookHandler.cs" />
+    <Compile Include="Injection\Components\Hooks\Converters\IHookHandlerAttributeConverter.cs" />
+    <Compile Include="Injection\Components\IAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Hooks\ReturnableHookHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\AlterBaseProtectionHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\AlterProtectionHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IAlterBaseFieldProtectionAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IAlterProtectionAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IForceVirtualBaseAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IMakeVirtualBaseCallAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IRedirectConstructorFromBaseAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IRedirectConstructorToMethodAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\MakeVirtualBaseCallHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\RedirectConstructorFromBaseHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\RedirectConstructorToMethodHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\ForceVirtualBaseHandler.cs" />
+    <Compile Include="Injection\Components\Parameters\IParameterHandler.cs" />
+    <Compile Include="Injection\Components\Parameters\InputHandler.cs" />
+    <Compile Include="Injection\Components\Parameters\LocalHandler.cs" />
+    <Compile Include="Injection\Components\Parameters\MethodOutputBindHandler.cs" />
+    <Compile Include="Injection\Components\Parameters\ThisHandler.cs" />
+    <Compile Include="Injection\Components\Parameters\UseOutputHandler.cs" />
     <Compile Include="Cecil\CecilContext.cs" />
     <Compile Include="Helpers\ILProcessorExtensionMethods.cs" />
+    <Compile Include="Injection\IAssemblyMerger.cs" />
+    <Compile Include="Injection\IInjectionContext.cs" />
+    <Compile Include="Injection\IInjectionProcessor.cs" />
+    <Compile Include="Injection\RepackAssemblyMerger.cs" />
     <Compile Include="PatcherConstants.cs" />
     <Compile Include="Helpers\AssemblyExtensionMethods.cs" />
     <Compile Include="Helpers\CecilHelper.cs" />

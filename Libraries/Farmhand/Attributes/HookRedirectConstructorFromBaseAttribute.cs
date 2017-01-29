@@ -6,7 +6,7 @@
     ///     Used by the installer. Redirects a constructor from it's base class'.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class HookRedirectConstructorFromBaseAttribute : Attribute
+    public sealed class HookRedirectConstructorFromBaseAttribute : FarmhandHook
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="HookRedirectConstructorFromBaseAttribute" /> class.

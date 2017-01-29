@@ -2,9 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.Composition;
     using System.IO;
     using System.Linq;
     using System.Reflection;
+
+    using Farmhand.Installers.Patcher.Injection;
 
     using Mono.Cecil;
     using Mono.Cecil.Cil;
@@ -14,36 +17,60 @@
     /// <summary>
     ///     A utility class which helps with injecting via Cecil.
     /// </summary>
-    public class CecilContext
+    [Export(typeof(IInjectionContext))]
+    [PartCreationPolicy(CreationPolicy.Shared)]
+    public class CecilContext : IInjectionContext
     {
+        private AssemblyDefinition AssemblyDefinition { get; set; }
+
+        #region IInjectionContext Members
+
         /// <summary>
-        ///     Initializes a new instance of the <see cref="CecilContext" /> class.
+        ///     Gets the loaded assemblies.
         /// </summary>
-        /// <param name="assembly">
-        ///     The assembly to load.
+        public IEnumerable<Assembly> LoadedAssemblies { get; } = new List<Assembly>();
+
+        /// <summary>
+        ///     Loads an assembly.
+        /// </summary>
+        /// <param name="file">
+        ///     The path of the assembly to load.
         /// </param>
-        /// <param name="loadPdb">
-        ///     Whether we should also load PDBs
-        /// </param>
-        public CecilContext(string assembly, bool loadPdb = false)
+        public void LoadAssembly(string file)
         {
-            var pdbPath = Path.GetDirectoryName(assembly) + Path.GetFileNameWithoutExtension(assembly) + ".pdb";
-            if (loadPdb && File.Exists(pdbPath))
+            ((List<Assembly>)this.LoadedAssemblies).Add(Assembly.LoadFrom(file));
+        }
+
+        /// <summary>
+        ///     Sets the primary assembly.
+        /// </summary>
+        /// <param name="file">
+        ///     The path of the assembly.
+        /// </param>
+        /// <param name="loadDebugInformation">
+        ///     Whether debug symbols should also be loaded.
+        /// </param>
+        public void SetPrimaryAssembly(string file, bool loadDebugInformation)
+        {
+            var pdbPath = Path.GetDirectoryName(file) + Path.GetFileNameWithoutExtension(file)
+                          + ".pdb";
+            if (loadDebugInformation && File.Exists(pdbPath))
             {
                 var readerParameters = new ReaderParameters
                                            {
-                                               SymbolReaderProvider = new PdbReaderProvider(),
+                                               SymbolReaderProvider =
+                                                   new PdbReaderProvider(),
                                                ReadSymbols = true
                                            };
-                this.AssemblyDefinition = AssemblyDefinition.ReadAssembly(assembly, readerParameters);
+                this.AssemblyDefinition = AssemblyDefinition.ReadAssembly(file, readerParameters);
             }
             else
             {
-                this.AssemblyDefinition = AssemblyDefinition.ReadAssembly(assembly);
+                this.AssemblyDefinition = AssemblyDefinition.ReadAssembly(file);
             }
         }
 
-        private AssemblyDefinition AssemblyDefinition { get; }
+        #endregion
 
         /// <summary>
         ///     Gets the IL Processor for a specific method.
@@ -100,7 +127,9 @@
         /// <exception cref="Exception">
         ///     Throws an exception if AssemblyDefinition is null, or a type is not specified.
         /// </exception>
-        public TypeDefinition GetTypeDefinition(string type, Collection<TypeDefinition> toCheck = null)
+        public TypeDefinition GetTypeDefinition(
+            string type,
+            Collection<TypeDefinition> toCheck = null)
         {
             if (this.AssemblyDefinition == null)
             {
@@ -249,7 +278,8 @@
             {
                 methodDef = selector == null
                                 ? typeDef.Methods.FirstOrDefault(m => m.FullName == method)
-                                : typeDef.Methods.Where(m => m.FullName == method).FirstOrDefault(selector);
+                                : typeDef.Methods.Where(m => m.FullName == method)
+                                    .FirstOrDefault(selector);
             }
 
             return methodDef;
@@ -415,7 +445,8 @@
             {
                 var writerParameters = new WriterParameters
                                            {
-                                               SymbolWriterProvider = new PdbWriterProvider(),
+                                               SymbolWriterProvider =
+                                                   new PdbWriterProvider(),
                                                WriteSymbols = true
                                            };
                 this.AssemblyDefinition.Write(file, writerParameters);
