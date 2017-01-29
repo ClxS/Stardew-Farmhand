@@ -97,6 +97,7 @@
     <Compile Include="Interfaces\IIinteractiveMenuComponent.cs" />
     <Compile Include="Interfaces\IKeyboardComponent.cs" />
     <Compile Include="Interfaces\IMenuComponent.cs" />
+    <Compile Include="Internal Menus\SettingsFlyout.cs" />
     <Compile Include="KeyboardSubscriberProxy.cs" />
     <Compile Include="OverlayManager.cs" />
     <Compile Include="ShopMenu.cs" />
