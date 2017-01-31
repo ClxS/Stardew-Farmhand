@@ -170,6 +170,7 @@
     <Compile Include="Attributes\HookAlterProtectionAttribute.cs" />
     <Compile Include="Attributes\HookAttribute.cs" />
     <Compile Include="Attributes\HookAlterBaseFieldProtectionAttribute.cs" />
+    <Compile Include="Attributes\HookExposeInternal.cs" />
     <Compile Include="Attributes\HookForceVirtualBaseAttribute.cs" />
     <Compile Include="Attributes\HookMakeBaseVirtualCallAttribute.cs" />
     <Compile Include="Attributes\HookRedirectAttribute.cs" />

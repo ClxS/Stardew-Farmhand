@@ -86,7 +86,7 @@
 
             this.injector.Inject();
 
-            Console.WriteLine("First Pass Installation Completed");
+            Console.WriteLine("Second Pass Installation Completed");
 
             path = path ?? PatcherConstants.FarmhandExe;
             var directory = Path.GetDirectoryName(path);

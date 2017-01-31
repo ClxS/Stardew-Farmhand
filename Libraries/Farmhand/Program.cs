@@ -1,12 +1,20 @@
-﻿namespace Farmhand
+﻿using Farmhand.Attributes;
+
+
+namespace Farmhand
 {
     using System.IO;
+
+    using Farmhand.Attributes;
 
     using Newtonsoft.Json;
 
     /// <summary>
     ///     Holds Farmhand configuration details.
     /// </summary>
+    [HookExposeInternal("FarmhandUI")]
+    [HookExposeInternal("FarmhandCharacter")]
+    [HookExposeInternal("FarmhandGame")]
     public class Program
     {
         /// <summary>

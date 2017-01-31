@@ -1,7 +1,7 @@
 ﻿namespace Farmhand.Installers.Patcher.Injection.Components.Modifiers.Converters
 {
     /// <summary>
-    /// The AlterProtectionAttributeConverter interface.
+    ///     The AlterProtectionAttributeConverter interface.
     /// </summary>
     public interface IAlterProtectionAttributeConverter : IAttributeConverter
     {

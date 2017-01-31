@@ -21,7 +21,7 @@
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class CecilContext : IInjectionContext
     {
-        private AssemblyDefinition AssemblyDefinition { get; set; }
+        internal AssemblyDefinition AssemblyDefinition { get; set; }
 
         #region IInjectionContext Members
 
