@@ -34,9 +34,7 @@
             tab.AddComponent(new TextComponent(new Point(10, 0), "Farmhand Settings"));
             this.debugModeBox = new CheckboxFormComponent(new Point(0, 12), "Debug Mode");
             this.cachePortsBox = new CheckboxFormComponent(new Point(0, 24), "Cache Ports");
-            this.debugModeBox.Value = Program.Config.DebugMode;
-            this.cachePortsBox.Value = Program.Config.CachePorts;
-
+            
             tab.AddComponent(this.debugModeBox);
             tab.AddComponent(this.cachePortsBox);
 
@@ -63,6 +61,12 @@
             }
         }
 
+        public void OnOpen()
+        {
+            this.debugModeBox.Value = Farmhand.Program.Config.DebugMode;
+            this.cachePortsBox.Value = Farmhand.Program.Config.CachePorts;
+        }
+
         public event EventHandler Close = delegate { };
 
         private void CancelButton_Handler(
@@ -78,9 +82,9 @@
             IComponentContainer collection,
             FrameworkMenu menu)
         {
-            Program.Config.CachePorts = this.cachePortsBox.Value;
-            Program.Config.DebugMode = this.cachePortsBox.Value;
-            Program.SaveConfig();
+            Farmhand.Program.Config.CachePorts = this.cachePortsBox.Value;
+            Farmhand.Program.Config.DebugMode = this.debugModeBox.Value;
+            Farmhand.Program.SaveConfig();
             this.OnClose();
         }
 

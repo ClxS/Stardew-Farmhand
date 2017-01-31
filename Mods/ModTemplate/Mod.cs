@@ -96,10 +96,20 @@
                 gearTexture?.Texture);
             settingsButton.Handler += SettingsButton_Handler;
             Menu.AddComponent(settingsButton);
-
+            
             ApiConfigMenu = new FarmhandConfig();
+            ApiConfigMenu.Close += CloseMenu;
         }
-        
+
+        private void CloseMenu(object sender, EventArgs e)
+        {
+            var menu = sender as IClickableMenu;
+            if (menu != null)
+            {
+                Game1.onScreenMenus.Remove(menu);
+            }
+        }
+
         private static void SettingsButton_Handler(
             IInteractiveMenuComponent component,
             IComponentContainer collection,
@@ -108,6 +118,7 @@
             if (!Game1.onScreenMenus.Contains(ApiConfigMenu))
             {
                 Game1.onScreenMenus.Add(ApiConfigMenu);
+                ApiConfigMenu.OnOpen();
             }
         }
 
