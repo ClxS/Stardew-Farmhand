@@ -449,6 +449,7 @@
                                                    new PdbWriterProvider(),
                                                WriteSymbols = true
                                            };
+                
                 this.AssemblyDefinition.Write(file, writerParameters);
             }
             else
