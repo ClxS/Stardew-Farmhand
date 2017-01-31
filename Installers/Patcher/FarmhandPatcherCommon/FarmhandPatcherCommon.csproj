@@ -73,10 +73,12 @@
     <Compile Include="Injection\Components\Modifiers\AlterProtectionHandler.cs" />
     <Compile Include="Injection\Components\Modifiers\Converters\IAlterBaseFieldProtectionAttributeConverter.cs" />
     <Compile Include="Injection\Components\Modifiers\Converters\IAlterProtectionAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IExposeInternalAttributeConverter.cs" />
     <Compile Include="Injection\Components\Modifiers\Converters\IForceVirtualBaseAttributeConverter.cs" />
     <Compile Include="Injection\Components\Modifiers\Converters\IMakeVirtualBaseCallAttributeConverter.cs" />
     <Compile Include="Injection\Components\Modifiers\Converters\IRedirectConstructorFromBaseAttributeConverter.cs" />
     <Compile Include="Injection\Components\Modifiers\Converters\IRedirectConstructorToMethodAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\ExposeInternals.cs" />
     <Compile Include="Injection\Components\Modifiers\MakeVirtualBaseCallHandler.cs" />
     <Compile Include="Injection\Components\Modifiers\RedirectConstructorFromBaseHandler.cs" />
     <Compile Include="Injection\Components\Modifiers\RedirectConstructorToMethodHandler.cs" />

@@ -45,6 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyConverters\AlterBaseFieldProtectionAttributeConverter.cs" />
     <Compile Include="PropertyConverters\AlterProtectionAttributeConverter.cs" />
+    <Compile Include="PropertyConverters\ExposeInternalAttributeConverter.cs" />
     <Compile Include="PropertyConverters\ForceVirtualBaseAttributeConverter.cs" />
     <Compile Include="PropertyConverters\MakeVirtualBaseCallAttributeConverter.cs" />
     <Compile Include="PropertyConverters\RedirectConstructorFromBaseAttributeConverter.cs" />
