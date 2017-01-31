@@ -15,6 +15,7 @@ namespace Farmhand
     [HookExposeInternal("FarmhandUI")]
     [HookExposeInternal("FarmhandCharacter")]
     [HookExposeInternal("FarmhandGame")]
+    [HookExposeInternal("ModTemplate")]
     public class Program
     {
         /// <summary>
