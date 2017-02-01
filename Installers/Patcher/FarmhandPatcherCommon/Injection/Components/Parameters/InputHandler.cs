@@ -6,8 +6,6 @@
     using System.ComponentModel.Composition;
     using System.Linq;
 
-    using Farmhand.Installers.Patcher.Injection.Components;
-
     using Mono.Cecil;
     using Mono.Cecil.Cil;
 
@@ -15,7 +13,7 @@
     [PartCreationPolicy(CreationPolicy.Shared)]
     public class InputHandler<T> : IParameterHandler
     {
-        #region IAttributeHandler Members
+        #region IParameterHandler Members
 
         public bool Equals(string fullName)
         {
@@ -29,23 +27,21 @@
         {
             var type = attribute.ConstructorArguments[0].Value as TypeReference;
             var name = attribute.ConstructorArguments[1].Value as string;
+            var isRef = (bool)attribute.ConstructorArguments[2].Value;
 
             var inputParam =
                 order.ReceivingProcessor.Body.Method.Parameters.FirstOrDefault(
                     p => p.Name == name && p.ParameterType.FullName == type?.FullName);
 
-            if (inputParam != null)
+            if (inputParam == null)
             {
-                if ((bool)attribute.ConstructorArguments[2].Value)
-                {
-                    instructions.Add(order.ReceivingProcessor.Create(OpCodes.Ldarga, inputParam));
-                }
-
-                instructions.Add(order.ReceivingProcessor.Create(OpCodes.Ldarg, inputParam));
-                return;
+                throw new Exception("The specified parameter was not found on this method");
             }
 
-            throw new Exception("The specified parameter was not found on this method");
+            instructions.Add(
+                isRef
+                    ? order.ReceivingProcessor.Create(OpCodes.Ldarga, inputParam)
+                    : order.ReceivingProcessor.Create(OpCodes.Ldarg, inputParam));
         }
 
         #endregion
