@@ -361,27 +361,37 @@
             while (stateChange);
         }
 
+        // Loads mod manifests using the default ModPaths paths
         private static void LoadModManifests()
         {
             foreach (var modPath in ModPaths)
             {
-                foreach (var perModPath in Directory.GetDirectories(modPath))
-                {
-                    var modJsonFiles = Directory.GetFiles(perModPath, "manifest.json");
-                    foreach (var file in modJsonFiles)
-                    {
-                        using (var r = new StreamReader(file))
-                        {
-                            var json = r.ReadToEnd();
-                            var modInfo = JsonConvert.DeserializeObject<ModManifest>(json, new VersionConverter());
+                LoadModManifests(modPath);
+            }
+        }
 
-                            modInfo.ModDirectory = perModPath;
-                            ModRegistry.RegisterItem(
-                                modInfo.UniqueId ?? new UniqueId<string>(Guid.NewGuid().ToString()),
-                                modInfo);
-                        }
+        // Loads mod manifests from a given directory
+        private static void LoadModManifests(String modDirectory)
+        {
+            foreach (var perModPath in Directory.GetDirectories(modDirectory))
+            {
+                var modJsonFiles = Directory.GetFiles(perModPath, "manifest.json");
+                foreach (var file in modJsonFiles)
+                {
+                    using (var r = new StreamReader(file))
+                    {
+                        var json = r.ReadToEnd();
+                        var modInfo = JsonConvert.DeserializeObject<ModManifest>(json, new VersionConverter());
+
+                        modInfo.ModDirectory = perModPath;
+                        ModRegistry.RegisterItem(
+                            modInfo.UniqueId ?? new UniqueId<string>(Guid.NewGuid().ToString()),
+                            modInfo);
                     }
                 }
+
+                // Recursively check for more mods!
+                LoadModManifests(perModPath);
             }
         }
 
