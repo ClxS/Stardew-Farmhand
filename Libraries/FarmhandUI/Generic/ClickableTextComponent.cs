@@ -70,13 +70,13 @@
                 this.Handler += handler;
             }
 
+            this.position = position;
             this.HoverEffect = hoverEffect;
             this.Font = font;
             this.Color = (Color)color;
             this.Shadow = shadow;
             this.Scale = scale;
             this.Text = text;
-            this.position = position;
         }
 
         /// <summary>
