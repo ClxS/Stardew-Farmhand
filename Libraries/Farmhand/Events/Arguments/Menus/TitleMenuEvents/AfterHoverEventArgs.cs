@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Events.Arguments.Menus.TitleMenuEvents
+namespace Farmhand.Events.Arguments.Menus.TitleMenuEvents
 {
     using System;
 

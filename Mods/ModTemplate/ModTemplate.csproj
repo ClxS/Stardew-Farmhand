@@ -50,8 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\SelectableTextComponent.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Pages\FarmhandConfig.cs" />
+    <Compile Include="Pages\ModConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
