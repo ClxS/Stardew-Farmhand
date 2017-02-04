@@ -14,6 +14,10 @@
     /// </summary>
     public class ClickableTextComponent : BaseInteractiveMenuComponent
     {
+        private Point position;
+
+        private string text;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ClickableTextComponent" /> class.
         /// </summary>
@@ -72,9 +76,7 @@
             this.Shadow = shadow;
             this.Scale = scale;
             this.Text = text;
-            var size = this.Font.MeasureString(this.Text) / Game1.pixelZoom * this.Scale;
-            this.SetScaledArea(
-                new Rectangle(position.X, position.Y, (int)Math.Ceiling(size.X), (int)Math.Ceiling(size.Y)));
+            this.position = position;
         }
 
         /// <summary>
@@ -110,7 +112,25 @@
         /// <summary>
         ///     Gets or sets the text to display.
         /// </summary>
-        protected string Text { get; set; }
+        public string Text
+        {
+            get
+            {
+                return this.text;
+            }
+
+            set
+            {
+                this.text = value;
+                var size = this.Font.MeasureString(this.Text) / Game1.pixelZoom * this.Scale;
+                this.SetScaledArea(
+                    new Rectangle(
+                        this.position.X,
+                        this.position.Y,
+                        (int)Math.Ceiling(size.X),
+                        (int)Math.Ceiling(size.Y)));
+            }
+        }
 
         /// <summary>
         ///     The click event handler.
