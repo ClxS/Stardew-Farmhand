@@ -53,7 +53,7 @@
                 ModRegistry.GetRegisteredItems()
                     .Where(m => m is ModManifest)
                     .Cast<ModManifest>()
-                    //.Where(m => m.Instance?.ConfigurationSettings != null)
+                    .Where(m => m.Instance?.ConfigurationSettings != null)
                     .ToArray();
             for (var i = 0; i < mods.Length; ++i)
             {
