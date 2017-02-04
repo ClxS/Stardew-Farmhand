@@ -174,10 +174,34 @@
         /// </param>
         public override void LeftClick(Point p, Point o)
         {
-            base.LeftClick(p, o);
-            this.Counter = 0;
-            this.Limiter = 10;
-            this.ArrowClick(p, o);
+            if (!this.Visible)
+            {
+                return;
+            }
+
+            if (!this.UpActive && !this.DownActive)
+            {
+                var o2 = new Point(
+                    this.Area.X + o.X,
+                    this.Area.Y + o.Y - (this.ScrollOffset * Zoom10));
+                foreach (var el in this.EventOrder)
+                {
+                    if (el.InBounds(p, o2))
+                    {
+                        this.GiveFocus(el);
+                        el.LeftClick(p, o2);
+                        return;
+                    }
+                }
+
+                this.ResetFocus();
+            }
+            else
+            {
+                this.Counter = 0;
+                this.Limiter = 10;
+                this.ArrowClick(p, o);
+            }
         }
 
         /// <summary>
