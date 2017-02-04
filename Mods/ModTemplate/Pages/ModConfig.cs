@@ -22,7 +22,7 @@
     {
         private readonly FrameworkMenu controlContainer;
 
-        private readonly ScrollableCollectionComponent ModList;
+        private readonly ScrollableCollectionComponent modList;
 
         public ModConfig()
             : base(FrameDimensions, false, false)
@@ -41,7 +41,7 @@
             tab.AddComponent(new TextComponent(new Point(10, 0), "Available Mods"));
             tab.AddComponent(new TextComponent(new Point(550 / Game1.pixelZoom, 0), "Mod Settings"));
 
-            this.ModList =
+            this.modList =
                 new ScrollableCollectionComponent(
                     new Rectangle(
                         0,
@@ -59,10 +59,10 @@
             {
                 var text = new SelectableTextComponent(new Point(0, 10 * i), mods[i].Name);
                 text.Handler += this.ModSelected_Handler;
-                this.ModList.AddComponent(text);
+                this.modList.AddComponent(text);
             }
 
-            tab.AddComponent(this.ModList);
+            tab.AddComponent(this.modList);
 
             this.controlContainer.AddComponent(tab);
         }
@@ -89,7 +89,7 @@
             if (textComponent != null)
             {
                 var otherItems =
-                    this.ModList.InteractiveComponents.Where(c => c is SelectableTextComponent)
+                    this.modList.InteractiveComponents.Where(c => c is SelectableTextComponent)
                         .Cast<SelectableTextComponent>();
                 foreach (var item in otherItems)
                 {
