@@ -15,6 +15,8 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
 
+    using ModTemplate.Pages;
+
     using StardewValley;
     using StardewValley.Menus;
 
@@ -24,15 +26,17 @@
 
     internal class Mod : Farmhand.Mod
     {
-        private static FrameworkMenu Menu;
+        private static FrameworkMenu menu;
 
-        private static FarmhandConfig ApiConfigMenu;
+        private static FarmhandConfig apiConfigMenu;
 
-        private static FlyoutState CurrentFlyoutState = FlyoutState.Closed;
+        private static ModConfig modConfigMenu;
 
-        private static float FlyoutOffset = 1.0f;
+        private static FlyoutState currentFlyoutState = FlyoutState.Closed;
 
-        private static bool RemoveOnNextFrame = false;
+        private static float flyoutOffset = 1.0f;
+
+        private static bool removeOnNextFrame;
 
         public override void Entry()
         {
@@ -40,21 +44,29 @@
             GraphicsEvents.PostRenderGuiEventNoCheck += GraphicsEvents_PostRenderGuiEventNoCheck;
             GameEvents.AfterLoadedContent += this.GameEvents_AfterLoadedContent;
             GameEvents.BeforeUpdateTick += GameEvents_BeforeUpdateTick;
-            TitleMenuEvents.BeforeReceiveLeftClick += TitleMenuEvents_BeforeReceiveLeftClick;
-            TitleMenuEvents.BeforeHoverAction += TitleMenuEvents_BeforeHoverAction;
+            TitleMenuEvents.BeforeReceiveLeftClick += this.TitleMenuEvents_BeforeReceiveLeftClick;
+            TitleMenuEvents.BeforeHoverAction += this.TitleMenuEvents_BeforeHoverAction;
+        }
+
+        private bool IsMenuOnScreen()
+        {
+            return Game1.onScreenMenus.Contains(apiConfigMenu)
+                   || Game1.onScreenMenus.Contains(modConfigMenu);
         }
 
         private void TitleMenuEvents_BeforeHoverAction(object sender, BeforeHoverEventArgs e)
         {
-            if (Game1.onScreenMenus.Contains(ApiConfigMenu))
+            if (this.IsMenuOnScreen())
             {
                 e.Cancel = true;
             }
         }
 
-        private void TitleMenuEvents_BeforeReceiveLeftClick(object sender, BeforeReceiveLeftClickEventArgs e)
+        private void TitleMenuEvents_BeforeReceiveLeftClick(
+            object sender,
+            BeforeReceiveLeftClickEventArgs e)
         {
-            if (Game1.onScreenMenus.Contains(ApiConfigMenu))
+            if (this.IsMenuOnScreen())
             {
                 e.Cancel = true;
             }
@@ -64,19 +76,25 @@
         {
             var state = Mouse.GetState();
 
-            if (RemoveOnNextFrame)
+            if (removeOnNextFrame)
             {
-                Game1.onScreenMenus.Remove(ApiConfigMenu);
-                RemoveOnNextFrame = false;
+                Game1.onScreenMenus.Remove(apiConfigMenu);
+                Game1.onScreenMenus.Remove(modConfigMenu);
+                removeOnNextFrame = false;
             }
 
-            UpdateMenu(Menu, state, e.GameTime);
-            
+            UpdateMenu(menu, state, e.GameTime);
+
             if (Game1.activeClickableMenu is TitleMenu)
             {
-                if (Game1.onScreenMenus.Contains(ApiConfigMenu))
+                if (Game1.onScreenMenus.Contains(apiConfigMenu))
                 {
-                    UpdateMenu(ApiConfigMenu, state, e.GameTime);
+                    UpdateMenu(apiConfigMenu, state, e.GameTime);
+                }
+
+                if (Game1.onScreenMenus.Contains(modConfigMenu))
+                {
+                    UpdateMenu(modConfigMenu, state, e.GameTime);
                 }
             }
         }
@@ -107,31 +125,53 @@
         private void GameEvents_AfterLoadedContent(object sender, EventArgs e)
         {
             var gearTexture = TextureRegistry.GetItem("icon_gear", this.ModSettings);
-            Menu = new FrameworkMenu(new Rectangle(0, 30, 20, 60), false, true);
-            var settingsButton = new ClickableTextureComponent(
+            menu = new FrameworkMenu(new Rectangle(0, 30, 20, 60), false, true);
+
+            var apiSettingsButton = new ClickableTextureComponent(
                 new Rectangle(-5, -3, 10, 10),
                 gearTexture?.Texture);
-            settingsButton.Handler += SettingsButton_Handler;
-            Menu.AddComponent(settingsButton);
-            
-            ApiConfigMenu = new FarmhandConfig();
-            ApiConfigMenu.Close += CloseMenu;
+            apiSettingsButton.Handler += ApiSettingsButton_Handler;
+            menu.AddComponent(apiSettingsButton);
+
+            var modSettingsButton = new ClickableTextureComponent(
+                new Rectangle(-5, 7, 10, 10),
+                gearTexture?.Texture);
+            modSettingsButton.Handler += ModSettingsButton_Handler;
+            menu.AddComponent(modSettingsButton);
+
+            apiConfigMenu = new FarmhandConfig();
+            apiConfigMenu.Close += this.CloseMenu;
+
+            modConfigMenu = new ModConfig();
+            modConfigMenu.Close += this.CloseMenu;
         }
 
         private void CloseMenu(object sender, EventArgs e)
         {
-            RemoveOnNextFrame = true;
+            removeOnNextFrame = true;
         }
 
-        private static void SettingsButton_Handler(
+        private static void ApiSettingsButton_Handler(
             IInteractiveMenuComponent component,
             IComponentContainer collection,
             FrameworkMenu menu)
         {
-            if (!Game1.onScreenMenus.Contains(ApiConfigMenu))
+            if (!Game1.onScreenMenus.Contains(apiConfigMenu))
             {
-                Game1.onScreenMenus.Add(ApiConfigMenu);
-                ApiConfigMenu.OnOpen();
+                Game1.onScreenMenus.Add(apiConfigMenu);
+                apiConfigMenu.OnOpen();
+            }
+        }
+
+        private static void ModSettingsButton_Handler(
+            IInteractiveMenuComponent component,
+            IComponentContainer collection,
+            FrameworkMenu menu)
+        {
+            if (!Game1.onScreenMenus.Contains(modConfigMenu))
+            {
+                Game1.onScreenMenus.Add(modConfigMenu);
+                modConfigMenu.OnOpen();
             }
         }
 
@@ -151,62 +191,67 @@
 
             if (Game1.activeClickableMenu is TitleMenu)
             {
-                if (Game1.onScreenMenus.Contains(ApiConfigMenu))
+                if (Game1.onScreenMenus.Contains(apiConfigMenu))
                 {
-                    ApiConfigMenu.draw(e.SpriteBatch);
+                    apiConfigMenu.draw(e.SpriteBatch);
+                }
+
+                if (Game1.onScreenMenus.Contains(modConfigMenu))
+                {
+                    modConfigMenu.draw(e.SpriteBatch);
                 }
             }
         }
 
         private static void HideMenu(DrawEventArgs e)
         {
-            if (CurrentFlyoutState == FlyoutState.Closed)
+            if (currentFlyoutState == FlyoutState.Closed)
             {
                 return;
             }
 
-            CurrentFlyoutState = FlyoutState.Closing;
+            currentFlyoutState = FlyoutState.Closing;
 
-            FlyoutOffset += (float)e.GameTime.ElapsedGameTime.TotalSeconds;
+            flyoutOffset += (float)e.GameTime.ElapsedGameTime.TotalSeconds;
 
-            if (FlyoutOffset >= 1.0f)
+            if (flyoutOffset >= 1.0f)
             {
-                FlyoutOffset = 1.0f;
-                CurrentFlyoutState = FlyoutState.Closed;
+                flyoutOffset = 1.0f;
+                currentFlyoutState = FlyoutState.Closed;
             }
 
-            Menu.Area = new Rectangle(
-                (int)Ease(FlyoutOffset, 0.0f, -20.0f, 1.0f) * Game1.pixelZoom,
+            menu.Area = new Rectangle(
+                (int)Ease(flyoutOffset, 0.0f, -20.0f, 1.0f) * Game1.pixelZoom,
                 30 * Game1.pixelZoom,
                 20 * Game1.pixelZoom,
                 60 * Game1.pixelZoom);
-            Menu.draw(e.SpriteBatch);
+            menu.draw(e.SpriteBatch);
         }
 
         private static void ShowMenu(DrawEventArgs e)
         {
-            if (CurrentFlyoutState == FlyoutState.Open)
+            if (currentFlyoutState == FlyoutState.Open)
             {
-                Menu.draw(e.SpriteBatch);
+                menu.draw(e.SpriteBatch);
                 return;
             }
 
-            CurrentFlyoutState = FlyoutState.Opening;
+            currentFlyoutState = FlyoutState.Opening;
 
-            FlyoutOffset -= (float)e.GameTime.ElapsedGameTime.TotalSeconds;
+            flyoutOffset -= (float)e.GameTime.ElapsedGameTime.TotalSeconds;
 
-            if (FlyoutOffset <= 0.0f)
+            if (flyoutOffset <= 0.0f)
             {
-                FlyoutOffset = 0.0f;
-                CurrentFlyoutState = FlyoutState.Open;
+                flyoutOffset = 0.0f;
+                currentFlyoutState = FlyoutState.Open;
             }
 
-            Menu.Area = new Rectangle(
-                (int)-Ease(FlyoutOffset, 0.0f, 20.0f, 1.0f) * Game1.pixelZoom,
+            menu.Area = new Rectangle(
+                (int)-Ease(flyoutOffset, 0.0f, 20.0f, 1.0f) * Game1.pixelZoom,
                 30 * Game1.pixelZoom,
                 20 * Game1.pixelZoom,
                 60 * Game1.pixelZoom);
-            Menu.draw(e.SpriteBatch);
+            menu.draw(e.SpriteBatch);
         }
 
         private static float Ease(float t, float b, float c, float d)
