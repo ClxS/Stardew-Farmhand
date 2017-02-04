@@ -532,9 +532,12 @@
                 return;
             }
 
-            foreach (var el in this.DrawOrder)
+            if (this.DrawOrder != null)
             {
-                el.Update(t);
+                foreach (var el in this.DrawOrder)
+                {
+                    el.Update(t);
+                }
             }
         }
 
