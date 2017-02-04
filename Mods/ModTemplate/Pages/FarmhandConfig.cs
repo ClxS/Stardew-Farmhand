@@ -2,8 +2,8 @@
 {
     // ReSharper disable StyleCop.SA1300
     using System;
+    using System.Collections.Generic;
 
-    using Farmhand;
     using Farmhand.UI;
     using Farmhand.UI.Containers;
     using Farmhand.UI.Form;
@@ -15,6 +15,8 @@
 
     using StardewValley;
 
+    using Program = Farmhand.Program;
+
     internal sealed class FarmhandConfig : FrameworkMenu
     {
         private readonly CheckboxFormComponent cachePortsBox;
@@ -22,6 +24,8 @@
         private readonly FrameworkMenu controlContainer;
 
         private readonly CheckboxFormComponent debugModeBox;
+
+        private readonly List<TextComponent> warningTextComponents;
 
         public FarmhandConfig()
             : base(FrameDimensions, false, false)
@@ -31,10 +35,25 @@
                 new FormCollectionComponent(
                     new Rectangle(0, 0, this.ZoomEventRegion.Width, this.ZoomEventRegion.Height));
 
+            this.warningTextComponents = new List<TextComponent>
+            {
+                new TextComponent(
+                    new Point(0, 52),
+                    "You might need to restart"),
+                new TextComponent(
+                    new Point(0, 60),
+                    "the game for some changes"),
+                new TextComponent(
+                    new Point(0, 68),
+                    "to take affect")
+            };
+
             tab.AddComponent(new TextComponent(new Point(10, 0), "Farmhand Settings"));
             this.debugModeBox = new CheckboxFormComponent(new Point(0, 12), "Debug Mode");
             this.cachePortsBox = new CheckboxFormComponent(new Point(0, 24), "Cache Ports");
-            
+            this.debugModeBox.Handler += this.FieldChanged_Handler;
+            this.cachePortsBox.Handler += this.FieldChanged_Handler;
+
             tab.AddComponent(this.debugModeBox);
             tab.AddComponent(this.cachePortsBox);
 
@@ -42,8 +61,13 @@
             saveButton.Handler += this.SaveButton_Handler;
             var cancelButton = new ButtonFormComponent(new Point(4, 80), 70, "Cancel");
             cancelButton.Handler += this.CancelButton_Handler;
+
             tab.AddComponent(saveButton);
             tab.AddComponent(cancelButton);
+            foreach (var component in this.warningTextComponents)
+            {
+                tab.AddComponent(component);
+            }
 
             this.controlContainer.AddComponent(tab);
         }
@@ -61,10 +85,26 @@
             }
         }
 
+        private void FieldChanged_Handler(
+            IInteractiveMenuComponent c,
+            IComponentContainer collection,
+            FrameworkMenu menu,
+            bool value)
+        {
+            foreach (var component in this.warningTextComponents)
+            {
+                component.Visible = true;
+            }
+        }
+
         public void OnOpen()
         {
-            this.debugModeBox.Value = Farmhand.Program.Config.DebugMode;
-            this.cachePortsBox.Value = Farmhand.Program.Config.CachePorts;
+            this.debugModeBox.Value = Program.Config.DebugMode;
+            this.cachePortsBox.Value = Program.Config.CachePorts;
+            foreach (var component in this.warningTextComponents)
+            {
+                component.Visible = false;
+            }
         }
 
         public event EventHandler Close = delegate { };
@@ -82,9 +122,9 @@
             IComponentContainer collection,
             FrameworkMenu menu)
         {
-            Farmhand.Program.Config.CachePorts = this.cachePortsBox.Value;
-            Farmhand.Program.Config.DebugMode = this.debugModeBox.Value;
-            Farmhand.Program.SaveConfig();
+            Program.Config.CachePorts = this.cachePortsBox.Value;
+            Program.Config.DebugMode = this.debugModeBox.Value;
+            Program.SaveConfig();
             this.OnClose();
         }
 

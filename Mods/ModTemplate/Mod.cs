@@ -32,6 +32,8 @@
 
         private static float FlyoutOffset = 1.0f;
 
+        private static bool RemoveOnNextFrame = false;
+
         public override void Entry()
         {
             // Add your entry logic here
@@ -39,6 +41,15 @@
             GameEvents.AfterLoadedContent += this.GameEvents_AfterLoadedContent;
             GameEvents.BeforeUpdateTick += GameEvents_BeforeUpdateTick;
             TitleMenuEvents.BeforeReceiveLeftClick += TitleMenuEvents_BeforeReceiveLeftClick;
+            TitleMenuEvents.BeforeHoverAction += TitleMenuEvents_BeforeHoverAction;
+        }
+
+        private void TitleMenuEvents_BeforeHoverAction(object sender, BeforeHoverEventArgs e)
+        {
+            if (Game1.onScreenMenus.Contains(ApiConfigMenu))
+            {
+                e.Cancel = true;
+            }
         }
 
         private void TitleMenuEvents_BeforeReceiveLeftClick(object sender, BeforeReceiveLeftClickEventArgs e)
@@ -52,6 +63,12 @@
         private static void GameEvents_BeforeUpdateTick(object sender, BeforeGameUpdateEventArgs e)
         {
             var state = Mouse.GetState();
+
+            if (RemoveOnNextFrame)
+            {
+                Game1.onScreenMenus.Remove(ApiConfigMenu);
+                RemoveOnNextFrame = false;
+            }
 
             UpdateMenu(Menu, state, e.GameTime);
             
@@ -103,11 +120,7 @@
 
         private void CloseMenu(object sender, EventArgs e)
         {
-            var menu = sender as IClickableMenu;
-            if (menu != null)
-            {
-                Game1.onScreenMenus.Remove(menu);
-            }
+            RemoveOnNextFrame = true;
         }
 
         private static void SettingsButton_Handler(
