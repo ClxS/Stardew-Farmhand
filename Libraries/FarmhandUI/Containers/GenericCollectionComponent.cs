@@ -508,7 +508,7 @@
                 return;
             }
 
-            foreach (var el in this.DrawOrder)
+            foreach (var el in this?.DrawOrder)
             {
                 el.Update(t);
             }
