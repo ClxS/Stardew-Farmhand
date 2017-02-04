@@ -5,10 +5,10 @@
     /// <summary>
     ///     The after receive left click.
     /// </summary>
-    public class AfterReceiveLeftClick : EventArgs
+    public class AfterHoverEventArgs : EventArgs
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="AfterReceiveLeftClick" /> class.
+        ///     Initializes a new instance of the <see cref="AfterHoverEventArgs" /> class.
         /// </summary>
         /// <param name="x">
         ///     The x.
@@ -16,14 +16,10 @@
         /// <param name="y">
         ///     The y.
         /// </param>
-        /// <param name="playSound">
-        ///     The play sound.
-        /// </param>
-        public AfterReceiveLeftClick(int x, int y, bool playSound)
+        public AfterHoverEventArgs(int x, int y)
         {
             this.X = x;
             this.Y = y;
-            this.PlaySound = playSound;
         }
 
         /// <summary>
@@ -35,10 +31,5 @@
         ///     Gets the Y position.
         /// </summary>
         public int Y { get; }
-
-        /// <summary>
-        ///     Gets a value indicating whether to play click sound.
-        /// </summary>
-        public bool PlaySound { get; }
     }
 }

@@ -16,13 +16,14 @@
         /// <remarks>
         ///     This is cancellable, allowing you to prevent clicks being passed to the title menu controls.
         /// </remarks>
-        public static event EventHandler<BeforeReceiveLeftClick> BeforeReceiveLeftClick =
+        public static event EventHandler<BeforeReceiveLeftClickEventArgs> BeforeReceiveLeftClick =
             delegate { };
 
         /// <summary>
         ///     Fires just after the menu is clicked.
         /// </summary>
-        public static event EventHandler<AfterReceiveLeftClick> AfterReceiveLeftClick = delegate { };
+        public static event EventHandler<AfterReceiveLeftClickEventArgs> AfterReceiveLeftClick =
+            delegate { };
 
         [Hook(HookType.Entry, "StardewValley.Menus.TitleMenu", "receiveLeftClick")]
         internal static bool OnBeforeReceiveLeftClick(
@@ -31,7 +32,7 @@
             [InputBind(typeof(int), "y")] int y,
             [InputBind(typeof(bool), "playSound")] bool playSound)
         {
-            var eventArgs = new BeforeReceiveLeftClick(x, y, playSound);
+            var eventArgs = new BeforeReceiveLeftClickEventArgs(x, y, playSound);
             EventCommon.SafeInvoke(BeforeReceiveLeftClick, @this, eventArgs);
             return eventArgs.Cancel;
         }
@@ -46,7 +47,7 @@
             EventCommon.SafeInvoke(
                 AfterReceiveLeftClick,
                 @this,
-                new AfterReceiveLeftClick(x, y, playSound));
+                new AfterReceiveLeftClickEventArgs(x, y, playSound));
         }
     }
 }

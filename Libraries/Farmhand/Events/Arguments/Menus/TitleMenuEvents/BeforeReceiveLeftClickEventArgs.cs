@@ -5,10 +5,10 @@
     /// <summary>
     ///     The after receive left click.
     /// </summary>
-    public class BeforeReceiveLeftClick : CancelEventArgs
+    public class BeforeReceiveLeftClickEventArgs : CancelEventArgs
     {
         /// <summary>
-        ///     Initializes a new instance of the <see cref="BeforeReceiveLeftClick" /> class.
+        ///     Initializes a new instance of the <see cref="BeforeReceiveLeftClickEventArgs" /> class.
         /// </summary>
         /// <param name="x">
         ///     The x.
@@ -19,7 +19,7 @@
         /// <param name="playSound">
         ///     The play sound.
         /// </param>
-        public BeforeReceiveLeftClick(int x, int y, bool playSound)
+        public BeforeReceiveLeftClickEventArgs(int x, int y, bool playSound)
         {
             this.X = x;
             this.Y = y;

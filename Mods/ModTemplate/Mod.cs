@@ -41,7 +41,7 @@
             TitleMenuEvents.BeforeReceiveLeftClick += TitleMenuEvents_BeforeReceiveLeftClick;
         }
 
-        private void TitleMenuEvents_BeforeReceiveLeftClick(object sender, BeforeReceiveLeftClick e)
+        private void TitleMenuEvents_BeforeReceiveLeftClick(object sender, BeforeReceiveLeftClickEventArgs e)
         {
             if (Game1.onScreenMenus.Contains(ApiConfigMenu))
             {
