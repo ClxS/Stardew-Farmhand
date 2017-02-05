@@ -32,6 +32,37 @@
             : base(FrameDimensions, false, false)
         {
             this.Centered = true;
+        }
+
+        private static Rectangle FrameDimensions
+        {
+            get
+            {
+                var bounds = Game1.game1.Window.ClientBounds;
+                return new Rectangle(
+                    0,
+                    0,
+                    (int)((bounds.Width / Game1.pixelZoom) / Game1.options.zoomLevel),
+                    (int)((bounds.Height / Game1.pixelZoom) / Game1.options.zoomLevel));
+            }
+        }
+
+        private static Rectangle FrameDimensionsZoomed
+        {
+            get
+            {
+                var bounds = Game1.game1.Window.ClientBounds;
+                return new Rectangle(
+                    0,
+                    0,
+                    (int)(bounds.Width / Game1.options.zoomLevel),
+                    (int)(bounds.Height / Game1.options.zoomLevel));
+            }
+        }
+
+        private void ConstructForm()
+        {
+            this.ClearComponents();
             var pos = Utility.getTopLeftPositionForCenteringOnScreen(100, 120);
             var controlArea = new Rectangle(
                 (int)pos.X / Game1.pixelZoom - 50,
@@ -47,15 +78,6 @@
             this.AddControlButtons(tab);
 
             this.AddComponent(tab);
-        }
-
-        private static Rectangle FrameDimensions
-        {
-            get
-            {
-                var bounds = Game1.game1.Window.ClientBounds;
-                return new Rectangle(0, 0, bounds.Width / Game1.pixelZoom, bounds.Height / Game1.pixelZoom);
-            }
         }
 
         private void AddControlOptions(IComponentCollection tab)
@@ -120,10 +142,12 @@
             var frameRect = tab.ZoomEventRegion;
 
             var frame =
-                new FrameComponent(
-                    new Rectangle(frameRect.X-10, frameRect.Y, frameRect.Width, frameRect.Height)) {
-                                                        Layer = -1 
-                                                     };
+                new FrameComponent(new Rectangle(frameRect.X - 10, frameRect.Y, frameRect.Width, frameRect.Height))
+                {
+                    Layer
+                        =
+                        -1
+                };
             this.AddComponent(frame);
         }
 
@@ -141,12 +165,20 @@
 
         public void OnOpen()
         {
+            this.SetArea();
+            this.ConstructForm();
             this.debugModeBox.Value = Program.Config.DebugMode;
             this.cachePortsBox.Value = Program.Config.CachePorts;
             foreach (var component in this.warningTextComponents)
             {
                 component.Visible = false;
             }
+        }
+
+        private void SetArea()
+        {
+            this.Area = FrameDimensionsZoomed;
+            this.initialize(this.Area.X, this.Area.Y, this.Area.Width, this.Area.Height, false);
         }
 
         public event EventHandler Close = delegate { };

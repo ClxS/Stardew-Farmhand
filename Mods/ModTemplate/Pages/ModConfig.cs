@@ -35,7 +35,6 @@
         public ModConfig()
             : base(FrameDimensions, false, false)
         {
-            this.ConstructForm();
         }
 
         private static Rectangle FrameDimensions
@@ -43,7 +42,24 @@
             get
             {
                 var bounds = Game1.game1.Window.ClientBounds;
-                return new Rectangle(0, 0, bounds.Width / Game1.pixelZoom, bounds.Height / Game1.pixelZoom);
+                return new Rectangle(
+                    0,
+                    0,
+                    (int)((bounds.Width / Game1.pixelZoom) / Game1.options.zoomLevel),
+                    (int)((bounds.Height / Game1.pixelZoom) / Game1.options.zoomLevel));
+            }
+        }
+
+        private static Rectangle FrameDimensionsZoomed
+        {
+            get
+            {
+                var bounds = Game1.game1.Window.ClientBounds;
+                return new Rectangle(
+                    0,
+                    0,
+                    (int)(bounds.Width / Game1.options.zoomLevel),
+                    (int)(bounds.Height / Game1.options.zoomLevel));
             }
         }
 
@@ -96,7 +112,7 @@
                 new ModConfigFieldsComponent(
                     new Rectangle(
                         this.modList.ZoomEventRegion.Width,
-                        20,
+                        10,
                         tab.ZoomEventRegion.Width - this.modList.ZoomEventRegion.Width - 20,
                         tab.ZoomEventRegion.Height - 30));
             tab.AddComponent(this.fieldsComponent);
@@ -280,7 +296,15 @@
 
         public void OnOpen()
         {
+            this.SetArea();
+            this.ConstructForm();
             this.PopulateModList();
+        }
+
+        private void SetArea()
+        {
+            this.Area = FrameDimensionsZoomed;
+            this.initialize(this.Area.X, this.Area.Y, this.Area.Width, this.Area.Height, false);
         }
 
         public event EventHandler Close = delegate { };
