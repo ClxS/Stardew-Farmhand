@@ -124,11 +124,11 @@
             var interactiveMenuComponent = component as IInteractiveMenuComponent;
             if (interactiveMenuComponent != null)
             {
-                this.InteractiveComponents.Add(interactiveMenuComponent);
+                this.InteractiveComponents?.Add(interactiveMenuComponent);
             }
             else
             {
-                this.StaticComponents.Add(component);
+                this.StaticComponents?.Add(component);
             }
 
             component.Attach(this);
@@ -140,18 +140,24 @@
         /// </summary>
         public void ClearComponents()
         {
-            foreach (var component in this.InteractiveComponents)
+            if (this.InteractiveComponents != null)
             {
-                component.Detach(this);
+                foreach (var component in this.InteractiveComponents)
+                {
+                    component.Detach(this);
+                }
             }
 
-            foreach (var component in this.StaticComponents)
+            if (this.StaticComponents != null)
             {
-                component.Detach(this);
+                foreach (var component in this.StaticComponents)
+                {
+                    component.Detach(this);
+                }
             }
 
-            this.InteractiveComponents.Clear();
-            this.StaticComponents.Clear();
+            this.InteractiveComponents?.Clear();
+            this.StaticComponents?.Clear();
             this.UpdateDrawOrder();
         }
 
@@ -297,9 +303,12 @@
             }
 
             var o2 = new Point(this.Area.X + o.X, this.Area.Y + o.Y);
-            foreach (var el in this.DrawOrder)
+            if (this.DrawOrder != null)
             {
-                el.Draw(b, o2);
+                foreach (var el in this.DrawOrder)
+                {
+                    el.Draw(b, o2);
+                }
             }
         }
 
@@ -334,18 +343,21 @@
                 this.HoverElement = null;
             }
 
-            foreach (var el in this.EventOrder)
+            if (this.EventOrder != null)
             {
-                if (el.InBounds(p, o2))
+                foreach (var el in this.EventOrder)
                 {
-                    if (this.HoverElement == null)
+                    if (el.InBounds(p, o2))
                     {
-                        this.HoverElement = el;
-                        el.HoverIn(p, o2);
-                    }
+                        if (this.HoverElement == null)
+                        {
+                            this.HoverElement = el;
+                            el.HoverIn(p, o2);
+                        }
 
-                    el.HoverOver(p, o2);
-                    break;
+                        el.HoverOver(p, o2);
+                        break;
+                    }
                 }
             }
         }
@@ -367,13 +379,16 @@
             }
 
             var o2 = new Point(this.Area.X + o.X, this.Area.Y + o.Y);
-            foreach (var el in this.EventOrder)
+            if (this.EventOrder != null)
             {
-                if (el.InBounds(p, o2))
+                foreach (var el in this.EventOrder)
                 {
-                    this.GiveFocus(el);
-                    el.LeftClick(p, o2);
-                    return;
+                    if (el.InBounds(p, o2))
+                    {
+                        this.GiveFocus(el);
+                        el.LeftClick(p, o2);
+                        return;
+                    }
                 }
             }
 
@@ -455,14 +470,17 @@
             }
 
             var o2 = new Point(this.Area.X + o.X, this.Area.Y + o.Y);
-            foreach (var el in this.EventOrder)
+            if (this.EventOrder != null)
             {
-                if (el.InBounds(p, o2))
+                foreach (var el in this.EventOrder)
                 {
-                    this.GiveFocus(el);
-                    this.FocusElement = el;
-                    el.RightClick(p, o2);
-                    return;
+                    if (el.InBounds(p, o2))
+                    {
+                        this.GiveFocus(el);
+                        this.FocusElement = el;
+                        el.RightClick(p, o2);
+                        return;
+                    }
                 }
             }
 
@@ -489,9 +507,12 @@
             }
 
             var o2 = new Point(this.Area.X + o.X, this.Area.Y + o.Y);
-            foreach (var el in this.EventOrder)
+            if (this.EventOrder != null)
             {
-                el.Scroll(d, p, o2);
+                foreach (var el in this.EventOrder)
+                {
+                    el.Scroll(d, p, o2);
+                }
             }
         }
 
@@ -508,9 +529,12 @@
                 return;
             }
 
-            foreach (var el in this.DrawOrder)
+            if (this.DrawOrder != null)
             {
-                el.Update(t);
+                foreach (var el in this.DrawOrder)
+                {
+                    el.Update(t);
+                }
             }
         }
 
