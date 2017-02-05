@@ -14,7 +14,6 @@
     using Farmhand.UI.Interfaces;
 
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
     using ModTemplate.Controls;
 
@@ -25,9 +24,9 @@
         private readonly Dictionary<SelectableTextComponent, string> optionSettings =
             new Dictionary<SelectableTextComponent, string>();
 
-        private ConfirmationDialog confirmationDialog;
+        private ColoredRectangleComponent background;
 
-        private FrameworkMenu controlContainer;
+        private ConfirmationDialog confirmationDialog;
 
         private ModConfigFieldsComponent fieldsComponent;
 
@@ -50,50 +49,105 @@
 
         private void ConstructForm()
         {
-            this.confirmationDialog = new ConfirmationDialog(this.ZoomEventRegion) { Visible = false };
+            this.Centered = true;
+            var controlArea = new Rectangle(
+                this.ZoomEventRegion.X,
+                this.ZoomEventRegion.Y - 10,
+                this.ZoomEventRegion.Width,
+                this.ZoomEventRegion.Height);
 
-            // TODO: Find a better way of assuming the default resolution.
-            this.controlContainer =
-                new FrameworkMenu(
-                    new Point((int)(1280 * 0.90 / Game1.pixelZoom), (int)(720 * 0.90 / Game1.pixelZoom)),
-                    false);
-            var tab =
-                new FormCollectionComponent(
-                    new Rectangle(0, 0, this.ZoomEventRegion.Width, this.ZoomEventRegion.Height));
+            var tab = new FormCollectionComponent(controlArea);
 
-            tab.AddComponent(new TextComponent(new Point(10, 0), "Available Mods"));
-            tab.AddComponent(new TextComponent(new Point(550 / Game1.pixelZoom, 0), "Mod Settings"));
+            this.AddControlBackgroundRect(tab);
+            this.AddControlModList(tab);
+            this.AddControlModFields(tab);
+            this.AddControlConfirmationDialog();
+            this.AddControlButtons(tab);
+            this.AddComponent(tab);
+        }
 
-            this.modList =
-                new ScrollableCollectionComponent(
-                    new Rectangle(0, 10, 300 / Game1.pixelZoom, this.controlContainer.ZoomEventRegion.Height - 10));
+        private void AddControlButtons(IComponentCollection tab)
+        {
+            var closeButton =
+                new ClickableTextureComponent(
+                    new Rectangle(tab.ZoomEventRegion.Width - 20, 0, 12, 12),
+                    Game1.mouseCursors,
+                    null,
+                    new Rectangle(0x151, 0x1ee, 12, 12)) {
+                                                            Layer = 1 
+                                                         };
+            closeButton.Handler += this.CloseButton_Handler;
+
+            tab.AddComponent(closeButton);
+        }
+
+        private void AddControlConfirmationDialog()
+        {
+            this.confirmationDialog = new ConfirmationDialog(this.ZoomEventRegion) { Visible = false, Layer = 2 };
+            this.confirmationDialog.Close += this.ConfirmationDialog_Close;
+            this.AddComponent(this.confirmationDialog);
+        }
+
+        private void AddControlModFields(IComponentCollection tab)
+        {
+            tab.AddComponent(new LabelComponent(new Point(10, -6), "Available Mods"));
 
             this.fieldsComponent =
                 new ModConfigFieldsComponent(
                     new Rectangle(
                         this.modList.ZoomEventRegion.Width,
-                        10,
-                        this.controlContainer.ZoomEventRegion.Width - this.modList.ZoomEventRegion.Width,
-                        this.controlContainer.ZoomEventRegion.Height - 10));
-
-            tab.AddComponent(this.modList);
+                        20,
+                        tab.ZoomEventRegion.Width - this.modList.ZoomEventRegion.Width - 20,
+                        tab.ZoomEventRegion.Height - 30));
             tab.AddComponent(this.fieldsComponent);
+        }
 
-            this.controlContainer.AddComponent(tab);
-            this.FloatingComponent = this.confirmationDialog;
-            this.AddComponent(this.confirmationDialog);
+        private void AddControlModList(IComponentCollection tab)
+        {
+            tab.AddComponent(new LabelComponent(new Point(550 / Game1.pixelZoom, -6), "Mod Settings"));
+            this.modList =
+                new ScrollableCollectionComponent(
+                    new Rectangle(0, 20, 300 / Game1.pixelZoom, tab.ZoomEventRegion.Height - 30));
+            tab.AddComponent(this.modList);
+        }
 
-            this.confirmationDialog.Close += this.ConfirmationDialog_Close;
+        private void AddControlBackgroundRect(FormCollectionComponent tab)
+        {
+            var backgroundRect = this.ZoomEventRegion;
+            this.background =
+                new ColoredRectangleComponent(
+                    new Rectangle(
+                        backgroundRect.X - 20,
+                        backgroundRect.Y - 20,
+                        backgroundRect.Width + 20,
+                        backgroundRect.Height + 20),
+                    Color.Black * 0.75f) {
+                                            Layer = -2 
+                                         };
+            this.AddComponent(this.background);
 
-            var closeButton =
-                new ClickableTextureComponent(
-                    new Rectangle(this.controlContainer.ZoomEventRegion.Width, -12, 12, 12),
-                    Game1.mouseCursors,
-                    null,
-                    new Rectangle(0x151, 0x1ee, 12, 12));
-            closeButton.Handler += this.CloseButton_Handler;
+            var frameRect = tab.ZoomEventRegion;
 
-            this.controlContainer.AddComponent(closeButton);
+            var frame =
+                new FrameComponent(new Rectangle(frameRect.X - 10, frameRect.Y, frameRect.Width, frameRect.Height))
+                {
+                    Layer
+                        =
+                        -1
+                };
+            this.AddComponent(frame);
+        }
+
+        public override void gameWindowSizeChanged(Rectangle oldBounds, Rectangle newBounds)
+        {
+            base.gameWindowSizeChanged(oldBounds, newBounds);
+
+            var xDiff = newBounds.Width - oldBounds.Width;
+            var yDiff = newBounds.Height - oldBounds.Height;
+
+            this.background.InflateRegion(xDiff, yDiff);
+
+            this.confirmationDialog?.OnWindowResize(oldBounds, newBounds);
         }
 
         private void PopulateModList()
@@ -117,7 +171,7 @@
 
                 this.optionSettings[text] = mods[i].UniqueId.ThisId;
 
-                if (anySelected == 2)
+                if (anySelected == 0)
                 {
                     text.IsSelected = true;
                 }
@@ -230,66 +284,6 @@
         }
 
         public event EventHandler Close = delegate { };
-
-        public override void draw(SpriteBatch b)
-        {
-            b.Draw(Game1.fadeToBlackRect, Game1.graphics.GraphicsDevice.Viewport.Bounds, Color.Black * 0.75f);
-
-            DrawMenuRect(
-                b,
-                this.controlContainer.Area.X,
-                this.controlContainer.Area.Y,
-                this.controlContainer.Area.Width,
-                this.controlContainer.Area.Height);
-
-            var o = new Point(this.Area.X + Zoom10, this.Area.Y + Zoom10);
-            foreach (var el in this.DrawOrder)
-            {
-                el.Draw(b, o);
-            }
-
-            this.controlContainer.draw(b);
-
-            this.confirmationDialog.Draw(b, o);
-
-            this.drawMouse(b);
-        }
-
-        public override void performHoverAction(int x, int y)
-        {
-            base.performHoverAction(x, y);
-            if (!this.confirmationDialog.Visible)
-            {
-                this.controlContainer.performHoverAction(x, y);
-            }
-        }
-
-        public override void update(GameTime time)
-        {
-            base.update(time);
-            if (!this.confirmationDialog.Visible)
-            {
-                this.controlContainer.update(time);
-            }
-        }
-
-        public override void receiveLeftClick(int x, int y, bool playSound = true)
-        {
-            base.receiveLeftClick(x, y, playSound);
-            if (!this.confirmationDialog.Visible)
-            {
-                this.controlContainer.receiveLeftClick(x, y, playSound);
-            }
-        }
-
-        public override void receiveScrollWheelAction(int direction)
-        {
-            base.receiveScrollWheelAction(direction);
-            if (!this.confirmationDialog.Visible)
-            {
-                this.controlContainer.receiveScrollWheelAction(direction);
-            }
-        }
 
         private void OnClose()
         {
