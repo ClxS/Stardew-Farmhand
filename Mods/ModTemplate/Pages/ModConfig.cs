@@ -136,6 +136,7 @@
                 if (saveChanges)
                 {
                     this.fieldsComponent.SaveChanges();
+                    this.fieldsComponent.Cleanup();
                 }
 
                 this.OnClose();
@@ -197,6 +198,7 @@
                     if (saveChanges)
                     {
                         this.fieldsComponent.SaveChanges();
+                        this.fieldsComponent.Cleanup();
                     }
 
                     var otherItems =

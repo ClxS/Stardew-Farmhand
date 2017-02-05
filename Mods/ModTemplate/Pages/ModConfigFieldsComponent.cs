@@ -35,15 +35,22 @@
             this.ClearForm();
             this.ReflectModProperties(settings);
             this.PopulateControls();
+            this.HaveFieldsChanged = false;
+        }
+
+        public void Cleanup()
+        {
+            this.ClearForm();
+            this.HaveFieldsChanged = false;
         }
 
         private void ClearForm()
         {
-            this.HaveFieldsChanged = false;
+            this.HoverElement = null;
+            this.FocusElement = null;
+            this.ClearComponents();
             this.properties.Clear();
             this.settingsInstance = null;
-            this.InteractiveComponents.Clear();
-            this.StaticComponents.Clear();
         }
 
         private void PopulateControls()
