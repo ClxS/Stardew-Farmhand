@@ -119,8 +119,7 @@
 
             if (state.ScrollWheelValue != Game1.oldMouseState.ScrollWheelValue)
             {
-                menu.receiveScrollWheelAction(
-                    state.ScrollWheelValue - Game1.oldMouseState.ScrollWheelValue);
+                menu.receiveScrollWheelAction(state.ScrollWheelValue - Game1.oldMouseState.ScrollWheelValue);
             }
         }
 
@@ -129,11 +128,19 @@
             var gearTexture = TextureRegistry.GetItem("icon_gear", this.ModSettings);
             menu = new FrameworkMenu(new Rectangle(0, 30, 20, 60), false, true);
 
-            var apiSettingsButton = new ClickableTextureComponent(new Rectangle(-5, -3, 10, 10), gearTexture?.Texture);
+            var apiSettingsButton = new ClickableTextureComponent(
+                new Rectangle(-5, -3, 10, 10),
+                gearTexture?.Texture,
+                null,
+                new Rectangle(25, 25, 21, 21));
             apiSettingsButton.Handler += ApiSettingsButton_Handler;
             menu.AddComponent(apiSettingsButton);
 
-            var modSettingsButton = new ClickableTextureComponent(new Rectangle(-5, 7, 10, 10), gearTexture?.Texture);
+            var modSettingsButton = new ClickableTextureComponent(
+                new Rectangle(-5, 7, 10, 10),
+                gearTexture?.Texture,
+                null,
+                new Rectangle(25, 25, 21, 21));
             modSettingsButton.Handler += ModSettingsButton_Handler;
             menu.AddComponent(modSettingsButton);
 
