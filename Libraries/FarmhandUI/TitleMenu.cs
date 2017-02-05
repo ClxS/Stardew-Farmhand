@@ -277,7 +277,7 @@
                 string.Empty,
                 "Mods Folder",
                 TextureRegistry.GetItem("FarmhandUI.modTitleMenu").Texture,
-                new Rectangle(52, 458, 24, 25),
+                new Rectangle(0, 0, 24, 25),
                 3f);
             this.backButton = new ClickableTextureComponent(
                 "Back",
@@ -381,18 +381,18 @@
             this.folderButton.tryHover(x, y, 0.25f);
             if (this.folderButton.containsPoint(x, y))
             {
-                if (this.folderButton.sourceRect.X == 52)
+                if (this.folderButton.sourceRect.X == 0)
                 {
                     Game1.playSound("Cowboy_Footstep");
                 }
 
-                this.folderButton.sourceRect.X = 76;
+                this.folderButton.sourceRect.X = 24;
 
                 this.HoverText = this.folderButton.hoverText;
             }
             else
             {
-                this.folderButton.sourceRect.X = 52;
+                this.folderButton.sourceRect.X = 0;
             }
         }
 
