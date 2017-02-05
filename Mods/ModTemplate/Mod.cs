@@ -129,15 +129,15 @@
             menu = new FrameworkMenu(new Rectangle(0, 30, 20, 60), false, true);
 
             var apiSettingsButton = new ClickableTextureComponent(
-                new Rectangle(-5, -3, 10, 10),
+                new Rectangle(-4, -3, 8, 8),
                 gearTexture?.Texture,
                 null,
-                new Rectangle(25, 25, 21, 21));
+                new Rectangle(2, 25, 21, 21));
             apiSettingsButton.Handler += ApiSettingsButton_Handler;
             menu.AddComponent(apiSettingsButton);
 
             var modSettingsButton = new ClickableTextureComponent(
-                new Rectangle(-5, 7, 10, 10),
+                new Rectangle(-4, 7, 8, 8),
                 gearTexture?.Texture,
                 null,
                 new Rectangle(25, 25, 21, 21));
