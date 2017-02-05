@@ -273,18 +273,24 @@
                 return;
             }
 
-            base.Scroll(d, p, o);
-            if (this.HoverElement != null)
+            var o2 = new Point(
+                    this.Area.X + o.X,
+                    this.Area.Y + o.Y - (this.ScrollOffset * Zoom10));
+            if (this.InBounds(p, o2))
             {
-                return;
-            }
+                base.Scroll(d, p, o);
+                if (this.HoverElement != null)
+                {
+                    return;
+                }
 
-            var change = d / 120;
-            var oldOffset = this.ScrollOffset;
-            this.ScrollOffset = Math.Max(0, Math.Min(this.ScrollOffset - change, this.InnerHeight));
-            if (oldOffset != this.ScrollOffset)
-            {
-                Game1.playSound("drumkit6");
+                var change = d / 120;
+                var oldOffset = this.ScrollOffset;
+                this.ScrollOffset = Math.Max(0, Math.Min(this.ScrollOffset - change, this.InnerHeight));
+                if (oldOffset != this.ScrollOffset)
+                {
+                    Game1.playSound("drumkit6");
+                }
             }
         }
 
