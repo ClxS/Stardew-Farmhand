@@ -14,6 +14,18 @@
     public class FrameComponent : BaseMenuComponent
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="FrameComponent"/> class.
+        /// </summary>
+        /// <param name="area">
+        /// The area.
+        /// </param>
+        public FrameComponent(Rectangle area)
+        {
+            this.Chrome = true;
+            this.SetScaledArea(area);
+        }
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="FrameComponent" /> class.
         /// </summary>
         /// <param name="area">
@@ -31,6 +43,11 @@
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to use the default chrome frame.
+        /// </summary>
+        protected bool Chrome { get; set; }
+
+        /// <summary>
         ///     The draw handler for this component
         /// </summary>
         /// <param name="b">
@@ -41,7 +58,16 @@
         /// </param>
         public override void Draw(SpriteBatch b, Point o)
         {
-            if (this.Visible)
+            if (!this.Visible)
+            {
+                return;
+            }
+
+            if (this.Chrome)
+            {
+                FrameworkMenu.DrawMenuRect(b, this.Area.X + o.X, this.Area.Y + o.Y, this.Area.Width, this.Area.Height);
+            }
+            else
             {
                 IClickableMenu.drawTextureBox(
                     b,
