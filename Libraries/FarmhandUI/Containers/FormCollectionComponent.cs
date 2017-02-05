@@ -187,7 +187,7 @@
         /// </returns>
         public FrameworkMenu GetAttachedMenu()
         {
-            return this.Parent.GetAttachedMenu();
+            return this.Parent?.GetAttachedMenu();
         }
 
         /// <summary>
@@ -203,7 +203,7 @@
                 return;
             }
 
-            this.Parent.GiveFocus(this);
+            this.Parent?.GiveFocus(this);
             this.ResetFocus();
             this.FocusElement = component;
             var element = this.FocusElement as IKeyboardComponent;

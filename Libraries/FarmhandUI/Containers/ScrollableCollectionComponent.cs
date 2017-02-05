@@ -100,9 +100,12 @@
                 null,
                 new RasterizerState { ScissorTestEnable = true });
             var o2 = new Point(o.X + reg.X, o.Y + reg.Y - (this.ScrollOffset * Zoom10));
-            foreach (var el in this.DrawOrder)
+            if (this.DrawOrder != null)
             {
-                el.Draw(b, o2);
+                foreach (var el in this.DrawOrder)
+                {
+                    el.Draw(b, o2);
+                }
             }
 
             b.End();
@@ -184,13 +187,16 @@
                 var o2 = new Point(
                     this.Area.X + o.X,
                     this.Area.Y + o.Y - (this.ScrollOffset * Zoom10));
-                foreach (var el in this.EventOrder)
+                if (this.EventOrder != null)
                 {
-                    if (el.InBounds(p, o2))
+                    foreach (var el in this.EventOrder)
                     {
-                        this.GiveFocus(el);
-                        el.LeftClick(p, o2);
-                        return;
+                        if (el.InBounds(p, o2))
+                        {
+                            this.GiveFocus(el);
+                            el.LeftClick(p, o2);
+                            return;
+                        }
                     }
                 }
 
@@ -312,18 +318,21 @@
         {
             base.UpdateDrawOrder();
             var height = this.Area.Height;
-            foreach (var c in this.DrawOrder)
+            if (this.DrawOrder != null)
             {
-                if (!c.Visible)
+                foreach (var c in this.DrawOrder)
                 {
-                    return;
-                }
+                    if (!c.Visible)
+                    {
+                        return;
+                    }
 
-                var r = c.GetRegion();
-                var b = r.Y + r.Height;
-                if (b > height)
-                {
-                    height = b;
+                    var r = c.GetRegion();
+                    var b = r.Y + r.Height;
+                    if (b > height)
+                    {
+                        height = b;
+                    }
                 }
             }
 
