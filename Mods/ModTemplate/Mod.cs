@@ -75,8 +75,15 @@
 
             if (removeOnNextFrame)
             {
-                Game1.onScreenMenus.Remove(apiConfigMenu);
-                Game1.onScreenMenus.Remove(modConfigMenu);
+                if (Game1.activeClickableMenu is TitleMenu)
+                {
+                    Game1.onScreenMenus.Remove(apiConfigMenu);
+                    Game1.onScreenMenus.Remove(modConfigMenu);
+                }
+                else
+                {
+                    Game1.activeClickableMenu = null;
+                }
                 removeOnNextFrame = false;
             }
 
@@ -163,7 +170,14 @@
         {
             if (!Game1.onScreenMenus.Contains(apiConfigMenu))
             {
-                Game1.onScreenMenus.Add(apiConfigMenu);
+                if (Game1.activeClickableMenu is TitleMenu)
+                {
+                    Game1.onScreenMenus.Add(apiConfigMenu);
+                }
+                else
+                {
+                    Game1.activeClickableMenu = apiConfigMenu;
+                }
                 apiConfigMenu.OnOpen();
             }
         }
@@ -175,7 +189,14 @@
         {
             if (!Game1.onScreenMenus.Contains(modConfigMenu))
             {
-                Game1.onScreenMenus.Add(modConfigMenu);
+                if (Game1.activeClickableMenu is TitleMenu)
+                {
+                    Game1.onScreenMenus.Add(modConfigMenu);
+                }
+                else
+                {
+                    Game1.activeClickableMenu = modConfigMenu;
+                }
                 modConfigMenu.OnOpen();
             }
         }
