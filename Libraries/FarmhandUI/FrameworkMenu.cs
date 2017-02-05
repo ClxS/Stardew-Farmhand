@@ -461,12 +461,12 @@
             var drawOrder = new List<IMenuComponent>(statics);
             drawOrder.AddRange(interactives);
             drawOrder =
-                drawOrder.OrderByDescending(x => x.Layer)
+                drawOrder.OrderBy(x => x.Layer)
                     .ThenByDescending(x => x.GetPosition().Y)
                     .ThenByDescending(x => x.GetPosition().X)
                     .ToList();
             var eventOrder =
-                interactives.OrderBy(x => x.Layer)
+                interactives.OrderByDescending(x => x.Layer)
                     .ThenBy(x => x.GetPosition().Y)
                     .ThenBy(x => x.GetPosition().X)
                     .ToList();
