@@ -252,6 +252,8 @@
                         throw new ArgumentOutOfRangeException(nameof(property.Type));
                 }
             }
+
+            this.settingsInstance.Save();
         }
 
         #region Nested type: Property
