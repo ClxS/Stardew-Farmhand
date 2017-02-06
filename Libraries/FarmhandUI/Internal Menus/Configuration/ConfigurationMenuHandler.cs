@@ -48,7 +48,8 @@
 
         private static bool IsMenuOnScreen()
         {
-            return Game1.onScreenMenus.Contains(apiConfigMenu) || Game1.onScreenMenus.Contains(modConfigMenu);
+            return Game1.onScreenMenus.Contains(apiConfigMenu) || Game1.onScreenMenus.Contains(modConfigMenu)
+                   || API.Game.ActiveClickableMenu == apiConfigMenu || API.Game.ActiveClickableMenu == modConfigMenu;
         }
 
         private static void TitleMenuEvents_BeforeHoverAction(object sender, BeforeHoverEventArgs e)
@@ -86,7 +87,10 @@
                 removeOnNextFrame = false;
             }
 
-            UpdateMenu(flyoutMenu, state, e.GameTime);
+            if (!IsMenuOnScreen())
+            {
+                UpdateMenu(flyoutMenu, state, e.GameTime);
+            }
 
             if (Game1.activeClickableMenu is TitleMenu)
             {
@@ -204,15 +208,18 @@
 
         private static void GraphicsEvents_PostRenderGuiEventNoCheck(object sender, DrawEventArgs e)
         {
-            var mouseX = Game1.getMouseX();
+            if (!IsMenuOnScreen())
+            {
+                var mouseX = Game1.getMouseX();
 
-            if (mouseX < 20 * Game1.pixelZoom)
-            {
-                ShowMenu(e);
-            }
-            else
-            {
-                HideMenu(e);
+                if (mouseX < 20 * Game1.pixelZoom)
+                {
+                    ShowMenu(e);
+                }
+                else
+                {
+                    HideMenu(e);
+                }
             }
 
             if (Game1.activeClickableMenu is TitleMenu)
