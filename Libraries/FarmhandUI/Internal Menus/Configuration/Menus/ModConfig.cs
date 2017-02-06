@@ -8,7 +8,6 @@
     using Farmhand.Logging;
     using Farmhand.Registries;
     using Farmhand.Registries.Containers;
-    using Farmhand.UI;
     using Farmhand.UI.Components.Containers;
     using Farmhand.UI.Components.Controls;
     using Farmhand.UI.Components.Interfaces;
@@ -66,11 +65,12 @@
         {
             this.ClearComponents();
             this.Centered = true;
+            var pos = Utility.getTopLeftPositionForCenteringOnScreen(260, 120);
             var controlArea = new Rectangle(
-                this.ZoomEventRegion.X,
-                this.ZoomEventRegion.Y - 10,
-                this.ZoomEventRegion.Width,
-                this.ZoomEventRegion.Height);
+                (int)pos.X / Game1.pixelZoom - 100,
+                (int)pos.Y / Game1.pixelZoom - 60,
+                260,
+                120);
 
             var tab = new FormCollectionComponent(controlArea);
 
@@ -84,14 +84,13 @@
 
         private void AddControlButtons(IComponentCollection tab)
         {
-            var closeButton =
-                new ClickableTextureComponent(
-                    new Rectangle(tab.ZoomEventRegion.Width - 20, 0, 12, 12),
-                    Game1.mouseCursors,
-                    null,
-                    new Rectangle(0x151, 0x1ee, 12, 12)) {
-                                                            Layer = 1 
-                                                         };
+            var closeButton = new ClickableTextureComponent(
+                                  new Rectangle(tab.ZoomEventRegion.Width - 20, 0, 12, 12),
+                                  Game1.mouseCursors,
+                                  null,
+                                  new Rectangle(0x151, 0x1ee, 12, 12)) {
+                                                                          Layer = 1 
+                                                                       };
             closeButton.Handler += this.CloseButton_Handler;
 
             tab.AddComponent(closeButton);
