@@ -1,6 +1,6 @@
 ﻿namespace Farmhand.UI
 {
-    using Farmhand.UI.Interfaces;
+    using Farmhand.UI.Components.Interfaces;
 
     using Microsoft.Xna.Framework.Input;
 

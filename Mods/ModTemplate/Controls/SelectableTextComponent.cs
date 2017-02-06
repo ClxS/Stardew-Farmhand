@@ -2,7 +2,7 @@
 {
     using System;
 
-    using Farmhand.UI.Generic;
+    using Farmhand.UI.Components.Controls;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;

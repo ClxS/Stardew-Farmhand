@@ -10,7 +10,7 @@
     using Farmhand.Events.Menus;
     using Farmhand.Registries;
     using Farmhand.UI;
-    using Farmhand.UI.Interfaces;
+    using Farmhand.UI.Components.Interfaces;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
@@ -20,7 +20,7 @@
     using StardewValley;
     using StardewValley.Menus;
 
-    using ClickableTextureComponent = Farmhand.UI.Generic.ClickableTextureComponent;
+    using ClickableTextureComponent = Farmhand.UI.Components.Controls.ClickableTextureComponent;
     using FarmhandConfig = ModTemplate.Pages.FarmhandConfig;
     using TitleMenu = Farmhand.UI.TitleMenu;
 
@@ -84,6 +84,7 @@
                 {
                     Game1.activeClickableMenu = null;
                 }
+
                 removeOnNextFrame = false;
             }
 
@@ -178,6 +179,7 @@
                 {
                     Game1.activeClickableMenu = apiConfigMenu;
                 }
+
                 apiConfigMenu.OnOpen();
             }
         }
@@ -197,6 +199,7 @@
                 {
                     Game1.activeClickableMenu = modConfigMenu;
                 }
+
                 modConfigMenu.OnOpen();
             }
         }

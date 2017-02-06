@@ -10,10 +10,9 @@
     using Farmhand;
     using Farmhand.UI;
     using Farmhand.UI.Base;
-    using Farmhand.UI.Containers;
-    using Farmhand.UI.Form;
-    using Farmhand.UI.Generic;
-    using Farmhand.UI.Interfaces;
+    using Farmhand.UI.Components.Containers;
+    using Farmhand.UI.Components.Controls;
+    using Farmhand.UI.Components.Interfaces;
 
     using Microsoft.Xna.Framework;
 
