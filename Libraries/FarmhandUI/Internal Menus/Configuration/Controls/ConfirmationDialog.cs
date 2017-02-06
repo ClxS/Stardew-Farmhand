@@ -1,4 +1,4 @@
-﻿namespace ModTemplate.Controls
+﻿namespace Farmhand.UI.Internal_Menus.Configuration.Controls
 {
     // ReSharper disable StyleCop.SA1300
     using System;

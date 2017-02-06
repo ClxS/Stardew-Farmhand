@@ -1,4 +1,4 @@
-﻿namespace Farmhand.UI.Components
+namespace Farmhand.UI.Components
 {
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;

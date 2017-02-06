@@ -1,4 +1,4 @@
-﻿namespace ModTemplate.Pages
+﻿namespace Farmhand.UI.Internal_Menus.Configuration.Controls
 {
     using System;
     using System.Collections.Generic;

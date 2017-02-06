@@ -1,8 +1,6 @@
-﻿namespace ModTemplate.Controls
+﻿namespace Farmhand.UI.Components.Controls
 {
     using System;
-
-    using Farmhand.UI.Components.Controls;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;

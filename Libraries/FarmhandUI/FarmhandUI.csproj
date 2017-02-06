@@ -74,8 +74,10 @@
     <Compile Include="Components\Containers\TablistComponent.cs" />
     <Compile Include="Components\Controls\ButtonFormComponent.cs" />
     <Compile Include="Components\Controls\CheckboxFormComponent.cs" />
+    <Compile Include="Components\Controls\ColoredRectangleComponent.cs" />
     <Compile Include="Components\Controls\DropdownFormComponent.cs" />
     <Compile Include="Components\Controls\PlusMinusFormComponent.cs" />
+    <Compile Include="Components\Controls\SelectableTextComponent.cs" />
     <Compile Include="Components\Controls\SliderFormComponentInt.cs" />
     <Compile Include="Components\Controls\SliderFormComponent.cs" />
     <Compile Include="Components\Controls\TextboxFormComponent.cs" />
@@ -97,7 +99,11 @@
     <Compile Include="Components\Interfaces\IIinteractiveMenuComponent.cs" />
     <Compile Include="Components\Interfaces\IKeyboardComponent.cs" />
     <Compile Include="Components\Interfaces\IMenuComponent.cs" />
-    <Compile Include="Internal Menus\SettingsFlyout.cs" />
+    <Compile Include="Internal Menus\Configuration\ConfigurationMenuHandler.cs" />
+    <Compile Include="Internal Menus\Configuration\Controls\ConfirmationDialog.cs" />
+    <Compile Include="Internal Menus\Configuration\Menus\FarmhandConfig.cs" />
+    <Compile Include="Internal Menus\Configuration\Menus\ModConfig.cs" />
+    <Compile Include="Internal Menus\Configuration\Controls\ModConfigFieldsComponent.cs" />
     <Compile Include="KeyboardSubscriberProxy.cs" />
     <Compile Include="OverlayManager.cs" />
     <Compile Include="ShopMenu.cs" />

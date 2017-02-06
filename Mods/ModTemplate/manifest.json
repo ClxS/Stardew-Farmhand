@@ -4,13 +4,5 @@
   "ModDll": "ModTemplate",
   "Author": "ModAuthor",
   "Version": "1.0",
-  "Description": "ModDescription",
-  "Content": {
-    "Textures": [
-      {
-        "Id": "icon_gear",
-        "File": "gear.png"
-      }
-    ]
-  }
+  "Description": "ModDescription"
 }

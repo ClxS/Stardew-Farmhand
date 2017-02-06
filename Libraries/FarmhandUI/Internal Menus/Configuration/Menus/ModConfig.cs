@@ -1,4 +1,4 @@
-﻿namespace ModTemplate.Pages
+﻿namespace Farmhand.UI.Internal_Menus.Configuration.Menus
 {
     // ReSharper disable StyleCop.SA1300
     using System;
@@ -12,10 +12,9 @@
     using Farmhand.UI.Components.Containers;
     using Farmhand.UI.Components.Controls;
     using Farmhand.UI.Components.Interfaces;
+    using Farmhand.UI.Internal_Menus.Configuration.Controls;
 
     using Microsoft.Xna.Framework;
-
-    using ModTemplate.Controls;
 
     using StardewValley;
 

@@ -1,4 +1,4 @@
-﻿namespace ModTemplate.Controls
+﻿namespace Farmhand.UI.Components.Controls
 {
     using Farmhand.UI.Base;
 
