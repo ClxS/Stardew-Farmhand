@@ -64,6 +64,7 @@
 
         private void ConstructForm()
         {
+            this.ClearComponents();
             this.Centered = true;
             var controlArea = new Rectangle(
                 this.ZoomEventRegion.X,
