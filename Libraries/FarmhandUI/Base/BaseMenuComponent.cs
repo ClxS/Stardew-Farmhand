@@ -2,7 +2,7 @@
 {
     using System;
 
-    using Farmhand.UI.Interfaces;
+    using Farmhand.UI.Components.Interfaces;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -180,21 +180,7 @@
         /// <summary>
         ///     Gets the parent of this component
         /// </summary>
-        /// <exception cref="NullReferenceException">
-        ///     Triggered when parent is null
-        /// </exception>
-        public IComponentContainer Parent
-        {
-            get
-            {
-                if (this.parent == null)
-                {
-                    throw new NullReferenceException("Component attempted to reference its parent while not attached");
-                }
-
-                return this.parent;
-            }
-        }
+        public IComponentContainer Parent => this.parent;
 
         /// <summary>
         ///     Gets or sets a value indicating whether the component is visible.

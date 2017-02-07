@@ -166,7 +166,7 @@
         /// </summary>
         [JsonIgnore]
         public string ModDirectory { get; internal set; }
-
+        
         internal bool LoadModDll()
         {
             if (this.Instance != null)
@@ -293,11 +293,12 @@
                     check = check.Replace("=", string.Empty).Replace('+', '-').Replace('/', '_');
 
                     // Fix for valid file name. = is just padding
-                    var checkPath = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                        "StardewValley",
-                        "cache",
-                        this.ModDll + "-" + check + ".dll");
+                    var checkPath =
+                        Path.Combine(
+                            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                            "StardewValley",
+                            "cache",
+                            this.ModDll + "-" + check + ".dll");
                     if (File.Exists(checkPath))
                     {
                         try
@@ -368,7 +369,8 @@
             {
                 foreach (var texture in this.Content.Textures)
                 {
-                    texture.AbsoluteFilePath = $"{this.ModDirectory}\\{Constants.ModContentDirectory}\\{texture.File}";
+                    texture.AbsoluteFilePath =
+                        $"{this.ModDirectory}\\{Constants.ModContentDirectory}\\{texture.File}";
 
                     if (!texture.Exists())
                     {
@@ -384,7 +386,8 @@
             {
                 foreach (var map in this.Content.Maps)
                 {
-                    map.AbsoluteFilePath = $"{this.ModDirectory}\\{Constants.ModContentDirectory}\\{map.File}";
+                    map.AbsoluteFilePath =
+                        $"{this.ModDirectory}\\{Constants.ModContentDirectory}\\{map.File}";
 
                     if (!map.Exists())
                     {
@@ -405,7 +408,8 @@
             {
                 if (file.IsXnb)
                 {
-                    file.AbsoluteFilePath = $"{this.ModDirectory}\\{Constants.ModContentDirectory}\\{file.File}";
+                    file.AbsoluteFilePath =
+                        $"{this.ModDirectory}\\{Constants.ModContentDirectory}\\{file.File}";
                 }
 
                 file.OwningMod = this;
@@ -444,7 +448,8 @@
             var item = TextureRegistry.GetItem(id, this);
             if (item == null)
             {
-                throw new NullReferenceException($"Found no matching registered texture in TextureRegistry: {id}");
+                throw new NullReferenceException(
+                    $"Found no matching registered texture in TextureRegistry: {id}");
             }
 
             return item.Texture;
@@ -467,7 +472,8 @@
             var item = MapRegistry.GetItem(id, this);
             if (item == null)
             {
-                throw new NullReferenceException($"Found no matching registered map in MapRegistry: {id}");
+                throw new NullReferenceException(
+                    $"Found no matching registered map in MapRegistry: {id}");
             }
 
             return item.Map;

@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.Composition;
     using System.ComponentModel.Composition.Hosting;
+    using System.Linq;
     using System.Reflection;
 
     using Farmhand.Attributes;
@@ -12,6 +13,8 @@
     using Farmhand.Installers.Patcher.Injection.Components.Modifiers;
     using Farmhand.Installers.Patcher.Injection.Components.Parameters;
     using Farmhand.Installers.Patcher.PropertyConverters;
+
+    using Mono.Cecil;
 
     /// <summary>
     ///     Performs the first-pass alterations to the game.
@@ -85,9 +88,9 @@
 
             this.injectionContext.SetPrimaryAssembly(repackOutput, true);
             this.injectionContext.LoadAssembly(this.GetAssemblyPath(PatcherConstants.FarmhandDll));
-
+            
             this.injector.Inject();
-
+            
             Console.WriteLine("First Pass Installation Completed");
 
             this.injectionContext.WriteAssembly(

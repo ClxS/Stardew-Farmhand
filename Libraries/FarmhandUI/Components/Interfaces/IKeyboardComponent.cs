@@ -1,20 +1,16 @@
-﻿namespace Farmhand.UI.Base
+﻿namespace Farmhand.UI.Components.Interfaces
 {
-    using Farmhand.UI.Components.Interfaces;
-
     using Microsoft.Xna.Framework.Input;
 
     /// <summary>
-    ///     The base keyboard form component.
+    ///     The KeyboardComponent interface.
     /// </summary>
-    public abstract class BaseKeyboardFormComponent : BaseFormComponent, IKeyboardComponent
+    public interface IKeyboardComponent
     {
-        #region IKeyboardComponent Members
-
         /// <summary>
         ///     Gets or sets a value indicating whether selected.
         /// </summary>
-        public bool Selected { get; set; }
+        bool Selected { get; set; }
 
         /// <summary>
         ///     Called when a character is entered
@@ -22,9 +18,7 @@
         /// <param name="chr">
         ///     The character received
         /// </param>
-        public virtual void TextReceived(char chr)
-        {
-        }
+        void TextReceived(char chr);
 
         /// <summary>
         ///     Called when a string is entered
@@ -32,9 +26,7 @@
         /// <param name="str">
         ///     The string received
         /// </param>
-        public virtual void TextReceived(string str)
-        {
-        }
+        void TextReceived(string str);
 
         /// <summary>
         ///     Called when a command is received
@@ -42,9 +34,7 @@
         /// <param name="cmd">
         ///     The command received
         /// </param>
-        public virtual void CommandReceived(char cmd)
-        {
-        }
+        void CommandReceived(char cmd);
 
         /// <summary>
         ///     Called when a special key is received
@@ -52,10 +42,6 @@
         /// <param name="key">
         ///     The key received
         /// </param>
-        public virtual void SpecialReceived(Keys key)
-        {
-        }
-
-        #endregion
+        void SpecialReceived(Keys key);
     }
 }

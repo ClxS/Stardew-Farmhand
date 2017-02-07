@@ -15,6 +15,7 @@ namespace Farmhand
     [HookExposeInternal("FarmhandUI")]
     [HookExposeInternal("FarmhandCharacter")]
     [HookExposeInternal("FarmhandGame")]
+    [HookExposeInternal("ModTemplate")]
     public class Program
     {
         /// <summary>
@@ -32,9 +33,17 @@ namespace Farmhand
             catch (FileNotFoundException)
             {
                 Config = new FarmhandConfig();
-                var cfg = JsonConvert.SerializeObject(Config, Formatting.Indented);
-                File.WriteAllText("FarmhandConfig.json", cfg);
+                SaveConfig();
             }
+        }
+
+        /// <summary>
+        /// The save config.
+        /// </summary>
+        internal static void SaveConfig()
+        {
+            var cfg = JsonConvert.SerializeObject(Config, Formatting.Indented);
+            File.WriteAllText("FarmhandConfig.json", cfg);
         }
     }
 }
