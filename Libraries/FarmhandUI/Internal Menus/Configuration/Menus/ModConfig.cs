@@ -110,9 +110,9 @@
             this.fieldsComponent =
                 new ModConfigFieldsComponent(
                     new Rectangle(
-                        this.modList.ZoomEventRegion.Width,
+                        this.modList.ZoomEventRegion.Width + 5,
                         10,
-                        tab.ZoomEventRegion.Width - this.modList.ZoomEventRegion.Width - 20,
+                        tab.ZoomEventRegion.Width - this.modList.ZoomEventRegion.Width - 25,
                         tab.ZoomEventRegion.Height - 30));
             tab.AddComponent(this.fieldsComponent);
         }
@@ -124,6 +124,12 @@
                 new ScrollableCollectionComponent(
                     new Rectangle(0, 20, 300 / Game1.pixelZoom, tab.ZoomEventRegion.Height - 30));
             tab.AddComponent(this.modList);
+
+            var bar =
+                new ColoredRectangleComponent(
+                    new Rectangle(this.modList.ZoomEventRegion.Width, 10, 1, tab.ZoomEventRegion.Height - 20),
+                    new Color(177, 78, 5, 200));
+            tab.AddComponent(bar);
         }
 
         private void AddControlBackgroundRect(FormCollectionComponent tab)
