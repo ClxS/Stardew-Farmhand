@@ -42,11 +42,14 @@
         /// <param name="logItem">
         ///     The entry to log.
         /// </param>
-        public void Write(LogEntry logItem)
+        /// <param name="module">
+        ///     The name of the module writing this log.
+        /// </param>
+        public void Write(LogEntry logItem, string module)
         {
             try
             {
-                this.File.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {logItem.Message}");
+                this.File.WriteLine($"[{DateTime.Now.ToLongTimeString()}][{module}] {logItem.Message}");
             }
             catch (Exception)
             {

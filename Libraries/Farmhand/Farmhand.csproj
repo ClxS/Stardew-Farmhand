@@ -288,6 +288,7 @@
     <Compile Include="Graphics\GraphicsHooks.cs" />
     <Compile Include="Graphics\PostProcessing\PostProcessing.cs" />
     <Compile Include="Helpers\ArgumentsHelper.cs" />
+    <Compile Include="Helpers\ModHelper.cs" />
     <Compile Include="Helpers\Randomizer\AgeRanges.cs" />
     <Compile Include="Helpers\Randomizer\CasingRules.cs" />
     <Compile Include="Helpers\Randomizer\Data.cs" />

@@ -18,7 +18,10 @@
         /// <param name="logItem">
         ///     The entry to log.
         /// </param>
-        public void Write(LogEntry logItem)
+        /// <param name="module">
+        ///     The name of the module writing this log.
+        /// </param>
+        public void Write(LogEntry logItem, string module)
         {
             if (Game1.onScreenMenus == null || Game1.content == null)
             {
@@ -33,7 +36,7 @@
             if (Game1.ChatBox != null)
             {
                 Game1.ChatBox?.receiveChatMessage(
-                    $"[FHLOG-{this.GetTypeSuffix(logItem.Type)}] {DateTime.Now.ToLongTimeString()} - {logItem.Message}",
+                    $"[FHLOG-{this.GetTypeSuffix(logItem.Type)}] {DateTime.Now.ToLongTimeString()} [{module}] - {logItem.Message}",
                     0L);
             }
         }

@@ -15,10 +15,13 @@
         /// <param name="logItem">
         ///     The entry to log.
         /// </param>
-        public void Write(LogEntry logItem)
+        /// <param name="module">
+        ///     The name of the module writing this log.
+        /// </param>
+        public void Write(LogEntry logItem, string module)
         {
             this.SetConsoleColour(logItem.Type);
-            Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {logItem.Message}");
+            Console.WriteLine($"[{DateTime.Now.ToLongTimeString()}][{module}] {logItem.Message}");
             this.SetConsoleColour(logItem.Type);
         }
 
