@@ -12,10 +12,10 @@ namespace Farmhand
     /// <summary>
     ///     Holds Farmhand configuration details.
     /// </summary>
+    [HookExposeInternal("FarmhandPatcherSecondPass")]
     [HookExposeInternal("FarmhandUI")]
     [HookExposeInternal("FarmhandCharacter")]
     [HookExposeInternal("FarmhandGame")]
-    [HookExposeInternal("ModTemplate")]
     public class Program
     {
         /// <summary>
