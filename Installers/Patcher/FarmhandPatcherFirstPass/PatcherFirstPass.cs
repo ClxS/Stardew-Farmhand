@@ -70,7 +70,9 @@
                         typeof(MakeVirtualBaseCallHandler),
                         typeof(MakeVirtualBaseCallAttributeConverter),
                         typeof(ExposeInternals),
-                        typeof(ExposeInternalAttributeConverter)));
+                        typeof(ExposeInternalAttributeConverter),
+                        typeof(MakeObsoleteHandler),
+                        typeof(MakeObsoleteAttributeConverter)));
             this.InitialiseContainer(catalog);
 
             path = path ?? PatcherConstants.StardewExe;

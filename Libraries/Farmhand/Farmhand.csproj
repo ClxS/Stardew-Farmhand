@@ -173,6 +173,7 @@
     <Compile Include="Attributes\HookExposeInternal.cs" />
     <Compile Include="Attributes\HookForceVirtualBaseAttribute.cs" />
     <Compile Include="Attributes\HookMakeBaseVirtualCallAttribute.cs" />
+    <Compile Include="Attributes\HookMarkObsoleteAttribute.cs" />
     <Compile Include="Attributes\HookRedirectAttribute.cs" />
     <Compile Include="Attributes\HookRedirectConstructorFromBaseAttribute.cs" />
     <Compile Include="Attributes\HookRedirectConstructorToMethodAttribute.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Attributes\LocalBindAttribute.cs" />
     <Compile Include="Attributes\LowestProtection.cs" />
     <Compile Include="Attributes\MethodOutputBindAttribute.cs" />
+    <Compile Include="Attributes\ObsoleteElementType.cs" />
     <Compile Include="Attributes\ParameterBindAttribute.cs" />
     <Compile Include="Attributes\PendingHookAttribute.cs" />
     <Compile Include="Attributes\ThisBindAttribute.cs" />

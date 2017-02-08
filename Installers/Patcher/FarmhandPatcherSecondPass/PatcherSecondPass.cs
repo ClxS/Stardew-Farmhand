@@ -65,7 +65,9 @@
                         typeof(RedirectConstructorToMethodHandler),
                         typeof(RedirectConstructorToMethodAttributeConverter),
                         typeof(MakeVirtualBaseCallHandler),
-                        typeof(MakeVirtualBaseCallAttributeConverter)));
+                        typeof(MakeVirtualBaseCallAttributeConverter),
+                        typeof(MakeObsoleteHandler),
+                        typeof(MakeObsoleteAttributeConverter)));
             this.InitialiseContainer(catalog);
 
             var repackOutput = this.GetAssemblyPath(PatcherConstants.PassTwoPackageResult);

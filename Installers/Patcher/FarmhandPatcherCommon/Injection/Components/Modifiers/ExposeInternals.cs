@@ -40,7 +40,6 @@
         }
 
         #region IHookHandler Members
-
         public void PerformAlteration(Attribute attribute, string type, string method)
         {
             this.propertyConverter.FromAttribute(attribute);

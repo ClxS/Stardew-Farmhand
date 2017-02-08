@@ -62,8 +62,82 @@
         /// </summary>
         public void Inject()
         {
+            this.InjectFieldHooks();
+            this.InjectPropertyHooks();
             this.InjectMethodHooks();
             this.InjectClassHooks();
+        }
+
+        private void InjectFieldHooks()
+        {
+            var fields =
+                this.cecilContext.LoadedAssemblies.SelectMany(a => a.GetTypes())
+                    .SelectMany(
+                        t =>
+                            t.GetFields(
+                                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance
+                                | BindingFlags.Static))
+                    .Where(m => m.GetCustomAttributes(typeof(THookBase), true).Any())
+                    .ToArray();
+
+            foreach (var field in fields)
+            {
+                if (field?.DeclaringType == null)
+                {
+                    continue;
+                }
+
+                var typeName = field.DeclaringType.FullName;
+                var hookAttributes =
+                    field.GetCustomAttributes(false).Cast<THookBase>();
+
+                foreach (var hook in hookAttributes)
+                {
+                    var matchingHandlers =
+                        this.hookHandlers.Where(h => h.Equals(hook.GetType().FullName));
+
+                    foreach (var handler in matchingHandlers)
+                    {
+                        handler.PerformAlteration(hook, typeName, field.Name);
+                    }
+                }
+            }
+        }
+
+        private void InjectPropertyHooks()
+        {
+            var properties =
+                this.cecilContext.LoadedAssemblies.SelectMany(a => a.GetTypes())
+                    .SelectMany(
+                        t =>
+                            t.GetProperties(
+                                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance
+                                | BindingFlags.Static))
+                    .Where(m => m.GetCustomAttributes(typeof(THookBase), true).Any())
+                    .ToArray();
+
+            foreach (var property in properties)
+            {
+                if (property?.DeclaringType == null)
+                {
+                    continue;
+                }
+
+                var typeName = property.DeclaringType.FullName;
+                var hookAttributes =
+                    property.GetCustomAttributes(false).Cast<THookBase>();
+
+                foreach (var hook in hookAttributes)
+                {
+                    var matchingHandlers =
+                        this.hookHandlers.Where(h => h.Equals(hook.GetType().FullName));
+
+                    foreach (var handler in matchingHandlers)
+                    {
+                        handler.PerformAlteration(hook, typeName, property.Name);
+                    }
+                }
+            }
         }
 
         private void InjectClassHooks()
