@@ -19,6 +19,7 @@
     using StardewValley.Menus;
 
     using ClickableTextureComponent = Farmhand.UI.Components.Controls.ClickableTextureComponent;
+    using Game = Farmhand.API.Game;
     using TitleMenu = Farmhand.UI.TitleMenu;
 
     internal static class ConfigurationMenuHandler
@@ -49,7 +50,7 @@
         private static bool IsMenuOnScreen()
         {
             return Game1.onScreenMenus.Contains(apiConfigMenu) || Game1.onScreenMenus.Contains(modConfigMenu)
-                   || API.Game.ActiveClickableMenu == apiConfigMenu || API.Game.ActiveClickableMenu == modConfigMenu;
+                   || Game.ActiveClickableMenu == apiConfigMenu || Game.ActiveClickableMenu == modConfigMenu;
         }
 
         private static void TitleMenuEvents_BeforeHoverAction(object sender, BeforeHoverEventArgs e)
@@ -74,14 +75,14 @@
 
             if (removeOnNextFrame)
             {
-                if (Game1.activeClickableMenu is TitleMenu)
+                if (Game.ActiveClickableMenu is TitleMenu)
                 {
                     Game1.onScreenMenus.Remove(apiConfigMenu);
                     Game1.onScreenMenus.Remove(modConfigMenu);
                 }
                 else
                 {
-                    Game1.activeClickableMenu = null;
+                    Game.ActiveClickableMenu = null;
                 }
 
                 removeOnNextFrame = false;
@@ -92,7 +93,7 @@
                 UpdateMenu(flyoutMenu, state, e.GameTime);
             }
 
-            if (Game1.activeClickableMenu is TitleMenu)
+            if (Game.ActiveClickableMenu is TitleMenu)
             {
                 if (Game1.onScreenMenus.Contains(apiConfigMenu))
                 {
@@ -117,7 +118,7 @@
             // the "activeClickableMenu".
             clickableMenu.performHoverAction(Game1.getMouseX(), Game1.getMouseY());
 
-            if (Game1.activeClickableMenu != null)
+            if (Game.ActiveClickableMenu != null)
             {
                 clickableMenu.update(gameTime);
             }
@@ -173,13 +174,13 @@
         {
             if (!Game1.onScreenMenus.Contains(apiConfigMenu))
             {
-                if (Game1.activeClickableMenu is TitleMenu)
+                if (Game.ActiveClickableMenu is TitleMenu)
                 {
                     Game1.onScreenMenus.Add(apiConfigMenu);
                 }
                 else
                 {
-                    Game1.activeClickableMenu = apiConfigMenu;
+                    Game.ActiveClickableMenu = apiConfigMenu;
                 }
 
                 apiConfigMenu.OnOpen();
@@ -193,13 +194,13 @@
         {
             if (!Game1.onScreenMenus.Contains(modConfigMenu))
             {
-                if (Game1.activeClickableMenu is TitleMenu)
+                if (Game.ActiveClickableMenu is TitleMenu)
                 {
                     Game1.onScreenMenus.Add(modConfigMenu);
                 }
                 else
                 {
-                    Game1.activeClickableMenu = modConfigMenu;
+                    Game.ActiveClickableMenu = modConfigMenu;
                 }
 
                 modConfigMenu.OnOpen();
@@ -222,7 +223,7 @@
                 }
             }
 
-            if (Game1.activeClickableMenu is TitleMenu)
+            if (Game.ActiveClickableMenu is TitleMenu)
             {
                 if (Game1.onScreenMenus.Contains(apiConfigMenu))
                 {

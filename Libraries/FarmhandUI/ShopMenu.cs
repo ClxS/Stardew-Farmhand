@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Farmhand.API;
     using Farmhand.API.Shops;
     using Farmhand.Attributes;
     using Farmhand.Logging;
@@ -126,7 +127,7 @@
 
             if (ShopUtilities.RegisteredShops.ContainsKey(internalShopName))
             {
-                Game1.activeClickableMenu = new ShopMenu(
+                Game.ActiveClickableMenu = new ShopMenu(
                     ShopUtilities.GetStock(owner, shopName),
                     ShopUtilities.RegisteredShops[internalShopName].CurrencyType);
             }

@@ -68,13 +68,13 @@
             }
 
             this.GraphicsDevice.Clear(this.bgColor);
-            if (options.showMenuBackground && activeClickableMenu != null
-                && activeClickableMenu.showWithoutTransparencyIfOptionIsSet())
+            if (options.showMenuBackground && Farmhand.API.Game.ActiveClickableMenu != null
+                && Farmhand.API.Game.ActiveClickableMenu.showWithoutTransparencyIfOptionIsSet())
             {
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
-                activeClickableMenu.drawBackground(spriteBatch);
+                Farmhand.API.Game.ActiveClickableMenu.drawBackground(spriteBatch);
                 GraphicsEvents.OnPreRenderGuiEvent(this, spriteBatch, gameTime, this.screen);
-                activeClickableMenu.draw(spriteBatch);
+                Farmhand.API.Game.ActiveClickableMenu.draw(spriteBatch);
                 GraphicsEvents.OnPostRenderGuiEvent(this, spriteBatch, gameTime, this.screen);
                 spriteBatch.End();
                 if (this.ZoomLevelIsOne)
@@ -119,7 +119,7 @@
                     new Color(0, 255, 0));
                 spriteBatch.DrawString(
                     smoothFont,
-                    parseText(errorMessage, smoothFont, graphics.GraphicsDevice.Viewport.Width),
+                    parseText(errorMessage, smoothFont, Farmhand.API.Game.GraphicsDevice.Viewport.Width),
                     new Vector2(16f, 48f),
                     Color.White);
                 spriteBatch.End();
@@ -139,7 +139,7 @@
                         null);
                     spriteBatch.Draw(
                         fadeToBlackRect,
-                        graphics.GraphicsDevice.Viewport.Bounds,
+                        Farmhand.API.Game.GraphicsDevice.Viewport.Bounds,
                         Color.Black * (gameMode == 0 ? 1f - fadeToBlackAlpha : fadeToBlackAlpha));
                     spriteBatch.End();
                 }
@@ -173,7 +173,7 @@
             if (showingEndOfNightStuff)
             {
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
-                activeClickableMenu?.draw(spriteBatch);
+                Farmhand.API.Game.ActiveClickableMenu?.draw(spriteBatch);
                 spriteBatch.End();
                 if (this.ZoomLevelIsOne)
                 {
@@ -217,7 +217,7 @@
                     spriteBatch,
                     "Loading" + text,
                     64,
-                    graphics.GraphicsDevice.Viewport.Height - 64,
+                    Farmhand.API.Game.GraphicsDevice.Viewport.Height - 64,
                     999,
                     -1,
                     999,
@@ -371,19 +371,19 @@
                 }
 
                 IL_B30:
-                if (!player.swimming && !player.isRidingHorse()
-                    && !currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(player.getTileLocation()))
+                if (!Farmhand.API.Game.Player.swimming && !Farmhand.API.Game.Player.isRidingHorse()
+                    && !currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(Farmhand.API.Game.Player.getTileLocation()))
                 {
                     spriteBatch.Draw(
                         shadowTexture,
-                        GlobalToLocal(player.position + new Vector2(32f, 24f)),
+                        GlobalToLocal(Farmhand.API.Game.Player.position + new Vector2(32f, 24f)),
                         shadowTexture.Bounds,
                         Color.White,
                         0f,
                         new Vector2(shadowTexture.Bounds.Center.X, shadowTexture.Bounds.Center.Y),
                         4f
-                        - ((player.running || player.usingTool) && player.FarmerSprite.indexInCurrentAnimation > 1
-                               ? Math.Abs(FarmerRenderer.featureYOffsetPerFrame[player.FarmerSprite.CurrentFrame])
+                        - ((Farmhand.API.Game.Player.running || Farmhand.API.Game.Player.usingTool) && Farmhand.API.Game.Player.FarmerSprite.indexInCurrentAnimation > 1
+                               ? Math.Abs(FarmerRenderer.featureYOffsetPerFrame[Farmhand.API.Game.Player.FarmerSprite.CurrentFrame])
                                  * 0.5f
                                : 0f),
                         SpriteEffects.None,
@@ -456,28 +456,28 @@
                 }
 
                 IL_F5F:
-                if (!player.swimming && !player.isRidingHorse()
-                    && currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(player.getTileLocation()))
+                if (!Farmhand.API.Game.Player.swimming && !Farmhand.API.Game.Player.isRidingHorse()
+                    && currentLocation.shouldShadowBeDrawnAboveBuildingsLayer(Farmhand.API.Game.Player.getTileLocation()))
                 {
                     spriteBatch.Draw(
                         shadowTexture,
-                        GlobalToLocal(player.position + new Vector2(32f, 24f)),
+                        GlobalToLocal(Farmhand.API.Game.Player.position + new Vector2(32f, 24f)),
                         shadowTexture.Bounds,
                         Color.White,
                         0f,
                         new Vector2(shadowTexture.Bounds.Center.X, shadowTexture.Bounds.Center.Y),
                         4f
-                        - ((player.running || player.usingTool) && player.FarmerSprite.indexInCurrentAnimation > 1
-                               ? Math.Abs(FarmerRenderer.featureYOffsetPerFrame[player.FarmerSprite.CurrentFrame])
+                        - ((Farmhand.API.Game.Player.running || Farmhand.API.Game.Player.usingTool) && Farmhand.API.Game.Player.FarmerSprite.indexInCurrentAnimation > 1
+                               ? Math.Abs(FarmerRenderer.featureYOffsetPerFrame[Farmhand.API.Game.Player.FarmerSprite.CurrentFrame])
                                  * 0.5f
                                : 0f),
                         SpriteEffects.None,
-                        Math.Max(0.0001f, player.getStandingY() / 10000f + 0.00011f) - 0.0001f);
+                        Math.Max(0.0001f, Farmhand.API.Game.Player.getStandingY() / 10000f + 0.00011f) - 0.0001f);
                 }
 
                 if (displayFarmer)
                 {
-                    player.draw(spriteBatch);
+                    Farmhand.API.Game.Player.draw(spriteBatch);
                 }
 
                 if ((eventUp || killScreen) && !killScreen)
@@ -485,19 +485,19 @@
                     currentLocation.currentEvent?.draw(spriteBatch);
                 }
 
-                if (player.currentUpgrade != null && player.currentUpgrade.daysLeftTillUpgradeDone <= 3
+                if (Farmhand.API.Game.Player.currentUpgrade != null && Farmhand.API.Game.Player.currentUpgrade.daysLeftTillUpgradeDone <= 3
                     && currentLocation.Name.Equals("Farm"))
                 {
                     spriteBatch.Draw(
-                        player.currentUpgrade.workerTexture,
-                        GlobalToLocal(viewport, player.currentUpgrade.positionOfCarpenter),
-                        player.currentUpgrade.getSourceRectangle(),
+                        Farmhand.API.Game.Player.currentUpgrade.workerTexture,
+                        GlobalToLocal(viewport, Farmhand.API.Game.Player.currentUpgrade.positionOfCarpenter),
+                        Farmhand.API.Game.Player.currentUpgrade.getSourceRectangle(),
                         Color.White,
                         0f,
                         Vector2.Zero,
                         1f,
                         SpriteEffects.None,
-                        (player.currentUpgrade.positionOfCarpenter.Y + tileSize * 3 / 4) / 10000f);
+                        (Farmhand.API.Game.Player.currentUpgrade.positionOfCarpenter.Y + tileSize * 3 / 4) / 10000f);
                 }
 
                 currentLocation.draw(spriteBatch);
@@ -508,18 +508,18 @@
                         Color.Black,
                         Color.White,
                         new Vector2(
-                            graphics.GraphicsDevice.Viewport.TitleSafeArea.Width / 2
+                            Farmhand.API.Game.GraphicsDevice.Viewport.TitleSafeArea.Width / 2
                             - borderFont.MeasureString(currentLocation.currentEvent.messageToScreen).X / 2f,
-                            graphics.GraphicsDevice.Viewport.TitleSafeArea.Height - tileSize),
+                            Farmhand.API.Game.GraphicsDevice.Viewport.TitleSafeArea.Height - tileSize),
                         0f,
                         1f,
                         0.999f);
                 }
 
-                if (player.ActiveObject == null && (player.UsingTool || pickingTool) && player.CurrentTool != null
-                    && (!player.CurrentTool.Name.Equals("Seeds") || pickingTool))
+                if (Farmhand.API.Game.Player.ActiveObject == null && (Farmhand.API.Game.Player.UsingTool || pickingTool) && Farmhand.API.Game.Player.CurrentTool != null
+                    && (!Farmhand.API.Game.Player.CurrentTool.Name.Equals("Seeds") || pickingTool))
                 {
-                    drawTool(player);
+                    drawTool(Farmhand.API.Game.Player);
                 }
 
                 if (currentLocation.Name.Equals("Farm"))
@@ -610,46 +610,46 @@
                         Color.White);
                 }
 
-                if (displayFarmer && player.ActiveObject != null && player.ActiveObject.bigCraftable
+                if (displayFarmer && Farmhand.API.Game.Player.ActiveObject != null && Farmhand.API.Game.Player.ActiveObject.bigCraftable
                     && this.checkBigCraftableBoundariesForFrontLayer()
                     && currentLocation.Map.GetLayer("Front")
-                        .PickTile(new Location(player.getStandingX(), player.getStandingY()), viewport.Size) == null)
+                        .PickTile(new Location(Farmhand.API.Game.Player.getStandingX(), Farmhand.API.Game.Player.getStandingY()), viewport.Size) == null)
                 {
-                    drawPlayerHeldObject(player);
+                    drawPlayerHeldObject(Farmhand.API.Game.Player);
                 }
-                else if (displayFarmer && player.ActiveObject != null
+                else if (displayFarmer && Farmhand.API.Game.Player.ActiveObject != null
                          && (currentLocation.Map.GetLayer("Front")
                                  .PickTile(
-                                     new Location((int)player.position.X, (int)player.position.Y - tileSize * 3 / 5),
+                                     new Location((int)Farmhand.API.Game.Player.position.X, (int)Farmhand.API.Game.Player.position.Y - tileSize * 3 / 5),
                                      viewport.Size) != null
                              && !currentLocation.Map.GetLayer("Front")
                                  .PickTile(
-                                     new Location((int)player.position.X, (int)player.position.Y - tileSize * 3 / 5),
+                                     new Location((int)Farmhand.API.Game.Player.position.X, (int)Farmhand.API.Game.Player.position.Y - tileSize * 3 / 5),
                                      viewport.Size)
                                  .TileIndexProperties.ContainsKey("FrontAlways")
                              || currentLocation.Map.GetLayer("Front")
                                  .PickTile(
-                                     new Location(player.GetBoundingBox().Right, (int)player.position.Y - tileSize * 3 / 5),
+                                     new Location(Farmhand.API.Game.Player.GetBoundingBox().Right, (int)Farmhand.API.Game.Player.position.Y - tileSize * 3 / 5),
                                      viewport.Size) != null
                              && !currentLocation.Map.GetLayer("Front")
                                  .PickTile(
-                                     new Location(player.GetBoundingBox().Right, (int)player.position.Y - tileSize * 3 / 5),
+                                     new Location(Farmhand.API.Game.Player.GetBoundingBox().Right, (int)Farmhand.API.Game.Player.position.Y - tileSize * 3 / 5),
                                      viewport.Size)
                                  .TileIndexProperties.ContainsKey("FrontAlways")))
                 {
-                    drawPlayerHeldObject(player);
+                    drawPlayerHeldObject(Farmhand.API.Game.Player);
                 }
 
-                if ((player.UsingTool || pickingTool) && player.CurrentTool != null
-                    && (!player.CurrentTool.Name.Equals("Seeds") || pickingTool)
+                if ((Farmhand.API.Game.Player.UsingTool || pickingTool) && Farmhand.API.Game.Player.CurrentTool != null
+                    && (!Farmhand.API.Game.Player.CurrentTool.Name.Equals("Seeds") || pickingTool)
                     && currentLocation.Map.GetLayer("Front")
                         .PickTile(
-                            new Location(player.getStandingX(), (int)player.position.Y - tileSize * 3 / 5),
+                            new Location(Farmhand.API.Game.Player.getStandingX(), (int)Farmhand.API.Game.Player.position.Y - tileSize * 3 / 5),
                             viewport.Size) != null
                     && currentLocation.Map.GetLayer("Front")
-                        .PickTile(new Location(player.getStandingX(), player.getStandingY()), viewport.Size) == null)
+                        .PickTile(new Location(Farmhand.API.Game.Player.getStandingX(), Farmhand.API.Game.Player.getStandingY()), viewport.Size) == null)
                 {
-                    drawTool(player);
+                    drawTool(Farmhand.API.Game.Player);
                 }
 
                 if (currentLocation.Map.GetLayer("AlwaysFront") != null)
@@ -660,7 +660,7 @@
                     mapDisplayDevice.EndScene();
                 }
 
-                if (toolHold > 400f && player.CurrentTool.UpgradeLevel >= 1 && player.canReleaseTool)
+                if (toolHold > 400f && Farmhand.API.Game.Player.CurrentTool.UpgradeLevel >= 1 && Farmhand.API.Game.Player.canReleaseTool)
                 {
                     var color = Color.White;
                     switch ((int)(toolHold / 600f) + 2)
@@ -682,18 +682,18 @@
                     spriteBatch.Draw(
                         littleEffect,
                         new Rectangle(
-                            (int)player.getLocalPosition(viewport).X - 2,
-                            (int)player.getLocalPosition(viewport).Y
-                            - (player.CurrentTool.Name.Equals("Watering Can") ? 0 : tileSize) - 2,
+                            (int)Farmhand.API.Game.Player.getLocalPosition(viewport).X - 2,
+                            (int)Farmhand.API.Game.Player.getLocalPosition(viewport).Y
+                            - (Farmhand.API.Game.Player.CurrentTool.Name.Equals("Watering Can") ? 0 : tileSize) - 2,
                             (int)(toolHold % 600f * 0.08f) + 4,
                             tileSize / 8 + 4),
                         Color.Black);
                     spriteBatch.Draw(
                         littleEffect,
                         new Rectangle(
-                            (int)player.getLocalPosition(viewport).X,
-                            (int)player.getLocalPosition(viewport).Y
-                            - (player.CurrentTool.Name.Equals("Watering Can") ? 0 : tileSize),
+                            (int)Farmhand.API.Game.Player.getLocalPosition(viewport).X,
+                            (int)Farmhand.API.Game.Player.getLocalPosition(viewport).Y
+                            - (Farmhand.API.Game.Player.CurrentTool.Name.Equals("Watering Can") ? 0 : tileSize),
                             (int)(toolHold % 600f * 0.08f),
                             tileSize / 8),
                         color);
@@ -713,7 +713,7 @@
                 {
                     spriteBatch.Draw(
                         fadeToBlackRect,
-                        graphics.GraphicsDevice.Viewport.Bounds,
+                        Farmhand.API.Game.GraphicsDevice.Viewport.Bounds,
                         Color.Black * currentLocation.LightLevel);
                 }
 
@@ -721,18 +721,18 @@
                 {
                     spriteBatch.Draw(
                         fadeToBlackRect,
-                        graphics.GraphicsDevice.Viewport.Bounds,
+                        Farmhand.API.Game.GraphicsDevice.Viewport.Bounds,
                         screenGlowColor * screenGlowAlpha);
                 }
 
                 currentLocation.drawAboveAlwaysFrontLayer(spriteBatch);
-                if (player.CurrentTool is FishingRod
-                    && ((player.CurrentTool as FishingRod).isTimingCast
-                        || (player.CurrentTool as FishingRod).castingChosenCountdown > 0f
-                        || (player.CurrentTool as FishingRod).fishCaught
-                        || (player.CurrentTool as FishingRod).showingTreasure))
+                if (Farmhand.API.Game.Player.CurrentTool is FishingRod
+                    && ((Farmhand.API.Game.Player.CurrentTool as FishingRod).isTimingCast
+                        || (Farmhand.API.Game.Player.CurrentTool as FishingRod).castingChosenCountdown > 0f
+                        || (Farmhand.API.Game.Player.CurrentTool as FishingRod).fishCaught
+                        || (Farmhand.API.Game.Player.CurrentTool as FishingRod).showingTreasure))
                 {
-                    player.CurrentTool.draw(spriteBatch);
+                    Farmhand.API.Game.Player.CurrentTool.draw(spriteBatch);
                 }
 
                 if (isRaining && currentLocation.IsOutdoors && !currentLocation.Name.Equals("Desert")
@@ -821,7 +821,7 @@
                         1f);
                     if (isRaining && currentLocation.isOutdoors && !(currentLocation is Desert))
                     {
-                        spriteBatch.Draw(staminaRect, graphics.GraphicsDevice.Viewport.Bounds, Color.OrangeRed * 0.45f);
+                        spriteBatch.Draw(staminaRect, Farmhand.API.Game.GraphicsDevice.Viewport.Bounds, Color.OrangeRed * 0.45f);
                     }
 
                     spriteBatch.End();
@@ -832,21 +832,21 @@
                 {
                     var num2 = -viewport.X % tileSize;
                     var num3 = -(float)viewport.Y % tileSize;
-                    for (var k = num2; k < graphics.GraphicsDevice.Viewport.Width; k += tileSize)
+                    for (var k = num2; k < Farmhand.API.Game.GraphicsDevice.Viewport.Width; k += tileSize)
                     {
                         spriteBatch.Draw(
                             staminaRect,
-                            new Rectangle(k, (int)num3, 1, graphics.GraphicsDevice.Viewport.Height),
+                            new Rectangle(k, (int)num3, 1, Farmhand.API.Game.GraphicsDevice.Viewport.Height),
                             Color.Red * 0.5f);
                     }
 
                     for (var num4 = num3;
-                         num4 < (float)graphics.GraphicsDevice.Viewport.Height;
+                         num4 < (float)Farmhand.API.Game.GraphicsDevice.Viewport.Height;
                          num4 += (float)tileSize)
                     {
                         spriteBatch.Draw(
                             staminaRect,
-                            new Rectangle(num2, (int)num4, graphics.GraphicsDevice.Viewport.Width, 1),
+                            new Rectangle(num2, (int)num4, Farmhand.API.Game.GraphicsDevice.Viewport.Width, 1),
                             Color.Red * 0.5f);
                     }
                 }
@@ -863,7 +863,7 @@
                     this.drawHUD();
                     GraphicsEvents.OnPostRenderHudEvent(this, spriteBatch, gameTime, this.screen);
                 }
-                else if (activeClickableMenu == null && farmEvent == null)
+                else if (Farmhand.API.Game.ActiveClickableMenu == null && farmEvent == null)
                 {
                     spriteBatch.Draw(
                         mouseCursors,
@@ -889,7 +889,7 @@
             }
 
             farmEvent?.draw(spriteBatch);
-            if (dialogueUp && !nameSelectUp && !messagePause && !(activeClickableMenu is DialogueBox))
+            if (dialogueUp && !nameSelectUp && !messagePause && !(Farmhand.API.Game.ActiveClickableMenu is DialogueBox))
             {
                 this.drawDialogueBox();
             }
@@ -899,16 +899,16 @@
                 spriteBatch.Draw(
                     fadeToBlackRect,
                     new Rectangle(
-                        (graphics.GraphicsDevice.Viewport.TitleSafeArea.Width - dialogueWidth) / 2,
-                        graphics.GraphicsDevice.Viewport.TitleSafeArea.Bottom - tileSize * 2,
+                        (Farmhand.API.Game.GraphicsDevice.Viewport.TitleSafeArea.Width - dialogueWidth) / 2,
+                        Farmhand.API.Game.GraphicsDevice.Viewport.TitleSafeArea.Bottom - tileSize * 2,
                         dialogueWidth,
                         tileSize / 2),
                     Color.LightGray);
                 spriteBatch.Draw(
                     staminaRect,
                     new Rectangle(
-                        (graphics.GraphicsDevice.Viewport.TitleSafeArea.Width - dialogueWidth) / 2,
-                        graphics.GraphicsDevice.Viewport.TitleSafeArea.Bottom - tileSize * 2,
+                        (Farmhand.API.Game.GraphicsDevice.Viewport.TitleSafeArea.Width - dialogueWidth) / 2,
+                        Farmhand.API.Game.GraphicsDevice.Viewport.TitleSafeArea.Bottom - tileSize * 2,
                         (int)(pauseAccumulator / pauseTime * dialogueWidth),
                         tileSize / 2),
                     Color.DimGray);
@@ -921,14 +921,14 @@
 
             if (isRaining && currentLocation.isOutdoors && !(currentLocation is Desert))
             {
-                spriteBatch.Draw(staminaRect, graphics.GraphicsDevice.Viewport.Bounds, Color.Blue * 0.2f);
+                spriteBatch.Draw(staminaRect, Farmhand.API.Game.GraphicsDevice.Viewport.Bounds, Color.Blue * 0.2f);
             }
 
             if ((fadeToBlack || globalFade) && !menuUp && (!nameSelectUp || messagePause))
             {
                 spriteBatch.Draw(
                     fadeToBlackRect,
-                    graphics.GraphicsDevice.Viewport.Bounds,
+                    Farmhand.API.Game.GraphicsDevice.Viewport.Bounds,
                     Color.Black * (gameMode == 0 ? 1f - fadeToBlackAlpha : fadeToBlackAlpha));
             }
             else if (flashAlpha > 0f)
@@ -937,7 +937,7 @@
                 {
                     spriteBatch.Draw(
                         fadeToBlackRect,
-                        graphics.GraphicsDevice.Viewport.Bounds,
+                        Farmhand.API.Game.GraphicsDevice.Viewport.Bounds,
                         Color.White * Math.Min(1f, flashAlpha));
                 }
 
@@ -965,10 +965,10 @@
                                 ? (getOldMouseX() + viewport.X) / tileSize + ","
                                   + (getOldMouseY() + viewport.Y) / tileSize
                                 : string.Concat(
-                                    "aplayer: ",
-                                    player.getStandingX() / tileSize,
+                                    "aFarmhand.API.Game.Player: ",
+                                    Farmhand.API.Game.Player.getStandingX() / tileSize,
                                     ", ",
-                                    player.getStandingY() / tileSize),
+                                    Farmhand.API.Game.Player.getStandingY() / tileSize),
                             Environment.NewLine, "debugOutput: ", debugOutput
                         }),
                     new Vector2(
@@ -1005,10 +1005,10 @@
             }
 
             GraphicsEvents.OnPreRenderGuiEventNoCheck(this, spriteBatch, gameTime, this.screen);
-            if (activeClickableMenu != null)
+            if (Farmhand.API.Game.ActiveClickableMenu != null)
             {
                 GraphicsEvents.OnPreRenderGuiEvent(this, spriteBatch, gameTime, this.screen);
-                activeClickableMenu.draw(spriteBatch);
+                Farmhand.API.Game.ActiveClickableMenu.draw(spriteBatch);
                 GraphicsEvents.OnPostRenderGuiEvent(this, spriteBatch, gameTime, this.screen);
             }
             else
