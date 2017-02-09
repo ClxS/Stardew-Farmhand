@@ -7,6 +7,8 @@
 
     using Microsoft.Xna.Framework;
 
+    using StardewValley;
+
     /// <summary>
     ///     Contains events relating to the main game state
     /// </summary>

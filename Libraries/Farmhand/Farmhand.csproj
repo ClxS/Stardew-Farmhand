@@ -202,6 +202,8 @@
     <Compile Include="Content\Injectors\NPCs\ScheduleLoader.cs" />
     <Compile Include="Content\Injectors\Other\CropInjector.cs" />
     <Compile Include="Content\Injectors\Other\DelegatedContentInjector.cs" />
+    <Compile Include="Content\Injectors\Other\ModXnbDictionaryInjector.cs" />
+    <Compile Include="Content\Injectors\Other\ModXnbTextureInjector.cs" />
     <Compile Include="Content\Injectors\Other\QuestInjector.cs" />
     <Compile Include="Content\Injectors\Mail\MailInjector.cs" />
     <Compile Include="Content\Injectors\Maps\MapInjector.cs" />
@@ -209,7 +211,7 @@
     <Compile Include="Content\Injectors\NPCs\Monsters\MonsterLoader.cs" />
     <Compile Include="Content\ContentManager.cs" />
     <Compile Include="Content\Injectors\IContentInjector.cs" />
-    <Compile Include="Content\Injectors\Other\ModXnbInjector.cs" />
+    <Compile Include="Content\Injectors\Other\ModXnbLoader.cs" />
     <Compile Include="Content\Injectors\Items\WeaponInjector.cs" />
     <Compile Include="Events\ApiEvents.cs" />
     <Compile Include="Events\Arguments\ApiEvents\ModLoadEventEventArgs.cs" />

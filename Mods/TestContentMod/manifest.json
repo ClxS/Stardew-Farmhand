@@ -8,6 +8,16 @@
 	{
     "XNB": [
       {
+        "Original": "Data\\Achievements",
+        "File": "AchievementsOverride",
+        "Replace": true
+      },
+      {
+        "Original": "ClubInterior",
+        "File": "ClubInterior",
+        "Replace": true
+      },
+      {
         "Original": "farmhouse_tiles",
         "Texture": "fridgeReplacementRed",
         "Destination": {
