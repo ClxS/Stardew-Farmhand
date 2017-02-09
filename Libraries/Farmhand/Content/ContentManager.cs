@@ -17,7 +17,11 @@
     using Farmhand.Content.Injectors.Other;
     using Farmhand.Logging;
 
+    using Microsoft.Xna.Framework.Content;
+
     using StardewValley;
+
+    using xTile;
 
     /// <summary>
     ///     An override for the XNA ContentManager which deals with loading custom XNBs when mods have registered custom
@@ -30,10 +34,20 @@
         new[] { typeof(IServiceProvider), typeof(string) })]
     [HookRedirectConstructorFromBase("StardewValley.Game1", "LoadContent",
         new[] { typeof(IServiceProvider), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", "setGameMode",
+        new[] { typeof(IServiceProvider), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", "performTenMinuteClockUpdate",
+        new[] { typeof(IServiceProvider), typeof(string) })]
     [HookRedirectConstructorFromBase("StardewValley.LocalizedContentManager", "CreateTemporary",
         new[] { typeof(IServiceProvider), typeof(string), typeof(CultureInfo), typeof(string) })]
     public class ContentManager : LocalizedContentManager
     {
+        [Hook(HookType.Entry, "StardewValley.Game1", "LoadContent")]
+        internal static void CreateContentManager([ThisBind] Game1 @this)
+        {
+            Game1.game1.Content = new ContentManager(@this.Content.ServiceProvider, @this.Content.RootDirectory);
+        }
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ContentManager" /> class.
         /// </summary>
@@ -77,7 +91,7 @@
         /// </summary>
         public static List<IContentLoader> ContentLoaders { get; } = new List<IContentLoader>
                 {
-                    new ModXnbInjector(),
+                    new ModXnbLoader(),
                     new MonsterLoader(),
                     new DialogueLoader(),
                     new PortraitLoader(),
@@ -93,6 +107,8 @@
         public static List<IContentInjector> ContentInjectors { get; } =
             new List<IContentInjector>
                 {
+                    new ModXnbTextureInjector(),
+                    new ModXnbDictionaryInjector(),
                     new BlueprintInjector(),
                     new MonsterInjector(),
                     new CropInjector(),
