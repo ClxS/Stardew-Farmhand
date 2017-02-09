@@ -74,7 +74,7 @@
 
             this.merger.Merge(
                 repackOutput,
-                PatcherConstants.PassOneFarmhandExe,
+                PatcherOptions.NoObsolete ? PatcherConstants.PassOneFarmhandExeNoObsolete : PatcherConstants.PassOneFarmhandExe,
                 PatcherConstants.FarmhandUiDll,
                 PatcherConstants.FarmhandGameDll,
                 PatcherConstants.FarmhandCharacterDll);
@@ -90,15 +90,23 @@
 
             Console.WriteLine("Second Pass Installation Completed");
 
-            path = path ?? PatcherConstants.FarmhandExe;
-            var directory = Path.GetDirectoryName(path);
-
-            if (directory == null)
+            if (string.IsNullOrEmpty(PatcherOptions.OutputOverride))
             {
-                throw new Exception("Path.GetDirectoryName(path) returned null");
-            }
+                path = path ?? PatcherConstants.FarmhandExe;
 
-            Directory.CreateDirectory(directory);
+                var directory = Path.GetDirectoryName(path);
+
+                if (directory == null)
+                {
+                    throw new Exception("Path.GetDirectoryName(path) returned null");
+                }
+                Directory.CreateDirectory(directory);
+            }
+            else
+            {
+                path = PatcherOptions.OutputOverride;
+                var directory = Path.GetDirectoryName(path);
+            }
 
             this.injectionContext.WriteAssembly(path, true);
         }

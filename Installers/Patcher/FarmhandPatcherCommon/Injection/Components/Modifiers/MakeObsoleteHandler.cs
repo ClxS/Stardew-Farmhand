@@ -41,6 +41,11 @@
         {
             this.propertyConverter.FromAttribute(attribute);
 
+            if (PatcherOptions.NoObsolete)
+            {
+                return;
+            }
+
             if (this.propertyConverter.IsField)
             {
                 var fieldDefinition = this.cecilContext.GetFieldDefinition(
