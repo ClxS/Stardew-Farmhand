@@ -85,7 +85,6 @@
                     new CropInjector(),
                     new WeaponInjector(),
                     new BigCraftableInjector(),
-                    new DelegatedContentInjector(),
                     new MapInjector(),
                     new MailInjector(),
                     new QuestInjector(),
@@ -98,7 +97,8 @@
                     new RainyDialogueInjector(),
                     new ScheduleLoader(),
                     /* End NPC Injectors */
-                    new EffectLoader()
+                    new EffectLoader(),
+                    new DelegatedContentInjector()
                 };
 
         /// <summary>
