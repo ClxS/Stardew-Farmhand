@@ -3,17 +3,11 @@
     using System;
     using System.IO;
 
-    using Farmhand.Logging;
-
     using Microsoft.Xna.Framework.Graphics;
 
-    internal class EffectLoader : IContentInjector
+    internal class EffectLoader : IContentLoader
     {
-        #region IContentInjector Members
-
-        public bool IsLoader => true;
-
-        public bool IsInjector => true;
+        #region IContentLoader Members
 
         public bool HandlesAsset(Type type, string assetName)
         {
@@ -53,11 +47,6 @@
             }
 
             return contentManager.LoadDirect<T>(platformAssetName);
-        }
-
-        public void Inject<T>(T obj, string assetName, ref object output)
-        {
-            Log.Error("You shouldn't be here!");
         }
 
         #endregion

@@ -5,6 +5,7 @@
     using System.IO;
     using System.Linq;
 
+    using Farmhand.API;
     using Farmhand.API.Utilities;
     using Farmhand.Logging;
     using Farmhand.Registries;
@@ -15,15 +16,11 @@
 
     using StardewValley;
 
-    internal class ModXnbInjector : IContentInjector
+    internal class ModXnbInjector : IContentLoader
     {
         private readonly Dictionary<string, Texture2D> cachedAlteredTextures = new Dictionary<string, Texture2D>();
 
-        #region IContentInjector Members
-
-        public bool IsLoader => true;
-
-        public bool IsInjector => false;
+        #region IContentLoader Members
 
         public bool HandlesAsset(Type type, string assetName)
         {
@@ -55,7 +52,7 @@
                     }
 
                     var currentDirectory = Path.GetDirectoryName(item.AbsoluteFilePath);
-                    var modContentManager = this.GetContentManagerForMod(contentManager, item);
+                    var modContentManager = this.GetContentManagerForMod(item);
                     var relPath = modContentManager.RootDirectory + "\\";
                     if (currentDirectory != null)
                     {
@@ -81,16 +78,11 @@
             return output;
         }
 
-        public void Inject<T>(T obj, string assetName, ref object output)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
-        
-        private LocalizedContentManager GetContentManagerForMod(ContentManager contentManager, ModXnb mod)
+
+        private LocalizedContentManager GetContentManagerForMod(ModXnb mod)
         {
-            return Farmhand.API.Content.GetContentManagerForMod(mod.OwningMod);
+            return Content.GetContentManagerForMod(mod.OwningMod);
         }
 
         private object LoadTexture(

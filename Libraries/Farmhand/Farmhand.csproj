@@ -190,6 +190,7 @@
     <Compile Include="Attributes\UseOutputBindAttribute.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Content\Injectors\Effects\EffectLoader.cs" />
+    <Compile Include="Content\Injectors\IContentLoader.cs" />
     <Compile Include="Content\Injectors\Items\BigCraftableInjector.cs" />
     <Compile Include="Content\Injectors\Blueprints\BlueprintInjector.cs" />
     <Compile Include="Content\Injectors\NPCs\DialogueLoader.cs" />

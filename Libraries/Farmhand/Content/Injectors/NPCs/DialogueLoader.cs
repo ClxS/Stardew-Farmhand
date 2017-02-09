@@ -6,11 +6,10 @@
     using System.Linq;
 
     using Farmhand.API.NPCs;
-    using Farmhand.Logging;
 
     using StardewValley;
 
-    internal class DialogueLoader : IContentInjector
+    internal class DialogueLoader : IContentLoader
     {
         public List<string> DialoguesExceptions
             =>
@@ -18,11 +17,7 @@
                     .Select(file => file?.Replace("Content\\", string.Empty).Replace(".xnb", string.Empty))
                     .ToList();
 
-        #region IContentInjector Members
-
-        public bool IsLoader => true;
-
-        public bool IsInjector => true;
+        #region IContentLoader Members
 
         public bool HandlesAsset(Type type, string assetName)
         {
@@ -36,11 +31,6 @@
             var dialogues = Npc.Npcs[baseName].Item1.Dialogues.BuildBaseDialogues();
 
             return (T)Convert.ChangeType(dialogues, typeof(T));
-        }
-
-        public void Inject<T>(T obj, string assetName, ref object output)
-        {
-            Log.Error("You shouldn't be here!");
         }
 
         #endregion

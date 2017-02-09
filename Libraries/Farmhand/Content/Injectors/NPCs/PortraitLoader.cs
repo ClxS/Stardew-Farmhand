@@ -3,15 +3,10 @@
     using System;
 
     using Farmhand.API.NPCs;
-    using Farmhand.Logging;
 
-    internal class PortraitLoader : IContentInjector
+    internal class PortraitLoader : IContentLoader
     {
-        #region IContentInjector Members
-
-        public bool IsLoader => true;
-
-        public bool IsInjector => true;
+        #region IContentLoader Members
 
         public bool HandlesAsset(Type type, string assetName)
         {
@@ -25,11 +20,6 @@
             var texture = Npc.Npcs[baseName].Item1.Portrait;
 
             return (T)Convert.ChangeType(texture, typeof(T));
-        }
-
-        public void Inject<T>(T obj, string assetName, ref object output)
-        {
-            Log.Error("You shouldn't be here!");
         }
 
         #endregion

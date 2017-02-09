@@ -3,9 +3,9 @@
     using System;
 
     /// <summary>
-    ///     Handles injecting into assets loaded by the <see cref="ContentManager" />.
+    ///     Handles loading assets loaded by the <see cref="ContentManager" />.
     /// </summary>
-    public interface IContentInjector
+    public interface IContentLoader
     {
         /// <summary>
         ///     Gets whether this injector should be used for the specified asset.
@@ -22,20 +22,20 @@
         bool HandlesAsset(Type type, string asset);
 
         /// <summary>
-        ///     Inject the asset using this injector.
+        ///     Loads the asset using this injector.
         /// </summary>
-        /// <param name="obj">
-        ///     The loaded object.
+        /// <param name="contentManager">
+        ///     The parent <see cref="ContentManager" />.
         /// </param>
         /// <param name="assetName">
-        ///     The asset name.
-        /// </param>
-        /// <param name="output">
-        ///     The output object.
+        ///     The asset path.
         /// </param>
         /// <typeparam name="T">
-        ///     The type of asset being injected.
+        ///     The type of asset being loaded.
         /// </typeparam>
-        void Inject<T>(T obj, string assetName, ref object output);
+        /// <returns>
+        ///     The loaded asset.
+        /// </returns>
+        T Load<T>(ContentManager contentManager, string assetName);
     }
 }

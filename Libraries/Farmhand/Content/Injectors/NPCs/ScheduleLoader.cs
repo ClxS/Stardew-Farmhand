@@ -9,7 +9,7 @@
 
     using StardewValley;
 
-    internal class ScheduleLoader : IContentInjector
+    internal class ScheduleLoader : IContentLoader
     {
         public List<string> SchedulesExceptions
             =>
@@ -17,11 +17,7 @@
                     .Select(file => file?.Replace("Content\\", string.Empty).Replace(".xnb", string.Empty))
                     .ToList();
 
-        #region IContentInjector Members
-
-        public bool IsLoader => true;
-
-        public bool IsInjector => false;
+        #region IContentLoader Members
 
         public bool HandlesAsset(Type type, string assetName)
         {
@@ -35,11 +31,6 @@
             var schedule = Npc.Npcs[baseName].Item1.Schedules.BuildSchedule();
 
             return (T)Convert.ChangeType(schedule, typeof(T));
-        }
-
-        public void Inject<T>(T obj, string assetName, ref object output)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

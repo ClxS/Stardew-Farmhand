@@ -75,12 +75,25 @@
         /// <summary>
         ///     Gets a <see cref="List{T}" /> which contains the injectors used for loading assets.
         /// </summary>
+        public static List<IContentLoader> ContentLoaders { get; } = new List<IContentLoader>
+                {
+                    new ModXnbInjector(),
+                    new MonsterLoader(),
+                    new DialogueLoader(),
+                    new PortraitLoader(),
+                    new NpcLoader(),
+                    new ScheduleLoader(),
+                    new EffectLoader(),
+                    new DelegatedContentInjector()
+                };
+
+        /// <summary>
+        ///     Gets a <see cref="List{T}" /> which contains the injectors used when loading assets.
+        /// </summary>
         public static List<IContentInjector> ContentInjectors { get; } =
             new List<IContentInjector>
                 {
-                    new ModXnbInjector(),
                     new BlueprintInjector(),
-                    new MonsterLoader(),
                     new MonsterInjector(),
                     new CropInjector(),
                     new WeaponInjector(),
@@ -89,15 +102,10 @@
                     new MailInjector(),
                     new QuestInjector(),
                     /* Begin NPC Injectors */
-                    new DialogueLoader(),
-                    new PortraitLoader(),
                     new GiftTastesInjector(),
                     new NpcDispositionsInjector(),
-                    new NpcLoader(),
                     new RainyDialogueInjector(),
-                    new ScheduleLoader(),
                     /* End NPC Injectors */
-                    new EffectLoader(),
                     new DelegatedContentInjector()
                 };
 
@@ -168,10 +176,10 @@
             try
             {
                 var loaders =
-                    ContentInjectors.Where(n => n.IsLoader && n.HandlesAsset(typeof(T), assetName))
+                    ContentLoaders.Where(n => n.HandlesAsset(typeof(T), assetName))
                         .ToArray();
                 var injectors =
-                    ContentInjectors.Where(n => !n.IsLoader && n.HandlesAsset(typeof(T), assetName))
+                    ContentInjectors.Where(n => n.HandlesAsset(typeof(T), assetName))
                         .ToArray();
 
                 if (loaders.Length > 1)
