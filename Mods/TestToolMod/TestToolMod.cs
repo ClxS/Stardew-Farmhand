@@ -35,9 +35,9 @@ namespace TestToolMod
         {
             // Check if the player already has this tool
             bool hasTool = false;
-            for(int i=0; i<Game1.player.items.Count; i++)
+            for(int i=0; i< Farmhand.API.Game.Player.items.Count; i++)
             {
-                if(Game1.player.items[i] is TestTool)
+                if(Farmhand.API.Game.Player.items[i] is TestTool)
                 {
                     hasTool = true;
                 }
@@ -52,9 +52,9 @@ namespace TestToolMod
 
             // Check if the player already has this weapon
             bool hasWeapon = false;
-            for (int i = 0; i < Game1.player.items.Count; i++)
+            for (int i = 0; i < Farmhand.API.Game.Player.items.Count; i++)
             {
-                if (Game1.player.items[i] is TestWeapon)
+                if (Farmhand.API.Game.Player.items[i] is TestWeapon)
                 {
                     hasWeapon = true;
                 }

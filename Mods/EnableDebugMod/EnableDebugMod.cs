@@ -25,11 +25,11 @@ namespace EnableDebugMod
         {
             switch (command) {
                 case "testcommand":
-                    Game1.player.money += 1500000;
+                    Farmhand.API.Game.Player.money += 1500000;
                     Game1.showGlobalMessage("TestCommand has been executed!");
                     return true;
                 case "uh":
-                    Game1.player.HouseUpgradeLevel = Math.Min(3, Game1.player.HouseUpgradeLevel + 1);
+                    Farmhand.API.Game.Player.HouseUpgradeLevel = Math.Min(3, Farmhand.API.Game.Player.HouseUpgradeLevel + 1);
                     Game1.removeFrontLayerForFarmBuildings();
                     Game1.addNewFarmBuildingMaps();
                     return true;
@@ -50,9 +50,9 @@ namespace EnableDebugMod
             {
                 Game1.loadForNewGame();
                 Game1.saveOnNewDay = false;
-                Game1.player.eventsSeen.Add(60367);
-                Game1.player.currentLocation = Utility.getHomeOfFarmer(Game1.player);
-                Game1.player.position = new Vector2(7f, 9f) * (float)Game1.tileSize;
+                Farmhand.API.Game.Player.eventsSeen.Add(60367);
+                Farmhand.API.Game.Player.currentLocation = Utility.getHomeOfFarmer(Farmhand.API.Game.Player);
+                Farmhand.API.Game.Player.position = new Vector2(7f, 9f) * (float)Game1.tileSize;
                 Game1.NewDay(0.0f);
                 Game1.exitActiveMenu();
                 Game1.setGameMode(3);

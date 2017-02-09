@@ -17,10 +17,10 @@ namespace JuminoDepositAnywhereMod
 
         private void GameEvents_OnAfterUpdateTick(object sender, EventArgs e)
         {
-            if (!Game1.hasLoadedGame || Game1.activeClickableMenu == null)
+            if (!Farmhand.API.Game.HasLoadedGame || Farmhand.API.Game.ActiveClickableMenu == null)
                 return;
             
-            var v = Game1.activeClickableMenu as JunimoNoteMenu;
+            var v = Farmhand.API.Game.ActiveClickableMenu as JunimoNoteMenu;
 
             var bundleField = v?.GetType().GetField("bundles", BindingFlags.Instance | BindingFlags.NonPublic);
             if (bundleField == null) return;

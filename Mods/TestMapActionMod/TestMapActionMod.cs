@@ -8,6 +8,8 @@ using Location = Farmhand.API.Locations.Location;
 
 namespace TestMapActionMod
 {
+    using Farmhand.API;
+
     public class TestMapActionMod : Mod
     {
         public static TestMapActionMod Instance;
@@ -38,7 +40,7 @@ namespace TestMapActionMod
             switch (action)
             {
                 case "WarpGreenhouse":
-                    if (!Game1.player.hasGreenhouse)
+                    if (!Game.Player.hasGreenhouse)
                     {
                         Game1.drawObjectDialogue("YOU SHALL NOT PASS!");
                         return true;

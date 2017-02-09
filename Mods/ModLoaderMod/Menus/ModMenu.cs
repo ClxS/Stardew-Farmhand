@@ -33,8 +33,8 @@ namespace ModLoaderMod.Menus
           : base(Game1.viewport.Width / 2 - (1050 + borderWidth * 2) / 2, Game1.viewport.Height / 2 - (600 + borderWidth * 2) / 2, 800 + borderWidth * 2, 600 + borderWidth * 2)
         {
             SetUpPositions();
-            Game1.player.faceDirection(2);
-            Game1.player.FarmerSprite.StopAnimation();
+            Farmhand.API.Game.Player.faceDirection(2);
+            Farmhand.API.Game.Player.FarmerSprite.StopAnimation();
         }
 
         public override void gameWindowSizeChanged(Rectangle oldBounds, Rectangle newBounds)
@@ -206,7 +206,7 @@ namespace ModLoaderMod.Menus
             drawTextureBox(b, Game1.mouseCursors, new Rectangle(384, 373, 18, 18), xPositionOnScreen, yPositionOnScreen, width, height, Color.White, Game1.pixelZoom, true);
 
             if (_modToggles.Count == 0)
-                SpriteText.drawStringHorizontallyCenteredAt(b, "No Mods Found", Game1.graphics.GraphicsDevice.Viewport.Bounds.Center.X, Game1.graphics.GraphicsDevice.Viewport.Bounds.Center.Y);
+                SpriteText.drawStringHorizontallyCenteredAt(b, "No Mods Found", Farmhand.API.Game.GraphicsDevice.Viewport.Bounds.Center.X, Farmhand.API.Game.GraphicsDevice.Viewport.Bounds.Center.Y);
 
             upArrow.draw(b);
             downArrow.draw(b);
