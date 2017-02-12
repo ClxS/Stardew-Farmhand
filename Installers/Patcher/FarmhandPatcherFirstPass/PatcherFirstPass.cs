@@ -33,6 +33,11 @@
         /// <param name="path">Game's executable Path</param>
         public override void PatchStardew(string path = null)
         {
+            if (path == null)
+            {
+                throw new ArgumentNullException(nameof(path));
+            }
+
             this.merger = null;
             this.injector = null;
             this.injectionContext = null;

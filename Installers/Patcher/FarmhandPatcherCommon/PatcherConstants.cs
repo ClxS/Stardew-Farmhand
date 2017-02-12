@@ -52,12 +52,7 @@
         ///     The first-pass package result assembly name.
         /// </summary>
         public static string PassOneFarmhandExeNoObsolete => "Stardew Farmhand.int1-NoObsolete.dll";
-
-        /// <summary>
-        ///     The second-pass patching result assembly name.
-        /// </summary>
-        public static string PassTwoFarmhandExe => FarmhandExe;
-
+        
         /// <summary>
         ///     The JSON library assembly name.
         /// </summary>

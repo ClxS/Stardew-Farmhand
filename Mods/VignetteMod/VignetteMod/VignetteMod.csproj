@@ -27,27 +27,23 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\WorkingDirectory\Mods\VignetteMod\</OutputPath>
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <NoStdLib>true</NoStdLib>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>false</XnaCompressContent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\x86\Release</OutputPath>
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <NoStdLib>true</NoStdLib>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <PlatformTarget>x86</PlatformTarget>
     <XnaCompressContent>true</XnaCompressContent>
+  </PropertyGroup>  
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformName>Windows</PlatformName>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\BuildTasks\Targets\ModCommon.targets" />
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
@@ -66,7 +62,7 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Stardew Farmhand">
-      <HintPath>..\..\..\WorkingDirectory\Stardew Farmhand.exe</HintPath>
+      <HintPath>$(SolutionDir)WorkingDirectory\$(PlatformName)\$(Configuration)\Stardew Farmhand.exe</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
