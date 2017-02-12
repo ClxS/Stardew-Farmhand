@@ -9,7 +9,7 @@ namespace Farmhand.Attributes
     ///     Used by the installer. Defines a common, non-returnable hook.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public sealed class HookAttribute : Attribute
+    public sealed class HookAttribute : FarmhandHook
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="HookAttribute" /> class.

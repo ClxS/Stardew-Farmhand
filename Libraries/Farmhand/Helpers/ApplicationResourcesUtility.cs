@@ -5,9 +5,11 @@
     using System.Linq;
     using System.Reflection;
 
+    using Farmhand.API.Utilities;
     using Farmhand.Attributes;
     using Farmhand.Registries.Containers;
 
+    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     using Newtonsoft.Json;
@@ -53,7 +55,7 @@
                     return null;
                 }
 
-                var texture = Texture2D.FromStream(Game1.graphics.GraphicsDevice, stream);
+                var texture = TextureUtility.FromStream(stream);
                 return texture;
             }
         }

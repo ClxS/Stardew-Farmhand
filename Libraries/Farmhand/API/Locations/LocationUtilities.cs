@@ -382,11 +382,6 @@
                 throw new ArgumentNullException(nameof(list));
             }
 
-            if (map == null)
-            {
-                throw new ArgumentNullException(nameof(map));
-            }
-
             TileSheet matchingTileSheet = null;
             foreach (var injectingTileSheet in list)
             {
@@ -399,7 +394,7 @@
             if (matchingTileSheet == null)
             {
                 throw new Exception(
-                    $"Could not find matching tilesheet {toMatch.ImageSource} in mod {map.Owner.ModSettings.Name} in map {map.Map.Id}!");
+                    $"Could not find matching tilesheet {toMatch.ImageSource} in mod {map?.Owner?.ModSettings?.Name} in map {map?.Map?.Id}!");
             }
 
             return matchingTileSheet;

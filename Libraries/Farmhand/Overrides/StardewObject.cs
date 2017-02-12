@@ -6,7 +6,7 @@
 
     [HookForceVirtualBase]
     [HookAlterBaseFieldProtection(LowestProtection.Protected)]
-    internal class StardewObject : Object
+    internal class StardewObjectHook : Object
     {
     }
 }

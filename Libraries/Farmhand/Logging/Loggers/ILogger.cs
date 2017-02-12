@@ -11,6 +11,9 @@
         /// <param name="logItem">
         ///     The entry to log.
         /// </param>
-        void Write(LogEntry logItem);
+        /// <param name="module">
+        ///     The name of the module writing this log.
+        /// </param>
+        void Write(LogEntry logItem, string module);
     }
 }

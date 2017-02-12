@@ -4,25 +4,14 @@
     using System.Collections.Generic;
 
     using Farmhand.API.NPCs;
-    using Farmhand.Logging;
 
     internal class NpcDispositionsInjector : IContentInjector
     {
         #region IContentInjector Members
 
-        public bool IsLoader => false;
-
-        public bool IsInjector => true;
-
         public bool HandlesAsset(Type type, string asset)
         {
             return asset == "Data\\NPCDispositions";
-        }
-
-        public T Load<T>(ContentManager contentManager, string assetName)
-        {
-            Log.Error("You shouldn't be here!");
-            return default(T);
         }
 
         public void Inject<T>(T obj, string assetName, ref object output)

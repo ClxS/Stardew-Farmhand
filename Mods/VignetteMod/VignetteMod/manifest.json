@@ -1,0 +1,8 @@
+﻿{
+  "UniqueId": "VignetteEffectMod",
+  "Name": "VignetteMod",
+  "ModDll": "VignetteMod",
+  "Author": "ClxS",
+  "Version": "1.0",
+  "Description": "Applies a simple vignette effect to the screen"
+}

@@ -6,11 +6,10 @@
     using System.Linq;
 
     using Farmhand.API.NPCs;
-    using Farmhand.Logging;
 
     using StardewValley;
 
-    internal class NpcLoader : IContentInjector
+    internal class NpcLoader : IContentLoader
     {
         public List<string> NpcExceptions
             =>
@@ -18,11 +17,7 @@
                     .Select(file => file?.Replace("Content\\", string.Empty).Replace(".xnb", string.Empty))
                     .ToList();
 
-        #region IContentInjector Members
-
-        public bool IsInjector => false;
-
-        public bool IsLoader => true;
+        #region IContentLoader Members
 
         public bool HandlesAsset(Type type, string assetName)
         {
@@ -36,11 +31,6 @@
             var sprite = Npc.Npcs[baseName].Item1.Texture;
 
             return (T)Convert.ChangeType(sprite, typeof(T));
-        }
-
-        public void Inject<T>(T obj, string assetName, ref object output)
-        {
-            Log.Error("You shouldn't be here!");
         }
 
         #endregion

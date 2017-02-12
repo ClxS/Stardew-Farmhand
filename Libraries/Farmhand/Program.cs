@@ -1,6 +1,11 @@
-﻿namespace Farmhand
+﻿using Farmhand.Attributes;
+
+
+namespace Farmhand
 {
     using System.IO;
+
+    using Farmhand.Attributes;
 
     using Microsoft.Xna.Framework.Graphics;
 
@@ -9,6 +14,10 @@
     /// <summary>
     ///     Holds Farmhand configuration details.
     /// </summary>
+    [HookExposeInternal("FarmhandPatcherSecondPass")]
+    [HookExposeInternal("FarmhandUI")]
+    [HookExposeInternal("FarmhandCharacter")]
+    [HookExposeInternal("FarmhandGame")]
     public class Program
     {
         /// <summary>
@@ -26,9 +35,17 @@
             catch (FileNotFoundException)
             {
                 Config = new FarmhandConfig();
-                var cfg = JsonConvert.SerializeObject(Config, Formatting.Indented);
-                File.WriteAllText("FarmhandConfig.json", cfg);
+                SaveConfig();
             }
+        }
+
+        /// <summary>
+        /// The save config.
+        /// </summary>
+        internal static void SaveConfig()
+        {
+            var cfg = JsonConvert.SerializeObject(Config, Formatting.Indented);
+            File.WriteAllText("FarmhandConfig.json", cfg);
         }
     }
 }

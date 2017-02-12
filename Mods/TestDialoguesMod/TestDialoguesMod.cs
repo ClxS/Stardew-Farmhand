@@ -25,8 +25,8 @@ namespace TestDialoguesMod
 
         public static void RobinTeleport(ref bool doDefault)
         {
-            StardewValley.Game1.player.Halt();
-            StardewValley.Game1.player.freezePause = 700;
+            Farmhand.API.Game.Player.Halt();
+            Farmhand.API.Game.Player.freezePause = 700;
             StardewValley.Game1.warpFarmer("Town", 105, 80, 1);
 
             doDefault = true;

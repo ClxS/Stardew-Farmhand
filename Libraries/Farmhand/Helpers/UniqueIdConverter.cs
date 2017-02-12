@@ -23,7 +23,7 @@
             object existingValue,
             JsonSerializer serializer)
         {
-            var isSet = true;
+            bool isSet;
             UniqueId<string> output = null;
             var id = (string)reader.Value;
 
@@ -32,6 +32,7 @@
                 try
                 {
                     output = new UniqueId<string>(id);
+                    isSet = true;
                 }
                 catch (Exception ex)
                 {

@@ -36,12 +36,12 @@ namespace TestMailMod
                     
                     var mail = Mail.MailBox.Select(_ =>
                     {
-                        if (Game1.player.hasOrWillReceiveMail(_.Key))
+                        if (Farmhand.API.Game.Player.hasOrWillReceiveMail(_.Key))
                             return null;
 
                         return _.Key;
                     }).Where(n => n != null).ToArray();
-                    Game1.player.mailForTomorrow.AddRange(mail);
+                    Farmhand.API.Game.Player.mailForTomorrow.AddRange(mail);
                     Game1.drawObjectDialogue($"Mail Sent: {string.Join(", ", mail)}");
                 }
             }

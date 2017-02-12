@@ -9,7 +9,7 @@ namespace Farmhand.Attributes
     ///     Used by the installer. Alters the protection of the provided class.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class HookAlterProtectionAttribute : Attribute
+    public sealed class HookAlterProtectionAttribute : FarmhandHook
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="HookAlterProtectionAttribute" /> class.

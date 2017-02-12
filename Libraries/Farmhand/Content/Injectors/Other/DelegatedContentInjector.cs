@@ -5,7 +5,7 @@
 
     using Farmhand.Logging;
 
-    internal class DelegatedContentInjector : IContentInjector
+    internal class DelegatedContentInjector : IContentInjector, IContentLoader
     {
         #region Delegates
 
@@ -27,14 +27,28 @@
 
         #region IContentInjector Members
 
-        public bool IsLoader { get; } = true;
-
-        public bool IsInjector { get; } = true;
-
         public bool HandlesAsset(Type type, string assetName)
         {
             return HandledAssets.Exists(x => x.Key == assetName && x.Value == type);
         }
+
+        public void Inject<T>(T item, string assetName, ref object output)
+        {
+            var key = new KeyValuePair<string, Type>(assetName, typeof(T));
+            if (!InjectorRegistry.ContainsKey(key))
+            {
+                return;
+            }
+
+            foreach (var handler in InjectorRegistry[key])
+            {
+                ((FileInjectMethod<T>)handler)(item, assetName, ref output);
+            }
+        }
+
+        #endregion
+
+        #region IContentLoader Members
 
         public T Load<T>(ContentManager manager, string assetName)
         {
@@ -51,20 +65,6 @@
             }
 
             return output;
-        }
-
-        public void Inject<T>(T item, string assetName, ref object output)
-        {
-            var key = new KeyValuePair<string, Type>(assetName, typeof(T));
-            if (!InjectorRegistry.ContainsKey(key))
-            {
-                return;
-            }
-
-            foreach (var handler in InjectorRegistry[key])
-            {
-                ((FileInjectMethod<T>)handler)(item, assetName, ref output);
-            }
         }
 
         #endregion

@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Farmhand.UI.Interfaces;
+    using Farmhand.UI.Components.Interfaces;
 
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
@@ -461,12 +461,12 @@
             var drawOrder = new List<IMenuComponent>(statics);
             drawOrder.AddRange(interactives);
             drawOrder =
-                drawOrder.OrderByDescending(x => x.Layer)
+                drawOrder.OrderBy(x => x.Layer)
                     .ThenByDescending(x => x.GetPosition().Y)
                     .ThenByDescending(x => x.GetPosition().X)
                     .ToList();
             var eventOrder =
-                interactives.OrderBy(x => x.Layer)
+                interactives.OrderByDescending(x => x.Layer)
                     .ThenBy(x => x.GetPosition().Y)
                     .ThenBy(x => x.GetPosition().X)
                     .ToList();
@@ -579,13 +579,16 @@
                 return;
             }
 
-            foreach (var el in this.EventOrder)
+            if (this.EventOrder != null)
             {
-                if (el.InBounds(p, o))
+                foreach (var el in this.EventOrder)
                 {
-                    this.GiveFocus(el);
-                    el.LeftClick(p, o);
-                    return;
+                    if (el.InBounds(p, o))
+                    {
+                        this.GiveFocus(el);
+                        el.LeftClick(p, o);
+                        return;
+                    }
                 }
             }
 
@@ -622,14 +625,17 @@
                 return;
             }
 
-            foreach (var el in this.EventOrder)
+            if (this.EventOrder != null)
             {
-                if (el.InBounds(p, o))
+                foreach (var el in this.EventOrder)
                 {
-                    this.GiveFocus(el);
-                    this.FocusElement = el;
-                    el.RightClick(p, o);
-                    return;
+                    if (el.InBounds(p, o))
+                    {
+                        this.GiveFocus(el);
+                        this.FocusElement = el;
+                        el.RightClick(p, o);
+                        return;
+                    }
                 }
             }
 
@@ -695,9 +701,12 @@
             var p = Game1.getMousePosition();
             var o = new Point(this.Area.X + Zoom10, this.Area.Y + Zoom10);
             this.FloatingComponent?.Scroll(direction, p, o);
-            foreach (var el in this.EventOrder)
+            if (this.EventOrder != null)
             {
-                el.Scroll(direction, p, o);
+                foreach (var el in this.EventOrder)
+                {
+                    el.Scroll(direction, p, o);
+                }
             }
         }
 
@@ -725,9 +734,13 @@
         {
             base.update(time);
             this.FloatingComponent?.Update(time);
-            foreach (var el in this.DrawOrder)
+
+            if (this.DrawOrder != null)
             {
-                el.Update(time);
+                foreach (var el in this.DrawOrder)
+                {
+                    el.Update(time);
+                }
             }
         }
 
@@ -745,9 +758,12 @@
             }
 
             var o = new Point(this.Area.X + Zoom10, this.Area.Y + Zoom10);
-            foreach (var el in this.DrawOrder)
+            if (this.DrawOrder != null)
             {
-                el.Draw(b, o);
+                foreach (var el in this.DrawOrder)
+                {
+                    el.Draw(b, o);
+                }
             }
 
             this.FloatingComponent?.Draw(b, o);

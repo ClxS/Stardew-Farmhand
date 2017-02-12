@@ -1,7 +1,10 @@
 ﻿namespace Farmhand.Logging
 {
     using System;
+    using System.Reflection;
+    using System.Runtime.CompilerServices;
 
+    using Farmhand.Helpers;
     using Farmhand.Logging.Loggers;
 
     /// <summary>
@@ -33,10 +36,13 @@
         /// <param name="message">
         ///     The message to display
         /// </param>
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public static void Success(string message)
         {
+            var manifest = ModHelper.GetModForAssembly(Assembly.GetCallingAssembly());
+
             var logItem = new LogEntry { Message = message, Type = LogEntryType.Success };
-            Logger.Write(logItem);
+            Logger.Write(logItem, manifest?.Name ?? "Farmhand");
         }
 
         /// <summary>
@@ -45,10 +51,13 @@
         /// <param name="message">
         ///     The message to display
         /// </param>
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public static void Warning(string message)
         {
+            var manifest = ModHelper.GetModForAssembly(Assembly.GetCallingAssembly());
+
             var logItem = new LogEntry { Message = message, Type = LogEntryType.Warning };
-            Logger.Write(logItem);
+            Logger.Write(logItem, manifest?.Name ?? "Farmhand");
         }
 
         /// <summary>
@@ -57,12 +66,15 @@
         /// <param name="message">
         ///     The message to display
         /// </param>
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public static void Verbose(string message)
         {
             if (IsVerbose)
             {
+                var manifest = ModHelper.GetModForAssembly(Assembly.GetCallingAssembly());
+
                 var logItem = new LogEntry { Message = message, Type = LogEntryType.Verbose };
-                Logger.Write(logItem);
+                Logger.Write(logItem, manifest?.Name ?? "Farmhand");
             }
         }
 
@@ -72,10 +84,13 @@
         /// <param name="message">
         ///     The message to display
         /// </param>
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public static void Info(string message)
         {
+            var manifest = ModHelper.GetModForAssembly(Assembly.GetCallingAssembly());
+
             var logItem = new LogEntry { Message = message };
-            Logger.Write(logItem);
+            Logger.Write(logItem, manifest?.Name ?? "Farmhand");
         }
 
         /// <summary>
@@ -87,8 +102,11 @@
         /// <param name="ex">
         ///     The exception to display.
         /// </param>
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public static void Exception(string message, Exception ex)
         {
+            var manifest = ModHelper.GetModForAssembly(Assembly.GetCallingAssembly());
+
             if (IsVerbose)
             {
                 var innerEx = ex.InnerException ?? ex;
@@ -97,13 +115,13 @@
                                       Message = $"{message}\n\t{innerEx.Message}\n\t{innerEx.StackTrace}",
                                       Type = LogEntryType.Error
                                   };
-                Logger.Write(logItem);
+                Logger.Write(logItem, manifest?.Name ?? "Farmhand");
             }
             else
             {
                 var innerEx = ex.InnerException ?? ex;
                 var logItem = new LogEntry { Message = $"{message}\n\t{innerEx.Message}", Type = LogEntryType.Error };
-                Logger.Write(logItem);
+                Logger.Write(logItem, manifest?.Name ?? "Farmhand");
             }
         }
 
@@ -111,10 +129,12 @@
         ///     Important message indicating an error.
         /// </summary>
         /// <param name="message">The message to display</param>
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public static void Error(string message)
         {
+            var manifest = ModHelper.GetModForAssembly(Assembly.GetCallingAssembly());
             var logItem = new LogEntry { Message = message, Type = LogEntryType.Error };
-            Logger.Write(logItem);
+            Logger.Write(logItem, manifest?.Name ?? "Farmhand");
         }
     }
 }

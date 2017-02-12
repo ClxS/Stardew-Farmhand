@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Reflection;
 
+    using Farmhand.Installers.Patcher;
+
     internal class Program
     {
         #region Pass enum
@@ -28,6 +30,7 @@
         {
             Patcher.Patcher patcher;
             var grmDisabled = args.Any(a => a.Equals("-disablegrm"));
+<<<<<<< HEAD
             var path = args.LastOrDefault();
             if (path == null)
             {
@@ -36,19 +39,44 @@
                     + "in the command, and point to the platform staging folder for pass1, or to the output exe for pass2.");
             }
 
+=======
+            var noObsolete = args.Any(a => a.Equals("-noobsolete"));
+>>>>>>> development
 
             if (args.Any(a => a.Equals("-pass1")))
             {
                 path = Path.Combine(path, path.EndsWith("Windows") ? "Stardew Valley.exe" : "StardewValley.exe");
                 patcher = CreatePatcher(Pass.PassOne);
+<<<<<<< HEAD
                 patcher.Options.DisableGrm = grmDisabled;
                 patcher.PatchStardew(path);
+=======
+                PatcherOptions.DisableGrm = grmDisabled;
+                PatcherOptions.NoObsolete = noObsolete;
+                if (noObsolete)
+                {
+                    PatcherOptions.OutputOverride = PatcherConstants.PassOneFarmhandExeNoObsolete;
+                }
+
+                patcher.PatchStardew();
+>>>>>>> development
             }
             else if (args.Any(a => a.Equals("-pass2")))
             {
                 patcher = CreatePatcher(Pass.PassTwo);
+<<<<<<< HEAD
                 patcher.Options.DisableGrm = grmDisabled;
                 patcher.PatchStardew(path);
+=======
+                PatcherOptions.DisableGrm = grmDisabled;
+                PatcherOptions.NoObsolete = noObsolete;
+                if (noObsolete)
+                {
+                    PatcherOptions.OutputOverride = "Stardew Farmhand No-Obsolete.exe";
+                }
+
+                patcher.PatchStardew();
+>>>>>>> development
             }
             else
             {

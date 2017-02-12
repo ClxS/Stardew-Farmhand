@@ -1,5 +1,9 @@
 ﻿namespace Farmhand.Registries.Containers
 {
+    using System.IO;
+
+    using Farmhand.API.Utilities;
+
     using Microsoft.Xna.Framework.Graphics;
 
     using Newtonsoft.Json;
@@ -40,9 +44,10 @@
             {
                 if (this.texture == null && this.Exists())
                 {
-                    this.texture = Texture2D.FromStream(
-                        Game1.graphics.GraphicsDevice,
-                        new System.IO.FileStream(this.AbsoluteFilePath, System.IO.FileMode.Open));
+                    using (var fs = new FileStream(this.AbsoluteFilePath, FileMode.Open))
+                    {
+                        this.texture = TextureUtility.FromStream(fs);
+                    }
                 }
 
                 return this.texture;

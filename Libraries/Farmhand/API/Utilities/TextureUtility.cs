@@ -1,7 +1,10 @@
 ﻿namespace Farmhand.API.Utilities
 {
     using System;
+    using System.IO;
+    using System.Threading.Tasks;
 
+    using Farmhand.Events;
     using Farmhand.Logging;
 
     using Microsoft.Xna.Framework;
@@ -10,10 +13,37 @@
     using StardewValley;
 
     /// <summary>
-    ///     Utility to aid with texture editing
+    ///     Utility to aid with texture loading and editing
     /// </summary>
     public static class TextureUtility
     {
+        private static readonly BlendState BlendColorBlendState;
+
+        private static readonly BlendState BlendAlphaBlendState;
+
+        static TextureUtility()
+        {
+            BlendColorBlendState = new BlendState
+                                       {
+                                           ColorDestinationBlend = Blend.Zero,
+                                           ColorWriteChannels =
+                                               ColorWriteChannels.Red | ColorWriteChannels.Green
+                                               | ColorWriteChannels.Blue,
+                                           AlphaDestinationBlend = Blend.Zero,
+                                           AlphaSourceBlend = Blend.SourceAlpha,
+                                           ColorSourceBlend = Blend.SourceAlpha
+                                       };
+
+            BlendAlphaBlendState = new BlendState
+                                       {
+                                           ColorWriteChannels = ColorWriteChannels.Alpha,
+                                           AlphaDestinationBlend = Blend.Zero,
+                                           ColorDestinationBlend = Blend.Zero,
+                                           AlphaSourceBlend = Blend.One,
+                                           ColorSourceBlend = Blend.One
+                                       };
+        }
+
         /// <summary>
         ///     Adds a sprite to a spritesheet.
         /// </summary>
@@ -136,6 +166,90 @@
             @base.SetData(0, destination, newData, 0, destination.Width * destination.Height);
 
             return @base;
+        }
+
+        /// <summary>
+        ///     Loads a texture from a Stream and premultiplies it.
+        /// </summary>
+        /// <param name="stream">The stream to load the texture from.</param>
+        /// <param name="preMultiplyAlpha">Whether the alpha should be premultiplied. Defaults to true.</param>
+        /// <returns>The loaded texture.</returns>
+        public static Texture2D FromStream(Stream stream, bool preMultiplyAlpha = true)
+        {
+            var texture = Texture2D.FromStream(Game1.graphics.GraphicsDevice, stream);
+            if (!preMultiplyAlpha)
+            {
+                return texture;
+            }
+
+            texture = GraphicsEvents.IsMidDrawCall ? PremultiplyCpu(texture) : PremultiplyGpu(texture);
+            return texture;
+        }
+
+        /// <summary>
+        ///     Premultiplies the texture using a CPU method. This is considerably slower than
+        ///     the GPU version, but is safe to use mid-draw call.
+        /// </summary>
+        /// <param name="texture">Texture to premultiply</param>
+        /// <returns>A premultiplied texture.</returns>
+        public static Texture2D PremultiplyCpu(Texture2D texture)
+        {
+            Log.Warning("Using PremultiplyCpu - Try to refactor your code to load the texture outside of the draw loop");
+
+            var data = new Color[texture.Width * texture.Height];
+            texture.GetData(data);
+            Parallel.For(0, data.Length, i => { data[i] = Color.FromNonPremultiplied(data[i].ToVector4()); });
+
+            texture.SetData(data);
+            return texture;
+        }
+
+        /// <summary>
+        ///     Loads a texture from a stream and premultiplies it using the GPU. This cannot safely be used mid-draw call
+        /// </summary>
+        /// <remarks>
+        ///     Uses a slight variation of the method posted
+        ///     here: https://gist.github.com/Layoric/6255384
+        /// </remarks>
+        /// <param name="texture">Texture to premultiply</param>
+        /// <returns>
+        ///     A premultiplied texture.
+        /// </returns>
+        public static Texture2D PremultiplyGpu(Texture2D texture)
+        {
+            // Setup a render target to hold our final texture which will have premulitplied alpha values
+            using (var renderTarget = new RenderTarget2D(Game1.graphics.GraphicsDevice, texture.Width, texture.Height))
+            {
+                var spriteBatch = new SpriteBatch(Game1.graphics.GraphicsDevice);
+
+                var viewportBackup = Game1.graphics.GraphicsDevice.Viewport;
+                Game1.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
+                Game1.graphics.GraphicsDevice.Clear(Color.Black);
+
+                // Multiply each color by the source alpha, and write in just the color values into the final texture
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendColorBlendState);
+                spriteBatch.Draw(texture, texture.Bounds, Color.White);
+                spriteBatch.End();
+
+                // Now copy over the alpha values from the source texture to the final one, without multiplying them
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendAlphaBlendState);
+                spriteBatch.Draw(texture, texture.Bounds, Color.White);
+                spriteBatch.End();
+
+                // Release the GPU back to drawing to the screen
+                Game1.graphics.GraphicsDevice.SetRenderTarget(null);
+                Game1.graphics.GraphicsDevice.Viewport = viewportBackup;
+
+                // Store data from render target because the RenderTarget2D is volatile
+                var data = new Color[texture.Width * texture.Height];
+                renderTarget.GetData(data);
+
+                // Unset texture from graphic device and set modified data back to it
+                Game1.graphics.GraphicsDevice.Textures[0] = null;
+                texture.SetData(data);
+            }
+
+            return texture;
         }
     }
 }

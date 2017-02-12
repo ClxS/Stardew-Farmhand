@@ -51,6 +51,11 @@
         public static event EventHandler<BeforeCheckActionEventArgs> BeforeCheckAction = delegate { };
 
         /// <summary>
+        ///     Fires just after checking for action at a position.
+        /// </summary>
+        public static event EventHandler<AfterCheckActionEventArgs> AfterCheckAction = delegate { };
+
+        /// <summary>
         ///     Fires just before loading the objects in a location.
         /// </summary>
         /// <remarks>
@@ -70,7 +75,7 @@
         ///     This event is cancellable, allowing you to prevent the warping of a player.
         /// </remarks>
         public static event EventHandler<BeforeWarpEventArgs> BeforeWarp = delegate { };
-
+        
         /// <summary>
         ///     Fired just before changing the current location.
         /// </summary>
@@ -102,6 +107,17 @@
             var eventArgs = new BeforeCheckActionEventArgs((GameLocation)@this, location, viewport, who);
             EventCommon.SafeInvoke(BeforeCheckAction, @this, eventArgs);
             return eventArgs.Handled;
+        }
+
+        [Hook(HookType.Exit, "StardewValley.GameLocation", "checkAction")]
+        internal static void OnAfterCheckAction(
+           [ThisBind] object @this,
+           [InputBind(typeof(Location), "tileLocation")] Location location,
+           [InputBind(typeof(Rectangle), "viewport")] Rectangle viewport,
+           [InputBind(typeof(Farmer), "who")] Farmer who,
+           [MethodOutputBind] bool handled)
+        {
+            EventCommon.SafeInvoke(AfterCheckAction, @this, new AfterCheckActionEventArgs((GameLocation)@this, location, viewport, who, handled));
         }
 
         [Hook(HookType.Exit, "StardewValley.GameLocation", "loadObjects")]

@@ -6,7 +6,7 @@
     ///     Used by the installer. Redirects a constructor to a method (for factory classes to use).
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public sealed class HookRedirectConstructorToMethodAttribute : Attribute
+    public sealed class HookRedirectConstructorToMethodAttribute : FarmhandHook
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="HookRedirectConstructorToMethodAttribute" /> class.

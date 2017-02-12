@@ -6,7 +6,7 @@
     ///     Used by the installer. Alters call instructions to call virtual.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public sealed class HookMakeBaseVirtualCallAttribute : Attribute
+    public sealed class HookMakeBaseVirtualCallAttribute : FarmhandHook
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="HookMakeBaseVirtualCallAttribute" /> class.

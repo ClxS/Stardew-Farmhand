@@ -35,6 +35,18 @@
         public TextureRect Destination { get; set; }
 
         /// <summary>
+        ///     Gets or sets a value indicating whether this should replace into the existing asset or
+        ///     inject into it.
+        /// </summary>
+        /// <value>
+        ///     <c>Replaces</c> if true; otherwise, <c>injects</c>.
+        /// </value>
+        /// <remarks>
+        ///     This is only valid on Dictionary replacing XNB files. Textures are always injected.
+        /// </remarks>
+        public bool Replace { get; set; }
+
+        /// <summary>
         ///     Gets or sets the owning mod.
         /// </summary>
         [JsonIgnore]

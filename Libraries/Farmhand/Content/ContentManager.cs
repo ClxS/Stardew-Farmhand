@@ -8,6 +8,7 @@
     using Farmhand.Attributes;
     using Farmhand.Content.Injectors;
     using Farmhand.Content.Injectors.Blueprints;
+    using Farmhand.Content.Injectors.Effects;
     using Farmhand.Content.Injectors.Items;
     using Farmhand.Content.Injectors.Mail;
     using Farmhand.Content.Injectors.Maps;
@@ -16,23 +17,37 @@
     using Farmhand.Content.Injectors.Other;
     using Farmhand.Logging;
 
+    using Microsoft.Xna.Framework.Content;
+
     using StardewValley;
+
+    using xTile;
 
     /// <summary>
     ///     An override for the XNA ContentManager which deals with loading custom XNBs when mods have registered custom
     ///     overrides. Can also be used by mods
     ///     to load their own XNB data
     /// </summary>
-    [HookRedirectConstructorFromBase("StardewValley.Game1", ".ctor", new[] { typeof(IServiceProvider), typeof(string) })
-    ]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", ".ctor",
+        new[] { typeof(IServiceProvider), typeof(string) })]
     [HookRedirectConstructorFromBase("StardewValley.Game1", "dummyLoad",
         new[] { typeof(IServiceProvider), typeof(string) })]
     [HookRedirectConstructorFromBase("StardewValley.Game1", "LoadContent",
+        new[] { typeof(IServiceProvider), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", "setGameMode",
+        new[] { typeof(IServiceProvider), typeof(string) })]
+    [HookRedirectConstructorFromBase("StardewValley.Game1", "performTenMinuteClockUpdate",
         new[] { typeof(IServiceProvider), typeof(string) })]
     [HookRedirectConstructorFromBase("StardewValley.LocalizedContentManager", "CreateTemporary",
         new[] { typeof(IServiceProvider), typeof(string), typeof(CultureInfo), typeof(string) })]
     public class ContentManager : LocalizedContentManager
     {
+        [Hook(HookType.Entry, "StardewValley.Game1", "LoadContent")]
+        internal static void CreateContentManager([ThisBind] Game1 @this)
+        {
+            Game1.game1.Content = new ContentManager(@this.Content.ServiceProvider, @this.Content.RootDirectory);
+        }
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ContentManager" /> class.
         /// </summary>
@@ -74,45 +89,41 @@
         /// <summary>
         ///     Gets a <see cref="List{T}" /> which contains the injectors used for loading assets.
         /// </summary>
-        public static List<IContentInjector> ContentInjectors { get; } = new List<IContentInjector>
-                                                                             {
-                                                                                 new ModXnbInjector
-                                                                                     (),
-                                                                                 new BlueprintInjector
-                                                                                     (),
-                                                                                 new MonsterLoader
-                                                                                     (),
-                                                                                 new MonsterInjector
-                                                                                     (),
-                                                                                 new CropInjector
-                                                                                     (),
-                                                                                 new WeaponInjector
-                                                                                     (),
-                                                                                 new BigCraftableInjector
-                                                                                     (),
-                                                                                 new DelegatedContentInjector
-                                                                                     (),
-                                                                                 new MapInjector(
-                                                                                 ),
-                                                                                 new MailInjector
-                                                                                     (),
-                                                                                 new QuestInjector
-                                                                                     (),
-                                                                                 /* Begin NPC Injectors */
-                                                                                 new DialogueLoader
-                                                                                     (),
-                                                                                 new GiftTastesInjector
-                                                                                     (),
-                                                                                 new NpcDispositionsInjector
-                                                                                     (),
-                                                                                 new NpcLoader(),
-                                                                                 new RainyDialogueInjector
-                                                                                     (),
-                                                                                 new ScheduleLoader
-                                                                                     ()
-                                                                                 
-                                                                                 /* End NPC Injectors */
-                                                                             };
+        public static List<IContentLoader> ContentLoaders { get; } = new List<IContentLoader>
+                {
+                    new ModXnbLoader(),
+                    new MonsterLoader(),
+                    new DialogueLoader(),
+                    new PortraitLoader(),
+                    new NpcLoader(),
+                    new ScheduleLoader(),
+                    new EffectLoader(),
+                    new DelegatedContentInjector()
+                };
+
+        /// <summary>
+        ///     Gets a <see cref="List{T}" /> which contains the injectors used when loading assets.
+        /// </summary>
+        public static List<IContentInjector> ContentInjectors { get; } =
+            new List<IContentInjector>
+                {
+                    new ModXnbTextureInjector(),
+                    new ModXnbDictionaryInjector(),
+                    new BlueprintInjector(),
+                    new MonsterInjector(),
+                    new CropInjector(),
+                    new WeaponInjector(),
+                    new BigCraftableInjector(),
+                    new MapInjector(),
+                    new MailInjector(),
+                    new QuestInjector(),
+                    /* Begin NPC Injectors */
+                    new GiftTastesInjector(),
+                    new NpcDispositionsInjector(),
+                    new RainyDialogueInjector(),
+                    /* End NPC Injectors */
+                    new DelegatedContentInjector()
+                };
 
         /// <summary>
         ///     Gets a list of expected problematic assets. The game has quite a lot of missing XNBs that throw exceptions.
@@ -124,6 +135,7 @@
                                                                        @"Characters\Dialogue\Gunther",
                                                                        @"Characters\Dialogue\Marlon",
                                                                        @"Characters\Dialogue\Henchman",
+                                                                       @"Characters\Dialogue\Dudley",
                                                                        @"Characters\schedules\Wizard",
                                                                        @"Characters\schedules\Dwarf",
                                                                        @"Characters\schedules\Mister Qi",
@@ -132,7 +144,8 @@
                                                                        @"Characters\schedules\Gunther",
                                                                        @"Characters\schedules\Marlon",
                                                                        @"Characters\schedules\Henchman",
-                                                                       @"Data\Festivals\spring1"
+                                                                       @"Data\Festivals\spring1",
+                                                                       @"Data\Festivals\spring12"
                                                                    };
 
         /// <summary>
@@ -163,11 +176,7 @@
         /// </returns>
         public LocalizedContentManager CreateContentManager(string rootDirectory)
         {
-            return new LocalizedContentManager(
-                this.ServiceProvider,
-                rootDirectory,
-                this.CurrentCulture,
-                this.LanguageCodeOverride);
+            return new ContentManager(this.ServiceProvider, rootDirectory);
         }
 
         /// <summary>
@@ -182,9 +191,12 @@
 
             try
             {
-                var loaders = ContentInjectors.Where(n => n.IsLoader && n.HandlesAsset(typeof(T), assetName)).ToArray();
+                var loaders =
+                    ContentLoaders.Where(n => n.HandlesAsset(typeof(T), assetName))
+                        .ToArray();
                 var injectors =
-                    ContentInjectors.Where(n => !n.IsLoader && n.HandlesAsset(typeof(T), assetName)).ToArray();
+                    ContentInjectors.Where(n => n.HandlesAsset(typeof(T), assetName))
+                        .ToArray();
 
                 if (loaders.Length > 1)
                 {

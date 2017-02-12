@@ -37,17 +37,27 @@
         ///     The first-pass package result assembly name.
         /// </summary>
         public static string PassOnePackageResult => "Stardew Farmhand.int1-package.dll";
-
+        
         /// <summary>
         ///     The second-pass package result assembly name.
         /// </summary>
         public static string PassTwoPackageResult => "Stardew Farmhand.dll";
-
+        
         /// <summary>
         ///     The first-pass patching result assembly name.
         /// </summary>
         public static string PassOneFarmhandExe => "Stardew Farmhand.int1.dll";
         
+        /// <summary>
+        ///     The first-pass package result assembly name.
+        /// </summary>
+        public static string PassOneFarmhandExeNoObsolete => "Stardew Farmhand.int1-NoObsolete.dll";
+
+        /// <summary>
+        ///     The second-pass patching result assembly name.
+        /// </summary>
+        public static string PassTwoFarmhandExe => FarmhandExe;
+
         /// <summary>
         ///     The JSON library assembly name.
         /// </summary>
