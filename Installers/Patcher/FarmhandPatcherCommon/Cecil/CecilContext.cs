@@ -1,4 +1,3 @@
-using Mono.Cecil.Mdb;
 namespace Farmhand.Installers.Patcher.Cecil
 {
     using System;
@@ -12,8 +11,8 @@ namespace Farmhand.Installers.Patcher.Cecil
 
     using Mono.Cecil;
     using Mono.Cecil.Cil;
+    using Mono.Cecil.Mdb;
     using Mono.Cecil.Pdb;
-	using Mono.Cecil.Mdb;
     using Mono.Collections.Generic;
 
     /// <summary>
@@ -54,19 +53,68 @@ namespace Farmhand.Installers.Patcher.Cecil
         /// </param>
         public void SetPrimaryAssembly(string file, bool loadDebugInformation)
         {
-            var pdbPath = Path.GetDirectoryName(assembly) + Path.GetFileNameWithoutExtension(assembly) + ".pdb";
-            if (loadPdb && File.Exists(pdbPath))
+            var mono = Type.GetType("Mono.Runtime") != null;
+            ISymbolReaderProvider readerProvider;
+            if (mono)
+            {
+                readerProvider = new MdbReaderProvider();
+            }
+            else
+            {
+                readerProvider = new PdbReaderProvider();
+            }
+
+            var pdbPath = Path.GetDirectoryName(file) + Path.GetFileName(file) + $".{(mono ? "m" : "p")}db";
+            if (loadDebugInformation && File.Exists(pdbPath))
             {
                 var readerParameters = new ReaderParameters
-                                           {
-                                               SymbolReaderProvider = new PdbReaderProvider(),
-                                               ReadSymbols = true
-                                           };
+                                       {
+                                           SymbolReaderProvider = readerProvider,
+                                           ReadSymbols = true
+                                       };
                 this.AssemblyDefinition = AssemblyDefinition.ReadAssembly(file, readerParameters);
             }
             else
             {
                 this.AssemblyDefinition = AssemblyDefinition.ReadAssembly(file);
+            }
+        }
+
+        /// <summary>
+        ///     Writes the modified assembly to disk.
+        /// </summary>
+        /// <param name="file">
+        ///     The output file.
+        /// </param>
+        /// <param name="writePdb">
+        ///     Whether an updated PDB should also be written.
+        /// </param>
+        public void WriteAssembly(string file, bool writePdb = false)
+        {
+            var mono = Type.GetType("Mono.Runtime") != null;
+            ISymbolWriterProvider writerProvider;
+            if (mono)
+            {
+                writerProvider = new MdbWriterProvider();
+            }
+            else
+            {
+                writerProvider = new PdbWriterProvider();
+            }
+
+            if (writePdb)
+            {
+                var writerParameters = new WriterParameters
+                {
+                    SymbolWriterProvider = writerProvider,
+                    WriteSymbols = true
+                };
+
+                this.AssemblyDefinition.Write(file, writerParameters);
+            }
+            else
+            {
+                this.AssemblyDefinition.Write(file);
             }
         }
 
@@ -127,9 +175,7 @@ namespace Farmhand.Installers.Patcher.Cecil
         /// <exception cref="Exception">
         ///     Throws an exception if AssemblyDefinition is null, or a type is not specified.
         /// </exception>
-        public TypeDefinition GetTypeDefinition(
-            string type,
-            Collection<TypeDefinition> toCheck = null)
+        public TypeDefinition GetTypeDefinition(string type, Collection<TypeDefinition> toCheck = null)
         {
             if (this.AssemblyDefinition == null)
             {
@@ -278,8 +324,7 @@ namespace Farmhand.Installers.Patcher.Cecil
             {
                 methodDef = selector == null
                                 ? typeDef.Methods.FirstOrDefault(m => m.FullName == method)
-                                : typeDef.Methods.Where(m => m.FullName == method)
-                                    .FirstOrDefault(selector);
+                                : typeDef.Methods.Where(m => m.FullName == method).FirstOrDefault(selector);
             }
 
             return methodDef;
@@ -431,37 +476,6 @@ namespace Farmhand.Installers.Patcher.Cecil
         }
 
         /// <summary>
-        ///     Writes the modified assembly to disk.
-        /// </summary>
-        /// <param name="file">
-        ///     The output file.
-        /// </param>
-        /// <param name="writePdb">
-        ///     Whether an updated PDB should also be written.
-        /// </param>
-        public void WriteAssembly(string file, bool writePdb = false)
-        {
-			var mono = Type.GetType("Mono.Runtime") != null;
-			ISymbolWriterProvider writerProvider;
-			if (mono) writerProvider = new MdbWriterProvider(); else writerProvider = new PdbWriterProvider();
-
-            if (writePdb)
-            {
-                var writerParameters = new WriterParameters
-                                           {
-                                               SymbolWriterProvider = new PdbWriterProvider(),
-                                               WriteSymbols = true
-                                           };
-                
-                this.AssemblyDefinition.Write(file, writerParameters);
-            }
-            else
-            {
-                this.AssemblyDefinition.Write(file);
-            }
-        }
-
-        /// <summary>
         ///     Inserts a new type into the AssemblyDefinition
         /// </summary>
         /// <param name="type">
@@ -479,11 +493,3 @@ namespace Farmhand.Installers.Patcher.Cecil
         }
     }
 }
-
-            var pdbPath = Path.GetDirectoryName(file) + Path.GetFileNameWithoutExtension(file)
-                          + ".pdb";
-            if (loadDebugInformation && File.Exists(pdbPath))
-                                               SymbolReaderProvider =
-                                                   new PdbReaderProvider(),
-                                               SymbolWriterProvider =
-                                                   new PdbWriterProvider(),
