@@ -428,6 +428,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{9985
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VignetteMod", "Mods\VignetteMod\VignetteMod\VignetteMod.csproj", "{70C4F2E4-BFB3-4F56-B861-1D08C84C1F57}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C12052C1-872A-4B04-97FB-9347A4539C87} = {C12052C1-872A-4B04-97FB-9347A4539C87}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
