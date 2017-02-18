@@ -186,7 +186,7 @@
                 }
             }
 
-            return false;
+            return true;
         }
 
         private static void HandleException(object sender, UnhandledExceptionEventArgs args)
