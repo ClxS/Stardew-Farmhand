@@ -36,7 +36,9 @@
             return farmhandTypes;
         }
 
+		#if XNA
         [Hook(HookType.Entry, "StardewValley.Game1", "Initialize")]
+		#endif
         public static void ManualHookup()
         {
             SaveGame.farmerSerializer.UnknownElement += FarmerSerializer_UnknownElement;
