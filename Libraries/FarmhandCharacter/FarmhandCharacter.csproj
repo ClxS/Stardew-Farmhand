@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="$(SolutionDir)\BuildTasks\Targets\CrossPlatform.targets" />
-  <Import Project="$(SolutionDir)\BuildTasks\Targets\Common.targets" />
-  <PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7C722998-FBFD-438C-9446-E67154EDBFC5}</ProjectGuid>
@@ -37,6 +34,8 @@
     <DocumentationFile>..\..\Bin\FarmhandCharacter.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\BuildTasks\Targets\CrossPlatform.targets" />
+  <Import Project="$(SolutionDir)\BuildTasks\Targets\Common.targets" />
   <ItemGroup>
     <Reference Include="Stardew Farmhand.int1">
       <HintPath>..\..\Bin\$(Platform)\$(Configuration)\Stardew Farmhand.int1.dll</HintPath>

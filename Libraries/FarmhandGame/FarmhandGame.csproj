@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="$(SolutionDir)\BuildTasks\Targets\CrossPlatform.targets" />
-  <Import Project="$(SolutionDir)\BuildTasks\Targets\Common.targets" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -37,6 +35,8 @@
     <DocumentationFile>..\..\Bin\FarmhandGame.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\BuildTasks\Targets\CrossPlatform.targets" />
+  <Import Project="$(SolutionDir)\BuildTasks\Targets\Common.targets" />
   <ItemGroup>
     <Reference Include="Stardew Farmhand.int1, Version=1.0.5940.30711, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
