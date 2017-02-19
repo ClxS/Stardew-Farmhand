@@ -29,11 +29,7 @@ install:
 - cmd: 7z x C:\projects\stardew-tools\SHFBInstaller.zip -oC:\projects\stardew-tools -y
 - ps: msiexec /i C:\projects\stardew-tools\InstallResources\SandcastleHelpFileBuilder.msi /quiet /norestart /log install.log
 - ps: |
-    $encrypted = ConvertTo-SecureString -String "01000000d08c9ddf0115d1118c7a00c04fc297eb01000000435f28ebf6f6f5428e8c13599a0d5f9900000000020000000000106600000001000020000000321b8fef33fcb4718eeb709b44ba819a97bde5e142bc7708167dc5f21703bcf8000000000e8000000002000020000000166aaae81415687e29025f14b235a2174b7ae04d3790972b09da046a1ba9577f70000000e86ea5a4cad52dacd320ac9e707a3ef4374d57320415c9fabd953833878f6b1235983b8612ba5abaea37fd9160bef3f0142c58bc4169e7fad36b44d119d1b490cf3f3e83bdb5f420c766af893972ad58ebc5fc9531438ca94e4fd20f22a9fb628157f5a07ca7958efdddb94ec3eaf28c4000000039c6f54dec85d75d6e10942ad3d2e2c5bf31884ca01624f50fa78be1632b2609a891444fcb24a104987e190402b5a057f4a2e442d2137cd65fe740958f858b41"
-    $Ptr = [System.Runtime.InteropServices.Marshal]::SecureStringToCoTaskMemUnicode($encrypted)
-    $result = [System.Runtime.InteropServices.Marshal]::PtrToStringUni($Ptr)
-    [System.Runtime.InteropServices.Marshal]::ZeroFreeCoTaskMemUnicode($Ptr)
-    $args = 'clone "' + $result + '" "C:\projects\stardew-farmhand\Staging"'
+    $args = 'clone "https://$env:TOOL_USER:$env:TOOL_TOKEN@gitlab.com/ClxS/Tool.git" "C:\projects\stardew-farmhand\Staging"'
     Start-Process -FilePath "C:\Program Files\Git\cmd\git.exe" -ArgumentList $args -Wait -NoNewWindow
 build_script:
 - ps: |
