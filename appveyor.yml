@@ -45,7 +45,7 @@ build_script:
       '/p:Platform="Windows"',
       "/p:Configuration=$env:CONFIGURATION",
       "/p:DefineConstants=WINDOWS"
-      "/v:m")
+      "/v:diag")
 
     # If build is not a scheduled one, than simply build project with MSBuild.
     if ($env:APPVEYOR_SCHEDULED_BUILD -ne "True") {
