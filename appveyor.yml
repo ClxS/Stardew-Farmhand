@@ -43,14 +43,14 @@ build_script:
     $buildArgs = @(
       "/m",
       "/l:C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll",
-      '/p:Platform="Any CPU"',
+      '/p:Platform="Windows"',
       "/p:Configuration=$env:CONFIGURATION",
       "/p:DefineConstants=WINDOWS"
       "/v:m")
 
     # If build is not a scheduled one, than simply build project with MSBuild.
     if ($env:APPVEYOR_SCHEDULED_BUILD -ne "True") {
-      Write-Host "Compiling AnyCPU"
+      Write-Host "Compiling Windows"
 
       & $buildCmd $buildArgs
       
