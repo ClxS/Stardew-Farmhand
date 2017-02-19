@@ -9,6 +9,8 @@ environment:
   VersionPatch: 0
   SandCastleZipFile: C:\projects\stardew-tools\SHFBInstaller.zip
   SandCastleUri: https://github.com/EWSoftware/SHFB/releases/download/v2015.10.10.0/SHFBInstaller_v2015.10.10.0.zip
+  XnaFile: C:\projects\stardew-tools\xnafx40_redist.msi
+  XnaUri: https://download.microsoft.com/download/A/C/2/AC2C903B-E6E8-42C2-9FD7-BEBAC362A930/xnafx40_redist.msi
   SHFBROOT: C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\
   TOOL_USER:
     secure: OHqX4MUJkciXyaPO+OpTSg==
@@ -30,8 +32,10 @@ install:
 - cmd: git submodule update --init --recursive
 - cmd: mkdir "C:\projects\stardew-tools\"
 - ps: Start-FileDownload $env:SandCastleUri -FileName $env:SandCastleZipFile
+- ps: Start-FileDownload $env:XnaUri -FileName $env:XnaFile
 - cmd: 7z x C:\projects\stardew-tools\SHFBInstaller.zip -oC:\projects\stardew-tools -y
 - ps: msiexec /i C:\projects\stardew-tools\InstallResources\SandcastleHelpFileBuilder.msi /quiet /norestart /log install.log
+- ps: msiexec /i $env:XnaFile /quiet /norestart /log xnainstall.log
 before_build:
 - cmd: '"C:\Program Files\Git\cmd\git.exe" clone "https://%TOOL_USER%:%TOOL_TOKEN%@gitlab.com/ClxS/Tool.git" "C:\projects\stardew-farmhand\Staging"'
 build_script:
