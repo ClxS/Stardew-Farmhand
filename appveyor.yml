@@ -75,7 +75,7 @@ build_script:
           "/p:Platform=Installer",
           "/p:Configuration=Release",
           "/p:DefineConstants=WINDOWS"
-          "/v:m")
+          "/v:diag")
         & $buildCmd $buildArgs
 
         git clone https://github.com/ClxS/Stardew-Farmhand.git C:\projects\stardew-docs
@@ -114,7 +114,7 @@ build_script:
     PublishCoverity.0.10.0/PublishCoverity compress -o "$env:APPVEYOR_BUILD_FOLDER\$env:APPVEYOR_PROJECT_NAME.zip" -i "$env:APPVEYOR_BUILD_FOLDER\cov-int"
     PublishCoverity.0.10.0/PublishCoverity publish -z "$env:APPVEYOR_BUILD_FOLDER\$env:APPVEYOR_PROJECT_NAME.zip" -r ClxS/Stardew-Farmhand -t $env:CoverityProjectToken -e $env:CoverityNotificationEmail -d "Scheduled CI server build." --codeVersion "$formField"
 artifacts:
-  - path: Bin\Installer-Release\FarmhandInstaller.exe
+  - path: Bin\Windows\Release\FarmhandInstaller.exe
     name: FarmhandInstaller
 deploy:
 - provider: GitHub
