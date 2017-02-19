@@ -32,9 +32,8 @@ install:
 - ps: Start-FileDownload $env:SandCastleUri -FileName $env:SandCastleZipFile
 - cmd: 7z x C:\projects\stardew-tools\SHFBInstaller.zip -oC:\projects\stardew-tools -y
 - ps: msiexec /i C:\projects\stardew-tools\InstallResources\SandcastleHelpFileBuilder.msi /quiet /norestart /log install.log
-- ps: |
-    $args = 'clone "https://$env:TOOL_USER:$env:TOOL_TOKEN@gitlab.com/ClxS/Tool.git" "C:\projects\stardew-farmhand\Staging"'
-    Start-Process -FilePath "C:\Program Files\Git\cmd\git.exe" -ArgumentList $args -Wait -NoNewWindow
+before_build:
+- cmd: '"C:\Program Files\Git\cmd\git.exe" clone "https://$env:TOOL_USER:$env:TOOL_TOKEN@gitlab.com/ClxS/Tool.git" "C:\projects\stardew-farmhand\Staging"'
 build_script:
 - ps: |
     nuget restore
