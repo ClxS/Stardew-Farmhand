@@ -111,15 +111,32 @@ Thin libraries used to ensure the correct libraries are used for each injection 
 ######FarmhandInstaller-Console
 A command line interface used for running the patcher. This will not be included as a public installer and instead is just used as a part of the build process.
 
-- Farmhand Installer - UI (EXE). This runs FarmhandPatcher too. Once it's complete, this will be the file we actually distribute out. It should automatically bundle the required binaries (Farmhand, FarmhandUI, FarmhandPatcherCommon, FarmhandPatcherFirstPass, FarmhandPatcherSecondPass) and extract them at runtime. At the final stages, this should allow for updated binaries to be fetched from the internet.
-
-- FarmhandPatcherCommon/FirstPass/SecondPass. These are used by the installer.They are separated into their own libraries to prevent conflicts due to the missing (not yet built) Stardew Farmhand intermediate
+######FarmhandInstaller.UI
+This is the distributed Farmhand installer. It currently uses WPF but will soon be replaced by platform specific installers.
 
 ##Libraries
 
-- Farmhand (DLL). The core code which is injected into Stardew
+######Farmhand
+The core code which is injected into Stardew. Most of the heavy lifting and API functionality takes place in this library, with second-pass libraries only being used for things which rely on the changes caused by this library.
+
+######FarmhandCharacter
+Contains NPC and Monster related API functionality.
+
+######FarmhandGame
+Contains overrides for the Game1 instance and overrides for certain item classes.
+
+######FarmhandUI 
+Contains a modified version of Entoarox's UI framework, as well contains additional UI enhancements such as the mod configuration menus.
+
+##Mods
+
+Far too many to list, the mods packaged serve a both examples and integration tests to ensure features continue to work.
 
 ##Tools
 
-- Farmhand Debugger (EXE). Just serves as an entry point for me to step through and debug StardewR code in the event I inject something incorrectly. This should be set as your startup project when not debugging the build process.
+######FarmhandDebugger
+Just serves as an entry point for me to step through and debug Stardew Farmhand. This should be set as your startup project when not debugging the build process. A benefit of this is that since Farmhand itself does not invoke a console window yet, console output will be redirected to the debugger's window.
+
+######InstallerPackager
+Prepares a number of data-defined packages for inclusion in the installer.
 
