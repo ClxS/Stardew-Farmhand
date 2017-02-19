@@ -75,7 +75,7 @@ build_script:
           "/p:Platform=Installer",
           "/p:Configuration=Release",
           "/p:DefineConstants=WINDOWS"
-          "/v:diag")
+          "/v:m")
         & $buildCmd $buildArgs
 
         git clone https://github.com/ClxS/Stardew-Farmhand.git C:\projects\stardew-docs
