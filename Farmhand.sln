@@ -865,7 +865,6 @@ Global
 		{C5D41223-E5EF-410D-81B1-4F439AF4AF1C}.Debug|MacOSX.ActiveCfg = Debug|MacOSX
 		{C5D41223-E5EF-410D-81B1-4F439AF4AF1C}.Debug|MacOSX.Build.0 = Debug|MacOSX
 		{C5D41223-E5EF-410D-81B1-4F439AF4AF1C}.Debug|Windows.ActiveCfg = Debug|Any CPU
-		{C5D41223-E5EF-410D-81B1-4F439AF4AF1C}.Debug|Windows.Build.0 = Debug|Any CPU
 		{C5D41223-E5EF-410D-81B1-4F439AF4AF1C}.Release|Documentation.ActiveCfg = Release|Any CPU
 		{C5D41223-E5EF-410D-81B1-4F439AF4AF1C}.Release|Installer.ActiveCfg = Release|Any CPU
 		{C5D41223-E5EF-410D-81B1-4F439AF4AF1C}.Release|Installer.Build.0 = Release|Any CPU
