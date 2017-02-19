@@ -13,7 +13,7 @@ environment:
   TOOL_USER:
     secure: OHqX4MUJkciXyaPO+OpTSg==
   TOOL_TOKEN:
-  	secure: DyhBy87Gg91K1KVM6kkOLIQ9ake6Xx/eX6UVbw/+Cxw=
+    secure: DyhBy87Gg91K1KVM6kkOLIQ9ake6Xx/eX6UVbw/+Cxw=
 image: Visual Studio 2015
 clone_folder: c:\projects\stardew-farmhand
 shallow_clone: false
