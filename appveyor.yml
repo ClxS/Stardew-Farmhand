@@ -10,6 +10,10 @@ environment:
   SandCastleZipFile: C:\projects\stardew-tools\SHFBInstaller.zip
   SandCastleUri: https://github.com/EWSoftware/SHFB/releases/download/v2015.10.10.0/SHFBInstaller_v2015.10.10.0.zip
   SHFBROOT: C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\
+  TOOL_USER:
+    secure: OHqX4MUJkciXyaPO+OpTSg==
+  TOOL_TOKEN:
+  	secure: DyhBy87Gg91K1KVM6kkOLIQ9ake6Xx/eX6UVbw/+Cxw=
 image: Visual Studio 2015
 clone_folder: c:\projects\stardew-farmhand
 shallow_clone: false
