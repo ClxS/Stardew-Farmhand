@@ -64,7 +64,7 @@ namespace Farmhand.Installers.Patcher.Cecil
                 readerProvider = new PdbReaderProvider();
             }
 
-            var pdbPath = Path.GetDirectoryName(file) + Path.GetFileName(file) + $".{(mono ? "m" : "p")}db";
+            var pdbPath = Path.GetDirectoryName(file) + Path.GetFileNameWithoutExtension(file) + $".{(mono ? "m" : "p")}db";
             if (loadDebugInformation && File.Exists(pdbPath))
             {
                 var readerParameters = new ReaderParameters
