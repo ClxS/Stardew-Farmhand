@@ -373,6 +373,11 @@
         // Loads mod manifests from a given directory
         private static void LoadModManifests(String modDirectory)
         {
+            if (!Directory.Exists(modDirectory))
+            {
+                return;
+            }
+
             foreach (var perModPath in Directory.GetDirectories(modDirectory))
             {
                 var modJsonFiles = Directory.GetFiles(perModPath, "manifest.json");
