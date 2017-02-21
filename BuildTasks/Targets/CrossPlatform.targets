@@ -1,9 +1,14 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition=" '$(Platform)' == 'Linux' ">
     <MonoGamePlatform>Linux</MonoGamePlatform>
-    <DefineConstants>LINUX;MONO</DefineConstants>
     <PlatformName>Linux</PlatformName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Linux' ">
+    <DefineConstants>DEBUG;LINUX;MONO</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Linux' ">
+    <DefineConstants>RELEASE;LINUX;MONO</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'MacOSX' ">
     <MonoGamePlatform>MacOSX</MonoGamePlatform>
@@ -11,10 +16,22 @@
     <PlatformName>MacOSX</PlatformName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Linux' ">
+    <DefineConstants>DEBUG;MACOSX;MONO</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Linux' ">
+    <DefineConstants>RELEASE;MACOSX;MONO</DefineConstants>
+  </PropertyGroup>
 	<PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <DefineConstants>WINDOWS;XNA</DefineConstants>
     <PlatformName>Windows</PlatformName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Linux' ">
+    <DefineConstants>DEBUG;WINDOWS;XNA</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Linux' ">
+    <DefineConstants>RELEASE;WINDOWS;XNA</DefineConstants>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="('$(Platform)' == 'Linux' or '$(Platform)' == 'MacOSX') And Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
 </Project>
