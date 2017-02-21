@@ -20,6 +20,8 @@
 
     using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
+
+
     /// <summary>
     ///     Overrides Stardew's Game1, allowing for advanced callback events to be added
     /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace Farmhand.Installers.Patcher.Cecil
+namespace Farmhand.Installers.Patcher.Cecil
 {
     using System;
     using System.Collections.Generic;
@@ -11,6 +11,7 @@
 
     using Mono.Cecil;
     using Mono.Cecil.Cil;
+    using Mono.Cecil.Mdb;
     using Mono.Cecil.Pdb;
     using Mono.Collections.Generic;
 
@@ -52,21 +53,68 @@
         /// </param>
         public void SetPrimaryAssembly(string file, bool loadDebugInformation)
         {
-            var pdbPath = Path.GetDirectoryName(file) + Path.GetFileNameWithoutExtension(file)
-                          + ".pdb";
+            var mono = Type.GetType("Mono.Runtime") != null;
+            ISymbolReaderProvider readerProvider;
+            if (mono)
+            {
+                readerProvider = new MdbReaderProvider();
+            }
+            else
+            {
+                readerProvider = new PdbReaderProvider();
+            }
+
+            var pdbPath = Path.GetDirectoryName(file) + Path.GetFileNameWithoutExtension(file) + $".{(mono ? "m" : "p")}db";
             if (loadDebugInformation && File.Exists(pdbPath))
             {
                 var readerParameters = new ReaderParameters
-                                           {
-                                               SymbolReaderProvider =
-                                                   new PdbReaderProvider(),
-                                               ReadSymbols = true
-                                           };
+                                       {
+                                           SymbolReaderProvider = readerProvider,
+                                           ReadSymbols = true
+                                       };
                 this.AssemblyDefinition = AssemblyDefinition.ReadAssembly(file, readerParameters);
             }
             else
             {
                 this.AssemblyDefinition = AssemblyDefinition.ReadAssembly(file);
+            }
+        }
+
+        /// <summary>
+        ///     Writes the modified assembly to disk.
+        /// </summary>
+        /// <param name="file">
+        ///     The output file.
+        /// </param>
+        /// <param name="writePdb">
+        ///     Whether an updated PDB should also be written.
+        /// </param>
+        public void WriteAssembly(string file, bool writePdb = false)
+        {
+            var mono = Type.GetType("Mono.Runtime") != null;
+            ISymbolWriterProvider writerProvider;
+            if (mono)
+            {
+                writerProvider = new MdbWriterProvider();
+            }
+            else
+            {
+                writerProvider = new PdbWriterProvider();
+            }
+
+            if (writePdb)
+            {
+                var writerParameters = new WriterParameters
+                {
+                    SymbolWriterProvider = writerProvider,
+                    WriteSymbols = true
+                };
+
+                this.AssemblyDefinition.Write(file, writerParameters);
+            }
+            else
+            {
+                this.AssemblyDefinition.Write(file);
             }
         }
 
@@ -127,9 +175,7 @@
         /// <exception cref="Exception">
         ///     Throws an exception if AssemblyDefinition is null, or a type is not specified.
         /// </exception>
-        public TypeDefinition GetTypeDefinition(
-            string type,
-            Collection<TypeDefinition> toCheck = null)
+        public TypeDefinition GetTypeDefinition(string type, Collection<TypeDefinition> toCheck = null)
         {
             if (this.AssemblyDefinition == null)
             {
@@ -157,7 +203,7 @@
                     break;
                 }
 
-                if (type.StartsWith(def.FullName) && def.HasNestedTypes)
+                if (type.StartsWith(def.FullName, StringComparison.Ordinal) && def.HasNestedTypes)
                 {
                     typeDef = this.GetTypeDefinition(type, def.NestedTypes);
                     if (typeDef != null)
@@ -278,8 +324,7 @@
             {
                 methodDef = selector == null
                                 ? typeDef.Methods.FirstOrDefault(m => m.FullName == method)
-                                : typeDef.Methods.Where(m => m.FullName == method)
-                                    .FirstOrDefault(selector);
+                                : typeDef.Methods.Where(m => m.FullName == method).FirstOrDefault(selector);
             }
 
             return methodDef;
@@ -428,34 +473,6 @@
             }
 
             return reference;
-        }
-
-        /// <summary>
-        ///     Writes the modified assembly to disk.
-        /// </summary>
-        /// <param name="file">
-        ///     The output file.
-        /// </param>
-        /// <param name="writePdb">
-        ///     Whether an updated PDB should also be written.
-        /// </param>
-        public void WriteAssembly(string file, bool writePdb = false)
-        {
-            if (writePdb)
-            {
-                var writerParameters = new WriterParameters
-                                           {
-                                               SymbolWriterProvider =
-                                                   new PdbWriterProvider(),
-                                               WriteSymbols = true
-                                           };
-                
-                this.AssemblyDefinition.Write(file, writerParameters);
-            }
-            else
-            {
-                this.AssemblyDefinition.Write(file);
-            }
         }
 
         /// <summary>

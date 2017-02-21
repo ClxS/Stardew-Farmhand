@@ -1,6 +1,7 @@
 ﻿namespace Farmhand.Installers
 {
     using System;
+    using System.IO;
     using System.Linq;
     using System.Reflection;
 
@@ -29,11 +30,21 @@
         {
             Patcher.Patcher patcher;
             var grmDisabled = args.Any(a => a.Equals("-disablegrm"));
+            var path = args.LastOrDefault();
+            if (path == null)
+            {
+                throw new ArgumentNullException(
+                    "Required argument (path) was missing. This should be the final argument "
+                    + "in the command, and point to the platform staging folder for pass1, or to the output exe for pass2.");
+            }
+            
             var noObsolete = args.Any(a => a.Equals("-noobsolete"));
 
             if (args.Any(a => a.Equals("-pass1")))
             {
+                path = Path.Combine(path, path.EndsWith("Windows") ? "Stardew Valley.exe" : "StardewValley.exe");
                 patcher = CreatePatcher(Pass.PassOne);
+
                 PatcherOptions.DisableGrm = grmDisabled;
                 PatcherOptions.NoObsolete = noObsolete;
                 if (noObsolete)
@@ -41,7 +52,7 @@
                     PatcherOptions.OutputOverride = PatcherConstants.PassOneFarmhandExeNoObsolete;
                 }
 
-                patcher.PatchStardew();
+                patcher.PatchStardew(path);
             }
             else if (args.Any(a => a.Equals("-pass2")))
             {
@@ -53,7 +64,7 @@
                     PatcherOptions.OutputOverride = "Stardew Farmhand No-Obsolete.exe";
                 }
 
-                patcher.PatchStardew();
+                patcher.PatchStardew(path);
             }
             else
             {

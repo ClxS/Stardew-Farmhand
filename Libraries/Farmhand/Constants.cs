@@ -14,8 +14,7 @@
         /// <summary>
         ///     Gets the default mod path.
         /// </summary>
-        public static string DefaultModPath { get; } = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
-                                                       + "\\Mods";
+		public static string DefaultModPath { get; } = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Mods");
 
         /// <summary>
         ///     Gets an instance of <see cref="Randomizer" />.

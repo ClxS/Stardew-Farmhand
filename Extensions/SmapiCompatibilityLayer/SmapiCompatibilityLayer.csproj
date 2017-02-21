@@ -9,50 +9,62 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SmapiCompatibilityLayer</RootNamespace>
     <AssemblyName>StardewModdingAPI</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)' == 'Linux'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)' == 'MacOSX'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\WorkingDirectory\Extensions\SMAPI\</OutputPath>
     <DefineConstants>TRACE;DEBUG;SMAPI_FOR_WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\WorkingDirectory\Extensions\SMAPI\</OutputPath>
     <DefineConstants>TRACE;SMAPI_FOR_WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <Import Project="$(SolutionDir)\BuildTasks\Targets\CrossPlatform.targets" />
+  <Import Project="$(SolutionDir)\BuildTasks\Targets\Common.targets" />
+  <Import Project="$(SolutionDir)\BuildTasks\Targets\ExtensionCommon.targets" />
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.dll</HintPath>
-      <HintPath>..\..\Staging\Microsoft.Xna.Framework.dll</HintPath>
+      <HintPath>..\..\Staging\$(PlatformName)\Microsoft.Xna.Framework.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Game\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Game.dll</HintPath>
-      <HintPath>..\..\Staging\Microsoft.Xna.Framework.Game.dll</HintPath>
+      <HintPath>..\..\Staging\$(PlatformName)\Microsoft.Xna.Framework.Game.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Graphics\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Graphics.dll</HintPath>
-      <HintPath>..\..\Staging\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+      <HintPath>..\..\Staging\$(PlatformName)\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="xTile">
+      <HintPath>$(SolutionDir)\Staging\$(PlatformName)\xTile.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Stardew Farmhand No-Obsolete">
-      <HintPath>..\..\Bin\Stardew Farmhand No-Obsolete.exe</HintPath>
+      <HintPath>$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\Stardew Farmhand No-Obsolete.exe</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,9 +76,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="xTile">
-      <HintPath>..\..\Staging\xTile.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompatibilityLayer.cs" />
@@ -83,8 +92,8 @@
   <Import Project="..\..\External\StardewModdingAPI\StardewModdingAPI.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>cd "$(SolutionDir)Bin" &amp; "$(SolutionDir)Bin\FarmhandInstaller-Console.exe" -pass1 -disablegrm -noobsolete
-cd "$(SolutionDir)Bin" &amp; "$(SolutionDir)Bin\FarmhandInstaller-Console.exe" -pass2 -disablegrm -noobsolete</PreBuildEvent>
+    <PreBuildEvent>cd "$(SolutionDir)Bin\$(PlatformName)\$(Configuration)" &amp; "$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\FarmhandInstaller-Console.exe" -pass1 -disablegrm -noobsolete "$(SolutionDir)Staging\$(PlatformName)"
+cd "$(SolutionDir)Bin\$(PlatformName)\$(Configuration)" &amp; "$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\FarmhandInstaller-Console.exe" -pass2 -disablegrm -noobsolete "$(SolutionDir)bin\$(PlatformName)\$(Configuration)"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

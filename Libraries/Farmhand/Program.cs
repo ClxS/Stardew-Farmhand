@@ -7,6 +7,8 @@ namespace Farmhand
 
     using Farmhand.Attributes;
 
+    using Microsoft.Xna.Framework.Graphics;
+
     using Newtonsoft.Json;
 
     /// <summary>

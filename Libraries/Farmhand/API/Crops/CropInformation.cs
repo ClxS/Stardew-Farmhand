@@ -1,7 +1,7 @@
 ﻿namespace Farmhand.API.Crops
 {
     using System.Collections.Generic;
-
+    
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
