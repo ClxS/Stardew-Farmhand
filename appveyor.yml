@@ -68,7 +68,7 @@ build_script:
           "/p:Platform=Documentation",
           "/p:Configuration=$env:CONFIGURATION",
           "/p:DefineConstants=WINDOWS"
-          "/v:diag")
+          "/v:m")
         & $buildCmd $buildArgs
 
         # Build the installer
