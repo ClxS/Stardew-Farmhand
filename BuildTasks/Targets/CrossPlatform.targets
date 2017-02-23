@@ -10,16 +10,27 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Linux' ">
     <DefineConstants>RELEASE;LINUX;MONO</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'Linux (Windows)' ">
+    <MonoGamePlatform>Linux</MonoGamePlatform>
+    <PlatformName>Linux</PlatformName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Linux (Windows)' ">
+    <DefineConstants>DEBUG;LINUX;MONO</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Linux (Windows)' ">
+    <DefineConstants>RELEASE;LINUX;MONO</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'MacOSX' ">
     <MonoGamePlatform>MacOSX</MonoGamePlatform>
     <DefineConstants>MACOSX;MONO</DefineConstants>
     <PlatformName>MacOSX</PlatformName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Linux' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|MacOSX' ">
     <DefineConstants>DEBUG;MACOSX;MONO</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Linux' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|MacOSX' ">
     <DefineConstants>RELEASE;MACOSX;MONO</DefineConstants>
   </PropertyGroup>
 	<PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">

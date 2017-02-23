@@ -18,10 +18,8 @@
         ///     Fired after a new instance of Bundle is constructed.
         /// </summary>
         public static event EventHandler AfterBundleConstructed = delegate { };
-
-#if WINDOWS
+        
         [Hook(HookType.Exit, "StardewValley.Menus.IClickableMenu", "initialize")]
-#endif
         internal static void OnAfterIClickableMenuInitialized(
             [ThisBind] object @this,
             [InputBind(typeof(int), "x")] int x,
@@ -32,10 +30,8 @@
         {
             EventCommon.SafeInvoke(AfterIClickableMenuInitialized, null);
         }
-
-#if WINDOWS
+        
         [Hook(HookType.Exit, "StardewValley.Menus.Bundle", ".ctor")]
-#endif
         internal static void OnAfterBundleConstructed([ThisBind] object @this)
         {
             EventCommon.SafeInvoke(AfterBundleConstructed, @this);

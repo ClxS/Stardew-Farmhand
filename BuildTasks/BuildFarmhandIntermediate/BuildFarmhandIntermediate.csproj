@@ -49,6 +49,9 @@
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PostBuildEvent>"$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\FarmhandInstaller-Console.exe" -pass1 -disablegrm "$(SolutionDir)Staging\$(PlatformName)"</PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'Linux (Windows)' ">
+    <PostBuildEvent>"$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\FarmhandInstaller-Console.exe" -pass1 -disablegrm "$(SolutionDir)Staging\$(PlatformName)"</PostBuildEvent>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'Linux' Or '$(Platform)' == 'MacOSX' ">
     <PostBuildEvent>mono "$(SolutionDir)Bin\$(PlatformName)\$(Configuration)\FarmhandInstaller-Console.exe" -pass1 -disablegrm "$(SolutionDir)Staging\$(PlatformName)"</PostBuildEvent>
   </PropertyGroup>

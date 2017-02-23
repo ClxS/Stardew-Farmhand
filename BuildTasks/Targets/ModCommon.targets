@@ -2,6 +2,9 @@
 	<PropertyGroup Condition=" '$(Platform)' == 'Linux' ">
 		<PlatformName>Linux</PlatformName>
 	</PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'Linux (Windows)' ">
+    <PlatformName>Linux</PlatformName>
+  </PropertyGroup>
 	<PropertyGroup Condition=" '$(Platform)' == 'MacOSX' ">
 		<PlatformName>MacOSX</PlatformName>
 	</PropertyGroup>
