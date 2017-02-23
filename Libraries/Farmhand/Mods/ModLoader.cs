@@ -244,11 +244,6 @@
 
                 modsThisPass = getModsForThisPass(modsToLoad, loadedMods, erroredMods, processedMods);
             }
-
-            // See ReferenceFix.Data.BuildXnaTypeCache()
-            // Since mod loading is done we don't need this anymore.
-            // There are a lot of types, so might as well save the memory.
-            ReferenceHelper.XnaTypes.Clear();
         }
 
         private static void BubbleDependencyLoadError(ModManifest erroredMod)

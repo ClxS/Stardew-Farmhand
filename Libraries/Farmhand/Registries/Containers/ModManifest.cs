@@ -5,14 +5,11 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using System.Security.Cryptography;
 
     using Farmhand.Helpers;
     using Farmhand.Logging;
 
     using Microsoft.Xna.Framework.Graphics;
-
-    using Mono.Cecil;
 
     using Newtonsoft.Json;
 
@@ -23,8 +20,6 @@
     /// </summary>
     public class ModManifest : IModManifest
     {
-        private static readonly SHA1CryptoServiceProvider Sha1 = new SHA1CryptoServiceProvider();
-
         /// <summary>
         ///     Initializes a new instance of the <see cref="ModManifest" /> class.
         /// </summary>
@@ -117,7 +112,7 @@
         ///     Gets the configuration path for this mod.
         /// </summary>
         [JsonIgnore]
-		public string ConfigurationPath => Path.Combine(this.ModDirectory, "Config");
+        public string ConfigurationPath => Path.Combine(this.ModDirectory, "Config");
 
         /// <summary>
         ///     Gets the mod load state.
@@ -166,7 +161,7 @@
         /// </summary>
         [JsonIgnore]
         public string ModDirectory { get; internal set; }
-        
+
         internal bool LoadModDll()
         {
             if (this.Instance != null)
@@ -176,7 +171,7 @@
 
             try
             {
-                this.ModAssembly = Assembly.Load(this.GetDllBytes());
+                this.ModAssembly = Assembly.LoadFile(this.ModDll);
                 if (this.ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Mod)) > 0)
                 {
                     var type = this.ModAssembly.GetTypes().First(x => x.BaseType == typeof(Mod));
@@ -231,132 +226,6 @@
             return this.Instance != null;
         }
 
-        internal byte[] GetDllBytes()
-        {
-			var modDllPath = Path.Combine(this.ModDirectory, this.ModDll);
-
-            if (!modDllPath.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
-            {
-                modDllPath += ".dll";
-            }
-
-            // When a SMAPI mod is still referencing the vanilla assembly,
-            // it doesn't see the Farmhand game. Everything will still be 
-            // in the state for when the assembly would first be loaded.
-            // This will fix the references so the mods will actually work.
-            // For loading mods from other platforms:
-            // There are also problems with XNA <=> Mono. Simply replacing
-            // the assembly name isn't really possible in this case, since
-            // all three XNA assemblies map to one Mono framework.
-            // (Trust me, I tried. Suddenly it looks for the definition of
-            // Vector2 inside the Farmhand assembly, or somewhere else
-            // bizarre.)
-            var bytes = File.ReadAllBytes(modDllPath);
-
-            var asm = AssemblyDefinition.ReadAssembly(new MemoryStream(bytes, false));
-
-            var shouldFix = false;
-            var toRemove = new List<AssemblyNameReference>();
-            foreach (var asmRef in asm.MainModule.AssemblyReferences)
-            {
-                // We only want to go to the effort of fixing everything if 
-                // there is a reference that even needs fixing.
-                // Also, the bad references will need to be removed.
-                if (ReferenceHelper.MatchesPlatform(asmRef))
-                {
-                    continue;
-                }
-
-                shouldFix = true;
-                toRemove.Add(asmRef);
-            }
-
-            foreach (var @ref in toRemove)
-            {
-                // However, we can't just simply remove the old references.
-                // The indices mess up and really weird stuff happens (see
-                // two comment blocks ago). Placing a dummy re-reference of
-                // ourself SEEMS to fix that.
-                var index = asm.MainModule.AssemblyReferences.IndexOf(@ref);
-                asm.MainModule.AssemblyReferences.Remove(@ref);
-                asm.MainModule.AssemblyReferences.Insert(index, ReferenceHelper.ThisRef);
-            }
-
-            if (shouldFix)
-            {
-                if (Program.Config.CachePorts)
-                {
-                    // We want to cache any 'fixed' assemblies so that we don't have to
-                    // go through and fix everything again. However if the mod is updated
-                    // or something, it will need to be fixed again.
-                    var check = Convert.ToBase64String(Sha1.ComputeHash(bytes));
-                    check = check.Replace("=", string.Empty).Replace('+', '-').Replace('/', '_');
-
-                    // Fix for valid file name. = is just padding
-                    var checkPath =
-                        Path.Combine(
-                            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                            "StardewValley",
-                            "cache",
-                            this.ModDll + "-" + check + ".dll");
-                    if (File.Exists(checkPath))
-                    {
-                        try
-                        {
-                            bytes = File.ReadAllBytes(checkPath);
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Exception($"Exception reading cached DLL {checkPath}", ex);
-                            bytes = FixDll(asm, checkPath);
-                        }
-                    }
-                    else
-                    {
-                        bytes = FixDll(asm, checkPath);
-                    }
-                }
-                else
-                {
-                    bytes = FixDll(asm, null);
-                }
-            }
-
-            return bytes;
-        }
-
-        private static byte[] FixDll(AssemblyDefinition asm, string cachePath)
-        {
-            ReferenceHelper.ReferenceResolver.DefinitionResolver.Fix(asm);
-
-            byte[] bytes;
-            using (var stream = new MemoryStream())
-            {
-                asm.Write(stream);
-                bytes = stream.GetBuffer();
-            }
-
-            if (cachePath != null)
-            {
-                try
-                {
-                    var dir = Path.GetDirectoryName(cachePath);
-                    if (!Directory.Exists(dir))
-                    {
-                        Directory.CreateDirectory(dir);
-                    }
-
-                    File.WriteAllBytes(cachePath, bytes);
-                }
-                catch (Exception ex)
-                {
-                    Log.Exception($"Exception caching fixed DLL {cachePath}", ex);
-                }
-            }
-
-            return bytes;
-        }
-
         internal void LoadContent()
         {
             if (this.Content == null)
@@ -369,7 +238,10 @@
             {
                 foreach (var texture in this.Content.Textures)
                 {
-					texture.AbsoluteFilePath = Path.Combine(this.ModDirectory, Constants.ModContentDirectory, texture.File);
+                    texture.AbsoluteFilePath = Path.Combine(
+                        this.ModDirectory,
+                        Constants.ModContentDirectory,
+                        texture.File);
 
                     if (!texture.Exists())
                     {
@@ -385,7 +257,7 @@
             {
                 foreach (var map in this.Content.Maps)
                 {
-					map.AbsoluteFilePath = Path.Combine(this.ModDirectory, Constants.ModContentDirectory, map.File);
+                    map.AbsoluteFilePath = Path.Combine(this.ModDirectory, Constants.ModContentDirectory, map.File);
 
                     if (!map.Exists())
                     {
@@ -406,7 +278,7 @@
             {
                 if (file.IsXnb)
                 {
-					file.AbsoluteFilePath = Path.Combine(this.ModDirectory, Constants.ModContentDirectory, file.File);
+                    file.AbsoluteFilePath = Path.Combine(this.ModDirectory, Constants.ModContentDirectory, file.File);
                 }
 
                 file.OwningMod = this;
@@ -445,8 +317,7 @@
             var item = TextureRegistry.GetItem(id, this);
             if (item == null)
             {
-                throw new NullReferenceException(
-                    $"Found no matching registered texture in TextureRegistry: {id}");
+                throw new NullReferenceException($"Found no matching registered texture in TextureRegistry: {id}");
             }
 
             return item.Texture;
@@ -469,8 +340,7 @@
             var item = MapRegistry.GetItem(id, this);
             if (item == null)
             {
-                throw new NullReferenceException(
-                    $"Found no matching registered map in MapRegistry: {id}");
+                throw new NullReferenceException($"Found no matching registered map in MapRegistry: {id}");
             }
 
             return item.Map;
