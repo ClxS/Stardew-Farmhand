@@ -171,7 +171,13 @@
 
             try
             {
-                this.ModAssembly = Assembly.LoadFile(this.ModDll);
+                var modDllPath = Path.Combine(this.ModDirectory, this.ModDll);
+                if (!modDllPath.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    modDllPath += ".dll";
+                }
+
+                this.ModAssembly = Assembly.LoadFile(modDllPath);
                 if (this.ModAssembly.GetTypes().Count(x => x.BaseType == typeof(Mod)) > 0)
                 {
                     var type = this.ModAssembly.GetTypes().First(x => x.BaseType == typeof(Mod));
