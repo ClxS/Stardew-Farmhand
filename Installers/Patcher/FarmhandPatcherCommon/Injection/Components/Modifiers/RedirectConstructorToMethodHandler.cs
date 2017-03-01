@@ -45,7 +45,7 @@
         public void PerformAlteration(Attribute attribute, string typeName, string methodName)
         {
             this.propertyConverter.FromAttribute(attribute);
-
+            
             var asmTypeSet =
                 this.cecilContext.LoadedAssemblies.Select(a => a.GetType(typeName)).ToArray();
             if (!asmTypeSet.Any())
@@ -58,9 +58,9 @@
                 throw new Exception("Multiple types found matching name " + typeName);
             }
 
-            var asmType = asmTypeSet.First();
+            var type = asmTypeSet.First();
 
-            var method = asmType.GetMethod(
+            var method = type.GetMethod(
                 methodName,
                 BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance
                 | BindingFlags.Static);
@@ -69,6 +69,8 @@
                 throw new Exception(
                     $"Could not find matching method ({methodName}) on type ({typeName})");
             }
+
+            var asmType = method.ReturnType;
 
             var methodType = method.DeclaringType.FullName;
 
@@ -89,7 +91,7 @@
                     parametersString += ",";
                 }
             }
-
+            
             var oldConstructor = asmType.GetConstructor(parameters);
 
             if (oldConstructor == null)
