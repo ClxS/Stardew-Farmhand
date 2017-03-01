@@ -38,7 +38,7 @@
   <Import Project="$(SolutionDir)\BuildTasks\Targets\Common.targets" />
   <ItemGroup>
     <Reference Include="Stardew Farmhand.int1">
-      <HintPath>..\..\Bin\$(Platform)\$(Configuration)\Stardew Farmhand.int1.dll</HintPath>
+      <HintPath>..\..\Bin\$(PlatformName)\$(Configuration)\Stardew Farmhand.int1.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

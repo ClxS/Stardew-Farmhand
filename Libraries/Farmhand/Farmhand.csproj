@@ -295,7 +295,6 @@
     <Compile Include="Helpers\Randomizer\Data.cs" />
     <Compile Include="Helpers\Randomizer\Extensions.cs" />
     <Compile Include="Helpers\Randomizer\RUtils.cs" />
-    <Compile Include="Helpers\ReferenceFix.cs" />
     <Compile Include="Helpers\VersionConverter.cs" />
     <Compile Include="Mods\ModSettings.cs" />
     <Compile Include="Program.cs" />
