@@ -37,7 +37,6 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <ErrorReport>prompt</ErrorReport>
-    <DocumentationFile>$(SolutionDir)StagingBin\Documentation\Farmhand.XML</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\Tools\BuildTasks\Targets\CrossPlatform.targets" />
   <Import Project="$(SolutionDir)\Tools\BuildTasks\Targets\Common.targets" />

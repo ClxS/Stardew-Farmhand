@@ -23,7 +23,6 @@
     <Optimize>false</Optimize>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <DocumentationFile>..\..\Bin\FarmhandCharacter.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -31,7 +30,6 @@
     <Optimize>true</Optimize>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <DocumentationFile>..\..\Bin\FarmhandCharacter.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\Tools\BuildTasks\Targets\CrossPlatform.targets" />
