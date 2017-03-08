@@ -494,21 +494,26 @@
 
             foreach (var perModPath in Directory.GetDirectories(modDirectory))
             {
-                var modJsonFiles = Directory.GetFiles(perModPath, "manifest.json");
-                foreach (var file in modJsonFiles)
+                if (Directory.GetFiles(perModPath, "*", SearchOption.TopDirectoryOnly).Length > 0)
                 {
-                    using (var r = new StreamReader(file))
+                    var file = Path.Combine(perModPath, "manifest.json");
+                    if (File.Exists(file))
                     {
-                        var json = r.ReadToEnd();
-                        var modInfo = JsonConvert.DeserializeObject<ModManifest>(json, new VersionConverter());
+                        using (var r = new StreamReader(file))
+                        {
+                            var json = r.ReadToEnd();
+                            var modInfo = JsonConvert.DeserializeObject<ModManifest>(json, new VersionConverter());
 
-                        modInfo.ModDirectory = perModPath;
-                        manifests.Add(modInfo);
+                            modInfo.ModDirectory = perModPath;
+                            manifests.Add(modInfo);
+                        }
                     }
                 }
-
-                // Recursively check for more mods!
-                LoadModManifests(perModPath, manifests);
+                else
+                {
+                    // Recursively check for more mods!
+                    LoadModManifests(perModPath, manifests);
+                }
             }
         }
     }
