@@ -27,16 +27,16 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\BuildTasks\Targets\ModCommon.targets" />
+  <Import Project="$(SolutionDir)\Tools\BuildTasks\Targets\ModCommon.targets" />
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-      <HintPath>..\..\Staging\Microsoft.Xna.Framework.dll</HintPath>
+      <HintPath>$(SolutionDir)StagingStaging\Microsoft.Xna.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-      <HintPath>..\..\Staging\Microsoft.Xna.Framework.Game.dll</HintPath>
+      <HintPath>$(SolutionDir)StagingStaging\Microsoft.Xna.Framework.Game.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
-      <HintPath>..\..\Staging\Microsoft.Xna.Framework.Graphics.dll</HintPath>
+      <HintPath>$(SolutionDir)StagingStaging\Microsoft.Xna.Framework.Graphics.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

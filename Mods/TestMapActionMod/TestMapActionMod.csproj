@@ -25,7 +25,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\BuildTasks\Targets\ModCommon.targets" />
+  <Import Project="$(SolutionDir)\Tools\BuildTasks\Targets\ModCommon.targets" />
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553">
       <Private>False</Private>

@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7F304954-A190-4003-B11E-A9043113396D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Farmhand.Installers.Patcher</RootNamespace>
+    <AssemblyName>FarmhandPatcherCommon</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)' == 'Linux'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)' == 'MacOSX'">
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>  
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\Tools\BuildTasks\Targets\CrossPlatform.targets" />
+  <Import Project="$(SolutionDir)\Tools\BuildTasks\Targets\Common.targets" />
+  <ItemGroup>
+    <Reference Include="ILRepack, Version=2.0.10.0, Culture=neutral, PublicKeyToken=c3e9373f1c31208e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ILRepack.Lib.2.0.10\lib\net40\ILRepack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Mono.Cecil.0.9.6.1\lib\net40\Mono.Cecil.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Mono.Cecil.0.9.6.1\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Mono.Cecil.0.9.6.1\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Mono.Cecil.0.9.6.1\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\..\..\packages\Mono.Cecil.0.9.6.1\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Injection\CecilInjectionProcessor.cs" />
+    <Compile Include="Injection\Components\CecilInjectOrder.cs" />
+    <Compile Include="Injection\Components\Hooks\Converters\IReturnableHookHandlerAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Hooks\HookHandler.cs" />
+    <Compile Include="Injection\Components\IHookHandler.cs" />
+    <Compile Include="Injection\Components\Hooks\Converters\IHookHandlerAttributeConverter.cs" />
+    <Compile Include="Injection\Components\IAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Hooks\ReturnableHookHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\AlterBaseProtectionHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\AlterProtectionHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IAlterBaseFieldProtectionAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IAlterProtectionAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IExposeInternalAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IForceVirtualBaseAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IMakeObsoleteAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IMakeVirtualBaseCallAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IRedirectConstructorFromBaseAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\Converters\IRedirectConstructorToMethodAttributeConverter.cs" />
+    <Compile Include="Injection\Components\Modifiers\ExposeInternals.cs" />
+    <Compile Include="Injection\Components\Modifiers\MakeObsoleteHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\MakeVirtualBaseCallHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\RedirectConstructorFromBaseHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\RedirectConstructorToMethodHandler.cs" />
+    <Compile Include="Injection\Components\Modifiers\ForceVirtualBaseHandler.cs" />
+    <Compile Include="Injection\Components\Parameters\IParameterHandler.cs" />
+    <Compile Include="Injection\Components\Parameters\InputHandler.cs" />
+    <Compile Include="Injection\Components\Parameters\LocalHandler.cs" />
+    <Compile Include="Injection\Components\Parameters\MethodOutputBindHandler.cs" />
+    <Compile Include="Injection\Components\Parameters\ThisHandler.cs" />
+    <Compile Include="Injection\Components\Parameters\UseOutputHandler.cs" />
+    <Compile Include="Cecil\CecilContext.cs" />
+    <Compile Include="Helpers\ILProcessorExtensionMethods.cs" />
+    <Compile Include="Injection\IAssemblyMerger.cs" />
+    <Compile Include="Injection\IInjectionContext.cs" />
+    <Compile Include="Injection\IInjectionProcessor.cs" />
+    <Compile Include="Injection\RepackAssemblyMerger.cs" />
+    <Compile Include="PatcherConstants.cs" />
+    <Compile Include="Helpers\AssemblyExtensionMethods.cs" />
+    <Compile Include="Helpers\CecilHelper.cs" />
+    <Compile Include="Helpers\TypeExtensionMethods.cs" />
+    <Compile Include="Patcher.cs" />
+    <Compile Include="PatcherOptions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\ReflectionContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EventArgs\" />
+    <Folder Include="Events\" />
+    <Folder Include="Repacker\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

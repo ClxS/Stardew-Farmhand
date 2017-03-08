@@ -43,7 +43,7 @@
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformName>Windows</PlatformName>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\BuildTasks\Targets\ModCommon.targets" />
+  <Import Project="$(SolutionDir)\Tools\BuildTasks\Targets\ModCommon.targets" />
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
