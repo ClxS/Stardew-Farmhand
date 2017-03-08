@@ -6,7 +6,7 @@
 
     public interface IModManifest
     {
-        UniqueId<string> UniqueId { get; }
+        string UniqueId { get; }
 
         bool IsFarmhandMod { get; }
 

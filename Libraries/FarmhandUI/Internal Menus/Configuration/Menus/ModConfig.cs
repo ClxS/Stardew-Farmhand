@@ -190,7 +190,7 @@
                 text.Selected += this.Mod_Selected;
                 this.modList.AddComponent(text);
 
-                this.optionSettings[text] = mods[i].UniqueId.ThisId;
+                this.optionSettings[text] = mods[i].UniqueId;
 
                 if (anySelected == 0)
                 {

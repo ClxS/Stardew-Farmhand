@@ -63,7 +63,7 @@
 
         private static string GetModSpecificPrefix(ModManifest mod)
         {
-            return $"\\{mod.UniqueId.ThisId}\\";
+            return $"\\{mod.UniqueId}\\";
         }
 
         /// <summary>

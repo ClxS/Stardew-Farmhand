@@ -31,6 +31,90 @@
 
         internal static EventManager ModEventManager { get; } = new EventManager();
 
+        /// <summary>
+        ///     Forcibly deactivates a mod by detaching it's event listeners.
+        /// </summary>
+        /// <param name="mod">The mod to deactive</param>
+        /// <param name="state">The new state of this mod. Defaults to ModState.Deactivated</param>
+        /// <param name="error">The exception encountered causing the mod to be unloaded. Defaults to null</param>
+        public static void DeactivateMod(Mod mod, ModState state = ModState.Deactivated, Exception error = null)
+        {
+            DeactivateMod(mod.ModSettings);
+        }
+
+        /// <summary>
+        ///     Forcibly deactivates a mod by detaching it's event listeners.
+        /// </summary>
+        /// <param name="mod">The manifest of the mod to deactive</param>
+        /// <param name="state">The new state of this mod. Defaults to ModState.Deactivated</param>
+        /// <param name="error">The exception encountered causing the mod to be unloaded. Defaults to null</param>
+        public static void DeactivateMod(ModManifest mod, ModState state = ModState.Deactivated, Exception error = null)
+        {
+            try
+            {
+                DetachAssemblyDelegates(mod.ModAssembly);
+                mod.ModState = state;
+                mod.LastException = error;
+                Log.Success($"Successfully unloaded mod {mod.Name} by {mod.Author}");
+            }
+            catch (Exception)
+            {
+                // Ignored
+            }
+        }
+
+        /// <summary>
+        ///     Forcibly detaches event delegates associated with a particular assembly
+        /// </summary>
+        /// <param name="assembly">The assembly the detach</param>
+        public static void DetachAssemblyDelegates(Assembly assembly)
+        {
+            if (assembly != null)
+            {
+                ModEventManager.DetachDelegates(assembly);
+            }
+        }
+
+        /// <summary>
+        ///     Reattaches disabled delegates for previously disabled mods
+        /// </summary>
+        /// <param name="mod">The mod to reactivate</param>
+        public static void ReactivateMod(Mod mod)
+        {
+            ReactivateMod(mod.ModSettings);
+        }
+
+        /// <summary>
+        ///     Reattaches disabled delegates for previously disabled mods
+        /// </summary>
+        /// <param name="mod">The manifest of the mod to reactivate</param>
+        public static void ReactivateMod(ModManifest mod)
+        {
+            if (mod.ModAssembly != null)
+            {
+                ModEventManager.ReattachDelegates(mod.ModAssembly);
+            }
+        }
+
+        /// <summary>
+        ///     Forces the game to reload mod configurations which use save specific settings.
+        /// </summary>
+        public static void ReloadConfigurations()
+        {
+            var mods = ModRegistry.GetRegisteredItems().Where(n => n.IsFarmhandMod).Cast<ModManifest>();
+            foreach (var mod in mods)
+            {
+                var config = mod.Instance?.ConfigurationSettings;
+                if (config != null)
+                {
+                    if (config.UseSaveSpecificConfiguration)
+                    {
+                        config.Load();
+                    }
+                }
+            }
+        }
+
         [Hook(HookType.Entry, "StardewValley.Game1", ".ctor")]
         internal static void LoadMods()
         {
@@ -141,10 +225,12 @@
                 {
                     if (mod.UniqueId == null)
                     {
-                        mod.UniqueId = new UniqueId<string>(Guid.NewGuid().ToString());
+                        Log.Error(
+                            $"Error - {mod.Name} by {mod.Author} manifest is invalid. A UniqueId must be provided.");
+                        continue;
                     }
 
-                    if (!mod.UniqueId.ThisId.Contains("\\")
+                    if (!mod.UniqueId.Contains("\\")
                         && (!mod.HasContent || mod.Content.Textures == null
                             || !mod.Content.Textures.Any(n => n.Id.Contains("\\"))))
                     {
@@ -165,25 +251,24 @@
         private static void LoadFinalMods()
         {
             Func<ModManifest[], List<ModManifest>, List<ModManifest>, List<ModManifest>, ModManifest[]> getModsForThisPass = (mods, modsLoaded, modsErrored, modsProcessed) =>
+                {
+                    Func<ModDependency, bool> isDependencyLoaded = dependency =>
                     {
-                        Func<ModDependency, bool> isDependencyLoaded = dependency =>
-                            {
-                                if (dependency.IsRequired)
-                                {
-                                    return modsLoaded.Any(ld => ld.UniqueId.Equals(dependency.UniqueId));
-                                }
+                        if (dependency.IsRequired)
+                        {
+                            return modsLoaded.Any(ld => ld.UniqueId.Equals(dependency.UniqueId));
+                        }
 
-                                var dependentMod = mods.FirstOrDefault(n => n.UniqueId.Equals(dependency.UniqueId));
-                                return dependentMod?.ModState != ModState.Unloaded;
-                            };
-
-                        return
-                            mods.Where(
-                                    n =>
-                                        n.ModState == ModState.Unloaded
-                                        && (n.Dependencies == null || n.Dependencies.All(d => isDependencyLoaded(d))))
-                                .ToArray();
+                        var dependentMod = mods.FirstOrDefault(n => n.UniqueId.Equals(dependency.UniqueId));
+                        return dependentMod?.ModState != ModState.Unloaded;
                     };
+
+                    return
+                        mods.Where(
+                            n =>
+                                n.ModState == ModState.Unloaded
+                                && (n.Dependencies == null || n.Dependencies.All(d => isDependencyLoaded(d)))).ToArray();
+                };
 
             var modsToLoad = ModRegistry.GetRegisteredItems().Where(n => n.IsFarmhandMod).Cast<ModManifest>().ToArray();
             var loadedMods = new List<ModManifest>();
@@ -359,14 +444,48 @@
         // Loads mod manifests using the default ModPaths paths
         private static void LoadModManifests()
         {
+            var manifests = new List<ModManifest>();
+
             foreach (var modPath in ModPaths)
             {
-                LoadModManifests(modPath);
+                LoadModManifests(modPath, manifests);
+            }
+
+            var uniqueMods = manifests.Where(x => manifests.Count(x2 => Equals(x2.UniqueId, x.UniqueId)) == 1).ToArray();
+            foreach (var modInfo in uniqueMods)
+            {
+                if (modInfo.UniqueId == null)
+                {
+                    Log.Error($"Mod {modInfo.Name} did not have a valid UniqueId - skipping");
+                }
+
+                ModRegistry.RegisterItem(new UniqueId<string>(modInfo.UniqueId), modInfo);
+            }
+
+            var duplicateMods = manifests.Where(m => !uniqueMods.Contains(m)).ToArray();
+            foreach (var duplicate in duplicateMods.DistinctBy(m => m.UniqueId))
+            {
+                var duplicates = duplicateMods.Where(m => m.UniqueId == duplicate.UniqueId).ToArray();
+                if (duplicates.All(d => d.Version == duplicate.Version))
+                {
+                    Log.Info(
+                        $"Duplicate copies of {duplicate.Name} by {duplicate.Author} were detected. "
+                        + $"Only the one at {duplicate.ModDirectory} will be loaded.");
+                    ModRegistry.RegisterItem(new UniqueId<string>(duplicate.UniqueId), duplicate);
+                    continue;
+                }
+
+                var highest = duplicates.MaxBy(d => d.Version);
+                Log.Warning(
+                    $"Warning! Duplicate copies of {duplicate.Name} by {duplicate.Author} were detected. Only the most recent version will "
+                    + $"be loaded. (Version {duplicate.Version} at {duplicate.ModDirectory}). "
+                    + "Mods which depend on a different version may not be able to load.");
+                ModRegistry.RegisterItem(new UniqueId<string>(highest.UniqueId), highest);
             }
         }
 
         // Loads mod manifests from a given directory
-        private static void LoadModManifests(String modDirectory)
+        private static void LoadModManifests(string modDirectory, List<ModManifest> manifests)
         {
             if (!Directory.Exists(modDirectory))
             {
@@ -384,98 +503,12 @@
                         var modInfo = JsonConvert.DeserializeObject<ModManifest>(json, new VersionConverter());
 
                         modInfo.ModDirectory = perModPath;
-                        ModRegistry.RegisterItem(
-                            modInfo.UniqueId ?? new UniqueId<string>(Guid.NewGuid().ToString()),
-                            modInfo);
+                        manifests.Add(modInfo);
                     }
                 }
 
                 // Recursively check for more mods!
-                LoadModManifests(perModPath);
-            }
-        }
-
-        /// <summary>
-        ///     Forcibly deactivates a mod by detaching it's event listeners.
-        /// </summary>
-        /// <param name="mod">The mod to deactive</param>
-        /// <param name="state">The new state of this mod. Defaults to ModState.Deactivated</param>
-        /// <param name="error">The exception encountered causing the mod to be unloaded. Defaults to null</param>
-        public static void DeactivateMod(Mod mod, ModState state = ModState.Deactivated, Exception error = null)
-        {
-            DeactivateMod(mod.ModSettings);
-        }
-
-        /// <summary>
-        ///     Forcibly deactivates a mod by detaching it's event listeners.
-        /// </summary>
-        /// <param name="mod">The manifest of the mod to deactive</param>
-        /// <param name="state">The new state of this mod. Defaults to ModState.Deactivated</param>
-        /// <param name="error">The exception encountered causing the mod to be unloaded. Defaults to null</param>
-        public static void DeactivateMod(ModManifest mod, ModState state = ModState.Deactivated, Exception error = null)
-        {
-            try
-            {
-                DetachAssemblyDelegates(mod.ModAssembly);
-                mod.ModState = state;
-                mod.LastException = error;
-                Log.Success($"Successfully unloaded mod {mod.Name} by {mod.Author}");
-            }
-            catch (Exception)
-            {
-                // Ignored
-            }
-        }
-
-        /// <summary>
-        ///     Forcibly detaches event delegates associated with a particular assembly
-        /// </summary>
-        /// <param name="assembly">The assembly the detach</param>
-        public static void DetachAssemblyDelegates(Assembly assembly)
-        {
-            if (assembly != null)
-            {
-                ModEventManager.DetachDelegates(assembly);
-            }
-        }
-
-        /// <summary>
-        ///     Reattaches disabled delegates for previously disabled mods
-        /// </summary>
-        /// <param name="mod">The mod to reactivate</param>
-        public static void ReactivateMod(Mod mod)
-        {
-            ReactivateMod(mod.ModSettings);
-        }
-
-        /// <summary>
-        ///     Reattaches disabled delegates for previously disabled mods
-        /// </summary>
-        /// <param name="mod">The manifest of the mod to reactivate</param>
-        public static void ReactivateMod(ModManifest mod)
-        {
-            if (mod.ModAssembly != null)
-            {
-                ModEventManager.ReattachDelegates(mod.ModAssembly);
-            }
-        }
-
-        /// <summary>
-        ///     Forces the game to reload mod configurations which use save specific settings.
-        /// </summary>
-        public static void ReloadConfigurations()
-        {
-            var mods = ModRegistry.GetRegisteredItems().Where(n => n.IsFarmhandMod).Cast<ModManifest>();
-            foreach (var mod in mods)
-            {
-                var config = mod.Instance?.ConfigurationSettings;
-                if (config != null)
-                {
-                    if (config.UseSaveSpecificConfiguration)
-                    {
-                        config.Load();
-                    }
-                }
+                LoadModManifests(perModPath, manifests);
             }
         }
     }

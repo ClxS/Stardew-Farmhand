@@ -51,9 +51,8 @@
         /// <summary>
         ///     Gets the unique ID for this mod.
         /// </summary>
-        [JsonConverter(typeof(UniqueIdConverter))]
         [JsonProperty]
-        public UniqueId<string> UniqueId { get; internal set; }
+        public string UniqueId { get; internal set; }
 
         /// <summary>
         ///     Gets whether this is a Farmhand mod.
