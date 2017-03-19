@@ -18,8 +18,6 @@
     <HtmlHelpName>Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <DocumentationSources>
-      <DocumentationSource sourceFile="$(SolutionDir)Bin\Farmhand.dll" />
-      <DocumentationSource sourceFile="$(SolutionDir)Bin\Farmhand.XML" />
       <DocumentationSource sourceFile="$(SolutionDir)Libraries\API\Farmhand\Farmhand.csproj" />
       <DocumentationSource sourceFile="$(SolutionDir)Libraries\API\FarmhandCharacter\FarmhandCharacter.csproj" />
       <DocumentationSource sourceFile="$(SolutionDir)Libraries\API\FarmhandGame\FarmhandGame.csproj" />
