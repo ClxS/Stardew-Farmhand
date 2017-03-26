@@ -11,7 +11,7 @@
 
 Stardew Farmhand is the new in-development API intended to replace SMAPI
 
-##License
+## License
 
 SMAPI Compatibility Layer: LGPL
 
@@ -19,18 +19,18 @@ Farmhand: MIT
 
 xml2json: Not Specified (http://www.bjelic.net/2012/08/01/coding/convert-xml-to-json-using-xslt/)
 
-##Branching Policy
+## Branching Policy
 
 The master branch is marked as protected and it's what all release builds will be compiled against. 
 Make your pull requests against the development or feature branches, pull requests directly into master probably will not be accepted.
 
-##Compiling the project
+## Compiling the project
 
 Note that this only applies to those wanting to develop the API. Mod developers do not need to go through this and the installer provides you with prebuilt packages you can use for mod development.
 
-###Windows
+### Windows
 
-######Populating Submodules
+###### Populating Submodules
 (This isn't nessecary unless you want to compile the SMAPI compatibility extension.)
 
 After cloning the repository, the first thing you'll need to do is download the SMAPI submodule. 
@@ -40,7 +40,7 @@ To do this, execute the PopulateSubmodules.bat file, or use the following comman
 git submodule update --init --recursive
 ```
 
-######Preparing Staging Files
+###### Preparing Staging Files
 
 Next we need to prepare a folder so the project knows where to locate Stardew files to inject into:
 
@@ -52,13 +52,13 @@ Next we need to prepare a folder so the project knows where to locate Stardew fi
 
 - If you wish to also build a Linux compatible version, create a folder called 'Linux' in the new staging folder and copy a Linux version of the game to it.
 
-######Compiling
+###### Compiling
 
 Now open the project's solution file. Note that if you do not have Sandcastle or XNA Game Studio installed, you'll receive an error about two of the projects failing to load, this can be ignored unless you are wanting to generate documentation (Sandcastle) or compile the shader test mod (XNA Game Studio).
 
 Once the solution is open, the Stardew Farmhand executable can be compiled by **Rebuild**ing the BuildFarmhandFinal project.
 
-######Project Dependencies and Gotcha's
+###### Project Dependencies and Gotcha's
 
 Because of how the project is structured, there are 3 tiers of dependencies in the core project.
 - Tier 1: The first tier includes projects without any dependencies. This tier consists mostly of Farmhand.csproj, and is compiled into the Teir 2 dependency by the BuildFarmhandIntermediate project.
@@ -72,7 +72,7 @@ Because of these distinct dependency layers, changing a project in a lower layer
 Because MSBuild cannot track dependencies properly on projects such as this, you'll need to Rebuild the BuildTask projects, so that the build commands that handle packaging are
 actually executed.
 
-####Linux
+#### Linux
 
 To build the project on Linux, follow the steps above, constructing only a Linux staging folder instead of a Windows folder.
 
@@ -83,60 +83,60 @@ be able to build either of these projects but neither are vital.
 
 - MonoDevelop will frequently just cease to work with the project, and cause random compile errors. If the error reports that it is due to an internal MSBuild error, clean the solution and build again; for other errors relating to undefined references in the project files, restarting MonoDevelop resolves these. Please let me know if you find an IDE which works better with the project!
 
-##Project Structure
+## Project Structure
 
-###Build Tasks
+### Build Tasks
 
 These projects create a MSBuild-able flow for the project, so manually patching is not required.
 
-######BuildFarmhandIntermediate
+###### BuildFarmhandIntermediate
 Packages Farmhand Core into Stardew and applies the appropriate hooks. This is the project you should click "Rebuild" on when altering the engine, as it will force all builds to trigger in the correct order.
 
-######BuildFarmhandFinal
+###### BuildFarmhandFinal
 Packages the projects dependent on the results of BuildFarmhandIntermediate into Stardew and produces the final Stardew Farmhand.exe
 
-###Documentation
+### Documentation
 
-######Farmhand
+###### Farmhand
 Compiles documentation using SandCastleFileBuilder into HTML
 
-###Installers
+### Installers
 
-######FarmhandPatcherCommon
+###### FarmhandPatcherCommon
 Contains common patcher code, and is the core library responsible for modifying the Stardew executable.
 
-######FarmhandPatcherFirstPass and FarmhandPatcherSecondPass
+###### FarmhandPatcherFirstPass and FarmhandPatcherSecondPass
 Thin libraries used to ensure the correct libraries are used for each injection pass.
 
-######FarmhandInstaller-Console
+###### FarmhandInstaller-Console
 A command line interface used for running the patcher. This will not be included as a public installer and instead is just used as a part of the build process.
 
-######FarmhandInstaller.UI
+###### FarmhandInstaller.UI
 This is the distributed Farmhand installer. It currently uses WPF but will soon be replaced by platform specific installers.
 
-##Libraries
+## Libraries
 
-######Farmhand
+###### Farmhand
 The core code which is injected into Stardew. Most of the heavy lifting and API functionality takes place in this library, with second-pass libraries only being used for things which rely on the changes caused by this library.
 
-######FarmhandCharacter
+###### FarmhandCharacter
 Contains NPC and Monster related API functionality.
 
-######FarmhandGame
+###### FarmhandGame
 Contains overrides for the Game1 instance and overrides for certain item classes.
 
-######FarmhandUI 
+###### FarmhandUI 
 Contains a modified version of Entoarox's UI framework, as well contains additional UI enhancements such as the mod configuration menus.
 
-##Mods
+## Mods
 
 Far too many to list, the mods packaged serve a both examples and integration tests to ensure features continue to work.
 
-##Tools
+## Tools
 
-######FarmhandDebugger
+###### FarmhandDebugger
 Just serves as an entry point for me to step through and debug Stardew Farmhand. This should be set as your startup project when not debugging the build process. A benefit of this is that since Farmhand itself does not invoke a console window yet, console output will be redirected to the debugger's window.
 
-######InstallerPackager
+###### InstallerPackager
 Prepares a number of data-defined packages for inclusion in the installer.
 
