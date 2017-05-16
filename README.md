@@ -1,15 +1,9 @@
-[![Stardew-Farmhand on discord](https://img.shields.io/badge/discord-stardew--farmhand-blue.svg?style=flat-square)](https://discord.gg/0t3fh2xhHVdOFmtI)
-
 ## Current Build Status
 
 | Branch        | Windows CI    | Static Analysis  |
 | ------------- | ------------  | --- |
 | Master      | [![Build status](https://ci.appveyor.com/api/projects/status/isjopx9h6gv9vv2x/branch/master?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand/branch/master) | |
 | Development      | [![Build status](https://ci.appveyor.com/api/projects/status/isjopx9h6gv9vv2x/branch/development?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand/branch/development) |  [![Static Analysis](https://scan.coverity.com/projects/10466/badge.svg?flat=1)](https://scan.coverity.com/projects/10466) |
-
-# Project Details
-
-Stardew Farmhand is the new in-development API intended to replace SMAPI
 
 ## License
 
