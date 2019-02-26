@@ -1,11 +1,8 @@
-###### On-hold: Check out [SMAPI](https://github.com/Pathoschild/SMAPI) for the main Stardew Modding API.
+## Archived
 
-## Current Build Status
+There will be no future changes to this project, keeping it around for posterity and as reference material. :)
 
-| Branch        | Windows CI     |
-| ------------- | ------------   |
-| Master      | [![Build status](https://ci.appveyor.com/api/projects/status/isjopx9h6gv9vv2x/branch/master?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand/branch/master) | |
-| Development      | [![Build status](https://ci.appveyor.com/api/projects/status/isjopx9h6gv9vv2x/branch/development?svg=true)](https://ci.appveyor.com/project/ClxS/stardew-farmhand/branch/development) | 
+Check out [SMAPI](https://github.com/Pathoschild/SMAPI) for the main Stardew Modding API.
 
 ## Compiling the project
 
